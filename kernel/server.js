@@ -1,8 +1,10 @@
 'use strict'
 
-const express = require('express')
+const Server = require('simple-websocket/server')
 
-const app = express()
+const port = 24860
+const server = new Server({ port })
 
-const PORT = 2486
-app.listen(PORT, () => console.log(`Listening at ${PORT}`))
+server.on('connection', (socket) => {
+  socket.on('data',  console.log)
+})
