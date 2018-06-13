@@ -2,7 +2,7 @@
   "name": "ara-content-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "boot/main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,11 +19,15 @@
   },
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
+    "choo": "^6.11.0",
     "electron": "^2.0.2",
     "electron-is-dev": "^0.3.0",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "littlstar": "git+ssh://git@github.com:littlstar/littlstar.js#rc-1.0.0",
+    "nanocomponent": "^6.5.2"
   },
   "devDependencies": {
+    "choo-devtools": "^2.5.1",
     "electron-reload": "^1.2.2"
   }
 }
