@@ -22,9 +22,9 @@
     "choo": "^6.11.0",
     "electron": "^2.0.2",
     "electron-is-dev": "^0.3.0",
-    "express": "^4.16.3",
     "littlstar": "git+ssh://git@github.com:littlstar/littlstar.js#rc-1.0.0",
-    "nanocomponent": "^6.5.2"
+    "nanocomponent": "^6.5.2",
+    "simple-websocket": "^7.0.2"
   },
   "devDependencies": {
     "choo-devtools": "^2.5.1",
