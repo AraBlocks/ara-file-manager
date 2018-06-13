@@ -1,20 +1,15 @@
-// Modules to control application life and create native browser window
+'use strict'
+
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
-require('./server/server.js')
 
-if(isDev) { require('electron-reload')(__dirname) }
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-const createWindow = () => {
+function createWindow ()  {
   // Create the browser window.
   mainWindow = new BrowserWindow({ width: 1000, height: 800 })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
-
+  mainWindow.loadFile('./browser/index.html')
   // Open the DevTools.
   if(isDev) { mainWindow.webContents.openDevTools() }
 
@@ -44,6 +39,3 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) { createWindow() }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
