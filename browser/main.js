@@ -11,5 +11,3 @@ require('./lib/router')(app)
 require('./lib/store')(app)
 
 document.body.appendChild(app.start())
-
-console.log('browser main running')
