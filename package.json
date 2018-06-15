@@ -27,10 +27,12 @@
     "littlstar": "git+ssh://git@github.com:littlstar/littlstar.js#rc-1.0.0",
     "md5-hex": "^2.0.0",
     "nanocomponent": "^6.5.2",
-    "simple-websocket": "^7.0.2"
+    "simple-websocket": "^7.0.2",
+    "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "choo-devtools": "^2.5.1",
+    "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.2"
   }
 }

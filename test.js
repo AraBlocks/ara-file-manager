@@ -6,7 +6,8 @@ socket.on('connect', () => {
   const item = JSON.stringify({
     title: 'The Room',
     license: 5,
-    description: 'The best movie ever!'
+    description: 'The best movie ever!',
+    price: 33
   })
   socket.send(item)
 })
