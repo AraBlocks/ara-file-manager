@@ -14,7 +14,7 @@ module.exports = (state, emitter) => {
 
     if (valid) {
       state.purchaseRequest = load
-      emitter.emit(state.events.PUSHSTATE, '/confirm')
+      state.navigator.goto( '#/confirm')
     }
   })
 
