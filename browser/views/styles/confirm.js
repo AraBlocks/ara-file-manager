@@ -13,9 +13,9 @@ module.exports = {
 
     :host div {
       align-items: center;
-      border: 1px solid black;
       display: flex;
       height: 100%;
+      flex-direction: column;
       justify-content: center;
       vertical-align: middle;
     }

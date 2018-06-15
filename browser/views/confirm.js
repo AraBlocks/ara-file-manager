@@ -4,6 +4,7 @@ const styles = require('./styles/confirm')
 const html = require('choo/html')
 
 module.exports = (state, emit) => {
+  const { purchaseRequest } = state
   return html`
     <div class=${styles.container}>
       <div>
@@ -13,7 +14,7 @@ module.exports = (state, emit) => {
               Title
             </td>
             <td>
-              The Room
+              ${purchaseRequest.title}
             </td>
           </tr>
           <tr>
@@ -21,7 +22,7 @@ module.exports = (state, emit) => {
               Description
             </td>
             <td>
-              The best movie ever
+              ${purchaseRequest.description}
             </td>
           </tr>
           <tr>
@@ -29,7 +30,7 @@ module.exports = (state, emit) => {
             License
           </td>
           <td>
-            5
+            ${purchaseRequest.license}
           </td>
         </tr>
         </table>
