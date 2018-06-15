@@ -1,6 +1,7 @@
 'use strict'
 
-const styles = require('./styles/confirm')
+const styles = require('../styles/confirm')
+const purchaseButton = require('./purchaseButton')
 const html = require('choo/html')
 
 module.exports = (state, emit) => {
@@ -26,6 +27,14 @@ module.exports = (state, emit) => {
             </td>
           </tr>
           <tr>
+            <td class=${styles.header}>
+              Price
+            </td>
+            <td>
+              ${purchaseRequest.price} ARA
+            </td>
+          </tr>
+          <tr>
           <td class=${styles.header}>
             License
           </td>
@@ -34,9 +43,7 @@ module.exports = (state, emit) => {
           </td>
         </tr>
         </table>
-        <button>
-          Purchase
-        </button>
+        ${purchaseButton(state)}
       </div>
     </div>
   `
