@@ -1,7 +1,7 @@
 'use strict'
 
 const home = require('../views/home')
-const confirm = require('../views/confirm')
+const confirm = require('../views/confirm/confirm')
 const choo = require('choo')
 
 module.exports = (app) => {
