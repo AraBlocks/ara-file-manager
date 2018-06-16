@@ -8,10 +8,15 @@ This project is still in active developement.
 
 ## Installation
 ```
-$ npm i
+$ npm run build
 ```
 
 ## Usage
+To trigger a purchase request
+```
+node mockDapp.js
+```
+Press the purchase button. In ~15 seconds a transaction receipt object should be logged to the console.
 
 ## Example
 
