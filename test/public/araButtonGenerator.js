@@ -1,28 +1,27 @@
 class AraButtonGenerator {
 	constructor() {
-
+    this.wsUri = "ws://localhost:24860"
+    this.websocket = new WebSocket(this.wsUri)
+    this.websocket.onopen = function() {
+      console.log("Websocket connected...")
+    }
   }
 
-  makeButton(license, target) {
-    var button = document.createElement("button");
-    button.innerHTML = "Ara Button";
+  sendLicense(license) {
+    this.websocket.send(license)
+  }
 
-    var body = document.getElementsByClassName("ara-buttons")[0];
-    body.appendChild(button);
+  makeButton(license, target, cssClassName) {
+    var button = document.createElement("button")
+    button.className = cssClassName
 
+    var body = document.getElementsByClassName(target)[0]
+    body.appendChild(button)
+
+    var superClass = this
     button.addEventListener ("click", function() {
-      const item = JSON.stringify({
-        title: 'The Room',
-        license: 5,
-        description: 'The best movie ever!',
-        price: 33
-      })
-      var wsUri = "ws://localhost:24860";
-      var websocket = new WebSocket(wsUri);
-      websocket.onopen = function() {
-          websocket.send(item);
-          alert("Message is sent...");
-       };
+      superClass.sendLicense(license)
     });
-  }
+    return button;
+  };
 }
