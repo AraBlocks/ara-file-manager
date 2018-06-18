@@ -3,9 +3,9 @@
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
 
+let mainWindow
 module.exports = new Promise((resolve) => {
 
-  let mainWindow
   function createWindow ()  {
     // Create the browser window.
     mainWindow = new BrowserWindow({ width: 1000, height: 800 })
@@ -14,7 +14,7 @@ module.exports = new Promise((resolve) => {
     // and load the index.html of the app.
     mainWindow.loadFile('./browser/index.html')
     // Open the DevTools.
-    if(isDev) { mainWindow.webContents.openDevTools() }
+    if (isDev) { mainWindow.webContents.openDevTools() }
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
