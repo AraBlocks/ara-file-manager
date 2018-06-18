@@ -9,7 +9,10 @@ const server = new Server({ port })
 
 module.exports = (window) => {
   server.on('connection', (socket) => {
-
-    socket.on('data', (data) => window.webContents.send(kPurchaseRequest, JSON.parse(data.toString())))
+    socket.on('data', (data) => {
+      window.show()
+      window.focus()
+      window.webContents.send(kPurchaseRequest, JSON.parse(data.toString()))
+    })
   })
 }
