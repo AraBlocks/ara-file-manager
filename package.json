@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm i && $(npm bin)/electron-rebuild",
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "repository": {
     "type": "git",
@@ -33,8 +33,20 @@
     "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
+    "ava": "^0.25.0",
     "choo-devtools": "^2.5.1",
     "electron-rebuild": "^1.7.3",
-    "electron-reload": "^1.2.2"
+    "electron-reload": "^1.2.2",
+    "ganache-cli": "^6.1.3"
+  },
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "sources": [
+      "src/*.{js}"
+    ],
+    "tap": true,
+    "cache": true
   }
 }
