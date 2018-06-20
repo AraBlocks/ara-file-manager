@@ -3,7 +3,6 @@
 const Application = require('spectron').Application
 const test = require('ava')
 const electronPath = require('electron')
-const path = require('path')
 
 test.beforeEach(t => {
   t.context.app = new Application({
@@ -15,7 +14,6 @@ test.beforeEach(t => {
 })
 
 test('Routing from home to confirm view', async t => {
-  let text
   let url
   const app = t.context.app
   await app.client.waitUntilWindowLoaded()
