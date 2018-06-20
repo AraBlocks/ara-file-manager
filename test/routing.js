@@ -8,7 +8,7 @@ const path = require('path')
 test.beforeEach(t => {
   t.context.app = new Application({
     path: electronPath,
-    args: [path.join(__dirname, '..', 'boot', 'main.js')]
+    args: ['boot/main.js']
   })
 
   return t.context.app.start()
