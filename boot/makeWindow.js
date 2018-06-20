@@ -2,6 +2,7 @@
 
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
+const path = require('path')
 
 let mainWindow
 module.exports = new Promise((resolve) => {
@@ -12,9 +13,10 @@ module.exports = new Promise((resolve) => {
     resolve(mainWindow)
 
     // and load the index.html of the app.
-    mainWindow.loadFile('./browser/index.html')
+    mainWindow.loadFile(path.join(__dirname, '..', 'browser', 'index.html'))
+
     // Open the DevTools.
-    if (isDev) { mainWindow.webContents.openDevTools() }
+    // if (isDev) { mainWindow.webContents.openDevTools() }
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
