@@ -15,9 +15,8 @@ class AraButtonGenerator extends WebSocket {
     const body = document.getElementsByClassName(target)[0]
     body.appendChild(button)
 
-    const superClass = this
-    button.addEventListener ("click", function() {
-      superClass.sendLicense(license)
+    button.addEventListener ("click", () => {
+      sendLicense(license)
     })
     return button
   }
