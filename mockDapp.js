@@ -2,6 +2,7 @@ const Socket = require('simple-websocket')
 
 const socket = Socket('ws://localhost:24860')
 
+console.log('starting mockDapp')
 socket.on('connect', () => {
   const item = JSON.stringify({
     title: 'The Room',

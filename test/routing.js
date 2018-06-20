@@ -16,16 +16,17 @@ test.beforeEach(t => {
 
 test('Routing from home to confirm view', async t => {
   let text
+  let url
   const app = t.context.app
   await app.client.waitUntilWindowLoaded()
-  text = await app.client.getHTML('div')
-  t.is(text[0].includes('Welcome to ARA Mananger'), true, 'Should be at home view upon app initiation')
+
+  url = await app.client.getUrl()
+  t.is(!url.includes('#'), true, 'Should be at home view upon app initiation')
 
   require('../mockDapp')
-  text = await app.client.getHTML('table')
-  t.is(!!text, true, 'Should be at confirm view when socket pinged')
+  await new Promise(resolve => setTimeout(resolve, 1000))
+  url = await app.client.getUrl()
+  t.is(url.includes('confirm'), true, 'Should be at confirm view when socket is pinged')
 
-  const url = await app.client.getUrl()
-  t.log(url)
   return t.context.app.stop()
 })
