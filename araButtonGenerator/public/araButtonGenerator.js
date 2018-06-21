@@ -16,7 +16,7 @@ class AraButtonGenerator extends WebSocket {
     body.appendChild(button)
 
     button.addEventListener ("click", () => {
-      sendLicense(license)
+      this.sendLicense(license)
     })
     return button
   }
