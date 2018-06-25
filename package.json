@@ -30,9 +30,7 @@
     "md5-hex": "^2.0.0",
     "nanocomponent": "^6.5.2",
     "simple-websocket": "^7.0.2",
-    "web3": "^1.0.0-beta.34",
-    "chai": "1.10.0",
-    "mocha": "2.1.0"
+    "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "ava": "^0.25.0",
@@ -40,11 +38,14 @@
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.2",
     "ganache-cli": "^6.1.3",
-    "spectron": "^3.8.0"
+    "spectron": "^3.8.0",
+    "chai": "1.10.0",
+    "mocha": "2.1.0"
   },
   "ava": {
     "files": [
-      "test/*.js"
+      "test/*.js",
+      "!**/araButtonGenerator.js"
     ],
     "sources": [
       "src/*.{js}"

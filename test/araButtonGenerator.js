@@ -26,11 +26,32 @@
   })
 
   it("should send license on click", function (done) {
-    araButtonGenerator.onopen = () => { btn.click() }
+    verifyMessageSent(btn, item, done)
+  })
+
+  it("should send second license on click", function (done) {
+    const item2 = JSON.stringify({
+      title: 'The Room 2',
+      license: 5,
+      description: 'The best movie ever!',
+      price: 55
+    })
+
+    let btn2 = araButtonGenerator.makeButton(item2, araButtonTarget, araButtonClass)
+    verifyMessageSent(btn2, item2, done)
+    btn2.remove()
+  })
+
+  function verifyMessageSent(btn, item, done) {
+    if (araButtonGenerator.readyState == 1) { 
+      btn.click() 
+    } else {
+      araButtonGenerator.onopen = () => { btn.click() }
+    }
     araButtonGenerator.onmessage = function (evt) { 
       const received_msg = evt.data
       expect(evt.data).to.be.equal(item)
       done()
-    }
-  })
+    }    
+  }
 })
