@@ -1,4 +1,4 @@
- describe("Testing", function () {
+ describe("Testing Ara Button Generator", function () {
   let btn
   const araButtonClass = "ara-button"
   const araButtonTarget = "ara-buttons"
