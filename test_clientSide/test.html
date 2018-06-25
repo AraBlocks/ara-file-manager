@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ara Button Generator Test!</title>
+  </head>
+  <body style="height: 100%;">
+    Hello
+    <div class="ara-buttons">
+    </div>
+  </body>
+  <script src="../araButtonGenerator/public/AraButtonGenerator.js">
+  </script>
+  <script>
+  </script>
+  <div id="mocha"></div>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script>
+      mocha.ui('bdd'); 
+      mocha.reporter('html');
+      var expect = chai.expect;
+  </script>
+  <script src="./testAraButtonGenerator.js"></script>
+  <script>
+    if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+    else { mocha.run(); }
+  </script>
+</html>
