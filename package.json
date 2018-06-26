@@ -2,8 +2,9 @@
   "name": "ara-content-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/littlstar/ara-content-manager/issues"
   },
-  "homepage": "https://github.com/littlstar/ara-content-manager#readme"
+  "homepage": "https://github.com/littlstar/ara-content-manager#readme",
+  "dependencies": {
+    "electron": "^2.0.3",
+    "electron-window-manager": "^1.0.6"
+  }
 }
