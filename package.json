@@ -1,0 +1,32 @@
+{
+  "name": "ara-content-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "boot/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/littlstar/ara-content-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/littlstar/ara-content-manager/issues"
+  },
+  "homepage": "https://github.com/littlstar/ara-content-manager#readme",
+  "dependencies": {
+    "choo": "^6.12.1",
+    "electron": "^2.0.3",
+    "electron-window-manager": "^1.0.6",
+    "nanocomponent": "^6.5.2"
+  },
+  "devDependencies": {
+    "choo-devtools": "^2.5.1",
+    "electron-is-dev": "^0.3.0",
+    "electron-reload": "^1.2.3"
+  }
+}

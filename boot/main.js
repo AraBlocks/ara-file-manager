@@ -1,11 +1,15 @@
 'use strict'
-const path = require('path')
+
+const electron = require('electron')
+const { app } = require('electron')
+const windowManager = require('electron-window-manager')
 const isDev = require('electron-is-dev')
+const path = require('path')
+require('./ipc')
 
-void async function() {
-  const window = await require('./makeWindow')
-  require('../kernel/server.js')(window)
+const index = `file://${path.resolve(__dirname, '..', 'browser/index.html')}`
+app.on('ready', () => {
+  windowManager.init()
+  windowManager.open('home', 'Welcome', index, false, { showDevTools: true })
   if (isDev) { require('electron-reload')(path.resolve('browser')) }
-}()
-
-
+})
