@@ -1,7 +1,0 @@
-main process
--socket server
-
-browser
--listeners
--navigator
--store
