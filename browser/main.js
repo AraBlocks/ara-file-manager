@@ -1,13 +1,18 @@
 'use strict'
 
-const chooDevTools = require('choo-devtools')
-const choo = require('choo')
-const isDev = require('electron-is-dev')
+const views = __dirname + '/views/'
+const remote = require('electron').remote;
+const windowManager = remote.require('electron-window-manager')
+const fs = require('fs')
 
-const app = choo()
-if(isDev) { app.use(chooDevTools()) }
+fs.readdirSync(views).forEach((view, i) => {
+  const handler = (e) => windowManager.bridge.emit(view)
+  windowManager.sharedData.set('current', view.slice(0, view.length - 3))
 
-require('./lib/router')(app)
-require('./lib/store')(app)
-
-document.body.appendChild(app.start())
+  const button = document.createElement('button')
+  button.innerHTML = view
+  button.onclick = handler
+  document.body.appendChild(button)
+  const br = document.createElement('br')
+  document.body.appendChild(br)
+})
