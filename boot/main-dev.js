@@ -5,7 +5,7 @@ const { app } = require('electron')
 const windowManager = require('electron-window-manager')
 const isDev = require('electron-is-dev')
 const path = require('path')
-require('./ipc')
+require('./ipc-dev')
 
 const index = `file://${path.resolve(__dirname, '..', 'browser/index.html')}`
 app.on('ready', () => {

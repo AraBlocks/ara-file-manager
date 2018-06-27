@@ -4,9 +4,8 @@
   "description": "",
   "main": "boot/main.js",
   "scripts": {
-    "build": "npm i && $(npm bin)/electron-rebuild",
-    "start": "electron .",
-    "test": "ava"
+    "start-dev": "electron boot/main-dev.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
