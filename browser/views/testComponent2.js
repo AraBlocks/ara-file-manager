@@ -14,7 +14,7 @@ class TestComponent2 extends Nanocomponent {
 
   createElement() {
     return html`
-      <div>hello</div>
+      <div>hello this is testComponent2</div>
     `
   }
 }
