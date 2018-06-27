@@ -1,7 +1,7 @@
 'use strict'
 
 const electron = require('electron')
-const { app, Menu, Tray } = require('electron')
+const { app } = require('electron')
 const windowManager = require('electron-window-manager')
 const isDev = require('electron-is-dev')
 const path = require('path')
