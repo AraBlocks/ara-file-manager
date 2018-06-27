@@ -4,7 +4,7 @@
   "description": "",
   "main": "boot/main.js",
   "scripts": {
-    "start-dev": "electron boot/main-dev.js",
+    "start": "electron boot/main-dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +24,9 @@
     "electron": "^2.0.3",
     "electron-window-manager": "^1.0.6",
     "md5-hex": "^2.0.0",
-    "nanocomponent": "^6.5.2"
+    "nanocomponent": "^6.5.2",
+    "electron-positioner": "^3.0.1",
+    "menubar": "*"
   },
   "devDependencies": {
     "choo-devtools": "^2.5.1",
