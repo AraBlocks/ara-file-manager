@@ -11,7 +11,7 @@ class ModalButton extends Nanocomponent {
     onmouseover = () => {},
     onmouseout = () => {},
     children = '',
-    className = '',
+    cssClass = '',
   }) {
     super()
 
@@ -20,7 +20,7 @@ class ModalButton extends Nanocomponent {
       onmouseover,
       onmouseout,
       children,
-      className
+      cssClass
     }
   }
 
@@ -33,7 +33,7 @@ class ModalButton extends Nanocomponent {
 
     return html`
       <button
-        class="${styles[state.className]}"
+        class="${styles[state.cssClass.name](state.cssClass.opts || {})}"
         onclick=${state.onclick}
         onmouseover=${state.onmouseover}
         onmouseout=${state.onmouseout}

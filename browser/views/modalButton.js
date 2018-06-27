@@ -9,9 +9,25 @@ class TestComponent extends Nanocomponent {
   constructor() {
     super()
 
-    this.modalButton = new ModalButton({
+    this.buyButton = new ModalButton({
       children: 'Buy Now',
-      className: 'standard'
+      cssClass: { name: 'standard' }
+    })
+
+    this.createButton = new ModalButton({
+      children: 'Create One',
+      cssClass: { name: 'smallInvisible'}
+    })
+
+    this.cancelButton = new ModalButton({
+      children: 'Cancel',
+      cssClass: {
+        name: 'smallInvisible',
+        opts: {
+          color: 'blue',
+          weight: 'light'
+        }
+      }
     })
   }
 
@@ -20,7 +36,12 @@ class TestComponent extends Nanocomponent {
   }
 
   createElement() {
-    const { modalButton } = this
+    const {
+      buyButton,
+      createButton,
+      cancelButton
+     } = this
+
     return html`
       <div style="
         display: flex;
@@ -29,7 +50,12 @@ class TestComponent extends Nanocomponent {
         align-items: center;
         height: 100%;
       ">
-        ${modalButton.render()}
+        ${buyButton.render()}
+        <br>
+        ${createButton.render()}
+        <br>
+        ${cancelButton.render()}
+        <br>
       </div>
     `
   }
