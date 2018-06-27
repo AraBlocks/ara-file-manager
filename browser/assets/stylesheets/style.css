@@ -1,0 +1,9 @@
+* {
+  border: none;
+  margin: 0 0 0 0;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}

@@ -4,7 +4,7 @@
   "description": "",
   "main": "boot/main.js",
   "scripts": {
-    "start": "electron .",
+    "start-dev": "electron boot/main-dev.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
