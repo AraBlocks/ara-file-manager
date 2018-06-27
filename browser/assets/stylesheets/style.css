@@ -1,3 +1,5 @@
+/* standardize */
+
 * {
   border: none;
   margin: 0 0 0 0;
@@ -6,4 +8,10 @@
 
 button {
   cursor: pointer;
+}
+
+/* CSS variables */
+
+:root {
+  --ara-input-grey: #cbcbcb;
 }

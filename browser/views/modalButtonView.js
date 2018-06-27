@@ -3,9 +3,8 @@
 const Nanocomponent = require('nanocomponent')
 const html = require('choo/html')
 const ModalButton = require('../components/modalButton')
-const { css } = require('../lib/cssTool/css')
 
-class TestComponent extends Nanocomponent {
+class ModalButtonView extends Nanocomponent {
   constructor() {
     super()
 
@@ -61,4 +60,4 @@ class TestComponent extends Nanocomponent {
   }
 }
 
-module.exports = TestComponent
+module.exports = ModalButtonView
