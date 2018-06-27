@@ -20,8 +20,10 @@
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
     "choo": "^6.12.1",
+    "domready": "^1.0.8",
     "electron": "^2.0.3",
     "electron-window-manager": "^1.0.6",
+    "md5-hex": "^2.0.0",
     "nanocomponent": "^6.5.2"
   },
   "devDependencies": {
