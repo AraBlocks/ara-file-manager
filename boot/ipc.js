@@ -22,7 +22,7 @@ const makeWindow = (view, i ) => {
     {
       width: 400,
       height: 400,
-      showDevTools: false
+      showDevTools: true
     }
   )
 }
