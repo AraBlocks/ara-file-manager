@@ -19,9 +19,18 @@
   },
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
+    "ara-identity": "github:arablocks/ara-identity",
+    "ara-console": "github:arablocks/ara-console",
+    "ara-context": "github:arablocks/ara-context",
+    "ara-crypto": "github:arablocks/ara-crypto",
+    "ara-identity-archiver": "github:arablocks/ara-identity-archiver",
+    "ara-network": "github:arablocks/ara-network",
+    "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
+    "cfsnet": "github:arablocks/cfsnet",
     "choo": "^6.12.1",
     "domready": "^1.0.8",
     "electron": "^2.0.3",
+    "electron-rebuild": "^1.7.3",
     "electron-window-manager": "^1.0.6",
     "md5-hex": "^2.0.0",
     "nanocomponent": "^6.5.2"
