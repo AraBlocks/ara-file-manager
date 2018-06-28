@@ -11,14 +11,17 @@ class ModalButton extends Nanocomponent {
     cssClass = {},
     onmouseout = () => {},
     onmouseover = () => {},
+    type = ''
   }) {
     super()
-    this.state = {
+
+    this.props = {
       children,
       onclick,
       cssClass,
       onmouseout,
-      onmouseover
+      onmouseover,
+      type
     }
   }
 
@@ -27,16 +30,17 @@ class ModalButton extends Nanocomponent {
   }
 
   createElement(chooState) {
-    const { state } = this
+    const { props } = this
 
     return html`
       <button
-        class="${styles[state.cssClass.name || 'standard'](state.cssClass.opts || {})}"
-        onclick=${state.onclick}
-        onmouseover=${state.onmouseover}
-        onmouseout=${state.onmouseout}
+        class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
+        onclick=${props.onclick}
+        onmouseover=${props.onmouseover}
+        onmouseout=${props.onmouseout}
+        type=${props.type}
       >
-        ${state.children}
+        ${props.children}
       </button>
     `
   }
