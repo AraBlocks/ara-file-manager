@@ -11,6 +11,8 @@ class InputView extends Nanocomponent {
     this.input = new Input({
       placeholder: 'Some text'
     })
+
+    window.inputView = this
   }
 
   update() {
@@ -21,13 +23,7 @@ class InputView extends Nanocomponent {
     const { input } = this
 
     return html`
-      <div style="
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-      ">
+      <div class="popup">
         ${input.render()}
       </div>`
   }

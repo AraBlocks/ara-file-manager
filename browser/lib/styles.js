@@ -2,11 +2,11 @@
 
 module.exports = {
   fonts: {
-    black: `"ProximaNova-Black", sans-serif;`,
-    bold: `"ProximaNova-Bold", sans-serif;`,
-    light: `"ProximaNova-Light", sans-serif;`,
-    regular: `"ProximaNova-Regular", sans-serif;`,
-    semibold: `"ProximaNova-Semibold", sans-serif;`,
+    black: `"ProximaNova-Black", sans-serif`,
+    bold: `"ProximaNova-Bold", sans-serif`,
+    light: `"ProximaNova-Light", sans-serif`,
+    regular: `"ProximaNova-Regular", sans-serif`,
+    semibold: `"ProximaNova-Semibold", sans-serif`,
   },
 
   colors: {
@@ -34,24 +34,23 @@ module.exports = {
     let selectedFont
     switch (font) {
       case 'black':
-        selectedFont = `"ProximaNova-Black", sans-serif;`
+        selectedFont = `"ProximaNova-Black", sans-serif`
         break
       case 'bold':
-        selectedFont = `"ProximaNova-Bold", sans-serif;`
+        selectedFont = `"ProximaNova-Bold", sans-serif`
         break
       case 'light':
-        selectedFont = `"ProximaNova-Light", sans-serif;`
+        selectedFont = `"ProximaNova-Light", sans-serif`
         break
       case 'regular':
-        selectedFont = `"ProximaNova-Regular", sans-serif;`
+        selectedFont = `"ProximaNova-Regular", sans-serif`
         break
       case 'semibold':
-        selectedFont = `"ProximaNova-Semibold", sans-serif;`
+        selectedFont = `"ProximaNova-Semibold", sans-serif`
         break
       default:
-        selectedFont = `"ProximaNova-Regular", sans-serif;`
-
+        selectedFont = `"ProximaNova-Regular", sans-serif`
+      }
       return selectedFont
-    }
   }
 }

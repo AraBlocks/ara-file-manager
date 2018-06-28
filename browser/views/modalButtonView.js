@@ -15,7 +15,7 @@ class ModalButtonView extends Nanocomponent {
 
     this.createButton = new ModalButton({
       children: 'Create One',
-      cssClass: { name: 'smallInvisible'}
+      cssClass: { name: 'smallInvisible' }
     })
 
     this.cancelButton = new ModalButton({
