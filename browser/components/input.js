@@ -7,6 +7,8 @@ const Nanocomponent = require('nanocomponent')
 class Input extends Nanocomponent {
   constructor({
     cssClass = {},
+    field = '',
+    parentState = {},
     placeholder = '',
     type = 'text'
   }) {
@@ -14,6 +16,8 @@ class Input extends Nanocomponent {
 
     this.props = {
       cssClass,
+      field,
+      parentState,
       placeholder,
       type
     }
@@ -33,11 +37,16 @@ class Input extends Nanocomponent {
     return html`
       <input
         class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
-        onchange=${e => state.value = e.target.value}
+        onchange=${onchange}
         placeholder=${props.placeholder}
         type=${props.type}
       >
     `
+
+    function onchange(e) {
+      state.value = e.target.value
+      props.parentState[props.field] = state.value
+    }
   }
 
 }
