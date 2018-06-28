@@ -7,7 +7,6 @@ const isDev = require('electron-is-dev')
 const path = require('path')
 const menuBarManager = require('../lib/menuBarManager')
 require('./ipc-dev')
-
 const index = `file://${path.resolve(__dirname, '..', 'browser/index.html')}`
 
 app.on('ready', () => {
@@ -16,4 +15,3 @@ app.on('ready', () => {
   if (isDev) { require('electron-reload')(path.resolve('browser')) }
   let menuManager = menuBarManager()
 })
-
