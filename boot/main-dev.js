@@ -10,6 +10,6 @@ require('./ipc-dev')
 const index = `file://${path.resolve(__dirname, '..', 'browser/index.html')}`
 app.on('ready', () => {
   windowManager.init()
-  windowManager.open('home', 'Welcome', index, false, { showDevTools: true })
+  windowManager.open('home', 'Welcome', index, false, { showDevTools: false })
   if (isDev) { require('electron-reload')(path.resolve('browser')) }
 })

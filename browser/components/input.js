@@ -44,7 +44,6 @@ class Input extends Nanocomponent {
     `
 
     function onchange(e) {
-      console.log(state)
       state.value = e.target.value
       props.parentState[props.field] = state.value
     }

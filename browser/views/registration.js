@@ -7,6 +7,7 @@ const Button = require('../components/modalButton')
 const { registration } = require('../lib/store')
 const Nanocomponent = require('nanocomponent')
 const isDev = require('electron-is-dev')
+
 class Registration extends Nanocomponent {
   constructor() {
     super()
@@ -16,7 +17,8 @@ class Registration extends Nanocomponent {
     this.passwordInput = new Input({
       placeholder: 'Password',
       parentState: this.state,
-      field: 'password'
+      field: 'password',
+      type: 'password'
     })
 
     this.submitButton = new Button({
