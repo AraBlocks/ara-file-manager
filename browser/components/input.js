@@ -12,10 +12,14 @@ class Input extends Nanocomponent {
   }) {
     super()
 
-    this.state = {
+    this.props = {
       cssClass,
       placeholder,
       type
+    }
+
+    this.state = {
+      value: ''
     }
   }
 
@@ -24,16 +28,18 @@ class Input extends Nanocomponent {
   }
 
   createElement(chooState) {
-    const { state }  = this
+    const { props, state }  = this
 
     return html`
       <input
-        class="${styles[state.cssClass.name || 'standard'](state.cssClass.opts || {})}"
-        placeholder=${state.placeholder}
-        type=${state.type}
+        class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
+        onchange=${e => state.value = e.target.value}
+        placeholder=${props.placeholder}
+        type=${props.type}
       >
     `
   }
+
 }
 
 module.exports = Input
