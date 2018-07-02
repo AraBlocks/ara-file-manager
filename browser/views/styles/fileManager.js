@@ -7,6 +7,40 @@ module.exports = {
   colors,
   fonts,
 
+  dropdown: css`
+    :host {
+      overflow: hidden;
+      font-family: ${fonts.regular};
+    }
+  `,
+
+  dropbtn: css`
+    :host {
+      font-size: 16px; 
+      font-family: ${fonts.regular};
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit; /* Important for vertical align on mobile phones */
+      margin: 0; /* Important for vertical align on mobile phones */
+    }    
+  `,
+
+  dropdownContent: css`
+    :host {
+      display: none;
+      flex-direction: column;
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 120px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+  `,
+
   header: css`
     :host {
       font-family: ${fonts.bold};

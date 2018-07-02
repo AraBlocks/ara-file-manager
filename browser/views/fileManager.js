@@ -25,6 +25,7 @@ class FileManager extends Nanocomponent {
 
     this.expandWindow.bind(this)
     this.closeWindow.bind(this)
+    this.openMenu.bind(this)
   }
 
   expandWindow() {
@@ -33,6 +34,14 @@ class FileManager extends Nanocomponent {
 
   closeWindow() {
     windowManager.get("fileManager.js").object.close()
+  }
+
+  openMenu() {
+    if(document.getElementById('menu').style.display == "flex") {
+      document.getElementById('menu').style.display = "none"
+    } else {
+      document.getElementById('menu').style.display = "flex"
+    }
   }
 
   update() {
@@ -47,7 +56,18 @@ class FileManager extends Nanocomponent {
     return html`
       <div class=${styles.verticalContainer}>
         <div class="${styles.horizontalContainer} ${styles.centerAlign}">
-          <button>menu</button><div class=${styles.header}>LTLSTAR</div><button onclick=${this.closeWindow}>close</button>
+          <div class=${styles.dropdown}>
+            <button class=${styles.dropbtn} onclick=${this.openMenu}>Dropdown 
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="${styles.dropdownContent}" id="menu">
+              <div>File Manager</div>
+              <div>Publish File</div>
+              <div>Log Out</div>
+              <div>Quit</div>
+            </div>
+          </div> 
+          <div class=${styles.header}>LTLSTAR</div><button onclick=${this.closeWindow}>close</button>
         </div>
         <div class=${styles.subHeader}>Wallet</div>
 
@@ -60,7 +80,7 @@ class FileManager extends Nanocomponent {
         </div>
 
         <div class=${styles.verticalContainerSmall}>
-          <div class=${styles.horizontalContainer}><div class=${styles.subHeader}>Files</div><button class=${styles.expandButton} onclick=${this.onclick}>Expand</button></div>
+          <div class=${styles.horizontalContainer}><div class=${styles.subHeader}>Files</div><button class=${styles.expandButton} onclick=${this.expandWindow}>Expand</button></div>
           <div class=${styles.line}></div>
           ${cancelButton.render({})}
         </div>
