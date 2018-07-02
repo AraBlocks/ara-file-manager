@@ -6,7 +6,7 @@ const windowManager = remote.require('electron-window-manager')
 const fs = require('fs')
 
 fs.readdirSync(views).forEach((view, i) => {
-  if (view === 'styles') { return }
+  if (view === 'fileManager.js' || view === 'styles') { return }
 
   const handler = (e) =>{
     windowManager.bridge.emit(view)
