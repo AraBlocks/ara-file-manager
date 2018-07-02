@@ -71,7 +71,8 @@ class Registration extends Nanocomponent {
       e.preventDefault()
 
       if (state.password.length === 0) { throw Error("Password can't be left blank") }
-      registration.register(state.password)
+      registration.createId(state.password)
+        .then(registration.archive)
         .then(console.log)
         .catch(console.log)
     }
