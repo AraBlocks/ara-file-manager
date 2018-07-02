@@ -16,11 +16,13 @@ module.exports = () => {
 
   windowManager.createNew('fileManager', 'File Manager', index, false, { showDevTools: false })
 
+  tray.on('click', () => openWindow('fileManager'))
   tray.setToolTip('Ara Content Manager')
   tray.setContextMenu(contextMenu)
 
   function openWindow(windowName) {
     const window = windowManager.get(windowName)
+    const shouldMoveWindow = window.object === undefined
     window.open()
     if (shouldMoveWindow) { adjustPosition(window) }
   }
