@@ -1,8 +1,10 @@
+'use strict'
+
 const context = require('ara-context')()
 const aid = require('ara-identity')
 const secrets = require('ara-network/secrets')
 
-const key = 'archiver'
+const KEY = 'archiver'
 module.exports = {
   async createId(password) {
     const araId = await aid.create({ context, password })
@@ -10,11 +12,12 @@ module.exports = {
     return araId
   },
 
-  async archive(identity) {
-    const doc = await secrets.load({ key })
+  async archive(araId) {
+    const doc = await secrets.load({ key: KEY })
 
     const { keystore } = doc.public || doc.secret
-    return await aid.archive(identity, { keystore, key })
+    await aid.archive(araId, { keystore, key: KEY })
+    return araId.did.reference
   }
 }
 
