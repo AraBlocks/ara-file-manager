@@ -109,7 +109,7 @@ module.exports = {
   line: css`
     :host {
       width: 100%;
-      height: 2px;
+      height: 1px;
       background-color: grey;
     }
   `,

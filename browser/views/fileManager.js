@@ -1,5 +1,7 @@
 'use strict'
 
+const remote = require('electron').remote;
+const windowManager = remote.require('electron-window-manager')
 const styles = require('./styles/fileManager')
 const html = require('choo/html')
 const Button = require('../components/modalButton')
@@ -20,6 +22,17 @@ class FileManager extends Nanocomponent {
         }
       }
     })
+
+    this.expandWindow.bind(this)
+    this.closeWindow.bind(this)
+  }
+
+  expandWindow() {
+    windowManager.get("fileManager.js").object.setSize(400, 600)
+  }
+
+  closeWindow() {
+    windowManager.get("fileManager.js").object.close()
   }
 
   update() {
@@ -34,7 +47,7 @@ class FileManager extends Nanocomponent {
     return html`
       <div class=${styles.verticalContainer}>
         <div class="${styles.horizontalContainer} ${styles.centerAlign}">
-          <button>menu</button><div class=${styles.header}>LTLSTAR</div><button>close</button>
+          <button>menu</button><div class=${styles.header}>LTLSTAR</div><button onclick=${this.closeWindow}>close</button>
         </div>
         <div class=${styles.subHeader}>Wallet</div>
 
@@ -45,9 +58,9 @@ class FileManager extends Nanocomponent {
           </div>
           <div class=${styles.content}><b>Current Exchange Value</b>: 1.0 ARA = $1.73 USD</div>
         </div>
-        
+
         <div class=${styles.verticalContainerSmall}>
-          <div class=${styles.horizontalContainer}><div class=${styles.subHeader}>Files</div><button class=${styles.expandButton}>Expand</button></div>
+          <div class=${styles.horizontalContainer}><div class=${styles.subHeader}>Files</div><button class=${styles.expandButton} onclick=${this.onclick}>Expand</button></div>
           <div class=${styles.line}></div>
           ${cancelButton.render({})}
         </div>
