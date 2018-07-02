@@ -22,6 +22,7 @@ module.exports = () => {
   function openWindow(windowName) {
     const window = windowManager.get(windowName)
     window.open()
+    if (shouldMoveWindow) { adjustPosition(window) }
   }
 
   function adjustPosition(window) {
