@@ -35,13 +35,29 @@ class FileDescription extends Nanocomponent {
   }
 
   createElement(chooState) {
-    const { props, children } = this
+    const { children, props, state } = this
 
     return html`
-      <div>
-        <div>${props.name}</div>
-        <div>${props.size}</div>
-        <div>${children.button.render()}</div>
+      <div class="${styles.container}">
+        <div class="${styles.iconHolder} iconHolder">
+          <div class="${styles.tempIcon}"></div>
+        </div>
+        <div class="${styles.summaryHolder} summaryHolder">
+          <div class="${styles.nameHolder} nameHolder">
+            <div>
+              ${props.name}
+            </div>
+            <div class="${styles.toolTipHolder}">
+              <div class="${styles.tempToolTip} tempToolTip"></div>
+            </div>
+          </div>
+          <div class="${styles.sizeHolder(state.status)} sizeHolder">
+            ${props.size} gb
+          </div>
+          <div class="${styles.buttonHolder} buttonHolder">
+            ${children.button.render()}
+          </div>
+        </div>
       </div>
     `
   }
