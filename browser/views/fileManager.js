@@ -8,9 +8,7 @@ const Button = require('../components/modalButton')
 const MenuButton = require('../components/menuButton')
 const UtilityButton = require('../components/utilityButton')
 const Separator = require('../components/separator')
-const { registration } = require('../lib/store')
 const Nanocomponent = require('nanocomponent')
-const isDev = require('electron-is-dev')
 
 class FileManager extends Nanocomponent {
   constructor() {
@@ -26,19 +24,31 @@ class FileManager extends Nanocomponent {
       }
     })
 
-    this.menuButton = new MenuButton()
-    this.separator = new Separator()
-    this.closeButton = new UtilityButton({ type: 'close' })
-    this.expandWindowButton = new UtilityButton( { type: 'expand', 
-      onclick: () => { 
-        let window = windowManager.get('fileManager.js').object
-        if (window.getSize()[1] == 600) {
-          window.setSize(400, 400)
-        } else {
-          window.setSize(400, 600)
+    this.children = {
+      menuButton: new MenuButton(),
+      separator: new Separator(),
+      closeButton: new UtilityButton({ type: 'close' }),
+      expandWindowButton: new UtilityButton( { type: 'expand', 
+        onclick: () => { 
+          let window = windowManager.get('fileManager.js').object
+          if (window.getSize()[1] == 600) {
+            window.setSize(400, 400)
+          } else {
+            window.setSize(400, 600)
+          }
+        } 
+      }),
+      fileManagerButton: new Button({
+        children: 'Open File Manager',
+        cssClass: {
+          name: 'smallInvisible',
+          opts: {
+            color: 'black',
+            weight: 'bold'
+          }
         }
-      } 
-    })
+      })
+    }
     this.expandWindow.bind(this)
   }
 
@@ -52,19 +62,15 @@ class FileManager extends Nanocomponent {
 
   createElement() {
     const {
-      fileManagerButton,
-      menuButton,
-      closeButton, 
-      expandWindowButton,
-      separator
+      children
     } = this
 
     return html`
       <div class=${styles.verticalContainer}>
         <div class="${styles.horizontalContainer} ${styles.centerAlign}">
-          ${menuButton.render({})}
+          ${children.menuButton.render({})}
           <div class=${styles.header}>LTLSTAR</div>
-          ${closeButton.render({})}
+          ${children.closeButton.render({})}
         </div>
 
         <div class=${styles.subHeader}>Wallet</div>
@@ -74,16 +80,18 @@ class FileManager extends Nanocomponent {
             <div class=${styles.price}>9999.99</div>
             <div class=${styles.ara}>ARA</div>
           </div>
-          <div class=${styles.content}><b>Current Exchange Value</b>: 1.0 ARA = $1.73 USD</div>
+          <div class=${styles.content}>
+            <b>Current Exchange Value</b>: 1.0 ARA = $1.73 USD
+          </div>
         </div>
 
         <div class=${styles.verticalContainerSmall}>
           <div class=${styles.horizontalContainer}>
             <div class=${styles.subHeader}>Files</div>
-            ${expandWindowButton.render({})}
+            ${children.expandWindowButton.render({})}
           </div>
-          ${separator.render({})}
-          ${fileManagerButton.render({})}
+          ${children.separator.render({})}
+          ${children.fileManagerButton.render({})}
         </div>
       </div>
     `
