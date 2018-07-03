@@ -7,6 +7,7 @@ const html = require('choo/html')
 const Button = require('../components/modalButton')
 const MenuButton = require('../components/menuButton')
 const UtilityButton = require('../components/utilityButton')
+const Separator = require('../components/separator')
 const { registration } = require('../lib/store')
 const Nanocomponent = require('nanocomponent')
 const isDev = require('electron-is-dev')
@@ -19,13 +20,14 @@ class FileManager extends Nanocomponent {
       cssClass: {
         name: 'smallInvisible',
         opts: {
-          color: 'blue',
+          color: 'black',
           weight: 'bold'
         }
       }
     })
 
     this.menuButton = new MenuButton()
+    this.separator = new Separator()
     this.closeButton = new UtilityButton({ type: 'close' })
     this.expandWindowButton = new UtilityButton( { type: 'expand', 
       onclick: () => { 
@@ -53,7 +55,8 @@ class FileManager extends Nanocomponent {
       fileManagerButton,
       menuButton,
       closeButton, 
-      expandWindowButton
+      expandWindowButton,
+      separator
     } = this
 
     return html`
@@ -79,7 +82,7 @@ class FileManager extends Nanocomponent {
             <div class=${styles.subHeader}>Files</div>
             ${expandWindowButton.render({})}
           </div>
-          <div class=${styles.line}></div>
+          ${separator.render({})}
           ${fileManagerButton.render({})}
         </div>
       </div>

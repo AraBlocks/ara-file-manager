@@ -55,8 +55,8 @@ module.exports = {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 95%;
-      padding: 10px;
+      height: 100%;
+      padding: 10px 10px 0px 10px;
       align-items: center;
     }
   `,
@@ -93,21 +93,4 @@ module.exports = {
       align-items: flex-end;
     }
   `,  
-
-  expandButton: css`
-    :host {
-      style="width:70px;
-      height:auto;
-      padding:5px 2px;
-      text-align:center;
-    }
-  `,
-
-  line: css`
-    :host {
-      width: 100%;
-      height: 1px;
-      background-color: ${colors.araGrey};
-    }
-  `,
 }
