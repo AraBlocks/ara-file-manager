@@ -6,6 +6,7 @@ const styles = require('./styles/fileManager')
 const html = require('choo/html')
 const Button = require('../components/modalButton')
 const MenuButton = require('../components/menuButton')
+const UtilityButton = require('../components/utilityButton')
 const { registration } = require('../lib/store')
 const Nanocomponent = require('nanocomponent')
 const isDev = require('electron-is-dev')
@@ -25,25 +26,22 @@ class FileManager extends Nanocomponent {
     })
 
     this.menuButton = new MenuButton()
+    this.closeButton = new UtilityButton({ type: 'close' })
+    this.expandWindowButton = new UtilityButton( { type: 'expand', 
+      onclick: () => { 
+        let window = windowManager.get('fileManager.js').object
+        if (window.getSize()[1] == 600) {
+          window.setSize(400, 400)
+        } else {
+          window.setSize(400, 600)
+        }
+      } 
+    })
     this.expandWindow.bind(this)
-    this.closeWindow.bind(this)
-    this.openMenu.bind(this)
   }
 
   expandWindow() {
-    windowManager.get("fileManager.js").object.setSize(400, 600)
-  }
-
-  closeWindow() {
-    windowManager.get("fileManager.js").object.close()
-  }
-
-  openMenu() {
-    if(document.getElementById('menu').style.display == "flex") {
-      document.getElementById('menu').style.display = "none"
-    } else {
-      document.getElementById('menu').style.display = "flex"
-    }
+    
   }
 
   update() {
@@ -53,27 +51,34 @@ class FileManager extends Nanocomponent {
   createElement() {
     const {
       fileManagerButton,
-      menuButton
+      menuButton,
+      closeButton, 
+      expandWindowButton
     } = this
 
     return html`
       <div class=${styles.verticalContainer}>
         <div class="${styles.horizontalContainer} ${styles.centerAlign}">
           ${menuButton.render({})}
-          <div class=${styles.header}>LTLSTAR</div><button onclick=${this.closeWindow}>close</button>
+          <div class=${styles.header}>LTLSTAR</div>
+          ${closeButton.render({})}
         </div>
-        <div class=${styles.subHeader}>Wallet</div>
 
+        <div class=${styles.subHeader}>Wallet</div>
 
         <div class=${styles.verticalContainerSmall}>
           <div class="${styles.horizontalContainer} ${styles.bottomAlign}">
-            <div class=${styles.price}>9999.99</div><div class=${styles.ara}>ARA</div>
+            <div class=${styles.price}>9999.99</div>
+            <div class=${styles.ara}>ARA</div>
           </div>
           <div class=${styles.content}><b>Current Exchange Value</b>: 1.0 ARA = $1.73 USD</div>
         </div>
 
         <div class=${styles.verticalContainerSmall}>
-          <div class=${styles.horizontalContainer}><div class=${styles.subHeader}>Files</div><button class=${styles.expandButton} onclick=${this.expandWindow}>Expand</button></div>
+          <div class=${styles.horizontalContainer}>
+            <div class=${styles.subHeader}>Files</div>
+            ${expandWindowButton.render({})}
+          </div>
           <div class=${styles.line}></div>
           ${fileManagerButton.render({})}
         </div>
