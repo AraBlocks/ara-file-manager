@@ -2,23 +2,23 @@
 
 const Nanocomponent = require('nanocomponent')
 const html = require('choo/html')
-const ModalButton = require('../components/modalButton')
+const Button = require('../components/button')
 
-class ModalButtonView extends Nanocomponent {
+class ButtonView extends Nanocomponent {
   constructor() {
     super()
 
-    this.buyButton = new ModalButton({
+    this.buyButton = new Button({
       children: 'Buy Now',
       cssClass: { name: 'standard' }
     })
 
-    this.createButton = new ModalButton({
+    this.createButton = new Button({
       children: 'Create One',
       cssClass: { name: 'smallInvisible' }
     })
 
-    this.cancelButton = new ModalButton({
+    this.cancelButton = new Button({
       children: 'Cancel',
       cssClass: {
         name: 'smallInvisible',
@@ -60,4 +60,4 @@ class ModalButtonView extends Nanocomponent {
   }
 }
 
-module.exports = ModalButtonView
+module.exports = ButtonView

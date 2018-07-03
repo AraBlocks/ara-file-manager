@@ -5,7 +5,7 @@ const {
   fonts,
   colorSelector,
   fontSelector
-} = require('../../lib/styles')
+} = require('../../lib/styleUtils')
 const { css } = require('../../lib/cssTool/css')
 
 module.exports = {

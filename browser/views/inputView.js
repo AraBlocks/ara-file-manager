@@ -1,8 +1,8 @@
 'use strict'
 
-const Nanocomponent = require('nanocomponent')
-const html = require('choo/html')
 const Input = require('../components/input')
+const html = require('choo/html')
+const Nanocomponent = require('nanocomponent')
 
 class InputView extends Nanocomponent {
   constructor() {

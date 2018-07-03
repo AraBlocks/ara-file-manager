@@ -1,6 +1,6 @@
 'use strict'
 
-const styles = require('./styles/modalButton')
+const styles = require('./styles/button')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
