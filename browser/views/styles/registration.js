@@ -1,6 +1,6 @@
 'use strict'
 
-const { colors, fonts } = require('../../lib/styles')
+const { colors, fonts } = require('../../lib/styleUtils')
 const { css } = require('../../lib/cssTool/css')
 
 module.exports = {

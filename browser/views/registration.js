@@ -3,7 +3,7 @@
 const styles = require('./styles/registration')
 const html = require('choo/html')
 const Input = require('../components/input')
-const Button = require('../components/modalButton')
+const Button = require('../components/Button')
 const { registration } = require('../lib/store')
 const Nanocomponent = require('nanocomponent')
 const isDev = require('electron-is-dev')

@@ -6,7 +6,7 @@ const {
   fonts,
   colorSelector,
   fontSelector
-} = require('../../lib/styles')
+} = require('../../lib/styleUtils')
 
 module.exports = {
   colors,

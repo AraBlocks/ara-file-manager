@@ -4,7 +4,7 @@ const styles = require('./styles/button')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-class ModalButton extends Nanocomponent {
+class Button extends Nanocomponent {
   constructor({
     children = '',
     onclick = () => {},
@@ -46,4 +46,4 @@ class ModalButton extends Nanocomponent {
   }
 }
 
-module.exports = ModalButton
+module.exports = Button
