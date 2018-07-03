@@ -1,14 +1,17 @@
 'use strict'
 
-const remote = require('electron').remote;
+const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 const styles = require('./styles/menuButton')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const Separator = require('./separator')
 
 class MenuButton extends Nanocomponent {
   constructor() {
     super()
+
+    this.separator = new Separator()
     this.openMenu.bind(this)
     this.openFileManager.bind(this)
     this.openPublishFile.bind(this)
@@ -38,7 +41,7 @@ class MenuButton extends Nanocomponent {
   }
 
   createElement(chooState) {
-    const { props } = this
+    const { separator } = this
 
     return html`
       <div class=${styles.dropdown}>
@@ -49,11 +52,11 @@ class MenuButton extends Nanocomponent {
         </div>
         <div class=${styles.dropdownContent} id="menu">
           <div class=${styles.dropdownButton} onclick=${this.openFileManager}>File Manager</div>
-          <div class=${styles.separator}></div>
+          ${separator.render({})}
           <div class=${styles.dropdownButton} onclick=${this.openPublishFile}>Publish File</div>
-          <div class=${styles.separator}></div>
+          ${separator.render({})}
           <div class=${styles.dropdownButton} onclick=${this.logOut}>Log Out</div>
-          <div class=${styles.separator}></div>
+          ${separator.render({})}
           <div class=${styles.dropdownButton} onclick=${this.quit}>Quit</div>
         </div>
       </div> 

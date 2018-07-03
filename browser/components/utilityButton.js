@@ -1,6 +1,6 @@
 'use strict'
 
-const remote = require('electron').remote;
+const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 const styles = require('./styles/utilityButton')
 const html = require('choo/html')

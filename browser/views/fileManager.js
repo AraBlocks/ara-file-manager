@@ -1,6 +1,6 @@
 'use strict'
 
-const remote = require('electron').remote;
+const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 const styles = require('./styles/fileManager')
 const html = require('choo/html')
@@ -13,16 +13,6 @@ const Nanocomponent = require('nanocomponent')
 class FileManager extends Nanocomponent {
   constructor() {
     super()
-    this.fileManagerButton = new Button({
-      children: 'Open File Manager',
-      cssClass: {
-        name: 'smallInvisible',
-        opts: {
-          color: 'black',
-          weight: 'bold'
-        }
-      }
-    })
 
     this.children = {
       menuButton: new MenuButton(),
@@ -49,11 +39,6 @@ class FileManager extends Nanocomponent {
         }
       })
     }
-    this.expandWindow.bind(this)
-  }
-
-  expandWindow() {
-    
   }
 
   update() {
@@ -69,7 +54,7 @@ class FileManager extends Nanocomponent {
       <div class=${styles.verticalContainer}>
         <div class="${styles.horizontalContainer} ${styles.centerAlign}">
           ${children.menuButton.render({})}
-          <div class=${styles.header}>LTLSTAR</div>
+          <div class=${styles.header}>LTLSTR</div>
           ${children.closeButton.render({})}
         </div>
 
