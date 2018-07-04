@@ -8,49 +8,17 @@ class ProgressRing extends Nanocomponent {
   constructor({
     parentRender,
     parentState,
-    status,
   }){
     super()
 
-    this.props = {
-      parentRender,
-      parentState
-    }
-
-    this.state = {
-      status,
-      timer: null
-    }
+    this.props = { parentRender, parentState }
   }
 
   update({ downloadPercent }) {
-    const { state }  = this
-
-    if (downloadPercent >= .99) {
-      state.status = 2
-      clearInterval(state.timer)
-      state.timer = null
-    }
     return true
   }
 
-  load() {
-    const {
-      state,
-      props: { parentState, parentRender }
-    } = this
-
-    // if (state.status === 1) {
-    //   state.timer = setInterval(()=> {
-    //     parentState.downloadPercent = parentState.downloadPercent >= 1 ? 0 : parentState.downloadPercent += .1
-    //     parentRender()
-    //   }, 1000)
-    // }
-  }
-
-  createElement({ downloadPercent }) {
-    const { state } = this
-
+  createElement({ downloadPercent, status }) {
     return html`
       <div class="${styles.container}">
         <svg
@@ -65,7 +33,7 @@ class ProgressRing extends Nanocomponent {
             y="53%"
             alignment-baseline="middle"
             text-anchor="middle"
-            fill="${styles.colorSelector(state.status)}"
+            fill="${styles.colorSelector(status)}"
             font-size="8"
             font-family="Verdana"
           >
@@ -94,7 +62,7 @@ class ProgressRing extends Nanocomponent {
         const circle = html`
           <circle
             class="${styles.progressRing}"
-            stroke="${styles.colorSelector(state.status)}"
+            stroke="${styles.colorSelector(status)}"
             stroke-width="2"
             fill="transparent"
             r="6"
@@ -117,7 +85,7 @@ class ProgressRing extends Nanocomponent {
 
     function symbolSelector() {
       let symbol
-      switch (state.status) {
+      switch (status) {
         case 0 :
           symbol = '✖'
           break

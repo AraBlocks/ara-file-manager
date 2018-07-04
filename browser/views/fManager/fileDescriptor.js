@@ -1,9 +1,9 @@
 'use strict'
 
 const html = require('choo/html')
-const styles = require('./styles.js/fileDescriptor')
 const PlaceHolderButton = require('../../components/button')
 const ProgressRing = require('../../components/progressRing')
+const styles = require('./styles.js/fileDescriptor')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescription extends Nanocomponent {
@@ -17,7 +17,8 @@ class FileDescription extends Nanocomponent {
 
     this.state = {
       downloadPercent,
-      status
+      status,
+      timer: null
     }
 
     this.children = {
@@ -44,6 +45,7 @@ class FileDescription extends Nanocomponent {
       state.downloadPercent = state.downloadPercent += .1
       if (state.downloadPercent >= 1) {
         state.downloadPercent = 1
+        state.status = 2
         clearInterval(state.timer)
       }
       this.rerender()
@@ -64,7 +66,7 @@ class FileDescription extends Nanocomponent {
     return html`
       <div class="${styles.container}">
         <div class="${styles.iconHolder} iconHolder">
-          ${children.progressRing.render({ downloadPercent })}
+          ${children.progressRing.render({ downloadPercent, status })}
         </div>
         <div class="${styles.summaryHolder} summaryHolder">
           <div class="${styles.nameHolder} nameHolder">
