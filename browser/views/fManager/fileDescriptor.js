@@ -38,6 +38,18 @@ class FileDescription extends Nanocomponent {
     }
   }
 
+  start() {
+    const { state } = this
+    state.timer = setInterval(() => {
+      state.downloadPercent = state.downloadPercent += .1
+      if (state.downloadPercent >= 1) {
+        state.downloadPercent = 1
+        clearInterval(state.timer)
+      }
+      this.rerender()
+    }, 1000)
+  }
+
   update() {
     return true
   }

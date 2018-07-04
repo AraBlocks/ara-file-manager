@@ -18,7 +18,6 @@ class ProgressRing extends Nanocomponent {
     }
 
     this.state = {
-      mockPercent: 0,
       status,
       timer: null
     }
@@ -36,16 +35,17 @@ class ProgressRing extends Nanocomponent {
   }
 
   load() {
-    const { state, props } = this
+    const {
+      state,
+      props: { parentState, parentRender }
+    } = this
 
-    if (state.status === 1 && state.timer === null) {
-      state.timer = setInterval(()=> {
-        state.mockPercent = state.mockPercent >= 1 ? 0 : state.mockPercent
-        props.parentState.downloadPercent = state.mockPercent
-        props.parentRender()
-        this.render({ downloadPercent: state.mockPercent += .1 })
-      }, 1000)
-    }
+    // if (state.status === 1) {
+    //   state.timer = setInterval(()=> {
+    //     parentState.downloadPercent = parentState.downloadPercent >= 1 ? 0 : parentState.downloadPercent += .1
+    //     parentRender()
+    //   }, 1000)
+    // }
   }
 
   createElement({ downloadPercent }) {

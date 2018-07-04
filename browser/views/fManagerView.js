@@ -20,6 +20,14 @@ class FileManagerView extends Nanocomponent {
 
   createElement(downloadPercent = 0) {
     Object.assign(window, { FileManagerView: this })
+
+    const downloadingDescriptor = new FileDescriptor({
+      name: 'Microsoft P...',
+      size: '3.632',
+      downloadPercent: 0,
+      status: 1
+    })
+
     return html`
       <div style="width: 50%">
         ${new FileDescriptor({
@@ -29,12 +37,8 @@ class FileManagerView extends Nanocomponent {
           status: 0
         }).render()}
 
-        ${new FileDescriptor({
-          name: 'Microsoft P...',
-          size: '3.632',
-          downloadPercent: 0,
-          status: 1
-        }).render()}
+        ${downloadingDescriptor.render()}
+        ${downloadingDescriptor.start()}
 
         ${new FileDescriptor({
           name: 'Adobe Pho...',
