@@ -5,10 +5,6 @@ const ProgressRing = require('../components/progressRing')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-let setTimer = false
-let percent = 0
-let test = {downloadPercent:0}
-// setInterval(() => test.downloadPercent+=.01, 200 )
 class FileManagerView extends Nanocomponent {
   constructor() {
     super()
