@@ -3,6 +3,7 @@
 const html = require('choo/html')
 const styles = require('./styles.js/fileDescriptor')
 const PlaceHolderButton = require('../../components/button')
+const ProgressRing = require('../../components/progressRing')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescription extends Nanocomponent {
@@ -26,7 +27,14 @@ class FileDescription extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'blue' }
          }
-      })
+      }),
+
+      progressRing: new ProgressRing({
+        status,
+        downloadPercent,
+        parentRender: this.render.bind(this),
+        parentState: this.state
+       })
     }
   }
 
@@ -34,13 +42,17 @@ class FileDescription extends Nanocomponent {
     return true
   }
 
-  createElement(chooState) {
-    const { children, props, state } = this
+  createElement() {
+    const {
+      children,
+      props,
+      state : { downloadPercent, status }
+    } = this
 
     return html`
       <div class="${styles.container}">
         <div class="${styles.iconHolder} iconHolder">
-          <div class="${styles.tempIcon}"></div>
+          ${children.progressRing.render({ downloadPercent })}
         </div>
         <div class="${styles.summaryHolder} summaryHolder">
           <div class="${styles.nameHolder} nameHolder">
@@ -51,7 +63,7 @@ class FileDescription extends Nanocomponent {
               <div class="${styles.tempToolTip} tempToolTip"></div>
             </div>
           </div>
-          <div class="${styles.sizeHolder(state.status)} sizeHolder">
+          <div class="${styles.sizeHolder(status)} sizeHolder">
             ${props.size} gb
           </div>
           <div class="${styles.buttonHolder} buttonHolder">

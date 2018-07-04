@@ -10,8 +10,9 @@ module.exports = {
   },
 
   colors: {
-    araRed: '#fc2636',
-    araBlue: '#1e7dfa'
+    araBlue: '#1e7dfa',
+    araGrey: '#cbcbcb',
+    araRed: '#fc2636'
   },
 
   colorSelector(color) {

@@ -23,7 +23,6 @@ module.exports = {
     :host {
       display: flex;
       justify-content: left;
-      margin-top: 4px;
       width: 12%;
     }
   `,
@@ -55,15 +54,6 @@ module.exports = {
       flex-direction: column;
       height: 100%;
       width: 88%;
-    }
-  `,
-
-  tempIcon: css`
-    :host {
-      border: 2px solid ${colors.araBlue};
-      border-radius: 50%;
-      height: 11px;
-      width: 11px;
     }
   `,
 
