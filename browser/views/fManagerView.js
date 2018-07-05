@@ -17,7 +17,7 @@ class FileManagerView extends Nanocomponent {
     Object.assign(window, { FileManagerView: this })
 
     const downloadingDescriptor = new FileDescriptor({
-      name: 'Microsoft P...',
+      name: 'Microsoft Powerpoint',
       size: '3.632',
       downloadPercent: 0,
       status: 1
@@ -36,7 +36,7 @@ class FileManagerView extends Nanocomponent {
         ${downloadingDescriptor.start()}
 
         ${new FileDescriptor({
-          name: 'Adobe Pho...',
+          name: 'Adobe Photoshop',
           size: '8.7',
           downloadPercent: 1,
           status: 2

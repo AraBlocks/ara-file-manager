@@ -27,6 +27,14 @@ module.exports = {
     }
   `,
 
+  name: css`
+    :host {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  `,
+
   nameHolder: css`
     :host {
       display: flex;
