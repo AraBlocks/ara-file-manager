@@ -1,12 +1,18 @@
 'use strict'
 
 const html = require('choo/html')
-const styles = require('./styles.js/fileDescriptor')
 const PlaceHolderButton = require('../../components/button')
+const ProgressRing = require('../../components/progressRing')
+const styles = require('./styles.js/fileDescriptor')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescription extends Nanocomponent {
-  constructor({ name, size, downloadPercent, status }) {
+  constructor({
+    downloadPercent,
+    name,
+    size,
+    status
+  }) {
     super()
 
     this.props = {
@@ -16,7 +22,8 @@ class FileDescription extends Nanocomponent {
 
     this.state = {
       downloadPercent,
-      status
+      status,
+      timer: null
     }
 
     this.children = {
@@ -26,21 +33,40 @@ class FileDescription extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'blue' }
          }
-      })
+      }),
+
+      progressRing: new ProgressRing({ status, downloadPercent })
     }
+  }
+
+  start() {
+    const { state } = this
+    state.timer = setInterval(() => {
+      state.downloadPercent = state.downloadPercent += .1
+      if (state.downloadPercent >= 1) {
+        state.downloadPercent = 1
+        state.status = 2
+        clearInterval(state.timer)
+      }
+      this.rerender()
+    }, 1000)
   }
 
   update() {
     return true
   }
 
-  createElement(chooState) {
-    const { children, props, state } = this
+  createElement() {
+    const {
+      children,
+      props,
+      state: { downloadPercent, status }
+    } = this
 
     return html`
       <div class="${styles.container}">
         <div class="${styles.iconHolder} iconHolder">
-          <div class="${styles.tempIcon}"></div>
+          ${children.progressRing.render({ downloadPercent, status })}
         </div>
         <div class="${styles.summaryHolder} summaryHolder">
           <div class="${styles.nameHolder} nameHolder">
@@ -51,7 +77,7 @@ class FileDescription extends Nanocomponent {
               <div class="${styles.tempToolTip} tempToolTip"></div>
             </div>
           </div>
-          <div class="${styles.sizeHolder(state.status)} sizeHolder">
+          <div class="${styles.sizeHolder(status)} sizeHolder">
             ${props.size} gb
           </div>
           <div class="${styles.buttonHolder} buttonHolder">
