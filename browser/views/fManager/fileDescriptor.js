@@ -7,7 +7,12 @@ const styles = require('./styles.js/fileDescriptor')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescription extends Nanocomponent {
-  constructor({ name, size, downloadPercent, status }) {
+  constructor({
+    downloadPercent,
+    name,
+    size,
+    status
+  }) {
     super()
 
     this.props = {
@@ -30,12 +35,7 @@ class FileDescription extends Nanocomponent {
          }
       }),
 
-      progressRing: new ProgressRing({
-        status,
-        downloadPercent,
-        parentRender: this.render.bind(this),
-        parentState: this.state
-       })
+      progressRing: new ProgressRing({ status, downloadPercent })
     }
   }
 
@@ -60,7 +60,7 @@ class FileDescription extends Nanocomponent {
     const {
       children,
       props,
-      state : { downloadPercent, status }
+      state: { downloadPercent, status }
     } = this
 
     return html`

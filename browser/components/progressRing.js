@@ -5,16 +5,11 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class ProgressRing extends Nanocomponent {
-  constructor({
-    parentRender,
-    parentState,
-  }){
+  constructor(){
     super()
-
-    this.props = { parentRender, parentState }
   }
 
-  update({ downloadPercent }) {
+  update() {
     return true
   }
 
@@ -86,13 +81,13 @@ class ProgressRing extends Nanocomponent {
     function symbolSelector() {
       let symbol
       switch (status) {
-        case 0 :
+        case 0:
           symbol = '✖'
           break
-        case 1 :
+        case 1:
           symbol = '⬇'
           break
-        default :
+        default:
           symbol = '⬆'
       }
       return symbol
