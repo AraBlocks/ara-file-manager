@@ -24,6 +24,9 @@ module.exports = {
       case 'blue':
         selectedColor = '#1e7dfa'
         break
+      case 'grey':
+        selectedColor = '#cbcbcb'
+        break
       default:
         selectedColor = '#fc2636'
     }
