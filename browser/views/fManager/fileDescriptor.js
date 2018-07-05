@@ -95,7 +95,6 @@ class FileDescription extends Nanocomponent {
           text = props.size
           break
         default:
-          downloadPercent
           text = `${Math.round(downloadPercent * props.size * 100) / 100}/${props.size}`
       }
       return text
