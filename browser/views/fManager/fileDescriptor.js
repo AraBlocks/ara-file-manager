@@ -4,6 +4,7 @@ const html = require('choo/html')
 const DynamicButton = require('../../components/dynamicButton')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles.js/fileDescriptor')
+const Tooltip = require('../../components/tooltip')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescription extends Nanocomponent {
@@ -11,7 +12,8 @@ class FileDescription extends Nanocomponent {
     downloadPercent,
     name,
     size,
-    status
+    status,
+    meta
   }) {
     super()
 
@@ -28,7 +30,10 @@ class FileDescription extends Nanocomponent {
 
     this.children = {
       button: new DynamicButton(this.buttonProps(status)),
-      progressRing: new ProgressRing({ status, downloadPercent })
+      progressRing: new ProgressRing({ status, downloadPercent }),
+      tooltip: new Tooltip({
+        tooltipText: this.makeTooltipText(meta)
+      })
     }
   }
 
@@ -75,6 +80,24 @@ class FileDescription extends Nanocomponent {
     return props
   }
 
+  makeTooltipText(meta) {
+    return html`
+      <div class="${styles.tooltip} tooltip">
+        <div>
+          <div>
+            AFS Id:
+          </div>
+          <div class="${styles.aid} aid">
+            ${meta.aid}
+          </div>
+        </div>
+        <div>
+          First Published: <span class="${styles.published} published">${meta.datePublished}</span>
+        </div>
+      </div>
+    `
+  }
+
   update() {
     return true
   }
@@ -98,7 +121,7 @@ class FileDescription extends Nanocomponent {
               ${props.name}
             </div>
             <div class="${styles.toolTipHolder}">
-              <div class="${styles.tempToolTip} tempToolTip"></div>
+              ${children.tooltip.render()}
             </div>
           </div>
           <div class="${styles.sizeHolder(status)} sizeHolder">

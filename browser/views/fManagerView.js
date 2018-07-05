@@ -20,7 +20,11 @@ class FileManagerView extends Nanocomponent {
       name: 'Microsoft Powerpoint',
       size: '3.632',
       downloadPercent: 0,
-      status: 1
+      status: 1,
+                meta: {
+            aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+            datePublished: '11/20/1989'
+          }
     })
 
     return html`
@@ -29,7 +33,11 @@ class FileManagerView extends Nanocomponent {
           name: 'Microsoft Word',
           size: '5.6',
           downloadPercent: 0,
-          status: 0
+          status: 0,
+          meta: {
+            aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+            datePublished: '11/20/1989'
+          }
         }).render()}
 
         ${downloadingDescriptor.render()}
@@ -39,7 +47,11 @@ class FileManagerView extends Nanocomponent {
           name: 'Adobe Photoshop',
           size: '8.7',
           downloadPercent: 1,
-          status: 2
+          status: 2,
+          meta: {
+            aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+            datePublished: '11/20/1989'
+          }
         }).render()}
       </div>
     `

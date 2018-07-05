@@ -12,7 +12,8 @@ module.exports = {
   colors: {
     araBlue: '#1e7dfa',
     araGrey: '#cbcbcb',
-    araRed: '#fc2636'
+    araLightBlack: '#444444',
+    araRed: '#fc2636',
   },
 
   colorSelector(color) {
@@ -26,6 +27,9 @@ module.exports = {
         break
       case 'grey':
         selectedColor = '#cbcbcb'
+        break
+      case 'black':
+        selectedColor = '#000000'
         break
       default:
         selectedColor = '#fc2636'
