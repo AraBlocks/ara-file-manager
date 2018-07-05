@@ -4,6 +4,13 @@ const { colors, fonts } = require('../../../lib/styleUtils')
 const { css } = require('../../../lib/cssTool/css')
 
 module.exports = {
+  aid: css`
+    :host {
+      color: ${colors.araLightBlack};
+      font-family: ${fonts.light};
+    }
+  `,
+
   buttonHolder: css`
     :host {
       width: 100%;
@@ -69,18 +76,25 @@ module.exports = {
     }
   `,
 
-  tempToolTip: css`
+  tooltip: css`
     :host {
-      border: 1px solid black;
-      height: 8px;
-      width: 8px;
-      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 100px;
     }
   `,
 
   toolTipHolder: css`
     :host {
       margin-top: 3px;
+    }
+  `,
+
+  published: css`
+    :host {
+      color: ${colors.araLightBlack};
+      font-family: ${fonts.light};
     }
   `
 }
