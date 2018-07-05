@@ -70,7 +70,7 @@ class FileDescription extends Nanocomponent {
         </div>
         <div class="${styles.summaryHolder} summaryHolder">
           <div class="${styles.nameHolder} nameHolder">
-            <div>
+            <div class="${styles.name}">
               ${props.name}
             </div>
             <div class="${styles.toolTipHolder}">
@@ -78,7 +78,7 @@ class FileDescription extends Nanocomponent {
             </div>
           </div>
           <div class="${styles.sizeHolder(status)} sizeHolder">
-            ${props.size} gb
+            ${renderSize()} gb
           </div>
           <div class="${styles.buttonHolder} buttonHolder">
             ${children.button.render()}
@@ -86,6 +86,19 @@ class FileDescription extends Nanocomponent {
         </div>
       </div>
     `
+
+    function renderSize() {
+      let text
+      switch(status) {
+        case 0:
+        case 2:
+          text = props.size
+          break
+        default:
+          text = `${Math.round(downloadPercent * props.size * 100) / 100}/${props.size}`
+      }
+      return text
+    }
   }
 }
 
