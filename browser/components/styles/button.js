@@ -2,8 +2,8 @@
 
 const {
   colors,
-  fonts,
   colorSelector,
+  fonts,
   fontSelector
 } = require('../../lib/styleUtils')
 const { css } = require('../../lib/cssTool/css')
@@ -11,6 +11,19 @@ const { css } = require('../../lib/cssTool/css')
 module.exports = {
   colors,
   fonts,
+
+  smallInvisible({ color  = 'red', weight = 'bold' }) {
+    return css`
+      :host {
+        background-color: white;
+        color: ${colorSelector(color)};
+        font-family: ${fontSelector(weight)};
+        font-size: 14px;
+        height: 30px;
+        width: 90%;
+      }
+    `
+  },
 
   standard({ color = 'red'}) {
     return css`
@@ -24,17 +37,4 @@ module.exports = {
       }
     `
   } ,
-
-  smallInvisible({ color  = 'red', weight = 'bold' }) {
-    return css`
-      :host {
-        background-color: white;
-        color: ${colorSelector(color)};
-        font-family: ${fontSelector(weight)};
-        font-size: 14px;
-        height: 30px;
-        width: 90%;
-      }
-    `
-  }
 }

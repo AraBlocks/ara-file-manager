@@ -1,7 +1,7 @@
 'use strict'
 
 const html = require('choo/html')
-const PlaceHolderButton = require('../../components/button')
+const DynamicButton = require('../../components/dynamicButton')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles.js/fileDescriptor')
 const Nanocomponent = require('nanocomponent')
@@ -27,14 +27,7 @@ class FileDescription extends Nanocomponent {
     }
 
     this.children = {
-      button: new PlaceHolderButton({
-        children: 'Open in Folder',
-        cssClass: {
-          name: 'smallInvisible',
-          opts: { color: 'blue' }
-         }
-      }),
-
+      button: new DynamicButton(this.buttonProps(status)),
       progressRing: new ProgressRing({ status, downloadPercent })
     }
   }
@@ -52,6 +45,36 @@ class FileDescription extends Nanocomponent {
     }, 1000)
   }
 
+  buttonProps(status) {
+    const props = {}
+    switch(status) {
+      case 0:
+        props.children = 'Download File'
+        props.cssClass = {
+          name: 'smallInvisible',
+          opts: { color: 'red' }
+         }
+         props.onclick = () => console.log('undownloaded')
+         break
+      case 1:
+         props.children = 'Cancel Download'
+         props.cssClass = {
+           name: 'smallInvisible',
+           opts: { color: 'grey' }
+         }
+         props.onclick = () => console.log('downloading')
+         break
+      default:
+        props.children = 'Open in Folder'
+        props.cssClass = {
+          name: 'smallInvisible',
+          opts: { color: 'blue' }
+        }
+        props.onclick = () => console.log('downloaded')
+    }
+    return props
+  }
+
   update() {
     return true
   }
@@ -59,6 +82,7 @@ class FileDescription extends Nanocomponent {
   createElement() {
     const {
       children,
+      buttonProps,
       props,
       state: { downloadPercent, status }
     } = this
@@ -81,7 +105,7 @@ class FileDescription extends Nanocomponent {
             ${renderSize()} gb
           </div>
           <div class="${styles.buttonHolder} buttonHolder">
-            ${children.button.render()}
+            ${children.button.render(buttonProps(status))}
           </div>
         </div>
       </div>

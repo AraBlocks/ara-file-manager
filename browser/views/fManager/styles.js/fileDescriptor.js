@@ -6,7 +6,11 @@ const { css } = require('../../../lib/cssTool/css')
 module.exports = {
   buttonHolder: css`
     :host {
-      width: 62%;
+      width: 100%;
+    }
+
+    :host button {
+      text-align: left;
     }
   `,
 
