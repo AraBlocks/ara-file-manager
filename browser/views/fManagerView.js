@@ -1,7 +1,6 @@
 'use strict'
 
 const FileDescriptor = require('./fManager/fileDescriptor')
-const ProgressRing = require('../components/progressRing')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
