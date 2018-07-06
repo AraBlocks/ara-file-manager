@@ -23,7 +23,6 @@ module.exports = {
 
   container: css`
     :host {
-      border: 1px solid black;
       display: flex;
       height: 75px;
       width: 100%;
