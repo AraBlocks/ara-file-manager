@@ -35,9 +35,12 @@ class PublishedStats extends Nanocomponent {
     }
     switch(status) {
       case 0:
-      case 1:
         props.cssClass.opts.color = 'red'
         props.children = 'Download File'
+        break
+      case 1:
+        props.cssClass.opts.color = 'grey'
+        props.children = 'Downloading File'
         break
       default:
         props.cssClass.opts.color = 'blue'
@@ -46,12 +49,19 @@ class PublishedStats extends Nanocomponent {
     return props
   }
 
-  update() {
-    return true
+  update({ status }) {
+    const { state } = this
+    const sameStatus = state.status === status
+    if (!sameStatus){ state.status = status }
+    return !sameStatus
   }
 
   createElement() {
-    const { children, state } = this
+    const {
+      children,
+      buttonProps,
+      state
+    } = this
     return html`
       <div class="${styles.container(state.status)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
@@ -69,7 +79,7 @@ class PublishedStats extends Nanocomponent {
           </div>
         </div>
         <div class="${styles.buttonHolder} publishedStats-buttonHolder">
-          ${children.button.render({})}
+          ${children.button.render(buttonProps(state.status))}
         </div>
       </div>
     `
