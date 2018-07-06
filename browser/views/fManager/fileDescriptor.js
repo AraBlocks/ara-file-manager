@@ -7,7 +7,7 @@ const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
 const Nanocomponent = require('nanocomponent')
 
-class FileDescription extends Nanocomponent {
+class FileDescriptor extends Nanocomponent {
   constructor({
     demoDownload,
     downloadPercent,
@@ -131,4 +131,4 @@ class FileDescription extends Nanocomponent {
   }
 }
 
-module.exports = FileDescription
+module.exports = FileDescriptor
