@@ -13,18 +13,18 @@ class PublishedRow extends Nanocomponent {
     meta,
     size,
     status,
-    percentDownloaded
   }) {
     super()
 
     this.state = {
+      downloadPercent,
       meta,
-      status,
-      percentDownloaded
+      status
     }
 
     this.children = {
       fileDescriptor: new FileDescriptor({
+        demoDownload: this.demoDownload.bind(this),
         downloadPercent,
         meta,
         name,
@@ -39,19 +39,37 @@ class PublishedRow extends Nanocomponent {
     }
   }
 
+  demoDownload() {
+    const { state } = this
+
+    state.status = 1
+    state.timer = setInterval(() => {
+      state.downloadPercent = state.downloadPercent += .1
+      if (state.downloadPercent >= 1) {
+        state.downloadPercent = 1
+        state.status = 2
+        clearInterval(state.timer)
+      }
+      this.rerender()
+    }, 1000)
+  }
+
   update() {
     return true
   }
 
   createElement() {
-    const { children } = this
+    const {
+      children,
+      state: { downloadPercent, status}
+     } = this
     return html`
       <div class="${styles.container} publishedRow-container">
         <div class="${styles.fileDescriptorHolder} publishedRow-fileDescriptorHolder">
-          ${children.fileDescriptor.render()}
+          ${children.fileDescriptor.render({ downloadPercent, status })}
         </div>
         <div class="${styles.publishedStatsHolder} publishedRow-publishedStatsHolder">
-          ${children.publishedStats.render()}
+          ${children.publishedStats.render({ status })}
         </div>
       </div>
     `

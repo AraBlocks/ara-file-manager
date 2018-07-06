@@ -32,7 +32,6 @@ class DynamicButton extends Nanocomponent {
 
   createElement() {
     const { state } = this
-
     return html`
       <button
         class="${styles[state.cssClass.name || 'standard'](state.cssClass.opts || {})}"
