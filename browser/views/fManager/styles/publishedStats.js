@@ -38,7 +38,6 @@ module.exports = {
         align-items: flex-end;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         height: 75px;
         width: 100%;
         color: ${color};

@@ -10,10 +10,10 @@ const Nanocomponent = require('nanocomponent')
 class FileDescription extends Nanocomponent {
   constructor({
     downloadPercent,
+    meta,
     name,
     size,
-    status,
-    meta
+    status
   }) {
     super()
 
@@ -82,17 +82,17 @@ class FileDescription extends Nanocomponent {
 
   makeTooltipText(meta) {
     return html`
-      <div class="${styles.tooltip} tooltip">
+      <div class="${styles.tooltip} fileDescriptor-tooltip">
         <div>
           <div>
             AFS Id:
           </div>
-          <div class="${styles.aid} aid">
+          <div class="${styles.aid} fileDescriptor-aid">
             ${meta.aid}
           </div>
         </div>
         <div>
-          First Published: <span class="${styles.published} published">${meta.datePublished}</span>
+          First Published: <span class="${styles.published} fileDescriptor-published">${meta.datePublished}</span>
         </div>
       </div>
     `
@@ -112,15 +112,15 @@ class FileDescription extends Nanocomponent {
 
     return html`
       <div class="${styles.container} fileDescriptor-container">
-        <div class="${styles.iconHolder} iconHolder">
+        <div class="${styles.iconHolder} fileDescriptor-iconHolder">
           ${children.progressRing.render({ downloadPercent, status })}
         </div>
         <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
           <div class="${styles.nameHolder} fileDescriptor-nameHolder">
-            <div class="${styles.name}">
+            <div class="${styles.name} fileDescriptor-name">
               ${props.name}
             </div>
-            <div class="${styles.toolTipHolder}">
+            <div class="${styles.tooltipHolder} fileDescriptor-tooltipHolder">
               ${children.tooltip.render()}
             </div>
           </div>
