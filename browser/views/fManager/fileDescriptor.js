@@ -7,8 +7,9 @@ const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
 const Nanocomponent = require('nanocomponent')
 
-class FileDescription extends Nanocomponent {
+class FileDescriptor extends Nanocomponent {
   constructor({
+    demoDownload,
     downloadPercent,
     meta,
     name,
@@ -18,14 +19,9 @@ class FileDescription extends Nanocomponent {
     super()
 
     this.props = {
+      demoDownload,
       name,
       size
-    }
-
-    this.state = {
-      downloadPercent,
-      status,
-      timer: null
     }
 
     this.children = {
@@ -37,19 +33,6 @@ class FileDescription extends Nanocomponent {
     }
   }
 
-  start() {
-    const { state } = this
-    state.timer = setInterval(() => {
-      state.downloadPercent = state.downloadPercent += .1
-      if (state.downloadPercent >= 1) {
-        state.downloadPercent = 1
-        state.status = 2
-        clearInterval(state.timer)
-      }
-      this.rerender()
-    }, 1000)
-  }
-
   buttonProps(status) {
     const props = {}
     switch(status) {
@@ -59,7 +42,7 @@ class FileDescription extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'red' }
          }
-         props.onclick = () => console.log('undownloaded')
+         props.onclick = this.props.demoDownload
          break
       case 1:
          props.children = 'Cancel Download'
@@ -102,14 +85,13 @@ class FileDescription extends Nanocomponent {
     return true
   }
 
-  createElement() {
+  createElement({ downloadPercent, status }) {
     const {
       children,
-      buttonProps,
       props,
-      state: { downloadPercent, status }
     } = this
 
+    const buttonProps = this.buttonProps.bind(this)
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
@@ -149,4 +131,4 @@ class FileDescription extends Nanocomponent {
   }
 }
 
-module.exports = FileDescription
+module.exports = FileDescriptor

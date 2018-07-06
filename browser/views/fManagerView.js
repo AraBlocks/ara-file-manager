@@ -17,7 +17,7 @@ class FileManagerView extends Nanocomponent {
 
   createElement() {
     const downloadDemo = new PublishedRow({
-      downloadPercent: 1,
+      downloadPercent: 0,
       meta: {
         aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
         datePublished: '11/20/1989',
@@ -28,7 +28,6 @@ class FileManagerView extends Nanocomponent {
       name: 'Adobe Photoshop',
       size: 10.67,
       status: 0,
-      percentDownloaded: 0
     })
 
     Object.assign(window, {
@@ -50,10 +49,9 @@ class FileManagerView extends Nanocomponent {
           name: 'Microsoft Word',
           size: 4.67,
           status: 2,
-          percentDownloaded: 1
         }).render()}
       ${new PublishedRow({
-        downloadPercent: 1,
+        downloadPercent: 0,
         meta: {
           aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
           datePublished: '11/20/1989',
@@ -64,7 +62,6 @@ class FileManagerView extends Nanocomponent {
         name: 'Microsoft PowerPoint',
         size: 1.67,
         status: 0,
-        percentDownloaded: 0
       }).render()}
 
       ${downloadDemo.render()}
