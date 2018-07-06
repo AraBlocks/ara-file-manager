@@ -3,7 +3,7 @@
 const html = require('choo/html')
 const DynamicButton = require('../../components/dynamicButton')
 const ProgressRing = require('../../components/progressRing')
-const styles = require('./styles.js/fileDescriptor')
+const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
 const Nanocomponent = require('nanocomponent')
 
@@ -111,7 +111,7 @@ class FileDescription extends Nanocomponent {
     } = this
 
     return html`
-      <div class="${styles.container}">
+      <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} iconHolder">
           ${children.progressRing.render({ downloadPercent, status })}
         </div>
