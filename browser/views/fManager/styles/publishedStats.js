@@ -62,9 +62,9 @@ module.exports = {
   stats: css`
     :host {
       display: flex;
-      justify-content: flex-end;
       font-family: ${fonts.regular};
       font-size: 14px;
+      justify-content: flex-end;
     }
   `
 }
