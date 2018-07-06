@@ -3,7 +3,7 @@
 const html = require('choo/html')
 const DynamicButton = require('../../components/dynamicButton')
 const ProgressRing = require('../../components/progressRing')
-const styles = require('./styles.js/fileDescriptor')
+const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
 const Nanocomponent = require('nanocomponent')
 
@@ -111,12 +111,12 @@ class FileDescription extends Nanocomponent {
     } = this
 
     return html`
-      <div class="${styles.container}">
+      <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} iconHolder">
           ${children.progressRing.render({ downloadPercent, status })}
         </div>
-        <div class="${styles.summaryHolder} summaryHolder">
-          <div class="${styles.nameHolder} nameHolder">
+        <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
+          <div class="${styles.nameHolder} fileDescriptor-nameHolder">
             <div class="${styles.name}">
               ${props.name}
             </div>
@@ -124,10 +124,10 @@ class FileDescription extends Nanocomponent {
               ${children.tooltip.render()}
             </div>
           </div>
-          <div class="${styles.sizeHolder(status)} sizeHolder">
+          <div class="${styles.sizeHolder(status)} fileDescriptor-sizeHolder">
             ${renderSize()} gb
           </div>
-          <div class="${styles.buttonHolder} buttonHolder">
+          <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
             ${children.button.render(buttonProps(status))}
           </div>
         </div>
