@@ -48,10 +48,9 @@ module.exports = {
   nameHolder: css`
     :host {
       display: flex;
-      justify-content: space-between;
       font-family: ${fonts.bold};
       font-size: 20px;
-      width: 87%;
+      width: 75%;
     }
   `,
 
@@ -84,8 +83,9 @@ module.exports = {
     }
   `,
 
-  toolTipHolder: css`
+  tooltipHolder: css`
     :host {
+      margin-left: 5px;
       margin-top: 3px;
     }
   `,
