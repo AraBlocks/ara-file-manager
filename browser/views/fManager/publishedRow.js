@@ -43,11 +43,13 @@ class PublishedRow extends Nanocomponent {
     const { state } = this
 
     state.status = 1
+    this.rerender()
     state.timer = setInterval(() => {
-      state.downloadPercent = state.downloadPercent += .1
-      if (state.downloadPercent >= 1) {
+      state.downloadPercent = state.downloadPercent += .12
+      if (state.downloadPercent >= .999) {
         state.downloadPercent = 1
         state.status = 2
+        this.rerender()
         clearInterval(state.timer)
       }
       this.rerender()
