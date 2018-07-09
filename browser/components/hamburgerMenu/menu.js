@@ -1,10 +1,9 @@
 'use strict'
 
-const Nanocomponent = require('nanocomponent')
 const html = require('choo/html')
-const styles = require('./styles/menu')
 const MenuItem = require('./menuItem')
-
+const styles = require('./styles/menu')
+const Nanocomponent = require('nanocomponent')
 class Menu extends Nanocomponent {
 	constructor({
 		items = []
