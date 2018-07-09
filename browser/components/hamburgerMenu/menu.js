@@ -4,6 +4,7 @@ const html = require('choo/html')
 const MenuItem = require('./menuItem')
 const styles = require('./styles/menu')
 const Nanocomponent = require('nanocomponent')
+
 class Menu extends Nanocomponent {
 	constructor({
 		items = []
