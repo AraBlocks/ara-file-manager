@@ -1,4 +1,11 @@
 @font-face {
+  font-family: 'NoeDisplay-Bold';
+  src: url('../fonts/NoeDisplay-Bold.woff') format('woff2');
+  font-weight: Bold;
+  font-style: Bold;
+}
+
+@font-face {
   font-family: 'ProximaNova-Regular';
   src: url('../fonts/ProximaNova-Regular.otf') format('opentype');
   font-weight: normal;
