@@ -31,7 +31,7 @@ class Menu extends Nanocomponent {
 	createElement() {
 		const { props, state: { displayed } } = this
 		const showItems = this.showItems.bind(this)
-		
+
 		return html`
 			<div class="${styles.container} Menu-container">
 				<div class="${styles.hamburger} Menu-hamburger" onclick=${showItems}>
@@ -44,7 +44,7 @@ class Menu extends Nanocomponent {
 				</div>
 			</div>
 		`
-		
+
 		function divider() {
 			return html`<div class="${styles.divider} Menu-divider"></div>`
 		}

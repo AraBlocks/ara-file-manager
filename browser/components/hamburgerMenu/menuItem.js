@@ -4,7 +4,7 @@ const html = require('choo/html')
 const styles = require('./styles/menuItem')
 const Nanocomponent = require('nanocomponent')
 class MenuItem extends Nanocomponent {
-  constructor({ 
+  constructor({
     children = "",
     onclick = () => {}
   }) {
@@ -23,7 +23,7 @@ class MenuItem extends Nanocomponent {
     const { props } = this
 
     return html`
-      <div 
+      <div
         class="${styles.container} MenuItem-container"
         onclick=${props.onclick}
       >
