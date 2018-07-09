@@ -1,7 +1,7 @@
 'use strict'
 
 const { colors, fonts } = require('../../../../lib/styleUtils')
-const { css }  = require('../../../../lib/cssTool/css')
+const { css }  = require('css')
 
 module.exports = {
   container: css`
@@ -9,7 +9,6 @@ module.exports = {
       align-items: baseline;
       display: flex;
       justify-content: space-between;
-      width: 90%;
     }
   `,
 

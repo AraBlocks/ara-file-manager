@@ -70,6 +70,7 @@ class PublishedRow extends Nanocomponent {
       children,
       state: { downloadPercent, status}
      } = this
+
     return html`
       <div class="${styles.container} publishedRow-container">
         <div class="${styles.fileDescriptorHolder} publishedRow-fileDescriptorHolder">
@@ -82,4 +83,5 @@ class PublishedRow extends Nanocomponent {
     `
   }
 }
+
 module.exports = PublishedRow
