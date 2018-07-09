@@ -34,16 +34,16 @@ class Menu extends Nanocomponent {
 		const showItems = this.showItems.bind(this)
 		
 		return html`
-		<div class="${styles.container} Menu-container">
-			<div class="${styles.hamburger} Menu-hamburger" onclick=${showItems}>
-				<div class="${styles.menuBar}" Menu-menuBar></div>
-				<div class="${styles.menuBar}" Menu-menuBar></div>
-				<div class="${styles.menuBar}" Menu-menuBar></div>
+			<div class="${styles.container} Menu-container">
+				<div class="${styles.hamburger} Menu-hamburger" onclick=${showItems}>
+					<div class="${styles.menuBar}" Menu-menuBar></div>
+					<div class="${styles.menuBar}" Menu-menuBar></div>
+					<div class="${styles.menuBar}" Menu-menuBar></div>
+				</div>
+				<div class="${styles.menu} Menu-menu" style="display: ${displayed ? "flex" : "none"};">
+					${props.items.map(item => [item.render(), divider()])}
+				</div>
 			</div>
-			<div class="${styles.menu} Menu-menu" style="display: ${displayed ? "flex" : "none"};">
-				${props.items.map(item => [item.render(), divider()])}
-			</div>
-		</div>
 		`
 		
 		function divider() {
