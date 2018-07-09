@@ -36,7 +36,8 @@
     "electron-window-manager": "^1.0.6",
     "md5-hex": "^2.0.0",
     "menubar": "*",
-    "nanocomponent": "^6.5.2"
+    "nanocomponent": "^6.5.2",
+    "styleUtils": "file:browser/lib/styleUtils"
   },
   "devDependencies": {
     "choo-devtools": "^2.5.1",

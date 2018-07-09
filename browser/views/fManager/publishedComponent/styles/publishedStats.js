@@ -4,8 +4,8 @@ const {
   colors,
   colorSelector,
   fonts
-} = require('../../../../lib/styleUtils')
-const { css } = require('../../../../lib/cssTool/css')
+} = require('styleUtils')
+const { css } = require('css')
 
 module.exports = {
   colors,
