@@ -28,14 +28,15 @@
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
     "cfsnet": "github:arablocks/cfsnet",
     "choo": "^6.12.1",
+    "css": "file:browser/lib/cssTool",
     "domready": "^1.0.8",
     "electron": "^2.0.3",
+    "electron-positioner": "^3.0.1",
     "electron-rebuild": "^1.7.3",
     "electron-window-manager": "^1.0.6",
     "md5-hex": "^2.0.0",
-    "nanocomponent": "^6.5.2",
-    "electron-positioner": "^3.0.1",
-    "menubar": "*"
+    "menubar": "*",
+    "nanocomponent": "^6.5.2"
   },
   "devDependencies": {
     "choo-devtools": "^2.5.1",
