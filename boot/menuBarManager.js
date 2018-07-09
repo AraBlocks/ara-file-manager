@@ -18,7 +18,7 @@ module.exports = () => {
 
   tray.on('click', () => openWindow('fileManager'))
   tray.setToolTip('Ara Content Manager')
-  tray.setContextMenu(contextMenu)
+  //tray.setContextMenu(contextMenu)
   openWindow('fileManager')
 
   function openWindow(windowName) {
