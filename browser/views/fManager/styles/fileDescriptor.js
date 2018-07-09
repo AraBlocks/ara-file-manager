@@ -1,7 +1,7 @@
 'use strict'
 
-const { colors, fonts } = require('../../../lib/styleUtils')
-const { css } = require('../../../lib/cssTool/css')
+const { colors, fonts } = require('styleUtils')
+const { css } = require('css')
 
 module.exports = {
   aid: css`

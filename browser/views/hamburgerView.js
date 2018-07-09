@@ -3,7 +3,7 @@
 const ManagerMenuItem= require('./managerMain/managerMenuItem')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const { colors } = require('../lib/styleUtils')
+const { colors } = require('styleUtils')
 
 class HamburgerView extends Nanocomponent {
   constructor() {
