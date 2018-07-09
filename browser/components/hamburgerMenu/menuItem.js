@@ -2,9 +2,9 @@
 
 const Nanocomponent = require('nanocomponent')
 const html = require('choo/html')
-const styles = require('./styles/managerMenuItem')
+const styles = require('./styles/menuItem')
 
-class ManagerMenuItem extends Nanocomponent {
+class MenuItem extends Nanocomponent {
   constructor({ 
     children = "",
     onclick = () => {}
@@ -25,7 +25,7 @@ class ManagerMenuItem extends Nanocomponent {
 
     return html`
       <div 
-        class="${styles.container} ManagerMenuItem-container"
+        class="${styles.container} MenuItem-container"
         onclick=${props.onclick}
       >
         ${props.children}
@@ -34,4 +34,4 @@ class ManagerMenuItem extends Nanocomponent {
   }
 }
 
-module.exports = ManagerMenuItem
+module.exports = MenuItem
