@@ -1,11 +1,11 @@
 'use strict'
 
-const Nanocomponent = require('nanocomponent')
 const html = require('choo/html')
-const styles = require('./styles/managerMenuItem')
+const styles = require('./styles/menuItem')
+const Nanocomponent = require('nanocomponent')
 
-class ManagerMenuItem extends Nanocomponent {
-  constructor({ 
+class MenuItem extends Nanocomponent {
+  constructor({
     children = "",
     onclick = () => {}
   }) {
@@ -24,8 +24,8 @@ class ManagerMenuItem extends Nanocomponent {
     const { props } = this
 
     return html`
-      <div 
-        class="${styles.container} ManagerMenuItem-container"
+      <div
+        class="${styles.container} MenuItem-container"
         onclick=${props.onclick}
       >
         ${props.children}
@@ -34,4 +34,4 @@ class ManagerMenuItem extends Nanocomponent {
   }
 }
 
-module.exports = ManagerMenuItem
+module.exports = MenuItem
