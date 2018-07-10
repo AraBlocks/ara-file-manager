@@ -1,6 +1,7 @@
 'use strict'
 
-const PublishedSection = require('./fManager/publishedComponent/publishedSection')
+const PublishedSection = require('./fileManager/published/publishedSection')
+const PurchasedStats = require('./fileManager/purchased/purchasedStats')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -22,6 +23,11 @@ class FileManagerView extends Nanocomponent {
     return html`
       <div id="outside">
         ${new PublishedSection({files: mockFiles()}).render()}
+        ${new PurchasedStats({
+          earnings: 3455.32,
+          peers: 32,
+          status: 2
+        }).render()}
       </div>
   `
   }
