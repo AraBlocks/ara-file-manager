@@ -87,10 +87,16 @@ module.exports = {
         font-size: 20px;
       }
     `,
+    proxiH2: css`
+    :host {
+      font-family: "ProximaNova-Bold", sans-serif;
+      font-size: 15px;
+    }
+  `,
     proxiContent: css`
       :host {
         font-family: "ProximaNova-Regular", sans-serif;
-        font-size: 15px;
+        font-size: 12px;
       }
     `,
   }

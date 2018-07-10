@@ -9,23 +9,22 @@ module.exports = {
 
 	container: css`
 		:host {
+      align-items: left;
       display: flex;
       flex-direction: column;
+      height: 75px;
       justify-content: space-between;
       width: 100%;
-      height: 75px;
-      align-items: left;
 		}
 	`,
 
 	priceContainer: css`
-	:host {
-		display: flex;
-		flex-direction: row;
-		width: 100%;
-		justify-content: flex-start;
-		align-items: flex-end;
-		background-color: red;
-	}
-`,  
+		:host {
+			align-items: flex-end;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			width: 100%;
+		}
+	` 
 }
