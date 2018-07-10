@@ -7,17 +7,14 @@ const Nanocomponent = require('nanocomponent')
 const { colors } = require('styleUtils')
 
 class HamburgerView extends Nanocomponent {
-	constructor() {
-  	super()
+  constructor() {
+    super()
 
   	this.menu = new Menu({
     	items: [{ children: 'File Manager' }, { children: 'Quit' }]
 		})
   	this.close = new UtilityButton({ children: '✕' })
-  	this.expand = new UtilityButton({ 
-	    children: '▼',
-	    onclick: () => console.log("expand") 
-    })
+  	this.expand = new UtilityButton({ children: '▼' })
     window.hamburger = this
   }
 
