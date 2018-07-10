@@ -16,7 +16,10 @@ class HamburgerView extends Nanocomponent {
     })
     this.close = new UtilityButton({ children: '✕' })
     this.expand = new UtilityButton({ children: '▼' })
-    this.wallet = new WalletView({ araOwned: 9999, exchangeRate: 1.73})
+    this.wallet = new WalletView({ 
+      araOwned: 9999, 
+      exchangeRate: 1.73 
+    })
     window.hamburger = this
   }
 
