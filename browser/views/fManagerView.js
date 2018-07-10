@@ -22,11 +22,14 @@ class FileManagerView extends Nanocomponent {
 
     return html`
       <div id="outside">
-        ${new PublishedSection({files: mockFiles()}).render()}
-        Purchased
-        ${new ItemRow(mockFiles()[0]).render()}
-        ${new ItemRow(mockFiles()[1]).render()}
-        ${new ItemRow(mockFiles()[2]).render()}
+        ${new Section({
+          files: mockFiles(),
+          type: 'published'
+        }).render()}
+        ${new Section({
+          files: mockFiles(),
+          type: 'purchased'
+        }).render()}
       </div>
   `
   }
