@@ -19,9 +19,8 @@ module.exports = {
     :host {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
       height: 75px;
-      width: 100%;
+      width: 50%;
     }
   `,
 
@@ -43,17 +42,17 @@ module.exports = {
     `
   },
 
-  stats: css`
-    :host {
-      display: flex;
-      justify-content: flex-end;
-    }
-  `,
-
   peers: css`
     :host {
       font-family: ${fonts.regular};
       font-size: 14px;
+    }
+  `,
+
+  stats: css`
+    :host {
+      display: flex;
+      justify-content: flex-end;
     }
   `
 }

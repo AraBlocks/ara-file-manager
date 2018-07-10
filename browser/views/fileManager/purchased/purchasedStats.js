@@ -44,7 +44,7 @@ class PurchasedStats extends Nanocomponent {
     const { children, state } = this
 
     return html`
-      <div class="${styles.container}">
+      <div class="${styles.container} styles.container">
         <div class="${styles.stats} purchasedStats-stats">
           ${renderPeers()}
           <div class="${styles.earnings(state.status)} purchasedStats-earnings">
