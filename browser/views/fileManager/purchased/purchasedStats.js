@@ -43,7 +43,7 @@ class PurchasedStats extends Nanocomponent {
   createElement() {
     const { children, state } = this
 
-    let string =`
+    return html`
       <div class="${styles.container}">
         <div class="${styles.stats} purchasedStats-stats">
           ${renderPeers()}
@@ -54,7 +54,6 @@ class PurchasedStats extends Nanocomponent {
         ${renderButton()}
       </div>
     `
-    return html`${string}`
 
     function renderPeers() {
       let nodes
@@ -62,16 +61,18 @@ class PurchasedStats extends Nanocomponent {
         case 0:
           break
         default:
-          nodes = `
-            <div>
+          nodes = [
+            html`
               <div class="${styles.peers} purchasedStats-peers">
                 <b>Peers:</b> ${state.peers}
               </div>
+            `,
+            html`
               <div class="${styles.divider} purchasedStats-divider">
                 |
               </div>
-            </div>
-          `
+            `
+          ]
       }
       return nodes
     }
@@ -83,7 +84,7 @@ class PurchasedStats extends Nanocomponent {
         case 1:
           break
         default:
-          button = `
+          button = html`
             <div class="${styles.buttonHolder}">
               ${children.button.render()}
             </div>
