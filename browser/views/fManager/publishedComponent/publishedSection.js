@@ -29,7 +29,9 @@ class PublishedSection extends Nanocomponent {
 
     return html`
       <div class="${styles.container} publishedSection-container">
-        PublishedFiles
+        <div>
+          Published Files
+        </div>
         <div class="${styles.separator} publishedSection-seperator"></div>
         ${state.files.map(file => file.render())}
       </div>
