@@ -43,17 +43,17 @@ module.exports = {
     `
   },
 
-  stats: css`
-    :host {
-      display: flex;
-      justify-content: flex-end;
-    }
-  `,
-
   peers: css`
     :host {
       font-family: ${fonts.regular};
       font-size: 14px;
+    }
+  `,
+
+  stats: css`
+    :host {
+      display: flex;
+      justify-content: flex-end;
     }
   `
 }
