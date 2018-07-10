@@ -1,18 +1,20 @@
 'use strict'
 
-const FileDescriptor = require('../fileDescriptor')
+const FileDescriptor = require('./fileDescriptor')
 const html = require('choo/html')
-const PublishedStats = require('./publishedStats')
-const styles = require('./styles/publishedRow')
+const PublishedStats = require('./published/publishedStats')
+const PurchasedStats = require('./purchased/purchasedStats')
+const styles = require('./styles/itemRow')
 const Nanocomponent = require('nanocomponent')
 
-class PublishedRow extends Nanocomponent {
+class ItemRow extends Nanocomponent {
   constructor({
     downloadPercent,
     name,
     meta,
     size,
     status,
+    typeRow
   }) {
     super()
 
@@ -22,6 +24,7 @@ class PublishedRow extends Nanocomponent {
       status
     }
 
+    const constructorArgs = { ...meta, status }
     this.children = {
       fileDescriptor: new FileDescriptor({
         demoDownload: this.demoDownload.bind(this),
@@ -32,10 +35,9 @@ class PublishedRow extends Nanocomponent {
         status
       }),
 
-      publishedStats: new PublishedStats({
-        ...meta,
-        status
-      })
+      stats: typeRow === 'published'
+        ? new PublishedStats(constructorArgs)
+        : new PurchasedStats(constructorArgs)
     }
   }
 
@@ -69,19 +71,17 @@ class PublishedRow extends Nanocomponent {
     const {
       children,
       state: { downloadPercent, status}
-     } = this
+    } = this
 
     return html`
-      <div class="${styles.container} publishedRow-container">
-        <div class="${styles.fileDescriptorHolder} publishedRow-fileDescriptorHolder">
+      <div class="${styles.container} ItemRow-container">
+        <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
           ${children.fileDescriptor.render({ downloadPercent, status })}
         </div>
-        <div class="${styles.publishedStatsHolder} publishedRow-publishedStatsHolder">
-          ${children.publishedStats.render({ status })}
-        </div>
+          ${children.stats.render({ status })}
       </div>
     `
   }
 }
 
-module.exports = PublishedRow
+module.exports = ItemRow

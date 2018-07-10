@@ -1,6 +1,7 @@
 'use strict'
 
 const PublishedSection = require('./fileManager/published/publishedSection')
+const ItemRow = require('./fileManager/itemRow')
 const PurchasedStats = require('./fileManager/purchased/purchasedStats')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -24,21 +25,9 @@ class FileManagerView extends Nanocomponent {
       <div id="outside">
         ${new PublishedSection({files: mockFiles()}).render()}
         Purchased
-        ${new PurchasedStats({
-          earnings: 3455.32,
-          peers: 32,
-          status: 2
-        }).render()}
-        ${new PurchasedStats({
-          earnings: 6.40,
-          peers: 0,
-          status: 0
-        }).render()}
-        ${new PurchasedStats({
-          earnings: 42.99,
-          peers: 3,
-          status: 1
-        }).render()}
+          ${new ItemRow(mockFiles()[0]).render()}
+          ${new ItemRow(mockFiles()[1]).render()}
+          ${new ItemRow(mockFiles()[2]).render()}
       </div>
   `
   }

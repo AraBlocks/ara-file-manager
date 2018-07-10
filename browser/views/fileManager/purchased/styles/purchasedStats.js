@@ -19,9 +19,8 @@ module.exports = {
     :host {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
       height: 75px;
-      width: 100%;
+      width: 50%;
     }
   `,
 
