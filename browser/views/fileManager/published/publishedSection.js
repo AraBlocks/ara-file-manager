@@ -13,6 +13,7 @@ class PublishedSection extends Nanocomponent {
 
   makeRows(files) {
     return files.map(file => new ItemRow({ ...file, typeRow: 'published' }))
+    return files.map(file => new PublishedRow(file))
   }
 
   update({ files }) {

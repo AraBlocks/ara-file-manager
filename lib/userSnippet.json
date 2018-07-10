@@ -41,7 +41,7 @@
     }, 
     "Console Log": {
         "prefix": "lslog",
-        "body": "Console.log($1)",
+        "body": "console.log($1)",
         "description": "Console Log"
     }
 }
