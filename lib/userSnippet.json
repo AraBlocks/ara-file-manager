@@ -1,0 +1,47 @@
+{    
+    "Add NanoComponent": {
+        "prefix": "lsnano",
+        "body": ["'use strict'\n",
+            "const styles = require('./styles/tooltip')",
+            "const html = require('choo/html')",
+            "const Nanocomponent = require('nanocomponent')\n",
+            "class ${className} extends Nanocomponent {",
+            "\tconstructor() {",
+                "\t\tsuper()",
+                "\t\tthis.props = {}",
+            "}\n",
+            "\tupdate(){",
+                "\t\treturn true",
+            "}\n",
+            "\tcreateElement() {",
+                "\t\tconst { props } = this",
+                "\t\treturn html`",
+                "\t\t`",
+              "\t}",
+            "}\n",
+            "module.exports = ${className}"
+        ],
+        "description": "NanoComponent - Boiler Plate"
+    }, 
+    "Add CSS Boiler Plate":{
+        "prefix": "lscss", 
+        "body": ["'use strict'\n",
+            "const { colors, fonts } = require('styleUtils')",
+            "const { css } = require('css')\n",
+            "module.exports = {",
+                "\tcolors,",
+                "\tfonts,\n",
+                "\t${cssClass}: css`",
+                    "\t\t:host {",
+                "\t\t}",
+                "\t`,",
+            "}"
+        ],
+        "description": "CSS - Boiler Plate"
+    }, 
+    "Console Log": {
+        "prefix": "lslog",
+        "body": "Console.log($1)",
+        "description": "Console Log"
+    }
+}
