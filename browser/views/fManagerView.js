@@ -1,8 +1,7 @@
 'use strict'
 
-const PublishedSection = require('./fileManager/published/publishedSection')
 const ItemRow = require('./fileManager/itemRow')
-const PurchasedStats = require('./fileManager/purchased/purchasedStats')
+const Section = require('./fileManager/section')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
