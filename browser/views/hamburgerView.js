@@ -10,11 +10,11 @@ class HamburgerView extends Nanocomponent {
   constructor() {
     super()
 
-  	this.menu = new Menu({
-    	items: [{ children: 'File Manager' }, { children: 'Quit' }]
-		})
-  	this.close = new UtilityButton({ children: '✕' })
-  	this.expand = new UtilityButton({ children: '▼' })
+    this.menu = new Menu({
+      items: [{ children: 'File Manager' }, { children: 'Quit' }]
+    })
+    this.close = new UtilityButton({ children: '✕' })
+    this.expand = new UtilityButton({ children: '▼' })
     window.hamburger = this
   }
 
