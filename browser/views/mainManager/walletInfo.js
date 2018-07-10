@@ -1,10 +1,10 @@
 'use strict'
 
-const styles = require('./styles/walletView')
+const styles = require('./styles/walletInfo')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-class WalletView extends Nanocomponent {
+class WalletInfo extends Nanocomponent {
 	constructor({
 		araOwned = 0,
 		exchangeRate = 0
@@ -46,4 +46,4 @@ class WalletView extends Nanocomponent {
 	}
 }
 
-module.exports = WalletView
+module.exports = WalletInfo

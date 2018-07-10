@@ -2,7 +2,7 @@
 
 const Menu= require('../components/hamburgerMenu/menu')
 const UtilityButton = require('../components/utilityButton')
-const WalletView = require('./walletView')
+const WalletInfo = require('./mainManager/walletInfo')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -15,7 +15,7 @@ class HamburgerView extends Nanocomponent {
     })
     this.close = new UtilityButton({ children: '✕' })
     this.expand = new UtilityButton({ children: '▼' })
-    this.wallet = new WalletView({ 
+    this.wallet = new WalletInfo({ 
       araOwned: 9999, 
       exchangeRate: 1.73 
     })
