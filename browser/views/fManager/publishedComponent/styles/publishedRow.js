@@ -9,7 +9,6 @@ module.exports = {
       align-items: baseline;
       display: flex;
       justify-content: space-between;
-      width: 90%;
     }
   `,
 

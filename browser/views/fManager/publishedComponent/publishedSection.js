@@ -17,6 +17,7 @@ class PublishedSection extends Nanocomponent {
 
   update({ files }) {
     const { makeRows, state } = this
+
     if (files.length !== state.files.length) {
       state.files = makeRows(files)
     }
@@ -25,18 +26,16 @@ class PublishedSection extends Nanocomponent {
 
   createElement() {
     const { state } = this
-    return html`
-      <div>
-        PublishedFiles
-        ${state.files}
-        ${divider()}
-      </div>
-      <div>🤷</div>
-    `
 
-    function divider() {
-      return html`<div class=${styles.divider}>--------</div>`
-    }
+    return html`
+      <div class="${styles.container} publishedSection-container">
+        <div>
+          Published Files
+        </div>
+        <div class="${styles.separator} publishedSection-seperator"></div>
+        ${state.files.map(file => file.render())}
+      </div>
+    `
   }
 }
 
