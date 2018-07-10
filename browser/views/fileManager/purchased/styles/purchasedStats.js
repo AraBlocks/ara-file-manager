@@ -27,6 +27,8 @@ module.exports = {
 
   divider: css`
     :host {
+      font-size: 14px;
+      font-family: ${fonts.regular};
       margin: 0 8px;
     }
   `,
