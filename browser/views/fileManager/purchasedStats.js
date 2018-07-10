@@ -1,6 +1,6 @@
 'use strict'
 
-const Button = require('../../../components/button')
+const Button = require('../../components/button')
 const styles = require('./styles/purchasedStats')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
