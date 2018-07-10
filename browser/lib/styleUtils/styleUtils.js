@@ -72,19 +72,19 @@ module.exports = {
     noeH1:  css`
       :host {
         font-family: "Noe", "ProximaNova-Bold";
-        font-size: 20px;
+        font-size: 24px;
       }
     `,
     proxiLarge: css`
       :host {
         font-family: "ProximaNova-Bold", sans-serif;
-        font-size: 40px;
+        font-size: 48px;
       }
     `,
     proxiH1: css`
       :host {
         font-family: "ProximaNova-Bold", sans-serif;
-        font-size: 20px;
+        font-size: 24px;
       }
     `,
     proxiH2: css`

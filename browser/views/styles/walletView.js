@@ -1,12 +1,16 @@
 'use strict'
 
-const { colors, fonts } = require('styleUtils')
+const { colors, fonts, fontCSS } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
 	colors,
 	fonts,
-
+	fontCSS,
+	ara: fontCSS.proxiH1,
+	araOwned: fontCSS.proxiLarge,
+	exchangeRate: fontCSS.proxiContent,
+	
 	container: css`
 		:host {
       align-items: left;
@@ -20,7 +24,7 @@ module.exports = {
 
 	priceContainer: css`
 		:host {
-			align-items: flex-end;
+			align-items: baseline;
 			display: flex;
 			flex-direction: row;
 			justify-content: flex-start;

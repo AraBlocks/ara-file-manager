@@ -5,7 +5,6 @@ const UtilityButton = require('../components/utilityButton')
 const WalletView = require('./walletView')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const { colors } = require('styleUtils')
 
 class HamburgerView extends Nanocomponent {
   constructor() {
@@ -28,7 +27,12 @@ class HamburgerView extends Nanocomponent {
   }
 
   createElement(chooState) {
-    const { menu, close, expand, wallet } = this
+    const { 
+      menu, 
+      close, 
+      expand, 
+      wallet 
+    } = this
 
     return html`
       <div class="popup">
