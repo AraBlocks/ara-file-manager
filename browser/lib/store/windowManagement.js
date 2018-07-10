@@ -4,11 +4,11 @@ const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 
 module.exports = {
-    quitApp: function() {
+    quitApp() {
         windowManager.closeAll()
     },
 
-    closeWindow: function() {
+    closeWindow() {
         close()
     }
 }

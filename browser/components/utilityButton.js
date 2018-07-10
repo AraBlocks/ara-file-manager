@@ -8,7 +8,7 @@ const Nanocomponent = require('nanocomponent')
 class UtilityButton extends Nanocomponent {
   constructor({
     children = '✕',
-    onclick = () => { windowManagement.closeWindow() }
+    onclick = windowManagement.closeWindow
   }) {
     super()
 

@@ -10,8 +10,6 @@ module.exports = {
 	standard: css`
 		:host {
 			background-color: white;
-			height: 35px;
-			width: 35px;
 		}
 	`,
 }
