@@ -1,6 +1,6 @@
 'use strict'
 
-const DynamicButton = require('../../../components/dynamicButton')
+const DynamicButton = require('../../components/dynamicButton')
 const styles = require('./styles/publishedStats')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
