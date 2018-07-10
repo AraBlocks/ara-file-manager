@@ -1,8 +1,8 @@
 'use strict'
 
 const FileDescriptor = require('./fileDescriptor')
-const PublishedStats = require('./published/publishedStats')
-const PurchasedStats = require('./purchased/purchasedStats')
+const PublishedStats = require('./publishedStats')
+const PurchasedStats = require('./purchasedStats')
 const styles = require('./styles/itemRow')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')

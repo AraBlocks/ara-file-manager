@@ -4,7 +4,7 @@ module.exports = {
   fonts: {
     black: `"ProximaNova-Black", sans-serif`,
     bold: `"ProximaNova-Bold", sans-serif`,
-    boldSpecial: `"Noe", "ProximaNova-Bold"`,
+    boldSpecial: `"NoeDisplay-Bold", "ProximaNova-Bold"`,
     light: `"ProximaNova-Light", sans-serif`,
     regular: `"ProximaNova-Regular", sans-serif`,
     semibold: `"ProximaNova-Semibold", sans-serif`,

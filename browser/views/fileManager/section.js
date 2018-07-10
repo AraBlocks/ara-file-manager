@@ -35,7 +35,7 @@ class Section extends Nanocomponent {
 
     return html`
       <div class="${styles.container} section-container">
-        <div>
+        <div class="${styles.header} section-header">
           ${headerText()}
         </div>
         <div class="${styles.separator} section-separator"></div>
@@ -47,10 +47,10 @@ class Section extends Nanocomponent {
       let text
       switch (props.typeRow) {
         case 'purchased':
-          text = 'Purchased'
+          text = 'Purchased Files'
           break
         default:
-          text = 'Published'
+          text = 'Published Files'
       }
       return text
     }
