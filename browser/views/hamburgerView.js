@@ -1,6 +1,7 @@
 'use strict'
 
 const Menu= require('../components/hamburgerMenu/menu')
+const UtilityButton = require('../components/utilityButton')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { colors } = require('styleUtils')
@@ -10,8 +11,10 @@ class HamburgerView extends Nanocomponent {
     super()
 
     this.menu = new Menu({
-      items: [{ children: "File Manager" }, { children: "Quit" }]
+      items: [{ children: 'File Manager' }, { children: 'Quit' }]
     })
+    this.close = new UtilityButton({ children: '✕' })
+    this.expand = new UtilityButton({ children: '▼' })
     window.hamburger = this
   }
 
@@ -20,12 +23,15 @@ class HamburgerView extends Nanocomponent {
   }
 
   createElement(chooState) {
-    const { menu } = this
+    const { menu, close, expand } = this
 
     return html`
       <div class="popup">
         ${menu.render()}
-      </div>`
+        ${close.render()}
+        ${expand.render()}
+      </div>
+    `
   }
 }
 
