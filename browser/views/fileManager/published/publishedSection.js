@@ -1,6 +1,6 @@
 'use strict'
 
-const PublishedRow = require('./publishedRow')
+const ItemRow = require('../itemRow')
 const styles = require('./styles/publishedSection')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -12,6 +12,7 @@ class PublishedSection extends Nanocomponent {
   }
 
   makeRows(files) {
+    return files.map(file => new ItemRow({ ...file, typeRow: 'published' }))
     return files.map(file => new PublishedRow(file))
   }
 
