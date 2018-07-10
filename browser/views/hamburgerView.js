@@ -30,7 +30,8 @@ class HamburgerView extends Nanocomponent {
         ${menu.render()}
         ${close.render()}
         ${expand.render()}
-      </div>`
+      </div>
+    `
   }
 }
 
