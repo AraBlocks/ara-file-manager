@@ -1,10 +1,10 @@
 'use strict'
 
 const FileDescriptor = require('./fileDescriptor')
-const html = require('choo/html')
 const PublishedStats = require('./published/publishedStats')
 const PurchasedStats = require('./purchased/purchasedStats')
 const styles = require('./styles/itemRow')
+const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class ItemRow extends Nanocomponent {
