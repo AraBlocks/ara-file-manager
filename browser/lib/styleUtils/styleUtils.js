@@ -95,7 +95,7 @@ module.exports = {
   `,
     proxiContent: css`
       :host {
-        font-family: "ProximaNova-Regular", sans-serif;
+        font-family: "ProximaNova-Light", sans-serif;
         font-size: 12px;
       }
     `,

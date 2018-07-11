@@ -1,5 +1,6 @@
 'use strict'
 
+const FileSection = require('./mainManager/fileSection')
 const Menu= require('../components/hamburgerMenu/menu')
 const UtilityButton = require('../components/utilityButton')
 const WalletInfo = require('./mainManager/walletInfo')
@@ -31,7 +32,8 @@ class HamburgerView extends Nanocomponent {
       menu, 
       close, 
       expand, 
-      wallet 
+      wallet,
+      fileSection 
     } = this
 
     return html`
