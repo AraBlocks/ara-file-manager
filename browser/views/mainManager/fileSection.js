@@ -10,7 +10,7 @@ const Nanocomponent = require('nanocomponent')
 class FileSection extends Nanocomponent {
 	constructor({ windowName }) {
 		super()
-		this.state = { expandedState: 0 }
+		this.state = { expanded: false }
 		this.windowName = windowName
 		this.children = {
 			expandWindowButton: new UtilityButton( { 
@@ -31,17 +31,9 @@ class FileSection extends Nanocomponent {
 	}
 
 	changeWindowSize() {
-		this.state.expandedState = (this.state.expandedState == 0) ? 1 : 0
-		windowManagement.changeMainManagerSize(this.windowName, this.state.expandedState == 1)
+		this.state.expanded = !this.state.expanded
+		windowManagement.changeMainManagerSize(this.windowName, this.state.expanded)
 		this.rerender()
-	}
-
-	renderExpandButton() {
-		if (this.state.expandedState == 0) {
-			return this.children.expandWindowButton.render({ children: '▼'})
-		} else {
-			return this.children.expandWindowButton.render({ children: '▲'})
-		}
 	}
 
 	update() {
@@ -56,16 +48,20 @@ class FileSection extends Nanocomponent {
 					<div class="${styles.header} FileSection-Header">
 						Files
 					</div>
-					${this.renderExpandButton()}
+					${renderExpandButton()}
 				</div>
 				${divider()}
-				<div class="${styles.flexibleContainer(state.expandedState)} FileSection-flexibleContainer"></div>
-				${state.expandedState == 0 ? null : divider()}
+				<div class="${styles.flexibleContainer(state.expanded)} FileSection-flexibleContainer"></div>
+				${state.expanded ? divider() : null}
 				${children.fileManagerButton.render()}
 			</div>
 		`
 		function divider() {
 			return html`<div class="${styles.divider} MainManagerView-divider"></div>`
+		}
+
+		function renderExpandButton() {
+			return (state.expanded) ? children.expandWindowButton.render({ children: '▲' }) : children.expandWindowButton.render({ children: '▼' })
 		}
 	}
 }

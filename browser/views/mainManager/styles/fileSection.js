@@ -8,16 +8,11 @@ module.exports = {
 	fonts,
 	header: fontCSS.noeH1,
 
-	flexibleContainer(status) {
-		let height
-		switch (status) {
-			case 0:
-				height = 0
-				break
-			default:
-				height = 199;
-		}
-
+	flexibleContainer(expanded) {
+		let height = 0
+		if (expanded) {
+			height = 199
+		} 
 		return css`
 			:host {
 				height: ${height}px;

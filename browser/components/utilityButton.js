@@ -13,8 +13,11 @@ class UtilityButton extends Nanocomponent {
     super()
 
     this.props = {
-      children,
       onclick
+    }
+
+    this.state = {
+      children
     }
   }
 
@@ -23,11 +26,11 @@ class UtilityButton extends Nanocomponent {
   }
 
   createElement({ children }) {
-    const { props } = this
+    const { props, state } = this
 
     return html`
       <button onclick=${props.onclick} class=${styles.standard}>
-        ${(children != null) ? children : props.children}
+        ${(children != null) ? children : state.children}
       </button>
     `
   }
