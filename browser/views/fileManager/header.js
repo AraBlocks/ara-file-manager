@@ -3,6 +3,7 @@
 const Button = require('../../components/button')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
+const TabItem = require('../../components/tabItem')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -12,6 +13,13 @@ class Header extends Nanocomponent {
     username
   }) {
     super()
+
+    this.props = { username }
+
+    this.state = {
+      activeTab: 0,
+      userBalance
+    }
 
     this.children = {
       publishFilebutton: new Button({
@@ -23,15 +31,22 @@ class Header extends Nanocomponent {
            }
         }
       }),
-      closeButton: new UtilityButton({ children: '✕' })
+      closeButton: new UtilityButton({ children: '✕' }),
+      tabs: this.makeTabs()
     }
+  }
 
-    this.props = { username }
-
-    this.state = {
-      activeTab: 0,
-      userBalance
-    }
+  makeTabs() {
+    const children = ['All Files', 'Published Files', 'Purchases']
+    return children.map((child, index) =>
+      new TabItem({
+        children: child,
+        index,
+        isActive: index === this.state.activeTab,
+        parentRerender: this.rerender.bind(this),
+        parentState: this.state,
+      })
+    )
   }
 
   update(){
@@ -68,16 +83,10 @@ class Header extends Nanocomponent {
           </div>
         </div>
       </div>
-      <div
-        style="
-          display: flex;
-          font-size: 14px;
-        "
-      >
-        ${void '*****placeholder for tabs'}
-        <div style="margin-right: 20px; font-family:${styles.fonts.bold}; color:${styles.colors.araRed};">All Files</div>
-        <div style="margin-right: 20px;">Published Files</div>
-        <div style="margin-right: 20px;">Purchases</div>
+      <div class="${styles.tabHolder} header-tabHolder">
+        ${children.tabs.map((tab, index) =>
+          tab.render({ isActive: state.activeTab === index})
+        )}
       </div>
       <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
         ${children.publishFilebutton.render()}
