@@ -5,8 +5,10 @@ const Positioner = require('electron-positioner')
 const iconPath = path.join(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
 
 const index = `file://${path.resolve(__dirname, '..', 'browser/index.html')}`
+
+let tray = null
 module.exports = () => {
-  const tray = new Tray(iconPath)
+  tray = new Tray(iconPath)
   const contextMenu = Menu.buildFromTemplate([
     { label: 'File Manager', type: 'normal', click: () => openWindow('fileManager') },
     { label: 'Publish File', type: 'normal' },

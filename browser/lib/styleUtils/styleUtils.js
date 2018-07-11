@@ -1,5 +1,7 @@
 'use strict'
 
+const { css } = require('css')
+
 module.exports = {
   fonts: {
     black: `"ProximaNova-Black", sans-serif`,
@@ -64,5 +66,38 @@ module.exports = {
         selectedFont = `"ProximaNova-Regular", sans-serif`
       }
       return selectedFont
+  },
+
+  fontCSS: {
+    noeH1:  css`
+      :host {
+        font-family: "Noe", "ProximaNova-Bold";
+        font-size: 24px;
+      }
+    `,
+    proxiLarge: css`
+      :host {
+        font-family: "ProximaNova-Bold", sans-serif;
+        font-size: 48px;
+      }
+    `,
+    proxiH1: css`
+      :host {
+        font-family: "ProximaNova-Bold", sans-serif;
+        font-size: 24px;
+      }
+    `,
+    proxiH2: css`
+    :host {
+      font-family: "ProximaNova-Bold", sans-serif;
+      font-size: 15px;
+    }
+  `,
+    proxiContent: css`
+      :host {
+        font-family: "ProximaNova-Regular", sans-serif;
+        font-size: 12px;
+      }
+    `,
   }
 }
