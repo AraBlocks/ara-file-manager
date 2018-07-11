@@ -38,22 +38,25 @@ class FileSection extends Nanocomponent {
 	}
 
 	update({ expandedState }) {
-		this.state.expandedState = expandedState
-		return true
+		const sameState = this.state.expandedState == expandedState
+		if (!sameState) {
+			this.state.expandedState = expandedState
+		}
+		return !sameState
 	}
 
 	createElement() {
-		const { state, children } = this
+		const { state, children } = this	
 		return html`
-			<div class=${styles.verticalContainerSmall}>
+			<div class=${styles.container}>
 				<div class=${styles.horizontalContainer}>
-					<div class=${styles.subHeader}>
+					<div class=${styles.header}>
 						Files
 					</div>
 					${children.expandWindowButton.render({})}
 				</div>
 				${divider(true)}
-				<div class=${styles.container( state.expandedState )}></div>
+				<div class=${styles.flexibleContainer( state.expandedState )}></div>
 				${divider(false)}
 				${children.fileManagerButton.render()}
 			</div>

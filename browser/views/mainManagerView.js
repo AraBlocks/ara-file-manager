@@ -1,6 +1,5 @@
 'use strict'
 
-const Button = require('../components/button')
 const FileSection = require('./mainManager/fileSection')
 const HamburgerMenu = require('../components/hamburgerMenu/menu')
 const styles = require('./styles/mainManagerView')
@@ -16,9 +15,9 @@ class MainManagerView extends Nanocomponent {
 		const windowName = 'mainManagerView.js'
 		this.expandedState = 0
 		windowManagement.setWindowSize(windowName, 400, 325)
-		this.props = {}
 
 		this.children = {
+			closeButton: new UtilityButton({ children: '✕' }),
       menuButton: new HamburgerMenu({
 				items: [
 					{ children: 'File Manager' },
@@ -27,12 +26,14 @@ class MainManagerView extends Nanocomponent {
 					{ children: 'Quit' }
 				]
 			}),
-      closeButton: new UtilityButton({ children: '✕' }),
 			wallet: new WalletInfo({ 
 				araOwned: 9999, 
 				exchangeRate: 1.73 
 			}),
-			fileSection: new FileSection({ expandedState: this.expandedState, windowName:  'mainManagerView.js'})
+			fileSection: new FileSection({ 
+				expandedState: this.expandedState, 
+				windowName: windowName 
+			})
     }
 	}
 
@@ -41,8 +42,7 @@ class MainManagerView extends Nanocomponent {
 	}
 
 	createElement() {
-		const { children, props, expandedState } = this
-		console.log(expandedState)
+		const { children, expandedState } = this
 		return html`
 			<div class=${styles.container}>
         <div class="${styles.horizontalContainer} ${styles.centerAlign}">
@@ -57,13 +57,12 @@ class MainManagerView extends Nanocomponent {
 					Wallet
 				</div>
 
-				${children.wallet.render(
-					{ 
+				${children.wallet.render({ 
 						araOwned: 9999, 
 						exchangeRate: 1.73 
 					}
 				)}
-				${children.fileSection.render({ expandedState: 0})}
+				${children.fileSection.render({ expandedState: expandedState })}
 			</div>
 		`
 	}	
