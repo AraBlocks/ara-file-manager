@@ -22,12 +22,12 @@ class UtilityButton extends Nanocomponent {
     return true
   }
 
-  createElement() {
+  createElement({ children }) {
     const { props } = this
 
     return html`
       <button onclick=${props.onclick} class=${styles.standard}>
-        ${props.children}
+        ${(children != null) ? children : props.children}
       </button>
     `
   }

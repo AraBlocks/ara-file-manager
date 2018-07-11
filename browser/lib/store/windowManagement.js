@@ -13,12 +13,16 @@ module.exports = {
 	},
 
 	setWindowSize(windowName, width, height, animated = false) {
-		let window = windowManager.get(windowName).object
+		const window = windowManager.get(windowName).object
 		window.setSize(width, height, animated)
 	}, 
-	
-	getHeight(windowName) {
-		let window = windowManager.get(windowName).object
-		return window.getSize()[1]
+		
+	changeMainManagerSize(windowName, expand) {
+		const window = windowManager.get(windowName).object
+		if (expand) {
+			window.setSize(400, 525)
+		} else {
+			window.setSize(400, 325)
+		}
 	}
 }

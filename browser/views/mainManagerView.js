@@ -14,7 +14,7 @@ class MainManagerView extends Nanocomponent {
 		super()
 		const windowName = 'mainManagerView.js'
 		this.expandedState = 1
-		windowManagement.setWindowSize(windowName, 400, 525)
+		windowManagement.setWindowSize(windowName, 400, 325)
 
 		this.children = {
 			closeButton: new UtilityButton({ children: '✕' }),
@@ -62,7 +62,7 @@ class MainManagerView extends Nanocomponent {
 						exchangeRate: 1.73 
 					}
 				)}
-				${children.fileSection.render({ expandedState: expandedState })}
+				${children.fileSection.render()}
 			</div>
 		`
 	}	
