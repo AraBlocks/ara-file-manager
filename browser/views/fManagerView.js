@@ -1,6 +1,6 @@
 'use strict'
 
-const ItemRow = require('./fileManager/itemRow')
+const Header = require('./fileManager/header')
 const Section = require('./fileManager/section')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -22,6 +22,10 @@ class FileManagerView extends Nanocomponent {
 
     return html`
       <div id="outside">
+        ${new Header({
+          userBalance: 325.45,
+          username: 'Merkle Romano'
+        }).render()}
         ${new Section({
           files: mockFiles(),
           type: 'published'
