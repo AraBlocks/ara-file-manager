@@ -31,7 +31,7 @@ class HamburgerView extends Nanocomponent {
       menu,
       close,
       expand,
-      wallet,
+      wallet
     } = this
 
     return html`

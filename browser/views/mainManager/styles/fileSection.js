@@ -20,8 +20,8 @@ module.exports = {
 
 		return css`
 			:host {
-				width: 100%;
 				height: ${height}px;
+				width: 100%;
 			}
 		`
 	}, 

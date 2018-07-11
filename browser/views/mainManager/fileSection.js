@@ -12,7 +12,8 @@ class FileSection extends Nanocomponent {
 		super()
 		this.state = { expandedState }
 		this.children = {
-			expandWindowButton: new UtilityButton( { children: '▼', 
+			expandWindowButton: new UtilityButton( { 
+				children: '▼', 
 				onclick: () => { 
 					if (windowManagement.getHeight(windowName) == 525) {
 						windowManagement.setWindowSize(windowName, 400, 325)
@@ -48,15 +49,15 @@ class FileSection extends Nanocomponent {
 	createElement() {
 		const { state, children } = this	
 		return html`
-			<div class=${styles.container}>
-				<div class=${styles.horizontalContainer}>
-					<div class=${styles.header}>
+			<div class="${styles.container} FileSection-container">
+				<div class="${styles.horizontalContainer} FileSection-horizontalContainer">
+					<div class="${styles.header} FileSection-Header">
 						Files
 					</div>
 					${children.expandWindowButton.render({})}
 				</div>
 				${divider(true)}
-				<div class=${styles.flexibleContainer( state.expandedState )}></div>
+				<div class="${styles.flexibleContainer( state.expandedState )} FileSection-flexibleContainer"></div>
 				${divider(false)}
 				${children.fileManagerButton.render()}
 			</div>
