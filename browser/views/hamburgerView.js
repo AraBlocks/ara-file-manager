@@ -1,6 +1,5 @@
 'use strict'
 
-const FileSection = require('./mainManager/fileSection')
 const Menu= require('../components/hamburgerMenu/menu')
 const UtilityButton = require('../components/utilityButton')
 const WalletInfo = require('./mainManager/walletInfo')
@@ -16,9 +15,9 @@ class HamburgerView extends Nanocomponent {
     })
     this.close = new UtilityButton({ children: '✕' })
     this.expand = new UtilityButton({ children: '▼' })
-    this.wallet = new WalletInfo({ 
-      araOwned: 9999, 
-      exchangeRate: 1.73 
+    this.wallet = new WalletInfo({
+      araOwned: 9999,
+      exchangeRate: 1.73
     })
     window.hamburger = this
   }
@@ -28,12 +27,11 @@ class HamburgerView extends Nanocomponent {
   }
 
   createElement(chooState) {
-    const { 
-      menu, 
-      close, 
-      expand, 
+    const {
+      menu,
+      close,
+      expand,
       wallet,
-      fileSection 
     } = this
 
     return html`

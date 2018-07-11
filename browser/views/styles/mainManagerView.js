@@ -12,6 +12,7 @@ module.exports = {
 
 	container: css`
 		:host {
+			background-color: white;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
@@ -44,17 +45,11 @@ module.exports = {
 
 	horizontalContainer: css`
 		:host {
+			align-items: center;
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
 			width: 100%;
-		}
-	`,  
-
-	centerAlign: css`
-		:host {
-			justify-content: space-between;
-			align-items: center;
 		}
 	`,  
 
