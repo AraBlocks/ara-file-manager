@@ -9,17 +9,20 @@ const Nanocomponent = require('nanocomponent')
 
 class Header extends Nanocomponent {
   constructor({
+    parentRerender,
+    parentState,
     userBalance,
     username
   }) {
     super()
 
-    this.props = { username }
-
-    this.state = {
-      activeTab: 0,
-      userBalance
+    this.props = {
+      parentRerender,
+      parentState,
+      username
     }
+
+    this.state = { userBalance }
 
     this.children = {
       publishFilebutton: new Button({
@@ -37,14 +40,15 @@ class Header extends Nanocomponent {
   }
 
   makeTabs() {
+    const { props } = this
     const children = ['All Files', 'Published Files', 'Purchases']
     return children.map((child, index) =>
       new TabItem({
         children: child,
         index,
-        isActive: index === this.state.activeTab,
-        parentRerender: this.rerender.bind(this),
-        parentState: this.state,
+        isActive: index === props.parentState.activeTab,
+        parentRerender: props.parentRerender,
+        parentState: props.parentState,
       })
     )
   }
@@ -53,7 +57,7 @@ class Header extends Nanocomponent {
     return true
   }
 
-  createElement() {
+  createElement({ activeTab }) {
     const {
       children,
       props,
@@ -85,8 +89,9 @@ class Header extends Nanocomponent {
       </div>
       <div class="${styles.tabHolder} header-tabHolder">
         ${children.tabs.map((tab, index) =>
-          tab.render({ isActive: state.activeTab === index})
+          tab.render({ isActive: activeTab === index})
         )}
+
       </div>
       <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
         ${children.publishFilebutton.render()}
