@@ -2,6 +2,7 @@
 
 const Header = require('./fileManager/header')
 const Section = require('./fileManager/section')
+const Container = require('./fileManager/container')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -21,20 +22,18 @@ class FileManagerView extends Nanocomponent {
      })
 
     return html`
-      <div id="outside">
-        ${new Header({
-          userBalance: 325.45,
-          username: 'Merkle Romano'
+      <div>
+        ${new Container({
+          userData: {
+            username: 'MerkleRomano',
+            userBalance: '434.12'
+          },
+          files: {
+            published: mockFiles(),
+            purchased: mockFiles()
+          }
         }).render()}
-        ${new Section({
-          files: mockFiles(),
-          type: 'published'
-        }).render()}
-        ${new Section({
-          files: mockFiles(),
-          type: 'purchased'
-        }).render()}
-      </div>
+    </div>
   `
   }
 }

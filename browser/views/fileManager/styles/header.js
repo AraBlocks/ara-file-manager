@@ -34,12 +34,12 @@ module.exports = {
 
   tabHolder: css`
     :host {
-      cursor: pointer;
       display: flex;
     }
 
     :host div {
-      margin-right: 10px;
+      cursor: pointer;
+      margin-right: 30px;
     }
   `,
 
@@ -52,6 +52,7 @@ module.exports = {
 
   userHolder: css`
     :host {
+      align-items: flex-end;
       display: flex;
       flex-direction: column;
       font-size: 16px;

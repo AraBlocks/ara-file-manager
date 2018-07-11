@@ -13,7 +13,7 @@ class Section extends Nanocomponent {
     super()
 
     this.props = { typeRow: type }
-    this.state = { files: this.makeRows(files) }
+    this.state = { files: this.makeRows(files[type]) }
   }
 
   makeRows(files) {
@@ -22,12 +22,16 @@ class Section extends Nanocomponent {
   }
 
   update({ files }) {
-    const { makeRows, state } = this
+    const {
+      props,
+      state
+    } = this
 
-    if (files.length !== state.files.length) {
-      state.files = makeRows(files)
+    const isSame = files[props.typeRow].length !== state.files.length
+    if (!isSame) {
+      state.files = this.makeRows(files[props.typeRow])
     }
-    return true
+    return !isSame
   }
 
   createElement() {
@@ -47,7 +51,7 @@ class Section extends Nanocomponent {
       let text
       switch (props.typeRow) {
         case 'purchased':
-          text = 'Purchased Files'
+          text = 'Purchased'
           break
         default:
           text = 'Published Files'

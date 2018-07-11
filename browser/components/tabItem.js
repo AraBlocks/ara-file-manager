@@ -25,7 +25,7 @@ class TabMenu extends Nanocomponent {
   }
 
   selectTab() {
-    const { props, state } = this
+    const { props } = this
     props.parentState.activeTab = props.index
     props.parentRerender()
   }
