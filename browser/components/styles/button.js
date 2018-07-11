@@ -12,27 +12,35 @@ module.exports = {
   colors,
   fonts,
 
-  smallInvisible({ color  = 'red', weight = 'bold' }) {
+  smallInvisible({
+    color  = 'red',
+    fontSize = '14',
+    weight = 'bold'
+  }) {
     return css`
       :host {
         background-color: white;
         color: ${colorSelector(color)};
         font-family: ${fontSelector(weight)};
-        font-size: 14px;
+        font-size: ${fontSize}px;
         height: 30px;
         width: 90%;
       }
     `
   },
 
-  standard({ color = 'red'}) {
+  standard({
+    color  = 'red',
+    fontSize = '18',
+    weight = 'bold'
+  }) {
     return css`
       :host {
         background-color: ${colorSelector(color)};
         color: white;
-        font-family: ${fonts.bold};
-        font-size: 18px;
-        height: 50px;
+        font-family: ${fontSelector(weight)};
+        font-size: ${fontSize}px;
+        height: 2em;
         width: 90%;
       }
     `
