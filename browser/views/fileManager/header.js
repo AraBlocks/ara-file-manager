@@ -31,7 +31,7 @@ class Header extends Nanocomponent {
     this.state = {
       activeTab: 0,
       userBalance
-     }
+    }
   }
 
   update(){
@@ -43,7 +43,7 @@ class Header extends Nanocomponent {
       children,
       props,
       state
-     } = this
+    } = this
 
     return html`
      <div class="${styles.container} header-container">
