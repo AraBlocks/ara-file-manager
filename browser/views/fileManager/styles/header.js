@@ -32,6 +32,17 @@ module.exports = {
     }
   `,
 
+  tabHolder: css`
+    :host {
+      cursor: pointer;
+      display: flex;
+    }
+
+    :host div {
+      margin-right: 10px;
+    }
+  `,
+
   titleHolder: css`
     :host {
       font-size: 30px;
