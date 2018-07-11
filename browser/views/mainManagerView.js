@@ -13,7 +13,6 @@ class MainManagerView extends Nanocomponent {
 	constructor() {
 		super()
 		const windowName = 'mainManagerView.js'
-		this.expandedState = 1
 		windowManagement.setWindowSize(windowName, 400, 325)
 
 		this.children = {
@@ -31,7 +30,6 @@ class MainManagerView extends Nanocomponent {
 				exchangeRate: 1.73 
 			}),
 			fileSection: new FileSection({ 
-				expandedState: this.expandedState, 
 				windowName: windowName 
 			})
     }
@@ -42,7 +40,7 @@ class MainManagerView extends Nanocomponent {
 	}
 
 	createElement() {
-		const { children, expandedState } = this
+		const { children } = this
 		return html`
 			<div class="${styles.container} MainManagerView-container">
         <div class="${styles.horizontalContainer} MainManagerView-horizontalContainer">

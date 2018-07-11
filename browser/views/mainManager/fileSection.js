@@ -61,7 +61,9 @@ class FileSection extends Nanocomponent {
 		}
 
 		function renderExpandButton() {
-			return (state.expanded) ? children.expandWindowButton.render({ children: '▲' }) : children.expandWindowButton.render({ children: '▼' })
+			return (state.expanded) 
+				? children.expandWindowButton.render({ children: '▲' }) 
+				: children.expandWindowButton.render({ children: '▼' })
 		}
 	}
 }
