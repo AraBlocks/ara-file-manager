@@ -3,7 +3,8 @@
 const { 
 	colors,
 	colorSelector, 
-	fonts } = require('styleUtils')
+	fonts 
+} = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
@@ -16,7 +17,6 @@ module.exports = {
 			colorUnchecked = 'grey'
 		}
 	}) {
-		console.log(colorChecked)
 		return css`
 			:host {
 				width: 50px;
