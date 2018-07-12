@@ -37,8 +37,8 @@ class HamburgerView extends Nanocomponent {
     return html`
       <div class="popup">
         ${menu.render()}
-        ${close.render()}
-        ${expand.render()}
+        ${close.render({})}
+        ${expand.render({})}
         ${wallet.render()}
       </div>
     `
