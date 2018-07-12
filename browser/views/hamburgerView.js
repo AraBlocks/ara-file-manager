@@ -15,9 +15,9 @@ class HamburgerView extends Nanocomponent {
     })
     this.close = new UtilityButton({ children: '✕' })
     this.expand = new UtilityButton({ children: '▼' })
-    this.wallet = new WalletInfo({ 
-      araOwned: 9999, 
-      exchangeRate: 1.73 
+    this.wallet = new WalletInfo({
+      araOwned: 9999,
+      exchangeRate: 1.73
     })
     window.hamburger = this
   }
@@ -27,18 +27,18 @@ class HamburgerView extends Nanocomponent {
   }
 
   createElement(chooState) {
-    const { 
-      menu, 
-      close, 
-      expand, 
-      wallet 
+    const {
+      menu,
+      close,
+      expand,
+      wallet
     } = this
 
     return html`
       <div class="popup">
         ${menu.render()}
-        ${close.render()}
-        ${expand.render()}
+        ${close.render({})}
+        ${expand.render({})}
         ${wallet.render()}
       </div>
     `
