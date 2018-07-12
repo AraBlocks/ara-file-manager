@@ -15,10 +15,12 @@ class ItemRow extends Nanocomponent {
 	}) {
 		super()
 		this.props = {
+			name,
+			size
+		}
+		this.state = {
 			downloadPercent,
 			meta,
-			name,
-			size,
 			status
 		}
 		this.children = {
@@ -26,16 +28,26 @@ class ItemRow extends Nanocomponent {
 		}
 	}
 
-	update() {
-		return true
+	update({ downloadPercent, meta, status }) {
+		const { state } = this
+		const sameStatus = state.downloadPercent == downloadPercent && state.meta == meta && state.status == status 
+		if (!sameStatus) {
+			state.downloadPercent = downloadPercent
+			state.meta = meta
+			state.status = status
+		}
+		return !sameStatus
 	}
 
 	createElement() {
-		const { children, props } = this
+		const { children, props, state } = this
 		return html`
 			<div class="${styles.container} itemRow-container">
 				<div class="${styles.iconHolder} itemRow-iconHolder">
-					${children.progressRing.render({ downloadPercent: props.downloadPercent, status: props.status })}
+					${children.progressRing.render({ 
+						downloadPercent: state.downloadPercent, 
+						status: state.status 
+					})}
 				</div>
 				<div class="${styles.summaryHolder} itemRow-summaryHolder">
 					<div class="${styles.nameHolder} itemRow-nameHolder">
@@ -46,7 +58,7 @@ class ItemRow extends Nanocomponent {
 					<div class="${styles.detailHolder} itemRow-detailHolder">
 						${renderSize()} gb
 						<div>
-							<b>Peers</b>: ${props.meta.peers}
+							<b>Peers</b>: ${state.meta.peers}
 						</div>
 					</div>
 				</div>
@@ -60,7 +72,7 @@ class ItemRow extends Nanocomponent {
 					text = props.size
 					break
 				default:
-					text = `${Math.round(props.downloadPercent * props.size * 100) / 100}/${props.size}`
+					text = `${Math.round(state.downloadPercent * props.size * 100) / 100}/${props.size}`
 			}
 			return text
 		}

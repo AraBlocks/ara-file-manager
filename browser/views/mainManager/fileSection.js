@@ -65,7 +65,11 @@ class FileSection extends Nanocomponent {
 				</div>
 				${divider()}
 				<div class="${styles.flexibleContainer(state.expanded)} FileSection-flexibleContainer">
-					${state.files.map(file => file.render())}
+					${state.files.map(file => file.render({
+						downloadPercent: file.state.downloadPercent,
+						meta: file.state.meta,
+						status: file.state.status
+					}))}
 				</div>
 				${state.expanded ? divider() : null}
 				${children.fileManagerButton.render()}
