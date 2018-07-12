@@ -21,16 +21,20 @@ class UtilityButton extends Nanocomponent {
     }
   }
 
-  update() {
-    return true
+  update({ children }) {
+    let sameSate = this.state.children == children
+    if (!sameSate) {
+      this.state.children = children
+    }
+    return !sameSate
   }
 
-  createElement({ children }) {
+  createElement() {
     const { props, state } = this
 
     return html`
       <button onclick=${props.onclick} class=${styles.standard}>
-        ${(children != null) ? children : state.children}
+        ${ state.children }
       </button>
     `
   }
