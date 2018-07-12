@@ -9,7 +9,7 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileSection extends Nanocomponent {
-	constructor({ 
+	constructor({
 		windowName,
 		files = []
 	}) {
@@ -17,20 +17,20 @@ class FileSection extends Nanocomponent {
 		this.state = { expanded: false, files: this.makeRows(files) }
 		this.windowName = windowName
 		this.children = {
-			expandWindowButton: new UtilityButton( { 
-				children: '▼', 
+			expandWindowButton: new UtilityButton({
+				children: '▼',
 				onclick: this.changeWindowSize.bind(this)
 			}),
 			fileManagerButton: new Button({
-        children: 'Open File Manager',
-        cssClass: {
-          name: 'smallInvisible',
-          opts: {
-            color: 'black',
-            weight: 'bold'
-          }
-        }
-			}), 
+				children: 'Open File Manager',
+				cssClass: {
+					name: 'smallInvisible',
+					opts: {
+						color: 'black',
+						weight: 'bold'
+					}
+				}
+			}),
 		}
 	}
 
@@ -40,24 +40,21 @@ class FileSection extends Nanocomponent {
 		this.rerender()
 	}
 
-  makeRows(files) {
-    return files.map(file => new ItemRow({ ...file }))
-  }
+	makeRows(files) {
+		return files.map(file => new ItemRow({ ...file }))
+	}
 
 	update({ files }) {
-		const {
-      state
-    } = this
-
-    const isSame = false
-    if (!isSame) {
+		const { state } = this
+		const isSame = state.files.length == files.length
+		if (!isSame) {
 			state.files = this.makeRows(files)
-    }
-    return !isSame
+		}
+		return !isSame
 	}
 
 	createElement() {
-		const { state, children } = this	
+		const { state, children } = this
 		return html`
 			<div class="${styles.container} FileSection-container">
 				<div class="${styles.horizontalContainer} FileSection-horizontalContainer">
@@ -79,8 +76,8 @@ class FileSection extends Nanocomponent {
 		}
 
 		function renderExpandButton() {
-			return (state.expanded) 
-				? children.expandWindowButton.render({ children: '▲' }) 
+			return (state.expanded)
+				? children.expandWindowButton.render({ children: '▲' })
 				: children.expandWindowButton.render({ children: '▼' })
 		}
 	}
