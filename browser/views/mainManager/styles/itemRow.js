@@ -20,18 +20,18 @@ module.exports = {
   `,
 
   detailHolder: css`
-  :host {
-    color: black;
-    display: flex;
-    font-family: ${fonts.light};
-    font-size: 12px;
-    justify-content: space-between;
-    width: 100%;
-  }
-  :host b {
-    font-family: ${fonts.bold}
-  }
-`,
+    :host {
+      color: black;
+      display: flex;
+      font-family: ${fonts.light};
+      font-size: 12px;
+      justify-content: space-between;
+      width: 100%;
+    }
+    :host b {
+      font-family: ${fonts.bold}
+    }
+  `,
 
   iconHolder: css`
     :host {

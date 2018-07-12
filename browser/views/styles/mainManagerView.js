@@ -51,7 +51,7 @@ module.exports = {
 			justify-content: space-between;
 			width: 100%;
 		}
-	`,  
+	`,
 
 	bottomAlign: css`
 		:host {
@@ -59,5 +59,5 @@ module.exports = {
 			justify-content: flex-start;
 			width: 100%;
 		}
-	`,  
+	`,
 }
