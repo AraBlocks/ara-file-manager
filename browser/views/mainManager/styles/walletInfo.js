@@ -10,7 +10,7 @@ module.exports = {
 	ara: fontCSS.proxiH1,
 	araOwned: fontCSS.proxiLarge,
 	exchangeRate: fontCSS.proxiContent,
-	
+
 	container: css`
 		:host {
       align-items: left;
@@ -18,7 +18,10 @@ module.exports = {
       flex-direction: column;
       height: 75px;
       justify-content: space-between;
-      width: 100%;
+			width: 100%;
+		}
+		:host b {
+			font-family: ${fonts.bold};
 		}
 	`,
 
@@ -30,5 +33,5 @@ module.exports = {
 			justify-content: flex-start;
 			width: 100%;
 		}
-	` 
+	`
 }
