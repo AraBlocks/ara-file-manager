@@ -9,14 +9,20 @@ module.exports = {
 	header: fontCSS.noeH1,
 
 	flexibleContainer(expanded) {
+		let display = "none"
 		let height = 0
 		if (expanded) {
 			height = 199
+			display = "flex"
 		} 
 		return css`
 			:host {
+				display: ${display};
+				flex-direction: column;
+				justify-content: space-between;
 				height: ${height}px;
 				width: 100%;
+				overflow: scroll;
 			}
 		`
 	}, 

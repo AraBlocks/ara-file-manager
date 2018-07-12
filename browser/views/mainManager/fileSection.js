@@ -1,6 +1,7 @@
 'use strict'
 
 const Button = require('../../components/button')
+const ItemRow = require('./itemRow')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/fileSection')
 const windowManagement = require('../../lib/store/windowManagement')
@@ -8,9 +9,12 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileSection extends Nanocomponent {
-	constructor({ windowName }) {
+	constructor({ 
+		windowName,
+		files = []
+	}) {
 		super()
-		this.state = { expanded: false }
+		this.state = { expanded: false, files: this.makeRows(files) }
 		this.windowName = windowName
 		this.children = {
 			expandWindowButton: new UtilityButton( { 
@@ -36,8 +40,20 @@ class FileSection extends Nanocomponent {
 		this.rerender()
 	}
 
-	update() {
-		return true
+  makeRows(files) {
+    return files.map(file => new ItemRow({ ...file }))
+  }
+
+	update({ files }) {
+		const {
+      state
+    } = this
+
+    const isSame = false
+    if (!isSame) {
+			state.files = this.makeRows(files)
+    }
+    return !isSame
 	}
 
 	createElement() {
@@ -51,7 +67,9 @@ class FileSection extends Nanocomponent {
 					${renderExpandButton()}
 				</div>
 				${divider()}
-				<div class="${styles.flexibleContainer(state.expanded)} FileSection-flexibleContainer"></div>
+				<div class="${styles.flexibleContainer(state.expanded)} FileSection-flexibleContainer">
+					${state.files.map(file => file.render())}
+				</div>
 				${state.expanded ? divider() : null}
 				${children.fileManagerButton.render()}
 			</div>
