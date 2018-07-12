@@ -6,14 +6,18 @@ module.exports = {
     const cleanDir = __dirname.slice(1)
     const root = '/' + cleanDir.slice(0, cleanDir.indexOf('/'))
 
-    return fs.readdirSync(root).reduce((acc, file) => {
-      if(file !== '.localized') {
+    return fs.readdirSync(root).reduce((acc, user) => {
+      if (user !== '.localized') {
         try {
-          fs.statSync(`${root}/${file}/.ara`)
-          const ids = fs.readdirSync(`${root}/${file}/.ara/identities`)
-            .reduce((acc, file) => file.length === 64 ? [...acc, file] : acc, [])
+          fs.statSync(`${root}/${user}/.ara`)
+          const ids = fs.readdirSync(`${root}/${user}/.ara/identities`)
+            .reduce((acc, file) =>
+              file.length === 64
+                ? [...acc, `${root}/${user}/.ara/identities/${file}`]
+                : acc, []
+            )
           acc = [...acc, ...ids]
-        } catch (e) {}
+        } catch (e) { }
       }
       return acc
     }, [])
