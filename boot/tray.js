@@ -32,7 +32,11 @@ const buildTray = () => {
   }
 
   function createWindow(view) {
-    return windowManager.createNew(view, view, getIndex(view), { showDevTools: false })
+    return windowManager.createNew(view, view, getIndex(view), {
+      width: 300,
+      height: 300,
+      showDevTools: false
+     })
   }
 
   function adjustPosition(window) {
