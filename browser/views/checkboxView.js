@@ -7,14 +7,16 @@ const Nanocomponent = require('nanocomponent')
 class CheckboxView extends Nanocomponent {
 	constructor() {
 		super()
-		this.props = {}
+		this.state = { checkbox: false }
 		this.checkbox = new Checkbox({ 
 			checked: false, 
 			cssClass: {
 				opts: {
 					colorChecked: 'blue'
 				}
-			}
+			}, 
+			field: 'checkbox',
+			parentState: this.state
 		})
 	}
 

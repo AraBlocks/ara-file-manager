@@ -7,16 +7,19 @@ const Nanocomponent = require('nanocomponent')
 class Checkbox extends Nanocomponent {
 	constructor({ 
 		checked, 
-		cssClass = {} 
+		cssClass = {},
+		field = "" ,
+		parentState = {}
 	}) {
 		super()
-		this.props = { cssClass }
+		this.props = { cssClass, field, parentState }
 		this.state = { checked }
 		this.onclick = this.onclick.bind(this)
 	}
 
 	onclick() {
 		this.state.checked = !this.state.checked
+		this.props.parentState[this.props.field] = this.state.checked
 		this.rerender()
 	}
 
@@ -35,13 +38,13 @@ class Checkbox extends Nanocomponent {
 			<div 
 				class=${styles.container({	
 					checked: state.checked, 
-					opts: (props.cssClass.opts || {})
+					opts: props.cssClass.opts || {}
 				})} 
 				onclick=${onclick}
 			>
 				<div class=${styles.checkmark({
 					checked: state.checked,
-					opts: (props.cssClass.opts || {})
+					opts: props.cssClass.opts || {}
 				})}
 				>
 					✓
