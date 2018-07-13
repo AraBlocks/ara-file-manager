@@ -44,13 +44,8 @@ class FileSection extends Nanocomponent {
 		return files.map(file => new ItemRow({ ...file }))
 	}
 
-	update({ files }) {
-		const { state } = this
-		const isSame = state.files.length == files.length
-		if (!isSame) {
-			state.files = this.makeRows(files)
-		}
-		return !isSame
+	update() {
+		return true
 	}
 
 	createElement() {
@@ -65,11 +60,7 @@ class FileSection extends Nanocomponent {
 				</div>
 				${divider()}
 				<div class="${styles.flexibleContainer(state.expanded)} FileSection-flexibleContainer">
-					${state.files.map(file => file.render({
-						downloadPercent: file.state.downloadPercent,
-						meta: file.state.meta,
-						status: file.state.status
-					}))}
+					${state.files.map(file => file.render())}
 				</div>
 				${state.expanded ? divider() : null}
 				${children.fileManagerButton.render()}
