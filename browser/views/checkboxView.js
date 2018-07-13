@@ -1,6 +1,5 @@
 'use strict'
 
-//const styles = require('./styles/tooltip')
 const Checkbox = require('../components/checkbox')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
