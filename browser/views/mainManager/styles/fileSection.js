@@ -9,13 +9,13 @@ module.exports = {
 	header: fontCSS.noeH1,
 
 	flexibleContainer(expanded) {
-		let height = 0
-		if (expanded) {
-			height = 199
-		} 
 		return css`
 			:host {
-				height: ${height}px;
+				display: ${expanded ? "flex" : "none"};
+				flex-direction: column;
+				height: ${expanded ? 199 : 0}px;
+				justify-content: space-between;
+				overflow: scroll;
 				width: 100%;
 			}
 		`
