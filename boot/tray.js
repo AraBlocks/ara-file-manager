@@ -18,7 +18,7 @@ const buildTray = () => {
     { label: 'File Manager', type: 'normal', click: () => openWindow('manager') },
     { label: 'Publish File', type: 'normal' },
     { label: 'Log Out', type: 'normal' },
-    { label: 'Developer', type: 'normal' , click: () => openWindow('home') },
+    { label: 'Developer', type: 'normal' , click: () => openWindow('developer') },
     { label: 'Quit', type: 'normal', role: 'quit' }
   ])
   tray.setContextMenu(contextMenu)
@@ -52,6 +52,9 @@ const buildTray = () => {
     }
     return index
   }
+
+  openWindow('developer')
 }
+
 
 module.exports = buildTray
