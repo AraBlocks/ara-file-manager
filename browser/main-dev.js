@@ -5,13 +5,13 @@ const remote = require('electron').remote;
 const windowManager = remote.require('electron-window-manager')
 const fs = require('fs')
 
-const exclude = [ 'fileManager.js', 'styles', 'fManager' ]
+const exclude = [ 'fileManager.js', 'styles', 'fileManager', 'mainManager' ]
 
 fs.readdirSync(views).forEach(createElement)
 
 function createElement(view) {
-  view = view.slice(0,-3)
   if (exclude.includes(view)) { return }
+  view = view.slice(0,-3)
 
   const handler = (e) =>{
     windowManager.bridge.emit(view)
