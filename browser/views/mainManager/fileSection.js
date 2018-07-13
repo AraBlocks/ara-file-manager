@@ -1,6 +1,7 @@
 'use strict'
 
 const Button = require('../../components/button')
+const ItemRow = require('./itemRow')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/fileSection')
 const windowManagement = require('../../lib/store/windowManagement')
@@ -8,25 +9,28 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileSection extends Nanocomponent {
-	constructor({ windowName }) {
+	constructor({
+		windowName,
+		files = []
+	}) {
 		super()
-		this.state = { expanded: false }
+		this.state = { expanded: false, files: this.makeRows(files) }
 		this.windowName = windowName
 		this.children = {
-			expandWindowButton: new UtilityButton( { 
-				children: '▼', 
+			expandWindowButton: new UtilityButton({
+				children: '▼',
 				onclick: this.changeWindowSize.bind(this)
 			}),
 			fileManagerButton: new Button({
-        children: 'Open File Manager',
-        cssClass: {
-          name: 'smallInvisible',
-          opts: {
-            color: 'black',
-            weight: 'bold'
-          }
-        }
-			}), 
+				children: 'Open File Manager',
+				cssClass: {
+					name: 'smallInvisible',
+					opts: {
+						color: 'black',
+						weight: 'bold'
+					}
+				}
+			}),
 		}
 	}
 
@@ -36,12 +40,21 @@ class FileSection extends Nanocomponent {
 		this.rerender()
 	}
 
-	update() {
+	makeRows(files) {
+		return files.map(file => new ItemRow({ ...file }))
+	}
+
+	update({ files }) {
+		const { state } = this
+		const isSame = state.files.length == files.length
+		if (!isSame) {
+			state.files = this.makeRows(files)
+		}
 		return true
 	}
 
 	createElement() {
-		const { state, children } = this	
+		const { state, children } = this
 		return html`
 			<div class="${styles.container} FileSection-container">
 				<div class="${styles.horizontalContainer} FileSection-horizontalContainer">
@@ -51,7 +64,12 @@ class FileSection extends Nanocomponent {
 					${renderExpandButton()}
 				</div>
 				${divider()}
-				<div class="${styles.flexibleContainer(state.expanded)} FileSection-flexibleContainer"></div>
+				<div class="${styles.flexibleContainer(state.expanded)} FileSection-flexibleContainer">
+					${state.files.map(file => file.render({
+						downloadPercent: file.state.downloadPercent,
+						status: file.state.status
+					}))}
+				</div>
 				${state.expanded ? divider() : null}
 				${children.fileManagerButton.render()}
 			</div>
@@ -61,8 +79,8 @@ class FileSection extends Nanocomponent {
 		}
 
 		function renderExpandButton() {
-			return (state.expanded) 
-				? children.expandWindowButton.render({ children: '▲' }) 
+			return (state.expanded)
+				? children.expandWindowButton.render({ children: '▲' })
 				: children.expandWindowButton.render({ children: '▼' })
 		}
 	}

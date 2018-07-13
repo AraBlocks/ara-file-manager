@@ -71,7 +71,7 @@ module.exports = {
   fontCSS: {
     noeH1:  css`
       :host {
-        font-family: "Noe", "ProximaNova-Bold";
+        font-family: "NoeDisplay-Bold", "ProximaNova-Bold";
         font-size: 24px;
       }
     `,
