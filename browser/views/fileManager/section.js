@@ -31,7 +31,7 @@ class Section extends Nanocomponent {
     if (!isSame) {
       state.files = this.makeRows(files[props.typeRow])
     }
-    return !isSame
+    return true
   }
 
   createElement() {
@@ -43,7 +43,10 @@ class Section extends Nanocomponent {
           ${headerText()}
         </div>
         <div class="${styles.separator} section-separator"></div>
-        ${state.files.map(file => file.render())}
+        ${state.files.map(file => file.render({
+          downloadPercent: file.downloadPercent,
+          status: file.status
+         }))}
       </div>
     `
 
