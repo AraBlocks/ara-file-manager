@@ -12,8 +12,8 @@ const Nanocomponent = require('nanocomponent')
 class MainManagerView extends Nanocomponent {
 	constructor() {
 		super()
-		const windowName = 'mainManagerView.js'
-		windowManagement.setWindowSize(windowName, 400, 325)
+		const windowName = 'mainManagerView'
+		// windowManagement.setWindowSize(windowName, 400, 325)
 
 		this.children = {
 			closeButton: new UtilityButton({ children: '✕' }),
