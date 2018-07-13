@@ -17,7 +17,7 @@ fs.readdirSync(views).forEach((view, i) => {
 const makeWindow = (view, i ) => {
   windowManager.open(
     view,
-    `Window ${i}`,
+    view,
     popup,
     false,
     {
