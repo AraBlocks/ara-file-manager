@@ -3,7 +3,7 @@
 const { Menu, Tray } = require('electron')
 const path = require('path')
 const Positioner = require('electron-positioner')
-const windowManager = require('electron-window-manager')
+const windowManager = require('../kernel/lib/lsWindowManager')
 
 const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
 const devIndex = `file://${path.resolve(__dirname, '..', 'browser/index-dev.html')}`
