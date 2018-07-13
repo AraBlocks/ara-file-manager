@@ -22,7 +22,8 @@ module.exports = {
 				width: 50px;
 				height: 50px;
 				background-color: white;
-				border: 2px solid ${checked 
+				border: 2px solid ${
+					checked 
 					? colorSelector(colorChecked) 
 					: colorSelector(colorUnchecked)
 				};
