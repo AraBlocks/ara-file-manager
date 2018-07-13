@@ -60,11 +60,12 @@ class ItemRow extends Nanocomponent {
 
   update({ downloadPercent, status }) {
     const { state } = this
-    if (downloadPercent !== state.downloadPercent || status !== this.status) {
+
+    const isSame = downloadPercent !== state.downloadPercent || status !== this.status
+    if (!isSame) {
       Object.assign(this.state, { downloadPercent, status })
-      return true
     }
-    return false
+    return !isSame
   }
 
   createElement() {
