@@ -11,9 +11,9 @@ fs.readdirSync(views).forEach(createElement)
 
 function createElement(view) {
   if (exclude.includes(view)) { return }
-  view = view.slice(0,-3)
+  view = view.slice(0, -3)
 
-  const handler = (e) =>{
+  const handler = (e) => {
     windowManager.bridge.emit(view)
     windowManager.sharedData.set('current', view)
   }
