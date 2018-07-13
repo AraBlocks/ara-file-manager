@@ -25,12 +25,17 @@ class CheckboxView extends Nanocomponent {
 	}
 
 	createElement() {
-		const { checkbox, props } = this
+		const { checkbox, state } = this
 		return html`
 			<div>
 				${checkbox.render()}
+				<button onclick=${onclick}>log checkbox state</button>
 			</div>
 		`
+
+		function onclick() {
+			console.log(state)
+		}
 	}
 }
 
