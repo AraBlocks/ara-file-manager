@@ -24,5 +24,3 @@ function createElement(view) {
   const br = document.createElement('br')
   document.body.appendChild(br)
 }
-console.log('this is running')
-
