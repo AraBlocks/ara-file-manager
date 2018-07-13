@@ -37,9 +37,9 @@ class ItemRow extends Nanocomponent {
 		return html`
 			<div class="${styles.container} itemRow-container">
 				<div class="${styles.iconHolder} itemRow-iconHolder">
-					${children.progressRing.render({ 
-						downloadPercent: state.downloadPercent, 
-						status: state.status 
+					${children.progressRing.render({
+						downloadPercent: state.downloadPercent,
+						status: state.status
 					})}
 				</div>
 				<div class="${styles.summaryHolder} itemRow-summaryHolder">
