@@ -28,8 +28,13 @@ class ItemRow extends Nanocomponent {
 		}
 	}
 
-	update() {
-		return true
+	update({ downloadPercent, status }) {
+		const { state } = this
+		const sameStatus = state.downloadPercent == downloadPercent && state.status == status 
+		if (!sameStatus) {
+			Object.assign(this.state, { downloadPercent, status })
+		}
+		return !sameStatus
 	}
 
 	createElement() {
