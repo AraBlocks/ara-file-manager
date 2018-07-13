@@ -44,8 +44,13 @@ class FileSection extends Nanocomponent {
 		return files.map(file => new ItemRow({ ...file }))
 	}
 
-	update() {
-		return true
+	update({ files }) {
+		const { state } = this
+		const isSame = state.files.length == files.length
+		if (!isSame) {
+			state.files = this.makeRows(files)
+		}
+		return !isSame
 	}
 
 	createElement() {
