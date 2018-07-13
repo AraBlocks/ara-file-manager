@@ -10,11 +10,12 @@ const exclude = [ 'fileManager.js', 'styles', 'fManager' ]
 fs.readdirSync(views).forEach(createElement)
 
 function createElement(view) {
+  view = view.slice(0,-3)
   if (exclude.includes(view)) { return }
 
   const handler = (e) =>{
     windowManager.bridge.emit(view)
-    windowManager.sharedData.set('current', view.slice(0, view.length - 3))
+    windowManager.sharedData.set('current', view)
   }
 
   const button = document.createElement('button')
