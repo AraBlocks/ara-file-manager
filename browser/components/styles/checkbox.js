@@ -11,7 +11,8 @@ module.exports = {
 	colors,
 	fonts,
 
-	container({ checked, 
+	container({ 
+		checked, 
 		opts: { 
 			colorChecked = 'red',
 			colorUnchecked = 'grey'
@@ -27,6 +28,7 @@ module.exports = {
 					? colorSelector(colorChecked) 
 					: colorSelector(colorUnchecked)
 				};
+				cursor: pointer;
 			}
 		`
 	},

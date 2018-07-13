@@ -12,14 +12,19 @@ class Checkbox extends Nanocomponent {
 		parentState = {}
 	}) {
 		super()
-		this.props = { cssClass, field, parentState }
+		this.props = { 
+			cssClass, 
+			field, 
+			parentState 
+		}
 		this.state = { checked }
 		this.onclick = this.onclick.bind(this)
 	}
 
 	onclick() {
-		this.state.checked = !this.state.checked
-		this.props.parentState[this.props.field] = this.state.checked
+		const { state, props } = this
+		state.checked = !state.checked
+		props.parentState[props.field] = state.checked
 		this.rerender()
 	}
 
