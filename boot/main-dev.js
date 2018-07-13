@@ -1,7 +1,7 @@
 'use strict'
 
 const { app } = require('electron')
-const windowManager = require('electron-window-manager')
+const windowManager = require('../kernel/lib/lsWindowManager')
 const isDev = require('electron-is-dev')
 const path = require('path')
 require('./ipc-dev')
