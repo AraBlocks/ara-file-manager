@@ -12,7 +12,6 @@ const Nanocomponent = require('nanocomponent')
 class MainManagerView extends Nanocomponent {
 	constructor() {
 		super()
-    const windowName = 'manager'
 
 		this.children = {
 			closeButton: new UtilityButton({ children: '✕' }),
@@ -29,7 +28,6 @@ class MainManagerView extends Nanocomponent {
 				exchangeRate: 1.73 
 			}),
 			fileSection: new FileSection({ 
-				windowName: windowName,
 				files: mockFiles() 
 			})
     }
