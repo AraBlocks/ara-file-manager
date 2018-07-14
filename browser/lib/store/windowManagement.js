@@ -12,11 +12,10 @@ module.exports = {
 		close()
 	},
 
-	setWindowSize(windowName, width, height, animated = false) {
-		const window = windowManager.get(windowName).object
-		window.setSize(width, height, animated)
-	}, 
-		
+	setWindowSize(width, height, animated = false) {
+		windowManager.getCurrent().object.setSize(width, height, animated)
+	},
+
 	changeMainManagerSize(windowName, expand) {
 		const window = windowManager.get(windowName).object
 		if (expand) {
