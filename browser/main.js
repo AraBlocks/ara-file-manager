@@ -1,4 +1,4 @@
 'use strict'
 
-const FileManager = require('./views/fileManager')
-document.body.appendChild((new FileManager).render())
+const MainManager = require('./views/mainManagerView')
+document.body.appendChild((new MainManager).render())
