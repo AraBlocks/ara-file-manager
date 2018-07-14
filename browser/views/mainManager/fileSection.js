@@ -10,12 +10,10 @@ const Nanocomponent = require('nanocomponent')
 
 class FileSection extends Nanocomponent {
 	constructor({
-		windowName,
 		files = []
 	}) {
 		super()
 		this.state = { expanded: false, files: this.makeRows(files) }
-		this.windowName = windowName
 		this.children = {
 			expandWindowButton: new UtilityButton({
 				children: '▼',
@@ -36,7 +34,7 @@ class FileSection extends Nanocomponent {
 
 	changeWindowSize() {
 		this.state.expanded = !this.state.expanded
-		windowManagement.changeMainManagerSize(this.windowName, this.state.expanded)
+		windowManagement.changeMainManagerSize(this.state.expanded)
 		this.rerender()
 	}
 
