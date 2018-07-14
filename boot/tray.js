@@ -28,21 +28,27 @@ const buildTray = () => {
     const shouldMoveWindow = window.object === null
     window.open()
     window.object.show()
-    if (shouldMoveWindow) { adjustPosition(window.object) }
+    if (shouldMoveWindow) { adjustPosition(window) }
   }
 
   function createWindow(view) {
-    return windowManager.createNew(view, view, getIndex(view), {
-      width: 300,
-      height: 300,
-      showDevTools: false
-     })
+    return windowManager.createNew(
+      view,
+      view,
+      getIndex(view),
+      false,
+      {
+        ...windowManager.setSize(view),
+        resizable: true
+     }
+    )
   }
 
-  function adjustPosition(window) {
-    const positioner = new Positioner(window)
-    const position = positioner.calculate('topRight')
-    window.setPosition(position.x, position.y)
+  function adjustPosition({ name, object: window }) {
+    const { x, y } = tray.getBounds()
+    const offset = windowManager.setSize(name).width / 2
+    const iconWidth = 7
+    window.setPosition(x - offset + iconWidth, y)
   }
 
   function getIndex(view){
