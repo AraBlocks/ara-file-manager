@@ -2,12 +2,9 @@
 
 const { Menu, Tray } = require('electron')
 const path = require('path')
-const Positioner = require('electron-positioner')
 const windowManager = require('electron-window-manager')
 
 const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
-const devIndex = `file://${path.resolve(__dirname, '..', 'browser/index-dev.html')}`
-const managerIndex = `file://${path.resolve(__dirname, '..', 'browser/index.html')}`
 
 let tray
 const buildTray = () => {
@@ -35,7 +32,7 @@ const buildTray = () => {
     return windowManager.createNew(
       view,
       view,
-      getIndex(view),
+      windowManager.loadURL(view),
       false,
       {
         ...windowManager.setSize(view),
@@ -49,18 +46,6 @@ const buildTray = () => {
     const offset = windowManager.setSize(name).width / 2
     const iconWidth = 7
     window.setPosition(x - offset + iconWidth, y)
-  }
-
-  function getIndex(view){
-    let index
-    switch (view){
-      case 'manager':
-        index = managerIndex
-        break
-      default:
-        index = devIndex
-    }
-    return index
   }
 
   openWindow('developer')
