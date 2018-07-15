@@ -5,7 +5,6 @@ const fs = require('fs')
 const windowManager = require('electron-window-manager')
 
 const views = path.resolve(__dirname, '..', 'browser/views')
-const popup = 'file://' + path.resolve(__dirname, '..', 'browser/popup.html')
 
 fs.readdirSync(views).forEach((view, i) => {
   view = view.slice(0, -3)
@@ -18,7 +17,7 @@ const makeWindow = (view, i ) => {
   windowManager.open(
     view,
     view,
-    popup,
+    windowManager.loadURL(view),
     false,
     {
       ...windowManager.setSize(view),
