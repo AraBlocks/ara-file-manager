@@ -27,7 +27,8 @@ class FileSection extends Nanocomponent {
 						color: 'black',
 						weight: 'bold'
 					}
-				}
+				},
+				onclick: () => windowManagement.openWindow('filemanager')
 			}),
 		}
 	}

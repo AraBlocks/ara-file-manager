@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>FileManager</title>
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/fonts.css">
+  </head>
+  <body style="height: 100%;">
+    <div id="container"></div>
+  </body>
+  <script>
+      const FileManager = require('./views/fManagerView')
+      const fileManager = new FileManager
+      document.getElementById('container').appendChild(fileManager.render())
+  </script>
+</html>
