@@ -36,6 +36,9 @@ windowManager.loadURL = function (view) {
     case 'developer':
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/index-dev.html')}`
       break
+    case 'manager':
+      file = `file://${path.resolve(__dirname, '..', '..', 'browser/index.html')}`
+      break
     default:
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/popup.html')}`
   }
