@@ -23,13 +23,13 @@ class Container extends Nanocomponent {
 
 		this.children = {
 			closeButton: new UtilityButton({ children: '✕' }),
-      menuButton: new HamburgerMenu({ items: menuItems }),
+			menuButton: new HamburgerMenu({ items: menuItems }),
 			wallet: new WalletInfo(walletInfo),
 			fileSection: new FileSection({ files: files })
-    }
+		}
 	}
 
-	update(){
+	update() {
 		return true
 	}
 

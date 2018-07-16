@@ -22,27 +22,6 @@ module.exports = {
 		}
 	`,
 
-	verticalContainer: css`
-		:host {
-			align-items: center;
-			display: flex;
-			flex-direction: column;
-			height: 100%;
-			justify-content: space-between;
-			padding: 10px 10px 0px 10px;
-		}
-	`,
-
-	verticalContainerSmall: css`
-		:host {
-			align-items: center;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-			width: 100%;
-		}
-	`,
-
 	horizontalContainer: css`
 		:host {
 			align-items: center;
