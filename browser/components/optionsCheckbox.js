@@ -8,7 +8,8 @@ const Nanocomponent = require('nanocomponent')
 
 class OptionsCheckbox extends Nanocomponent {
 	constructor({
-		optionType = ""
+		optionType = '',
+		parentState = {}
 	}) {
 		super()
 		this.props = { optionType }
@@ -18,11 +19,15 @@ class OptionsCheckbox extends Nanocomponent {
 				opts: {
 					maxWidth: 300
 				}
+			}),
+			checkbox: new Checkbox({
+				field: optionType,
+				parentState: parentState
 			})
 		}
 	}
 
-	update(){
+	update() {
 		return true
 	}
 
@@ -39,11 +44,10 @@ class OptionsCheckbox extends Nanocomponent {
 					<div>
 						If you choose <b>not</b> to host your file on Littlstar, you'll need<br>
 					</div>
-					to host the file on your own computer and remain<br> 
-					connected in order to guarantee distribution.<br> 
+					to host the file on your own computer and remain<br>
+					connected in order to guarantee distribution.<br>
 					</div>
-				` 
-
+				`
 			case 'priceManagement':
 				return html`
 					<div class="${styles.tooltip} ${styles.tooltipText}">
@@ -63,15 +67,18 @@ class OptionsCheckbox extends Nanocomponent {
 		const { children, props } = this
 		const { title, description } = getOptionsText()
 		return html`
-			<div class=${styles.container}>
-				<div class=${styles.topContainer}>
-					<div class="${styles.title}">
-						${title}
+			<div class="${styles.container} OptionsCheckbox-container">
+				${children.checkbox.render()}
+				<div class="${styles.textContainer} OptionsCheckbox-textContainer">
+					<div class="${styles.topContainer} OptionsCheckbox-topContainer">
+						<div class="${styles.title} OptionsCheckbox-title">
+							${title}
+						</div>
+						${children.tooltip.render()}
 					</div>
-					${children.tooltip.render()}
-				</div>
-				<div class="${styles.descriptionText}">
-					${description}
+					<div class="${styles.description} OptionsCheckbox-description">
+						${description}
+					</div>
 				</div>
 			</div>
 		`

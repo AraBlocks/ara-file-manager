@@ -20,8 +20,8 @@ module.exports = {
 	}) {
 		return css`
 			:host {
-				width: 50px;
-				height: 50px;
+				width: 30px;
+				height: 30px;
 				background-color: white;
 				border: 2px solid ${
 					checked 
@@ -39,7 +39,7 @@ module.exports = {
 	}) {
 		return css`
 			:host {
-				font-size: 40px;
+				font-size: 30px;
 				color: ${colorChecked};
 				text-align: center;
 				display: ${checked ? "block" : "none"};

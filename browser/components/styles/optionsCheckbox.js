@@ -7,13 +7,20 @@ module.exports = {
 	colors,
 	fonts,
 	tooltipText: fontCSS.proxiContent,
-	descriptionText: fontCSS.proxiContent,
+	description: fontCSS.proxiContent,
 
 	container: css`
 		:host {
 			display: flex;
+		}
+	`,
+
+	textContainer: css`
+		:host {
+			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
+			padding-left: 10px;
 		}
 	`,
 

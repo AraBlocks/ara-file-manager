@@ -1,13 +1,14 @@
 'use strict'
 
 const Checkbox = require('../components/checkbox')
+const OptionsCheckbox = require('../components/optionsCheckbox')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class CheckboxView extends Nanocomponent {
 	constructor() {
 		super()
-		this.state = { checkbox: false }
+		this.state = { checkbox: false, supernode: false }
 		this.checkbox = new Checkbox({ 
 			checked: false, 
 			cssClass: {
@@ -18,6 +19,13 @@ class CheckboxView extends Nanocomponent {
 			field: 'checkbox',
 			parentState: this.state
 		})
+
+		this.optionsCheckbox = new OptionsCheckbox(
+			{
+				optionType: 'supernode',
+				parentState: this.state
+			}
+		)
 	}
 
 	update() {
@@ -25,10 +33,11 @@ class CheckboxView extends Nanocomponent {
 	}
 
 	createElement() {
-		const { checkbox, state } = this
+		const { checkbox, optionsCheckbox, state } = this
 		return html`
 			<div>
 				${checkbox.render()}
+				${optionsCheckbox.render()}
 				<button onclick=${onclick}>log checkbox state</button>
 			</div>
 		`
