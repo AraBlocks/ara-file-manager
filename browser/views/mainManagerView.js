@@ -12,12 +12,6 @@ class MainManagerView extends Nanocomponent {
 	constructor() {
     super()
     this.container = new Container({
-      menuItems: [
-        { children: 'File Manager' },
-        { children: 'Publish File' },
-        { children: 'Log Out' },
-        { children: 'Quit' }
-      ],
       walletInfo: {
 				araOwned: 9999,
 				exchangeRate: 1.73
