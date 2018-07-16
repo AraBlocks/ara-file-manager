@@ -1,6 +1,7 @@
 'use strict'
 
 const Menu= require('../components/hamburgerMenu/menu')
+const OptionsCheckbox = require('../components/optionsCheckbox')
 const UtilityButton = require('../components/utilityButton')
 const WalletInfo = require('./mainManager/walletInfo')
 const html = require('choo/html')
@@ -19,6 +20,7 @@ class HamburgerView extends Nanocomponent {
       araOwned: 9999,
       exchangeRate: 1.73
     })
+    this.options = new OptionsCheckbox({ optionType: 'priceManagement' })
     window.hamburger = this
   }
 
@@ -31,7 +33,8 @@ class HamburgerView extends Nanocomponent {
       menu,
       close,
       expand,
-      wallet
+      wallet,
+      options
     } = this
 
     return html`
@@ -40,6 +43,7 @@ class HamburgerView extends Nanocomponent {
         ${close.render({})}
         ${expand.render({})}
         ${wallet.render()}
+        ${options.render()}  
       </div>
     `
   }
