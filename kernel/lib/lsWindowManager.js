@@ -31,12 +31,14 @@ windowManager.loadURL = function (view) {
   let file
   switch (view) {
     case 'filemanager':
+    case 'fManagerView':
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/file-manager.html')}`
       break
     case 'developer':
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/index-dev.html')}`
       break
     case 'manager':
+    case 'mainManagerView':
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/index.html')}`
       break
     default:
