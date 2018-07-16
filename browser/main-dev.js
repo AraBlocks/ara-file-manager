@@ -1,9 +1,10 @@
 'use strict'
 
-const views = __dirname + '/views/'
+const fs = require('fs')
 const remote = require('electron').remote;
 const windowManager = remote.require('electron-window-manager')
-const fs = require('fs')
+const windowManagement = require('./lib/store/windowManagement')
+const views = __dirname + '/views/'
 
 const exclude = [ 'fileManager.js', 'styles', 'fileManager', 'mainManager' ]
 
@@ -26,7 +27,6 @@ function createElement(view) {
   document.body.appendChild(br)
 }
 
-const windowManagement = require('./lib/store/windowManagement')
 const button = document.createElement('button')
 button.innerHTML = 'create modal'
 button.onclick = () => windowManagement.openModal()
