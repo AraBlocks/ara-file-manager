@@ -47,4 +47,11 @@ windowManager.loadURL = function (view) {
   return file
 }
 
+windowManager.modalOpenStatus = false
+
+Object.defineProperty(windowManager, 'modalIsOpen', {
+  get: function() { return this.modalOpenStatus },
+  set: function(bool) { this.modalOpenStatus = bool }
+})
+
 module.exports = windowManager

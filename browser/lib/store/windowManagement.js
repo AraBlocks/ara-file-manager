@@ -8,16 +8,34 @@ module.exports = {
 		windowManager.closeAll()
 	},
 
-	closeWindow() {
-		close()
-	},
-
 	changeMainManagerSize(expand) {
 		const window = windowManager.getCurrent().object
 		if (expand) {
 			window.setSize(400, 525)
 		} else {
 			window.setSize(400, 325)
+		}
+	},
+
+	closeWindow() {
+		close()
+	},
+
+	openModal() {
+		console.log('opening modal')
+		if (windowManager.modalIsOpen) {
+
+		} else {
+			console.log(windowManager.modalIsOpen)
+			const hash = 'modal' + Math.random()
+			windowManager.open(
+				hash,
+				hash,
+				windowManager.loadURL(),
+				false,
+				windowManager.setSize(hash),
+			)
+			windowManager.modalIsOpen = true
 		}
 	},
 
