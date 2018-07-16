@@ -5,10 +5,10 @@
   "main": "boot/main-dev.js",
   "scripts": {
     "start-dev": "electron boot/main-dev.js",
-    "dist": "build",
-    "pack": "build --dir",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "install-app-deps",
+    "pack": "build --dir",
+    "dist": "build"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "ara-network": "github:arablocks/ara-network",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
     "cfsnet": "github:arablocks/cfsnet",
-    "choo": "^6.12.1",
+    "choo": "^6.13.0",
     "css": "file:browser/lib/cssTool",
     "domready": "^1.0.8",
     "electron-is-dev": "^0.3.0",
@@ -42,13 +42,13 @@
     "styleUtils": "file:browser/lib/styleUtils"
   },
   "devDependencies": {
-    "electron": "^2.0.3",
-    "choo-devtools": "^2.5.1",
     "electron-builder": "^20.22.0",
-    "electron-reload": "^1.2.3"
+    "electron-reload": "^1.2.3",
+    "electron": "^2.0.3",
+    "electron-rebuild": "^1.7.3"
   },
   "build": {
-    "appId": "1",
+    "appId": "yourappid",
     "dmg": {
       "contents": [
         {
@@ -65,8 +65,10 @@
     },
     "linux": {
       "target": [
-        "IconTemplate"
+        "AppImage",
+        "deb"
       ]
-    }
+    },
+    "win": {}
   }
 }
