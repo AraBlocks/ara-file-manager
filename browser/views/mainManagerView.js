@@ -18,17 +18,17 @@ class MainManagerView extends Nanocomponent {
       menuButton: new HamburgerMenu({
 				items: [
 					{ children: 'File Manager' },
-				 	{ children: 'Publish File' }, 
-				 	{ children: 'Log Out' }, 
+				 	{ children: 'Publish File' },
+				 	{ children: 'Log Out' },
 					{ children: 'Quit' }
 				]
 			}),
-			wallet: new WalletInfo({ 
-				araOwned: 9999, 
-				exchangeRate: 1.73 
+			wallet: new WalletInfo({
+				araOwned: 9999,
+				exchangeRate: 1.73
 			}),
-			fileSection: new FileSection({ 
-				files: mockFiles() 
+			fileSection: new FileSection({
+				files: mockFiles()
 			})
     }
 	}
@@ -48,20 +48,20 @@ class MainManagerView extends Nanocomponent {
 					</div>
           ${children.closeButton.render({})}
 				</div>
-				
+
 				<div class="${styles.subHeader} ${styles.bottomAlign} MainManagerView-subHeader,bottomAlign">
 					Wallet
 				</div>
 
-				${children.wallet.render({ 
-						araOwned: 9999, 
-						exchangeRate: 1.73 
+				${children.wallet.render({
+						araOwned: 9999,
+						exchangeRate: 1.73
 					}
 				)}
 				${children.fileSection.render({ files: mockFiles() })}
 			</div>
 		`
-	}	
+	}
 }
 
 function mockFiles() {
@@ -117,7 +117,7 @@ function mockFiles() {
       name: 'Microsoft Excel',
       size: 4.23,
       status: 0,
-		}, 
+		},
 		{
       downloadPercent: 0.5,
       meta: {
