@@ -37,7 +37,7 @@ const buildTray = () => {
       {
         ...windowManager.setSize(view),
         resizable: true
-     }
+      }
     )
   }
 
