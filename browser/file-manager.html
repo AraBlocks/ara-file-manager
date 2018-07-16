@@ -10,8 +10,9 @@
     <div id="container"></div>
   </body>
   <script>
-      const windowManager = require('electron-window-manager')
-      const { userData, files } = windowManager.sharedData.fetch(store)
+      const { remote } = require('electron')
+      const windowManager = remote.require('electron-window-manager')
+      const { userData, files } = windowManager.sharedData.fetch('store')
 
       const FileManager = require('./views/fileManager/container')
       const fileManager = new FileManager({ files, userData })
