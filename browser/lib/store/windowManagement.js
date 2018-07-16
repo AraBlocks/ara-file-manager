@@ -21,20 +21,18 @@ module.exports = {
 		close()
 	},
 
-	openModal() {
-		console.log('opening modal')
+	openModal(view = 'modal') {
 		if (windowManager.modalIsOpen) {
-
+			windowManager.get('modal').focus()
 		} else {
-			console.log(windowManager.modalIsOpen)
-			const hash = 'modal' + Math.random()
-			windowManager.open(
-				hash,
-				hash,
-				windowManager.loadURL(),
+			const modal = windowManager.open(
+				view,
+				view,
+				windowManager.loadURL(view),
 				false,
-				windowManager.setSize(hash),
+				{ ... windowManager.setSize(view) }
 			)
+			modal.object.on('close', () => windowManager.modalIsOpen = false)
 			windowManager.modalIsOpen = true
 		}
 	},

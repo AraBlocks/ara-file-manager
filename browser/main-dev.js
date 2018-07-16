@@ -29,7 +29,7 @@ function createElement(view) {
 const windowManagement = require('./lib/store/windowManagement')
 const button = document.createElement('button')
 button.innerHTML = 'create modal'
-button.onclick = windowManagement.openModal
+button.onclick = () => windowManagement.openModal()
 document.body.appendChild(button)
 const br = document.createElement('br')
 document.body.appendChild(br)
