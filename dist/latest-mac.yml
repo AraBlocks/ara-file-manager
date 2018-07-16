@@ -1,0 +1,10 @@
+version: 1.0.0
+files:
+  - url: ara-content-manager-1.0.0-mac.zip
+    sha512: HJsknX7Ub2qmVG4ib2abYT9AbZz9cu0WW3T7WW4EPWBiLudPogaa0HhPCSZxgdMQwVwC5y8pGpNPmOrSGBh2yg==
+  - url: ara-content-manager-1.0.0.dmg
+    sha512: OR2P5837ozF+wClEpopXYvLK3bEF1vxqDagCcgi8E0io1dWoVCfrbHtIROM8qhn62m+FiP2t0R6O7ap6CuqbwQ==
+    size: 49248658
+path: ara-content-manager-1.0.0-mac.zip
+sha512: HJsknX7Ub2qmVG4ib2abYT9AbZz9cu0WW3T7WW4EPWBiLudPogaa0HhPCSZxgdMQwVwC5y8pGpNPmOrSGBh2yg==
+releaseDate: '2018-07-16T15:46:48.987Z'
