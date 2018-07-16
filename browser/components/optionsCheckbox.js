@@ -17,7 +17,7 @@ class OptionsCheckbox extends Nanocomponent {
 		this.children = {
 			tooltip: new Tooltip({
 				tooltipText: html`
-					<div class="${styles.tooltip} ${styles.tooltipText}">
+					<div class="${styles.tooltip} ${styles.tooltipText} OptionsCheckbox-tooltipTooltipText">
 						${optionsTextProvider.createTooltipText(optionType)}
 					</div>
 				`,
