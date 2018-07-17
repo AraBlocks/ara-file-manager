@@ -45,8 +45,12 @@ module.exports = {
       width: 100%;
     }
 
-    :host * {
+    :host input {
       width: 94%;
+    }
+
+    :host button {
+      width: 94%
     }
   `,
 
