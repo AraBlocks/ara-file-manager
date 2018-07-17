@@ -3,7 +3,8 @@
 module.exports = {
   userData: {
     username: 'cryptokitter',
-    userBalance: 135.23
+    userBalance: 135.23,
+    aid: {}
   },
   files: {
     published: mockFiles(),

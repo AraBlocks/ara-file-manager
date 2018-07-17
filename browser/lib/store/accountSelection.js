@@ -11,9 +11,12 @@ module.exports = {
         try {
           fs.statSync(`${root}/${user}/.ara`)
           const ids = fs.readdirSync(`${root}/${user}/.ara/identities`)
-            .reduce((acc, file) =>
-              file.length === 64
-                ? [...acc, `${root}/${user}/.ara/identities/${file}`]
+            .reduce((acc, aid) =>
+              aid.length === 64
+                ? [...acc, {
+                    aid,
+                    keystore: JSON.parse(fs.readFileSync(`${root}/${user}/.ara/identities/${aid}/keystore/eth`))
+                  }]
                 : acc, []
             )
           acc = [...acc, ...ids]
@@ -23,4 +26,3 @@ module.exports = {
     }, [])
   }
 }
-
