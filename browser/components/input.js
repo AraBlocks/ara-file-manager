@@ -7,6 +7,7 @@ const Nanocomponent = require('nanocomponent')
 class Input extends Nanocomponent {
   constructor({
     cssClass = {},
+    embeddedButton = {},
     field = '',
     parentState = {},
     placeholder = '',
@@ -16,6 +17,7 @@ class Input extends Nanocomponent {
 
     this.props = {
       cssClass,
+      embeddedButton,
       field,
       parentState,
       placeholder,
@@ -27,28 +29,50 @@ class Input extends Nanocomponent {
     }
   }
 
-  update() {
-    return true
+  update({ value }) {
+    const { state } = this
+    const sameValue = this.state.value === value
+    if (!sameValue) {
+      state.value = value
+    }
+    return !sameValue
   }
 
   createElement(chooState) {
     const { props, state }  = this
 
     return html`
-      <input
-        class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
-        onchange=${onchange}
-        placeholder=${props.placeholder}
-        type=${props.type}
-      >
+      <div class="${styles.container}">
+        <input
+          class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
+          onchange=${onchange}
+          placeholder=${props.placeholder}
+          value=${state.value}
+          type=${props.type}
+        >
+        ${generateButton()}
+      </div>
     `
 
     function onchange(e) {
       state.value = e.target.value
       props.parentState[props.field] = state.value
     }
-  }
 
+    function generateButton() {
+      let button = html``
+      if (props.embeddedButton.option === "button") {
+        button = html`
+          <button
+            class=${styles.button}
+            onclick=${props.embeddedButton.onclick}
+          >
+            ${props.embeddedButton.title}
+          </button>`
+      }
+      return button
+    }
+  }
 }
 
 module.exports = Input

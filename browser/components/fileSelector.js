@@ -1,7 +1,7 @@
 'use strict'
 
 const fileSystemManager = require('../lib/store/fileSystemManager')
-const styles = require('./styles/fileSelector')
+const Input = require('../components/input')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -14,6 +14,16 @@ class FileSelector extends Nanocomponent {
 		this.props = { field, parentState }
 		this.state = { filePath: '' }
 		this.onclick = this.onclick.bind(this)
+		this.children = { input: new Input({
+			placeholder: 'File Directory',
+			field,
+			parentState,
+			embeddedButton: {
+        option: 'button',
+        title: 'Select',
+        onclick: this.onclick
+      }
+		})}
 	}
 
 	update({ filePath }) {
@@ -37,12 +47,10 @@ class FileSelector extends Nanocomponent {
 	}
 
 	createElement() {
-		const { onclick, state } = this
+		const { state, children } = this
 		return html`
-			<div class=${styles.container} onclick=${onclick}>
-				<div class=${styles.filePath(state.filePath !== '')}>
-					${state.filePath == '' ? 'File Directory' : state.filePath}
-				</div>
+			<div>
+				${children.input.render({value: state.filePath})}
 			</div>
 		`
 	}

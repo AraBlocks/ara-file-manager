@@ -9,7 +9,12 @@ class InputView extends Nanocomponent {
     super()
 
     this.input = new Input({
-      placeholder: 'Some text'
+      placeholder: 'Some text',
+      embeddedButton: {
+        option: 'button',
+        title: 'Select',
+        onclick: () => console.log('clicked')
+      }
     })
 
     window.inputView = this

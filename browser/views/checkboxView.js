@@ -9,7 +9,7 @@ const Nanocomponent = require('nanocomponent')
 class CheckboxView extends Nanocomponent {
 	constructor() {
 		super()
-		this.state = { checkbox: false, supernode: false, fileSelector: '' }
+		this.state = { checkbox: false, supernode: false, filePath: '' }
 		this.checkbox = new Checkbox({
 			checked: false,
 			cssClass: {
@@ -29,7 +29,7 @@ class CheckboxView extends Nanocomponent {
 		)
 
 		this.fileSelector = new FileSlector({
-			field: 'fileSelector',
+			field: 'filePath',
 			parentState: this.state
 		})
 	}
