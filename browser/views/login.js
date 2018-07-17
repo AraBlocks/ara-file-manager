@@ -1,7 +1,9 @@
 'use strict'
 
+const { dispatch } = require('../lib/store/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
+const { osxSurfaceAids } = require('../lib/store/accountSelection')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -45,8 +47,21 @@ class Login extends Nanocomponent {
       usernameInput: new Input({
         parentState: this.state,
         field: 'usernameValue',
-        placeHolder: 'Username'
+        placeholder: 'Username'
       }),
+    }
+
+    this.login = this.login.bind(this)
+  }
+
+  async login(e) {
+    e.preventDefault()
+    const { usernameValue, passwordValue } = this.state
+    if (usernameValue === 'kit' && passwordValue === 'abc') {
+      const [ aid ] = osxSurfaceAids()
+      dispatch('login', aid)
+    } else {
+      return
     }
   }
 
@@ -55,7 +70,7 @@ class Login extends Nanocomponent {
   }
 
   createElement() {
-    const { children } = this
+    const { children, login } = this
     return html`
       <div class="${styles.container} login-container">
         <div class="${styles.logo} login-logo">
@@ -71,7 +86,7 @@ class Login extends Nanocomponent {
           <br>
           To get started, log in with your <b>ARA id</b>
         </p>
-        <form class="${styles.form} login-form">
+        <form class="${styles.form} login-form" onsubmit=${login}>
           ${children.usernameInput.render()}
           ${children.passwordInput.render()}
           ${children.loginButton.render()}
