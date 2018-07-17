@@ -31,19 +31,23 @@ module.exports = {
     `
   },
 
-  textHolder: css`
-    :host {
-      bottom: 8px;
-      background-color: white;
-      border: .5px solid ${colors.araGrey};
-      font-size: 12px;
-      left: 6px;
-      max-width: 200px;
-      padding: 5px;
-      text-align: center;
-      visibility: hidden;
-      position: absolute;
-      z-index: 1;
-    }
-  `
+  textHolder({
+    maxWidth = 200
+  }) {
+    return css`
+      :host {
+        bottom: 8px;
+        background-color: white;
+        border: .5px solid ${colors.araGrey};
+        font-size: 12px;
+        left: 6px;
+        max-width: ${maxWidth}px;
+        padding: 5px;
+        text-align: center;
+        visibility: hidden;
+        position: absolute;
+        z-index: 1;
+      }
+    `
+  }
 }
