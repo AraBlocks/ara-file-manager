@@ -47,7 +47,7 @@ class Login extends Nanocomponent {
       usernameInput: new Input({
         parentState: this.state,
         field: 'usernameValue',
-        placeholder: 'Username',
+        placeholder: 'Username'
       }),
     }
 
