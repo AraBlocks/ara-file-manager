@@ -11,15 +11,11 @@ class Login extends Nanocomponent {
     super()
 
     this.state = {
-      usernameValue: '',
-      passwordValue: ''
+      passwordValue: '',
+      usernameValue: ''
     }
 
     this.children = {
-      loginButton: new Button({
-        children: 'Log In'
-      }),
-
       cancelButton: new Button({
         children: 'Cancel',
         cssClass: {
@@ -29,6 +25,10 @@ class Login extends Nanocomponent {
             weight: 'light'
           }
         }
+      }),
+
+      loginButton: new Button({
+        children: 'Log In'
       }),
 
       registerButton: new Button({
