@@ -6,7 +6,6 @@ const Input = require('../components/input')
 const Button = require('../components/Button')
 // const { registration } = require('../lib/store')
 const Nanocomponent = require('nanocomponent')
-const isDev = require('electron-is-dev')
 
 class Registration extends Nanocomponent {
   constructor() {
@@ -36,8 +35,6 @@ class Registration extends Nanocomponent {
         }
       }
     })
-
-    if (isDev) { Object.assign(window, { registrationView: this }) }
   }
 
   update() {

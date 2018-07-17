@@ -4,8 +4,8 @@ const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 
 module.exports = {
-	quitApp() {
-		windowManager.closeAll()
+	dispatch(action, load) {
+		windowManager.bridge.emit(action, load)
 	},
 
 	changeMainManagerSize(expand) {
@@ -51,4 +51,7 @@ module.exports = {
 		windowManager.getCurrent().object.setSize(width, height, animated)
 	},
 
+	quitApp() {
+		windowManager.closeAll()
+	},
 }

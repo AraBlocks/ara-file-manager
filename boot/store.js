@@ -1,6 +1,14 @@
 'use strict'
 
-module.exports = {
+const windowManager = require('electron-window-manager')
+
+windowManager.bridge.on('login', data => {
+  console.log('login:', data)
+  state.userData.aid = data
+  windowManager.bridge.emit('new-state', state)
+})
+
+const state = {
   userData: {
     username: 'cryptokitter',
     userBalance: 135.23,
@@ -55,3 +63,5 @@ function mockFiles() {
     }
   ]
 }
+
+module.exports = state

@@ -1,8 +1,9 @@
 'use strict'
 
-const { osxSurfaceAids } = require('../lib/store/accountSelection')
+const { dispatch } = require('../lib/store/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
+const { osxSurfaceAids } = require('../lib/store/accountSelection')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -57,7 +58,8 @@ class Login extends Nanocomponent {
     e.preventDefault()
     const { usernameValue, passwordValue } = this.state
     if (usernameValue === 'kit' && passwordValue === 'abc') {
-      console.log(osxSurfaceAids())
+      const [ aid ] = osxSurfaceAids()
+      dispatch('login', aid)
     } else {
       return
     }
