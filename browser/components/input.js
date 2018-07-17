@@ -33,7 +33,6 @@ class Input extends Nanocomponent {
 
   createElement(chooState) {
     const { props, state }  = this
-
     return html`
       <input
         class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
