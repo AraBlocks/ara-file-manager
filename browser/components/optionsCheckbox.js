@@ -13,7 +13,7 @@ class OptionsCheckbox extends Nanocomponent {
 		parentState = {}
 	}) {
 		super()
-		this.props = { ...optionsTextProvider.getOptionsTitleDescription(props.field) }
+		this.props = { ...optionsTextProvider.getOptionsTitleDescription(field) }
 		this.children = {
 			tooltip: new Tooltip({
 				tooltipText: optionsTextProvider.createTooltipText(field, styles.tooltip),

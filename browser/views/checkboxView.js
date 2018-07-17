@@ -1,6 +1,7 @@
 'use strict'
 
 const Checkbox = require('../components/checkbox')
+const FileSlector = require('../components/fileSelector')
 const OptionsCheckbox = require('../components/optionsCheckbox')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -8,7 +9,7 @@ const Nanocomponent = require('nanocomponent')
 class CheckboxView extends Nanocomponent {
 	constructor() {
 		super()
-		this.state = { checkbox: false, supernode: false }
+		this.state = { checkbox: false, supernode: false, fileSelector: '' }
 		this.checkbox = new Checkbox({
 			checked: false,
 			cssClass: {
@@ -26,6 +27,11 @@ class CheckboxView extends Nanocomponent {
 				parentState: this.state
 			}
 		)
+
+		this.fileSelector = new FileSlector({
+			field: 'fileSelector',
+			parentState: this.state
+		})
 	}
 
 	update() {
@@ -33,12 +39,13 @@ class CheckboxView extends Nanocomponent {
 	}
 
 	createElement() {
-		const { checkbox, optionsCheckbox, state } = this
+		const { checkbox, optionsCheckbox, fileSelector, state } = this
 		return html`
 			<div>
 				${checkbox.render()}
 				${optionsCheckbox.render()}
-				<button onclick=${onclick}>log checkbox state</button>
+				<button onclick=${onclick}>log all states</button>
+				${fileSelector.render()}
 			</div>
 		`
 
