@@ -20,7 +20,7 @@ class HamburgerView extends Nanocomponent {
       araOwned: 9999,
       exchangeRate: 1.73
     })
-    this.options = new OptionsCheckbox({ optionType: 'priceManagement' })
+    this.options = new OptionsCheckbox({ field: 'priceManagement' })
     window.hamburger = this
   }
 
@@ -43,7 +43,7 @@ class HamburgerView extends Nanocomponent {
         ${close.render({})}
         ${expand.render({})}
         ${wallet.render()}
-        ${options.render()}  
+        ${options.render()}
       </div>
     `
   }

@@ -9,27 +9,27 @@ class CheckboxView extends Nanocomponent {
 	constructor() {
 		super()
 		this.state = { checkbox: false, supernode: false }
-		this.checkbox = new Checkbox({ 
-			checked: false, 
+		this.checkbox = new Checkbox({
+			checked: false,
 			cssClass: {
 				opts: {
 					colorChecked: 'blue'
 				}
-			}, 
+			},
 			field: 'checkbox',
 			parentState: this.state
 		})
 
 		this.optionsCheckbox = new OptionsCheckbox(
 			{
-				optionType: 'supernode',
+				field: 'supernode',
 				parentState: this.state
 			}
 		)
 	}
 
 	update() {
-		return true	
+		return true
 	}
 
 	createElement() {

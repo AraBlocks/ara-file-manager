@@ -9,25 +9,21 @@ const Nanocomponent = require('nanocomponent')
 
 class OptionsCheckbox extends Nanocomponent {
 	constructor({
-		optionType = '',
+		field = '',
 		parentState = {}
 	}) {
 		super()
-		this.props = { optionType }
+		this.props = { field }
 		this.children = {
 			tooltip: new Tooltip({
-				tooltipText: html`
-					<div class="${styles.tooltip} ${styles.tooltipText} OptionsCheckbox-tooltipTooltipText">
-						${optionsTextProvider.createTooltipText(optionType)}
-					</div>
-				`,
+				tooltipText: optionsTextProvider.createTooltipText(field, styles.tooltip),
 				opts: {
 					maxWidth: 300
 				}
 			}),
 			checkbox: new Checkbox({
-				field: optionType,
-				parentState: parentState
+				field,
+				parentState
 			})
 		}
 	}
@@ -38,7 +34,7 @@ class OptionsCheckbox extends Nanocomponent {
 
 	createElement() {
 		const { children, props } = this
-		const { title, description } = optionsTextProvider.getOptionsTitleDescription(props.optionType)
+		const { title, description } = optionsTextProvider.getOptionsTitleDescription(props.field)
 		return html`
 			<div class="${styles.container} OptionsCheckbox-container">
 				${children.checkbox.render()}

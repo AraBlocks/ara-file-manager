@@ -48,6 +48,6 @@ module.exports = {
         position: absolute;
         z-index: 1;
       }
-    ` 
+    `
   }
 }
