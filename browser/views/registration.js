@@ -1,5 +1,6 @@
 'use strict'
 
+const { closeWindow } = require('../lib/store/windowManagement')
 const styles = require('./styles/registration')
 const html = require('choo/html')
 const Input = require('../components/input')
@@ -33,7 +34,8 @@ class Registration extends Nanocomponent {
           color: 'blue',
           weight: 'light'
         }
-      }
+      },
+      onclick: closeWindow
     })
   }
 
@@ -41,9 +43,8 @@ class Registration extends Nanocomponent {
     return true
   }
 
-  createElement(chooState) {
+  createElement() {
     const {
-      state,
       passwordInput,
       submitButton,
       cancelButton
