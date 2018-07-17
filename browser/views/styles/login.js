@@ -4,13 +4,6 @@ const { css } = require('css')
 const { fonts } = require('styleUtils')
 
 module.exports = {
-  descriptionHolder: css`
-    :host {
-      font-size: 12px;
-      font-family: ${fonts.light};
-    }
-  `,
-
   buttonHolder: css`
     :host {
       align-items: center;
@@ -35,6 +28,13 @@ module.exports = {
     }
   `,
 
+  descriptionHolder: css`
+    :host {
+      font-size: 12px;
+      font-family: ${fonts.light};
+    }
+  `,
+
   form: css`
     :host {
       align-items: center;
@@ -45,12 +45,8 @@ module.exports = {
       width: 100%;
     }
 
-    :host input {
+    :host * {
       width: 94%;
-    }
-
-    :host button {
-      width: 94%
     }
   `,
 
