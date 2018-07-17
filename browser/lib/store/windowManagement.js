@@ -40,13 +40,18 @@ module.exports = {
 	transitionModal(view) {
 		const current = windowManager.getCurrent().object
 		windowManager.sharedData.set('current', view)
-		windowManager.open(
+
+		windowManager.modalIsOpen = false
+		const modal = windowManager.open(
 			view,
 			view,
 			windowManager.loadURL(view),
 			false,
 			{ ... windowManager.setSize(view) }
 		)
+		modal.object.on('close', () => windowManager.modalIsOpen = false)
+		windowManager.modalIsOpen = true
+
 		current.close()
 	},
 
