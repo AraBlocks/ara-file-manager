@@ -1,6 +1,10 @@
 'use strict'
 
-const { dispatch } = require('../lib/store/windowManagement')
+const {
+  closeWindow,
+  dispatch,
+  transitionModal,
+} = require('../lib/store/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
 const { osxSurfaceAids } = require('../lib/store/accountSelection')
@@ -26,7 +30,8 @@ class Login extends Nanocomponent {
             color: 'blue',
             weight: 'light'
           }
-        }
+        },
+        onclick: closeWindow
       }),
 
       loginButton: new Button({
@@ -35,7 +40,10 @@ class Login extends Nanocomponent {
 
       registerButton: new Button({
         children: 'Create One',
-        cssClass: { name: 'smallInvisible' }
+        cssClass: { name: 'smallInvisible' },
+        onclick: () => {
+          transitionModal('registration')
+        }
       }),
 
       passwordInput: new Input({

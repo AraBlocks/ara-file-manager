@@ -37,6 +37,19 @@ module.exports = {
 		}
 	},
 
+	transitionModal(view) {
+		const current = windowManager.getCurrent().object
+		windowManager.sharedData.set('current', view)
+		windowManager.open(
+			view,
+			view,
+			windowManager.loadURL(view),
+			false,
+			{ ... windowManager.setSize(view) }
+		)
+		current.close()
+	},
+
 	openWindow(view) {
 		windowManager.open(
 			view,
