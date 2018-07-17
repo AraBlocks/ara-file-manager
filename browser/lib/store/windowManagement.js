@@ -4,72 +4,72 @@ const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 
 module.exports = {
-	dispatch(action, load) {
-		windowManager.bridge.emit(action, load)
-	},
+	changeMainManagerSize,
+	dispatch,
+	closeWindow,
+	openModal,
+	transitionModal,
+	openWindow,
+	setWindowSize,
+	quitApp
+}
 
-	changeMainManagerSize(expand) {
-		const window = windowManager.getCurrent().object
-		if (expand) {
-			window.setSize(400, 525)
-		} else {
-			window.setSize(400, 325)
-		}
-	},
+function changeMainManagerSize(expand) {
+	const window = windowManager.getCurrent().object
+	if (expand) {
+		window.setSize(400, 525)
+	} else {
+		window.setSize(400, 325)
+	}
+}
 
-	closeWindow() {
-		close()
-	},
+function dispatch(action, load) {
+	windowManager.bridge.emit(action, load)
+}
 
-	openModal(view = 'modal') {
-		if (windowManager.modalIsOpen) {
-			windowManager.get('modal').focus()
-		} else {
-			const modal = windowManager.open(
-				view,
-				view,
-				windowManager.loadURL(view),
-				false,
-				{ ... windowManager.setSize(view) }
-			)
-			modal.object.on('close', () => windowManager.modalIsOpen = false)
-			windowManager.modalIsOpen = true
-		}
-	},
+function closeWindow() {
+	close()
+}
 
-	transitionModal(view) {
-		const current = windowManager.getCurrent().object
-		windowManager.sharedData.set('current', view)
-
-		windowManager.modalIsOpen = false
+function openModal(view = 'modal') {
+	if (windowManager.modalIsOpen) {
+		windowManager.get('modal').focus()
+	} else {
 		const modal = windowManager.open(
-			view,
-			view,
-			windowManager.loadURL(view),
-			false,
-			{ ... windowManager.setSize(view) }
-		)
-		modal.object.on('close', () => windowManager.modalIsOpen = false)
-		windowManager.modalIsOpen = true
-
-		current.close()
-	},
-
-	openWindow(view) {
-		windowManager.open(
 			view,
 			view,
 			windowManager.loadURL(view),
 			false,
 			{ ...windowManager.setSize(view) }
 		)
-	},
+		modal.object.on('close', () => windowManager.modalIsOpen = false)
+		windowManager.modalIsOpen = true
+	}
+}
 
-	setWindowSize(width, height, animated = false) {
-		windowManager.getCurrent().object.setSize(width, height, animated)
-	},
+function transitionModal(view) {
+	const current = windowManager.getCurrent().object
+	windowManager.sharedData.set('current', view)
 
-	quitApp() {
-		windowManager.closeAll()
-	},
+	windowManager.modalIsOpen = false
+	openModal(view)
+	current.close()
+}
+
+function openWindow(view) {
+	windowManager.open(
+		view,
+		view,
+		windowManager.loadURL(view),
+		false,
+		{ ...windowManager.setSize(view) }
+	)
+}
+
+function setWindowSize(width, height, animated = false) {
+	windowManager.getCurrent().object.setSize(width, height, animated)
+}
+
+function quitApp() {
+	windowManager.closeAll()
 }
