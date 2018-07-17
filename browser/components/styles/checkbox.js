@@ -14,7 +14,7 @@ module.exports = {
 	container({
 		checked,
 		opts: {
-			colorChecked = 'red',
+			colorChecked = colors.araRed,
 			colorUnchecked = 'grey'
 		}
 	}) {
@@ -35,7 +35,7 @@ module.exports = {
 
 	checkmark({
 		checked,
-		opts: { colorChecked = 'red' }
+		opts: { colorChecked = colors.araRed }
 	}) {
 		return css`
 			:host {

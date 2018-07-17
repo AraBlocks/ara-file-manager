@@ -7,7 +7,7 @@ module.exports = {
 	showSelectFileDialog() {
 		return new Promise((resolve, reject) => {
 			dialog.showOpenDialog((fileNames) => {
-				fileNames ? resolve(fileNames) : reject('error')
+				fileNames ? resolve(fileNames) : reject(error)
 			})
 		})
 	}

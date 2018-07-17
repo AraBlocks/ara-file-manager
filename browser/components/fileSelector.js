@@ -18,11 +18,11 @@ class FileSelector extends Nanocomponent {
 
 	update({ filePath }) {
 		const { state } = this
-		const sameState = state.filePath == filePath
-		if (!sameState) {
+		const samePath = state.filePath === filePath
+		if (!samePath) {
 			state.filePath = filePath
 		}
-		return !sameState
+		return !samePath
 	}
 
 	onclick() {
