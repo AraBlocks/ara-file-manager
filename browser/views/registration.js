@@ -4,7 +4,7 @@ const styles = require('./styles/registration')
 const html = require('choo/html')
 const Input = require('../components/input')
 const Button = require('../components/Button')
-const { registration } = require('../lib/store')
+// const { registration } = require('../lib/store')
 const Nanocomponent = require('nanocomponent')
 const isDev = require('electron-is-dev')
 
@@ -70,11 +70,11 @@ class Registration extends Nanocomponent {
     function onsubmit(e) {
       e.preventDefault()
 
-      if (state.password.length === 0) { throw Error("Password can't be left blank") }
-      registration.createId(state.password)
-        .then(registration.archive)
-        .then(console.log)
-        .catch(console.log)
+      // if (state.password.length === 0) { throw Error("Password can't be left blank") }
+      // registration.createId(state.password)
+      //   .then(registration.archive)
+      //   .then(console.log)
+      //   .catch(console.log)
     }
   }
 }

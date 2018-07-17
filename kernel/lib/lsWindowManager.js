@@ -6,19 +6,23 @@ windowManager.setSize = function (view) {
   let width
   let height
   switch (view) {
-    case 'registration':
-      width = 400
-      height = 350
-      break
     case 'fManagerView':
     case 'filemanager':
       width = 520
       height = 730
       break
+    case 'login':
+      width = 390
+      height = 547
+      break
     case 'mainManagerView':
     case 'manager':
       width = 400
       height = 325
+      break
+    case 'registration':
+      width = 400
+      height = 350
       break
     default:
       width = 300
