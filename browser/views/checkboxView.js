@@ -2,6 +2,7 @@
 
 const Checkbox = require('../components/checkbox')
 const FileSlector = require('../components/fileSelector')
+const FileInfo = require('./publishFile/fileInfo')
 const OptionsCheckbox = require('../components/optionsCheckbox')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
