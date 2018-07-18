@@ -28,6 +28,10 @@ windowManager.setSize = function (view) {
       width = 400
       height = 350
       break
+    case 'testing':
+      width = 550
+      height = 700
+      break
     default:
       width = 300
       height = 300
@@ -48,6 +52,9 @@ windowManager.loadURL = function (view) {
     case 'manager':
     case 'mainManagerView':
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/index.html')}`
+      break
+    case 'testing':
+      file = `file://${path.resolve(__dirname, '..', '..', 'test/index.html')}`
       break
     default:
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/modal.html')}`

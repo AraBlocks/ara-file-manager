@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+  <head>
+    <meta charset="UTF-8">
+    <title>Component Tests</title>
+  </head>
+  <body style="height: 100%;">
+    <div id="mocha"></div>
+  </body>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script>
+      mocha.ui('bdd')
+      mocha.reporter('html')
+      require('./components/button')
+      mocha.run()
+  </script>
+</html>
