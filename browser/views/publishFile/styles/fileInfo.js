@@ -1,10 +1,9 @@
 'use strict'
 
-const { colors, fonts } = require('styleUtils')
+const { fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-	colors,
 	fonts,
 
 	container: css`
@@ -18,13 +17,13 @@ module.exports = {
 
 	infoTipHolder: css`
 		:host {
-			font-family: ${fonts.light};
-			font-size: 12px;
 			display: flex;
 			flex-direction: column;
+			font-family: ${fonts.light};
+			font-size: 12px;
+			height: 100px;
 			justify-content: space-between;
 			width: 49%;
-			height: 100px;
 		}
 
 		:host b {
@@ -36,8 +35,8 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
-			justify-content: center;
 			height: 49%;
+			justify-content: center;
 		}
 	`,
 
@@ -50,8 +49,8 @@ module.exports = {
 	verticalContainer: css`
 		:host {
 			display: flex;
-			width: 100%;
 			justify-content: space-between;
+			width: 100%;
 		}
 	`
 }
