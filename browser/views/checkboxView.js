@@ -45,7 +45,7 @@ class CheckboxView extends Nanocomponent {
 			placeholder: 'Price',
 			type: 'number',
       embeddedButton: {
-        option: 'converter',
+        option: 'selection',
         optionList: [
           'ARA',
           'USD'

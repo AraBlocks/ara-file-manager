@@ -32,7 +32,7 @@ module.exports = {
     }
   `,
 
-  converter: css`
+  selection: css`
     :host {
       font-size: 12px;
       font-family: ${fonts.bold};
