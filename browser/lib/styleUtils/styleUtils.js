@@ -19,6 +19,26 @@ module.exports = {
     araRed: '#fc2636',
   },
 
+  buttonSelector(type) {
+    let opts
+    switch (type) {
+      case 'cancel':
+        opts = {
+          children: 'Cancel',
+          cssClass: {
+            name: 'smallInvisible',
+            opts: {
+              color: 'blue',
+              weight: 'light'
+            }
+          }
+        }
+        break
+      default:
+    }
+    return opts
+  },
+
   colorSelector(color) {
     let selectedColor
     switch (color) {
