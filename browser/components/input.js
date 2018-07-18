@@ -25,7 +25,8 @@ class Input extends Nanocomponent {
     }
 
     this.state = {
-      value: ''
+      value: '',
+      converter: this.props.embeddedButton.optionList ? this.props.embeddedButton.optionList[0] : ''
     }
   }
 
@@ -60,16 +61,28 @@ class Input extends Nanocomponent {
 
     function generateButton() {
       let button = html``
-      if (props.embeddedButton.option === "button") {
+      const embeddedButton = props.embeddedButton
+      if (embeddedButton.option === 'button') {
         button = html`
           <button
             class=${styles.button}
-            onclick=${props.embeddedButton.onclick}
+            onclick=${embeddedButton.onclick}
           >
-            ${props.embeddedButton.children}
+            ${embeddedButton.children}
           </button>`
+      } else if (embeddedButton.option === 'converter' && embeddedButton.optionList != null) {
+        button = html`
+          <select class=${styles.converter} onchange=${currencyChanged}>
+            ${embeddedButton.optionList.map(currency => html`<option value=${currency}>${currency}</option>`)}
+          </select>
+        `
       }
       return button
+
+      function currencyChanged(e) {
+        state.value = e.target.value
+        props.parentState[embeddedButton.field] = state.value
+      }
     }
   }
 }
