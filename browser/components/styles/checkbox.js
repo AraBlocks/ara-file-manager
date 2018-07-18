@@ -1,9 +1,9 @@
 'use strict'
 
-const { 
+const {
 	colors,
-	colorSelector, 
-	fonts 
+	colorSelector,
+	fonts
 } = require('styleUtils')
 const { css } = require('css')
 
@@ -11,10 +11,10 @@ module.exports = {
 	colors,
 	fonts,
 
-	container({ 
-		checked, 
-		opts: { 
-			colorChecked = 'red',
+	container({
+		checked,
+		opts: {
+			colorChecked = colors.araRed,
 			colorUnchecked = 'grey'
 		}
 	}) {
@@ -24,8 +24,8 @@ module.exports = {
 				height: 30px;
 				background-color: white;
 				border: 2px solid ${
-					checked 
-					? colorSelector(colorChecked) 
+					checked
+					? colorSelector(colorChecked)
 					: colorSelector(colorUnchecked)
 				};
 				cursor: pointer;
@@ -33,9 +33,9 @@ module.exports = {
 		`
 	},
 
-	checkmark({ 
-		checked, 
-		opts: { colorChecked = 'red' }
+	checkmark({
+		checked,
+		opts: { colorChecked = colors.araRed }
 	}) {
 		return css`
 			:host {
