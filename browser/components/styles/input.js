@@ -32,6 +32,14 @@ module.exports = {
     }
   `,
 
+  selection: css`
+    :host {
+      font-size: 12px;
+      font-family: ${fonts.bold};
+      margin: 5px;
+    }
+  `,
+
   standard() {
     return css`
       :host {
