@@ -20,7 +20,6 @@ fs.readdirSync(views).forEach((view) => createElement(view, false))
 fs.readdirSync(modals).forEach(modal => createElement(modal, true))
 
 function createElement(view, isModal = false) {
-  console.log({view, isModal})
   if (exclude.includes(view)) { return }
   view = view.slice(0, -3)
 
