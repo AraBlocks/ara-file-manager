@@ -14,7 +14,6 @@ class FileSelector extends Nanocomponent {
 
 		this.props = { field, parentState }
 		this.state = { filePath: '' }
-		this.selectFile = this.selectFile.bind(this)
 		this.children = { input: new Input({
 			placeholder: 'File Directory',
 			field,
@@ -22,7 +21,7 @@ class FileSelector extends Nanocomponent {
 			embeddedButton: {
 				option: 'button',
         children: 'Select',
-        onclick: this.selectFile
+        onclick: this.selectFile.bind(this)
       }
 		})}
 	}
