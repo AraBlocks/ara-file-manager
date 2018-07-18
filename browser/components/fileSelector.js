@@ -11,17 +11,18 @@ class FileSelector extends Nanocomponent {
 		parentState
 	}) {
 		super()
+
 		this.props = { field, parentState }
 		this.state = { filePath: '' }
-		this.onclick = this.onclick.bind(this)
+		this.selectFile = this.selectFile.bind(this)
 		this.children = { input: new Input({
 			placeholder: 'File Directory',
 			field,
 			parentState,
 			embeddedButton: {
-        option: 'button',
-        title: 'Select',
-        onclick: this.onclick
+				option: 'button',
+        children: 'Select',
+        onclick: this.selectFile
       }
 		})}
 	}
@@ -35,7 +36,7 @@ class FileSelector extends Nanocomponent {
 		return !samePath
 	}
 
-	onclick() {
+	selectFile() {
 		const { state, props } = this
 		fileSystemManager.showSelectFileDialog()
 			.then(((fileNames) => {

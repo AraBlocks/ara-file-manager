@@ -67,7 +67,7 @@ class Input extends Nanocomponent {
             class=${styles.button}
             onclick=${props.embeddedButton.onclick}
           >
-            ${props.embeddedButton.title}
+            ${props.embeddedButton.children}
           </button>`
       }
       return button

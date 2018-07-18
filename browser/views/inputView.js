@@ -12,7 +12,7 @@ class InputView extends Nanocomponent {
       placeholder: 'Some text',
       embeddedButton: {
         option: 'button',
-        title: 'Select',
+        children: 'Select',
         onclick: () => console.log('clicked')
       }
     })
