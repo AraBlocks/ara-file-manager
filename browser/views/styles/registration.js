@@ -31,7 +31,7 @@ module.exports = {
       flex-direction: column;
       height: 120px;
       justify-content: space-between;
-      width: 100%;
+      width: 90%;
     }
   `
 }
