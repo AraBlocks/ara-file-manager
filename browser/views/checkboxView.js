@@ -10,7 +10,12 @@ const Nanocomponent = require('nanocomponent')
 class CheckboxView extends Nanocomponent {
 	constructor() {
 		super()
-		this.state = { checkbox: false, supernode: false, filePath: '' , currency: ''}
+		this.state = {
+			checkbox: false,
+			supernode: false,
+			filePath: '' ,
+			currency: ''
+		}
 		this.checkbox = new Checkbox({
 			checked: false,
 			cssClass: {
