@@ -38,7 +38,7 @@ class HamburgerView extends Nanocomponent {
     } = this
 
     return html`
-      <div class="popup">
+      <div class="modal">
         ${menu.render()}
         ${close.render({})}
         ${expand.render({})}
