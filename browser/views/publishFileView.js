@@ -8,8 +8,10 @@ const Nanocomponent = require('nanocomponent')
 class PublishFileVIew extends Nanocomponent {
 	constructor() {
 		super()
-		this.props = {}
-		this.fileInfo = new FileInfo()
+		this.state = {}
+		this.fileInfo = new FileInfo({
+			parentState: this.state
+		})
 	}
 
 	update(){
@@ -17,10 +19,11 @@ class PublishFileVIew extends Nanocomponent {
 	}
 
 	createElement() {
-		const { fileInfo, props } = this
+		const { fileInfo } = this
 		return html`
 			<div>
 				${fileInfo.render()}
+				<button onclick=${() => console.log(this.state)}>Log state</button>
 			</div>
 		`
 	}

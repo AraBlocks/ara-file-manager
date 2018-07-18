@@ -7,23 +7,20 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileInfo extends Nanocomponent {
-	constructor() {
+	constructor({
+		parentState
+	}) {
 		super()
-		this.state = {
-			currency: '',
-			fileName: '',
-			filePath: '',
-			price: ''
-		}
+		this.props = { parentState }
 		this.children = {
 			fileNameInput: new Input({
 				field: 'fileName',
 				placeholder: 'File Name',
-				parentState: this.state
+				parentState
 			}),
 			priceInput: new Input({
 				field: 'price',
-				parentState: this.state,
+				parentState,
 				placeholder: 'Price',
 				type: 'number',
 				embeddedButton: {
@@ -37,7 +34,7 @@ class FileInfo extends Nanocomponent {
 			}),
 			fileSelector: new FileSlector({
 				field: 'filePath',
-				parentState: this.state
+				parentState: parentState
 			})
 		}
 	}
