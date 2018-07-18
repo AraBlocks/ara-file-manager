@@ -30,11 +30,12 @@ class Input extends Nanocomponent {
     }
   }
 
-  update({ value }) {
+  update({ value, converter = '' }) {
     const { state } = this
-    const sameValue = this.state.value === value
+    const sameValue = this.state.value === value && this.state.converter === converter
     if (!sameValue) {
       state.value = value
+      state.converter = converter
     }
     return !sameValue
   }
