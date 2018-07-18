@@ -5,12 +5,22 @@ const remote = require('electron').remote;
 const windowManager = remote.require('electron-window-manager')
 const windowManagement = require('./lib/store/windowManagement')
 const views = __dirname + '/views/'
+const modals = __dirname + '/views/modals/'
 
-const exclude = [ 'fileManager.js', 'styles', 'fileManager', 'mainManager' ]
+const exclude = [
+  'fileManager.js',
+  'styles',
+  'modals',
+  'fileManager',
+  'mainManager',
+  'styles.js'
+ ]
 
-fs.readdirSync(views).forEach(createElement)
+fs.readdirSync(views).forEach((view) => createElement(view, false))
+fs.readdirSync(modals).forEach(modal => createElement(modal, true))
 
-function createElement(view) {
+function createElement(view, isModal = false) {
+  console.log({view, isModal})
   if (exclude.includes(view)) { return }
   view = view.slice(0, -3)
 
@@ -22,14 +32,10 @@ function createElement(view) {
   const button = document.createElement('button')
   button.innerHTML = view
   button.onclick = handler
-  document.body.appendChild(button)
-  const br = document.createElement('br')
-  document.body.appendChild(br)
+  button.style.padding = '.5em'
+  button.style.margin = '5px'
+  const div = isModal
+    ? document.getElementById('modal-holder')
+    : document.getElementById('view-holder')
+  div.appendChild(button)
 }
-
-const button = document.createElement('button')
-button.innerHTML = 'create modal'
-button.onclick = () => windowManagement.openModal()
-document.body.appendChild(button)
-const br = document.createElement('br')
-document.body.appendChild(br)

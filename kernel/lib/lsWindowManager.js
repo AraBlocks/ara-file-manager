@@ -6,6 +6,10 @@ windowManager.setSize = function (view) {
   let width
   let height
   switch (view) {
+    case 'checkoutModal1':
+      width = 340
+      height = 270
+      break
     case 'fManagerView':
     case 'filemanager':
       width = 520
@@ -46,7 +50,7 @@ windowManager.loadURL = function (view) {
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/index.html')}`
       break
     default:
-      file = `file://${path.resolve(__dirname, '..', '..', 'browser/popup.html')}`
+      file = `file://${path.resolve(__dirname, '..', '..', 'browser/modal.html')}`
   }
   return file
 }

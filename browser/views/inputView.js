@@ -23,7 +23,7 @@ class InputView extends Nanocomponent {
     const { input } = this
 
     return html`
-      <div class="popup">
+      <div class="modal">
         ${input.render()}
       </div>`
   }

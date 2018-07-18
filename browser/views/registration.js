@@ -51,7 +51,7 @@ class Registration extends Nanocomponent {
     } = this
 
     return html`
-      <div class="popup">
+      <div class="modal">
         <div class=${styles.header}>LTLSTAR</div>
         <div class=${styles.header}>Register</div>
         <p class=${styles.description}>
