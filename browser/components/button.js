@@ -29,7 +29,7 @@ class Button extends Nanocomponent {
     return true
   }
 
-  createElement(chooState) {
+  createElement() {
     const { props } = this
     return html`
       <button

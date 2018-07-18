@@ -5,7 +5,7 @@
   "main": "boot/main-dev.js",
   "scripts": {
     "start-dev": "electron boot/main-dev.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "electron test/main.js",
     "postinstall": "install-app-deps",
     "pack": "build --dir",
     "dist": "build"
@@ -43,10 +43,12 @@
   },
   "devDependencies": {
     "ava": "^0.25.0",
+    "chai": "^4.1.2",
     "electron": "^2.0.3",
     "electron-builder": "^20.22.0",
     "electron-rebuild": "^1.7.3",
-    "electron-reload": "^1.2.3"
+    "electron-reload": "^1.2.3",
+    "mocha": "^5.2.0"
   },
   "build": {
     "appId": "yourappid",
