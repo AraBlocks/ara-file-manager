@@ -28,37 +28,51 @@ class Input extends Nanocomponent {
       value: '',
       selection: this.props.embeddedButton.optionList ? this.props.embeddedButton.optionList[0] : ''
     }
+
+    this.onchange = this.onchange.bind(this)
   }
 
-  update({ value, selection = '' }) {
+  update({ value, selection }) {
     const { state } = this
-    const sameValue = this.state.value === value && this.state.selection === selection
+    const sameValue = state.value === value && state.selection === selection
     if (!sameValue) {
-      state.value = value
-      state.selection = selection
+      state.value = state.value === value ? state.value : value
+      state.selection = state.selection === selection ? state.selection : selection
     }
     return !sameValue
   }
 
-  createElement(chooState) {
-    const { props, state }  = this
+  onchange(e) {
+    const { props, state } = this
+    state.value = e.target.value
+    props.parentState[props.field] = state.value
+  }
+
+  select(e) {
+    const { props, state } = this
+    state.selection = e.target.value
+    props.parentState[props.embeddedButton.field] = state.selection
+  }
+
+  createElement() {
+    const {
+      onchange,
+      props,
+      select,
+      state
+    } = this
     return html`
       <div class="${styles.container}">
         <input
-          class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
+          class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass"
           onchange=${onchange}
-          placeholder=${props.placeholder}
-          value=${state.value}
+          placeholder="${props.placeholder}"
+          value="${state.value}"
           type=${props.type}
         >
         ${generateButton()}
       </div>
     `
-
-    function onchange(e) {
-      state.value = e.target.value
-      props.parentState[props.field] = state.value
-    }
 
     function generateButton() {
       let button = html``
@@ -73,17 +87,12 @@ class Input extends Nanocomponent {
           </button>`
       } else if (embeddedButton.option === 'selection' && embeddedButton.optionList != null) {
         button = html`
-          <select class=${styles.selection} onchange=${currencyChanged}>
-            ${embeddedButton.optionList.map(currency => html`<option value=${currency}>${currency}</option>`)}
+          <select class=${styles.selection} onchange=${select}>
+            ${embeddedButton.optionList.map(option => html`<option value=${option}>${option}</option>`)}
           </select>
         `
       }
       return button
-
-      function currencyChanged(e) {
-        state.selection = e.target.value
-        props.parentState[embeddedButton.field] = state.selection
-      }
     }
   }
 }
