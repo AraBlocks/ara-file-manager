@@ -11,7 +11,7 @@ module.exports = {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			margin: 10px;
+			padding-top: 1px;
 		}
 	`,
 

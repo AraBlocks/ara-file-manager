@@ -24,6 +24,10 @@ windowManager.setSize = function (view) {
       width = 400
       height = 325
       break
+    case 'publishFileView':
+      width = 650
+      height = 490
+      break
     case 'registration':
       width = 400
       height = 350
@@ -52,6 +56,9 @@ windowManager.loadURL = function (view) {
     case 'manager':
     case 'mainManagerView':
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/index.html')}`
+      break
+    case 'publishFileView':
+      file = `file://${path.resolve(__dirname, '..', '..', 'browser/publish-file.html')}`
       break
     case 'testing':
       file = `file://${path.resolve(__dirname, '..', '..', 'test/index.html')}`

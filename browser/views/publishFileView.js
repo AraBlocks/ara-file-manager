@@ -1,7 +1,7 @@
 'use strict'
 
-// const styles = require('./styles/tooltip')
 const FileInfo = require('./publishFile/fileInfo')
+const PublishFileContainer = require('./publishFile/container')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -12,6 +12,7 @@ class PublishFileVIew extends Nanocomponent {
 		this.fileInfo = new FileInfo({
 			parentState: this.state
 		})
+		this.publishFileContainer = new PublishFileContainer()
 	}
 
 	update(){
@@ -19,11 +20,10 @@ class PublishFileVIew extends Nanocomponent {
 	}
 
 	createElement() {
-		const { fileInfo } = this
+		const { publishFileContainer } = this
 		return html`
 			<div>
-				${fileInfo.render()}
-				<button onclick=${() => console.log(this.state)}>Log state</button>
+				${publishFileContainer.render()}
 			</div>
 		`
 	}
