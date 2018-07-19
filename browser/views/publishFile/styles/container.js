@@ -6,28 +6,20 @@ const { css } = require('css')
 module.exports = {
 	colors,
 	fonts,
-	header: fontCSS.noeH1,
-
-	flexibleContainer(expanded) {
-		return css`
-			:host {
-				display: ${expanded ? "flex" : "none"};
-				flex-direction: column;
-				height: ${expanded ? 199 : 0}px;
-				justify-content: space-between;
-				overflow: scroll;
-				width: 100%;
-			}
-		`
-	},
+	title: fontCSS.noeH1,
+	content: fontCSS.proxiContent,
 
 	container: css`
 		:host {
-			align-items: center;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			width: 100%;
+			margin: 20px;
+			height: 450px;
+		}
+
+		:host b {
+			font-family: ${fonts.bold}
 		}
 	`,
 
@@ -39,11 +31,17 @@ module.exports = {
 		}
 	`,
 
-	horizontalContainer: css`
+	titleHolder: css`
 		:host {
 			display: flex;
 			justify-content: space-between;
-			width: 100%;
 		}
 	`,
+
+	optionsHolder: css`
+		:host {
+			display: flex;
+			justify-content: space-between;
+		}
+	`
 }
