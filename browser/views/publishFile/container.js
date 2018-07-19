@@ -29,7 +29,7 @@ class Container extends Nanocomponent {
 				field: 'supernode',
 				parentState: this.state
 			}),
-			priceMaintanenceCheckbox: new OptionsCheckbox({
+			priceManagementCheckbox: new OptionsCheckbox({
 				field: 'priceManagement',
 				parentState: this.state
 			}),
@@ -67,7 +67,7 @@ class Container extends Nanocomponent {
 				${children.fileInfo.render()}
 				<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
 					${children.supernodeCheckbox.render()}
-					${children.priceMaintanenceCheckbox.render()}
+					${children.priceManagementCheckbox.render()}
 				</div>
 				${children.publishButton.render()}
 			</div>

@@ -27,7 +27,6 @@ windowManager.setSize = function (view) {
     case 'publishFileView':
       width = 650
       height = 490
-      console.log('hello')
       break
     case 'registration':
       width = 400
