@@ -1,4 +1,4 @@
-{    
+{
     "Add NanoComponent": {
         "prefix": "lsnano",
         "body": ["'use strict'\n",
@@ -9,10 +9,10 @@
             "\tconstructor() {",
                 "\t\tsuper()",
                 "\t\tthis.props = {}",
-            "}\n",
+            "\t}\n",
             "\tupdate(){",
                 "\t\treturn true",
-            "}\n",
+            "\t}\n",
             "\tcreateElement() {",
                 "\t\tconst { props } = this",
                 "\t\treturn html`",
@@ -22,9 +22,9 @@
             "module.exports = ${className}"
         ],
         "description": "NanoComponent - Boiler Plate"
-    }, 
+    },
     "Add CSS Boiler Plate":{
-        "prefix": "lscss", 
+        "prefix": "lscss",
         "body": ["'use strict'\n",
             "const { colors, fonts } = require('styleUtils')",
             "const { css } = require('css')\n",
@@ -38,10 +38,21 @@
             "}"
         ],
         "description": "CSS - Boiler Plate"
-    }, 
+    },
     "Console Log": {
         "prefix": "lslog",
         "body": "console.log($1)",
         "description": "Console Log"
+    },
+    "lstest": {
+        "prefix": "lstest",
+        "body": ["'use strict'\n",
+            "const ${1:component} = require('${2|../../browser/components/,../browser/views/|}')",
+            "describe('${3:description} Component', () => {",
+                "\tit('${4:test1}', () => {",
+                "\t})",
+            "})"
+            ],
+        "description": "Test-Boiler Plate"
     }
 }
