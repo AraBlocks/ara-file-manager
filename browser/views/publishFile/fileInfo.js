@@ -1,6 +1,6 @@
 'use strict'
 
-const FileSlector = require('../../components/fileSelector')
+const FileSelector = require('../../components/fileSelector')
 const Input = require('../../components/input')
 const styles = require('./styles/fileInfo')
 const html = require('choo/html')
@@ -33,9 +33,9 @@ class FileInfo extends Nanocomponent {
 					field: 'currency'
 				}
 			}),
-			fileSelector: new FileSlector({
+			fileSelector: new FileSelector({
 				field: 'filePath',
-				parentState: parentState
+				parentState
 			})
 		}
 	}
