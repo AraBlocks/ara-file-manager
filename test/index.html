@@ -9,10 +9,11 @@
   </body>
   <script src="../node_modules/mocha/mocha.js"></script>
   <script>
+      const { expect } = require('chai')
+      const fs = require('fs')
       mocha.ui('bdd')
       mocha.reporter('html')
-      const { expect } = require('chai')
-      require('./components/dynamicButton')
+      fs.readdirSync(__dirname + '/components/').forEach(test => require(`./components/${test}`))
       mocha.run()
   </script>
 </html>
