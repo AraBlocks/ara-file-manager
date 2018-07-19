@@ -27,6 +27,7 @@
     "ara-crypto": "github:arablocks/ara-crypto",
     "ara-identity": "github:arablocks/ara-identity",
     "ara-identity-archiver": "github:arablocks/ara-identity-archiver",
+    "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-network": "github:arablocks/ara-network",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
     "cfsnet": "github:arablocks/cfsnet",
