@@ -42,15 +42,11 @@ module.exports = {
       flex-direction: column;
       height: 190px;
       justify-content: space-between;
-      width: 100%;
-    }
-
-    :host input {
-      width: 94%;
+      width: 90%;
     }
 
     :host button {
-      width: 94%
+      width: 100%
     }
   `,
 
