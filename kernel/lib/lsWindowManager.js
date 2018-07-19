@@ -30,7 +30,7 @@ windowManager.setSize = function (view) {
       break
     case 'testing':
       width = 550
-      height = 700
+      height = 900
       break
     default:
       width = 300

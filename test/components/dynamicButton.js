@@ -2,7 +2,7 @@
 
 const DynamicButton = require('../../browser/components/dynamicButton')
 
-describe("DynamicButton Component", () => {
+describe('DynamicButton Component', () => {
   it('Should update state', () => {
     const updatedState = {
       children: 'Updated',
