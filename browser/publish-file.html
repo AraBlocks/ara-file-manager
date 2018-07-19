@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Publish File</title>
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/fonts.css">
+  </head>
+  <body style="height: 100%;">
+    <div id="container"></div>
+  </body>
+  <script>
+			const FileInfo = require('./views/publishFile/fileInfo')
+			const PublishFile = require('./views/publishFile/container')
+			const publishFile = new PublishFile()
+      document.getElementById('container').appendChild(publishFile.render())
+  </script>
+</html>
