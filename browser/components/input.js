@@ -86,6 +86,7 @@ class Input extends Nanocomponent {
             ${embeddedButton.children}
           </button>`
       } else if (embeddedButton.option === 'selection' && embeddedButton.optionList != null) {
+        props.parentState[embeddedButton.field] = embeddedButton.optionList[0]
         button = html`
           <select class=${styles.selection} onchange=${select}>
             ${embeddedButton.optionList.map(option => html`<option value=${option}>${option}</option>`)}

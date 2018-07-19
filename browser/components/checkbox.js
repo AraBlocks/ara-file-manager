@@ -6,7 +6,6 @@ const Nanocomponent = require('nanocomponent')
 
 class Checkbox extends Nanocomponent {
 	constructor({
-		checked,
 		cssClass = {},
 		field = "" ,
 		parentState = {}
@@ -17,7 +16,7 @@ class Checkbox extends Nanocomponent {
 			field,
 			parentState
 		}
-		this.state = { checked }
+		this.state = { checked: parentState[field] }
 		this.onclick = this.onclick.bind(this)
 	}
 
