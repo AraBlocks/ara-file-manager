@@ -13,7 +13,8 @@ const exclude = [
   'modals',
   'fileManager',
   'mainManager',
-  'styles.js'
+  'styles.js',
+  'publishFile'
  ]
 
 fs.readdirSync(views).forEach((view) => createElement(view, false))

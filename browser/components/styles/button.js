@@ -41,7 +41,7 @@ module.exports = {
         font-family: ${fontSelector(weight)};
         font-size: ${fontSize}px;
         height: 2em;
-        width: 90%;
+        width: 100%;
       }
     `
   } ,

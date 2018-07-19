@@ -16,7 +16,7 @@ module.exports = {
       border: 1px solid var(--ara-input-grey);
       display: flex;
       justify-content: space-between;
-      width: 89%;
+      width: 100%;
     }
   `,
 
