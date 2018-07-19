@@ -17,8 +17,8 @@ class Container extends Nanocomponent {
 			fileName: '',
 			filePath: '',
 			price: '',
-			supernode: true,
-			priceManagement: true
+			priceManagement: true,
+			supernode: true
 		}
 
 		this.children = {
@@ -34,8 +34,8 @@ class Container extends Nanocomponent {
 				parentState: this.state
 			}),
 			publishButton: new Button({
-				children: 'Publish', onclick:
-				this.publishFile.bind(this)
+				children: 'Publish',
+				onclick: this.publishFile.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
 		}
@@ -50,22 +50,22 @@ class Container extends Nanocomponent {
 	}
 
 	createElement() {
-		const { children, state } = this
+		const { children } = this
 		return html`
-			<div class=${styles.container}>
-				<div class="${styles.titleHolder} ${styles.title}">
+			<div class="${styles.container} PublishFileContainer-container">
+				<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
 					Publish File
 					${children.utilityButton.render({})}
 				</div>
-				<div class="${styles.content}">
+				<div class="${styles.content} PublishFileContainer-content">
 					Publish your content for distribution on the ARA Network. You can publish a single file or an entire directory as a single
 					asset. Once published, use the provided distribution link to allow users to purchase your content.<br><br>
 					<b>Note:</b> ARA is a decentralized network. at least one computer or supernode must be connected and hosting this file for users
 					to be able to download it.
 				</div>
-				<div class=${styles.divider}></div>
+				<div class="${styles.divider} PublishFileContainer-divider"></div>
 				${children.fileInfo.render()}
-				<div class="${styles.optionsHolder}">
+				<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
 					${children.supernodeCheckbox.render()}
 					${children.priceMaintanenceCheckbox.render()}
 				</div>

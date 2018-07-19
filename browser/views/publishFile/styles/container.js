@@ -13,9 +13,9 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
+			height: 450px;
 			justify-content: space-between;
 			margin: 20px;
-			height: 450px;
 		}
 
 		:host b {
@@ -31,14 +31,7 @@ module.exports = {
 		}
 	`,
 
-	titleHolder: css`
-		:host {
-			display: flex;
-			justify-content: space-between;
-		}
-	`,
-
-	optionsHolder: css`
+	horizontalContainer: css`
 		:host {
 			display: flex;
 			justify-content: space-between;
