@@ -49,7 +49,7 @@ const rc = require('ara-runtime-configuration')
 
 void async function main() {
   try { await identityArchiver.configure(rc.network.node['identity-archiver'], require('yargs')) }
-  catch (err) { await identityArchiver.configure(null, require('yargs')) }
+  catch (err) { await identityArchiver.configure({keys:, require('yargs')) }
   try {
     await identityArchiver.start(argv)
   } catch (e) {
