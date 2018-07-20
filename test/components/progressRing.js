@@ -2,7 +2,7 @@
 
 const ProgressRing = require('../../browser/components/progressRing')
 
-describe('should render different symbols based on status', () => {
+describe('ProgressRing', () => {
   let progressRing
   beforeEach(() => {
     progressRing = new ProgressRing
