@@ -39,3 +39,12 @@ function createElement(view, isModal = false) {
     : document.getElementById('view-holder')
   div.appendChild(button)
 }
+
+if (remote.process.argv.includes('loggedin')) {
+  const { dispatch } = require('./lib/store/windowManagement')
+  const { osxSurfaceAids } = require('./lib/store/accountSelection')
+
+  void async function() {
+    dispatch('LOGIN', osxSurfaceAids()[0])
+  }()
+}

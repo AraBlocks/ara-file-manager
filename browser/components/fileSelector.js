@@ -38,11 +38,11 @@ class FileSelector extends Nanocomponent {
 	selectFile() {
 		const { state, props } = this
 		fileSystemManager.showSelectFileDialog()
-			.then(((fileNames) => {
+			.then(fileNames => {
 				state.filePath = fileNames[0]
 				props.parentState[props.field] = fileNames[0]
 				this.rerender()
-			}))
+			})
 			.catch(console.log)
 	}
 

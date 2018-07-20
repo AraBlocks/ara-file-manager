@@ -15,6 +15,7 @@ module.exports = {
               aid.length === 64
                 ? [...acc, {
                     aid,
+                    ddo: JSON.parse(fs.readFileSync(`${root}/${user}/.ara/identities/${aid}/ddo.json`)),
                     keystore: JSON.parse(fs.readFileSync(`${root}/${user}/.ara/identities/${aid}/keystore/eth`))
                   }]
                 : acc, []

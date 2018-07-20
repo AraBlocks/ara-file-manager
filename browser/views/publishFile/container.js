@@ -9,16 +9,16 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-	constructor() {
+	constructor({ userData }) {
 		super()
 
 		this.state = {
 			currency: '',
-			fileName: '',
 			filePath: '',
 			price: '',
 			priceManagement: true,
-			supernode: true
+			supernode: true,
+			userData
 		}
 
 		this.children = {

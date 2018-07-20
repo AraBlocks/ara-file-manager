@@ -9,16 +9,7 @@ require('./ipc-dev')
 app.on('ready', () => {
   windowManager.init()
   windowManager.sharedData.set('store', require('./store'))
-  if (isDev) {
-    require('electron-reload')(path.resolve('browser'))
-    if (process.argv.includes('loggedin')) {
-      const { dispatch } = require('../browser/lib/store/windowManagement')
-      const { osxSurfaceAids } = require('../browser/lib/store/accountSelection')
-      const { resolveAid } = require('../browser/lib/store/authentication')
-
-      dispatch('login', resolveAid(osxSurfaceAids()[0]))
-    }
-  }
+  if (isDev) { require('electron-reload')(path.resolve('browser')) }
   require('./tray')()
 })
 
