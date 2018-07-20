@@ -1,7 +1,7 @@
 'use strict'
 
-const UtilityButton = require('../../browser/components/utilityButton')
 const DomElementManager = require('../domElementManager')
+const UtilityButton = require('../../browser/components/utilityButton')
 
 describe('UtilityButton Component', () => {
 	it('Should Update State', () => {
