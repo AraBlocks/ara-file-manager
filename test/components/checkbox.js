@@ -1,6 +1,7 @@
 'use strict'
 
 const Checkbox = require('../../browser/components/checkbox')
+const DomElementManager = require('../domElementManager')
 
 describe('Checkbox Component', () => {
 	it('Should update state', () => {
@@ -11,11 +12,10 @@ describe('Checkbox Component', () => {
 			}
 		})
 
-		const testComponentNode = document.getElementById('test components')
-		testComponentNode.appendChild(checkbox.render())
+		DomElementManager.mountElement(checkbox.render())
 		checkbox.onclick()
-		expect(checkbox.state.checked !== initialState)
-		testComponentNode.removeChild(testComponentNode.firstChild)
+		expect(checkbox.state.checked).to.not.equal(initialState)
+		DomElementManager.removeAllElements()
 	})
 })
 
