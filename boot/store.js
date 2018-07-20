@@ -2,8 +2,9 @@
 
 const windowManager = require('electron-window-manager')
 
-windowManager.bridge.on('login', data => {
+windowManager.bridge.on('LOGIN', data => {
   state.userData.aid = data
+  state.userData.aid.pw = 'abc'
   windowManager.bridge.emit('new-state', state)
 })
 

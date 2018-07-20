@@ -1,7 +1,5 @@
 'use strict'
 
-const fs = require('fs')
-const Nanocomponent = require('nanocomponent')
 const remote = require('electron').remote;
 const windowManager = remote.require('electron-window-manager')
 

@@ -8,10 +8,10 @@ describe('Input Component', () => {
     const input = new Input({})
     const initialValue = input.state.value
 
-    input.onchange({ target: { value: 'abc '}})
+    input.onchange({ target: { value: 'abc'}})
 
-    expect(initialValue !== input.state.value)
-    expect(input.state.value === 'abc')
+    expect(initialValue).not.to.equal(input.state.value)
+    expect(input.state.value).to.equal('abc')
   })
 
   it('select should update selection property in state', () => {
@@ -30,7 +30,7 @@ describe('Input Component', () => {
 
     input.select({ target: { value: 'USD' } })
 
-    expect(initialSelection !== input.state.selection)
-    expect(input.state.selection === 'USD')
+    expect(initialSelection).not.to.equal(input.state.selection)
+    expect(input.state.selection).to.equal('USD')
   })
 })

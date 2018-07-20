@@ -16,7 +16,7 @@ void async function () {
   try {
     await afs.add({
       did,
-      paths: ['build'],
+      paths: ['/Users/mark/Documents/Thai.pages'],
       password
     })
     console.log('added file succesfully')

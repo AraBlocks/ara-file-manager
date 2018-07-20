@@ -5,6 +5,9 @@ const PublishFileContainer = require('./publishFile/container')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
+const { remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
+
 class PublishFileVIew extends Nanocomponent {
 	constructor() {
 		super()
