@@ -30,7 +30,7 @@ describe('Input Component', () => {
 
     input.select({ target: { value: 'USD' } })
 
-    expect(initialSelection !== input.state.selection)
-    expect(input.state.selection === 'USD')
+    expect(initialSelection).to.not.equal(input.state.selection)
+    expect(input.state.selection).to.equal('USD')
   })
 })
