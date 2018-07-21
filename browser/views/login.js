@@ -67,7 +67,7 @@ class Login extends Nanocomponent {
     const { usernameValue, passwordValue } = this.state
     if (usernameValue === 'kit' && passwordValue === 'abc') {
       const [ aid ] = osxSurfaceAids()
-      dispatch('LOGIN', aid)
+      dispatch({ action: 'LOGIN', load: aid })
     } else {
       return
     }

@@ -40,11 +40,14 @@ function createElement(view, isModal = false) {
   div.appendChild(button)
 }
 
-if (remote.process.argv.includes('loggedin')) {
+const { argv } = remote.process
+if (argv.includes('loggedin')) {
   const { dispatch } = require('./lib/store/windowManagement')
   const { osxSurfaceAids } = require('./lib/store/accountSelection')
 
+  const password = argv[argv.length - 1]
   void async function() {
-    dispatch('LOGIN', osxSurfaceAids()[0])
+    const afs = osxSurfaceAids().filter(({ afs }) => afs === argv[argv.length - 2])
+    dispatch({action:'LOGIN', load: Object.assign(...afs, { password }) })
   }()
 }

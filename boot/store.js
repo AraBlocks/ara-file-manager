@@ -1,11 +1,16 @@
 'use strict'
 
+const publish = require('./actionCreators/publish')
 const windowManager = require('electron-window-manager')
 
-windowManager.bridge.on('LOGIN', data => {
-  state.userData.aid = data
-  state.userData.aid.pw = 'abc'
+windowManager.bridge.on('LOGIN', load => {
+  state.userData.aid = load
   windowManager.bridge.emit('new-state', state)
+})
+
+windowManager.bridge.on('PUBLISH', async load => {
+  const meta = await publish(load)
+  windowManager.bridge.emit('published', meta)
 })
 
 const state = {
