@@ -23,7 +23,7 @@ function changeMainManagerSize(expand) {
 	}
 }
 
-function dispatch(action, load) {
+function dispatch({action, load}) {
 	windowManager.bridge.emit(action, load)
 }
 
