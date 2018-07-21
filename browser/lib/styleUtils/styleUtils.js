@@ -39,14 +39,14 @@ module.exports = {
     return opts
   },
 
-  colorSelector(color) {
+  colorSelector(color, fade = false) {
     let selectedColor
     switch (color) {
       case 'red':
-        selectedColor = '#fc2636'
+        selectedColor = !fade ? '#fc2636' : '#ff0063'
         break
       case 'blue':
-        selectedColor = '#1e7dfa'
+        selectedColor = !fade ? '#1e7dfa' : '#00a1ff'
         break
       case 'grey':
         selectedColor = '#cbcbcb'
