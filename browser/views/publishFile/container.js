@@ -59,7 +59,7 @@ class Container extends Nanocomponent {
 		dispatch({ action: 'PUBLISH', load: {
 				did,
 				password,
-				paths: [ filePath || 'README.md' ]
+				paths: filePath
 			}
 		})
 	}

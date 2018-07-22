@@ -5,13 +5,12 @@ const afs = require('ara-filesystem')
 module.exports = async ({ did, password, paths }) => {
   const arafs = await afs.create({ owner: did, password })
   const { afs: { did: id }, mnemonic } = arafs
-  console.log({id, mnemonic})
   arafs.afs.close()
 
   try {
     await afs.add({
       did: id,
-      paths: ['README.md'],
+      paths: ['README.md', '.ararc'],
       password
     })
     console.log('added file succesfully')

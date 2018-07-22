@@ -39,8 +39,8 @@ class FileSelector extends Nanocomponent {
 		const { state, props } = this
 		fileSystemManager.showSelectFileDialog()
 			.then(fileNames => {
-				state.filePath = fileNames[0]
-				props.parentState[props.field] = fileNames[0]
+				state.filePath = fileNames
+				props.parentState[props.field] = fileNames
 				this.rerender()
 			})
 			.catch(console.log)

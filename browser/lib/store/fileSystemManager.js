@@ -5,8 +5,15 @@ const dialog = remote.dialog
 
 module.exports = {
 	showSelectFileDialog() {
+		const opts = {
+			properties: [
+				'openFile',
+				'openDirectory',
+				'multiSelections'
+			]
+		}
 		return new Promise((resolve, reject) => {
-			dialog.showOpenDialog((fileNames, error) => {
+			dialog.showOpenDialog(opts, (fileNames, error) => {
 				fileNames ? resolve(fileNames) : reject(error)
 			})
 		})
