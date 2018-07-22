@@ -33,9 +33,9 @@ class UtilityButton extends Nanocomponent {
     const { props, state } = this
 
     return html`
-      <button onclick=${props.onclick} class=${styles.standard}>
-        ${ state.children }
-      </button>
+      <div onclick=${props.onclick} class=${styles.standard}>
+        ${state.children}
+      </div>
     `
   }
 }

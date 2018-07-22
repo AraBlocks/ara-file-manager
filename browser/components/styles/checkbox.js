@@ -25,8 +25,8 @@ module.exports = {
 				background-color: white;
 				border: 2px solid ${
 					checked
-					? colorSelector(colorChecked)
-					: colorSelector(colorUnchecked)
+						? colorSelector(colorChecked)
+						: colorSelector(colorUnchecked)
 				};
 				cursor: pointer;
 			}

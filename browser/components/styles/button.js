@@ -29,7 +29,7 @@ module.exports = {
       }
 
       :host:hover {
-        opacity: .7;
+        color: ${colorSelector(color, true)};
       }
     `
   },
@@ -46,12 +46,12 @@ module.exports = {
         font-family: ${fontSelector(weight)};
         font-size: ${fontSize}px;
         height: 2em;
-        transition: all 200ms;
+        transition: all 100ms;
         width: 100%;
       }
 
       :host:hover {
-        opacity: .7;
+        background-color: ${colorSelector(color, true)};
       }
     `
   } ,

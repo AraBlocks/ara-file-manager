@@ -44,7 +44,6 @@ class Container extends Nanocomponent {
   createElement() {
     const {
       children,
-      props,
       state: { activeTab, files }
     } = this
 
@@ -52,10 +51,10 @@ class Container extends Nanocomponent {
     return html`
       <div class="${styles.container} container-container">
         <div>
-          ${children.header.render({
-            activeTab
-           })}
-          ${renderSections().map(section => section.render({ files }))}
+          ${children.header.render({ activeTab })}
+          <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+            ${renderSections().map(section => section.render({ files }))}
+          </div>
         </div>
       </div>
     `

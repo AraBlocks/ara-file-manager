@@ -13,5 +13,12 @@ module.exports = {
     :host > div {
       width: 95%;
     }
+  `,
+
+  sectionContainer: css`
+    :host {
+      height: 525px;
+      overflow-y: scroll;
+    }
   `
 }

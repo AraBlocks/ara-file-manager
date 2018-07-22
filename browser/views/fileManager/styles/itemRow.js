@@ -13,7 +13,8 @@ module.exports = {
 
   fileDescriptorHolder: css`
     :host {
-      width: 50%;
+      min-height: 85px;
+      min-width: 220px;
     }
   `,
 

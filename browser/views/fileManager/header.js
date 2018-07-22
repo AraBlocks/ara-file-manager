@@ -4,6 +4,7 @@ const Button = require('../../components/button')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
+const { minimizeWindow } = require('../../lib/store/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -35,6 +36,7 @@ class Header extends Nanocomponent {
         }
       }),
       closeButton: new UtilityButton({ children: '✕' }),
+      minimizeButton: new UtilityButton({ children: '–', onclick: minimizeWindow }),
       tabs: this.makeTabs()
     }
   }
@@ -70,7 +72,8 @@ class Header extends Nanocomponent {
         <div>
           LTLSTAR
         </div>
-        <div class="${styles.closeButtonHolder} header-closeButtonHolder">
+        <div class="${styles.windowControlsHolder} header-windowControlsHolder">
+          ${children.minimizeButton.render({})}
           ${children.closeButton.render({})}
         </div>
       </div>
@@ -88,10 +91,7 @@ class Header extends Nanocomponent {
         </div>
       </div>
       <div class="${styles.tabHolder} header-tabHolder">
-        ${children.tabs.map((tab, index) =>
-          tab.render({ isActive: activeTab === index})
-        )}
-
+        ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index}))}
       </div>
       <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
         ${children.publishFilebutton.render()}

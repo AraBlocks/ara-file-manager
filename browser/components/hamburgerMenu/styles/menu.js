@@ -5,8 +5,18 @@ const { css } = require('../../../lib/cssTool/css')
 
 module.exports = {
   colors,
-  fonts,
-	
+	fonts,
+
+	container: css`
+		:host {
+			cursor: pointer;
+		}
+
+		:host:hover div {
+			display: flex;
+		}
+	`,
+
 	divider: css`
 		:host {
 			background-color: ${colors.araGrey};
@@ -31,6 +41,7 @@ module.exports = {
 			border: 1px ${colors.araGrey} solid;
 			border-bottom: 0px;
 			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			display: none;
 			flex-direction: column;
 			justify-content: space-between;
 			position: absolute;
@@ -38,7 +49,7 @@ module.exports = {
 			z-index: 1;
     }
 	`,
-	
+
 	menuBar: css`
 		:host {
 			background-color: black;

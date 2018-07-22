@@ -39,14 +39,14 @@ module.exports = {
     return opts
   },
 
-  colorSelector(color, fade = false) {
+  colorSelector(color, hoverState = false) {
     let selectedColor
     switch (color) {
       case 'red':
-        selectedColor = !fade ? '#fc2636' : '#ff0063'
+        selectedColor = !hoverState ? '#fc2636' : '#e50112'
         break
       case 'blue':
-        selectedColor = !fade ? '#1e7dfa' : '#00a1ff'
+        selectedColor = !hoverState ? '#1e7dfa' : '#005ed9'
         break
       case 'grey':
         selectedColor = '#cbcbcb'
@@ -58,7 +58,7 @@ module.exports = {
         selectedColor = '#000000'
         break
       default:
-        selectedColor = '#fc2636'
+        selectedColor = !hoverState ? '#fc2636' : 'green'
     }
 
     return selectedColor
