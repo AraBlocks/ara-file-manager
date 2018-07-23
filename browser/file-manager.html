@@ -12,10 +12,10 @@
   <script>
       const { remote } = require('electron')
       const windowManager = remote.require('electron-window-manager')
-      const { userData, files } = windowManager.sharedData.fetch('store')
+      const store = windowManager.sharedData.fetch('store')
 
       const FileManager = require('./views/fileManager/container')
-      const fileManager = new FileManager({ files, userData })
+      const fileManager = new FileManager(store)
       document.getElementById('container').appendChild(fileManager.render())
   </script>
 </html>

@@ -6,7 +6,7 @@ const secrets = require('ara-network/secrets')
 
 const KEY = 'archiver'
 module.exports = {
-  async createId(password) {
+  async create(password) {
     const araId = await aid.create({ context, password })
     await aid.util.writeIdentity(araId)
     return araId
