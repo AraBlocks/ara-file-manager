@@ -11,6 +11,7 @@ class Input extends Nanocomponent {
     field = '',
     parentState = {},
     placeholder = '',
+    readOnly = false,
     type = 'text'
   }) {
     super()
@@ -21,11 +22,12 @@ class Input extends Nanocomponent {
       field,
       parentState,
       placeholder,
+      readOnly,
       type
     }
 
     this.state = {
-      value: '',
+      value: parentState[field] || '',
       selection: this.props.embeddedButton.optionList ? this.props.embeddedButton.optionList[0] : ''
     }
 
@@ -69,6 +71,7 @@ class Input extends Nanocomponent {
           placeholder="${props.placeholder}"
           value="${state.value}"
           type=${props.type}
+          ${props.readOnly ? 'readonly' : ''}
         >
         ${generateButton()}
       </div>
