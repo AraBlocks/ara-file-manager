@@ -1,7 +1,7 @@
 'use strict'
 
 const Checkbox = require('./checkbox')
-const optionsTextProvider = require('../lib/store/optionsTextProvider')
+const optionsTextProvider = require('../lib/tools/optionsTextProvider')
 const styles = require('./styles/optionsCheckbox')
 const Tooltip = require('./tooltip')
 const html = require('choo/html')

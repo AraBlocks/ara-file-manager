@@ -3,7 +3,7 @@
 const html = require('choo/html')
 const styles = require('./styles')
 const Button = require('../../components/button')
-const { closeWindow } = require('../../lib/store/windowManagement')
+const { closeWindow } = require('../../lib/tools/windowManagement')
 
 module.exports = ({
   fileName = 'Some File',

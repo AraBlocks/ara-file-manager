@@ -1,7 +1,7 @@
 'use strict'
 
 const styles = require('./styles/utilityButton')
-const windowManagement = require('../lib/store/windowManagement')
+const windowManagement = require('../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
