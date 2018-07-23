@@ -3,17 +3,6 @@
 const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 
-module.exports = {
-	changeMainManagerSize,
-	dispatch,
-	closeWindow,
-	openModal,
-	transitionModal,
-	openWindow,
-	setWindowSize,
-	quitApp
-}
-
 function changeMainManagerSize(expand) {
 	const window = windowManager.getCurrent().object
 	if (expand) {
@@ -28,7 +17,11 @@ function dispatch(action, load) {
 }
 
 function closeWindow() {
-	close()
+	windowManager.getCurrent().close()
+}
+
+function minimizeWindow() {
+	windowManager.getCurrent().minimize()
 }
 
 function openModal(view = 'modal') {
@@ -40,7 +33,10 @@ function openModal(view = 'modal') {
 			view,
 			windowManager.loadURL(view),
 			false,
-			{ ...windowManager.setSize(view) }
+			{
+				frame: false,
+				...windowManager.setSize(view),
+			}
 		)
 		modal.object.on('close', () => windowManager.modalIsOpen = false)
 		windowManager.modalIsOpen = true
@@ -62,7 +58,10 @@ function openWindow(view) {
 		view,
 		windowManager.loadURL(view),
 		false,
-		{ ...windowManager.setSize(view) }
+		{
+			frame: false,
+			...windowManager.setSize(view)
+		}
 	)
 }
 
@@ -72,4 +71,16 @@ function setWindowSize(width, height, animated = false) {
 
 function quitApp() {
 	windowManager.closeAll()
+}
+
+module.exports = {
+	changeMainManagerSize,
+	dispatch,
+	closeWindow,
+	openModal,
+	minimizeWindow,
+	transitionModal,
+	openWindow,
+	setWindowSize,
+	quitApp
 }

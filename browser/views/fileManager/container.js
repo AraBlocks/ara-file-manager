@@ -4,6 +4,7 @@ const Header = require('./header')
 const Section = require('./section')
 const styles = require('./styles/container')
 const html = require('choo/html')
+const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
@@ -35,6 +36,8 @@ class Container extends Nanocomponent {
         type: 'purchased'
       })
     }
+
+    if (isDev) { window.components = { fileManager: this } }
   }
 
   update(){
@@ -44,7 +47,6 @@ class Container extends Nanocomponent {
   createElement() {
     const {
       children,
-      props,
       state: { activeTab, files }
     } = this
 
@@ -52,10 +54,10 @@ class Container extends Nanocomponent {
     return html`
       <div class="${styles.container} container-container">
         <div>
-          ${children.header.render({
-            activeTab
-           })}
-          ${renderSections().map(section => section.render({ files }))}
+          ${children.header.render({ activeTab })}
+          <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+            ${renderSections().map(section => section.render({ files }))}
+          </div>
         </div>
       </div>
     `

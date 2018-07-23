@@ -36,17 +36,19 @@ module.exports = {
   }) {
     return css`
       :host {
-        bottom: 8px;
         background-color: white;
         border: .5px solid ${colors.araGrey};
         font-size: 12px;
-        left: 6px;
+        margin-left: 5px;
+        margin-top: -120px;
         max-width: ${maxWidth}px;
+        opacity: .85;
         padding: 5px;
         text-align: center;
         visibility: hidden;
         position: absolute;
         z-index: 1;
+        position: fixed;
       }
     `
   }

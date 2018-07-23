@@ -9,7 +9,10 @@ module.exports = {
 
 	standard: css`
 		:host {
-			background-color: white;
+			cursor: pointer;
+			height: 10px;
+			width: 10px;
+			font-size: 12px;
 		}
 	`,
 }

@@ -30,7 +30,8 @@ const makeWindow = (view, i ) => {
     {
       ...windowManager.setSize(view),
       showDevTools: true,
-      resizable: true
+      resizable: true,
+      frame: false
     }
   )
 }
