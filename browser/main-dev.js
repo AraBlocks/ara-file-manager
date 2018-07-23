@@ -39,3 +39,15 @@ function createElement(view, isModal = false) {
     : document.getElementById('view-holder')
   div.appendChild(button)
 }
+
+const { argv } = remote.process
+if (argv.includes('loggedin')) {
+  const { dispatch } = require('./lib/store/windowManagement')
+  const { osxSurfaceAids } = require('./lib/store/accountSelection')
+
+  const password = argv[argv.length - 1]
+  void async function() {
+    const afs = osxSurfaceAids().filter(({ afs }) => afs === argv[argv.length - 2])
+    dispatch({action:'LOGIN', load: Object.assign(...afs, { password }) })
+  }()
+}

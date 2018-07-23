@@ -62,12 +62,12 @@ class Login extends Nanocomponent {
     this.login = this.login.bind(this)
   }
 
-  async login(e) {
+  login(e) {
     e.preventDefault()
     const { usernameValue, passwordValue } = this.state
     if (usernameValue === 'kit' && passwordValue === 'abc') {
       const [ aid ] = osxSurfaceAids()
-      dispatch('login', aid)
+      dispatch({ action: 'LOGIN', load: aid })
     } else {
       return
     }

@@ -10,8 +10,18 @@
     <div id="container"></div>
   </body>
   <script>
-			const PublishFile = require('./views/publishFile/container')
-			const publishFile = new PublishFile()
+      const PublishFile = require('./views/publishFile/container')
+      const isDev = require('electron-is-dev')
+      const { remote } = require('electron')
+      const windowManager = remote.require('electron-window-manager')
+
+      const { userData } = windowManager.sharedData.fetch('store')
+			const publishFile = new PublishFile({ userData })
       document.getElementById('container').appendChild(publishFile.render())
+
+      if (isDev) {
+        Object.assign(window, { components: { publishFile } })
+        windowManager.bridge.on('published',console.log)
+      }
   </script>
 </html>

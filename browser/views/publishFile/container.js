@@ -5,20 +5,21 @@ const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
+const { dispatch } = require('../../lib/store/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-	constructor() {
+	constructor({ userData }) {
 		super()
 
 		this.state = {
 			currency: '',
-			fileName: '',
 			filePath: '',
 			price: '',
 			priceManagement: true,
-			supernode: true
+			supernode: true,
+			userData
 		}
 
 		this.children = {
@@ -46,7 +47,21 @@ class Container extends Nanocomponent {
 	}
 
 	publishFile() {
-		console.log(this.state)
+		const {
+			userData: { aid },
+			filePath
+		} = this.state
+		const {
+			ddo: { id: did },
+			password
+		} = aid
+
+		dispatch({ action: 'PUBLISH', load: {
+				did,
+				password,
+				paths: filePath
+			}
+		})
 	}
 
 	createElement() {
