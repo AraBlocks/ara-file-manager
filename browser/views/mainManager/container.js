@@ -41,12 +41,12 @@ class Container extends Nanocomponent {
 		const { children, state } = this
 		return html`
 			<div class="${styles.container} MainManagerView-container">
-        <div class="${styles.horizontalContainer} MainManagerView-horizontalContainer">
-          ${children.menuButton.render({})}
+				<div class="${styles.horizontalContainer} MainManagerView-horizontalContainer">
+					${children.menuButton.render({})}
 					<div class="${styles.header} MainManagerView-header">
 						LTLSTR
 					</div>
-          ${children.closeButton.render({})}
+					${children.closeButton.render({})}
 				</div>
 
 				<div class="${styles.subHeader} ${styles.bottomAlign} MainManagerView-subHeader,bottomAlign">

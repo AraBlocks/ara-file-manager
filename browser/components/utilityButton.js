@@ -22,11 +22,11 @@ class UtilityButton extends Nanocomponent {
   }
 
   update({ children }) {
-    let sameSate = this.state.children == children
-    if (!sameSate) {
+    let sameState = this.state.children === children
+    if (!sameState) {
       this.state.children = children
     }
-    return !sameSate
+    return !sameState
   }
 
   createElement() {

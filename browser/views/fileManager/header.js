@@ -73,8 +73,8 @@ class Header extends Nanocomponent {
           LTLSTAR
         </div>
         <div class="${styles.windowControlsHolder} header-windowControlsHolder">
-          ${children.minimizeButton.render({})}
-          ${children.closeButton.render({})}
+          ${children.minimizeButton.render({ children: '–', onclick: minimizeWindow })}
+          ${children.closeButton.render({ children: '✕', onclick: minimizeWindow })}
         </div>
       </div>
       <div class="${styles.subHeader} header-subheader">

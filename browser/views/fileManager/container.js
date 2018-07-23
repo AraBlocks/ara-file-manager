@@ -4,6 +4,7 @@ const Header = require('./header')
 const Section = require('./section')
 const styles = require('./styles/container')
 const html = require('choo/html')
+const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
@@ -35,6 +36,8 @@ class Container extends Nanocomponent {
         type: 'purchased'
       })
     }
+
+    if (isDev) { window.components = { fileManager: this } }
   }
 
   update(){
