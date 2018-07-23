@@ -9,7 +9,7 @@ const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
   constructor({
-    userData,
+    account,
     files
   }) {
     super()
@@ -21,7 +21,7 @@ class Container extends Nanocomponent {
 
     this.children = {
       header: new Header({
-        ...userData,
+        ...account,
         parentRerender: this.rerender.bind(this),
         parentState: this.state,
        }),
