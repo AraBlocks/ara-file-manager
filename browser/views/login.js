@@ -1,13 +1,12 @@
 'use strict'
 
+const authenticate = require('../lib/login')
 const {
   closeWindow,
-  dispatch,
   transitionModal,
 } = require('../lib/store/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
-const { osxSurfaceAids } = require('../lib/store/accountSelection')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -64,10 +63,10 @@ class Login extends Nanocomponent {
 
   login(e) {
     e.preventDefault()
+
     const { usernameValue, passwordValue } = this.state
     if (usernameValue === 'kit' && passwordValue === 'abc') {
-      const [ aid ] = osxSurfaceAids()
-      dispatch({ action: 'LOGIN', load: aid })
+      authenticate()
     } else {
       return
     }
