@@ -25,7 +25,7 @@ module.exports = {
         font-size: ${fontSize}px;
         height: 30px;
         transition: all 100ms;
-        width: 90%;
+        width: 100%;
       }
 
       :host:hover {
