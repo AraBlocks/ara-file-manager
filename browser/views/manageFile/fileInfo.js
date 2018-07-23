@@ -9,13 +9,11 @@ const Nanocomponent = require('nanocomponent')
 
 class FileInfo extends Nanocomponent {
 	constructor({
-		tokenPrice,
 		parentState
 	}) {
 		super()
 
 		this.props = { parentState }
-		this.state = { tokenPrice }
 		this.children = {
 			fileNameInput: new Input({
 				field: 'fileName',
@@ -59,17 +57,12 @@ class FileInfo extends Nanocomponent {
 		helper.copyToClipboard(children.distributionLink.state.value, 'distributionLink')
 	}
 
-	update({ tokenPrice }) {
-		const { state } = this
-		const sameState = state.tokenPrice === tokenPrice
-		if (!sameState) {
-			state.tokenPrice = tokenPrice
-		}
-		return !sameState
+	update() {
+		return true
 	}
 
 	createElement() {
-		const { children, state } = this
+		const { children, props } = this
 		return html`
 			<div class=${styles.container}>
 				<div class=${styles.verticalContainer}>
@@ -78,7 +71,12 @@ class FileInfo extends Nanocomponent {
 					</div>
 					<div class=${styles.infoTipHolder}>
 						${children.priceInput.render()}
-						<b>ARA Token Price: ${state.tokenPrice}</b>
+						<div class=${styles.araPriceHolder}>
+							<b>ARA Token Price:</b>
+							<div class=${styles.araPrice}>
+								<b>${props.parentState['tokenPrice']} ARA</b>
+							</div>
+						</div>
 					</div>
 				</div>
 				<b>Update File</b>

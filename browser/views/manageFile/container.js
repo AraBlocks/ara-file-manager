@@ -3,9 +3,8 @@
 const Button = require('../../components/button')
 const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
-const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
-const { dispatch } = require('../../lib/store/windowManagement')
+const UtilityButton = require('../../components/utilityButton')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -18,6 +17,7 @@ class Container extends Nanocomponent {
 		price,
 		priceManagement,
 		supernode,
+		tokenPrice,
 		userData
 	}) {
 		super()
@@ -30,6 +30,7 @@ class Container extends Nanocomponent {
 			price,
 			priceManagement,
 			supernode,
+			tokenPrice,
 			userData
 		}
 
@@ -46,7 +47,6 @@ class Container extends Nanocomponent {
 			}),
 			fileInfo: new FileInfo({
 				parentState: this.state,
-				tokenPrice: 9.99
 			}),
 			supernodeCheckbox: new OptionsCheckbox({
 				field: 'supernode',
@@ -57,7 +57,7 @@ class Container extends Nanocomponent {
 				parentState: this.state
 			}),
 			publishButton: new Button({
-				children: 'Publish',
+				children: 'Update',
 				onclick: this.updateFile.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
@@ -68,9 +68,7 @@ class Container extends Nanocomponent {
 		return true
 	}
 
-	updateFile() {
-
-	}
+	updateFile() {}
 
 	createElement() {
 		const { children } = this
@@ -85,7 +83,7 @@ class Container extends Nanocomponent {
 					This is also where you can find this file’s <b>distribution</b> link, which you will need for users to purchase this file with their Littlstar File Manager.
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
-				${children.fileInfo.render({ tokenPrice: 9.99 })}
+				${children.fileInfo.render()}
 				<div class="${styles.horizontalContainer} ManageFileContainer-horizontalContainer">
 					${children.supernodeCheckbox.render()}
 					${children.priceManagementCheckbox.render()}

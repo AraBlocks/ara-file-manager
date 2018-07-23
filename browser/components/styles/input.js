@@ -45,7 +45,7 @@ module.exports = {
       :host {
         font-size: 20px;
         font-family: ${fonts.light};
-        height: 50px;
+        height: 45px;
         text-indent: 10px;
         width: 100%;
       }
