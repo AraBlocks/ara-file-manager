@@ -4,7 +4,7 @@
   "description": "",
   "main": "boot/main-dev.js",
   "scripts": {
-    "start-dev": "electron boot/main-dev.js",
+    "start-dev": "electron boot/main.js",
     "test": "electron test/main.js",
     "postinstall": "install-app-deps",
     "pack": "build --dir",
