@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body style="height: 100%;">
-  	Download this file?
+  	Download this file?<br><br>
     <div class="ara-buttons" width: 50px;>
     </div>
   </body>
@@ -15,10 +15,9 @@
   <script>
     const araButtonGenerator = new AraButtonGenerator("ws://localhost:24860")
     const item = JSON.stringify({
-      title: 'The Room',
-      license: 5,
-      description: 'The best movie ever!',
-      price: 33
+      fileName: 'My Awesome File',
+      aid: 'did:ara:8e5c3cbe6ff041f24b67022ceb760f0c93e1bc084207d058c35f95e5053de594',
+      price: 5
     })
     let btn = araButtonGenerator.makeButton(item, "ara-buttons", "ara-button")
     btn.innerHTML = "ARA"

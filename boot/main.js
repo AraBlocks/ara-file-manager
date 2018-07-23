@@ -12,6 +12,7 @@ app.on('ready', () => {
   require('../kernel/lib/actionCreators')
   if (isDev) { require('electron-reload')(path.resolve('browser')) }
   require('./tray')()
+  require('./server.js')()
 })
 
 app.on('window-all-closed', () =>{})

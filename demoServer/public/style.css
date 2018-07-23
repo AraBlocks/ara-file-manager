@@ -1,29 +1,18 @@
 body {
-  padding: 20px;
+	font-family: "ProximaNova-Light", sans-serif;
+	font-size: 15px;
+	padding: 20px;
 }
 .ara-button {
-  background: #ff3232;
-  background-image: -webkit-linear-gradient(top, #ff3232, #bd0707);
-  background-image: -moz-linear-gradient(top, #ff3232, #bd0707);
-  background-image: -ms-linear-gradient(top, #ff3232, #bd0707);
-  background-image: -o-linear-gradient(top, #ff3232, #bd0707);
-  background-image: linear-gradient(to bottom, #ff3232, #bd0707);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 28px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 20px;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
+	background-color: #fc2636;
+	color: white;
+	font-family: "ProximaNova-Bold", sans-serif;
+	font-size: 15px;
+	height: 2em;
+	transition: all 100ms;
+	width: 200px;
 }
 
 .ara-button:hover {
-  background: #595659;
-  background-image: -webkit-linear-gradient(top, #595659, #000000);
-  background-image: -moz-linear-gradient(top, #595659, #000000);
-  background-image: -ms-linear-gradient(top, #595659, #000000);
-  background-image: -o-linear-gradient(top, #595659, #000000);
-  background-image: linear-gradient(to bottom, #595659, #000000);
-  text-decoration: none;
+	background-color: #e50112;
 }
