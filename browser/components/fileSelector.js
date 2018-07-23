@@ -1,6 +1,6 @@
 'use strict'
 
-const fileSystemManager = require('../lib/store/fileSystemManager')
+const fileSystemManager = require('../lib/tools/fileSystemManager')
 const Input = require('../components/input')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')

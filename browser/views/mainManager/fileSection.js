@@ -4,7 +4,7 @@ const Button = require('../../components/button')
 const ItemRow = require('./itemRow')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/fileSection')
-const windowManagement = require('../../lib/store/windowManagement')
+const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 

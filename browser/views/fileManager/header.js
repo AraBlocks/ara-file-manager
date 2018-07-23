@@ -4,7 +4,7 @@ const Button = require('../../components/button')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
-const { minimizeWindow } = require('../../lib/store/windowManagement')
+const { minimizeWindow } = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
