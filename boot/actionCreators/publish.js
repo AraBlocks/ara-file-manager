@@ -21,7 +21,6 @@ module.exports = async ({ did, password, paths }) => {
   let price
   try {
     price = await afs.estimateCommitGasCost({ did: id, password })
-    console.log({ price })
   } catch (err) {
     console.log({ err })
   }
