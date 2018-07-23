@@ -21,6 +21,7 @@
 
       if (isDev) {
         Object.assign(window, { components: { publishFile } })
+        windowManager.bridge.on('published',load => console.log({load}))
       }
   </script>
 </html>

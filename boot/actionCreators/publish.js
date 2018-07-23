@@ -21,17 +21,16 @@ module.exports = async ({ did, password, paths }) => {
   let price
   try {
     price = await afs.estimateCommitGasCost({ did: id, password })
+    console.log({ price })
   } catch (err) {
     console.log({ err })
   }
 
   const result = await afs.commit({ did: id, password, price })
   if (result instanceof Error) {
-    console.warn(result)
+    console.log(result)
   } else {
     console.log("file(s) successfully committed")
-    return null
+    return { did: id, mnemonic }
   }
-
-  return { did: id, mnemonic }
 }
