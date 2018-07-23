@@ -33,7 +33,10 @@ function openModal(view = 'modal') {
 			view,
 			windowManager.loadURL(view),
 			false,
-			{ ...windowManager.setSize(view) }
+			{
+				frame: false,
+				...windowManager.setSize(view),
+			}
 		)
 		modal.object.on('close', () => windowManager.modalIsOpen = false)
 		windowManager.modalIsOpen = true
@@ -55,7 +58,10 @@ function openWindow(view) {
 		view,
 		windowManager.loadURL(view),
 		false,
-		{ ...windowManager.setSize(view) }
+		{
+			frame: false,
+			...windowManager.setSize(view)
+		}
 	)
 }
 
