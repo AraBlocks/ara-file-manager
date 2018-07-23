@@ -18,17 +18,12 @@ module.exports = {
     }
   `,
 
-  closeButtonHolder: css`
-    :host button {
-    }
-  `
-  ,
-
   subHeader: css`
     :host {
       display: flex;
       font-size: 14px;
       justify-content: space-between;
+      padding-top: 10px;
     }
   `,
 
@@ -66,6 +61,14 @@ module.exports = {
   publishFilebuttonHolder: css`
     :host button {
       width: 100%;
+    }
+  `,
+
+  windowControlsHolder: css`
+    :host {
+      display: flex;
+      justify-content: space-between;
+      width: 25px;
     }
   `
 }

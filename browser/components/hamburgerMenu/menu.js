@@ -40,7 +40,7 @@ class Menu extends Nanocomponent {
 					<div class="${styles.menuBar}" Menu-menuBar></div>
 					<div class="${styles.menuBar}" Menu-menuBar></div>
 				</div>
-				<div class="${styles.menu} Menu-menu" style="display: ${displayed ? "flex" : "none"};">
+				<div class="${styles.menu} Menu-menu" >
 					${props.items.map(item => [item.render(), divider()])}
 				</div>
 			</div>

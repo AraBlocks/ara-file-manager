@@ -10,6 +10,13 @@ module.exports = {
         color: ${isActive ? colors.araRed : 'black'};
         font-family: ${fonts.regular};
         font-size: 14px;
+        transition: all 50ms ease-in-out;
+      }
+
+      ${!isActive &&
+        `:host:hover {
+          transform: scale(1.1);
+        }`
       }
     `
   }

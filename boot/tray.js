@@ -35,8 +35,9 @@ const buildTray = () => {
       windowManager.loadURL(view),
       false,
       {
-        ...windowManager.setSize(view),
-        resizable: true
+        frame: false,
+        resizable: true,
+        ...windowManager.setSize(view)
       }
     )
   }
