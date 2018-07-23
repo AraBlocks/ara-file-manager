@@ -4,7 +4,7 @@ const authenticate = require('../lib/login')
 const {
   closeWindow,
   transitionModal,
-} = require('../lib/store/windowManagement')
+} = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
 const styles = require('./styles/login')

@@ -15,13 +15,14 @@
       const { remote } = require('electron')
       const windowManager = remote.require('electron-window-manager')
 
-      const { userData } = windowManager.sharedData.fetch('store')
-			const publishFile = new PublishFile({ userData })
+      const { account } = windowManager.sharedData.fetch('store')
+			const publishFile = new PublishFile({ account })
       document.getElementById('container').appendChild(publishFile.render())
 
       if (isDev) {
+        const { PUBLISHED } = require('../lib/constants/stateManagement')
         Object.assign(window, { components: { publishFile } })
-        windowManager.bridge.on('published',console.log)
+        windowManager.bridge.on(PUBLISHED, console.log)
       }
   </script>
 </html>

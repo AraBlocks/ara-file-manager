@@ -1,11 +1,10 @@
 'use strict'
 
-const { closeWindow } = require('../lib/store/windowManagement')
+const { closeWindow } = require('../lib/tools/windowManagement')
 const styles = require('./styles/registration')
 const html = require('choo/html')
 const Input = require('../components/input')
 const Button = require('../components/Button')
-// const { registration } = require('../lib/store')
 const Nanocomponent = require('nanocomponent')
 
 class Registration extends Nanocomponent {
