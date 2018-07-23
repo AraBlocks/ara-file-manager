@@ -1,0 +1,18 @@
+body {
+	font-family: "ProximaNova-Light", sans-serif;
+	font-size: 15px;
+	padding: 20px;
+}
+.ara-button {
+	background-color: #fc2636;
+	color: white;
+	font-family: "ProximaNova-Bold", sans-serif;
+	font-size: 15px;
+	height: 2em;
+	transition: all 100ms;
+	width: 200px;
+}
+
+.ara-button:hover {
+	background-color: #e50112;
+}
