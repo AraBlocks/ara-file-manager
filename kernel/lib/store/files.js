@@ -1,6 +1,6 @@
 module.exports = {
-  published: mockFiles(),
-  purchased: mockFiles()
+  published: [],
+  purchased: []
 }
 
 function mockFiles() {
