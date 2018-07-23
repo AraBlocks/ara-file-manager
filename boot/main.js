@@ -4,11 +4,12 @@ const { app } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const isDev = require('electron-is-dev')
 const path = require('path')
-require('./ipc-dev')
+
+if (isDev) { require('./ipc-dev') }
 
 app.on('ready', () => {
   windowManager.init()
-  windowManager.sharedData.set('store', require('./store'))
+  require('../kernel/lib/actionCreators')
   if (isDev) { require('electron-reload')(path.resolve('browser')) }
   require('./tray')()
 })

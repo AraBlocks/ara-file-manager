@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const remote = require('electron').remote;
+const { argv } = remote.process
 const windowManager = remote.require('electron-window-manager')
-const windowManagement = require('./lib/store/windowManagement')
 const views = __dirname + '/views/'
 const modals = __dirname + '/views/modals/'
 
@@ -40,14 +40,15 @@ function createElement(view, isModal = false) {
   div.appendChild(button)
 }
 
-const { argv } = remote.process
-if (argv.includes('loggedin')) {
-  const { dispatch } = require('./lib/store/windowManagement')
-  const { osxSurfaceAids } = require('./lib/store/accountSelection')
 
-  const password = argv[argv.length - 1]
+if (argv.includes('loggedin')) {
+  const { LOGIN_DEV } = require('../lib/constants/stateManagement')
   void async function() {
-    const afs = osxSurfaceAids().filter(({ afs }) => afs === argv[argv.length - 2])
-    dispatch({action:'LOGIN', load: Object.assign(...afs, { password }) })
+    windowManager.bridge.emit(LOGIN_DEV, {
+      password: argv[argv.length - 1],
+      afsId: argv[argv.length - 2]
+    })
   }()
 }
+
+window.store = windowManager.sharedData.fetch('store')
