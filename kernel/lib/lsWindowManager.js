@@ -6,6 +6,10 @@ windowManager.setSize = function (view) {
   let width
   let height
   switch (view) {
+    case 'reDownloadModal':
+      width = 340
+      height = 200
+      break
     case 'checkoutModal1':
       width = 340
       height = 270
