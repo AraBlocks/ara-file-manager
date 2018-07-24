@@ -56,7 +56,10 @@ class Container extends Nanocomponent {
         <div>
           ${children.header.render({ activeTab })}
           <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
-            ${renderSections().map(section => section.render({ files }))}
+            ${files.length
+              ? renderSections().map(section => section.render({ files }))
+              : renderNoFilesMsg()
+            }
           </div>
         </div>
       </div>
@@ -75,6 +78,30 @@ class Container extends Nanocomponent {
           sections.push(children.purchasedSection)
       }
       return sections
+    }
+
+    function renderNoFilesMsg() {
+      return html`
+        <div class="${styles.noFilesContainer} fileManager-noFilesContainer">
+          <div class="${styles.noFilesHeader} fileManager-noFilesHeader">
+            There are no files associated with your account
+          </div>
+          <p>
+            You can download files from users with ARA-enabled links.
+            <br>
+            You can also publish your own files into the network for distribution.
+          </p>
+          <p>
+            Downloading and hosting files will earn you ARA token rewards,
+            <br>
+            which can be spent to purchase more content on the network.
+          </p>
+          <a href="">
+            Learn More
+          </a>
+        </div>
+
+      `
     }
   }
 }
