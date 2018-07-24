@@ -10,14 +10,14 @@ const windowManager = remote.require('electron-window-manager')
 module.exports = ({
   price = windowManager.fileInfo.price || 0
 }) => {
-  const downloadButton = new Button({ 
+  const downloadButton = new Button({
     children: 'Download',
     onclick: download
-   })
+  })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
     onclick: closeWindow
-   })
+  })
   return html`
     <div class="${styles.container} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
