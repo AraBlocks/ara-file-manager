@@ -2,24 +2,22 @@
 <html style="height: 100%;">
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Download File</title>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body style="height: 100%;">
-  	Download this file?<br><br>
-    <div class="ara-buttons" width: 50px;>
-    </div>
+    Opening File Manager...<br><br>
   </body>
-  <script src="AraButtonGenerator.js">
-  </script>
   <script>
-    const araButtonGenerator = new AraButtonGenerator("ws://localhost:24860")
+    const websocket = new WebSocket("ws://localhost:24860")
     const item = JSON.stringify({
       fileName: 'My Awesome File',
       aid: 'did:ara:8e5c3cbe6ff041f24b67022ceb760f0c93e1bc084207d058c35f95e5053de594',
-      price: 5
+      price: 5.99
     })
-    let btn = araButtonGenerator.makeButton(item, "ara-buttons", "ara-button")
-    btn.innerHTML = "ARA"
+    websocket.onopen = () => {
+      websocket.send(item)
+      websocket.close()
+    }
   </script>
 </html>
