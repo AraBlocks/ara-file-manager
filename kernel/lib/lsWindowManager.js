@@ -32,6 +32,10 @@ windowManager.setSize = function (view) {
       width = 650
       height = 490
       break
+    case 'publishConfirmModal':
+      width = 360
+      height = 225
+      break
     case 'registration':
       width = 400
       height = 350
