@@ -78,5 +78,6 @@ const windowManager = remote.require('electron-window-manager')
 
 windowManager.bridge.on('REGISTERED', () => {
   openWindow('filemanager')
+  windowManager.get('registration').close()
 })
 module.exports = Registration
