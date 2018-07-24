@@ -17,5 +17,6 @@ windowManager.bridge.on(REGISTER, async (password = 'abc') => {
   const afsId = toHex(blake2b(araId.publicKey))
   const load = await register.archive(araId)
   windowManager.bridge.emit(LOGIN_DEV, { afsId, password })
+  console.log('about to emit REGISTERED')
   windowManager.bridge.emit(REGISTERED, { load, araId })
 })
