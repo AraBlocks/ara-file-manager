@@ -35,3 +35,8 @@ button {
   justify-content: space-around;
   width: 100%;
 }
+
+/* animations */
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}

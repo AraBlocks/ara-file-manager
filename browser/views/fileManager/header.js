@@ -4,7 +4,7 @@ const Button = require('../../components/button')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
-const { minimizeWindow } = require('../../lib/tools/windowManagement')
+const { minimizeWindow, openWindow } = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -33,7 +33,8 @@ class Header extends Nanocomponent {
             color: 'blue',
             fontSize: 14
            }
-        }
+        },
+        onclick: () => openWindow('publishFileView')
       }),
       closeButton: new UtilityButton({ children: '✕' }),
       minimizeButton: new UtilityButton({ children: '–', onclick: minimizeWindow }),
