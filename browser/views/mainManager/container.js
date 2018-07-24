@@ -2,6 +2,7 @@
 
 const FileSection = require('./fileSection')
 const HamburgerMenu = require('../../components/hamburgerMenu/menu')
+const { openWindow, quitApp } = require('../../lib/tools/windowManagement')
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
 const WalletInfo = require('./walletInfo')
@@ -23,10 +24,10 @@ class Container extends Nanocomponent {
 		this.children = {
 			closeButton: new UtilityButton({ children: '✕' }),
 			menuButton: new HamburgerMenu({ items: [
-        { children: 'File Manager' },
-        { children: 'Publish File' },
+        { children: 'File Manager', onclick: () => openWindow('manager') },
+        { children: 'Publish File', onclick: () => openWindow('publishFileView') },
         { children: 'Log Out' },
-        { children: 'Quit' }
+        { children: 'Quit', onclick: quitApp }
 			]}),
 			wallet: new WalletInfo(walletInfo),
 			fileSection: new FileSection({ files })
