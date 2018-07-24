@@ -12,7 +12,7 @@ try {
   functionalComponent = require('./views/modals/' + current)
 }
 
-document.body.appendChild(
+document.getElementById('container').appendChild(
   Component
     ? (new Component).render()
     : functionalComponent({})

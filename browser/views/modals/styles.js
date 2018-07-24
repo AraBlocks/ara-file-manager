@@ -18,10 +18,9 @@ module.exports = {
       align-items: center;
       display: flex;
       flex-direction: column;
-      height: 100%;
-      height: 270px;
-      width: 340px;
-      justify-content: space-around;
+      height: 95%;
+      width: 90%;
+      justify-content: space-between;
       text-align: center;
     }
 
@@ -44,6 +43,13 @@ module.exports = {
     }
   `,
 
+  messageBold: css`
+    :host {
+      font-family: ${fonts.bold};
+      font-size: 25px;
+    }
+  `,
+
   postheader: css`
     :host {
       font-family: ${fonts.bold};
@@ -55,6 +61,28 @@ module.exports = {
     :host {
       font-size: 12px;
       margin-bottom: 5px;
+    }
+  `,
+
+  smallBold: css`
+    :host {
+      font-family: ${fonts.bold};
+      font-size: 20px;
+    }
+  `,
+
+  smallMessage: css`
+    :host {
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+  `,
+
+  verticalContainer: css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
   `
 }
