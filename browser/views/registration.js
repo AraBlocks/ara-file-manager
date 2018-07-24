@@ -13,7 +13,10 @@ class Registration extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { password: '' }
+    this.state = {
+      password: '',
+      registering: false
+    }
 
     this.passwordInput = new Input({
       placeholder: 'Password',
@@ -38,6 +41,8 @@ class Registration extends Nanocomponent {
       },
       onclick: closeWindow
     })
+
+    this.rerender = this.rerender.bind(this)
   }
 
   update() {
@@ -46,13 +51,15 @@ class Registration extends Nanocomponent {
 
   createElement() {
     const {
+      cancelButton,
       passwordInput,
+      rerender,
       submitButton,
-      cancelButton
+      state
     } = this
 
     return html`
-      <div class="modal">
+      <div class="modal ${styles.overlay(state.registering)}">
         <div class=${styles.header}>LTLSTAR</div>
         <div class=${styles.header}>Register</div>
         <p class=${styles.description}>
@@ -68,7 +75,9 @@ class Registration extends Nanocomponent {
     `
     function onsubmit(e) {
       e.preventDefault()
+      state.registering = true
       register()
+      rerender()
     }
   }
 }
@@ -77,7 +86,6 @@ const { remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 windowManager.bridge.on('REGISTERED', () => {
-  console.log('heard REGISTERED')
   openWindow('filemanager')
   windowManager.get('registration').close()
 })
