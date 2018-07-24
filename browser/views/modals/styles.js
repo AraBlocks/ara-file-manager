@@ -18,10 +18,10 @@ module.exports = {
       align-items: center;
       display: flex;
       flex-direction: column;
+      justify-content: space-around;
       height: 95%;
-      width: 90%;
-      justify-content: space-between;
       text-align: center;
+      width: 90%;
     }
 
     :host > * {
@@ -47,6 +47,7 @@ module.exports = {
     :host {
       font-family: ${fonts.bold};
       font-size: 25px;
+      margin-bottom: 10px;
     }
   `,
 
@@ -74,7 +75,7 @@ module.exports = {
   smallMessage: css`
     :host {
       font-size: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 2px;
     }
   `,
 
