@@ -77,6 +77,7 @@ const { remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 windowManager.bridge.on('REGISTERED', () => {
+  console.log('heard REGISTERED')
   openWindow('filemanager')
   windowManager.get('registration').close()
 })
