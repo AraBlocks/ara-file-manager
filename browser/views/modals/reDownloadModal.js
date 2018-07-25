@@ -1,6 +1,5 @@
 'use strict'
 
-const afsManager = require('../../lib/tools/afsManager')
 const Button = require('../../components/button')
 const { closeWindow, openWindow } = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
@@ -9,8 +8,7 @@ const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 
 module.exports = ({
-  price = windowManager.fileInfo.price || 0,
-  aid = windowManager.fileInfo.aid
+  price = windowManager.fileInfo.price || 0
 }) => {
   const downloadButton = new Button({
     children: 'Download',
@@ -40,6 +38,5 @@ module.exports = ({
 
   function download() {
     openWindow('fManagerView')
-    afsManager.download(aid)
   }
 }
