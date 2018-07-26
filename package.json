@@ -30,6 +30,7 @@
     "ara-identity-archiver": "github:arablocks/ara-identity-archiver",
     "ara-network": "github:arablocks/ara-network",
     "ara-network-node-identity-archiver": "github:arablocks/ara-network-node-identity-archiver",
+    "ara-network-node-identity-resolver": "github:arablocks/ara-network-node-identity-resolver",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
     "cfsnet": "github:arablocks/cfsnet",
     "choo": "^6.13.0",
