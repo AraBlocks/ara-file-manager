@@ -2,7 +2,7 @@
   "name": "ara-content-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "boot/main-dev.js",
+  "main": "boot/main.js",
   "scripts": {
     "start-dev": "electron boot/main.js",
     "test": "electron test/main.js",
@@ -25,12 +25,12 @@
     "ara-console": "github:arablocks/ara-console",
     "ara-context": "github:arablocks/ara-context",
     "ara-crypto": "github:arablocks/ara-crypto",
+    "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-identity": "github:arablocks/ara-identity",
     "ara-identity-archiver": "github:arablocks/ara-identity-archiver",
-    "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-network": "github:arablocks/ara-network",
-    "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
     "ara-network-node-identity-archiver": "github:arablocks/ara-network-node-identity-archiver",
+    "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
     "cfsnet": "github:arablocks/cfsnet",
     "choo": "^6.13.0",
     "css": "file:browser/lib/cssTool",
@@ -41,11 +41,13 @@
     "md5-hex": "^2.0.0",
     "menubar": "*",
     "nanocomponent": "^6.5.2",
-    "styleUtils": "file:browser/lib/styleUtils"
+    "styleUtils": "file:browser/lib/styleUtils",
+    "user-home": "^2.0.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",
     "chai": "^4.1.2",
+    "debug": "^3.1.0",
     "electron": "^2.0.3",
     "electron-builder": "^20.22.0",
     "electron-rebuild": "^1.7.3",
