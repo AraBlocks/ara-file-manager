@@ -4,7 +4,7 @@ const { closeWindow, openWindow } = require('../lib/tools/windowManagement')
 const styles = require('./styles/registration')
 const html = require('choo/html')
 const Input = require('../components/input')
-const Button = require('../components/Button')
+const Button = require('../components/button')
 const register = require('../lib/register')
 const Nanocomponent = require('nanocomponent')
 
