@@ -25,12 +25,13 @@
     "ara-console": "github:arablocks/ara-console",
     "ara-context": "github:arablocks/ara-context",
     "ara-crypto": "github:arablocks/ara-crypto",
+    "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-identity": "github:arablocks/ara-identity",
     "ara-identity-archiver": "github:arablocks/ara-identity-archiver",
-    "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-network": "github:arablocks/ara-network",
-    "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
     "ara-network-node-identity-archiver": "github:arablocks/ara-network-node-identity-archiver",
+    "ara-network-node-identity-resolver": "github:arablocks/ara-network-node-identity-resolver",
+    "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
     "cfsnet": "github:arablocks/cfsnet",
     "choo": "^6.13.0",
     "css": "file:browser/lib/cssTool",
@@ -41,7 +42,8 @@
     "md5-hex": "^2.0.0",
     "menubar": "*",
     "nanocomponent": "^6.5.2",
-    "styleUtils": "file:browser/lib/styleUtils"
+    "styleUtils": "file:browser/lib/styleUtils",
+    "user-home": "^2.0.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",
