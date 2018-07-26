@@ -50,7 +50,7 @@ class FileInfo extends Nanocomponent {
 			<div class=${styles.container}>
 				<div class=${styles.verticalContainer}>
 					<div class=${styles.infoTipHolder}>
-						${children.fileNameInput.render()}
+						${children.fileNameInput.render({})}
 						<div class=${styles.infoTip}>
 							<div>
 								<b>Recommended:</b> If this field is left blank, users will only
@@ -59,7 +59,7 @@ class FileInfo extends Nanocomponent {
 						</div>
 					</div>
 					<div class=${styles.infoTipHolder}>
-						${children.priceInput.render()}
+						${children.priceInput.render({})}
 						<div class=${styles.infoTip}>
 							Price is converted to the equivalent value in ARA Tokens.
 							Leave blank if you do not want to charge for this file.
@@ -67,7 +67,7 @@ class FileInfo extends Nanocomponent {
 					</div>
 				</div>
 				<div class=${styles.fileDirectoryHoler}>
-					${children.fileSelector.render()}
+					${children.fileSelector.render({})}
 				</div>
 			</div>
 		`

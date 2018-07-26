@@ -1,11 +1,15 @@
 'use strict'
 
 const { publish } = require('../actions')
-const { PUBLISH, PUBLISHED, PUBLISHING } = require('../../../lib/constants/stateManagement')
+const { ESTIMATION, ESTIMATING_COST, PUBLISH} = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 
 windowManager.bridge.on(PUBLISH, async (load) => {
-  windowManager.bridge.emit(PUBLISHING)
-  const response = await publish(load)
-  windowManager.bridge.emit(PUBLISHED, response)
+  console.log({load})
+  windowManager.bridge.emit(ESTIMATING_COST)
+
+  const estimate = await publish(load)
+  console.log({estimate})
+  windowManager.bridge.emit(ESTIMATION, estimate)
+  // windowManager.bridge.emit(PUBLISHED, response)
 })

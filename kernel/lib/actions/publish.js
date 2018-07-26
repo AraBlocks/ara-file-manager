@@ -18,14 +18,16 @@ module.exports = async ({ did, password, paths }) => {
     console.warn('error in adding')
   }
 
-  let price
+  let gasEstimate
   try {
-    price = await afs.estimateCommitGasCost({ did: id, password })
+    gasEstimate = await afs.estimateCommitGasCost({ did: id, password })
   } catch (err) {
     console.log({ err })
   }
 
-  const result = await afs.commit({ did: id, password, price })
+  return { did: id, mnemonic, gasEstimate }
+
+  const result = await afs.commit({ did: id, password, gasEstimate })
   if (result instanceof Error) {
     console.log(result)
   } else {

@@ -19,8 +19,10 @@
 			const publishFile = new PublishFile({ account })
       document.getElementById('container').appendChild(publishFile.render())
 
-      const { PUBLISHED } = require('../lib/constants/stateManagement')
+      const { PUBLISHED, ESTIMATING_COST, ESTIMATION } = require('../lib/constants/stateManagement')
       Object.assign(window, { components: { publishFile } })
       windowManager.bridge.on(PUBLISHED, console.log)
+      windowManager.bridge.on(ESTIMATING_COST, () => publishFile.render(true))
+      windowManager.bridge.on(ESTIMATION, console.log)
   </script>
 </html>
