@@ -33,4 +33,3 @@ module.exports = async ({ did, password, paths }) => {
     return { did: id, mnemonic }
   }
 }
-//
