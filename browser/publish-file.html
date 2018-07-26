@@ -19,10 +19,8 @@
 			const publishFile = new PublishFile({ account })
       document.getElementById('container').appendChild(publishFile.render())
 
-      if (isDev) {
-        const { PUBLISHED } = require('../lib/constants/stateManagement')
-        Object.assign(window, { components: { publishFile } })
-        windowManager.bridge.on(PUBLISHED, console.log)
-      }
+      const { PUBLISHED } = require('../lib/constants/stateManagement')
+      Object.assign(window, { components: { publishFile } })
+      windowManager.bridge.on(PUBLISHED, console.log)
   </script>
 </html>
