@@ -2,7 +2,7 @@
   "name": "ara-content-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "boot/main-dev.js",
+  "main": "boot/main.js",
   "scripts": {
     "start-dev": "electron boot/main.js",
     "test": "electron test/main.js",
@@ -48,6 +48,7 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "chai": "^4.1.2",
+    "debug": "^3.1.0",
     "electron": "^2.0.3",
     "electron-builder": "^20.22.0",
     "electron-rebuild": "^1.7.3",

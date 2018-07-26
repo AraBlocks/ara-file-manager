@@ -1,5 +1,6 @@
 'use strict'
 
+const isDev = require('electron-is-dev')
 const { Menu, Tray, screen } = require('electron')
 const path = require('path')
 const windowManager = require('electron-window-manager')
@@ -14,13 +15,14 @@ const buildTray = () => {
   const contextMenu = Menu.buildFromTemplate([
     { label: 'File Manager', type: 'normal', click: () => openWindow('fManagerView') },
     { label: 'Publish File', type: 'normal', click: () => openWindow('publishFileView') },
+    { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'Log Out', type: 'normal' },
     { label: 'Developer', type: 'normal' , click: () => openWindow('developer') },
     { label: 'Quit', type: 'normal', role: 'quit' }
   ])
 
   tray.on('click', () => {
-    openWindow('manager')
+    // openWindow('manager')
     tray.popUpContextMenu(contextMenu)
   })
 
@@ -52,7 +54,7 @@ const buildTray = () => {
     window.setPosition(screenSize.width - offset, 0)
   }
 
-  openWindow('developer')
+  isDev && openWindow('developer')
 }
 
 

@@ -14,8 +14,8 @@ module.exports = (action) => reducers.forEach(({ property, reducer }) => {
   return reducer(state[property], action)
 })
 
-if (isDev) {
-  const windowManager = require('electron-window-manager')
-  windowManager.sharedData.set('store', state)
-}
+
+const windowManager = require('electron-window-manager')
+windowManager.sharedData.set('store', state)
+
 
