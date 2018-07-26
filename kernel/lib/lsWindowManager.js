@@ -68,6 +68,9 @@ windowManager.loadURL = function (view) {
     case 'publishFileView':
       file = `file://${path.resolve(__dirname, '..', '..', 'browser/publish-file.html')}`
       break
+    case 'registration':
+      file = `file://${path.resolve(__dirname, '..', '..', 'browser/registration.html')}`
+      break
     case 'testing':
       file = `file://${path.resolve(__dirname, '..', '..', 'test/index.html')}`
       break
