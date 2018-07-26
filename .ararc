@@ -4,6 +4,7 @@ provider = http://127.0.0.1:9545 ;; truffle http
 ;provider = http://127.0.0.1:8545 ;; geth
 ;provider = http://127.0.0.1:7545 ;; ganache
 ;provider = ws://127.0.0.1:9545 ;; truffle ws
-provider = http://192.168.128.118:7545 ;; ganache
+;provider = http://192.168.128.118:7545 ;; ganache isabel
+provider = http://192.168.128.254:7545 ;; ganache mark
 ;; Identity network configuration
 [network.identity]
