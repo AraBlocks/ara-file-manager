@@ -10,19 +10,34 @@
     <div id="container"></div>
   </body>
   <script>
-      const PublishFile = require('./views/publishFile/container')
-      const isDev = require('electron-is-dev')
-      const { remote } = require('electron')
-      const windowManager = remote.require('electron-window-manager')
+    const {
+      ESTIMATING_COST,
+      ESTIMATION,
+      FEED_MODAL,
+      PUBLISHED,
+    } = require('../lib/constants/stateManagement')
+    const PublishFile = require('./views/publishFile/container')
+    const { openModal, closeWindow } = require('./lib/tools/windowManagement')
+    const { remote } = require('electron')
+    const windowManager = remote.require('electron-window-manager')
+    const { account } = windowManager.sharedData.fetch('store')
+    const isDev = require('electron-is-dev')
 
-      const { account } = windowManager.sharedData.fetch('store')
-			const publishFile = new PublishFile({ account })
-      document.getElementById('container').appendChild(publishFile.render())
+    const publishFile = new PublishFile({ account })
 
-      const { PUBLISHED, ESTIMATING_COST, ESTIMATION } = require('../lib/constants/stateManagement')
-      Object.assign(window, { components: { publishFile } })
-      windowManager.bridge.on(PUBLISHED, console.log)
-      windowManager.bridge.on(ESTIMATING_COST, () => publishFile.render(true))
-      windowManager.bridge.on(ESTIMATION, console.log)
+    const estimateCost = () => publishFile.render(true)
+    windowManager.bridge.on(ESTIMATING_COST, estimateCost)
+    windowManager.bridge.removeListener(ESTIMATING_COST, estimateCost)
+    const estimateReceived = windowManager.bridge.on(ESTIMATION, () => openModal('publishConfirmModal'))
+    const published = windowManager.bridge.on(PUBLISHED, closeWindow)
+
+    document.getElementById('container').appendChild(publishFile.render())
+    Object.assign(window, { components: { publishFile } })
+
+    window.onunload = () => {
+      windowManager.bridge.removeListener(ESTIMATING_COST, estimateCost)
+      windowManager.bridge.removeListener(ESTIMATION, estimateReceived)
+      windowManager.bridge.removeListener(PUBLISHED, published)
+    }
   </script>
 </html>

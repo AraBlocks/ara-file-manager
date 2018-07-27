@@ -28,7 +28,6 @@ class Checkbox extends Nanocomponent {
 	}
 
 	update(checked) {
-		console.log(checked)
 		const { state } = this
 		const sameState = state.checked == checked
 		if (!sameState) {
