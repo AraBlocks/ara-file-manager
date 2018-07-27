@@ -18,9 +18,9 @@ windowManager.bridge.on(DOWNLOAD, async (load) => {
 						datePublished: '11/20/1989',
 						earnings: 2134.33,
 						peers: 353,
-						price: 5,
+						price: windowManager.fileInfo.price,
 					},
-					name: 'hello',
+					name: windowManager.fileInfo.fileName,
 					size: 1.67,
 					status: 1,
 				}
@@ -40,9 +40,9 @@ windowManager.bridge.on(DOWNLOAD, async (load) => {
 							datePublished: '11/20/1989',
 							earnings: 2134.33,
 							peers: 353,
-							price: 3.99,
+							price: windowManager.fileInfo.price,
 						},
-						name: 'Hello',
+						name: windowManager.fileInfo.fileName,
 						size: 1.67,
 						status: 2,
 					}
