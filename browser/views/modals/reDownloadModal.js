@@ -38,3 +38,8 @@ module.exports = ({
     </div>
   `
 }
+
+windowManager.bridge.on('DOWNLOADING', () => {
+  openWindow('filemanager')
+  windowManager.get('reDownloadModal').close()
+})

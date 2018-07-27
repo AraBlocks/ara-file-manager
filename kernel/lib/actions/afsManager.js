@@ -1,7 +1,7 @@
 const { create } = require('ara-filesystem')
 const { createSwarm } = require('ara-network/discovery')
 
-broadcast('did:ara:7b30505d6fc335770237936bba6a0d0a62d49e792bc555746e49fdda880c7b39')
+broadcast('did:ara:acd9cb17d7b89bda1471f699d95273bfba9150b0237c044ac0f4e83de19fe3c2')
 async function broadcast (did) {
     // Create a swarm for uploading the content
     const { afs } = await create({did})
@@ -60,10 +60,10 @@ async function download ({did, handler}) {
    async function onend(){
        console.log(await afs.readdir('.'))
        console.log(`Downloaded!`)
-        afs.close()
-        swarm.destroy()
+       afs.close()
+       swarm.destroy()
+       handler()
         console.log("Swarm destroyed")
-        handler()
     }
 
     async function handleConnection(connection, info){
