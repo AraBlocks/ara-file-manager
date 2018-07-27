@@ -3,5 +3,6 @@
 module.exports = {
   accountSelection: require('./accountSelection'),
   publish: require('./publish'),
-  register: require('./register')
+  register: require('./register'),
+  download: require('./download')
 }
