@@ -6,6 +6,10 @@ const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
 const Nanocomponent = require('nanocomponent')
+const fs = require('fs')
+const path = require('path');
+const userHome = require('user-home')
+const {shell} = require('electron')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
@@ -58,7 +62,10 @@ class FileDescriptor extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'blue' }
         }
-        props.onclick = () => console.log('downloaded')
+        props.onclick = () => {
+          const folderPath = path.join(userHome, '.ara', 'afs')
+          shell.openItem(folderPath)
+        }
     }
     return props
   }
