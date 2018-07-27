@@ -10,9 +10,11 @@
   </body>
   <script>
     const websocket = new WebSocket("ws://localhost:24860")
+    var aid = document.URL.match(/id=([a-z0-9:]+)/)[0].slice(3)
+
     const item = JSON.stringify({
       fileName: 'My Awesome File',
-      aid: 'did:ara:acd9cb17d7b89bda1471f699d95273bfba9150b0237c044ac0f4e83de19fe3c2',
+      aid,
       price: 5.99
     })
     websocket.onopen = () => {
