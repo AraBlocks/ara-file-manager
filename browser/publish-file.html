@@ -9,35 +9,5 @@
   <body style="height: 100%; background-color: white;">
     <div id="container"></div>
   </body>
-  <script>
-    const {
-      ESTIMATING_COST,
-      ESTIMATION,
-      FEED_MODAL,
-      PUBLISHED,
-    } = require('../lib/constants/stateManagement')
-    const PublishFile = require('./views/publishFile/container')
-    const { openModal, closeWindow } = require('./lib/tools/windowManagement')
-    const { remote } = require('electron')
-    const windowManager = remote.require('electron-window-manager')
-    const { account } = windowManager.sharedData.fetch('store')
-    const isDev = require('electron-is-dev')
-
-    const publishFile = new PublishFile({ account })
-
-    const estimateCost = () => publishFile.render(true)
-    windowManager.bridge.on(ESTIMATING_COST, estimateCost)
-    windowManager.bridge.removeListener(ESTIMATING_COST, estimateCost)
-    const estimateReceived = windowManager.bridge.on(ESTIMATION, () => openModal('publishConfirmModal'))
-    const published = windowManager.bridge.on(PUBLISHED, closeWindow)
-
-    document.getElementById('container').appendChild(publishFile.render())
-    Object.assign(window, { components: { publishFile } })
-
-    window.onunload = () => {
-      windowManager.bridge.removeListener(ESTIMATING_COST, estimateCost)
-      windowManager.bridge.removeListener(ESTIMATION, estimateReceived)
-      windowManager.bridge.removeListener(PUBLISHED, published)
-    }
-  </script>
+  <script src="publishFile.js"></script>
 </html>
