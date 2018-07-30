@@ -10,6 +10,7 @@ const {
   FEED_MODAL,
   PUBLISH,
   PUBLISHED,
+  PUBLISHING
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 
@@ -24,10 +25,8 @@ ipcMain.on(PUBLISH, async (event, load) => {
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   const { account: { aid } } = windowManager.sharedData.fetch('store')
   const { password } = aid
-  try {
-    await publish.commit(Object.assign(load, { password }))
-    windowManager.get('publishFileView').object.webContents.send(PUBLISHED)
-  } catch (err) {
-    console.log({err})
-  }
+  publish.commit(Object.assign(load, { password }))
+    .then(() => windowManager.get('fileManager').object.webContents.send(PUBLISHED))
+    .catch(console.log)
+  windowManager.get('fileManager').object.webContents.send(PUBLISHING)
 })
