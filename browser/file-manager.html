@@ -10,6 +10,7 @@
     <div id="container"></div>
   </body>
   <script>
+      const { DOWNLOADED } = require('../lib/constants/stateManagement')
       const { remote } = require('electron')
       const windowManager = remote.require('electron-window-manager')
       const store = windowManager.sharedData.fetch('store')
@@ -18,7 +19,7 @@
       const fileManager = new FileManager(store)
       document.getElementById('container').appendChild(fileManager.render())
 
-      windowManager.bridge.on('DOWNLOADED', () => {
+      windowManager.bridge.on(DOWNLOADED, () => {
         fileManager.rerender()
       })
   </script>
