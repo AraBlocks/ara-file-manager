@@ -6,11 +6,7 @@ const windowManager = remote.require('electron-window-manager')
 
 function changeMainManagerSize(expand) {
 	const window = windowManager.getCurrent().object
-	if (expand) {
-		window.setSize(400, 525)
-	} else {
-		window.setSize(400, 325)
-	}
+	window.setSize(400, expand ? 525 : 325)
 }
 
 function closeWindow() {

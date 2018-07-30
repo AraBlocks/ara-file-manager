@@ -26,7 +26,30 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   const { account: { aid } } = windowManager.sharedData.fetch('store')
   const { password } = aid
   publish.commit(Object.assign(load, { password }))
-    .then(() => windowManager.get('fileManager').object.webContents.send(PUBLISHED))
+    .then(() => {
+      dispatch({ type: PUBLISHED, load: null })
+        windowManager.get('filemanager')
+        ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
+        : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
+    })
     .catch(console.log)
-  windowManager.get('fileManager').object.webContents.send(PUBLISHING)
+
+  dispatch({
+    type: PUBLISHING,
+    load: {
+      downloadPercent: 0,
+      meta: {
+        aid: load.did,
+        datePublished: '',
+        earnings: 0,
+        peers: 0,
+        price: 0,
+      },
+      name: 'Some File',
+      size: 1.67,
+      status: 1,
+    }
+  })
+  windowManager.get('publishFileView').object.webContents.send(PUBLISHING)
+  // windowManager.get('fileManager').object.webContents.send(PUBLISHING)
 })

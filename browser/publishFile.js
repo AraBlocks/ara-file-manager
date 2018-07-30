@@ -4,7 +4,7 @@ const { closeWindow, openModal} = require('./lib/tools/windowManagement')
 const {
   ESTIMATING_COST,
   ESTIMATION,
-  PUBLISHED,
+  PUBLISHING,
 } = require('../lib/constants/stateManagement')
 const PublishFile = require('./views/publishFile/container')
 const { ipcRenderer, remote } = require('electron')
@@ -16,4 +16,4 @@ document.getElementById('container').appendChild(publishFile.render())
 
 ipcRenderer.on(ESTIMATING_COST, () => publishFile.render(true))
 ipcRenderer.on(ESTIMATION, () => openModal('publishConfirmModal'))
-ipcRenderer.on(PUBLISHED, () => closeWindow.apply(this))
+ipcRenderer.on(PUBLISHING, () => closeWindow('publishFileView'))
