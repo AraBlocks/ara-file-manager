@@ -9,7 +9,6 @@ const {
   FEED_MODAL,
   PUBLISH,
   PUBLISHED,
-  PUBLISHING
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 
