@@ -21,6 +21,10 @@ function closeWindow() {
 	windowManager.getCurrent().close()
 }
 
+function emit(event, load) {
+	windowManager.bridge.emit(event, load)
+}
+
 function minimizeWindow() {
 	windowManager.getCurrent().minimize()
 }
@@ -29,6 +33,7 @@ function openModal(view = 'modal') {
 	if (windowManager.modalIsOpen) {
 		windowManager.get('modal').focus()
 	} else {
+		windowManager.sharedData.set('current', view)
 		const modal = windowManager.open(
 			view,
 			view,
@@ -80,6 +85,7 @@ module.exports = {
 	changeMainManagerSize,
 	dispatch,
 	closeWindow,
+	emit,
 	openModal,
 	minimizeWindow,
 	transitionModal,

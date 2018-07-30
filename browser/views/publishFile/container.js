@@ -64,10 +64,14 @@ class Container extends Nanocomponent {
 		})
 	}
 
-	createElement() {
+	createElement(pending = false) {
 		const { children } = this
 		return html`
-			<div class="${styles.container} PublishFileContainer-container">
+			<div class="
+				${styles.container}
+				${pending && styles.overlay('PublishFileContainer-container')}
+				PublishFileContainer-container
+			">
 				<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
 					Publish File
 					${children.utilityButton.render({})}

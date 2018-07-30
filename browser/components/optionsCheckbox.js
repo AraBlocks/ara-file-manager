@@ -36,7 +36,7 @@ class OptionsCheckbox extends Nanocomponent {
 		const { children, props } = this
 		return html`
 			<div class="${styles.container} OptionsCheckbox-container">
-				${children.checkbox.render()}
+				${children.checkbox.render({})}
 				<div class="${styles.textContainer} OptionsCheckbox-textContainer">
 					<div class="${styles.topContainer} OptionsCheckbox-topContainer">
 						<div class="${styles.title} OptionsCheckbox-title">

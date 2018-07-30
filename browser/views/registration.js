@@ -13,10 +13,7 @@ class Registration extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = {
-      password: '',
-      registering: false
-    }
+    this.state = { password: '' }
 
     this.passwordInput = new Input({
       placeholder: 'Password',
@@ -42,24 +39,24 @@ class Registration extends Nanocomponent {
       onclick: closeWindow
     })
 
-    this.rerender = this.rerender.bind(this)
+    this.render = this.render.bind(this)
   }
 
   update() {
     return true
   }
 
-  createElement() {
+  createElement(pending = false) {
     const {
       cancelButton,
       passwordInput,
-      rerender,
+      render,
       submitButton,
       state
     } = this
 
     return html`
-      <div class="modal ${styles.overlay(state.registering)}">
+      <div class="modal ${pending && styles.overlay('modal')}">
         <div class=${styles.header}>LTLSTAR</div>
         <div class=${styles.header}>Register</div>
         <p class=${styles.description}>
@@ -77,7 +74,7 @@ class Registration extends Nanocomponent {
       e.preventDefault()
       state.registering = true
       register()
-      rerender()
+      render(true)
     }
   }
 }

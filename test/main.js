@@ -16,7 +16,6 @@ app.on('ready', () => {
     {
       ...windowManager.setSize('testing'),
       resizable: true,
-      showDevTools: true
     }
   )
 })
