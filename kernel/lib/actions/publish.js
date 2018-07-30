@@ -30,7 +30,6 @@ module.exports = {
   },
 
   async commit({ did, password, gasEstimate }){
-    console.log({did,password,gasEstimate})
     const result = await afs.commit({ did, password, gasEstimate })
     if (result instanceof Error) {
       console.log(result)

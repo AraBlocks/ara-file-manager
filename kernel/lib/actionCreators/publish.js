@@ -27,7 +27,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   try {
     await publish.commit(Object.assign(load, { password }))
     windowManager.get('publishFileView').object.webContents.send(PUBLISHED)
-    // event.sender.send(PUBLISHED)
   } catch (err) {
     console.log({err})
   }
