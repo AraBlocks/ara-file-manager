@@ -18,7 +18,7 @@ function dispatch({action, load}) {
 }
 
 function closeWindow() {
-	windowManager.getCurrent().close()
+	close()
 }
 
 function emit(event, load) {

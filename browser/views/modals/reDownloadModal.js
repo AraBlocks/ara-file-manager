@@ -1,7 +1,6 @@
 'use strict'
 
 const Button = require('../../components/button')
-const { DOWNLOADING } = require('../../../lib/constants/stateManagement')
 const { closeWindow, openWindow } = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
@@ -10,12 +9,15 @@ const windowManager = remote.require('electron-window-manager')
 const download = require('../../lib/download')
 
 module.exports = ({
-  price = windowManager.fileInfo.price || 0,
-  aid = windowManager.fileInfo.aid
+  price = windowManager.fileInfo.price || 0
 }) => {
   const downloadButton = new Button({
     children: 'Download',
-    onclick: download
+    onclick: () => {
+      openWindow('filemanager')
+      download()
+      closeWindow()
+    }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
@@ -39,8 +41,3 @@ module.exports = ({
     </div>
   `
 }
-
-windowManager.bridge.on(DOWNLOADING, () => {
-  openWindow('filemanager')
-  windowManager.get('reDownloadModal').close()
-})
