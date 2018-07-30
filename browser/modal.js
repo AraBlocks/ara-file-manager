@@ -4,6 +4,8 @@ const remote = require('electron').remote;
 const windowManager = remote.require('electron-window-manager')
 
 const current = windowManager.sharedData.fetch('current')
+const { modal: { data } } = windowManager.sharedData.fetch('store')
+
 let Component
 let functionalComponent
 try {
@@ -15,5 +17,5 @@ try {
 document.getElementById('container').appendChild(
   Component
     ? (new Component).render()
-    : functionalComponent({})
+    : functionalComponent(data)
 )
