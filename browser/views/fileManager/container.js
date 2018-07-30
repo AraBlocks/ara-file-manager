@@ -49,14 +49,13 @@ class Container extends Nanocomponent {
       children,
       state: { activeTab, files }
     } = this
-
     Object.assign(window, { container: this })
     return html`
       <div class="${styles.container} container-container">
         <div>
           ${children.header.render({ activeTab })}
           <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
-            ${[ ...files.published, files.purchased ].length
+            ${[ ...files.published, ...files.purchased ].length
               ? renderSections().map(section => section.render({ files }))
               : renderNoFilesMsg()
             }
