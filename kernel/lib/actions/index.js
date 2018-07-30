@@ -2,7 +2,7 @@
 
 module.exports = {
   accountSelection: require('./accountSelection'),
+  download: require('./download'),
   publish: require('./publish'),
-  register: require('./register'),
-  download: require('./download')
+  register: require('./register')
 }

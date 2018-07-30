@@ -34,7 +34,7 @@ windowManager.bridge.on(DOWNLOAD, async (load) => {
 			load: {
 				purchased: [
 					{
-						downloadPercent: 0,
+						downloadPercent: 1,
 						meta: {
 							aid: windowManager.fileInfo.aid,
 							datePublished: '11/20/1989',

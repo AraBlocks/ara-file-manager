@@ -1,6 +1,7 @@
 'use strict'
 
 const Button = require('../../components/button')
+const { DOWNLOADING } = require('../../../lib/constants/stateManagement')
 const { closeWindow, openWindow } = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
@@ -39,7 +40,7 @@ module.exports = ({
   `
 }
 
-windowManager.bridge.on('DOWNLOADING', () => {
+windowManager.bridge.on(DOWNLOADING, () => {
   openWindow('filemanager')
   windowManager.get('reDownloadModal').close()
 })
