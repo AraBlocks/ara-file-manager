@@ -1,7 +1,9 @@
 'use strict'
 
-const { CONFIRM_PUBLISH } = require('../../../lib/constants/stateManagement')
+const { CONFIRM_PUBLISH, PUBLISHED } = require('../../../lib/constants/stateManagement')
 const { closeWindow, emit } = require('../../lib/tools/windowManagement')
+// const { ipcRenderer, remote } = require('electron')
+// const windowManager = remote.require('electron-window-manager')
 const Button = require('../../components/button')
 const styles = require('./styles')
 const html = require('choo/html')
@@ -13,7 +15,7 @@ module.exports = (load) => {
       emit(CONFIRM_PUBLISH, load)
       closeWindow()
     }
-   })
+  })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
     onclick: closeWindow
