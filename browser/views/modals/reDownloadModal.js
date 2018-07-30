@@ -1,12 +1,12 @@
 'use strict'
 
-const afsManager = require('../../lib/tools/afsManager')
 const Button = require('../../components/button')
 const { closeWindow, openWindow } = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
 const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
+const download = require('../../lib/download')
 
 module.exports = ({
   price = windowManager.fileInfo.price || 0,
@@ -37,9 +37,9 @@ module.exports = ({
       </div>
     </div>
   `
-
-  function download() {
-    openWindow('fManagerView')
-    afsManager.download(aid)
-  }
 }
+
+windowManager.bridge.on('DOWNLOADING', () => {
+  openWindow('filemanager')
+  windowManager.get('reDownloadModal').close()
+})
