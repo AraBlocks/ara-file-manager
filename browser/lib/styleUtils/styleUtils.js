@@ -121,37 +121,5 @@ module.exports = {
         font-size: 12px;
       }
     `,
-  },
-
-  overlay(elementName){
-    css`
-     .${elementName}:before {
-       content: "";
-       z-index: 1;
-       display: block;
-       position: absolute;
-       height: 100%;
-       top: 0;
-       left: 0;
-       right: 0;
-       background: rgba(0, 0, 0, 0.8);
-     }
-     .${elementName}:after {
-       content: "";
-       box-sizing: border-box;
-       position: absolute;
-       top: 50%;
-       left: 50%;
-       width: 40px;
-       height: 40px;
-       margin-top: -20px;
-       margin-left: -20px;
-       border-radius: 50%;
-       border: 2px solid #ccc;
-       border-top-color: #333;
-       animation: spinner .6s linear infinite;
-       z-index: 2;
-     }
-   `
   }
 }

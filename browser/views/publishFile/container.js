@@ -3,6 +3,7 @@
 const Button = require('../../components/button')
 const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
+const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
 const { dispatch } = require('../../lib/tools/windowManagement')
@@ -67,28 +68,27 @@ class Container extends Nanocomponent {
 	createElement(pending = false) {
 		const { children } = this
 		return html`
-			<div class="
-				${styles.container}
-				${pending && styles.overlay('PublishFileContainer-container')}
-				PublishFileContainer-container
-			">
-				<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
-					Publish File
-					${children.utilityButton.render({})}
+			<div>
+				${overlay(pending)}
+				<div class="${styles.container} PublishFileContainer-container">
+					<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
+						Publish File
+						${children.utilityButton.render({})}
+					</div>
+					<div class="${styles.content} PublishFileContainer-content">
+						Publish your content for distribution on the ARA Network. You can publish a single file or an entire directory as a single
+						asset. Once published, use the provided distribution link to allow users to purchase your content.<br><br>
+						<b>Note:</b> ARA is a decentralized network. at least one computer or supernode must be connected and hosting this file for users
+						to be able to download it.
+					</div>
+					<div class="${styles.divider} PublishFileContainer-divider"></div>
+					${children.fileInfo.render()}
+					<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
+						${children.supernodeCheckbox.render()}
+						${children.priceManagementCheckbox.render()}
+					</div>
+					${children.publishButton.render()}
 				</div>
-				<div class="${styles.content} PublishFileContainer-content">
-					Publish your content for distribution on the ARA Network. You can publish a single file or an entire directory as a single
-					asset. Once published, use the provided distribution link to allow users to purchase your content.<br><br>
-					<b>Note:</b> ARA is a decentralized network. at least one computer or supernode must be connected and hosting this file for users
-					to be able to download it.
-				</div>
-				<div class="${styles.divider} PublishFileContainer-divider"></div>
-				${children.fileInfo.render()}
-				<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
-					${children.supernodeCheckbox.render()}
-					${children.priceManagementCheckbox.render()}
-				</div>
-				${children.publishButton.render()}
 			</div>
 		`
 	}
