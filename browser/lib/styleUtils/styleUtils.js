@@ -123,9 +123,9 @@ module.exports = {
     `,
   },
 
-  overlay(status){
-    status && css`
-     .modal:before {
+  overlay(elementName){
+    css`
+     .${elementName}:before {
        content: "";
        z-index: 1;
        display: block;
@@ -136,7 +136,7 @@ module.exports = {
        right: 0;
        background: rgba(0, 0, 0, 0.8);
      }
-     .modal:after {
+     .${elementName}:after {
        content: "";
        box-sizing: border-box;
        position: absolute;

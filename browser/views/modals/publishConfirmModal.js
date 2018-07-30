@@ -1,12 +1,19 @@
 'use strict'
 
-const { closeWindow } = require('../../lib/tools/windowManagement')
+const { CONFIRM_PUBLISH } = require('../../../lib/constants/stateManagement')
+const { closeWindow, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
 const html = require('choo/html')
 
-module.exports = ({ price = 5.43 }) => {
-  const publishButton = new Button({ children: 'Publish' })
+module.exports = (load) => {
+  const publishButton = new Button({
+    children: 'Publish',
+    onclick: () => {
+      emit(CONFIRM_PUBLISH, load)
+      closeWindow()
+    }
+   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
     onclick: closeWindow
@@ -23,7 +30,7 @@ module.exports = ({ price = 5.43 }) => {
             Publishing this file will cost:
           </div>
           <span class="${styles.postheader} modals-postheader">
-            ${price} ARA
+            ${load.gasEstimate} ARA
           </span>
         </div>
       </div>

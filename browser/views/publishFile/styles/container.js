@@ -1,13 +1,19 @@
 'use strict'
 
-const { colors, fonts, fontCSS } = require('styleUtils')
+const {
+	colors,
+	fonts,
+	fontCSS,
+	overlay
+} = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
 	colors,
-	fonts,
-	title: fontCSS.noeH1,
 	content: fontCSS.proxiContent,
+	fonts,
+	overlay,
+	title: fontCSS.noeH1,
 
 	container: css`
 		:host {
