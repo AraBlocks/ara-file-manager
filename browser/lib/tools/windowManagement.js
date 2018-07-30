@@ -1,7 +1,7 @@
 'use strict'
 
 const isDev = require('electron-is-dev')
-const remote = require('electron').remote
+const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 function changeMainManagerSize(expand) {
@@ -14,7 +14,7 @@ function changeMainManagerSize(expand) {
 }
 
 function dispatch({action, load}) {
-	windowManager.bridge.emit(action, load)
+	ipcRenderer.send(action, load)
 }
 
 function closeWindow() {
@@ -22,7 +22,7 @@ function closeWindow() {
 }
 
 function emit(event, load) {
-	windowManager.bridge.emit(event, load)
+	ipcRenderer.send(event, load)
 }
 
 function minimizeWindow() {
