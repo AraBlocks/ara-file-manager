@@ -4,10 +4,14 @@ const { DOWNLOADED, DOWNLOADING } = require('../../../lib/constants/stateManagem
 module.exports = (state, { load, type }) => {
   switch (type){
     case DOWNLOADING:
-      state.purchased = load.purchased
+      state.purchased.push(load)
       break
     case DOWNLOADED:
-      state.purchased = load.purchased
+      for (file of state.purchased) {
+        if(file.meta.aid === load) {
+          console.log(file)
+        }
+      }
       break
     default:
       return state

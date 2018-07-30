@@ -11,46 +11,40 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 	const newState = dispatch({
     type: DOWNLOADING,
     load: {
-      purchased: [
-				{
-					downloadPercent: 0,
-					meta: {
-						aid: windowManager.fileInfo.aid,
-						datePublished: '11/20/1989',
-						earnings: 2134.33,
-						peers: 353,
-						price: windowManager.fileInfo.price,
-					},
-					name: windowManager.fileInfo.fileName,
-					size: 1.67,
-					status: 1,
-				}
-			]
-    }
-  })
+				downloadPercent: 0,
+				meta: {
+					aid: windowManager.fileInfo.aid,
+					datePublished: '11/20/1989',
+					earnings: 2134.33,
+					peers: 353,
+					price: windowManager.fileInfo.price,
+				},
+				name: windowManager.fileInfo.fileName,
+				size: 1.67,
+				status: 1,
+			}
+	})
+	windowManager.get('filemanager').object.webContents.send(DOWNLOADED, windowManager.fileInfo.aid)
 	download({did: load, handler: () => {
 		const newload = {
-			purchased: [
-				{
-					downloadPercent: 1,
-					meta: {
-						aid: windowManager.fileInfo.aid,
-						datePublished: '11/20/1989',
-						earnings: 2134.33,
-						peers: 353,
-						price: windowManager.fileInfo.price,
-					},
-					name: windowManager.fileInfo.fileName,
-					size: 1.67,
-					status: 2,
-				}
-			]
+			downloadPercent: 1,
+			meta: {
+				aid: windowManager.fileInfo.aid,
+				datePublished: '11/20/1989',
+				earnings: 2134.33,
+				peers: 353,
+				price: windowManager.fileInfo.price,
+			},
+			name: windowManager.fileInfo.fileName,
+			size: 1.67,
+			status: 2,
 		}
-		windowManager.get('fManagerView').object.webContents.send(DOWNLOADED, newload)
+		windowManager.get('filemanager').object.webContents.send(DOWNLOADED, newload)
 	}})
 })
 
 ipcMain.on(DOWNLOADED, async(event, load) => {
+	console.log('\n\n\n\naloha')
 	const newState = dispatch({
 		type: DOWNLOADED,
 		load
