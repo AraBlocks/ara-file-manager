@@ -13,7 +13,7 @@ module.exports = ({
     children: 'Download',
     onclick: () => {
       windowManagement.openWindow('filemanager')
-      windowManagement.emit({event: DOWNLOAD, load: windowManager.fileInfo.aid})
+      windowManagement.emit({ event: DOWNLOAD, load: windowManager.fileInfo.aid })
       windowManagement.closeWindow()
     }
   })
