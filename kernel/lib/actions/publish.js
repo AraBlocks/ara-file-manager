@@ -11,7 +11,7 @@ module.exports = {
     try {
       await afs.add({
         did: id,
-        paths: ['README.md', '.ararc'],
+        paths: ['README.md'],
         password
       })
       console.log('added file succesfully')
