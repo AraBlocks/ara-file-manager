@@ -10,6 +10,7 @@ const {
   FEED_MODAL,
   PUBLISH,
   PUBLISHED,
+  PUBLISHING
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 
@@ -24,10 +25,31 @@ ipcMain.on(PUBLISH, async (event, load) => {
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   const { account: { aid } } = windowManager.sharedData.fetch('store')
   const { password } = aid
-  try {
-    await publish.commit(Object.assign(load, { password }))
-    windowManager.get('publishFileView').object.webContents.send(PUBLISHED)
-  } catch (err) {
-    console.log({err})
-  }
+  publish.commit(Object.assign(load, { password }))
+    .then(() => {
+      dispatch({ type: PUBLISHED, load: null })
+        windowManager.get('filemanager')
+          ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
+          : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
+    })
+    .catch(console.log)
+
+  dispatch({
+    type: PUBLISHING,
+    load: {
+      downloadPercent: 0,
+      meta: {
+        aid: load.did,
+        datePublished: '',
+        earnings: 0,
+        peers: 0,
+        price: 0,
+      },
+      name: 'Some File',
+      size: 1.67,
+      status: 1,
+    }
+  })
+
+  windowManager.get('publishFileView').object.webContents.send(PUBLISHING)
 })
