@@ -7,12 +7,9 @@ module.exports = (state, { load, type }) => {
       state.purchased.push(load)
       break
     case DOWNLOADED:
-      for (const file of state.purchased) {
-        if(file.meta.aid === load) {
-          file.downloadPercent = 1
-          file.status = 2
-        }
-      }
+      const file = state.purchased[-1]
+      file.downloadPercent = 1
+      file.status = 2
       break
     default:
       return state

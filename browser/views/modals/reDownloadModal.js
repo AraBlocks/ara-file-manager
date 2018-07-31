@@ -1,12 +1,10 @@
 'use strict'
 
 const Button = require('../../components/button')
-const { closeWindow, openWindow } = require('../../lib/tools/windowManagement')
+const { DOWNLOAD } = require('../../../lib/constants/stateManagement')
+const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
-const remote = require('electron').remote
-const windowManager = remote.require('electron-window-manager')
-const download = require('../../lib/download')
 
 module.exports = ({
   price = windowManager.fileInfo.price || 0
@@ -14,14 +12,14 @@ module.exports = ({
   const downloadButton = new Button({
     children: 'Download',
     onclick: () => {
-      openWindow('filemanager')
-      download()
-      closeWindow()
+      windowManagement.openWindow('filemanager')
+      windowManagement.emit(DOWNLOAD, windowManager.fileInfo.aid)
+      windowManagement.closeWindow()
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: closeWindow
+    onclick: windowManagement.closeWindow
   })
   return html`
     <div class="${styles.container} modals-container">

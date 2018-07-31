@@ -7,4 +7,4 @@ const FileManager = require('./views/fileManager/container')
 const fileManager = new FileManager(store)
 document.getElementById('container').appendChild(fileManager.render())
 
-ipcRenderer.on(DOWNLOADED, async(event, load) => fileManager.rerender())
+ipcRenderer.on(DOWNLOADED, fileManager.rerender)
