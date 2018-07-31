@@ -9,15 +9,15 @@
     Opening File Manager...<br><br>
   </body>
   <script>
-    const websocket = new WebSocket("ws://localhost:24860")
     const item = JSON.stringify({
       fileName: 'My Awesome File',
       aid: 'did:ara:1391d7b8bd59d7ac5229b8360b1847872282424069bc4c427b29b68982858f0d',
       price: 5.99
     })
-    websocket.onopen = () => {
-      websocket.send(item)
-      websocket.close()
-    }
+    const xmlHttp = new XMLHttpRequest()
+    xmlHttp.open( "POST", 'http://localhost:3002', true ) // false for synchronous request
+    xmlHttp.setRequestHeader("Content-Type", "application/json")
+    xmlHttp.withCredentials = true
+    xmlHttp.send( item )
   </script>
 </html>

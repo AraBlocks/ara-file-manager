@@ -1,28 +1,33 @@
 'use strict'
 
-const Server = require('simple-websocket/server')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const express = require('express')
 const windowManager = require('electron-window-manager')
-const port = 24860
-const server = new Server({ port })
+const app = express()
 
 module.exports = () => {
-  server.on('connection', (socket) => {
-    console.log("Server Connected")
-    socket.on('data', (data) => {
-      console.log(JSON.parse(data.toString()))
-      const modalName = 'reDownloadModal'
-      windowManager.sharedData.set('current', modalName)
-      windowManager.createNew(
-        modalName,
-        modalName,
-        windowManager.loadURL(modalName),
-        false,
-        {
-          frame: false,
-          ...windowManager.setSize(modalName),
-        }
-      ).open()
-      windowManager.fileInfo = JSON.parse(data.toString())
-    })
+  const corsOptions = cors({
+    credentials: true,
+    origin: 'http://localhost:3001'
   })
+  app.use(corsOptions)
+  app.use(bodyParser.json())
+  app.post('/', (req, res) => {
+    res.send('File info received!')
+    const modalName = 'reDownloadModal'
+    windowManager.sharedData.set('current', modalName)
+    windowManager.createNew(
+      modalName,
+      modalName,
+      windowManager.loadURL(modalName),
+      false,
+      {
+        frame: false,
+        ...windowManager.setSize(modalName),
+      }
+    ).open()
+    windowManager.fileInfo = req.body
+  })
+  app.listen(3002, () => console.log('Demo app listening on port 3002!'))
 }
