@@ -13,7 +13,10 @@ class Section extends Nanocomponent {
     super()
 
     this.props = { typeRow: type }
-    this.state = { files: this.makeRows(files[type]) }
+    this.state = {
+      files: this.makeRows(files[type]),
+      firstRender: true
+    }
   }
 
   makeRows(files) {
@@ -21,21 +24,13 @@ class Section extends Nanocomponent {
     return files.map(file => new ItemRow({ ...file, typeRow }))
   }
 
-  update({ files }) {
-    const {
-      props,
-      state
-    } = this
-
-    const isSame = files[props.typeRow].length !== state.files.length
-    if (!isSame) {
-      state.files = this.makeRows(files[props.typeRow])
-    }
+  update() {
     return true
   }
 
-  createElement() {
+  createElement({ files }) {
     const { props, state } = this
+    state.files = this.makeRows(files[props.typeRow])
 
     return html`
       <div class="${styles.container} section-container">
