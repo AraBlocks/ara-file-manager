@@ -73,17 +73,17 @@ async function download({ did, handler }) {
 }
 
 function getAfsPath(aid) {
-	const aidHash = aid.slice(8)
-	return path.join(createAFSKeyPath(aidHash), 'home', 'content')
+	return path.join(createAFSKeyPath(aid), 'home', 'content')
 }
 
 function renameAfsFiles(aid, fileName) {
-	const afsFolderPath = getAfsPath(aid)
+	const aidHash = aid.slice(8)
+	const afsFolderPath = getAfsPath(aidHash)
 	const afsFilePath = path.join(afsFolderPath, 'data')
 	const newPath = path.join(afsFolderPath, fileName)
 	fs.rename(afsFilePath, newPath, function(err) {
 		if (err) {
-			console.log('some error occurred')
+			console.log('some error occurred when renaming afs files')
 		}
 	})
 }
