@@ -1,15 +1,14 @@
 'use strict'
 
-const html = require('choo/html')
 const DynamicButton = require('../../components/dynamicButton')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
+const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const fs = require('fs')
 const path = require('path');
+const { shell } = require('electron')
 const userHome = require('user-home')
-const {shell} = require('electron')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
