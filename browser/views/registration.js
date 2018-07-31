@@ -37,7 +37,7 @@ class Registration extends Nanocomponent {
           weight: 'light'
         }
       },
-      onclick: closeWindow
+      onclick: () => closeWindow()
     })
 
     this.render = this.render.bind(this)
