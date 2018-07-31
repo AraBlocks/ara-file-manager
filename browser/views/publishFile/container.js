@@ -1,11 +1,12 @@
 'use strict'
 
 const Button = require('../../components/button')
+const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
+const { PUBLISH } = require('../../../lib/constants/stateManagement')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
-const { dispatch } = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -56,12 +57,9 @@ class Container extends Nanocomponent {
 			password
 		} = aid
 
-		dispatch({ action: 'PUBLISH', load: {
-				did,
-				password,
-				paths: filePath
-			}
-		})
+		const event = PUBLISH
+		const load = { did, password, paths: filePath }
+		emit({ event, load })
 	}
 
 	createElement(pending = false) {
