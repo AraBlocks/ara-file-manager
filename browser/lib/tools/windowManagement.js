@@ -13,15 +13,11 @@ function changeMainManagerSize(expand) {
 	}
 }
 
-function dispatch({action, load}) {
-	ipcRenderer.send(action, load)
-}
-
 function closeWindow() {
 	windowManager.getCurrent().close()
 }
 
-function emit(event, load) {
+function emit({ event, load }) {
 	ipcRenderer.send(event, load)
 }
 
@@ -83,7 +79,6 @@ function quitApp() {
 
 module.exports = {
 	changeMainManagerSize,
-	dispatch,
 	closeWindow,
 	emit,
 	openModal,

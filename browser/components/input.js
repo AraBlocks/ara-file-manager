@@ -32,14 +32,8 @@ class Input extends Nanocomponent {
     this.onchange = this.onchange.bind(this)
   }
 
-  update({ value, selection }) {
-    const { state } = this
-    const sameValue = state.value === value && state.selection === selection
-    if (!sameValue) {
-      state.value = state.value === value ? state.value : value
-      state.selection = state.selection === selection ? state.selection : selection
-    }
-    return !sameValue
+  update() {
+    return true
   }
 
   onchange(e) {
