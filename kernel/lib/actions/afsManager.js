@@ -5,8 +5,10 @@ const fs = require('fs')
 const path = require('path')
 
 async function broadcast(did) {
+
 	// Create a swarm for uploading the content
-	const { afs } = await create({ did })
+	const fullDid = 'did:ara:' + did
+	const { afs } = await create({ did: fullDid })
 
 	// Join the discovery swarm for the requested content
 	const opts = {
@@ -14,7 +16,7 @@ async function broadcast(did) {
 	}
 	const swarm = createSwarm(opts)
 	swarm.on('connection', handleConnection)
-	swarm.join(did)
+	swarm.join(fullDid)
 
 	function stream(peer) {
 		const stream = afs.replicate({
@@ -38,7 +40,8 @@ async function broadcast(did) {
 async function download({ did, handler }) {
 	console.log('Creating afs...')
 	// Create a swarm for downloading the content
-	const { afs } = await create({ did })
+	const fullDid = 'did:ara:' + did
+	const { afs } = await create({ did: fullDid })
 
 	// Join the discovery swarm for the requested content
 	console.log('Waiting for peer connection...')
@@ -47,7 +50,7 @@ async function download({ did, handler }) {
 	}
 	const swarm = createSwarm(opts)
 	swarm.once('connection', handleConnection)
-	swarm.join(did)
+	swarm.join(fullDid)
 
 	function stream(peer) {
 		const stream = afs.replicate({
