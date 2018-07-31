@@ -4,18 +4,17 @@ const { createSwarm } = require('ara-network/discovery')
 const fs = require('fs')
 const path = require('path')
 
-broadcast('did:ara:d642743e1ca0de760498d8d8eb37e34f2d9b4a7c918fa622d3cef78b73c3eb2e')
-async function broadcast (did) {
-    // Create a swarm for uploading the content
-    const { afs } = await create({did})
+async function broadcast(did) {
+	// Create a swarm for uploading the content
+	const { afs } = await create({ did })
 
-    // Join the discovery swarm for the requested content
-    const opts = {
-        stream: stream,
-    }
-    const swarm = createSwarm(opts)
-    swarm.once('connection', handleConnection)
-    swarm.join(did)
+	// Join the discovery swarm for the requested content
+	const opts = {
+		stream: stream,
+	}
+	const swarm = createSwarm(opts)
+	swarm.on('connection', handleConnection)
+	swarm.join(did)
 
 	function stream(peer) {
 		const stream = afs.replicate({
@@ -43,12 +42,22 @@ async function download({ did, handler }) {
 
 	// Join the discovery swarm for the requested content
 	console.log('Waiting for peer connection...')
-    const opts = {
-        stream: stream,
-    }
-    const swarm = createSwarm(opts)
-    swarm.once('connection', handleConnection)
-    swarm.join(did)
+	const opts = {
+		stream: stream,
+	}
+	const swarm = createSwarm(opts)
+	swarm.once('connection', handleConnection)
+	swarm.join(did)
+
+	function stream(peer) {
+		const stream = afs.replicate({
+			upload: false,
+			download: true
+		})
+		stream.once('end', onend)
+		stream.peer = peer
+		return stream
+	}
 
 	async function onend() {
 		const files = await afs.readdir('.')

@@ -65,6 +65,8 @@ class FileDescriptor extends Nanocomponent {
         }
         props.onclick = () => {
           const folderPath = afsManager.getAfsPath(this.props.meta.aid)
+          console.log(folderPath)
+          console.log(this.props.meta.aid)
           shell.openItem(folderPath)
         }
     }
