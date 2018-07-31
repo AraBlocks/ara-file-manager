@@ -69,15 +69,15 @@ button {
 
 .spinner {
   margin: 60px auto;
-  font-size: 10px;
+  font-size: 6px;
   position: relative;
   text-indent: -9999em;
   border-top: .5em solid rgba(255, 255, 255, 0.2);
-  border-right: .5em solid rgba(255, 255, 255, 0.2);
-  border-bottom: .5em solid rgba(255, 255, 255, 0.2);
+  border-right: .5em solid #ffffff;
+  border-bottom: .5em solid #ffffff;
   border-left: .5em solid #ffffff;
   transform: translateZ(0);
-  animation: spin 400ms infinite linear;
+  animation: spin 800ms infinite linear;
 }
 
 /* animations */
