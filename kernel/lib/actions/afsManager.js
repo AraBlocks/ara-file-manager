@@ -1,7 +1,7 @@
 const { create } = require('ara-filesystem')
 const { createSwarm } = require('ara-network/discovery')
 
-// broadcast('did:ara:acd9cb17d7b89bda1471f699d95273bfba9150b0237c044ac0f4e83de19fe3c2')
+broadcast('did:ara:d642743e1ca0de760498d8d8eb37e34f2d9b4a7c918fa622d3cef78b73c3eb2e')
 async function broadcast (did) {
     // Create a swarm for uploading the content
     const { afs } = await create({did})
@@ -11,7 +11,7 @@ async function broadcast (did) {
         stream: stream,
     }
     const swarm = createSwarm(opts)
-    swarm.on('connection', handleConnection)
+    swarm.once('connection', handleConnection)
     swarm.join(did)
 
    function stream(peer) {
@@ -44,7 +44,7 @@ async function download ({did, handler}) {
         stream: stream,
     }
     const swarm = createSwarm(opts)
-    swarm.on('connection', handleConnection)
+    swarm.once('connection', handleConnection)
     swarm.join(did)
 
    function stream(peer) {
