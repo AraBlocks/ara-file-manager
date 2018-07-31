@@ -1,11 +1,12 @@
 'use strict'
 
+const Button = require('../components/button')
 const { closeWindow, openWindow } = require('../lib/tools/windowManagement')
+const Input = require('../components/input')
+const overlay = require('../components/overlay')
+const register = require('../lib/register')
 const styles = require('./styles/registration')
 const html = require('choo/html')
-const Input = require('../components/input')
-const Button = require('../components/button')
-const register = require('../lib/register')
 const Nanocomponent = require('nanocomponent')
 
 
@@ -56,7 +57,8 @@ class Registration extends Nanocomponent {
     } = this
 
     return html`
-      <div class="modal ${pending && styles.overlay('modal')}">
+      <div class="modal">
+        ${overlay(pending)}
         <div class=${styles.header}>LTLSTAR</div>
         <div class=${styles.header}>Register</div>
         <p class=${styles.description}>
