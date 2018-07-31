@@ -1,12 +1,13 @@
 'use strict'
 
+const afsManager = require('../../../kernel/lib/actions/afsManager')
 const DynamicButton = require('../../components/dynamicButton')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const path = require('path');
+const path = require('path')
 const { shell } = require('electron')
 const userHome = require('user-home')
 
@@ -23,6 +24,7 @@ class FileDescriptor extends Nanocomponent {
 
     this.props = {
       demoDownload,
+      meta,
       name,
       size
     }
@@ -62,7 +64,9 @@ class FileDescriptor extends Nanocomponent {
           opts: { color: 'blue' }
         }
         props.onclick = () => {
-          const folderPath = path.join(userHome, '.ara', 'afs')
+          const folderPath = afsManager.getAfsPath(this.props.meta.aid)
+          console.log(folderPath)
+          console.log(this.props.meta.aid)
           shell.openItem(folderPath)
         }
     }
