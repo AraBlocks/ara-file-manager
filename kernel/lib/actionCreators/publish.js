@@ -29,8 +29,8 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
     .then(() => {
       dispatch({ type: PUBLISHED, load: null })
         windowManager.get('filemanager')
-        ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
-        : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
+          ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
+          : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
     })
     .catch(console.log)
 
@@ -50,6 +50,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
       status: 1,
     }
   })
+
   windowManager.get('publishFileView').object.webContents.send(PUBLISHING)
-  // windowManager.get('fileManager').object.webContents.send(PUBLISHING)
 })
