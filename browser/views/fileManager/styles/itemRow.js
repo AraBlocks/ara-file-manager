@@ -5,7 +5,6 @@ const { css }  = require('css')
 module.exports = {
   container: css`
     :host {
-      align-items: baseline;
       display: flex;
       justify-content: space-between;
     }

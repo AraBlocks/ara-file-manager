@@ -17,6 +17,8 @@ module.exports = {
     }
 
     :host button {
+      font-size: 12px;
+      height: 25px;
       text-align: right;
       width: 100%;
     }
