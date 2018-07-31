@@ -1,7 +1,7 @@
 'use strict'
 
 const isDev = require('electron-is-dev')
-const { ipcRenderer, remote } = require('electron')
+const { ipcRenderer, remote, shell } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 function changeMainManagerSize(expand) {
@@ -19,6 +19,10 @@ function emit({ event, load }) {
 
 function minimizeWindow() {
 	windowManager.getCurrent().minimize()
+}
+
+function openFolder(path) {
+	shell.openItem(path)
 }
 
 function openModal(view = 'modal') {
@@ -80,6 +84,7 @@ module.exports = {
 	openModal,
 	minimizeWindow,
 	transitionModal,
+	openFolder,
 	openWindow,
 	setWindowSize,
 	quitApp
