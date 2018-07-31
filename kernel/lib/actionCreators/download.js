@@ -24,29 +24,11 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 				status: 1,
 			}
 	})
-	windowManager.get('filemanager').object.webContents.send(DOWNLOADED, windowManager.fileInfo.aid)
-	download({did: load, handler: () => {
-		const newload = {
-			downloadPercent: 1,
-			meta: {
-				aid: windowManager.fileInfo.aid,
-				datePublished: '11/20/1989',
-				earnings: 2134.33,
-				peers: 353,
-				price: windowManager.fileInfo.price,
-			},
-			name: windowManager.fileInfo.fileName,
-			size: 1.67,
-			status: 2,
-		}
-		windowManager.get('filemanager').object.webContents.send(DOWNLOADED, newload)
+	download({did: windowManager.fileInfo.aid, handler: () => {
+		const newState = dispatch({
+			type: DOWNLOADED,
+			load: windowManager.fileInfo.aid
+		})
+		windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
 	}})
-})
-
-ipcMain.on(DOWNLOADED, async(event, load) => {
-	console.log('\n\n\n\naloha')
-	const newState = dispatch({
-		type: DOWNLOADED,
-		load
-	})
 })
