@@ -74,8 +74,8 @@ class Registration extends Nanocomponent {
     `
     function onsubmit(e) {
       e.preventDefault()
-      // state.registering = true
-      // register()
+      state.registering = true
+      register()
       render(true)
     }
   }
