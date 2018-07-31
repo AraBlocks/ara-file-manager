@@ -1,7 +1,7 @@
 const { create } = require('ara-filesystem')
 const { createSwarm } = require('ara-network/discovery')
 
-broadcast('did:ara:d642743e1ca0de760498d8d8eb37e34f2d9b4a7c918fa622d3cef78b73c3eb2e')
+broadcast('did:ara:079e1b0a545d605961b3cb7d612cb68dfbdda61aa036653a853626424cc75fbe')
 async function broadcast (did) {
     // Create a swarm for uploading the content
     const { afs } = await create({did})

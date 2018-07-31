@@ -17,6 +17,8 @@ module.exports = {
     }
 
     :host button {
+      font-size: 12px;
+      height: 25px;
       text-align: left;
     }
   `,
@@ -49,7 +51,7 @@ module.exports = {
     :host {
       display: flex;
       font-family: ${fonts.bold};
-      font-size: 20px;
+      font-size: 16px;
       width: 75%;
     }
   `,
@@ -59,7 +61,7 @@ module.exports = {
       :host {
         color: ${status === 0 ? 'grey' : 'black' };
         font-family: ${fonts.light};
-        font-size: 15px;
+        font-size: 13px;
       }
     `
   },

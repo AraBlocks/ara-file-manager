@@ -16,4 +16,3 @@ document.getElementById('container').appendChild(publishFile.render())
 
 ipcRenderer.on(ESTIMATING_COST, () => publishFile.render(true))
 ipcRenderer.on(ESTIMATION, () => openModal('publishConfirmModal'))
-ipcRenderer.on(PUBLISHING, () => closeWindow('publishFileView'))

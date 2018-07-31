@@ -55,6 +55,14 @@ class FileDescriptor extends Nanocomponent {
          }
          props.onclick = () => console.log('downloading')
          break
+      case 3:
+        props.children = 'Cancel Publish'
+        props.cssClass = {
+          name: 'smallInvisible',
+          opts: { color: 'grey' }
+        }
+        props.onclick = () => console.log('downloading')
+        break
       default:
         props.children = 'Open in Folder'
         props.cssClass = {
@@ -101,7 +109,11 @@ class FileDescriptor extends Nanocomponent {
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
-          ${children.progressRing.render({ downloadPercent, status })}
+          ${
+            status === 3
+              ? html`<div class="spinner-small"></div>`
+              : children.progressRing.render({ downloadPercent, status })
+          }
         </div>
         <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
           <div class="${styles.nameHolder} fileDescriptor-nameHolder">

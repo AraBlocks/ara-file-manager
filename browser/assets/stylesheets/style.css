@@ -24,6 +24,7 @@ button {
 
 :root {
   --ara-input-grey: #cbcbcb;
+  --ara-blue: #1e7dfa;
 }
 
 /* Classes */
@@ -61,7 +62,7 @@ button {
   justify-content: center;
 }
 
-.spinner, .spinner:after {
+.spinner, .spinner:after, .spinner-small, .spinner:after {
   border-radius: 50%;
   width: 6em;
   height: 6em;
@@ -76,6 +77,16 @@ button {
   border-right: .5em solid #ffffff;
   border-bottom: .5em solid #ffffff;
   border-left: .5em solid #ffffff;
+  transform: translateZ(0);
+  animation: spin 800ms infinite linear;
+}
+
+.spinner-small {
+  font-size: 2px;
+  position: relative;
+  text-indent: -9999em;
+  border: .5em solid var(--ara-blue);
+  border-top: .5em solid rgba(255, 255, 255, 0.2);
   transform: translateZ(0);
   animation: spin 800ms infinite linear;
 }

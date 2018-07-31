@@ -27,10 +27,12 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   const { password } = aid
   publish.commit(Object.assign(load, { password }))
     .then(() => {
-      dispatch({ type: PUBLISHED, load: null })
+      setTimeout(() => {
+        dispatch({ type: PUBLISHED, load: null })
         windowManager.get('filemanager')
           ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
           : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
+      }, 3000)
     })
     .catch(console.log)
 
@@ -45,11 +47,15 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         peers: 0,
         price: 0,
       },
-      name: 'Some File',
+      name: 'Microsoft Powerpoint 2016',
       size: 1.67,
-      status: 1,
+      status: 3,
     }
   })
 
-  windowManager.get('publishFileView').object.webContents.send(PUBLISHING)
+  windowManager.get('filemanager')
+    ? windowManager.get('filemanager').object.webContents.send(PUBLISHING)
+    : windowManager.get('fManagerView').object.webContents.send(PUBLISHING)
+
+  windowManager.get('publishFileView').close()
 })
