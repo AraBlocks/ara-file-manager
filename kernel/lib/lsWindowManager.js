@@ -16,7 +16,7 @@ windowManager.setSize = function (view) {
       break
     case 'fManagerView':
     case 'filemanager':
-      width = 520
+      width = 490
       height = 730
       break
     case 'login':
