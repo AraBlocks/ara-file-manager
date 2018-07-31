@@ -30,7 +30,7 @@ class Login extends Nanocomponent {
             weight: 'light'
           }
         },
-        onclick: closeWindow
+        onclick: () => closeWindow()
       }),
 
       loginButton: new Button({

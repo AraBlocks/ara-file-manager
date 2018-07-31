@@ -16,7 +16,7 @@ module.exports = (load) => {
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: closeWindow
+    onclick: () => closeWindow()
   })
 
   return html`

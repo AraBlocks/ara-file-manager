@@ -13,7 +13,7 @@ module.exports = ({
   const buyButton = new Button({ children: 'Buy Now' })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: closeWindow
+    onclick: () => closeWindow()
    })
   return html`
     <div class="${styles.container} modals-container">

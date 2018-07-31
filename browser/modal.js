@@ -19,3 +19,5 @@ document.getElementById('container').appendChild(
     ? (new Component).render()
     : functionalComponent(data)
 )
+
+window.onunload = () => windowManager.modalIsOpen = false
