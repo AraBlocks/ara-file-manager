@@ -52,7 +52,6 @@ class Container extends Nanocomponent {
     Object.assign(window, { container: this })
     return html`
       <div>
-        <div></div>
         <div class="${styles.container} container-container">
           <div>
             ${children.header.render({ activeTab })}

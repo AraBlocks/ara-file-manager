@@ -13,10 +13,7 @@ class Section extends Nanocomponent {
     super()
 
     this.props = { typeRow: type }
-    this.state = {
-      files: this.makeRows(files[type]),
-      firstRender: true
-    }
+    this.state = { files: this.makeRows(files[type]) }
   }
 
   makeRows(files) {
