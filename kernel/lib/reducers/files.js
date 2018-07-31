@@ -7,7 +7,7 @@ module.exports = (state, { load, type }) => {
       state.purchased.push(load)
       break
     case DOWNLOADED:
-      const file = state.purchased[-1]
+      const file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = 1
       file.status = 2
       break
