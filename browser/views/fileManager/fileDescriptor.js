@@ -2,14 +2,12 @@
 
 const afsManager = require('../../../kernel/lib/actions/afsManager')
 const DynamicButton = require('../../components/dynamicButton')
+const { openFolder } = require('../../lib/tools/windowManagement')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const path = require('path')
-const { shell } = require('electron')
-const userHome = require('user-home')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
@@ -65,9 +63,7 @@ class FileDescriptor extends Nanocomponent {
         }
         props.onclick = () => {
           const folderPath = afsManager.getAfsPath(this.props.meta.aid)
-          console.log(folderPath)
-          console.log(this.props.meta.aid)
-          shell.openItem(folderPath)
+          openFolder(folderPath)
         }
     }
     return props
