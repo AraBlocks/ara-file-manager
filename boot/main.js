@@ -15,5 +15,4 @@ app.on('ready', () => {
   require('./server')()
   //require('../kernel/lib/actions/writeSecrets')()
 })
-
-app.on('window-all-closed', () =>{})
+app.on('window-all-closed', () => {})
