@@ -53,7 +53,7 @@ class FileSelector extends Nanocomponent {
 		const { state, children } = this
 		return html`
 			<div>
-				${children.input.render()}
+				${children.input.render({ value: state.filePath })}
 			</div>
 		`
 	}

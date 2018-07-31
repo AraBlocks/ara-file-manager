@@ -32,7 +32,8 @@ class Input extends Nanocomponent {
     this.onchange = this.onchange.bind(this)
   }
 
-  update() {
+  update({ value = null}) {
+    this.state.value = value || this.state.value
     return true
   }
 
