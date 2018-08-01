@@ -36,7 +36,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 			type: DOWNLOADED,
 			load: windowManager.fileInfo.aid
 		})
-		//windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
+		windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
 	}})
 })
 
