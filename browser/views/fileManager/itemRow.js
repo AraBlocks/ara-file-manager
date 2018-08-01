@@ -24,7 +24,7 @@ class ItemRow extends Nanocomponent {
       status
     }
 
-    const constructorArgs = { ...meta, status }
+    const constructorArgs = { ...meta, name, status }
     this.children = {
       fileDescriptor: new FileDescriptor({
         demoDownload: this.demoDownload.bind(this),

@@ -1,5 +1,6 @@
 'use strict'
 
+const clipboardHelper = require('../../lib/tools/clipboardHelper')
 const DynamicButton = require('../../components/dynamicButton')
 const styles = require('./styles/publishedStats')
 const html = require('choo/html')
@@ -7,7 +8,9 @@ const Nanocomponent = require('nanocomponent')
 
 class PublishedStats extends Nanocomponent {
   constructor({
+    aid = null,
     earnings = null,
+    name = null,
     peers = null,
     price = null,
     status
@@ -44,7 +47,12 @@ class PublishedStats extends Nanocomponent {
         break
       default:
         props.cssClass.opts.color = 'blue'
-        props.children = 'Manage File'
+        //props.children = 'Manage File'
+        props.children = 'Copy Link'
+        props.onclick = () => {
+          const distributionLink = `http://localhost:3001/download/id=${aid}/name=${name}/price=${price}`
+          clipboardHelper.copyToClipboard(distributionLink, 'distributionLink')
+        }
     }
     return props
   }
