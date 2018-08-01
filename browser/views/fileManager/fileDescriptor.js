@@ -86,10 +86,18 @@ class FileDescriptor extends Nanocomponent {
           <div class="${styles.aid} fileDescriptor-aid">
             ${meta.aid}
             <div
+              style="
+              position: relative;
+              width: 100%;
+              "
               class="${styles.clipboard} fileDescriptor-clipboard"
-              onclick=${() => copyToClipboard(meta.aid)}
+              onclick=${function(){
+                this.children[0].style.display = 'block'
+                copyToClipboard(meta.aid)
+                setTimeout(() => this.children[0].style.display = 'none', 1700)
+              }}
             >
-              📋
+              📋<span>Copied !</span>
             </div>
           </div>
         </div>

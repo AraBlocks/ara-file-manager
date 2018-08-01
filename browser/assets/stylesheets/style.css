@@ -100,3 +100,25 @@ button {
     transform: rotate(360deg);
   }
 }
+
+@keyframes fadeInUp {
+  0% {
+    transform: translate3d(0,40px,0)
+  }
+
+  50% {
+    transform: translate3d(0,0,0);
+    opacity: 1
+  }
+
+  100% {
+    transform: translate3d(0,0,0);
+    opacity: 0
+  }
+}
+
+.fadeInUp {
+  opacity: 0;
+  animation-name: fadeInUp;
+  -webkit-animation-name: fadeInUp;
+}
