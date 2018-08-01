@@ -27,6 +27,16 @@ module.exports = {
     :host {
       cursor: pointer;
     }
+
+    :host span {
+      display: none;
+      position: absolute;
+      color: red;
+      left: 39%;
+      top: -35%;
+      animation: fadeInUp 1600ms;
+      opacity: 0;
+    }
   `,
 
   container: css`
