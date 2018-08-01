@@ -3,7 +3,13 @@
 const afs = require('ara-filesystem')
 
 module.exports = {
-  async addCreateEstimate({ did, password, paths }) {
+  async addCreateEstimate({
+    did,
+    name,
+    password,
+    paths,
+    price
+  }) {
     const arafs = await afs.create({ owner: did, password })
     const { afs: { did: id }, mnemonic } = arafs
     arafs.afs.close()
@@ -26,7 +32,13 @@ module.exports = {
       console.log({ err })
     }
 
-    return { did: id, mnemonic, gasEstimate }
+    return {
+      did: id,
+      mnemonic,
+      gasEstimate,
+      name,
+      price
+    }
   },
 
   async commit({ did, password, gasEstimate }){

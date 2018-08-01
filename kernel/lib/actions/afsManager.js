@@ -89,8 +89,7 @@ function getAfsPath(aid) {
 }
 
 function renameAfsFiles(aid, fileName) {
-	const aidHash = aid.slice(8)
-	const afsFolderPath = getAfsPath(aidHash)
+	const afsFolderPath = getAfsPath(aid)
 	const afsFilePath = path.join(afsFolderPath, 'data')
 	const newPath = path.join(afsFolderPath, fileName)
 	fs.rename(afsFilePath, newPath, function(err) {

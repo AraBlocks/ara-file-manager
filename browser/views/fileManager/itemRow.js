@@ -40,8 +40,8 @@ class ItemRow extends Nanocomponent {
       }),
 
       stats: typeRow === 'published'
-        ? new PublishedStats({ ...meta, status })
-        : new PurchasedStats({ ...meta, status })
+        ? new PublishedStats({ ...meta, name, status })
+        : new PurchasedStats({ ...meta, name, status })
     }
 
     this.demoDownload = this.demoDownload.bind(this)
