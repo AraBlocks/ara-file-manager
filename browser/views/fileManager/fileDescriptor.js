@@ -31,7 +31,7 @@ class FileDescriptor extends Nanocomponent {
       button: new DynamicButton(this.buttonProps(status)),
       progressRing: new ProgressRing({ status, downloadPercent }),
       tooltip: new Tooltip({
-        tooltipText: this.makeTooltipText(meta)
+        tooltipText: this.makeTooltipText(meta, name)
       })
     }
   }
@@ -76,7 +76,7 @@ class FileDescriptor extends Nanocomponent {
     return props
   }
 
-  makeTooltipText(meta) {
+  makeTooltipText(meta, name) {
     return html`
       <div class="${styles.tooltip} fileDescriptor-tooltip">
         <div>
@@ -87,7 +87,7 @@ class FileDescriptor extends Nanocomponent {
             ${meta.aid}
             <div
               class="${styles.clipboard} fileDescriptor-clipboard"
-              onclick=${() => copyToClipboard(meta.aid)}
+              onclick=${() => copyToClipboard(`http://localhost:3001/download/id=${meta.aid}/name=${name}/price=${meta.price}`)}
             >
               📋
             </div>
