@@ -45,9 +45,9 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         datePublished: '',
         earnings: 0,
         peers: 0,
-        price: 0,
+        price: load.price,
       },
-      name: 'Microsoft Powerpoint 2016',
+      name: load.name,
       size: 1.67,
       status: 3,
     }
