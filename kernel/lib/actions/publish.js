@@ -18,7 +18,7 @@ module.exports = {
       await afs.add({
         did: id,
         paths: ['README.md'],
-        password: password
+        password
       })
       console.log('added file succesfully')
     } catch (e) {
