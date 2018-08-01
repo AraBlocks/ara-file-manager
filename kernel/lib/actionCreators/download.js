@@ -2,13 +2,17 @@
 
 const dispatch = require('../reducers/dispatch')
 const { download } = require('../actions')
-const { DOWNLOAD, DOWNLOADED, DOWNLOADING } = require('../../../lib/constants/stateManagement')
+const {
+	DOWNLOAD,
+	DOWNLOADED,
+	DOWNLOADED_DEV,
+	DOWNLOADING
+} = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
 ipcMain.on(DOWNLOAD, async (event, load) => {
-	windowManager.get('filemanager').object.webContents.send(DOWNLOADING)
-	const newState = dispatch({
+	dispatch({
     type: DOWNLOADING,
     load: {
 				downloadPercent: 0,
@@ -24,11 +28,16 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 				status: 1,
 			}
 	})
+
+	windowManager.get('filemanager').object.webContents.send(DOWNLOADING)
+
 	download({did: windowManager.fileInfo.aid, handler: () => {
-		const newState = dispatch({
+		dispatch({
 			type: DOWNLOADED,
 			load: windowManager.fileInfo.aid
 		})
-		windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
+		//windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
 	}})
 })
+
+ipcMain.on(DOWNLOADED_DEV, () => dispatch({ type: DOWNLOADED, load: null }))
