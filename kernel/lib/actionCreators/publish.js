@@ -35,6 +35,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
       }, 3000)
     })
     .catch(console.log)
+
   dispatch({
     type: PUBLISHING,
     load: {
