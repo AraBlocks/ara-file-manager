@@ -23,6 +23,12 @@ module.exports = {
     }
   `,
 
+  clipboard: css`
+    :host {
+      cursor: pointer;
+    }
+  `,
+
   container: css`
     :host {
       display: flex;
