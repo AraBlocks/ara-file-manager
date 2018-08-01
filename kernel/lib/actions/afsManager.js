@@ -102,5 +102,6 @@ function renameAfsFiles(aid, fileName) {
 module.exports = {
 	broadcast,
 	download,
-	getAfsPath
+	getAfsPath,
+	renameAfsFiles
 }
