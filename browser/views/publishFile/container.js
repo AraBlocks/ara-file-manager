@@ -62,7 +62,13 @@ class Container extends Nanocomponent {
 		} = aid
 
 		const event = PUBLISH
-		const load = { did, password, paths: filePath, name: fileName, price }
+		const load = {
+			did,
+			password,
+			paths: filePath,
+			name: fileName,
+			price
+		}
 		emit({ event, load })
 	}
 
