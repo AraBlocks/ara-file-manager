@@ -1,11 +1,11 @@
 'use strict'
 
 const { DOWNLOADED_DEV } = require('../../../lib/constants/stateManagement')
+const { emit } = require('../../lib/tools/windowManagement')
 const FileDescriptor = require('./fileDescriptor')
 const PublishedStats = require('./publishedStats')
 const PurchasedStats = require('./purchasedStats')
 const styles = require('./styles/itemRow')
-const { emit } = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -82,6 +82,7 @@ class ItemRow extends Nanocomponent {
 
     typeRow === 'purchased'
     && !this.state.timer
+    && status !== 2
     && setTimeout(demoDownload, 1500)
 
     return html`
