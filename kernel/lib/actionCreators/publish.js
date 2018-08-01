@@ -2,7 +2,7 @@
 
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
-const { publish } = require('../actions')
+const { afsManager, publish } = require('../actions')
 const {
   CONFIRM_PUBLISH,
   ESTIMATION,
@@ -33,6 +33,10 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
           ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
           : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
       }, 3000)
+      // setTimeout(() => {
+      //   console.log('hitting!')
+        afsManager.broadcast(load.did)
+      // }, 30 * 1000)
     })
     .catch(console.log)
 
