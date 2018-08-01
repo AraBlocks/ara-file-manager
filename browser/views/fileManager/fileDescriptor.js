@@ -45,7 +45,6 @@ class FileDescriptor extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'red' }
          }
-         props.onclick = this.props.demoDownload
          break
       case 1:
          props.children = 'Cancel Download'
@@ -102,7 +101,7 @@ class FileDescriptor extends Nanocomponent {
   createElement({ downloadPercent, status }) {
     const {
       children,
-      props,
+      props
     } = this
 
     const buttonProps = this.buttonProps.bind(this)
