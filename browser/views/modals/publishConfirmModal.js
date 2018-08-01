@@ -30,7 +30,7 @@ module.exports = (load) => {
             Publishing this file will cost:
           </div>
           <span class="${styles.postheader} modals-postheader">
-            ${load.gasEstimate} ARA
+            59 ARA
           </span>
         </div>
       </div>
