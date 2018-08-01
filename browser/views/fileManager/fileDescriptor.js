@@ -2,7 +2,7 @@
 
 const afsManager = require('../../../kernel/lib/actions/afsManager')
 const DynamicButton = require('../../components/dynamicButton')
-const { openFolder } = require('../../lib/tools/windowManagement')
+const { copyToClipboard, openFolder } = require('../../lib/tools/windowManagement')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
@@ -85,6 +85,12 @@ class FileDescriptor extends Nanocomponent {
           </div>
           <div class="${styles.aid} fileDescriptor-aid">
             ${meta.aid}
+            <div
+              class="${styles.clipboard} fileDescriptor-clipboard"
+              onclick=${() => copyToClipboard(meta.aid)}
+            >
+              📋
+            </div>
           </div>
         </div>
         <div>
@@ -93,6 +99,7 @@ class FileDescriptor extends Nanocomponent {
       </div>
     `
   }
+
 
   update() {
     return true

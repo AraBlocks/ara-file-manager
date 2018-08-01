@@ -1,7 +1,12 @@
 'use strict'
 
 const isDev = require('electron-is-dev')
-const { ipcRenderer, remote, shell } = require('electron')
+const {
+	clipboard,
+	ipcRenderer,
+	remote,
+	shell
+} = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 function changeMainManagerSize(expand) {
@@ -11,6 +16,10 @@ function changeMainManagerSize(expand) {
 
 function closeWindow() {
 	close()
+}
+
+function copyToClipboard(text, modifier = (a) => a) {
+	clipboard.writeText(modifier(text))
 }
 
 function emit({ event, load }) {
@@ -81,6 +90,7 @@ function quitApp() {
 
 module.exports = {
 	changeMainManagerSize,
+	copyToClipboard,
 	closeWindow,
 	emit,
 	openModal,
