@@ -26,9 +26,9 @@ class Tooltip extends Nanocomponent {
   createElement() {
     const { props } = this
     return html`
-      <div class="${styles.container(props.opts)} container">
+      <div class="${styles.container(props.opts)} tooltip-container">
         ${props.icon}
-        <div class="${styles.textHolder(props.opts)} textHolder">
+        <div class="${styles.textHolder(props.opts)} tooltip-textHolder">
           ${props.tooltipText}
         </div>
       </div>
