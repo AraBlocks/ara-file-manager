@@ -9,10 +9,13 @@
     Opening File Manager...<br><br>
   </body>
   <script>
+    const aid = document.URL.match(/id=([a-z0-9:]+)/)[0].slice(3)
+    const fileName = document.URL.match(/name=([a-zA-Z0-9:]+)/)[0].slice(5)
+    const price = document.URL.match(/price=([-+]?([0-9]*\.[0-9]+|[0-9]+))/)[0].slice(6)
     const item = JSON.stringify({
-      fileName: 'My Awesome File',
-      aid: '079e1b0a545d605961b3cb7d612cb68dfbdda61aa036653a853626424cc75fbe',
-      price: 5.99
+      fileName,
+      aid,
+      price
     })
     const xmlHttp = new XMLHttpRequest()
     xmlHttp.open( "POST", 'http://localhost:3002', true ) // false for synchronous request
