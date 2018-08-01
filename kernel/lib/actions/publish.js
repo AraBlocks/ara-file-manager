@@ -10,7 +10,7 @@ module.exports = {
     paths,
     price
   }) {
-    const arafs = await afs.create({ owner: did, password: password })
+    const arafs = await afs.create({ owner: did, password })
     const { afs: { did: id }, mnemonic } = arafs
     arafs.afs.close()
 
@@ -27,7 +27,7 @@ module.exports = {
 
     let gasEstimate
     try {
-      gasEstimate = await afs.estimateCommitGasCost({ did: id, password: password })
+      gasEstimate = await afs.estimateCommitGasCost({ did: id, password })
     } catch (err) {
       console.log({ err })
     }
