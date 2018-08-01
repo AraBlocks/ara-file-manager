@@ -3,7 +3,7 @@
 const dispatch = require('../reducers/dispatch')
 const { renameAfsFiles } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
-const { publish } = require('../actions')
+const { afsManager, publish } = require('../actions')
 const {
   CONFIRM_PUBLISH,
   ESTIMATION,
