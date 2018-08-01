@@ -1,5 +1,5 @@
 module.exports = {
-  published: [],
+  published: mockFiles(),
   purchased: []
 }
 

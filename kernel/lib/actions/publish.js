@@ -3,8 +3,14 @@
 const afs = require('ara-filesystem')
 
 module.exports = {
-  async addCreateEstimate({ did, password, paths }) {
-    const arafs = await afs.create({ owner: did, password })
+  async addCreateEstimate({
+    did,
+    name,
+    password,
+    paths,
+    price
+  }) {
+    const arafs = await afs.create({ owner: did, password: password })
     const { afs: { did: id }, mnemonic } = arafs
     arafs.afs.close()
 
@@ -12,7 +18,7 @@ module.exports = {
       await afs.add({
         did: id,
         paths: ['README.md'],
-        password
+        password: password
       })
       console.log('added file succesfully')
     } catch (e) {
@@ -21,12 +27,18 @@ module.exports = {
 
     let gasEstimate
     try {
-      gasEstimate = await afs.estimateCommitGasCost({ did: id, password })
+      gasEstimate = await afs.estimateCommitGasCost({ did: id, password: password })
     } catch (err) {
       console.log({ err })
     }
 
-    return { did: id, mnemonic, gasEstimate }
+    return {
+      did: id,
+      mnemonic,
+      gasEstimate,
+      name,
+      price
+    }
   },
 
   async commit({ did, password, gasEstimate }){
