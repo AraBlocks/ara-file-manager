@@ -34,7 +34,10 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
           ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
           : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
       }, 3000)
+
       renameAfsFiles(load.did, load.paths[0])
+
+      afsManager.broadcast(load.did)
     })
     .catch(console.log)
 
