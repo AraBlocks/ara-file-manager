@@ -17,6 +17,7 @@ class Container extends Nanocomponent {
 
 		this.state = {
 			currency: '',
+			fileName: '',
 			filePath: '',
 			price: '',
 			priceManagement: true,
@@ -51,7 +52,9 @@ class Container extends Nanocomponent {
 	publishFile() {
 		const {
 			account: { aid },
-			filePath
+			fileName,
+			filePath,
+			price
 		} = this.state
 		const {
 			ddo: { id: did },
@@ -59,7 +62,7 @@ class Container extends Nanocomponent {
 		} = aid
 
 		const event = PUBLISH
-		const load = { did, password, paths: filePath }
+		const load = { did, password, paths: filePath, name: fileName, price }
 		emit({ event, load })
 	}
 
