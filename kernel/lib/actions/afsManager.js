@@ -5,9 +5,9 @@ const fs = require('fs')
 const path = require('path')
 
 async function broadcast(did) {
-
 	// Create a swarm for uploading the content
 	const fullDid = 'did:ara:' + did
+	console.log('broadcasting for ', fullDid)
 	const { afs } = await create({ did: fullDid })
 
 	// Join the discovery swarm for the requested content
@@ -15,7 +15,7 @@ async function broadcast(did) {
 		stream: stream,
 	}
 	const swarm = createSwarm(opts)
-	swarm.on('connection', handleConnection)
+	swarm.once('connection', handleConnection)
 	swarm.join(fullDid)
 
 	function stream(peer) {
