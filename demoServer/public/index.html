@@ -13,9 +13,15 @@
     const fileName = document.URL.match(/name=([a-zA-Z0-9:]+)/)[0].slice(5)
     const price = document.URL.match(/price=([-+]?[0-9]*\.?[0-9]+)/)[0].slice(6)
     const item = JSON.stringify({
+<<<<<<< HEAD
       fileName: 'My Awesome File',
       aid: '458910e5c752cc27ff0f328f8b612f9994d8f6921d5d35cb051f8888a0c4faea',
       price: 5.99
+=======
+      fileName,
+      aid,
+      price
+>>>>>>> 0c87b5caffae69c207c00524124d3bf638c0c8e5
     })
     const xmlHttp = new XMLHttpRequest()
     xmlHttp.open( "POST", 'http://localhost:3002', true ) // false for synchronous request
