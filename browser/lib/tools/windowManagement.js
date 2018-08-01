@@ -56,17 +56,19 @@ function transitionModal(view) {
 }
 
 function openWindow(view) {
-	windowManager.open(
-		view,
-		view,
-		windowManager.loadURL(view),
-		false,
-		{
-			frame: false,
-			...windowManager.setSize(view)
-		},
-		!isDev
-	)
+	windowManager.get(view)
+		? windowManager.get(view).focus()
+		: windowManager.open(
+				view,
+				view,
+				windowManager.loadURL(view),
+				false,
+				{
+					frame: false,
+					...windowManager.setSize(view)
+				},
+				!isDev
+			)
 }
 
 function setWindowSize(width, height, animated = false) {
