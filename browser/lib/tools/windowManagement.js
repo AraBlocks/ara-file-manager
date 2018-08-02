@@ -51,7 +51,6 @@ function openModal(view = 'modal') {
 			},
 			!isDev
 		)
-		modal.object.on('close', () => windowManager.modalIsOpen = false)
 		windowManager.modalIsOpen = true
 	}
 }
