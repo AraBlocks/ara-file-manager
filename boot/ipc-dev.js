@@ -28,9 +28,10 @@ const makeWindow = (view, i ) => {
     windowManager.loadURL(view),
     false,
     {
-      ...windowManager.setSize(view),
+      backgroundColor: 'white',
+      frame: false,
       resizable: true,
-      frame: false
+      ...windowManager.setSize(view)
     }
   )
 }

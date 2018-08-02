@@ -7,6 +7,7 @@ const {
   PUBLISHING
  } = require('../lib/constants/stateManagement')
 const { ipcRenderer, remote } = require('electron')
+const isDev = require('electron-is-dev')
 const windowManager = remote.require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
@@ -18,3 +19,5 @@ ipcRenderer.on(DOWNLOADING, () => fileManager.rerender())
 // ipcRenderer.on(DOWNLOADED, () => fileManager.rerender())
 ipcRenderer.on(PUBLISHING, () => fileManager.rerender())
 ipcRenderer.on(PUBLISHED, () => fileManager.rerender())
+
+isDev && (window.components = { fileManager })
