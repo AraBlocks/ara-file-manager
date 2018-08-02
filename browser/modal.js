@@ -1,5 +1,7 @@
 'use strict'
 
+const { emit } = require('../browser/lib/tools/windowManagement')
+const { DUMP_MODAL_STATE } = require('../lib/constants/stateManagement')
 const remote = require('electron').remote;
 const windowManager = remote.require('electron-window-manager')
 
@@ -20,4 +22,7 @@ document.getElementById('container').appendChild(
     : functionalComponent(data)
 )
 
-window.onunload = () => windowManager.modalIsOpen = false
+window.onunload = () => {
+  windowManager.modalIsOpen = false
+  emit({ event: DUMP_MODAL_STATE })
+}
