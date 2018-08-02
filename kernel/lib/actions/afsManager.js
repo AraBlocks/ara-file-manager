@@ -84,12 +84,12 @@ async function download({ did, handler }) {
 	}
 }
 
-function getAfsPath(aid) {
+function makeAfsPath(aid) {
 	return path.join(createAFSKeyPath(aid), 'home', 'content')
 }
 
 function renameAfsFiles(aid, fileName) {
-	const afsFolderPath = getAfsPath(aid)
+	const afsFolderPath = makeAfsPath(aid)
 	const afsFilePath = path.join(afsFolderPath, 'data')
 	const newPath = path.join(afsFolderPath, fileName)
 	fs.rename(afsFilePath, newPath, function(err) {
@@ -102,6 +102,6 @@ function renameAfsFiles(aid, fileName) {
 module.exports = {
 	broadcast,
 	download,
-	getAfsPath,
+	makeAfsPath,
 	renameAfsFiles
 }

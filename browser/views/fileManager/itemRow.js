@@ -14,6 +14,7 @@ class ItemRow extends Nanocomponent {
     downloadPercent,
     name,
     meta,
+    path,
     size,
     status,
     typeRow
@@ -35,6 +36,7 @@ class ItemRow extends Nanocomponent {
         downloadPercent,
         meta,
         name,
+        path,
         size,
         status
       }),
