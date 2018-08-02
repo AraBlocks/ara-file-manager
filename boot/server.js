@@ -23,6 +23,7 @@ module.exports = () => {
       windowManager.loadURL(modalName),
       false,
       {
+        backgroundColor: 'white',
         frame: false,
         ...windowManager.setSize(modalName),
       }

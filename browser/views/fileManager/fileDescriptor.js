@@ -1,6 +1,5 @@
 'use strict'
 
-const afsManager = require('../../../kernel/lib/actions/afsManager')
 const DynamicButton = require('../../components/dynamicButton')
 const { copyToClipboard, openFolder } = require('../../lib/tools/windowManagement')
 const ProgressRing = require('../../components/progressRing')
@@ -15,6 +14,7 @@ class FileDescriptor extends Nanocomponent {
     downloadPercent,
     meta,
     name,
+    path,
     size,
     status
   }) {
@@ -24,6 +24,7 @@ class FileDescriptor extends Nanocomponent {
       demoDownload,
       meta,
       name,
+      path,
       size
     }
 
@@ -69,8 +70,7 @@ class FileDescriptor extends Nanocomponent {
           opts: { color: 'blue' }
         }
         props.onclick = () => {
-          const folderPath = afsManager.getAfsPath(this.props.meta.aid)
-          openFolder(folderPath)
+          openFolder(this.props.path)
         }
     }
     return props

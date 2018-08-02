@@ -8,6 +8,7 @@ const {
 	DOWNLOADED_DEV,
 	DOWNLOADING
 } = require('../../../lib/constants/stateManagement')
+const { renameAfsFiles, makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
@@ -26,6 +27,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 				name: windowManager.fileInfo.fileName,
 				size: 1.67,
 				status: 1,
+				path: makeAfsPath(windowManager.fileInfo.aid)
 			}
 	})
 

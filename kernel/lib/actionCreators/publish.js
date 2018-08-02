@@ -1,7 +1,7 @@
 'use strict'
 
 const dispatch = require('../reducers/dispatch')
-const { renameAfsFiles } = require('../actions/afsManager')
+const { renameAfsFiles, makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
 const { afsManager, publish } = require('../actions')
 const {
@@ -55,6 +55,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
       name: load.name,
       size: 1.67,
       status: 3,
+      path: makeAfsPath(load.did)
     }
   })
 

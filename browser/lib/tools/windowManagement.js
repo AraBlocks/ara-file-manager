@@ -45,6 +45,7 @@ function openModal(view = 'modal') {
 			windowManager.loadURL(view),
 			false,
 			{
+				backgroundColor: 'white',
 				frame: false,
 				...windowManager.setSize(view),
 			},
@@ -73,6 +74,7 @@ function openWindow(view) {
 				windowManager.loadURL(view),
 				false,
 				{
+					backgroundColor: 'white',
 					frame: false,
 					...windowManager.setSize(view)
 				},
