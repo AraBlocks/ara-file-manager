@@ -7,7 +7,7 @@ const styles = require('./styles')
 const html = require('choo/html')
 
 module.exports = ({
-  price = windowManager.fileInfo.price || 0
+  price = windowManager.fileInfo.price
 }) => {
   const downloadButton = new Button({
     children: 'Download',
