@@ -1,7 +1,8 @@
 'use strict'
 
-const { app } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
+const { app } = require('electron')
+const isDev = require('electron-is-dev')
 const path = require('path')
 
 app.on('ready', () => {
@@ -18,5 +19,6 @@ app.on('ready', () => {
       resizable: true,
       ...windowManager.setSize('testing')
     }
+    ,!isDev
   )
 })

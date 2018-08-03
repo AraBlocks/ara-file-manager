@@ -3,6 +3,7 @@
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const express = require('express')
+const isDev = require('electron-is-dev')
 const windowManager = require('electron-window-manager')
 const app = express()
 
@@ -26,7 +27,8 @@ module.exports = () => {
         backgroundColor: 'white',
         frame: false,
         ...windowManager.setSize(modalName),
-      }
+      },
+      !isDev
     ).open()
     windowManager.fileInfo = req.body
   })
