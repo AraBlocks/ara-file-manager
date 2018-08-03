@@ -2,6 +2,7 @@
 const fs = require('fs')
 const path = require('path');
 const userHome = require('user-home')
+const { app } = require('electron')
 
 function writeFile(sourcePath, targetPath) {
 	fs.readFile(sourcePath, (err, data) => {
@@ -13,17 +14,19 @@ function writeFile(sourcePath, targetPath) {
 }
 
 function writeSecrets() {
-	const secretDirectory = path.join('.', 'kernel', 'secrets')
-	fs.readdir(secretDirectory, (err, keys) => {
-		if (err) throw err;
-		for (const key of keys) {
-			const sourcePath = path.join('.', 'kernel', 'secrets', key)
-			const targetPath = path.join(userHome, '.ara', 'secrets', key)
-			writeFile(sourcePath, targetPath)
-		}
-	})
-
-	const ararcSource = path.join('.', '.ararc')
+	// const secretDirectory = path.join('.', 'kernel', 'secrets')
+	// fs.readdir(secretDirectory, (err, keys) => {
+	// 	if (err) throw err;
+	// 	for (const key of keys) {
+	// 		const sourcePath = path.join('.', 'kernel', 'secrets', key)
+	// 		const targetPath = path.join(userHome, '.ara', 'secrets', key)
+	// 		writeFile(sourcePath, targetPath)
+	// 	}
+	// })
+	const ararcSource = app.getAppPath() + '/.ararc'//path.resolve(__dirname, '.ararc')
+	console.log({__dirname})
+	console.log({ararcSource})
+	// const ararcSource = path.resolve(__dirname, '../..', '.ararc')
 	const ararcTarget = path.join(userHome, '.ararc')
 	writeFile(ararcSource, ararcTarget)
 }

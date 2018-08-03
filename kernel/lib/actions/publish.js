@@ -1,6 +1,8 @@
 'use strict'
 
 const afs = require('ara-filesystem')
+const path = require('path')
+const { app } = require('electron')
 
 module.exports = {
   async addCreateEstimate({
@@ -10,7 +12,7 @@ module.exports = {
     paths,
     price
   }) {
-    const testFilePath = ['README.md']
+    const testFilePath = ['./bg_test3.mov']
     const arafs = await afs.create({ owner: did, password })
     const { afs: { did: id }, mnemonic } = arafs
     arafs.afs.close()

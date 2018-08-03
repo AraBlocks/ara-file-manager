@@ -1,10 +1,11 @@
 'use strict'
 
-const path = require('path')
+const isDev = require('electron-is-dev')
 const fs = require('fs')
+const path = require('path')
 const windowManager = require('electron-window-manager')
 
-const views = path.resolve(__dirname, '..', 'browser/views')
+const views = path.resolve(__dirname, '..', 'browser', 'views')
 const modals = path.resolve(__dirname, '..', 'browser/views/modals')
 
 fs.readdirSync(views).forEach((view, i) => {
@@ -33,5 +34,6 @@ const makeWindow = (view, i ) => {
       resizable: true,
       ...windowManager.setSize(view)
     }
+    ,!isDev
   )
 }
