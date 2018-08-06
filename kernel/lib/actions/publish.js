@@ -10,7 +10,7 @@ module.exports = {
     paths,
     price
   }) {
-    const testFilePath = paths
+    console.log({paths})
     const arafs = await afs.create({ owner: did, password })
     const { afs: { did: id }, mnemonic } = arafs
     arafs.afs.close()
@@ -18,7 +18,7 @@ module.exports = {
     try {
       await afs.add({
         did: id,
-        paths: testFilePath,
+        paths,
         password
       })
       console.log('added file succesfully')
