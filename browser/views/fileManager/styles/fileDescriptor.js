@@ -25,6 +25,7 @@ module.exports = {
 
   clipboard: css`
     :host {
+      color: ${colors.araRed};
       cursor: pointer;
     }
 
@@ -33,7 +34,7 @@ module.exports = {
       position: absolute;
       color: red;
       left: 39%;
-      top: -35%;
+      top: -200%;
       animation: fadeInUp 1600ms;
       opacity: 0;
     }
