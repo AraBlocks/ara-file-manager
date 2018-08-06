@@ -10,7 +10,7 @@ module.exports = {
     paths,
     price
   }) {
-    const testFilePath = paths || ['./bg_test3.mov']
+    const testFilePath = paths
     const arafs = await afs.create({ owner: did, password })
     const { afs: { did: id }, mnemonic } = arafs
     arafs.afs.close()
