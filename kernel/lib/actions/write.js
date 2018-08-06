@@ -4,18 +4,21 @@ const path = require('path');
 const userHome = require('user-home')
 const { app } = require('electron')
 
-function writeFile(sourcePath, targetPath) {
-	if (!`${userHome}/${sourcePath}`) {
-		const src = fs.readFile(sourcePath)
-		fs.writeFile(targetPath, src)
+function writeFile(sourcePath, targetPath, fileName) {
+	if (!fs.existsSync(`${userHome}/${fileName}`)) {
+		console.log(`writing ${fileName} to ${userHome}`)
+		const src = fs.readFileSync(sourcePath)
+		fs.writeFileSync(`${targetPath}/${fileName}`, `${src}`)
+		return null
 	}
+	console.log(`${fileName} already exists at ${userHome} - no need to write`)
 }
 
 function writeToHome(sourcePath) {
-	writeFile(userHome, sourcePath)
+	const [ path ] = sourcePath
+	const fileName = path.slice(path.lastIndexOf('/') + 1)
+	return writeFile(path, userHome, fileName)
 }
-
-console.log({__dirname})
 
 function writeSecrets() {
 	// const secretDirectory = path.join('.', 'kernel', 'secrets')
@@ -36,5 +39,6 @@ function writeSecrets() {
 }
 
 module.exports = {
-	writeSecrets
+	writeSecrets,
+	writeToHome
 }
