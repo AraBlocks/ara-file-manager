@@ -10,11 +10,13 @@ async function broadcast(did) {
 	console.log('broadcasting for ', fullDid)
 	const { afs } = await create({ did: fullDid })
 
+	afs.on('content', () => {
+		console.log("on content")
+		afs.partitions.resolve(afs.HOME).content.on('sync', onend)
+	})
+
 	// Join the discovery swarm for the requested content
-	const opts = {
-		stream: stream,
-	}
-	const swarm = createSwarm(opts)
+	const swarm = createSwarm({ stream })
 	swarm.once('connection', handleConnection)
 	swarm.join(fullDid)
 
@@ -23,7 +25,7 @@ async function broadcast(did) {
 			upload: true,
 			download: false
 		})
-		stream.once('end', onend)
+		// stream.once('end', onend)
 		stream.peer = peer
 		return stream
 	}
