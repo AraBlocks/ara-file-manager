@@ -14,8 +14,10 @@ const {
   PUBLISHING
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
+const { writeToHome } = require('../actions/write')
 
 ipcMain.on(PUBLISH, async (event, load) => {
+  writeToHome(load.paths)
   event.sender.send(ESTIMATING_COST)
 
   const estimate = await publish.addCreateEstimate(load)
