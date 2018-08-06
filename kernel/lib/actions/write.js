@@ -5,13 +5,17 @@ const userHome = require('user-home')
 const { app } = require('electron')
 
 function writeFile(sourcePath, targetPath) {
-	fs.readFile(sourcePath, (err, data) => {
-		if (err) throw err;
-		fs.writeFile(targetPath, data, (err) => {
-			if (err) throw err;
-		})
-	})
+	if (!`${userHome}/${sourcePath}`) {
+		const src = fs.readFile(sourcePath)
+		fs.writeFile(targetPath, src)
+	}
 }
+
+function writeToHome(sourcePath) {
+	writeFile(userHome, sourcePath)
+}
+
+console.log({__dirname})
 
 function writeSecrets() {
 	// const secretDirectory = path.join('.', 'kernel', 'secrets')
@@ -31,4 +35,6 @@ function writeSecrets() {
 	writeFile(ararcSource, ararcTarget)
 }
 
-module.exports = writeSecrets
+module.exports = {
+	writeSecrets
+}
