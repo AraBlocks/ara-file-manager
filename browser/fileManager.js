@@ -20,6 +20,6 @@ ipcRenderer.on(DOWNLOADING, () => fileManager.rerender())
 ipcRenderer.on(DOWNLOAD_FAILED, () => fileManager.rerender())
 ipcRenderer.on(DOWNLOADED, () => fileManager.rerender())
 ipcRenderer.on(PUBLISHING, () => fileManager.rerender())
-ipcRenderer.on(PUBLISHED, () => fileManager.rerender())
+ipcRenderer.on(PUBLISHED, () => fileManager.render(store))
 
 isDev && (window.components = { fileManager })

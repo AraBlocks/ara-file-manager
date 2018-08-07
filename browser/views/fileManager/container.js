@@ -16,7 +16,8 @@ class Container extends Nanocomponent {
 
     this.state = {
       activeTab: 0,
-      files
+      files,
+      userBalance: account.userBalance
     }
 
     this.children = {
@@ -40,21 +41,22 @@ class Container extends Nanocomponent {
     if (isDev) { window.components = { fileManager: this } }
   }
 
-  update(){
+  update(store){
+    this.state.userBalance = store.account.userBalance
     return true
   }
 
   createElement() {
     const {
       children,
-      state: { activeTab, files }
+      state: { activeTab, files, userBalance }
     } = this
     Object.assign(window, { container: this })
     return html`
       <div>
         <div class="${styles.container} container-container">
           <div>
-            ${children.header.render({ activeTab })}
+            ${children.header.render({ activeTab, userBalance })}
             <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
               ${[ ...files.published, ...files.purchased ].length
                 ? renderSections().map(section => section.render({ files }))
