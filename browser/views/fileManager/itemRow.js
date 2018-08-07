@@ -51,12 +51,12 @@ class ItemRow extends Nanocomponent {
 
   demoDownload() {
     const { state } = this
+    if (state.status !== 1) { return }
     state.status = 1
     state.timer = setInterval(() => {
       state.downloadPercent = state.downloadPercent += .12
-      if (state.downloadPercent >= .999) {
-        state.downloadPercent = 1
-        state.status = 2
+      if (state.downloadPercent >= .9) {
+        state.downloadPercent = 0.9
         this.rerender()
         clearInterval(state.timer)
         emit({ event: DOWNLOADED_DEV })

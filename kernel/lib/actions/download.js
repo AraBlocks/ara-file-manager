@@ -2,7 +2,7 @@
 
 const afsManager = require('./afsManager')
 
-module.exports = ({did, handler}) => {
-	afsManager.download({did, handler})
+module.exports = ({ did, handler, errorHandler }) => {
+	afsManager.download({ did, handler, errorHandler })
 }
 
