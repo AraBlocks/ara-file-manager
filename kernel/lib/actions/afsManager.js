@@ -11,10 +11,7 @@ async function broadcast(did) {
 	const { afs } = await create({ did: fullDid })
 
 	// Join the discovery swarm for the requested content
-	const opts = {
-		stream: stream,
-	}
-	const swarm = createSwarm(opts)
+	const swarm = createSwarm({ stream })
 	swarm.once('connection', handleConnection)
 	swarm.join(fullDid)
 
@@ -42,6 +39,11 @@ async function download({ did, handler }) {
 	// Create a swarm for downloading the content
 	const fullDid = 'did:ara:' + did
 	const { afs } = await create({ did: fullDid })
+
+	afs.on('content', () => {
+		console.log("on content")
+		afs.partitions.resolve(afs.HOME).content.on('sync', onend)
+	})
 
 	// Join the discovery swarm for the requested content
 	console.log('Waiting for peer connection...')

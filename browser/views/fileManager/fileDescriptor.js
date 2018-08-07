@@ -84,7 +84,7 @@ class FileDescriptor extends Nanocomponent {
             AFS Id:
           </div>
           <div class="${styles.aid} fileDescriptor-aid">
-            ${meta.aid}
+            ${meta.aid.slice(0, 30) + '...'}
           </div>
         </div>
         <div
