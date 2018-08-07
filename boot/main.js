@@ -13,6 +13,6 @@ app.on('ready', () => {
   require('./tray')()
   require('./server')()
   require('../demoServer/demoServer')
-  require('../kernel/lib/actions/annManager')
+  // require('../kernel/lib/actions/annManager')
 })
 app.on('window-all-closed', () => {})

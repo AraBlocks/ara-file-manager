@@ -30,8 +30,8 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   const { password } = aid
   publish.commit(Object.assign(load, { password }))
     .then(() => {
+      dispatch({ type: PUBLISHED, load: load.price })
       setTimeout(() => {
-        dispatch({ type: PUBLISHED, load: null })
         windowManager.get('filemanager')
           ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
           : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
