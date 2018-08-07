@@ -63,6 +63,14 @@ class FileDescriptor extends Nanocomponent {
         }
         props.onclick = () => console.log('downloading')
         break
+      case 4:
+        props.children = 'Download Failed'
+        props.cssClass = {
+          name: 'smallInvisible',
+          opts: { color: 'red' }
+        }
+        props.onclick = () => console.log('download failed')
+        break
       default:
         props.children = 'Open in Folder'
         props.cssClass = {

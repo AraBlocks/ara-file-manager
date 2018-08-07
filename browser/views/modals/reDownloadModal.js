@@ -14,7 +14,7 @@ module.exports = ({
     onclick: () => {
       windowManagement.openWindow('filemanager')
       windowManagement.emit({ event: DOWNLOAD, load: windowManager.fileInfo.aid })
-      windowManagement.closeWindow()
+      windowManagement.closeWindow('reDownloadModal')
     }
   })
   const cancelbutton = new Button({
