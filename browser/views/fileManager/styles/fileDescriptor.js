@@ -25,7 +25,14 @@ module.exports = {
 
   clipboard: css`
     :host {
-      color: ${colors.araRed};
+      position: relative;
+      width: 100%;
+      background-color: var(--ara-blue);
+      color: white;
+      height: 2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       cursor: pointer;
     }
 
