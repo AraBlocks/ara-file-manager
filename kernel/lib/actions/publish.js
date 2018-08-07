@@ -10,7 +10,8 @@ module.exports = {
     paths,
     price
   }) {
-    const testFilePath = paths
+    paths = paths[0].slice(paths[0].lastIndexOf('/') + 1)
+
     const arafs = await afs.create({ owner: did, password })
     const { afs: { did: id }, mnemonic } = arafs
     arafs.afs.close()
@@ -18,7 +19,7 @@ module.exports = {
     try {
       await afs.add({
         did: id,
-        paths: testFilePath,
+        paths: [ paths ],
         password
       })
       console.log('added file succesfully')
@@ -38,7 +39,7 @@ module.exports = {
       mnemonic,
       gasEstimate,
       name,
-      paths: testFilePath,
+      paths,
       price
     }
   },

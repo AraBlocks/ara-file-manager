@@ -8,7 +8,8 @@ function writeFile(sourcePath, targetPath, fileName) {
 	if (!fs.existsSync(`${userHome}/${fileName}`)) {
 		console.log(`writing ${fileName} to ${userHome}`)
 		const src = fs.readFileSync(sourcePath)
-		fs.writeFileSync(`${targetPath}/${fileName}`, `${src}`)
+		console.log({sourcePath})
+		fs.writeFileSync(`${targetPath}/${fileName}`, src)
 		return null
 	}
 	console.log(`${fileName} already exists at ${userHome} - no need to write`)
