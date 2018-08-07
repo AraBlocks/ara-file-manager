@@ -14,8 +14,10 @@ function changeMainManagerSize(expand) {
 	window.setSize(400, expand ? 525 : 325)
 }
 
-function closeWindow() {
-	close()
+function closeWindow(name = null) {
+	name
+		? windowManager.get(name).object.close()
+		: windowManager.getCurrent().object.close()
 }
 
 function copyToClipboard(text, modifier = (a) => a) {
