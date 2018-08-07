@@ -3,6 +3,7 @@
 const {
   DOWNLOADED,
   DOWNLOADING,
+  DOWNLOAD_FAILED,
   PUBLISHED,
   PUBLISHING
  } = require('../lib/constants/stateManagement')
@@ -16,6 +17,7 @@ const fileManager = new FileManager(store)
 document.getElementById('container').appendChild(fileManager.render())
 
 ipcRenderer.on(DOWNLOADING, () => fileManager.rerender())
+ipcRenderer.on(DOWNLOAD_FAILED, () => fileManager.rerender())
 // ipcRenderer.on(DOWNLOADED, () => fileManager.rerender())
 ipcRenderer.on(PUBLISHING, () => fileManager.rerender())
 ipcRenderer.on(PUBLISHED, () => fileManager.rerender())

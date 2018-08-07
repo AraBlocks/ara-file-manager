@@ -84,7 +84,7 @@ class ProgressRing extends Nanocomponent {
         case 0:
           symbol = '✖'
           break
-        case 1:
+        case 1, 4:
           symbol = '⬇'
           break
         default:
