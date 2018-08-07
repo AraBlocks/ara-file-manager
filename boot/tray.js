@@ -12,14 +12,19 @@ const buildTray = () => {
   tray = new Tray(iconPath)
   tray.setToolTip('Ara Content Manager')
 
-  const contextMenu = Menu.buildFromTemplate([
+  const menuItems = [
     { label: 'File Manager', type: 'normal', click: () => openWindow('fManagerView') },
     { label: 'Publish File', type: 'normal', click: () => openWindow('publishFileView') },
     { label: 'Register', type: 'normal', click: () => openWindow('registration') },
-    { label: 'Log Out', type: 'normal' },
-    { label: 'Developer', type: 'normal' , click: () => openWindow('developer') },
     { label: 'Quit', type: 'normal', role: 'quit' }
-  ])
+  ]
+
+  isDev && menuItems.push(
+    { label: 'Developer', type: 'normal', click: () => openWindow('developer')},
+    { label: 'Log Out', type: 'normal' },
+  )
+
+  const contextMenu = Menu.buildFromTemplate(menuItems)
 
   tray.on('click', () => {
     // openWindow('manager')
