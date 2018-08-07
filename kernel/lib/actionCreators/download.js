@@ -6,7 +6,8 @@ const {
 	DOWNLOAD,
 	DOWNLOADED,
 	DOWNLOADED_DEV,
-	DOWNLOADING
+	DOWNLOADING,
+	DOWNLOAD_FAILED
 } = require('../../../lib/constants/stateManagement')
 const { renameAfsFiles, makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
@@ -39,6 +40,13 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 			load: windowManager.fileInfo.aid
 		})
 		windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
+	}, errorHandler: () => {
+		console.log('Download failed')
+		dispatch({
+			type: DOWNLOAD_FAILED,
+			load: windowManager.fileInfo.aid
+		})
+		windowManager.get('filemanager').object.webContents.send(DOWNLOAD_FAILED)
 	}})
 })
 

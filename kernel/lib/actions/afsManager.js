@@ -8,12 +8,20 @@ async function broadcast(did) {
 	// Create a swarm for uploading the content
 	const fullDid = 'did:ara:' + did
 	console.log('broadcasting for ', fullDid)
-	const { afs } = await create({ did: fullDid })
+	const { afs } = await create({ did: fullDid }).catch((e) => {
+		console.log(e)
+		console.log('Error creating afs when broadcasting')
+	})
 
 	// Join the discovery swarm for the requested content
-	const swarm = createSwarm({ stream })
+	const opts = {
+		stream: stream,
+	}
+	console.log('Creating swarm...')
+	const swarm = createSwarm(opts)
 	swarm.once('connection', handleConnection)
 	swarm.join(fullDid)
+	console.log('Joined Swarm')
 
 	function stream(peer) {
 		const stream = afs.replicate({
@@ -34,11 +42,14 @@ async function broadcast(did) {
 	}
 }
 
-async function download({ did, handler }) {
+async function download({ did, handler, errorHandler }) {
 	console.log('Creating afs...')
 	// Create a swarm for downloading the content
 	const fullDid = 'did:ara:' + did
-	const { afs } = await create({ did: fullDid })
+	const { afs } = await create({ did: fullDid }).catch(((err) => {
+		console.log(err)
+		errorHandler()
+	}))
 
 	afs.on('content', () => {
 		console.log("on content")
@@ -65,7 +76,10 @@ async function download({ did, handler }) {
 	}
 
 	async function onend() {
-		const files = await afs.readdir('.')
+		const files = await afs.readdir('.').catch((e) => {
+			console.log(e)
+			errorHandler()
+		})
 		renameAfsFiles(did, files[0])
 		console.log(files)
 		console.log(`Downloaded!`)
@@ -82,6 +96,7 @@ async function download({ did, handler }) {
 		}
 		catch (err) {
 			console.log(`Error: ${err}`)
+			errorHandler()
 		}
 	}
 }
