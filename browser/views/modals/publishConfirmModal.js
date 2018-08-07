@@ -1,6 +1,6 @@
 'use strict'
 
-const { CONFIRM_PUBLISH, PUBLISHED } = require('../../../lib/constants/stateManagement')
+const { CONFIRM_PUBLISH } = require('../../../lib/constants/stateManagement')
 const { closeWindow, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
@@ -16,7 +16,11 @@ module.exports = (load) => {
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => closeWindow()
+    onclick: () => {
+      windowManager.modalIsOpen = false
+      closeWindow('publishFileView')
+      closeWindow()
+    }
   })
 
   return html`
