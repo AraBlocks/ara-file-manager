@@ -1,10 +1,14 @@
+'use strict'
+
+const dispatch = require('../reducers/dispatch')
 const { create } = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const { createSwarm } = require('ara-network/discovery')
 const fs = require('fs')
 const path = require('path')
 
-async function broadcast(did) {
+
+async function broadcast(did, handler) {
 	// Create a swarm for uploading the content
 	const fullDid = 'did:ara:' + did
 	console.log('broadcasting for ', fullDid)
@@ -26,7 +30,7 @@ async function broadcast(did) {
 	function stream(peer) {
 		const stream = afs.replicate({
 			upload: true,
-			download: false
+			download: false,
 		})
 		stream.once('end', onend)
 		stream.peer = peer
@@ -38,6 +42,7 @@ async function broadcast(did) {
 	}
 
 	async function handleConnection(connection, info) {
+		handler()
 		console.log(`SWARM: New peer: ${info.host} on port: ${info.port}`)
 	}
 }

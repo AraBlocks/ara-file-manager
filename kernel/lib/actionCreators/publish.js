@@ -11,7 +11,8 @@ const {
   FEED_MODAL,
   PUBLISH,
   PUBLISHED,
-  PUBLISHING
+  PUBLISHING,
+  UPLOAD_COMPLETE
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const { writeToHome } = require('../actions/write')
@@ -30,7 +31,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   const { password } = aid
   publish.commit(Object.assign(load, { password }))
     .then(() => {
-      dispatch({ type: PUBLISHED, load: load.price })
+      dispatch({ type: PUBLISHED, load: load.cost })
       setTimeout(() => {
         windowManager.get('filemanager')
           ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
@@ -39,7 +40,13 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
 
       // renameAfsFiles(load.did, load.paths[0])
 
-      afsManager.broadcast(load.did)
+      afsManager.broadcast(
+        load.did,
+        () => {
+          dispatch({ type: UPLOAD_COMPLETE, load: load.price})
+          windowManager.get('filemanager').object.webContents.send(UPLOAD_COMPLETE)
+        }
+      )
     })
     .catch(console.log)
 

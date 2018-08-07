@@ -1,6 +1,11 @@
 'use strict'
 
-const { LOGIN, LOGIN_DEV, PUBLISHED } = require('../../../lib/constants/stateManagement')
+const {
+  LOGIN,
+  LOGIN_DEV,
+  PUBLISHED,
+  UPLOAD_COMPLETE
+ } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load, type }) => {
   switch (type) {
@@ -13,6 +18,10 @@ module.exports = (state, { load, type }) => {
       break
       case PUBLISHED:
       state.userBalance = state.userBalance - load
+      break
+    case UPLOAD_COMPLETE:
+      state.userBalance = state.userBalance + Number(load)
+      state.userBalance
       break
     default:
       return state
