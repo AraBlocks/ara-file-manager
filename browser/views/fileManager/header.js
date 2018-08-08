@@ -60,7 +60,7 @@ class Header extends Nanocomponent {
     return true
   }
 
-  createElement({ activeTab }) {
+  createElement({ activeTab, userBalance }) {
     const {
       children,
       props,
@@ -87,7 +87,7 @@ class Header extends Nanocomponent {
             <b>${props.username}</b>
           </div>
           <div>
-            ${state.userBalance} ARA
+            ${userBalance} ARA
           </div>
         </div>
       </div>
