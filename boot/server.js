@@ -27,8 +27,7 @@ module.exports = () => {
         backgroundColor: 'white',
         frame: false,
         ...windowManager.setSize(modalName),
-      },
-      !isDev
+      }
     ).open()
     windowManager.fileInfo = req.body
   })

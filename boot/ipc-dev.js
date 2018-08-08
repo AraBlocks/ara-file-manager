@@ -34,6 +34,5 @@ const makeWindow = (view, i ) => {
       resizable: true,
       ...windowManager.setSize(view)
     }
-    ,!isDev
   )
 }
