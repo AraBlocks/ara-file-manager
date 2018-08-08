@@ -51,7 +51,7 @@ class Container extends Nanocomponent {
       children,
       state: { activeTab, files, userBalance }
     } = this
-    console.log({userBalance})
+
     Object.assign(window, { container: this })
     return html`
       <div>

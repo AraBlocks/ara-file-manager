@@ -86,7 +86,7 @@ class Header extends Nanocomponent {
           <div>
             <b>${props.username}</b>
           </div>
-          <div class="odometer odometer-theme-default">
+          <div>
             ${userBalance} ARA
           </div>
         </div>
