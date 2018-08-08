@@ -62,6 +62,7 @@ class PublishedStats extends Nanocomponent {
       buttonProps,
       state
     } = this
+
     return html`
       <div class="${styles.container(state.status)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">

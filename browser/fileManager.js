@@ -5,7 +5,8 @@ const {
   DOWNLOADING,
   DOWNLOAD_FAILED,
   PUBLISHED,
-  PUBLISHING
+  PUBLISHING,
+  UPLOAD_COMPLETE
  } = require('../lib/constants/stateManagement')
 const { ipcRenderer, remote } = require('electron')
 const isDev = require('electron-is-dev')
@@ -20,6 +21,7 @@ ipcRenderer.on(DOWNLOADING, () => fileManager.rerender())
 ipcRenderer.on(DOWNLOAD_FAILED, () => fileManager.rerender())
 ipcRenderer.on(DOWNLOADED, () => fileManager.rerender())
 ipcRenderer.on(PUBLISHING, () => fileManager.rerender())
-ipcRenderer.on(PUBLISHED, () => fileManager.rerender())
+ipcRenderer.on(PUBLISHED, () => fileManager.render(store))
+ipcRenderer.on(UPLOAD_COMPLETE, () => fileManager.render(store))
 
 isDev && (window.components = { fileManager })
