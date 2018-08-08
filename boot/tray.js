@@ -50,8 +50,7 @@ const buildTray = () => {
         frame: false,
         resizable: true,
         ...windowManager.setSize(view)
-      },
-      !isDev
+      }
     )
   }
 
