@@ -13,9 +13,9 @@ const buildTray = () => {
   tray.setToolTip('Ara Content Manager')
 
   const menuItems = [
+    { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'File Manager', type: 'normal', click: () => openWindow('fManagerView') },
     { label: 'Publish File', type: 'normal', click: () => openWindow('publishFileView') },
-    { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'Quit', type: 'normal', role: 'quit' }
   ]
 
