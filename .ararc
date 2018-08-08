@@ -2,7 +2,7 @@
 [web3]
 ;provider = http://192.168.128.118:7545 ;; ganache isabel
 ;provider = http://192.168.128.254:7545 ;; ganache mark
-provider = http://localhost:8545 ;; ganache-cli mark
+provider = http://localhost:9545 ;; ganache-cli mark
 ;provider = http://169.254.127.147:7545 ;; ganache-cli ad-hoc
 ;; Identity network configuration
 [network.identity]

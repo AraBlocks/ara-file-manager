@@ -40,6 +40,7 @@ const buildTray = () => {
   }
 
   function createWindow(view) {
+    console.log(path.join(__dirname, 'icons/mac/ARA.icns'))
     return windowManager.createNew(
       view,
       view,
@@ -49,8 +50,9 @@ const buildTray = () => {
         backgroundColor: 'white',
         frame: false,
         resizable: true,
+        icon: path.join(__dirname, 'icons/mac/ARA.icns'),
         ...windowManager.setSize(view)
-      }
+      },
     )
   }
 
