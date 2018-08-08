@@ -19,6 +19,5 @@ app.on('ready', () => {
       resizable: true,
       ...windowManager.setSize('testing')
     }
-    ,!isDev
   )
 })
