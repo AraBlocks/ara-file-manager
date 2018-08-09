@@ -8,7 +8,7 @@ app.get('/download/:id/:name/:price/', (req, res) => {
 	res.sendFile(__dirname + '/public'+ '/index.html')
 	const item = JSON.stringify({
 		aid: req.params.id,
-		fileName: req.params.name,
+		fileName: decodeURIComponent(req.params.name),
 		price: req.params.price
 	})
 
