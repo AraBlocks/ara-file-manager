@@ -15,7 +15,7 @@ module.exports = {
 			flex-direction: column;
 			height: 600px;
 			justify-content: space-between;
-			margin: 20px;
+			margin: 0px 20px;
 		}
 
 		:host b {
@@ -26,6 +26,7 @@ module.exports = {
 	divider: css`
 		:host {
 			background-color: ${colors.araGrey};
+			margin-top: 20px;
 			height: 1px;
 			width: 100%;
 		}
@@ -35,6 +36,7 @@ module.exports = {
 		:host {
 			display: flex;
 			justify-content: space-between;
+			margin: 20px 0;
 		}
 	`
 }

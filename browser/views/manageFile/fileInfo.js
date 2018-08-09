@@ -81,7 +81,9 @@ class FileInfo extends Nanocomponent {
 				</div>
 				<b>Update File</b>
 				${children.fileSelector.render()}
-				<b>Distribution Link</b>
+				<div class=${styles.distributionLink}>
+					<b>Distribution Link</b>
+				</div>
 				${children.distributionLink.render()}
 			</div>
 		`
