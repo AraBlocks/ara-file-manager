@@ -12,7 +12,7 @@ module.exports = {
 			flex-direction: column;
 			height: 260px;
 			justify-content: space-between;
-			padding-top: 1px;
+			padding-top: 25px;
 		}
 
 		:host b {
@@ -30,6 +30,12 @@ module.exports = {
 		:host {
 			color: ${colors.araBlue};
 			padding-left: 4px;
+		}
+	`,
+
+	distributionLink: css`
+		:host {
+			padding-top: 10px;
 		}
 	`,
 

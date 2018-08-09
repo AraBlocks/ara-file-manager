@@ -41,7 +41,8 @@ class Container extends Nanocomponent {
 					name: 'smallInvisible',
 					opts: {
 						color: 'blue',
-						weight: 'bold'
+						weight: 'bold',
+						height: '36px'
 					}
 				}
 			}),
