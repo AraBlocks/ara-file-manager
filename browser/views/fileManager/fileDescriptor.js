@@ -103,7 +103,8 @@ class FileDescriptor extends Nanocomponent {
           class="${styles.clipboard} fileDescriptor-clipboard"
           onclick=${function(){
             this.children[0].style.display = 'block'
-            copyToClipboard(`http://localhost:3001/download/id=${meta.aid}/name=${name}/price=${meta.price}`)
+            const encodedName = encodeURIComponent(name)
+            copyToClipboard(`http://localhost:3001/download/${meta.aid}/${encodedName}/${meta.price}`)
             setTimeout(() => this.children[0].style.display = 'none', 1700)
           }}
         >
