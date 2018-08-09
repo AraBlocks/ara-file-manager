@@ -37,7 +37,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 	download({did: windowManager.fileInfo.aid, handler: () => {
 		dispatch({
 			type: DOWNLOADED,
-			load: windowManager.fileInfo.aid
+			load: windowManager.fileInfo
 		})
 		windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
 	}, errorHandler: () => {
@@ -50,4 +50,4 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 	}})
 })
 
-ipcMain.on(DOWNLOADED_DEV, () => dispatch({ type: DOWNLOADED, load: null }))
+ipcMain.on(DOWNLOADED_DEV, () => dispatch({ type: DOWNLOADED, load: windowManager.fileInfo }))

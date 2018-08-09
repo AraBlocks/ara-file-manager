@@ -18,6 +18,7 @@ module.exports = (state, { load, type }) => {
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = 1
       file.status = 2
+      state.userBalance = state.userBalance - load
       break
     case DOWNLOAD_FAILED:
       file = state.purchased[state.purchased.length - 1]
