@@ -43,7 +43,6 @@ module.exports = {
         margin-left: 2px;
         margin-top: -115px;
         max-width: ${maxWidth}px;
-        opacity: .85;
         padding: 5px;
         text-align: center;
         visibility: hidden;
