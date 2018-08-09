@@ -25,7 +25,7 @@ windowManager.setSize = function (view) {
       break
     case 'manageFileView':
       width = 650
-      height = 620
+      height = 600
       break
     case 'mainManagerView':
     case 'manager':

@@ -24,11 +24,11 @@ module.exports = {
     :host {
       background-color: ${colors.araBlue};
       color: white;
-      font-size: 15px;
+      font-size: 12px;
       font-family: ${fonts.light};
-      height: 30px;
+      height: 25px;
       margin: 10px;
-      width: 60px;
+      width: 70px;
     }
   `,
 
@@ -43,7 +43,7 @@ module.exports = {
   standard() {
     return css`
       :host {
-        font-size: 20px;
+        font-size: 18px;
         font-family: ${fonts.light};
         height: 45px;
         text-indent: 10px;
