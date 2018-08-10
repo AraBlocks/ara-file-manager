@@ -17,6 +17,7 @@ module.exports = () => {
   app.post('/', (req, res) => {
     res.send('File info received!')
     const modalName = 'reDownloadModal'
+    if (windowManager.get(modalName).object != null) { return }
     windowManager.sharedData.set('current', modalName)
     windowManager.createNew(
       modalName,
