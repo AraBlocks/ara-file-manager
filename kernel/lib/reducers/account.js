@@ -1,6 +1,7 @@
 'use strict'
 
 const {
+  DOWNLOAD_COMPLETE,
   LOGIN,
   LOGIN_DEV,
   PUBLISHED,
@@ -22,6 +23,9 @@ module.exports = (state, { load, type }) => {
     case UPLOAD_COMPLETE:
       state.userBalance = state.userBalance + Number(load)
       state.userBalance
+      break
+    case DOWNLOAD_COMPLETE:
+      state.userBalance = state.userBalance - Number(load)
       break
     default:
       return state
