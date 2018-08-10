@@ -7,6 +7,7 @@ const {
 	DOWNLOADED,
 	DOWNLOADED_DEV,
 	DOWNLOADING,
+	DOWNLOAD_COMPLETE,
 	DOWNLOAD_FAILED
 } = require('../../../lib/constants/stateManagement')
 const { renameAfsFiles, makeAfsPath } = require('../actions/afsManager')
@@ -33,7 +34,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 	})
 
 	windowManager.get('filemanager').object.webContents.send(DOWNLOADING)
-
+	dispatch({ type: DOWNLOAD_COMPLETE, load: windowManager.fileInfo.price})
 	download({did: windowManager.fileInfo.aid, handler: () => {
 		dispatch({
 			type: DOWNLOADED,
