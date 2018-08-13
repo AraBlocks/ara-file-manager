@@ -10,18 +10,18 @@ module.exports = {
     paths,
     price
   }) {
-    paths = paths[0].slice(paths[0].lastIndexOf('/') + 1)
 
     const arafs = await afs.create({ owner: did, password })
     const { afs: { did: id }, mnemonic } = arafs
     arafs.afs.close()
 
     try {
-      await afs.add({
+      const newAfs = await afs.add({
         did: id,
-        paths: [ paths ],
+        paths: paths,
         password
       })
+      newAfs.close()
       console.log('added file succesfully')
     } catch (e) {
       console.warn('error in adding')

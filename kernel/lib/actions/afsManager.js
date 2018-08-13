@@ -1,12 +1,10 @@
 'use strict'
 
-const dispatch = require('../reducers/dispatch')
-const { create, getPrice } = require('ara-filesystem')
+const { create, getPrice, unarchive } = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const { createSwarm } = require('ara-network/discovery')
 const fs = require('fs')
 const path = require('path')
-
 
 async function broadcast(did, handler) {
 	// Create a swarm for uploading the content
@@ -90,7 +88,7 @@ async function download({ did, handler, errorHandler }) {
 			console.log(e)
 			errorHandler()
 		})
-		renameAfsFiles(did, files[0])
+		unarchiveAFS({ did, path: makeAfsPath(did) })
 		console.log(files)
 		console.log(`Downloaded!`)
 		afs.close()
@@ -115,15 +113,12 @@ function makeAfsPath(aid) {
 	return path.join(createAFSKeyPath(aid), 'home', 'content')
 }
 
-function renameAfsFiles(aid, fileName) {
-	const afsFolderPath = makeAfsPath(aid)
-	const afsFilePath = path.join(afsFolderPath, 'data')
-	const newPath = path.join(afsFolderPath, fileName)
-	fs.rename(afsFilePath, newPath, function(err) {
-		if (err) {
-			console.log('some error occurred when renaming afs files')
-		}
-	})
+function unarchiveAFS({ did, path }) {
+	try {
+		unarchive({ did, path })
+	} catch(err) {
+		console.log(err)
+	}
 }
 
 module.exports = {
@@ -131,5 +126,5 @@ module.exports = {
 	download,
 	getAFSPrice,
 	makeAfsPath,
-	renameAfsFiles
+	unarchiveAFS,
 }
