@@ -1,9 +1,9 @@
 'use strict'
 
 const FileSelector = require('../../components/fileSelector')
-const helper = require('../../lib/store/clipboardHelper')
 const Input = require('../../components/input')
 const styles = require('./styles/fileInfo')
+const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -54,7 +54,7 @@ class FileInfo extends Nanocomponent {
 
 	copyLink() {
 		const { children } = this
-		helper.copyToClipboard(children.distributionLink.state.value, 'distributionLink')
+		windowManagement.copyToClipboard(children.distributionLink.state.value)
 	}
 
 	update() {
