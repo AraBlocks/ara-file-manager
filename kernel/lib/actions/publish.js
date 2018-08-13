@@ -55,7 +55,7 @@ module.exports = {
       console.log("file(s) successfully committed")
       if (price != null) {
         try {
-          afs.setPrice({ did, password, price: Number(price) })
+          await afs.setPrice({ did, password, price: Number(price) })
         } catch (err) {
           console.log(err)
         }
