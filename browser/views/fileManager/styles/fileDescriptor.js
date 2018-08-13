@@ -25,25 +25,23 @@ module.exports = {
 
   clipboard: css`
     :host {
-      position: relative;
-      width: 100%;
+      cursor: pointer;
       background-color: var(--ara-blue);
       color: white;
-      height: 2em;
       display: flex;
       flex-direction: column;
+      height: 2em;
       justify-content: center;
-      cursor: pointer;
+      position: relative;
+      width: 100%;
     }
 
     :host span {
-      display: none;
-      position: absolute;
+      animation-duration: 1000ms;
       color: red;
       left: 39%;
-      top: -200%;
-      animation: fadeInUp 1600ms;
       opacity: 0;
+      position: absolute;
     }
   `,
 

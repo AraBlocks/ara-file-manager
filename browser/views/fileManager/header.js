@@ -12,7 +12,6 @@ class Header extends Nanocomponent {
   constructor({
     parentRerender,
     parentState,
-    userBalance,
     username
   }) {
     super()
@@ -22,8 +21,6 @@ class Header extends Nanocomponent {
       parentState,
       username
     }
-
-    this.state = { userBalance }
 
     this.children = {
       publishFilebutton: new Button({

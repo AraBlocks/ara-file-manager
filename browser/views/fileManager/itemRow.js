@@ -74,13 +74,18 @@ class ItemRow extends Nanocomponent {
     return !isSame
   }
 
-  createElement() {
+  createElement({ fileInfo }) {
     const {
       children,
       demoDownload,
       props: { typeRow },
-      state: { downloadPercent, status }
     } = this
+
+    const {
+      downloadPercent,
+      status,
+      meta
+    } = fileInfo
 
     typeRow === 'purchased'
     && !this.state.timer
@@ -92,7 +97,7 @@ class ItemRow extends Nanocomponent {
         <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
           ${children.fileDescriptor.render({ downloadPercent, status })}
         </div>
-          ${children.stats.render({ status })}
+          ${children.stats.render({ ...meta })}
       </div>
     `
   }

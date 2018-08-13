@@ -6,18 +6,8 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class PurchasedStats extends Nanocomponent {
-  constructor({
-    earnings,
-    peers,
-    status
-   }) {
+  constructor() {
     super()
-
-    this.state = {
-      earnings,
-      peers,
-      status
-    }
 
     this.children = {
       button: new Button({
@@ -33,22 +23,19 @@ class PurchasedStats extends Nanocomponent {
     }
   }
 
-  update({ status }) {
-    const { state } = this
-    const sameStatus = state.status === status
-    if (!sameStatus) { state.status = status }
-    return !sameStatus
+  update() {
+    return true
   }
 
-  createElement() {
-    const { children, state } = this
+  createElement({ earnings, peers, status }) {
+    const { children } = this
 
     return html`
       <div class="${styles.container} styles.container">
         <div class="${styles.stats} purchasedStats-stats">
           ${renderPeers()}
-          <div class="${styles.earnings(state.status)} purchasedStats-earnings">
-            <b>Earnings:</b> ${state.earnings} ARA
+          <div class="${styles.earnings(status)} purchasedStats-earnings">
+            <b>Earnings:</b> ${earnings} ARA
           </div>
         </div>
         ${renderButton()}
@@ -57,14 +44,14 @@ class PurchasedStats extends Nanocomponent {
 
     function renderPeers() {
       let nodes
-      switch(state.status) {
+      switch(status) {
         case 0:
           break
         default:
           nodes = [
             html`
               <div class="${styles.peers} purchasedStats-peers">
-                <b>Peers:</b> ${state.peers}
+                <b>Peers:</b> ${peers}
               </div>
             `,
             html`
@@ -79,7 +66,7 @@ class PurchasedStats extends Nanocomponent {
 
     function renderButton() {
       let button
-      switch(state.status) {
+      switch(status) {
         case 0:
         case 1:
           break
