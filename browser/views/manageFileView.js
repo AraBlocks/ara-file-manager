@@ -11,9 +11,9 @@ class ManageFileView extends Nanocomponent {
 		const { userData } = windowManager.sharedData.fetch('store')
 		this.manageFileContainer = new ManageFileContainer({
 			currency: 'USD',
+			distributionLink: 'http://ltlstr.com/afsname/ahgaksdhftiaygkjahsdfkjahbc',
 			fileName: 'My Awesome File',
 			filePath: '/Documents/FilePath',
-			distributionLink: 'http://ltlstr.com/afsname/ahgaksdhftiaygkjahsdfkjahbc',
 			price: 9.99,
 			priceManagement: true,
 			supernode: false,

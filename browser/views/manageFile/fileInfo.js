@@ -15,9 +15,24 @@ class FileInfo extends Nanocomponent {
 
 		this.props = { parentState }
 		this.children = {
+			distributionLink: new Input({
+				placeholder: 'Distribution Link',
+				field: 'distributionLink',
+				parentState,
+				readOnly: true,
+				embeddedButton: {
+					option: 'button',
+					children: 'Copy',
+					onclick: this.copyLink.bind(this)
+				}
+			}),
 			fileNameInput: new Input({
 				field: 'fileName',
 				placeholder: 'File Name',
+				parentState
+			}),
+			fileSelector: new FileSelector({
+				field: 'filePath',
 				parentState
 			}),
 			priceInput: new Input({
@@ -32,21 +47,6 @@ class FileInfo extends Nanocomponent {
 						'USD'
 					],
 					field: 'currency'
-				}
-			}),
-			fileSelector: new FileSelector({
-				field: 'filePath',
-				parentState
-			}),
-			distributionLink: new Input({
-				placeholder: 'Distribution Link',
-				field: 'distributionLink',
-				parentState,
-				readOnly: true,
-				embeddedButton: {
-					option: 'button',
-					children: 'Copy',
-					onclick: this.copyLink.bind(this)
 				}
 			})
 		}
