@@ -1,5 +1,6 @@
 'use strict'
 
+const { getAFSPrice } = require('../kernel/lib/actions/afsManager')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const express = require('express')
@@ -16,21 +17,24 @@ module.exports = () => {
   app.use(bodyParser.json())
   app.post('/', (req, res) => {
     res.send('File info received!')
-    const modalName = 'reDownloadModal'
-    if (windowManager.get(modalName).object != null) { return }
-    windowManager.sharedData.set('current', modalName)
-    windowManager.createNew(
-      modalName,
-      modalName,
-      windowManager.loadURL(modalName),
-      false,
-      {
-        backgroundColor: 'white',
-        frame: false,
-        ...windowManager.setSize(modalName),
-      }
-    ).open()
-    windowManager.fileInfo = req.body
+    getAFSPrice({ did: req.body.aid, password: 'abc' }).then((price) => {
+      const modalName = 'reDownloadModal'
+      if (windowManager.get(modalName).object != null) { return }
+      windowManager.sharedData.set('current', modalName)
+      windowManager.createNew(
+        modalName,
+        modalName,
+        windowManager.loadURL(modalName),
+        false,
+        {
+          backgroundColor: 'white',
+          frame: false,
+          ...windowManager.setSize(modalName),
+        }
+      ).open()
+      windowManager.fileInfo = req.body
+      windowManager.fileInfo.price = price
+    }).catch(console.log)
   })
   app.listen(3002, () => console.log('Demo app listening on port 3002!'))
 }
