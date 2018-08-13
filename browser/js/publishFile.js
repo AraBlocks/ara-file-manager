@@ -1,12 +1,12 @@
 'use strict'
 
-const { closeWindow, openModal} = require('./lib/tools/windowManagement')
+const { closeWindow, openModal} = require('../lib/tools/windowManagement')
 const {
   ESTIMATING_COST,
   ESTIMATION,
   PUBLISHING,
-} = require('../lib/constants/stateManagement')
-const PublishFile = require('./views/publishFile/container')
+} = require('../../lib/constants/stateManagement')
+const PublishFile = require('../views/publishFile/container')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')

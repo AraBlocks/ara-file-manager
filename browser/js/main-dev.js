@@ -1,11 +1,13 @@
 'use strict'
 
+const path = require('path')
+const modals = path.resolve(__dirname, '..', 'views', 'modals')
+const views = path.resolve(__dirname , '..', 'views')
+
 const fs = require('fs')
 const remote = require('electron').remote;
 const { argv } = remote.process
 const windowManager = remote.require('electron-window-manager')
-const views = __dirname + '/views/'
-const modals = __dirname + '/views/modals/'
 
 const exclude = [
   'fileManager.js',

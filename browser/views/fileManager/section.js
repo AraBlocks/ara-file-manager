@@ -6,14 +6,10 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Section extends Nanocomponent {
-  constructor({
-    files = [],
-    type = ''
-   }) {
+  constructor({ type = '' }) {
     super()
 
     this.props = { typeRow: type }
-    this.state = { files: this.makeRows(files[type]) }
   }
 
   makeRows(files) {
@@ -26,18 +22,18 @@ class Section extends Nanocomponent {
   }
 
   createElement({ files }) {
-    const { props, state } = this
-    state.files = this.makeRows(files[props.typeRow])
-
+    const { props } = this
+    const fileRows = this.makeRows(files[props.typeRow])
     return html`
       <div class="${styles.container} section-container">
         <div class="${styles.header} section-header">
           ${headerText()}
         </div>
         <div class="${styles.separator} section-separator"></div>
-        ${state.files.map(file => file.render({
+        ${fileRows.map((file, i) => file.render({
           downloadPercent: file.downloadPercent,
-          status: file.status
+          status: file.status,
+          fileInfo: files[props.typeRow][i]
          }))}
       </div>
     `
