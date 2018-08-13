@@ -1,7 +1,7 @@
 'use strict'
 
-const { emit } = require('../browser/lib/tools/windowManagement')
-const { DUMP_MODAL_STATE } = require('../lib/constants/stateManagement')
+const { emit } = require('../../browser/lib/tools/windowManagement')
+const { DUMP_MODAL_STATE } = require('../../lib/constants/stateManagement')
 const remote = require('electron').remote;
 const windowManager = remote.require('electron-window-manager')
 
@@ -11,9 +11,9 @@ const { modal: { data } } = windowManager.sharedData.fetch('store')
 let Component
 let functionalComponent
 try {
-  Component = require('./views/' + current)
+  Component = require('../views/' + current)
 } catch (e) {
-  functionalComponent = require('./views/modals/' + current)
+  functionalComponent = require('../views/modals/' + current)
 }
 
 document.getElementById('container').appendChild(
