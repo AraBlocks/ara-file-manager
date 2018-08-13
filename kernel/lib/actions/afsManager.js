@@ -1,7 +1,7 @@
 'use strict'
 
 const dispatch = require('../reducers/dispatch')
-const { create } = require('ara-filesystem')
+const { create, getPrice } = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const { createSwarm } = require('ara-network/discovery')
 const fs = require('fs')
@@ -45,6 +45,12 @@ async function broadcast(did, handler) {
 		handler()
 		console.log(`SWARM: New peer: ${info.host} on port: ${info.port}`)
 	}
+}
+
+async function getAFSPrice({ did, password }) {
+	const result = await getPrice({ did, password })
+	console.log(`Price is: ${result}`)
+	return result
 }
 
 async function download({ did, handler, errorHandler }) {
@@ -124,6 +130,7 @@ function renameAfsFiles(aid, fileName) {
 module.exports = {
 	broadcast,
 	download,
+	getAFSPrice,
 	makeAfsPath,
 	renameAfsFiles
 }

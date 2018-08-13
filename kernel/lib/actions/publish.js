@@ -44,12 +44,15 @@ module.exports = {
     }
   },
 
-  async commit({ did, password, gasEstimate }){
+  async commit({ did, password, gasEstimate, price }){
     const result = await afs.commit({ did, password, gasEstimate })
     if (result instanceof Error) {
       console.log(result)
     } else {
       console.log("file(s) successfully committed")
+      afs.setPrice({ did, password, price: Number(price) }).catch(
+        console.log('failed to set price')
+      )
     }
     return result
   }
