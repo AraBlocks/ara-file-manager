@@ -30,6 +30,9 @@ module.exports = {
     let gasEstimate
     try {
       gasEstimate = await afs.estimateCommitGasCost({ did: id, password })
+      if (price != null) {
+        gasEstimate += await afs.estimateSetPriceGasCost({ did: id, password, price: Number(price) })
+      }
     } catch (err) {
       console.log({ err })
     }
@@ -44,15 +47,19 @@ module.exports = {
     }
   },
 
-  async commit({ did, password, gasEstimate, price }){
+  async commit({ did, password, gasEstimate, price = null }){
     const result = await afs.commit({ did, password, gasEstimate })
     if (result instanceof Error) {
       console.log(result)
     } else {
       console.log("file(s) successfully committed")
-      afs.setPrice({ did, password, price: Number(price) }).catch(
-        console.log('failed to set price')
-      )
+      if (price != null) {
+        try {
+          afs.setPrice({ did, password, price: Number(price) })
+        } catch (err) {
+          console.log(err)
+        }
+      }
     }
     return result
   }

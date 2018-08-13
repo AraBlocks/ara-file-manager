@@ -49,7 +49,6 @@ async function broadcast(did, handler) {
 
 async function getAFSPrice({ did, password }) {
 	const result = await getPrice({ did, password })
-	console.log(`Price is: ${result}`)
 	return result
 }
 
