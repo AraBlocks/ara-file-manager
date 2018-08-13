@@ -1,7 +1,7 @@
 'use strict'
 
 const dispatch = require('../reducers/dispatch')
-const { renameAfsFiles, makeAfsPath } = require('../actions/afsManager')
+const { makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
 const { afsManager, publish } = require('../actions')
 const {
@@ -37,9 +37,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
           ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
           : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
       }, 3000)
-
-      // renameAfsFiles(load.did, load.paths[0])
-
+      afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
       afsManager.broadcast(
         load.did,
         () => {

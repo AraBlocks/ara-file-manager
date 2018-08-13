@@ -10,7 +10,7 @@ const {
 	DOWNLOAD_COMPLETE,
 	DOWNLOAD_FAILED
 } = require('../../../lib/constants/stateManagement')
-const { renameAfsFiles, makeAfsPath } = require('../actions/afsManager')
+const { makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
