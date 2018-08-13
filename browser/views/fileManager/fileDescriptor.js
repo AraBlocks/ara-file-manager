@@ -109,7 +109,6 @@ class FileDescriptor extends Nanocomponent {
 
             const encodedName = encodeURIComponent(name)
             copyToClipboard(`http://localhost:3001/download/${meta.aid}/${encodedName}`)
-            setTimeout(() => this.children[0].style.display = 'none', 1700)
           }}
         >
           Copy Distribution Link<span>Copied !</span>
