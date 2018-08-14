@@ -23,7 +23,8 @@
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
     "ara-filesystem": "github:arablocks/ara-filesystem",
-    "ara-identity-archiver": "github:arablocks/ara-identity-archiver",
+    "ara-identity": "github:arablocks/ara-identity",
+    "ara-network": "github:arablocks/ara-network",
     "body-parser": "^1.18.3",
     "choo": "^6.13.0",
     "cors": "^2.8.4",
