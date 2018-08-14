@@ -1,6 +1,6 @@
 'use strict'
 
-const { app } = require('electron')
+const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const isDev = require('electron-is-dev')
 const path = require('path')
@@ -13,5 +13,8 @@ app.on('ready', () => {
   require('./tray')()
   require('./server')()
   require('../demoServer/demoServer')
+  globalShortcut.register('CommandOrControl+/', () => {
+    windowManager.getCurrent().object.openDevTools()
+  })
 })
 app.on('window-all-closed', () => {})
