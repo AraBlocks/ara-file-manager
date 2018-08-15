@@ -1,7 +1,5 @@
 'use strict'
 
-const { DOWNLOADED_DEV } = require('../../../lib/constants/stateManagement')
-const { emit } = require('../../lib/tools/windowManagement')
 const FileDescriptor = require('./fileDescriptor')
 const PublishedStats = require('./publishedStats')
 const PurchasedStats = require('./purchasedStats')

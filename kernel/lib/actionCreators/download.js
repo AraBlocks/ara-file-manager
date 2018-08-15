@@ -5,7 +5,6 @@ const { download } = require('../actions')
 const {
 	DOWNLOAD,
 	DOWNLOADED,
-	DOWNLOADED_DEV,
 	DOWNLOADING,
 	DOWNLOAD_COMPLETE,
 	DOWNLOAD_FAILED,
@@ -58,5 +57,3 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 		windowManager.get('filemanager').object.webContents.send(DOWNLOAD_FAILED)
 	}})
 })
-
-ipcMain.on(DOWNLOADED_DEV, () => dispatch({ type: DOWNLOADED, load: null }))
