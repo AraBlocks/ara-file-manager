@@ -8,7 +8,8 @@ const {
 	DOWNLOADED_DEV,
 	DOWNLOADING,
 	DOWNLOAD_COMPLETE,
-	DOWNLOAD_FAILED
+	DOWNLOAD_FAILED,
+	DOWNLOAD_START
 } = require('../../../lib/constants/stateManagement')
 const { makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
@@ -16,7 +17,7 @@ const windowManager = require('electron-window-manager')
 
 ipcMain.on(DOWNLOAD, async (event, load) => {
 	dispatch({
-    type: DOWNLOADING,
+    type: DOWNLOAD_START,
     load: {
 				downloadPercent: 0,
 				meta: {
@@ -33,14 +34,21 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 			}
 	})
 
-	windowManager.get('filemanager').object.webContents.send(DOWNLOADING)
 	dispatch({ type: DOWNLOAD_COMPLETE, load: windowManager.fileInfo.price})
-	download({did: windowManager.fileInfo.aid, handler: () => {
-		dispatch({
-			type: DOWNLOADED,
-			load: windowManager.fileInfo.aid
-		})
-		windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
+	download({did: windowManager.fileInfo.aid, handler: (percentage) => {
+		if (percentage !== 1) {
+			dispatch({
+				type: DOWNLOADING,
+				load: percentage
+			})
+			windowManager.get('filemanager').object.webContents.send(DOWNLOADING)
+		} else {
+			dispatch({
+				type: DOWNLOADED,
+				load: windowManager.fileInfo.aid
+			})
+			windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
+		}
 	}, errorHandler: () => {
 		console.log('Download failed')
 		dispatch({

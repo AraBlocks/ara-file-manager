@@ -10,7 +10,6 @@ const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
-    demoDownload,
     downloadPercent,
     meta,
     name,
@@ -21,7 +20,6 @@ class FileDescriptor extends Nanocomponent {
     super()
 
     this.props = {
-      demoDownload,
       meta,
       name,
       path,
