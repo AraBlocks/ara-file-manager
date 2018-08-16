@@ -4,6 +4,7 @@ const {
   DOWNLOADED,
   DOWNLOADING,
   DOWNLOAD_FAILED,
+  DOWNLOAD_START,
   PUBLISHED,
   PUBLISHING
 } = require('../../../lib/constants/stateManagement')
@@ -12,7 +13,9 @@ module.exports = (state, { load, type }) => {
   let file
   switch (type){
     case DOWNLOADING:
-      state.purchased.push(load)
+      file = state.purchased[state.purchased.length - 1]
+      file.downloadPercent = load.downloadPercent
+      file.size = load.size || file.size
       break
     case DOWNLOADED:
       file = state.purchased[state.purchased.length - 1]
@@ -23,6 +26,9 @@ module.exports = (state, { load, type }) => {
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = 0
       file.status = 4
+      break
+    case DOWNLOAD_START:
+      state.purchased.push(load)
       break
     case PUBLISHING:
       state.published.push(load)

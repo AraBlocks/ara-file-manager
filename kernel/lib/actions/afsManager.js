@@ -60,8 +60,22 @@ async function download({ did, handler, errorHandler }) {
 	}))
 
 	afs.on('content', () => {
-		console.log("on content")
-		afs.partitions.resolve(afs.HOME).content.on('sync', onend)
+		const feed = afs.partitions.resolve(afs.HOME).content
+		let prevPercent = 0
+		feed.on('download', () => {
+			const size = feed.byteLength
+			console.log(size)
+			const total = feed.length
+			if (total) {
+				const downloaded = feed.downloaded()
+				const perc = downloaded / total
+				if (perc >= prevPercent + 0.04) {
+					prevPercent = perc
+					handler({ perc, size })
+				}
+			}
+		})
+		feed.on('sync', onend)
 	})
 
 	// Join the discovery swarm for the requested content
@@ -93,7 +107,7 @@ async function download({ did, handler, errorHandler }) {
 		console.log(`Downloaded!`)
 		afs.close()
 		swarm.destroy()
-		handler()
+		handler({ percentage: 1 })
 		console.log("Swarm destroyed")
 	}
 
