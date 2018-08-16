@@ -1,7 +1,5 @@
 'use strict'
 
-const { DOWNLOADED_DEV } = require('../../../lib/constants/stateManagement')
-const { emit } = require('../../lib/tools/windowManagement')
 const FileDescriptor = require('./fileDescriptor')
 const PublishedStats = require('./publishedStats')
 const PurchasedStats = require('./purchasedStats')
@@ -32,7 +30,6 @@ class ItemRow extends Nanocomponent {
 
     this.children = {
       fileDescriptor: new FileDescriptor({
-        demoDownload: this.demoDownload.bind(this),
         downloadPercent,
         meta,
         name,
@@ -45,24 +42,6 @@ class ItemRow extends Nanocomponent {
         ? new PublishedStats({ ...meta, name, status })
         : new PurchasedStats({ ...meta, name, status })
     }
-
-    this.demoDownload = this.demoDownload.bind(this)
-  }
-
-  demoDownload() {
-    const { state } = this
-    if (state.status !== 1) { return }
-    state.status = 1
-    state.timer = setInterval(() => {
-      state.downloadPercent = state.downloadPercent += .12
-      if (state.downloadPercent >= .9) {
-        state.downloadPercent = 0.9
-        this.rerender()
-        clearInterval(state.timer)
-        emit({ event: DOWNLOADED_DEV })
-      }
-      this.rerender()
-    }, 1000)
   }
 
   update({ downloadPercent, status }) {
@@ -77,8 +56,6 @@ class ItemRow extends Nanocomponent {
   createElement({ fileInfo }) {
     const {
       children,
-      demoDownload,
-      props: { typeRow },
     } = this
 
     const {
@@ -86,11 +63,6 @@ class ItemRow extends Nanocomponent {
       status,
       meta
     } = fileInfo
-
-    typeRow === 'purchased'
-    && !this.state.timer
-    && status !== 2
-    && setTimeout(demoDownload, 1500)
 
     return html`
       <div class="${styles.container} ItemRow-container">
