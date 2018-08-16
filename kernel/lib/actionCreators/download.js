@@ -27,18 +27,18 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 					price: windowManager.fileInfo.price,
 				},
 				name: windowManager.fileInfo.fileName,
-				size: 1.67,
+				size: 0,
 				status: 1,
 				path: makeAfsPath(windowManager.fileInfo.aid)
 			}
 	})
 
 	dispatch({ type: DOWNLOAD_COMPLETE, load: windowManager.fileInfo.price})
-	download({did: windowManager.fileInfo.aid, handler: (percentage) => {
-		if (percentage !== 1) {
+	download({did: windowManager.fileInfo.aid, handler: (load) => {
+		if (load.percentage !== 1) {
 			dispatch({
 				type: DOWNLOADING,
-				load: percentage
+				load
 			})
 			windowManager.get('filemanager').object.webContents.send(DOWNLOADING)
 		} else {

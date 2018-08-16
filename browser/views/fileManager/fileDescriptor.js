@@ -5,6 +5,7 @@ const { copyToClipboard, openFolder } = require('../../lib/tools/windowManagemen
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
+const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -149,7 +150,7 @@ class FileDescriptor extends Nanocomponent {
             </div>
           </div>
           <div class="${styles.sizeHolder(status)} fileDescriptor-sizeHolder">
-            ${renderSize()} gb
+            ${renderSize()}
           </div>
           <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
             ${children.button.render(buttonProps(status))}
@@ -163,10 +164,10 @@ class FileDescriptor extends Nanocomponent {
       switch(status) {
         case 0:
         case 2:
-          text = props.size
+          text = filesize(props.size)
           break
         default:
-          text = `${Math.round(downloadPercent * props.size * 100) / 100}/${props.size}`
+          text = `${Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
       }
       return text
     }

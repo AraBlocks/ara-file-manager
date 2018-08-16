@@ -2,6 +2,7 @@
 
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/itemRow')
+const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -54,7 +55,7 @@ class ItemRow extends Nanocomponent {
 						</div>
 					</div>
 					<div class="${styles.detailHolder} itemRow-detailHolder">
-						${renderSize()} gb
+						${renderSize()}
 						<div>
 							<b>Peers</b>: ${state.meta.peers}
 						</div>
@@ -62,17 +63,17 @@ class ItemRow extends Nanocomponent {
 				</div>
 			</div>
 		`
-		function renderSize() {
-			let text
-			switch (status) {
-				case 0:
-				case 2:
-					text = props.size
-					break
-				default:
-					text = `${Math.round(state.downloadPercent * props.size * 100) / 100}/${props.size}`
-			}
-			return text
+    function renderSize() {
+      let text
+      switch(status) {
+        case 0:
+        case 2:
+          text = filesize(props.size)
+          break
+        default:
+          text = `${Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
+      }
+      return text
 		}
 	}
 }

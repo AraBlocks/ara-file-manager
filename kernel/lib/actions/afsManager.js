@@ -63,13 +63,15 @@ async function download({ did, handler, errorHandler }) {
 		const feed = afs.partitions.resolve(afs.HOME).content
 		let prevPercent = 0
 		feed.on('download', () => {
+			const size = feed.byteLength
+			console.log(size)
 			const total = feed.length
 			if (total) {
 				const downloaded = feed.downloaded()
 				const perc = downloaded / total
 				if (perc >= prevPercent + 0.04) {
 					prevPercent = perc
-					handler(perc)
+					handler({ perc, size })
 				}
 			}
 		})
@@ -105,7 +107,7 @@ async function download({ did, handler, errorHandler }) {
 		console.log(`Downloaded!`)
 		afs.close()
 		swarm.destroy()
-		handler(1)
+		handler({ percentage: 1 })
 		console.log("Swarm destroyed")
 	}
 

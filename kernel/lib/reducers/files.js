@@ -14,7 +14,8 @@ module.exports = (state, { load, type }) => {
   switch (type){
     case DOWNLOADING:
       file = state.purchased[state.purchased.length - 1]
-      file.downloadPercent = load
+      file.downloadPercent = load.downloadPercent
+      file.size = load.size || file.size
       break
     case DOWNLOADED:
       file = state.purchased[state.purchased.length - 1]
