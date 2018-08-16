@@ -13,7 +13,8 @@ class Section extends Nanocomponent {
   }
 
   makeRows(files) {
-    return files.map(file => new ItemRow({ ...file }))
+    const { props: { typeRow } } = this
+    return files.map(file => new ItemRow({ ...file, typeRow }))
   }
 
   update() {
