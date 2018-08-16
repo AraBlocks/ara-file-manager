@@ -71,7 +71,7 @@ class ItemRow extends Nanocomponent {
           text = filesize(props.size)
           break
         default:
-          text = `${Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
+          text = `${Math.round(state.downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
       }
       return text
 		}
