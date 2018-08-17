@@ -1,6 +1,7 @@
 'use strict'
 
 const { app, globalShortcut } = require('electron')
+const { getAFSPrice } = require('../kernel/lib/actions/afsManager')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const isDev = require('electron-is-dev')
 const path = require('path')
@@ -48,21 +49,24 @@ app.on('open-url', function (event, url) {
 })
 
 function openDeepLinking() {
-  const modalName = 'reDownloadModal'
-  if (windowManager.get(modalName).object != null) { return }
-  windowManager.sharedData.set('current', modalName)
-  windowManager.createNew(
-    modalName,
-    modalName,
-    windowManager.loadURL(modalName),
-    false,
-    {
-      backgroundColor: 'white',
-      frame: false,
-      ...windowManager.setSize(modalName),
-    }
-  ).open()
   parseLink()
+  getAFSPrice({ did: windowManager.fileInfo.aid, password: 'abc' }).then((price) => {
+    const modalName = 'reDownloadModal'
+    if (windowManager.get(modalName).object != null) { return }
+    windowManager.sharedData.set('current', modalName)
+    windowManager.createNew(
+      modalName,
+      modalName,
+      windowManager.loadURL(modalName),
+      false,
+      {
+        backgroundColor: 'white',
+        frame: false,
+        ...windowManager.setSize(modalName),
+      }
+    ).open()
+    windowManager.fileInfo.price = price
+  }).catch(console.log)
 }
 
 function parseLink() {
@@ -71,7 +75,6 @@ function parseLink() {
     windowManager.fileInfo = {
       aid: linkElements[1],
       fileName: linkElements[2],
-      price: 44
     }
   }
 }
