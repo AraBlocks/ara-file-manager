@@ -18,6 +18,7 @@ if (shouldQuit) {
     return
 }
 
+app.setName('Ara Content Manager')
 app.on('ready', () => {
   windowManager.init()
   require('../kernel/lib/actionCreators')
