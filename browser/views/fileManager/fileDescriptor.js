@@ -107,7 +107,7 @@ class FileDescriptor extends Nanocomponent {
             span.addEventListener('animationend', () => span.classList.remove('fadeInUp'), false)
 
             const encodedName = encodeURIComponent(name)
-            copyToClipboard(`http://localhost:3001/download/${meta.aid}/${encodedName}`)
+            copyToClipboard(`lstr://download/${meta.aid}/${encodedName}`)
           }}
         >
           Copy Distribution Link<span>Copied !</span>
