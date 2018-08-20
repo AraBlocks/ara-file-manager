@@ -83,7 +83,9 @@ windowManager.loadURL = function (view) {
 
 windowManager.openDeepLinking = function (deepLinkingUrl) {
   parseLink()
-  getAFSPrice({ did: windowManager.fileInfo.aid }).then((price) => {
+
+  try {
+    const price = await getAFSPrice({ did: windowManager.fileInfo.aid })
     const modalName = 'reDownloadModal'
     if (windowManager.get(modalName).object != null) { return }
     windowManager.sharedData.set('current', modalName)
@@ -99,7 +101,9 @@ windowManager.openDeepLinking = function (deepLinkingUrl) {
       }
     ).open()
     windowManager.fileInfo.price = price
-  }).catch(console.log)
+  } catch(err) {
+    console.log(err)
+  }
 
   function parseLink() {
     const linkElements = deepLinkingUrl.slice(7).split("/")
