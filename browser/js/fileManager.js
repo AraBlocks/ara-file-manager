@@ -8,6 +8,7 @@ const {
   PUBLISHING,
   UPLOAD_COMPLETE
 } = require('../../lib/constants/stateManagement')
+
 const { ipcRenderer, remote } = require('electron')
 const isDev = require('electron-is-dev')
 const windowManager = remote.require('electron-window-manager')
