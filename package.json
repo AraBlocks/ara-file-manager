@@ -55,7 +55,7 @@
     "mocha": "^5.2.0"
   },
   "build": {
-    "appId": "yourappid",
+    "appId": "com.littlstar.ara-content-manager",
     "dmg": {
       "contents": [
         {
@@ -74,6 +74,12 @@
       "target": [
         "AppImage",
         "deb"
+      ]
+    },
+    "protocols": {
+      "name": "Ara Content Manager",
+      "schemes": [
+        "lstr"
       ]
     },
     "win": {}
