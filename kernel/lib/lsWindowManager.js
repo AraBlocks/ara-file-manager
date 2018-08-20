@@ -1,4 +1,5 @@
 'use strict'
+const { getAFSPrice } = require('../lib/actions/afsManager')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
@@ -78,6 +79,41 @@ windowManager.loadURL = function (view) {
       file = `file://${path.resolve(__dirname, '..', '..', 'browser', 'html', 'modal.html')}`
   }
   return file
+}
+
+windowManager.openDeepLinking = function (deepLinkingUrl) {
+  parseLink()
+
+  try {
+    const price = await getAFSPrice({ did: windowManager.fileInfo.aid })
+    const modalName = 'reDownloadModal'
+    if (windowManager.get(modalName).object != null) { return }
+    windowManager.sharedData.set('current', modalName)
+    windowManager.createNew(
+      modalName,
+      modalName,
+      windowManager.loadURL(modalName),
+      false,
+      {
+        backgroundColor: 'white',
+        frame: false,
+        ...windowManager.setSize(modalName),
+      }
+    ).open()
+    windowManager.fileInfo.price = price
+  } catch(err) {
+    console.log(err)
+  }
+
+  function parseLink() {
+    const linkElements = deepLinkingUrl.slice(7).split("/")
+    if (linkElements.length === 3 && linkElements[0] == 'download') {
+      windowManager.fileInfo = {
+        aid: linkElements[1],
+        fileName: linkElements[2],
+      }
+    }
+  }
 }
 
 windowManager.modalOpenStatus = false

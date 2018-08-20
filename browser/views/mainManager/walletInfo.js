@@ -19,16 +19,16 @@ class WalletInfo extends Nanocomponent {
 	update({ araOwned, exchangeRate }){
 		const { state } = this
 		const sameState = state.araOwned === araOwned && state.exchangeRate == exchangeRate
-		if (!sameState) { 
-			state.araOwned = araOwned 
+		if (!sameState) {
+			state.araOwned = araOwned
 			state.exchangeRate = exchangeRate
-		} 
+		}
 		return !sameState
 	}
 
 	createElement() {
 		const { state } = this
-		return html`		
+		return html`
 			<div class="${styles.container} WalletView-container">
 				<div class="${styles.priceContainer} WalletView-priceContainer">
 					<div class="${styles.araOwned} StylesUtil-proxiLarge">
