@@ -13,7 +13,7 @@ app.on('ready', () => {
   require('./tray')()
   require('./server')()
   require('../demoServer/demoServer')
-  globalShortcut.register('CommandOrControl+/', () => {
+  globalShortcut.register('CommandOrControl+\\', () => {
     windowManager.getCurrent().object.openDevTools()
   })
 })

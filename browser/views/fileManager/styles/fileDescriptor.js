@@ -26,7 +26,7 @@ module.exports = {
   clipboard: css`
     :host {
       cursor: pointer;
-      background-color: var(--ara-blue);
+      background-color: #1e7dfa;
       color: white;
       display: flex;
       flex-direction: column;
@@ -100,6 +100,7 @@ module.exports = {
 
   tooltip: css`
     :host {
+      color: black;
       display: flex;
       flex-direction: column;
       justify-content: space-around;

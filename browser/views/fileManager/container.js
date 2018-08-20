@@ -6,7 +6,10 @@ const styles = require('./styles/container')
 const html = require('choo/html')
 const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
-
+const tt = require('../../electron-tooltip')
+tt({
+  // config properties
+})
 class Container extends Nanocomponent {
   constructor({
     account,
@@ -55,10 +58,11 @@ class Container extends Nanocomponent {
     isDev && Object.assign(window, { container: this })
     return html`
       <div>
-        <div class="${styles.container} container-container">
-          <div>
-            ${children.header.render({ activeTab, userBalance })}
-            <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+      <div class="${styles.container} container-container">
+      <div>
+      ${children.header.render({ activeTab, userBalance })}
+      <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+      <a href="http://www.facebook.com" data-tooltip="<div>hi babe</div>" data-tooltip-position="top">fb</a>
               ${files.published.length || files.purchased.length
                 ? renderSections().map(section => section.render({ files }))
                 : renderNoFilesMsg()
