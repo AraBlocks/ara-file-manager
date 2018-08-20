@@ -11,7 +11,7 @@ module.exports = {
     }
   `,
 
-  clipboard:css`
+  clipboard: css`
     :host {
       cursor: pointer;
       background-color: #1e7dfa;
