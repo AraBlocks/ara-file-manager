@@ -1,7 +1,7 @@
 'use strict'
 
 const dispatch = require('../reducers/dispatch')
-const { download } = require('../actions')
+const { afsManager } = require('../actions')
 const {
 	DOWNLOAD,
 	DOWNLOADED,
@@ -34,7 +34,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 	})
 
 	dispatch({ type: DOWNLOAD_COMPLETE, load: windowManager.fileInfo.price})
-	download({did: windowManager.fileInfo.aid, handler: (load) => {
+	afsManager.download({did: windowManager.fileInfo.aid, handler: (load) => {
 		if (load.percentage !== 1) {
 			dispatch({
 				type: DOWNLOADING,
