@@ -20,16 +20,16 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
     load: {
 				downloadPercent: 0,
 				meta: {
-					aid: windowManager.fileInfo.aid,
+					aid: load.aid,
 					datePublished: '11/20/1989',
 					earnings: 2134.33,
 					peers: 353,
-					price: windowManager.fileInfo.price,
+					price: load.price,
 				},
-				name: windowManager.fileInfo.fileName,
+				name: load.fileName,
 				size: 0,
 				status: 1,
-				path: makeAfsPath(windowManager.fileInfo.aid)
+				path: makeAfsPath(load.aid)
 			}
 	})
 

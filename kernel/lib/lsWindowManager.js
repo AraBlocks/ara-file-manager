@@ -89,11 +89,12 @@ windowManager.loadURL = function (view) {
 }
 
 windowManager.openDeepLinking = async (deepLinkingUrl) => {
+  const fileInfo = parseLink()
   try {
-    const price = await getAFSPrice({ did: windowManager.fileInfo.aid })
+    const price = await getAFSPrice({ did: fileInfo.aid })
     dispatch({
       type: FEED_MODAL,
-      load: { price, ...parseLink() }
+      load: { price, ...fileInfo }
     })
     const modalName = 'reDownloadModal'
     if (windowManager.get(modalName).object != null) { return }
