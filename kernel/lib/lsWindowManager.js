@@ -9,6 +9,7 @@ windowManager.setSize = function (view) {
   switch (view) {
     case 'failureModal':
     case 'reDownloadModal':
+    case 'notEnoughAraModal':
       width = 340
       height = 200
       break
