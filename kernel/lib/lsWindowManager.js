@@ -7,9 +7,8 @@ windowManager.setSize = function (view) {
   let width
   let height
   switch (view) {
-    case 'failureModal':
     case 'reDownloadModal':
-    case 'notEnoughAraModal':
+    case 'generalMessageModal':
       width = 340
       height = 200
       break

@@ -82,6 +82,9 @@ module.exports = {
       font-size: 12px;
       margin-bottom: 2px;
     }
+    :host b {
+      font-family: ${fonts.bold};
+    }
   `,
 
   verticalContainer: css`

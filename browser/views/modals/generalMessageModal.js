@@ -1,23 +1,24 @@
 'use strict'
 
-const html = require('choo/html')
-const styles = require('./styles')
 const Button = require('../../components/button')
 const { closeWindow } = require('../../lib/tools/windowManagement')
+const generalModalTextProvider = require('../../lib/tools/generalModalTextProvider')
+const html = require('choo/html')
+const styles = require('./styles')
 
-module.exports = () => {
+module.exports = ({ modalName = 'fileMissing', fileName = 'Grump Cat' }) => {
   const confirmButton = new Button({
 		children: 'Confirm',
 		onclick: () => closeWindow()
 	})
+	const { description, title } = generalModalTextProvider(modalName, fileName)
   return html`
     <div class="${styles.container} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
-			Not enough ARA
+				${title}
       </div>
 			<div class="${styles.smallMessage} modal-smallMessage">
-				You do not have enough ARA Tokens to complete<br>
-				this transaction.
+				${description}
 			</div>
       <div>
         ${confirmButton.render()}
