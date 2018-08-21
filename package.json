@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
-    "ara-crypto": "github:arablocks/ara-crypto",
     "ara-context": "github:arablocks/ara-context",
+    "ara-crypto": "github:arablocks/ara-crypto",
     "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-identity": "github:arablocks/ara-identity",
     "ara-network": "github:arablocks/ara-network",
@@ -40,7 +40,9 @@
     "menubar": "*",
     "nanocomponent": "^6.5.2",
     "styleUtils": "file:browser/lib/styleUtils",
-    "user-home": "^2.0.0"
+    "typedarray-to-buffer": "^3.1.5",
+    "user-home": "^2.0.0",
+    "web3-providers-ws": "^1.0.0-beta.35"
   },
   "devDependencies": {
     "ava": "^0.25.0",

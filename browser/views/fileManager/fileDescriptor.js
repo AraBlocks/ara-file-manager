@@ -1,7 +1,7 @@
 'use strict'
 
 const DynamicButton = require('../../components/dynamicButton')
-const { copyToClipboard, openFolder } = require('../../lib/tools/windowManagement')
+const { openFolder } = require('../../lib/tools/windowManagement')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
@@ -31,7 +31,9 @@ class FileDescriptor extends Nanocomponent {
       button: new DynamicButton(this.buttonProps(status)),
       progressRing: new ProgressRing({ status, downloadPercent }),
       tooltip: new Tooltip({
-        tooltipText: this.makeTooltipText(meta, name)
+        id: meta.aid,
+        component: 'fileTooltip',
+        args: { meta, name }
       })
     }
   }

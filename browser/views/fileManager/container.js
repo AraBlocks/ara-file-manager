@@ -6,6 +6,7 @@ const styles = require('./styles/container')
 const html = require('choo/html')
 const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
+const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
   constructor({
@@ -52,13 +53,17 @@ class Container extends Nanocomponent {
       state: { activeTab, files, userBalance }
     } = this
 
+    tooltip({})
+
     isDev && Object.assign(window, { container: this })
     return html`
       <div>
-        <div class="${styles.container} container-container">
-          <div>
-            ${children.header.render({ activeTab, userBalance })}
-            <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+      <div class="${styles.container} container-container">
+      <div>
+      ${children.header.render({ activeTab, userBalance })}
+      <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+
+
               ${files.published.length || files.purchased.length
                 ? renderSections().map(section => section.render({ files }))
                 : renderNoFilesMsg()
