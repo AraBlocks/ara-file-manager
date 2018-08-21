@@ -10,6 +10,7 @@ const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
 	constructor({ account }) {
@@ -73,6 +74,7 @@ class Container extends Nanocomponent {
 	}
 
 	createElement(pending = false) {
+		tooltip({})
 		const { children } = this
 		return html`
 			<div>

@@ -81,7 +81,7 @@ windowManager.loadURL = function (view) {
   return file
 }
 
-windowManager.openDeepLinking = function (deepLinkingUrl) {
+windowManager.openDeepLinking = async (deepLinkingUrl) => {
   parseLink()
 
   try {
