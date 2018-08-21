@@ -15,6 +15,10 @@ windowManager.setSize = function (view) {
       width = 340
       height = 270
       break
+    case 'failureModal':
+      width = 340
+      height = 200
+      break
     case 'fManagerView':
     case 'filemanager':
       width = 490
