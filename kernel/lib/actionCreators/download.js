@@ -33,8 +33,8 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 			}
 	})
 
-	dispatch({ type: DOWNLOAD_COMPLETE, load: windowManager.fileInfo.price})
-	afsManager.download({did: windowManager.fileInfo.aid, handler: (load) => {
+	dispatch({ type: DOWNLOAD_COMPLETE, load: load.price})
+	afsManager.download({did: load.aid, handler: (load) => {
 		if (load.percentage !== 1) {
 			dispatch({
 				type: DOWNLOADING,
@@ -44,7 +44,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 		} else {
 			dispatch({
 				type: DOWNLOADED,
-				load: windowManager.fileInfo.aid
+				load: load.aid
 			})
 			windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
 		}
@@ -52,7 +52,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 		console.log('Download failed')
 		dispatch({
 			type: DOWNLOAD_FAILED,
-			load: windowManager.fileInfo.aid
+			load: load.aid
 		})
 		windowManager.get('filemanager').object.webContents.send(DOWNLOAD_FAILED)
 	}})
