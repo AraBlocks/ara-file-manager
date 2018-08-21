@@ -7,6 +7,7 @@ windowManager.setSize = function (view) {
   let width
   let height
   switch (view) {
+    case 'failureModal':
     case 'reDownloadModal':
       width = 340
       height = 200
@@ -14,10 +15,6 @@ windowManager.setSize = function (view) {
     case 'checkoutModal1':
       width = 340
       height = 270
-      break
-    case 'failureModal':
-      width = 340
-      height = 200
       break
     case 'fManagerView':
     case 'filemanager':
