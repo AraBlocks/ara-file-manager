@@ -14,8 +14,8 @@ const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
   }
 })
 if (shouldQuit) {
-    app.quit()
-    return
+  app.quit()
+  return
 }
 
 app.setName('Ara Content Manager')
@@ -34,11 +34,11 @@ app.on('ready', () => {
     windowManager.openDeepLinking(deepLinkingUrl)
   }
 })
-app.on('window-all-closed', () => {})
+app.on('window-all-closed', () => { })
 
-// For Deek Linking
+// For Deep Linking
 app.setAsDefaultProtocolClient('lstr')
-app.on('open-url', function (event, url) {
+app.on('open-url', (event, url) => {
   event.preventDefault()
   deepLinkingUrl = url
   if (app.isReady()) {
