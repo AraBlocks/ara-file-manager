@@ -34,7 +34,7 @@ app.on('ready', () => {
     windowManager.openDeepLinking(deepLinkingUrl)
   }
 })
-app.on('window-all-closed', () => { })
+app.on('window-all-closed', () => {})
 
 // For Deep Linking
 app.setAsDefaultProtocolClient('lstr')

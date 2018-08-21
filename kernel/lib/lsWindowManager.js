@@ -58,28 +58,32 @@ windowManager.loadURL = function (view) {
   switch (view) {
     case 'filemanager':
     case 'fManagerView':
-      file = `file://${path.resolve(__dirname, '..', '..', 'browser', 'html', 'file-manager.html')}`
+      file = 'file-manager'
       break
     case 'developer':
-      file = `file://${path.resolve(__dirname, '..', '..', 'browser', 'html', 'index-dev.html')}`
+      file = 'index-dev'
       break
     case 'manager':
     case 'mainManagerView':
-      file = `file://${path.resolve(__dirname, '..', '..', 'browser', 'html', 'index.html')}`
+      file = 'index'
       break
     case 'publishFileView':
-      file = `file://${path.resolve(__dirname, '..', '..', 'browser', 'html', 'publish-file.html')}`
+      file = 'publish-file'
       break
     case 'registration':
-      file = `file://${path.resolve(__dirname, '..', '..', 'browser', 'html', 'registration.html')}`
+      file = 'registration'
       break
     case 'testing':
-      file = `file://${path.resolve(__dirname, '..', '..', 'test', 'html', 'index.html')}`
+      file = 'index-test'
       break
     default:
-      file = `file://${path.resolve(__dirname, '..', '..', 'browser', 'html', 'modal.html')}`
+      file = 'modal'
   }
-  return file
+  return makeFilePath({ file, parent: file.includes('-test') ? 'test' : 'browser' })
+
+  function makeFilePath({ file, parent }) {
+    return `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}.html`)}`
+  }
 }
 
 windowManager.openDeepLinking = async (deepLinkingUrl) => {
