@@ -46,8 +46,7 @@ async function broadcast(did, handler) {
 }
 
 async function getAFSPrice({ did, password }) {
-	const result = await getPrice({ did, password })
-	return result
+	result = await getPrice({ did, password })
 }
 
 async function download({ did, handler, errorHandler }) {
