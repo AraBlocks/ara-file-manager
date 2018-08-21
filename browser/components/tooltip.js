@@ -6,16 +6,20 @@ const Nanocomponent = require('nanocomponent')
 
 class Tooltip extends Nanocomponent {
   constructor({
-    opts = {},
+    args,
+    component,
     icon = '?',
-    tooltipText = ''
+    id,
+    opts = {}
   }) {
     super()
 
     this.props = {
-      opts,
+      args,
+      component,
       icon,
-      tooltipText
+      id,
+      opts
     }
   }
 
@@ -26,11 +30,14 @@ class Tooltip extends Nanocomponent {
   createElement() {
     const { props } = this
     return html`
-      <div class="${styles.container(props.opts)} tooltip-container">
+      <div
+        class="${styles.container(props.opts)}
+        tooltip-container"
+        data-tooltip-id=${props.id}
+        data-tooltip-component=${props.component}
+        data-tooltip-args=${JSON.stringify(props.args)}
+      >
         ${props.icon}
-        <div class="${styles.textHolder(props.opts)} tooltip-textHolder">
-          ${props.tooltipText}
-        </div>
       </div>
     `
   }
