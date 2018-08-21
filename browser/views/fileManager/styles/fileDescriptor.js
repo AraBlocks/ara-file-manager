@@ -4,12 +4,6 @@ const { colors, fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-  aid: css`
-    :host {
-      color: ${colors.araLightBlack};
-      font-family: ${fonts.light};
-    }
-  `,
 
   buttonHolder: css`
     :host {
@@ -20,28 +14,6 @@ module.exports = {
       font-size: 12px;
       height: 25px;
       text-align: left;
-    }
-  `,
-
-  clipboard: css`
-    :host {
-      cursor: pointer;
-      background-color: var(--ara-blue);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      height: 2em;
-      justify-content: center;
-      position: relative;
-      width: 100%;
-    }
-
-    :host span {
-      animation-duration: 1000ms;
-      color: red;
-      left: 39%;
-      opacity: 0;
-      position: absolute;
     }
   `,
 
@@ -98,26 +70,11 @@ module.exports = {
     }
   `,
 
-  tooltip: css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 100px;
-    }
-  `,
 
   tooltipHolder: css`
     :host {
       margin-left: 5px;
       margin-top: 3px;
-    }
-  `,
-
-  published: css`
-    :host {
-      color: ${colors.araLightBlack};
-      font-family: ${fonts.light};
     }
   `
 }
