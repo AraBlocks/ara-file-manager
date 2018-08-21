@@ -26,7 +26,7 @@ module.exports = (load) => {
   return html`
     <div class="${styles.container} modals-container">
       <div>
-        <div class="${styles.messageBold} modal-messageBold">
+        <div class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin">
           Publish Now?
         </div>
         <div class="${styles.verticalContainer} modal-verticalContainer">

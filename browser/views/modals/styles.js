@@ -13,6 +13,12 @@ module.exports = {
     }
   `,
 
+  bottomMargin: css`
+    :host {
+      margin-bottom: 10px;
+    }
+  `,
+
   container: css`
     :host {
       align-items: center;
@@ -47,7 +53,6 @@ module.exports = {
     :host {
       font-family: ${fonts.bold};
       font-size: 25px;
-      margin-bottom: 10px;
     }
   `,
 
