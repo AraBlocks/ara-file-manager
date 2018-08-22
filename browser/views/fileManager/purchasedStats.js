@@ -35,7 +35,7 @@ class PurchasedStats extends Nanocomponent {
         <div class="${styles.stats} purchasedStats-stats">
           ${renderPeers()}
           <div class="${styles.earnings(status)} purchasedStats-earnings">
-            <b>Earnings:</b> ${earnings} ARA
+            <b>Earnings:</b> ${earnings} Ara
           </div>
         </div>
         ${renderButton()}

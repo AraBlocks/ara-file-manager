@@ -55,7 +55,7 @@ class PublishedStats extends Nanocomponent {
     return html`
       <div class="${styles.container(status)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
-          ${price} ARA
+          ${price} Ara
         </div>
         <div class="${styles.stats} publishedStats-stats">
           <div>
@@ -65,7 +65,7 @@ class PublishedStats extends Nanocomponent {
             |
           </div>
           <div>
-            <b>Earnings:</b> ${earnings} ARA
+            <b>Earnings:</b> ${earnings} Ara
           </div>
         </div>
         <div class="${styles.buttonHolder} publishedStats-buttonHolder">

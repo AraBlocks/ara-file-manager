@@ -5,7 +5,7 @@ module.exports = {
 
 function mockFiles() {
   return [
-  {
+    {
       downloadPercent: 0,
       meta: {
         aid: 'did:ara:fdkgi6c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
