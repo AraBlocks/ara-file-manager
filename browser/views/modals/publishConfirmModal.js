@@ -30,7 +30,7 @@ module.exports = (load) => {
           Publish Now?
         </div>
         <div class="${styles.verticalContainer} modal-verticalContainer">
-          <div class="${styles.smallMessage} modal-smallMessage">
+          <div class="${styles.smallMessage({})} modal-smallMessage">
             Publishing this file will cost:
           </div>
           <span class="${styles.postheader} modals-postheader">

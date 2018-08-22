@@ -17,7 +17,7 @@ module.exports = ({ modalName = 'fileMissing', fileName = 'Grump Cat' }) => {
       <div class="${styles.messageBold} modal-messageBold">
 				${title}
       </div>
-			<div class="${styles.smallMessage} modal-smallMessage">
+			<div class="${styles.smallMessage({})} modal-smallMessage">
 				${description}
 			</div>
       <div>

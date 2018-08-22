@@ -31,7 +31,7 @@ module.exports = ({
           for
         </div>
       <div>
-        <span class="${styles.bigBold} modals-bigBold">${price}</span> ARA
+        <span class="${styles.bigBold} modals-bigBold">${price}</span> Ara
       </div>
       </div>
       <div>
