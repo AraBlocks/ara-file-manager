@@ -29,7 +29,7 @@ class TabMenu extends Nanocomponent {
     return html`
       <div
         class="${styles.tab(isActive)} tab-tab"
-        onclick=${() =>props.selectTab(props.index)}
+        onclick=${() => props.selectTab(props.index)}
       >
         ${props.children}
       </div>
