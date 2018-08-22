@@ -18,6 +18,10 @@ windowManager.setSize = function (view) {
       width = 340
       height = 270
       break
+    case 'deleteConfirmModal':
+      width = 340
+      height = 485
+      break
     case 'fManagerView':
     case 'filemanager':
       width = 490
@@ -123,7 +127,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
     if (linkElements.length === 3 && linkElements[0] == 'download') {
       return {
         aid: linkElements[1],
-        fileName: linkElements[2],
+        fileName: decodeURIComponent(linkElements[2]),
       }
     }
   }

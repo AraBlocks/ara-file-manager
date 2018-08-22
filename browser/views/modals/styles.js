@@ -1,7 +1,7 @@
 'use strict'
 
 const { css } = require('css')
-const { buttonSelector, fonts } = require('styleUtils')
+const { buttonSelector, colorSelector, fonts } = require('styleUtils')
 
 module.exports = {
   buttonSelector,
@@ -77,15 +77,19 @@ module.exports = {
     }
   `,
 
-  smallMessage: css`
-    :host {
-      font-size: 12px;
-      margin-bottom: 2px;
-    }
-    :host b {
-      font-family: ${fonts.bold};
-    }
-  `,
+  smallMessage({
+    color  = 'black',
+  }) {
+    return css`
+      :host {
+        color: ${colorSelector(color)};
+        font-size: 12px;
+        margin-bottom: 2px;
+      }
+      :host b {
+        font-family: ${fonts.bold};
+      }`
+  },
 
   spinnerHolder: css`
     :host {
@@ -94,7 +98,7 @@ module.exports = {
       font-size: 4px;
     }
   `,
-  
+
   verticalContainer: css`
     :host {
       display: flex;

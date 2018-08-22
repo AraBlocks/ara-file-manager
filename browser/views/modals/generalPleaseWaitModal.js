@@ -11,13 +11,13 @@ module.exports = ({ modalName = 'pleaseWait', fileName = 'Grump Cat' }) => {
       <div class="${styles.messageBold} modal-messageBold">
 				Please wait...
       </div>
-			<div class="${styles.smallMessage} modal-smallMessage">
+			<div class="${styles.smallMessage({})} modal-smallMessage">
 				${description}
 			</div>
 			<div class="${styles.spinnerHolder} modal-spinnerHolder">
       	<div class="spinner-small-red ${styles.spinnerHolder}"></div>
 			</div>
-			<div class="${styles.smallMessage} modal-smallMessage">
+			<div class="${styles.smallMessage({})} modal-smallMessage">
 				${waitTime}
 			</div>
     </div>
