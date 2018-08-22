@@ -87,6 +87,14 @@ module.exports = {
     }
   `,
 
+  spinnerHolder: css`
+    :host {
+      display: flex;
+      justify-content: center;
+      font-size: 4px;
+    }
+  `,
+  
   verticalContainer: css`
     :host {
       display: flex;
