@@ -15,10 +15,7 @@ class Header extends Nanocomponent {
   }) {
     super()
 
-    this.props = {
-      username,
-      selectTab
-    }
+    this.props = { username }
 
     this.children = {
       publishFilebutton: new Button({
@@ -33,18 +30,18 @@ class Header extends Nanocomponent {
       }),
       closeButton: new UtilityButton({ children: '✕' }),
       minimizeButton: new UtilityButton({ children: '–', onclick: minimizeWindow }),
-      tabs: this.makeTabs()
+      tabs: this.makeTabs(selectTab)
     }
   }
 
-  makeTabs() {
+  makeTabs(selectTab) {
     const { props } = this
     const children = ['All Files', 'Published Files', 'Purchases']
     return children.map((child, index) =>
       new TabItem({
         children: child,
         index,
-        selectTab: props.selectTab
+        selectTab
       })
     )
   }
