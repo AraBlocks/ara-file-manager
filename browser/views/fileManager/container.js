@@ -58,16 +58,13 @@ class Container extends Nanocomponent {
     isDev && Object.assign(window, { container: this })
     return html`
       <div>
-      <div class="${styles.container} container-container">
-      <div>
-      ${children.header.render({ activeTab, userBalance })}
-      <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
-
-
+        <div class="${styles.container} container-container">
+          <div>
+            ${children.header.render({ activeTab, userBalance })}
+            <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
               ${files.published.length || files.purchased.length
                 ? renderSections().map(section => section.render({ files }))
-                : renderNoFilesMsg()
-              }
+                : renderNoFilesMsg()}
             </div>
           </div>
         </div>
