@@ -2,7 +2,7 @@
 
 const Button = require('../../components/button')
 const { closeWindow } = require('../../lib/tools/windowManagement')
-const generalModalTextProvider = require('../../lib/tools/generalModalTextProvider')
+const { generalModalText } = require('../../lib/tools/generalModalTextProvider')
 const html = require('choo/html')
 const styles = require('./styles')
 
@@ -11,7 +11,7 @@ module.exports = ({ modalName = 'fileMissing', fileName = 'Grump Cat' }) => {
 		children: 'Confirm',
 		onclick: () => closeWindow()
 	})
-	const { description, title } = generalModalTextProvider(modalName, fileName)
+	const { description, title } = generalModalText(modalName, fileName)
   return html`
     <div class="${styles.container} modals-container">
       <div class="${styles.messageBold} modal-messageBold">

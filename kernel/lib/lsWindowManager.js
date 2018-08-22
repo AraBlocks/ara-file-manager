@@ -21,6 +21,10 @@ windowManager.setSize = function (view) {
       width = 490
       height = 730
       break
+    case 'generalPleaseWaitModal':
+      width = 340
+      height = 220
+      break
     case 'login':
       width = 390
       height = 547
