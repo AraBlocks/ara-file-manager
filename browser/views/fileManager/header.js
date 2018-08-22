@@ -58,43 +58,39 @@ class Header extends Nanocomponent {
   }
 
   createElement({ activeTab, userBalance }) {
-    const {
-      children,
-      props,
-      state
-    } = this
+    const { children, props } = this
 
     return html`
-     <div class="${styles.container} header-container">
-      <div class="${styles.subHeader} header-subheader">
-        <div>
-          LTLSTAR
-        </div>
-        <div class="${styles.windowControlsHolder} header-windowControlsHolder">
-          ${children.minimizeButton.render({ children: '–'})}
-          ${children.closeButton.render({ children: '✕'})}
-        </div>
-      </div>
-      <div class="${styles.subHeader} header-subheader">
-        <div class="${styles.titleHolder} header-titleHolder">
-          File Manager
-        </div>
-        <div class="${styles.userHolder} header-userHolder">
+      <div class="${styles.container} header-container">
+        <div class="${styles.subHeader} header-subheader">
           <div>
-            <b>${props.username}</b>
+            LTLSTAR
           </div>
-          <div>
-            ${userBalance} ARA
+          <div class="${styles.windowControlsHolder} header-windowControlsHolder">
+            ${children.minimizeButton.render({ children: '–'})}
+            ${children.closeButton.render({ children: '✕'})}
           </div>
         </div>
+        <div class="${styles.subHeader} header-subheader">
+          <div class="${styles.titleHolder} header-titleHolder">
+            File Manager
+          </div>
+          <div class="${styles.userHolder} header-userHolder">
+            <div>
+              <b>${props.username}</b>
+            </div>
+            <div>
+              ${userBalance} Ara
+            </div>
+          </div>
+        </div>
+        <div class="${styles.tabHolder} header-tabHolder">
+          ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index}))}
+        </div>
+        <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
+          ${children.publishFilebutton.render()}
+        </div>
       </div>
-      <div class="${styles.tabHolder} header-tabHolder">
-        ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index}))}
-      </div>
-      <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
-        ${children.publishFilebutton.render()}
-      </div>
-     </div>
     `
   }
 }
