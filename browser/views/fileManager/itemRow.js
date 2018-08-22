@@ -19,12 +19,12 @@ class ItemRow extends Nanocomponent {
   }) {
     super()
 
-    this.state = {
-      downloadPercent,
-      meta,
-      status,
-      timer: false
-    }
+    // this.state = {
+    //   downloadPercent,
+    //   meta,
+    //   status,
+    //   timer: false
+    // }
 
     this.props = { typeRow }
 
@@ -44,32 +44,19 @@ class ItemRow extends Nanocomponent {
     }
   }
 
-  update({ downloadPercent, status }) {
-    const { state } = this
-    const isSame = downloadPercent === state.downloadPercent && status === this.status
-    if (!isSame) {
-      Object.assign(this.state, { downloadPercent, status })
-    }
-    return !isSame
+  update() {
+    return true
   }
 
-  createElement({ fileInfo }) {
-    const {
-      children,
-    } = this
-
-    const {
-      downloadPercent,
-      status,
-      meta
-    } = fileInfo
+  createElement({ downloadPercent, status, meta }) {
+    const { children } = this
 
     return html`
       <div class="${styles.container} ItemRow-container">
         <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
           ${children.fileDescriptor.render({ downloadPercent, status })}
         </div>
-          ${children.stats.render({ ...meta })}
+        ${children.stats.render({ ...meta })}
       </div>
     `
   }
