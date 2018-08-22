@@ -10,14 +10,16 @@ const Nanocomponent = require('nanocomponent')
 
 class Header extends Nanocomponent {
   constructor({
-    selectTab,
+    parentRerender,
+    parentState,
     username
   }) {
     super()
 
     this.props = {
-      username,
-      selectTab
+      parentRerender,
+      parentState,
+      username
     }
 
     this.children = {
@@ -44,7 +46,9 @@ class Header extends Nanocomponent {
       new TabItem({
         children: child,
         index,
-        selectTab: props.selectTab
+        isActive: index === props.parentState.activeTab,
+        parentRerender: props.parentRerender,
+        parentState: props.parentState,
       })
     )
   }
