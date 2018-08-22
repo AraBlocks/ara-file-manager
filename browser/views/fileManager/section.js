@@ -22,33 +22,17 @@ class Section extends Nanocomponent {
   }
 
   createElement({ files }) {
-    const { props } = this
-    const fileRows = this.makeRows(files[props.typeRow])
+    const { props: { typeRow } } = this
+    const fileRows = files.map(file => new ItemRow({ ...file, typeRow }))
     return html`
       <div class="${styles.container} section-container">
         <div class="${styles.header} section-header">
-          ${headerText()}
+          ${props.typeRow === 'purchased' ? 'Purchased' : 'Published Files'}
         </div>
         <div class="${styles.separator} section-separator"></div>
-        ${fileRows.map((file, i) => file.render({
-          downloadPercent: file.downloadPercent,
-          status: file.status,
-          fileInfo: files[props.typeRow][i]
-         }))}
+        ${fileRows.map((file, i) => file.render({ ...files[props.typeRow][i]}))}
       </div>
     `
-
-    function headerText() {
-      let text
-      switch (props.typeRow) {
-        case 'purchased':
-          text = 'Purchased'
-          break
-        default:
-          text = 'Published Files'
-      }
-      return text
-    }
   }
 }
 
