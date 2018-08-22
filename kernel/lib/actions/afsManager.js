@@ -11,8 +11,7 @@ async function broadcast(did, handler) {
 	const fullDid = 'did:ara:' + did
 	console.log('broadcasting for ', fullDid)
 	const { afs } = await create({ did: fullDid }).catch((e) => {
-		console.log(e)
-		console.log('Error creating afs when broadcasting')
+		console.log('Error creating afs when broadcasting', e)
 	})
 
 	// Join the discovery swarm for the requested content
@@ -55,7 +54,7 @@ async function download({ did, handler, errorHandler }) {
 	// Create a swarm for downloading the content
 	const fullDid = 'did:ara:' + did
 	const { afs } = await create({ did: fullDid }).catch(((err) => {
-		console.log(err)
+		console.log({createErr: err})
 		errorHandler()
 	}))
 
@@ -64,11 +63,11 @@ async function download({ did, handler, errorHandler }) {
 		let prevPercent = 0
 		feed.on('download', () => {
 			const size = feed.byteLength
-			console.log(size)
 			const total = feed.length
 			if (total) {
 				const downloaded = feed.downloaded()
 				const perc = downloaded / total
+				console.log({perc})
 				if (perc >= prevPercent + 0.04) {
 					prevPercent = perc
 					handler({ perc, size })
@@ -98,12 +97,12 @@ async function download({ did, handler, errorHandler }) {
 	}
 
 	async function onend() {
-		const files = await afs.readdir('.').catch((e) => {
-			console.log(e)
+		const files = await afs.readdir('.').catch(err => {
+			console.log({readdirErr: err})
 			errorHandler()
 		})
 		unarchiveAFS({ did, path: makeAfsPath(did) })
-		console.log(files)
+		console.log({files})
 		console.log(`Downloaded!`)
 		afs.close()
 		swarm.destroy()
@@ -117,7 +116,7 @@ async function download({ did, handler, errorHandler }) {
 			await afs.download('.')
 		}
 		catch (err) {
-			console.log(`Error: ${err}`)
+			console.log({downloadErr: err})
 			errorHandler()
 		}
 	}
@@ -131,7 +130,7 @@ function unarchiveAFS({ did, path }) {
 	try {
 		unarchive({ did, path })
 	} catch(err) {
-		console.log(err)
+		console.log({unarchiveErr: err})
 	}
 }
 
