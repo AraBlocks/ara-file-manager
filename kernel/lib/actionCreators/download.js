@@ -1,7 +1,7 @@
 'use strict'
 
 const dispatch = require('../reducers/dispatch')
-const { download } = require('../actions')
+const { afsManager } = require('../actions')
 const {
 	DOWNLOAD,
 	DOWNLOADED,
@@ -20,21 +20,21 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
     load: {
 				downloadPercent: 0,
 				meta: {
-					aid: windowManager.fileInfo.aid,
+					aid: load.aid,
 					datePublished: '11/20/1989',
 					earnings: 2134.33,
 					peers: 353,
-					price: windowManager.fileInfo.price,
+					price: load.price,
 				},
-				name: windowManager.fileInfo.fileName,
+				name: load.fileName,
 				size: 0,
 				status: 1,
-				path: makeAfsPath(windowManager.fileInfo.aid)
+				path: makeAfsPath(load.aid)
 			}
 	})
 
-	dispatch({ type: DOWNLOAD_COMPLETE, load: windowManager.fileInfo.price})
-	download({did: windowManager.fileInfo.aid, handler: (load) => {
+	dispatch({ type: DOWNLOAD_COMPLETE, load: load.price})
+	afsManager.download({did: load.aid, handler: (load) => {
 		if (load.percentage !== 1) {
 			dispatch({
 				type: DOWNLOADING,
@@ -44,7 +44,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 		} else {
 			dispatch({
 				type: DOWNLOADED,
-				load: windowManager.fileInfo.aid
+				load: load.aid
 			})
 			windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
 		}
@@ -52,7 +52,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 		console.log('Download failed')
 		dispatch({
 			type: DOWNLOAD_FAILED,
-			load: windowManager.fileInfo.aid
+			load: load.aid
 		})
 		windowManager.get('filemanager').object.webContents.send(DOWNLOAD_FAILED)
 	}})

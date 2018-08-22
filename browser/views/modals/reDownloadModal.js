@@ -6,20 +6,18 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
 
-module.exports = ({
-  price = windowManager.fileInfo.price
-}) => {
+module.exports = ({ aid, fileName, price }) => {
   const downloadButton = new Button({
     children: 'Download',
     onclick: () => {
       windowManagement.openWindow('filemanager')
-      windowManagement.emit({ event: DOWNLOAD, load: windowManager.fileInfo.aid })
+      windowManagement.emit({ event: DOWNLOAD, load: { aid, fileName, price } })
       windowManagement.closeWindow('reDownloadModal')
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: windowManagement.closeWindow
+    onclick: () => windowManagement.closeWindow('reDownloadModal')
   })
   return html`
     <div class="${styles.container} modals-container">
