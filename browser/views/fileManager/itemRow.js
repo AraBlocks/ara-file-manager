@@ -19,15 +19,7 @@ class ItemRow extends Nanocomponent {
   }) {
     super()
 
-    // this.state = {
-    //   downloadPercent,
-    //   meta,
-    //   status,
-    //   timer: false
-    // }
-
     this.props = { typeRow }
-
     this.children = {
       fileDescriptor: new FileDescriptor({
         downloadPercent,
@@ -37,7 +29,6 @@ class ItemRow extends Nanocomponent {
         size,
         status
       }),
-
       stats: typeRow === 'published'
         ? new PublishedStats({ ...meta, name, status })
         : new PurchasedStats({ ...meta, name, status })
@@ -50,7 +41,6 @@ class ItemRow extends Nanocomponent {
 
   createElement({ downloadPercent, status, meta }) {
     const { children } = this
-
     return html`
       <div class="${styles.container} ItemRow-container">
         <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
