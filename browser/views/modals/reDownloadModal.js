@@ -12,12 +12,12 @@ module.exports = ({ aid, fileName, price }) => {
     onclick: () => {
       windowManagement.openWindow('filemanager')
       windowManagement.emit({ event: DOWNLOAD, load: { aid, fileName, price } })
-      windowManagement.closeWindow('reDownloadModal')
+      windowManagement.closeModal('reDownloadModal')
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => windowManagement.closeWindow('reDownloadModal')
+    onclick: () => windowManagement.closeModal('reDownloadModal')
   })
   return html`
     <div class="${styles.container} modals-container">
@@ -25,7 +25,7 @@ module.exports = ({ aid, fileName, price }) => {
         Download this file?
       </div>
       <div class="${styles.verticalContainer} modal-verticalContainer">
-        <div class="${styles.smallMessage} modal-smallMessage">
+        <div class="${styles.smallMessage({})} modal-smallMessage">
           The download will cost:
         </div>
         <span class="${styles.postheader} modals-postheader">${price} ARA</span>
