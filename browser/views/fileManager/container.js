@@ -24,8 +24,8 @@ class Container extends Nanocomponent {
     this.children = {
       header: new Header({
         ...account,
-        parentRerender: this.rerender.bind(this),
-        parentState: this.state,
+        activeTab: this.state.activeTab,
+        selectTab: this.selectTab.bind(this)
        }),
 
       publishedSection: new Section({
@@ -39,7 +39,14 @@ class Container extends Nanocomponent {
       })
     }
 
+    this.rerender = this.rerender.bind(this)
     if (isDev) { window.components = { fileManager: this } }
+  }
+
+  selectTab(index) {
+    const { state, rerender } = this
+    state.activeTab = index
+    rerender()
   }
 
   update(store){

@@ -8,23 +8,15 @@ class TabMenu extends Nanocomponent {
   constructor({
     children,
     index,
-    parentState,
-    parentRerender
+    selectTab
   }) {
     super()
 
     this.props = {
       children,
       index,
-      parentState,
-      parentRerender
+      selectTab
     }
-  }
-
-  selectTab() {
-    const { props } = this
-    props.parentState.activeTab = props.index
-    props.parentRerender()
   }
 
   update(){
@@ -32,13 +24,12 @@ class TabMenu extends Nanocomponent {
   }
 
   createElement({ isActive }) {
-    const { props, state } = this
-    const selectTab = this.selectTab.bind(this)
+    const { props } = this
 
     return html`
       <div
         class="${styles.tab(isActive)} tab-tab"
-        onclick=${selectTab}
+        onclick=${() =>props.selectTab(props.index)}
       >
         ${props.children}
       </div>
