@@ -36,6 +36,8 @@ class FileDescriptor extends Nanocomponent {
         args: { meta, name }
       })
     }
+
+    this.buttonProps = this.buttonProps.bind(this)
   }
 
   buttonProps(status) {
@@ -91,19 +93,17 @@ class FileDescriptor extends Nanocomponent {
 
   createElement({ downloadPercent, status }) {
     const {
+      buttonProps,
       children,
       props
     } = this
-    const buttonProps = this.buttonProps.bind(this)
 
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
-          ${
-            status === 3
-              ? html`<div class="spinner-small-blue"></div>`
-              : children.progressRing.render({ downloadPercent, status })
-          }
+          ${status === 3
+            ? html`<div class="spinner-small-blue"></div>`
+            : children.progressRing.render({ downloadPercent, status })}
         </div>
         <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
           <div class="${styles.nameHolder} fileDescriptor-nameHolder">
@@ -115,7 +115,9 @@ class FileDescriptor extends Nanocomponent {
             </div>
           </div>
           <div class="${styles.sizeHolder(status)} fileDescriptor-sizeHolder">
-            ${renderSize()}
+            ${status === 1
+              ? `${Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
+              : filesize(props.size)}
           </div>
           <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
             ${children.button.render(buttonProps(status))}
@@ -123,19 +125,6 @@ class FileDescriptor extends Nanocomponent {
         </div>
       </div>
     `
-
-    function renderSize() {
-      let text
-      switch(status) {
-        case 0:
-        case 2:
-          text = filesize(props.size)
-          break
-        default:
-          text = `${Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
-      }
-      return text
-    }
   }
 }
 

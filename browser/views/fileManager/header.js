@@ -35,7 +35,6 @@ class Header extends Nanocomponent {
   }
 
   makeTabs(selectTab) {
-    const { props } = this
     const children = ['All Files', 'Published Files', 'Purchases']
     return children.map((child, index) =>
       new TabItem({
