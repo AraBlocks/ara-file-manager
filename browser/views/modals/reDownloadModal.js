@@ -12,12 +12,12 @@ module.exports = ({ aid, fileName, price }) => {
     onclick: () => {
       windowManagement.openWindow('filemanager')
       windowManagement.emit({ event: DOWNLOAD, load: { aid, fileName, price } })
-      windowManagement.closeWindow('reDownloadModal')
+      windowManagement.closeModal('reDownloadModal')
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => windowManagement.closeWindow('reDownloadModal')
+    onclick: () => windowManagement.closeModal('reDownloadModal')
   })
   return html`
     <div class="${styles.container} modals-container">

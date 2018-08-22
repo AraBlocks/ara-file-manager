@@ -3,7 +3,7 @@
 const html = require('choo/html')
 const styles = require('./styles')
 const Button = require('../../components/button')
-const { closeWindow } = require('../../lib/tools/windowManagement')
+const { closeModal } = require('../../lib/tools/windowManagement')
 
 module.exports = ({
   fileName = 'Some File',
@@ -13,7 +13,7 @@ module.exports = ({
   const buyButton = new Button({ children: 'Buy Now' })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => closeWindow()
+    onclick: () => closeModal()
    })
   return html`
     <div class="${styles.container} modals-container">

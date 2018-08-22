@@ -127,7 +127,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
     if (linkElements.length === 3 && linkElements[0] == 'download') {
       return {
         aid: linkElements[1],
-        fileName: linkElements[2],
+        fileName: decodeURIComponent(linkElements[2]),
       }
     }
   }

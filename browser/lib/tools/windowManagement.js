@@ -14,6 +14,11 @@ function changeMainManagerSize(expand) {
 	window.setSize(400, expand ? 525 : 325)
 }
 
+function closeModal(name = null) {
+	windowManager.modalIsOpen = false
+	closeWindow(name)
+}
+
 function closeWindow(name = null) {
 	name
 		? windowManager.get(name).object.close()
@@ -92,6 +97,7 @@ function quitApp() {
 module.exports = {
 	changeMainManagerSize,
 	copyToClipboard,
+	closeModal,
 	closeWindow,
 	emit,
 	openModal,

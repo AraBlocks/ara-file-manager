@@ -1,7 +1,7 @@
 'use strict'
 
 const { CONFIRM_PUBLISH } = require('../../../lib/constants/stateManagement')
-const { closeWindow, emit } = require('../../lib/tools/windowManagement')
+const { closeModal, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
 const html = require('choo/html')
@@ -11,15 +11,14 @@ module.exports = (load) => {
     children: 'Publish',
     onclick: () => {
       emit({ event: CONFIRM_PUBLISH, load: { ...load, cost: 59 } }),
-      closeWindow()
+      closeModal()
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
     onclick: () => {
-      windowManager.modalIsOpen = false
       closeWindow('publishFileView')
-      closeWindow()
+      closeModal()
     }
   })
 
