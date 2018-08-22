@@ -8,13 +8,7 @@ const Nanocomponent = require('nanocomponent')
 class Section extends Nanocomponent {
   constructor({ type = '' }) {
     super()
-
     this.props = { typeRow: type }
-  }
-
-  makeRows(files) {
-    const { props: { typeRow } } = this
-    return files.map(file => new ItemRow({ ...file, typeRow }))
   }
 
   update() {
@@ -23,14 +17,14 @@ class Section extends Nanocomponent {
 
   createElement({ files }) {
     const { props: { typeRow } } = this
-    const fileRows = files.map(file => new ItemRow({ ...file, typeRow }))
+    const fileRows = files[typeRow].map(file => new ItemRow({ ...file, typeRow }))
     return html`
       <div class="${styles.container} section-container">
         <div class="${styles.header} section-header">
-          ${props.typeRow === 'purchased' ? 'Purchased' : 'Published Files'}
+          ${typeRow === 'purchased' ? 'Purchased' : 'Published Files'}
         </div>
         <div class="${styles.separator} section-separator"></div>
-        ${fileRows.map((file, i) => file.render({ ...files[props.typeRow][i]}))}
+        ${fileRows.map((file, i) => file.render({ ...files[typeRow][i]}))}
       </div>
     `
   }
