@@ -16,7 +16,7 @@ module.exports = {
     await aid.archive(araId, {
       secret: SECRET,
       name: NAME,
-      keyring: '/Users/isabellee/.ara/secret/ara-archiver.pub'
+      keyring: `/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`
     })
     return araId.did.reference
   }
