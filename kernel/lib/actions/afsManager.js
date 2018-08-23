@@ -101,76 +101,85 @@ async function getAFSPrice({ did, password }) {
 }
 
 async function download({ did, handler, errorHandler }) {
-	console.log('Creating afs...')
-	// Create a swarm for downloading the content
-	const fullDid = 'did:ara:' + did
-	const { afs } = await create({ did: fullDid }).catch(((err) => {
-		console.log({createErr: err})
-		errorHandler()
-	}))
-
-	afs.on('content', () => {
-		const feed = afs.partitions.resolve(afs.HOME).content
-		let prevPercent = 0
-		feed.on('download', () => {
-			const size = feed.byteLength
-			const total = feed.length
-			if (total) {
-				const downloaded = feed.downloaded()
-				const perc = downloaded / total
-				console.log({perc})
-				if (perc >= prevPercent + 0.04) {
-					prevPercent = perc
-					handler({ perc, size })
-				}
-			}
-		})
-		feed.on('sync', onend)
-	})
-
-	// Join the discovery swarm for the requested content
-	console.log('Waiting for peer connection...')
-	const opts = {
-		stream: stream,
-	}
-	const swarm = createSwarm(opts)
-	swarm.once('connection', handleConnection)
-	swarm.join(fullDid)
-
-	function stream(peer) {
-		const stream = afs.replicate({
-			upload: false,
+	try {
+		araNetworkNodeDcdn.start({
+			did: did,
 			download: true
 		})
-		stream.once('end', onend)
-		stream.peer = peer
-		return stream
+	} catch(e) {
+		console.log(e)
 	}
 
-	async function onend() {
-		const files = await afs.readdir('.').catch(err => {
-			console.log({readdirErr: err})
-			errorHandler()
-		})
-		unarchiveAFS({ did, path: makeAfsPath(did) })
-		console.log({files})
-		console.log(`Downloaded!`)
-		afs.close()
-		swarm.destroy()
-		handler({ percentage: 1 })
-		console.log("Swarm destroyed")
-	}
+	// console.log('Creating afs...')
+	// // Create a swarm for downloading the content
+	// const fullDid = 'did:ara:' + did
+	// const { afs } = await create({ did: fullDid }).catch(((err) => {
+	// 	console.log({createErr: err})
+	// 	errorHandler()
+	// }))
 
-	async function handleConnection(connection, info) {
-		console.log(`SWARM: New peer: ${info.host} on port: ${info.port}`)
-		try {
-			await afs.download('.')
-		}
-		catch (err) {
-			console.log({downloadErr: err})
-			errorHandler()
-		}
-	}
+	// afs.on('content', () => {
+	// 	const feed = afs.partitions.resolve(afs.HOME).content
+	// 	let prevPercent = 0
+	// 	feed.on('download', () => {
+	// 		const size = feed.byteLength
+	// 		const total = feed.length
+	// 		if (total) {
+	// 			const downloaded = feed.downloaded()
+	// 			const perc = downloaded / total
+	// 			console.log({perc})
+	// 			if (perc >= prevPercent + 0.04) {
+	// 				prevPercent = perc
+	// 				handler({ perc, size })
+	// 			}
+	// 		}
+	// 	})
+	// 	feed.on('sync', onend)
+	// })
+
+	// // Join the discovery swarm for the requested content
+	// console.log('Waiting for peer connection...')
+	// const opts = {
+	// 	stream: stream,
+	// }
+	// const swarm = createSwarm(opts)
+	// swarm.once('connection', handleConnection)
+	// swarm.join(fullDid)
+
+	// function stream(peer) {
+	// 	const stream = afs.replicate({
+	// 		upload: false,
+	// 		download: true
+	// 	})
+	// 	stream.once('end', onend)
+	// 	stream.peer = peer
+	// 	return stream
+	// }
+
+	// async function onend() {
+	// 	const files = await afs.readdir('.').catch(err => {
+	// 		console.log({readdirErr: err})
+	// 		errorHandler()
+	// 	})
+	// 	unarchiveAFS({ did, path: makeAfsPath(did) })
+	// 	console.log({files})
+	// 	console.log(`Downloaded!`)
+	// 	afs.close()
+	// 	swarm.destroy()
+	// 	handler({ percentage: 1 })
+	// 	console.log("Swarm destroyed")
+	// }
+
+	// async function handleConnection(connection, info) {
+	// 	console.log(`SWARM: New peer: ${info.host} on port: ${info.port}`)
+	// 	try {
+	// 		await afs.download('.')
+	// 	}
+	// 	catch (err) {
+	// 		console.log({downloadErr: err})
+	// 		errorHandler()
+	// 	}
+	// }
 }
 
 function makeAfsPath(aid) {
