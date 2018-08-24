@@ -101,9 +101,10 @@ async function getAFSPrice({ did, password }) {
 }
 
 async function download({ did, handler, errorHandler }) {
+	const fullDid = 'did:ara:' + did
 	try {
 		araNetworkNodeDcdn.start({
-			did: did,
+			did: fullDid,
 			download: true
 		})
 	} catch(e) {
@@ -112,7 +113,7 @@ async function download({ did, handler, errorHandler }) {
 
 	// console.log('Creating afs...')
 	// // Create a swarm for downloading the content
-	// const fullDid = 'did:ara:' + did
+
 	// const { afs } = await create({ did: fullDid }).catch(((err) => {
 	// 	console.log({createErr: err})
 	// 	errorHandler()
