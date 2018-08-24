@@ -21,11 +21,7 @@ class PublishFileVIew extends Nanocomponent {
 
 	createElement() {
 		const { publishFileContainer } = this
-		return html`
-			<div>
-				${publishFileContainer.render()}
-			</div>
-		`
+		return html`<div>${publishFileContainer.render()}</div>`
 	}
 }
 

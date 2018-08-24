@@ -2,13 +2,13 @@
 
 const Button = require('../components/button')
 const { closeWindow, openWindow } = require('../lib/tools/windowManagement')
+const { emit } = require('../lib/tools/windowManagement')
 const Input = require('../components/input')
 const overlay = require('../components/overlay')
-const register = require('../lib/register')
 const styles = require('./styles/registration')
+const { PUBLISH } = require('../../lib/constants/stateManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-
 
 class Registration extends Nanocomponent {
   constructor() {
@@ -40,20 +40,26 @@ class Registration extends Nanocomponent {
       onclick: () => closeWindow()
     })
 
+    this.register = this.register.bind(this)
     this.render = this.render.bind(this)
+  }
+
+  register(e) {
+    e.preventDefault()
+    emit({ event: PUBLISH })
+    this.render({ pending: true })
   }
 
   update() {
     return true
   }
 
-  createElement(pending = false) {
+  createElement({ pending = false }) {
     const {
       cancelButton,
       passwordInput,
-      render,
       submitButton,
-      state
+      register
     } = this
 
     return html`
@@ -65,19 +71,13 @@ class Registration extends Nanocomponent {
           To use the <b>Littlstar Media Manager</b>, you'll need to create an ARA id. We will generate the ID
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
-        <form class=${styles.registerForm} onsubmit=${onsubmit}>
+        <form class=${styles.registerForm} onsubmit=${register}>
           ${passwordInput.render({})}
           ${submitButton.render({})}
         </form>
         ${cancelButton.render({})}
       </div>
     `
-    function onsubmit(e) {
-      e.preventDefault()
-      state.registering = true
-      register()
-      render(true)
-    }
   }
 }
 
