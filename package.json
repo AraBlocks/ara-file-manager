@@ -27,6 +27,7 @@
     "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-identity": "github:arablocks/ara-identity",
     "ara-network": "github:arablocks/ara-network",
+    "ara-network-node-dcdn": "github:arablocks/ara-network-node-dcdn",
     "body-parser": "^1.18.3",
     "choo": "^6.13.0",
     "cors": "^2.8.4",
