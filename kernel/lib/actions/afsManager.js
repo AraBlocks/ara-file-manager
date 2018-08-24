@@ -1,11 +1,9 @@
 'use strict'
 
-const { create, getPrice, unarchive } = require('ara-filesystem')
+const { getPrice, unarchive } = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const araNetworkNodeDcdn = require('ara-network-node-dcdn')
 const { publishDID } = require('ara-network-node-dcdn/subnet')
-const { createSwarm } = require('ara-network/discovery')
-const fs = require('fs')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
@@ -13,7 +11,6 @@ async function broadcast(did, handler) {
 	const fullDid = 'did:ara:' + did
 	console.log(`broadcasting..${fullDid}`)
 	const { account: { aid } } = windowManager.sharedData.fetch('store')
-	console.log(aid)
 	try {
 		araNetworkNodeDcdn.start({
 			did: fullDid,
