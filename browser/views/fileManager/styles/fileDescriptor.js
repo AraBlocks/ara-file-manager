@@ -4,12 +4,6 @@ const { colors, fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-  aid: css`
-    :host {
-      color: ${colors.araLightBlack};
-      font-family: ${fonts.light};
-    }
-  `,
 
   buttonHolder: css`
     :host {
@@ -17,6 +11,8 @@ module.exports = {
     }
 
     :host button {
+      font-size: 12px;
+      height: 25px;
       text-align: left;
     }
   `,
@@ -49,7 +45,7 @@ module.exports = {
     :host {
       display: flex;
       font-family: ${fonts.bold};
-      font-size: 20px;
+      font-size: 16px;
       width: 75%;
     }
   `,
@@ -59,7 +55,7 @@ module.exports = {
       :host {
         color: ${status === 0 ? 'grey' : 'black' };
         font-family: ${fonts.light};
-        font-size: 15px;
+        font-size: 13px;
       }
     `
   },
@@ -74,26 +70,11 @@ module.exports = {
     }
   `,
 
-  tooltip: css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 100px;
-    }
-  `,
 
   tooltipHolder: css`
     :host {
       margin-left: 5px;
       margin-top: 3px;
-    }
-  `,
-
-  published: css`
-    :host {
-      color: ${colors.araLightBlack};
-      font-family: ${fonts.light};
     }
   `
 }

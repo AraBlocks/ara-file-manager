@@ -8,45 +8,28 @@ class TabMenu extends Nanocomponent {
   constructor({
     children,
     index,
-    isActive,
-    parentState,
-    parentRerender
+    selectTab
   }) {
     super()
-
-    this.state = { isActive }
 
     this.props = {
       children,
       index,
-      parentState,
-      parentRerender
+      selectTab
     }
   }
 
-  selectTab() {
+  update(){
+    return true
+  }
+
+  createElement({ isActive }) {
     const { props } = this
-    props.parentState.activeTab = props.index
-    props.parentRerender()
-  }
-
-  update({ isActive }){
-    const { state } = this
-    const isSame = isActive === state.isActive
-    if (!isSame) {
-      state.isActive = isActive
-    }
-    return !isSame
-  }
-
-  createElement() {
-    const { props, state } = this
-    const selectTab = this.selectTab.bind(this)
 
     return html`
       <div
-        class="${styles.tab(state.isActive)} tab-tab"
-        onclick=${selectTab}
+        class="${styles.tab(isActive)} tab-tab"
+        onclick=${() => props.selectTab(props.index)}
       >
         ${props.children}
       </div>

@@ -12,74 +12,41 @@ class ItemRow extends Nanocomponent {
     downloadPercent,
     name,
     meta,
+    path,
     size,
     status,
     typeRow
   }) {
     super()
 
-    this.state = {
-      downloadPercent,
-      meta,
-      status
-    }
-
-    const constructorArgs = { ...meta, status }
+    this.props = { typeRow }
     this.children = {
       fileDescriptor: new FileDescriptor({
-        demoDownload: this.demoDownload.bind(this),
         downloadPercent,
         meta,
         name,
+        path,
         size,
         status
       }),
-
       stats: typeRow === 'published'
-        ? new PublishedStats(constructorArgs)
-        : new PurchasedStats(constructorArgs)
+        ? new PublishedStats({ ...meta, name, status })
+        : new PurchasedStats({ ...meta, name, status })
     }
   }
 
-  demoDownload() {
-    const { state } = this
-
-    state.status = 1
-    this.rerender()
-    state.timer = setInterval(() => {
-      state.downloadPercent = state.downloadPercent += .12
-      if (state.downloadPercent >= .999) {
-        state.downloadPercent = 1
-        state.status = 2
-        this.rerender()
-        clearInterval(state.timer)
-      }
-      this.rerender()
-    }, 1000)
+  update() {
+    return true
   }
 
-  update({ downloadPercent, status }) {
-    const { state } = this
-
-    const isSame = downloadPercent === state.downloadPercent && status === this.status
-    if (!isSame) {
-      Object.assign(this.state, { downloadPercent, status })
-    }
-    return !isSame
-  }
-
-  createElement() {
-    const {
-      children,
-      state: { downloadPercent, status}
-    } = this
-
+  createElement({ downloadPercent, status, meta }) {
+    const { children } = this
     return html`
       <div class="${styles.container} ItemRow-container">
         <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
           ${children.fileDescriptor.render({ downloadPercent, status })}
         </div>
-          ${children.stats.render({ status })}
+        ${children.stats.render({ ...meta })}
       </div>
     `
   }

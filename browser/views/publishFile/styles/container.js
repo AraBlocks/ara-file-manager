@@ -5,9 +5,9 @@ const { css } = require('css')
 
 module.exports = {
 	colors,
+	content: fontCSS.proxiContent,
 	fonts,
 	title: fontCSS.noeH1,
-	content: fontCSS.proxiContent,
 
 	container: css`
 		:host {

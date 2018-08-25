@@ -38,11 +38,11 @@ module.exports = {
       :host {
         background-color: white;
         border: .5px solid ${colors.araGrey};
+        cursor: default;
         font-size: 12px;
-        margin-left: 5px;
-        margin-top: -120px;
+        margin-left: 2px;
+        margin-top: -115px;
         max-width: ${maxWidth}px;
-        opacity: .85;
         padding: 5px;
         text-align: center;
         visibility: hidden;

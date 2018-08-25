@@ -1,11 +1,14 @@
 'use strict'
 
-const { closeWindow } = require('../lib/tools/windowManagement')
+const Button = require('../components/button')
+const { closeWindow, openWindow } = require('../lib/tools/windowManagement')
+const Input = require('../components/input')
+const overlay = require('../components/overlay')
+const register = require('../lib/register')
 const styles = require('./styles/registration')
 const html = require('choo/html')
-const Input = require('../components/input')
-const Button = require('../components/Button')
 const Nanocomponent = require('nanocomponent')
+
 
 class Registration extends Nanocomponent {
   constructor() {
@@ -34,23 +37,28 @@ class Registration extends Nanocomponent {
           weight: 'light'
         }
       },
-      onclick: closeWindow
+      onclick: () => closeWindow()
     })
+
+    this.render = this.render.bind(this)
   }
 
   update() {
     return true
   }
 
-  createElement() {
+  createElement(pending = false) {
     const {
+      cancelButton,
       passwordInput,
+      render,
       submitButton,
-      cancelButton
+      state
     } = this
 
     return html`
       <div class="modal">
+        ${overlay(pending)}
         <div class=${styles.header}>LTLSTAR</div>
         <div class=${styles.header}>Register</div>
         <p class=${styles.description}>
@@ -66,14 +74,18 @@ class Registration extends Nanocomponent {
     `
     function onsubmit(e) {
       e.preventDefault()
-
-      // if (state.password.length === 0) { throw Error("Password can't be left blank") }
-      // registration.createId(state.password)
-      //   .then(registration.archive)
-      //   .then(console.log)
-      //   .catch(console.log)
+      state.registering = true
+      register()
+      render(true)
     }
   }
 }
 
+const { remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
+
+windowManager.bridge.on('REGISTERED', () => {
+  openWindow('filemanager')
+  windowManager.get('registration').close()
+})
 module.exports = Registration

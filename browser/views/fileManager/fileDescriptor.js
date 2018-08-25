@@ -1,26 +1,29 @@
 'use strict'
 
-const html = require('choo/html')
 const DynamicButton = require('../../components/dynamicButton')
+const { openFolder } = require('../../lib/tools/windowManagement')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
+const filesize = require('filesize')
+const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
-    demoDownload,
     downloadPercent,
     meta,
     name,
+    path,
     size,
     status
   }) {
     super()
 
     this.props = {
-      demoDownload,
+      meta,
       name,
+      path,
       size
     }
 
@@ -28,9 +31,13 @@ class FileDescriptor extends Nanocomponent {
       button: new DynamicButton(this.buttonProps(status)),
       progressRing: new ProgressRing({ status, downloadPercent }),
       tooltip: new Tooltip({
-        tooltipText: this.makeTooltipText(meta)
+        id: meta.aid,
+        component: 'fileTooltip',
+        args: { meta, name }
       })
     }
+
+    this.buttonProps = this.buttonProps.bind(this)
   }
 
   buttonProps(status) {
@@ -42,7 +49,6 @@ class FileDescriptor extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'red' }
          }
-         props.onclick = this.props.demoDownload
          break
       case 1:
          props.children = 'Cancel Download'
@@ -52,33 +58,33 @@ class FileDescriptor extends Nanocomponent {
          }
          props.onclick = () => console.log('downloading')
          break
+      case 3:
+        props.children = 'Cancel Publish'
+        props.cssClass = {
+          name: 'smallInvisible',
+          opts: { color: 'grey' }
+        }
+        props.onclick = () => console.log('downloading')
+        break
+      case 4:
+        props.children = 'Download Failed'
+        props.cssClass = {
+          name: 'smallInvisible',
+          opts: { color: 'red' }
+        }
+        props.onclick = () => console.log('download failed')
+        break
       default:
         props.children = 'Open in Folder'
         props.cssClass = {
           name: 'smallInvisible',
           opts: { color: 'blue' }
         }
-        props.onclick = () => console.log('downloaded')
+        props.onclick = () => {
+          openFolder(this.props.path)
+        }
     }
     return props
-  }
-
-  makeTooltipText(meta) {
-    return html`
-      <div class="${styles.tooltip} fileDescriptor-tooltip">
-        <div>
-          <div>
-            AFS Id:
-          </div>
-          <div class="${styles.aid} fileDescriptor-aid">
-            ${meta.aid}
-          </div>
-        </div>
-        <div>
-          First Published: <span class="${styles.published} fileDescriptor-published">${meta.datePublished}</span>
-        </div>
-      </div>
-    `
   }
 
   update() {
@@ -87,15 +93,17 @@ class FileDescriptor extends Nanocomponent {
 
   createElement({ downloadPercent, status }) {
     const {
+      buttonProps,
       children,
-      props,
+      props
     } = this
 
-    const buttonProps = this.buttonProps.bind(this)
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
-          ${children.progressRing.render({ downloadPercent, status })}
+          ${status === 3
+            ? html`<div class="spinner-small-blue"></div>`
+            : children.progressRing.render({ downloadPercent, status })}
         </div>
         <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
           <div class="${styles.nameHolder} fileDescriptor-nameHolder">
@@ -107,7 +115,9 @@ class FileDescriptor extends Nanocomponent {
             </div>
           </div>
           <div class="${styles.sizeHolder(status)} fileDescriptor-sizeHolder">
-            ${renderSize()} gb
+            ${status === 1
+              ? `${Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
+              : filesize(props.size)}
           </div>
           <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
             ${children.button.render(buttonProps(status))}
@@ -115,19 +125,6 @@ class FileDescriptor extends Nanocomponent {
         </div>
       </div>
     `
-
-    function renderSize() {
-      let text
-      switch(status) {
-        case 0:
-        case 2:
-          text = props.size
-          break
-        default:
-          text = `${Math.round(downloadPercent * props.size * 100) / 100}/${props.size}`
-      }
-      return text
-    }
   }
 }
 

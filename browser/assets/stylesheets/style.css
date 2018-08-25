@@ -24,9 +24,12 @@ button {
 
 :root {
   --ara-input-grey: #cbcbcb;
+  --ara-blue: #1e7dfa;
+  --ara-red: #fc2636;
 }
 
 /* Classes */
+
 .modal {
   align-items: center;
   display: flex;
@@ -34,4 +37,94 @@ button {
   height: 100%;
   justify-content: space-around;
   width: 100%;
+}
+
+.overlay {
+  align-items: center;
+  background-color: rgba(0,0,0,0.5);
+  bottom: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.overlay > div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.spinner, .spinner:after, .spinner-small-blue, .spinner-small-red, .spinner:after {
+  border-radius: 50%;
+  width: 6em;
+  height: 6em;
+}
+
+.spinner {
+  margin: 60px auto;
+  font-size: 6px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: .5em solid rgba(255, 255, 255, 0.2);
+  border-right: .5em solid #ffffff;
+  border-bottom: .5em solid #ffffff;
+  border-left: .5em solid #ffffff;
+  transform: translateZ(0);
+  animation: spin 800ms infinite linear;
+}
+
+.spinner-small-blue {
+  font-size: 2px;
+  position: relative;
+  text-indent: -9999em;
+  border: .5em solid var(--ara-blue);
+  border-top: .5em solid rgba(255, 255, 255, 0.2);
+  transform: translateZ(0);
+  animation: spin 800ms infinite linear;
+}
+
+.spinner-small-red {
+  font-size: 2px;
+  position: relative;
+  text-indent: -9999em;
+  border: .5em solid var(--ara-red);
+  border-top: .5em solid rgba(255, 255, 255, 0.2);
+  transform: translateZ(0);
+  animation: spin 800ms infinite linear;
+}
+
+/* animations */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(0, -35px);
+    opacity: .7;
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp;
+  transition: all ease-in-out;
 }

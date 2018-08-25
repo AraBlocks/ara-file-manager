@@ -88,6 +88,7 @@ module.exports = {
       return selectedFont
   },
 
+
   fontCSS: {
     noeH1:  css`
       :host {
@@ -95,6 +96,7 @@ module.exports = {
         font-size: 24px;
       }
     `,
+
     proxiLarge: css`
       :host {
         font-family: "ProximaNova-Bold", sans-serif;

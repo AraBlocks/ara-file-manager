@@ -1,14 +1,14 @@
 module.exports = {
-  published: mockFiles(),
-  purchased: mockFiles()
+  published: [],
+  purchased: []
 }
 
 function mockFiles() {
   return [
-  {
+    {
       downloadPercent: 0,
       meta: {
-        aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+        aid: 'did:ara:fdkgi6c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
         datePublished: '11/20/1989',
         earnings: 237.43,
         peers: 1003,
@@ -21,7 +21,7 @@ function mockFiles() {
     {
       downloadPercent: 1,
       meta: {
-        aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+        aid: 'did:ara:oopd6c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
         datePublished: '11/20/1989',
         earnings: 54.33,
         peers: 33,
@@ -34,7 +34,7 @@ function mockFiles() {
     {
       downloadPercent: 0,
       meta: {
-        aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+        aid: 'did:ara:kdi986c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
         datePublished: '11/20/1989',
         earnings: 2134.33,
         peers: 353,

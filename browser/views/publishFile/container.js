@@ -1,13 +1,16 @@
 'use strict'
 
 const Button = require('../../components/button')
+const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
+const { PUBLISH } = require('../../../lib/constants/stateManagement')
+const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
-const { dispatch } = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
 	constructor({ account }) {
@@ -15,8 +18,9 @@ class Container extends Nanocomponent {
 
 		this.state = {
 			currency: '',
+			fileName: 'Ara',
 			filePath: '',
-			price: '',
+			price: '9.99',
 			priceManagement: true,
 			supernode: true,
 			account
@@ -49,42 +53,51 @@ class Container extends Nanocomponent {
 	publishFile() {
 		const {
 			account: { aid },
-			filePath
+			fileName,
+			filePath,
+			price
 		} = this.state
 		const {
 			ddo: { id: did },
 			password
 		} = aid
 
-		dispatch({ action: 'PUBLISH', load: {
-				did,
-				password,
-				paths: filePath
-			}
-		})
+		const event = PUBLISH
+		const load = {
+			did,
+			password,
+			paths: filePath,
+			name: fileName,
+			price
+		}
+		emit({ event, load })
 	}
 
-	createElement() {
+	createElement(pending = false) {
+		tooltip({})
 		const { children } = this
 		return html`
-			<div class="${styles.container} PublishFileContainer-container">
-				<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
-					Publish File
-					${children.utilityButton.render({})}
+			<div>
+				${overlay(pending)}
+				<div class="${styles.container} PublishFileContainer-container">
+					<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
+						Publish File
+						${children.utilityButton.render({})}
+					</div>
+					<div class="${styles.content} PublishFileContainer-content">
+						Publish your content for distribution on the ARA Network. You can publish a single file or an entire directory as a single
+						asset. Once published, use the provided distribution link to allow users to purchase your content.<br><br>
+						<b>Note:</b> ARA is a decentralized network. at least one computer or supernode must be connected and hosting this file for users
+						to be able to download it.
+					</div>
+					<div class="${styles.divider} PublishFileContainer-divider"></div>
+					${children.fileInfo.render()}
+					<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
+						${children.supernodeCheckbox.render()}
+						${children.priceManagementCheckbox.render()}
+					</div>
+					${children.publishButton.render()}
 				</div>
-				<div class="${styles.content} PublishFileContainer-content">
-					Publish your content for distribution on the ARA Network. You can publish a single file or an entire directory as a single
-					asset. Once published, use the provided distribution link to allow users to purchase your content.<br><br>
-					<b>Note:</b> ARA is a decentralized network. at least one computer or supernode must be connected and hosting this file for users
-					to be able to download it.
-				</div>
-				<div class="${styles.divider} PublishFileContainer-divider"></div>
-				${children.fileInfo.render()}
-				<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
-					${children.supernodeCheckbox.render()}
-					${children.priceManagementCheckbox.render()}
-				</div>
-				${children.publishButton.render()}
 			</div>
 		`
 	}

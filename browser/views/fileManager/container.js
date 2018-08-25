@@ -6,24 +6,25 @@ const styles = require('./styles/container')
 const html = require('choo/html')
 const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
+const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
   constructor({
-    userData,
+    account,
     files
   }) {
     super()
 
     this.state = {
       activeTab: 0,
-      files
+      files,
+      userBalance: account.userBalance
     }
 
     this.children = {
       header: new Header({
-        ...userData,
-        parentRerender: this.rerender.bind(this),
-        parentState: this.state,
+        ...account,
+        selectTab: this.selectTab.bind(this)
        }),
 
       publishedSection: new Section({
@@ -37,26 +38,40 @@ class Container extends Nanocomponent {
       })
     }
 
+    this.rerender = this.rerender.bind(this)
     if (isDev) { window.components = { fileManager: this } }
   }
 
-  update(){
+  selectTab(index) {
+    const { state, rerender } = this
+    state.activeTab = index
+    rerender()
+  }
+
+  update(store){
+    this.state.userBalance = store.account.userBalance
     return true
   }
 
   createElement() {
     const {
       children,
-      state: { activeTab, files }
+      state: { activeTab, files, userBalance }
     } = this
 
-    Object.assign(window, { container: this })
+    tooltip({})
+
+    isDev && Object.assign(window, { container: this })
     return html`
-      <div class="${styles.container} container-container">
-        <div>
-          ${children.header.render({ activeTab })}
-          <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
-            ${renderSections().map(section => section.render({ files }))}
+      <div>
+        <div class="${styles.container} container-container">
+          <div>
+            ${children.header.render({ activeTab, userBalance })}
+            <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+              ${files.published.length || files.purchased.length
+                ? renderSections().map(section => section.render({ files }))
+                : renderNoFilesMsg()}
+            </div>
           </div>
         </div>
       </div>
@@ -75,6 +90,30 @@ class Container extends Nanocomponent {
           sections.push(children.purchasedSection)
       }
       return sections
+    }
+
+    function renderNoFilesMsg() {
+      return html`
+        <div class="${styles.noFilesContainer} fileManager-noFilesContainer">
+          <div class="${styles.noFilesHeader} fileManager-noFilesHeader">
+            There are no files associated with your account
+          </div>
+          <p>
+            You can download files from users with ARA-enabled links.
+            <br>
+            You can also publish your own files into the network for distribution.
+          </p>
+          <p>
+            Downloading and hosting files will earn you ARA token rewards,
+            <br>
+            which can be spent to purchase more content on the network.
+          </p>
+          <a href="">
+            Learn More
+          </a>
+        </div>
+
+      `
     }
   }
 }

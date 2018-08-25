@@ -1,9 +1,0 @@
-;; Ethereum conf
-[web3]
-provider = http://127.0.0.1:9545 ;; truffle http
-;provider = http://127.0.0.1:8545 ;; geth
-;provider = http://127.0.0.1:7545 ;; ganache
-;provider = ws://127.0.0.1:9545 ;; truffle ws
-
-;; Identity network configuration
-[network.identity]

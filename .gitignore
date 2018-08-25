@@ -1,5 +1,7 @@
 .DS_store
 node_modules
 package-lock.json
-dist
+dist/
 .cfs
+release-builds/
+afses.json

@@ -1,21 +1,22 @@
 'use strict'
 
-const state = require('../store')
 const account = require('./account')
 const files = require('./files')
-const isDev = require('electron-is-dev')
+const modal = require('./modal')
+const state = require('../store')
 
 const reducers = [
   { property: 'account', reducer: account },
-  { property: 'files', reducer: files }
+  { property: 'files', reducer: files },
+  { property: 'modal', reducer: modal }
 ]
 
 module.exports = (action) => reducers.forEach(({ property, reducer }) => {
   return reducer(state[property], action)
 })
 
-if (isDev) {
-  const windowManager = require('electron-window-manager')
-  windowManager.sharedData.set('store', state)
-}
+
+const windowManager = require('electron-window-manager')
+windowManager.sharedData.set('store', state)
+
 

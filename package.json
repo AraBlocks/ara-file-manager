@@ -2,7 +2,7 @@
   "name": "ara-content-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "boot/main-dev.js",
+  "main": "boot/main.js",
   "scripts": {
     "start-dev": "electron boot/main.js",
     "test": "electron test/main.js",
@@ -22,38 +22,41 @@
   },
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
-    "ara-console": "github:arablocks/ara-console",
     "ara-context": "github:arablocks/ara-context",
     "ara-crypto": "github:arablocks/ara-crypto",
-    "ara-identity": "github:arablocks/ara-identity",
-    "ara-identity-archiver": "github:arablocks/ara-identity-archiver",
     "ara-filesystem": "github:arablocks/ara-filesystem",
+    "ara-identity": "github:arablocks/ara-identity",
     "ara-network": "github:arablocks/ara-network",
-    "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration",
-    "ara-network-node-identity-archiver": "github:arablocks/ara-network-node-identity-archiver",
-    "cfsnet": "github:arablocks/cfsnet",
+    "ara-network-node-dcdn": "github:arablocks/ara-network-node-dcdn",
+    "body-parser": "^1.18.3",
     "choo": "^6.13.0",
+    "cors": "^2.8.4",
     "css": "file:browser/lib/cssTool",
     "domready": "^1.0.8",
     "electron-is-dev": "^0.3.0",
     "electron-positioner": "^3.0.1",
     "electron-window-manager": "^1.0.6",
+    "filesize": "^3.6.1",
     "md5-hex": "^2.0.0",
     "menubar": "*",
     "nanocomponent": "^6.5.2",
-    "styleUtils": "file:browser/lib/styleUtils"
+    "styleUtils": "file:browser/lib/styleUtils",
+    "typedarray-to-buffer": "^3.1.5",
+    "user-home": "^2.0.0",
+    "web3-providers-ws": "^1.0.0-beta.35"
   },
   "devDependencies": {
     "ava": "^0.25.0",
     "chai": "^4.1.2",
-    "electron": "^2.0.3",
+    "debug": "^3.1.0",
+    "electron": "^2.0.5",
     "electron-builder": "^20.22.0",
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
     "mocha": "^5.2.0"
   },
   "build": {
-    "appId": "yourappid",
+    "appId": "com.littlstar.ara-content-manager",
     "dmg": {
       "contents": [
         {
@@ -72,6 +75,12 @@
       "target": [
         "AppImage",
         "deb"
+      ]
+    },
+    "protocols": {
+      "name": "Ara Content Manager",
+      "schemes": [
+        "lstr"
       ]
     },
     "win": {}

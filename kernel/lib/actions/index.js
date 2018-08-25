@@ -2,5 +2,7 @@
 
 module.exports = {
   accountSelection: require('./accountSelection'),
-  publish: require('./publish')
+  publish: require('./publish'),
+  register: require('./register'),
+  afsManager: require('./afsManager')
 }

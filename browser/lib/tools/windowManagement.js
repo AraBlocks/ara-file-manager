@@ -1,44 +1,62 @@
 'use strict'
 
-const remote = require('electron').remote
+const isDev = require('electron-is-dev')
+const {
+	clipboard,
+	ipcRenderer,
+	remote,
+	shell
+} = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 function changeMainManagerSize(expand) {
 	const window = windowManager.getCurrent().object
-	if (expand) {
-		window.setSize(400, 525)
-	} else {
-		window.setSize(400, 325)
-	}
+	window.setSize(400, expand ? 525 : 325)
 }
 
-function dispatch({action, load}) {
-	windowManager.bridge.emit(action, load)
+function closeModal(name = null) {
+	windowManager.modalIsOpen = false
+	closeWindow(name)
 }
 
-function closeWindow() {
-	windowManager.getCurrent().close()
+function closeWindow(name = null) {
+	name
+		? windowManager.get(name).object.close()
+		: windowManager.getCurrent().object.close()
+}
+
+function copyToClipboard(text, modifier = (a) => a) {
+	clipboard.writeText(modifier(text))
+}
+
+function emit({ event, load }) {
+	ipcRenderer.send(event, load)
 }
 
 function minimizeWindow() {
 	windowManager.getCurrent().minimize()
 }
 
+function openFolder(path) {
+	shell.openItem(path)
+}
+
 function openModal(view = 'modal') {
 	if (windowManager.modalIsOpen) {
 		windowManager.get('modal').focus()
 	} else {
+		windowManager.sharedData.set('current', view)
 		const modal = windowManager.open(
 			view,
 			view,
 			windowManager.loadURL(view),
 			false,
 			{
+				backgroundColor: 'white',
 				frame: false,
 				...windowManager.setSize(view),
 			}
 		)
-		modal.object.on('close', () => windowManager.modalIsOpen = false)
 		windowManager.modalIsOpen = true
 	}
 }
@@ -53,16 +71,19 @@ function transitionModal(view) {
 }
 
 function openWindow(view) {
-	windowManager.open(
-		view,
-		view,
-		windowManager.loadURL(view),
-		false,
-		{
-			frame: false,
-			...windowManager.setSize(view)
-		}
-	)
+	windowManager.get(view)
+		? windowManager.get(view).focus()
+		: windowManager.open(
+				view,
+				view,
+				windowManager.loadURL(view),
+				false,
+				{
+					backgroundColor: 'white',
+					frame: false,
+					...windowManager.setSize(view)
+				}
+			)
 }
 
 function setWindowSize(width, height, animated = false) {
@@ -75,11 +96,14 @@ function quitApp() {
 
 module.exports = {
 	changeMainManagerSize,
-	dispatch,
+	copyToClipboard,
+	closeModal,
 	closeWindow,
+	emit,
 	openModal,
 	minimizeWindow,
 	transitionModal,
+	openFolder,
 	openWindow,
 	setWindowSize,
 	quitApp

@@ -1,7 +1,7 @@
 'use strict'
 
 const { css } = require('css')
-const { buttonSelector, fonts } = require('styleUtils')
+const { buttonSelector, colorSelector, fonts } = require('styleUtils')
 
 module.exports = {
   buttonSelector,
@@ -13,16 +13,21 @@ module.exports = {
     }
   `,
 
+  bottomMargin: css`
+    :host {
+      margin-bottom: 10px;
+    }
+  `,
+
   container: css`
     :host {
       align-items: center;
       display: flex;
       flex-direction: column;
-      height: 100%;
-      height: 270px;
-      width: 340px;
       justify-content: space-around;
+      height: 95%;
       text-align: center;
+      width: 90%;
     }
 
     :host > * {
@@ -44,6 +49,13 @@ module.exports = {
     }
   `,
 
+  messageBold: css`
+    :host {
+      font-family: ${fonts.bold};
+      font-size: 25px;
+    }
+  `,
+
   postheader: css`
     :host {
       font-family: ${fonts.bold};
@@ -55,6 +67,43 @@ module.exports = {
     :host {
       font-size: 12px;
       margin-bottom: 5px;
+    }
+  `,
+
+  smallBold: css`
+    :host {
+      font-family: ${fonts.bold};
+      font-size: 20px;
+    }
+  `,
+
+  smallMessage({
+    color  = 'black',
+  }) {
+    return css`
+      :host {
+        color: ${colorSelector(color)};
+        font-size: 12px;
+        margin-bottom: 2px;
+      }
+      :host b {
+        font-family: ${fonts.bold};
+      }`
+  },
+
+  spinnerHolder: css`
+    :host {
+      display: flex;
+      justify-content: center;
+      font-size: 4px;
+    }
+  `,
+
+  verticalContainer: css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
   `
 }
