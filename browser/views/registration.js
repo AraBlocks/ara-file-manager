@@ -1,12 +1,12 @@
 'use strict'
 
 const Button = require('../components/button')
-const { closeWindow, openWindow } = require('../lib/tools/windowManagement')
+const { closeWindow } = require('../lib/tools/windowManagement')
 const { emit } = require('../lib/tools/windowManagement')
 const Input = require('../components/input')
 const overlay = require('../components/overlay')
 const styles = require('./styles/registration')
-const { PUBLISH } = require('../../lib/constants/stateManagement')
+const { REGISTER } = require('../../lib/constants/stateManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -46,7 +46,7 @@ class Registration extends Nanocomponent {
 
   register(e) {
     e.preventDefault()
-    emit({ event: PUBLISH })
+    emit({ event: REGISTER, load: 'abc' })
     this.render({ pending: true })
   }
 
@@ -81,11 +81,4 @@ class Registration extends Nanocomponent {
   }
 }
 
-const { remote } = require('electron')
-const windowManager = remote.require('electron-window-manager')
-
-windowManager.bridge.on('REGISTERED', () => {
-  openWindow('filemanager')
-  windowManager.get('registration').close()
-})
 module.exports = Registration
