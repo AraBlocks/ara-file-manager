@@ -24,7 +24,7 @@ app.on('ready', () => {
   require('../kernel/lib/actionCreators')
   if (isDev) { require('electron-reload')(path.resolve('browser')) }
   require('./tray')()
-  globalShortcut.register('CommandOrControl+/', () => {
+  globalShortcut.register('CommandOrControl+\\', () => {
     windowManager.getCurrent().object.openDevTools()
   })
   if (process.platform == 'win32') {
