@@ -97,7 +97,6 @@ class FileDescriptor extends Nanocomponent {
       children,
       props
     } = this
-
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">

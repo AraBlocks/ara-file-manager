@@ -15,10 +15,8 @@ const {
   UPLOAD_COMPLETE
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
-const { writeToHome } = require('../actions/write')
 
 ipcMain.on(PUBLISH, async (event, load) => {
-  writeToHome(load.paths)
   event.sender.send(ESTIMATING_COST)
 
   const estimate = await publish.addCreateEstimate(load)
@@ -29,14 +27,10 @@ ipcMain.on(PUBLISH, async (event, load) => {
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   const { account: { aid } } = windowManager.sharedData.fetch('store')
   const { password } = aid
-  publish.commit(Object.assign(load, { password }))
+  publish.commit({ ...load, password })
     .then(() => {
       dispatch({ type: PUBLISHED, load: load.cost })
-      setTimeout(() => {
-        windowManager.get('filemanager')
-          ? windowManager.get('filemanager').object.webContents.send(PUBLISHED)
-          : windowManager.get('fManagerView').object.webContents.send(PUBLISHED)
-      }, 3000)
+      windowManager.get('filemanager').object.webContents.send(PUBLISHED)
       afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
       afsManager.broadcast(
         load.did,
@@ -66,9 +60,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
     }
   })
 
-  windowManager.get('filemanager')
-    ? windowManager.get('filemanager').object.webContents.send(PUBLISHING)
-    : windowManager.get('fManagerView').object.webContents.send(PUBLISHING)
-
+  windowManager.get('filemanager').object.webContents.send(PUBLISHING)
   windowManager.get('publishFileView').close()
 })
