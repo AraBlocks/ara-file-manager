@@ -7,7 +7,7 @@ const { publishDID } = require('ara-network-node-dcdn/subnet')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
-async function broadcast(did, handler) {
+async function broadcast(did) {
 	const fullDid = 'did:ara:' + did
 	console.log(`broadcasting..${fullDid}`)
 	const { account: { aid } } = windowManager.sharedData.fetch('store')
