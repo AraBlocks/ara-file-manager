@@ -13,18 +13,19 @@ const Nanocomponent = require('nanocomponent')
 const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
-	constructor({ account }) {
+	constructor({ did, password }) {
 		super()
 
 		this.state = {
 			currency: '',
 			fileName: 'Ara',
 			filePath: '',
-			price: '9.99',
+			price: null,
 			priceManagement: true,
 			supernode: true,
-			account
 		}
+
+		this.props = { did, password }
 
 		this.children = {
 			fileInfo: new FileInfo({
@@ -52,17 +53,12 @@ class Container extends Nanocomponent {
 
 	publishFile() {
 		const {
-			account: { aid },
 			fileName,
 			filePath,
 			price
 		} = this.state
-		const {
-			ddo: { id: did },
-			password
-		} = aid
+		const { did, password } = this.props
 
-		const event = PUBLISH
 		const load = {
 			did,
 			password,
@@ -70,15 +66,15 @@ class Container extends Nanocomponent {
 			name: fileName,
 			price
 		}
-		emit({ event, load })
+		emit({ event: PUBLISH, load })
 	}
 
-	createElement(pending = false) {
+	createElement({ spinner = false }) {
 		tooltip({})
 		const { children } = this
 		return html`
 			<div>
-				${overlay(pending)}
+				${overlay(spinner)}
 				<div class="${styles.container} PublishFileContainer-container">
 					<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
 						Publish File
