@@ -49,6 +49,20 @@ module.exports = {
     }
   `,
 
+  horizontalContainer: css`
+    :host {
+      display: flex;
+      justify-content: center;
+    }
+  `,
+
+  link: css`
+    :host {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  `,
+
   messageBold: css`
     :host {
       font-family: ${fonts.bold};
@@ -90,6 +104,12 @@ module.exports = {
         font-family: ${fonts.bold};
       }`
   },
+
+  smallPadding: css`
+    :host {
+      padding: 0px 2px;
+    }
+  `,
 
   spinnerHolder: css`
     :host {

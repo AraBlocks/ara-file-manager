@@ -34,6 +34,14 @@ module.exports = {
           }
         }
         break
+      case 'blue':
+        opts = {
+          cssClass: {
+            opts: {
+              color: 'blue'
+             }
+          }
+        }
       default:
     }
     return opts
