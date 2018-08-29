@@ -17,11 +17,15 @@ const {
 const windowManager = require('electron-window-manager')
 
 ipcMain.on(PUBLISH, async (event, load) => {
-  event.sender.send(ESTIMATING_COST)
+  try {
+    event.sender.send(ESTIMATING_COST)
 
-  const estimate = await publish.addCreateEstimate(load)
-  dispatch({ type: FEED_MODAL, load: estimate })
-  event.sender.send(ESTIMATION)
+    const estimate = await publish.addCreateEstimate(load)
+    dispatch({ type: FEED_MODAL, load: estimate })
+    event.sender.send(ESTIMATION)
+  } catch(e) {
+    console.log(e)
+  }
 })
 
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
