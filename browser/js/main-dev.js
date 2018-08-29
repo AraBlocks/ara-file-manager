@@ -42,13 +42,12 @@ function createElement(view, isModal = false) {
   div.appendChild(button)
 }
 
-
 if (argv.includes('loggedin')) {
-  const { LOGIN_DEV } = require('../lib/constants/stateManagement')
+  const { LOGIN_DEV } = require('../../lib/constants/stateManagement')
   void async function() {
     windowManager.bridge.emit(LOGIN_DEV, {
-      password: argv[argv.length - 1],
-      afsId: argv[argv.length - 2]
+      password: argv[argv.length - 2],
+      afsId: argv[argv.length - 3]
     })
   }()
 }
