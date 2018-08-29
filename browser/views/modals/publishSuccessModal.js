@@ -2,7 +2,7 @@
 
 const Button = require('../../components/button')
 const { closeModal } = require('../../lib/tools/windowManagement')
-const { copyToClipboard } = require('../../lib/tools/windowManagement')
+const { copyDistributionLink } = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const styles = require('./styles')
 
@@ -16,7 +16,7 @@ module.exports = ({ aid = 'e89160647bd617d33ac386ed89f069d366711cafec9036d908058
 		children: 'Copy Link',
 		...styles.buttonSelector('blue'),
 		onclick: () => {
-			copyToClipboard(`lstr://download/${aid}/${encodedName}`)
+			copyDistributionLink(aid, fileName)
 		}
 	})
   return html`

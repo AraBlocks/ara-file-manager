@@ -29,6 +29,11 @@ function copyToClipboard(text, modifier = (a) => a) {
 	clipboard.writeText(modifier(text))
 }
 
+function copyDistributionLink(aid, fileName) {
+	const encodedName = encodeURIComponent(fileName)
+	copyToClipboard(`lstr://download/${aid}/${encodedName}`)
+}
+
 function emit({ event, load }) {
 	ipcRenderer.send(event, load)
 }
@@ -96,6 +101,7 @@ function quitApp() {
 
 module.exports = {
 	changeMainManagerSize,
+	copyDistributionLink,
 	copyToClipboard,
 	closeModal,
 	closeWindow,

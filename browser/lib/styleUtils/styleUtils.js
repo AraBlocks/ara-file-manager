@@ -39,7 +39,7 @@ module.exports = {
           cssClass: {
             opts: {
               color: 'blue'
-             }
+            }
           }
         }
       default:
