@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acms:account')
 const {
   DOWNLOAD_COMPLETE,
   LOGIN,
@@ -9,6 +10,7 @@ const {
  } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load, type }) => {
+  debug('Old state: %O', state)
   switch (type) {
     case LOGIN:
       state.aid = load[0]
@@ -28,6 +30,7 @@ module.exports = (state, { load, type }) => {
       state.userBalance = state.userBalance - Number(load)
       break
     default:
+      debug('New state: %O', state)
       return state
   }
   return state

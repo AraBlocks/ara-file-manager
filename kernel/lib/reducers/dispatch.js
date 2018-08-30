@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acm:kernel:lib:reducers:dispatch')
 const account = require('./account')
 const files = require('./files')
 const modal = require('./modal')
@@ -12,6 +13,7 @@ const reducers = [
 ]
 
 module.exports = (action) => reducers.forEach(({ property, reducer }) => {
+  debug('Firing reducer: %s', action)
   return reducer(state[property], action)
 })
 

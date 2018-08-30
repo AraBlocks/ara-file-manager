@@ -1,6 +1,6 @@
 'use strict'
 
-const isDev = require('electron-is-dev')
+const debug = require('debug')('browser:lib:tools:windowManagement')
 const {
 	clipboard,
 	ipcRenderer,
@@ -30,6 +30,7 @@ function copyToClipboard(text, modifier = (a) => a) {
 }
 
 function emit({ event, load }) {
+	debug('Emit: %o', { event, load })
 	ipcRenderer.send(event, load)
 }
 
@@ -46,7 +47,7 @@ function openModal(view = 'modal') {
 		windowManager.get('modal').focus()
 	} else {
 		windowManager.sharedData.set('current', view)
-		const modal = windowManager.open(
+		windowManager.open(
 			view,
 			view,
 			windowManager.loadURL(view),
