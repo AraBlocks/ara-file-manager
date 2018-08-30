@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { getPrice, unarchive } = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const araNetworkNodeDcdn = require('ara-network-node-dcdn')
@@ -51,11 +52,8 @@ function makeAfsPath(aid) {
 }
 
 function unarchiveAFS({ did, path }) {
-	try {
-		unarchive({ did, path })
-	} catch(err) {
-		console.log({unarchiveErr: err})
-	}
+	debug('Unarchiving %o', { did, path })
+	unarchive({ did, path })
 }
 
 module.exports = {

@@ -48,7 +48,7 @@ class Registration extends Nanocomponent {
   register(e) {
     e.preventDefault()
     const { password } = this.state
-    debug('Registering with password: %s', password)
+    debug('Emitting %s . Load: %s', REGISTER, password)
     emit({ event: REGISTER, load: password })
     this.render({ pending: true })
   }

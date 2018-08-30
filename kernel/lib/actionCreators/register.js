@@ -14,13 +14,13 @@ const { blake2b } = require('ara-crypto')
 const { toHex } = require('ara-identity/util')
 
 ipcMain.on(REGISTER, async (event, password) => {
-  debug('%s heard: %s', REGISTER, password)
+  debug('%s heard. load: %s', REGISTER, password)
   try {
     const araId = await register.create(password)
 
     const afsId = toHex(blake2b(araId.publicKey))
     await register.archive(araId)
-    const [account] = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === afsId)
+    const [ account ] = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === afsId)
 
     debug('Dispatching %s', LOGIN_DEV)
     dispatch({
