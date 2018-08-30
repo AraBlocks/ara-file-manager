@@ -57,25 +57,9 @@ module.exports = {
     }
   },
 
-<<<<<<< HEAD
   async commit({ did, password, gasEstimate, price = null }) {
     try {
       const result = await afs.commit({ did, password, gasEstimate })
-=======
-  async commit({ did, password, gasEstimate, price = null }){
-    console.log('committing')
-    let result
-    try {
-      result = await afs.commit({ did, password, gasEstimate })
-      console.log(result)
-    } catch(e) {
-      console.log(e)
-    }
-    if (result instanceof Error) {
-      console.log(result)
-    } else {
-      console.log("file(s) successfully committed")
->>>>>>> cache
       if (price != null) {
         await afs.setPrice({ did, password, price: Number(price) })
         debug('Price set succesfully: %s', price)
