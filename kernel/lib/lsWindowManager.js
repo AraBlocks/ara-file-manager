@@ -135,6 +135,12 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
 
 windowManager.modalOpenStatus = false
 
+windowManager.pingView = ({ view, event, load = null }) => {
+  const window = windowManager.get(view)
+  if (!window) { return }
+  window.object.webContents.send(event, load)
+}
+
 Object.defineProperty(windowManager, 'modalIsOpen', {
   get: function() { return this.modalOpenStatus },
   set: function(bool) { this.modalOpenStatus = bool }
