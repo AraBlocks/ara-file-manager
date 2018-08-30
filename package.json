@@ -23,11 +23,13 @@
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
     "ara-context": "github:arablocks/ara-context",
+    "ara-contracts": "github:arablocks/ara-contracts",
     "ara-crypto": "github:arablocks/ara-crypto",
     "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-identity": "github:arablocks/ara-identity",
     "ara-network": "github:arablocks/ara-network",
     "ara-network-node-dcdn": "github:arablocks/ara-network-node-dcdn",
+    "ara-util": "github:arablocks/ara-util",
     "body-parser": "^1.18.3",
     "choo": "^6.13.0",
     "cors": "^2.8.4",
