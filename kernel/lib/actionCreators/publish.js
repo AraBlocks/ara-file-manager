@@ -43,7 +43,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         debug('Dispatch %s . Load: %s', PUBLISHED, load.cost)
         dispatch({ type: PUBLISHED, load: load.cost })
         fileManagerOpen() && windowManager.get('filemanager').object.webContents.send(PUBLISHED)
-        afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
+        // afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         // afsManager.broadcast(
         //   load.did,
         //   () => {

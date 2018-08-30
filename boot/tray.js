@@ -16,7 +16,7 @@ const buildTray = () => {
 
   const menuItems = [
     { label: 'Register', type: 'normal', click: () => openWindow('registration') },
-    { label: 'File Manager', type: 'normal', click: () => openWindow('fManagerView') },
+    { label: 'File Manager', type: 'normal', click: () => openWindow('filemanager') },
     { label: 'Publish File', type: 'normal', click: () => openWindow('publishFileView') },
     { label: 'Log Out', type: 'normal' },
     { label: 'Quit', type: 'normal', role: 'quit' }
