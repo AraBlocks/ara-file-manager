@@ -30,8 +30,8 @@ module.exports = (state, { load, type }) => {
       state.userBalance = state.userBalance - Number(load)
       break
     default:
-      debug('New state: %O', state)
-      return state
+    return state
   }
+  debug('New state: %O', state)
   return state
 }

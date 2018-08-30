@@ -13,8 +13,8 @@ module.exports = (state, { load, type }) => {
       state.data = load
       break
     default:
-    debug('New state: %O', state)
     return state
   }
+  debug('New state: %O', state)
   return state
 }

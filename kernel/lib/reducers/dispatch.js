@@ -13,7 +13,6 @@ const reducers = [
 ]
 
 module.exports = (action) => reducers.forEach(({ property, reducer }) => {
-  debug('Firing reducer: %s', action)
   return reducer(state[property], action)
 })
 
