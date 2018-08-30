@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:araContractsManager')
+const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const {
   web3: {
     account,
