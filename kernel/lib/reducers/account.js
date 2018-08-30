@@ -10,12 +10,8 @@ const {
  } = require('../../../lib/constants/stateManagement')
 const araContractsManager = require('../actions/araContractsManager')
 
-<<<<<<< HEAD
 module.exports = (state, { load, type }) => {
   debug('Old state: %O', state)
-=======
-module.exports = async (state, { load, type }) => {
->>>>>>> cache
   switch (type) {
     case LOGIN:
       state.aid = load[0]

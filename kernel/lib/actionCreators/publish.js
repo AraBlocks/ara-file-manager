@@ -36,7 +36,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard. Load: %O', CONFIRM_PUBLISH, load)
   const { account: { aid } } = windowManager.sharedData.fetch('store')
   const { password } = aid
-<<<<<<< HEAD
   try {
     debug('Committing AFS')
     publish.commit({ ...load, password })
@@ -71,21 +70,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         status: 3,
         path: makeAfsPath(load.did)
       }
-=======
-  console.log('confirm publish')
-  publish.commit({ ...load, password })
-    .then(() => {
-      dispatch({ type: PUBLISHED, load: load.cost })
-      windowManager.get('filemanager').object.webContents.send(PUBLISHED)
-     // afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
-      // afsManager.broadcast(
-      //   load.did,
-      //   () => {
-      //     dispatch({ type: UPLOAD_COMPLETE, load: load.price})
-      //     windowManager.get('filemanager').object.webContents.send(UPLOAD_COMPLETE)
-      //   }
-      // )
->>>>>>> cache
     })
 
     fileManagerOpen() && windowManager.get('filemanager').object.webContents.send(PUBLISHING)
