@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acm:browser:views:publishFile:container')
 const Button = require('../../components/button')
 const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
@@ -66,6 +67,8 @@ class Container extends Nanocomponent {
 			name: fileName,
 			price
 		}
+
+		debug('Emitting %s . Load: %O', PUBLISH, load)
 		emit({ event: PUBLISH, load })
 	}
 
