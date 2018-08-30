@@ -27,14 +27,16 @@ module.exports = ({ aid = 'e89160647bd617d33ac386ed89f069d366711cafec9036d908058
 			<div class="${styles.smallMessage({})} modal-smallMessage">
 				has been successfully published!<br><br>
 				Use this link to distribute this file to other users:<br>
-				<div class="${styles.link}"><b>${`lstr://download/${aid}/${encodedName}`}</b></div>
+				<div class="${styles.link}">
+					<b>${`lstr://download/${aid}/${encodedName}`}</b>
+				</div>
 			</div>
 			${copyLinkButton.render()}
 			<div class="${styles.smallMessage({})} modal-smallMessage">
 				You can edit this file and retrieve the distribution link<br>
 				<div class="${styles.horizontalContainer}">
 					any time by clicking
-					<div class="${styles.smallMessage({ color: 'blue' })} ${styles.smallPadding} modal-smallMessage">
+					<div class="${styles.smallMessage({ color: 'blue' })} ${styles.smallPadding} modal-smallMessage,smallPadding">
 						<b>Manage File</b>
 					</div>
 					in the full file list.
