@@ -10,7 +10,7 @@ const windowManager = require('electron-window-manager')
 
 async function broadcast(did) {
 	const fullDid = 'did:ara:' + did
-	console.log(`broadcasting..${fullDid}`)
+	debug('Broadcasting for %s', fullDid)
 	const { account: { aid } } = windowManager.sharedData.fetch('store')
 	try {
 		araNetworkNodeDcdn.start({
@@ -25,25 +25,27 @@ async function broadcast(did) {
       name: 'remote1',
       keys: path.resolve(`/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`),
     })
-	} catch(e) {
-		console.log(e)
+	} catch(err) {
+		debug('Error broadcasting %O', err)
 	}
 }
 
 async function getAFSPrice({ did, password }) {
+	debug('Getting price for %s', did)
 	const result = await getPrice({ did, password })
 	return result
 }
 
 async function download({ did, handler, errorHandler }) {
+	debug('Downloading through DCDN: %s', did)
 	const fullDid = 'did:ara:' + did
 	try {
 		araNetworkNodeDcdn.start({
 			did: fullDid,
 			download: true
 		})
-	} catch(e) {
-		console.log(e)
+	} catch(err) {
+		debug('Error downloading: %O', err)
 	}
 }
 
