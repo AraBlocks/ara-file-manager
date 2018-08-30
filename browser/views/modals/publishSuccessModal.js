@@ -6,7 +6,10 @@ const { copyDistributionLink } = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const styles = require('./styles')
 
-module.exports = ({ aid = 'e89160647bd617d33ac386ed89f069d366711cafec9036d90805894761a58ebb', fileName = 'Grump Cat' }) => {
+module.exports = ({
+	aid = 'e89160647bd617d33ac386ed89f069d366711cafec9036d90805894761a58ebb',
+	fileName = 'Grump Cat'
+}) => {
 	const encodedName = encodeURIComponent(fileName)
 	const confirmButton = new Button({
 		children: 'Confirm',
