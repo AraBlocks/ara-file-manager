@@ -5,7 +5,7 @@ const { getAFSPrice } = require('../lib/actions/afsManager')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
-windowManager.setSize = function (view) {
+windowManager.setSize = (view) => {
   let width
   let height
   switch (view) {

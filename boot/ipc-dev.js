@@ -1,6 +1,7 @@
 'use strict'
 
-const isDev = require('electron-is-dev')
+'use strict'
+
 const fs = require('fs')
 const path = require('path')
 const windowManager = require('electron-window-manager')

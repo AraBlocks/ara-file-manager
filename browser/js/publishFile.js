@@ -1,6 +1,7 @@
 'use strict'
 
-const { closeWindow, openModal} = require('../lib/tools/windowManagement')
+const debug = require('debug')('acm:browser:js:publishFile')
+const { openModal} = require('../lib/tools/windowManagement')
 const {
   ESTIMATING_COST,
   ESTIMATION,
@@ -16,5 +17,12 @@ const publishFile = new PublishFile({
  })
 document.getElementById('container').appendChild(publishFile.render({}))
 
-ipcRenderer.on(ESTIMATING_COST, () => publishFile.render({ spinner: true }))
-ipcRenderer.on(ESTIMATION, () => openModal('publishConfirmModal'))
+ipcRenderer.on(ESTIMATING_COST, () => {
+  debug('%s heard', ESTIMATING_COST)
+  publishFile.render({ spinner: true })
+})
+
+ipcRenderer.on(ESTIMATION, () => {
+  debug('%s heard', ESTIMATION)
+  openModal('publishConfirmModal')
+})

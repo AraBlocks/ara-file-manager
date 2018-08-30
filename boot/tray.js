@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acm:boot:tray')
 const isDev = require('electron-is-dev')
 const { Menu, Tray, screen } = require('electron')
 const path = require('path')
@@ -9,6 +10,7 @@ const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'I
 
 let tray
 const buildTray = () => {
+  debug('Building tray')
   tray = new Tray(iconPath)
   tray.setToolTip('Ara Content Manager')
 
@@ -16,27 +18,23 @@ const buildTray = () => {
     { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'File Manager', type: 'normal', click: () => openWindow('fManagerView') },
     { label: 'Publish File', type: 'normal', click: () => openWindow('publishFileView') },
+    { label: 'Log Out', type: 'normal' },
     { label: 'Quit', type: 'normal', role: 'quit' }
   ]
 
-  isDev && menuItems.push(
-    { label: 'Developer', type: 'normal', click: () => openWindow('developer')},
-    { label: 'Log Out', type: 'normal' },
-  )
+  //If dev mode, pushes developer option to tray
+  isDev && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer')})
 
+  //Creates context menu and adds onclick listener to tray
   const contextMenu = Menu.buildFromTemplate(menuItems)
-
-  tray.on('click', () => {
-    // openWindow('manager')
-    tray.popUpContextMenu(contextMenu)
-  })
+  tray.on('click', () => tray.popUpContextMenu(contextMenu))
 
   function openWindow(view) {
     const window = windowManager.get(view) || createWindow(view)
-    const shouldMoveWindow = window.object === null
+    // const shouldMoveWindow = window.object === null
     window.open()
     window.object.show()
-    if (shouldMoveWindow && view === 'manager') { adjustPosition(window) }
+    // if (shouldMoveWindow && view === 'manager') { adjustPosition(window) }
   }
 
   function createWindow(view) {
@@ -54,11 +52,11 @@ const buildTray = () => {
     )
   }
 
-  function adjustPosition({ name, object: window }) {
-    const screenSize = screen.getPrimaryDisplay().bounds
-    const offset = windowManager.setSize(name).width
-    window.setPosition(screenSize.width - offset, 0)
-  }
+  // function adjustPosition({ name, object: window }) {
+  //   const screenSize = screen.getPrimaryDisplay().bounds
+  //   const offset = windowManager.setSize(name).width
+  //   window.setPosition(screenSize.width - offset, 0)
+  // }
 
   isDev && openWindow('developer')
 }
