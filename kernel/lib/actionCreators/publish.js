@@ -31,18 +31,19 @@ ipcMain.on(PUBLISH, async (event, load) => {
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   const { account: { aid } } = windowManager.sharedData.fetch('store')
   const { password } = aid
+  console.log('confirm publish')
   publish.commit({ ...load, password })
     .then(() => {
       dispatch({ type: PUBLISHED, load: load.cost })
       windowManager.get('filemanager').object.webContents.send(PUBLISHED)
-      afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
-      afsManager.broadcast(
-        load.did,
-        () => {
-          dispatch({ type: UPLOAD_COMPLETE, load: load.price})
-          windowManager.get('filemanager').object.webContents.send(UPLOAD_COMPLETE)
-        }
-      )
+     // afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
+      // afsManager.broadcast(
+      //   load.did,
+      //   () => {
+      //     dispatch({ type: UPLOAD_COMPLETE, load: load.price})
+      //     windowManager.get('filemanager').object.webContents.send(UPLOAD_COMPLETE)
+      //   }
+      // )
     })
     .catch(console.log)
 

@@ -7,8 +7,9 @@ const {
   PUBLISHED,
   UPLOAD_COMPLETE
  } = require('../../../lib/constants/stateManagement')
+const araContractsManager = require('../actions/araContractsManager')
 
-module.exports = (state, { load, type }) => {
+module.exports = async (state, { load, type }) => {
   switch (type) {
     case LOGIN:
       state.aid = load[0]
@@ -16,13 +17,14 @@ module.exports = (state, { load, type }) => {
     case LOGIN_DEV:
       state.aid = load.account
       state.aid.password = load.password
+      state.aid.accountAddress = await araContractsManager.getAccountAddress(load.account.ddo.id, load.password)
       break
       case PUBLISHED:
-      state.userBalance = state.userBalance - load
+      //state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
+      console.log(state.userBalance)
       break
     case UPLOAD_COMPLETE:
       state.userBalance = state.userBalance + Number(load)
-      state.userBalance
       break
     case DOWNLOAD_COMPLETE:
       state.userBalance = state.userBalance - Number(load)
