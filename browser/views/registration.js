@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acm:browser:views:registration')
 const Button = require('../components/button')
 const { closeWindow } = require('../lib/tools/windowManagement')
 const { emit } = require('../lib/tools/windowManagement')
@@ -14,7 +15,7 @@ class Registration extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { password: '' }
+    this.state = { password : 'abc' }
 
     this.passwordInput = new Input({
       placeholder: 'Password',
@@ -46,7 +47,9 @@ class Registration extends Nanocomponent {
 
   register(e) {
     e.preventDefault()
-    emit({ event: REGISTER, load: 'abc' })
+    const { password } = this.state
+    debug('Registering with password: %s', password)
+    emit({ event: REGISTER, load: password })
     this.render({ pending: true })
   }
 

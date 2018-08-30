@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acms:files')
 const {
   DOWNLOADED,
   DOWNLOADING,
@@ -10,6 +11,7 @@ const {
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load, type }) => {
+  debug('Old state: %O', state)
   let file
   switch (type){
     case DOWNLOADING:
@@ -39,6 +41,7 @@ module.exports = (state, { load, type }) => {
       file.status = 2
       file.meta.datePublished = new Date
     default:
+      debug('New state: %O', state)
       return state
   }
   return state
