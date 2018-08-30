@@ -42,7 +42,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
       .then(() => {
         debug('Dispatch %s . Load: %s', PUBLISHED, load.cost)
         dispatch({ type: PUBLISHED, load: load.cost })
-        fileManagerOpen() && windowManager.get('filemanager').object.webContents.send(PUBLISHED)
+        windowManager.pingView({ view: 'filemanager', event: PUBLISHED })
         // afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         // afsManager.broadcast(
         //   load.did,
@@ -72,11 +72,9 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
       }
     })
 
-    fileManagerOpen() && windowManager.get('filemanager').object.webContents.send(PUBLISHING)
+    windowManager.pingView({ view: 'filemanager', event: PUBLISHING })
     windowManager.get('publishFileView').close()
   } catch (err) {
     debug('Error: %O', err)
   }
 })
-
-const fileManagerOpen = () => windowManager.get('filemanager')
