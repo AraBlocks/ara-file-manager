@@ -1,7 +1,8 @@
 'use strict'
 
 const { abi } = require('ara-contracts/build/contracts/ARAToken.json')
-const { kARATokenAddress } = require('ara-contracts/constants')
+//const { kARATokenAddress } = require('ara-contracts/constants')
+const kARATokenAddress = '0xd7ba1cafae3349df74a245a15d2a39efeaa25eda'
 const { purchase, library } = require('ara-contracts')
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const Web3 = require('web3')
@@ -30,7 +31,7 @@ async function getUserBalance(account) {
 	try {
 		const balance = await call({
 			abi,
-			address: '0xd7ba1cafae3349df74a245a15d2a39efeaa25eda', // Remember to change this!!!
+			address: kARATokenAddress, // Remember to change this!!!
 			functionName: 'balanceOf',
 			arguments: [
 				account
@@ -43,7 +44,8 @@ async function getUserBalance(account) {
 	}
 }
 
-async function purchaseItem(requesterDid, password, contentDid) {
+async function purchaseItem({ requesterDid, password, contentDid }) {
+	debug(`Purchasing item ${contentDid}`)
 	try {
 		await purchase(
 			{
@@ -56,14 +58,17 @@ async function purchaseItem(requesterDid, password, contentDid) {
 				}
 			}
 		)
+		debug('Purchase Completed')
 	} catch(e) {
-		console.log(e)
+		debug(e)
 	}
 }
 
 async function getLibraryItems(userAid) {
 	try {
 		const lib = await library.getLibrary(userAid)
+		debug('Got Library Items')
+		debug(lib)
 		return lib
 	} catch(e) {
 		debug(e)
@@ -83,5 +88,7 @@ async function getEtherBalance(account) {
 
 module.exports = {
 	getAccountAddress,
-	getUserBalance
+	getLibraryItems,
+	getUserBalance,
+	purchaseItem
 }
