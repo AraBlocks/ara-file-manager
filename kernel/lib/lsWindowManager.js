@@ -1,4 +1,5 @@
 'use strict'
+
 const dispatch = require('./reducers/dispatch')
 const { FEED_MODAL } = require('../../lib/constants/stateManagement')
 const { getAFSPrice } = require('../lib/actions/afsManager')
@@ -63,7 +64,7 @@ windowManager.setSize = (view) => {
   return { width, height }
 }
 
-windowManager.loadURL = function (view) {
+windowManager.loadURL = (view) => {
   let file
   switch (view) {
     case 'filemanager':
@@ -89,14 +90,13 @@ windowManager.loadURL = function (view) {
     default:
       file = 'modal'
   }
-  return makeFilePath({ file, parent: file.includes('-test') ? 'test' : 'browser' })
-
-  function makeFilePath({ file, parent }) {
-    return `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}.html`)}`
-  }
+  return windowManager.makeFilePath({ file, parent: file.includes('-test') ? 'test' : 'browser' })
 }
 
+windowManager.makeFilePath = ({ file, parent }) => `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}.html`)}`
+
 windowManager.openDeepLinking = async (deepLinkingUrl) => {
+  
   const fileInfo = parseLink()
   try {
     const price = await getAFSPrice({ did: fileInfo.aid })
