@@ -2,6 +2,7 @@
 
 const { abi } = require('ara-contracts/build/contracts/ARAToken.json')
 const { kARATokenAddress } = require('ara-contracts/constants')
+const { purchase, library } = require('ara-contracts')
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const Web3 = require('web3')
 const PROVIDER = 'ws://127.0.0.1:8546'
@@ -37,6 +38,34 @@ async function getUserBalance(account) {
 		})
 		debug(`Balance is ${balance} ARA`)
 		return balance
+	} catch(e) {
+		debug(e)
+	}
+}
+
+async function purchaseItem(userAid, password, contentDid) {
+	try {
+		let result = await purchase(
+			{
+				requesterDid: 'ab10d1792f80143bb466597bafe5c71119845f88ee3d27f89944c1969579452d',
+				contentDid: '56378067e164a53a6650f5f767d307748f831fcbd3ce3dadb3f457bccb2663ac',
+				password: 'abc',
+				job: {
+					jobId: '0x0000000000000000000000000000000000000000000000000000000000000000',
+					budget: 100000
+				}
+			}
+		)
+		console.log(result)
+	} catch(e) {
+		console.log(e)
+	}
+}
+
+async function getLibraryItems(userAid) {
+	try {
+		const lib = await library.getLibrary(userAid)
+		return lib
 	} catch(e) {
 		debug(e)
 	}
