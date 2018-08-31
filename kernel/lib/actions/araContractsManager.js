@@ -43,20 +43,19 @@ async function getUserBalance(account) {
 	}
 }
 
-async function purchaseItem(userAid, password, contentDid) {
+async function purchaseItem(requesterDid, password, contentDid) {
 	try {
-		let result = await purchase(
+		await purchase(
 			{
-				requesterDid: 'ab10d1792f80143bb466597bafe5c71119845f88ee3d27f89944c1969579452d',
-				contentDid: '56378067e164a53a6650f5f767d307748f831fcbd3ce3dadb3f457bccb2663ac',
-				password: 'abc',
+				requesterDid,
+				contentDid,
+				password,
 				job: {
 					jobId: '0x0000000000000000000000000000000000000000000000000000000000000000',
 					budget: 100000
 				}
 			}
 		)
-		console.log(result)
 	} catch(e) {
 		console.log(e)
 	}
