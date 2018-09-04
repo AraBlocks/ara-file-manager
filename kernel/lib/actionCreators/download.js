@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acm:kernel:lib:actionCreators:download')
 const dispatch = require('../reducers/dispatch')
 const { afsManager } = require('../actions')
 const {
@@ -15,45 +16,46 @@ const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
 ipcMain.on(DOWNLOAD, async (event, load) => {
-	dispatch({
-    type: DOWNLOAD_START,
-    load: {
-				downloadPercent: 0,
-				meta: {
-					aid: load.aid,
-					datePublished: '11/20/1989',
-					earnings: 2134.33,
-					peers: 353,
-					price: load.price,
-				},
-				name: load.fileName,
-				size: 0,
-				status: 1,
-				path: makeAfsPath(load.aid)
-			}
-	})
-
-	dispatch({ type: DOWNLOAD_COMPLETE, load: load.price})
-	afsManager.download({did: load.aid, handler: (load) => {
-		if (load.percentage !== 1) {
-			dispatch({
-				type: DOWNLOADING,
-				load
-			})
-			windowManager.get('filemanager').object.webContents.send(DOWNLOADING)
-		} else {
-			dispatch({
-				type: DOWNLOADED,
-				load: load.aid
-			})
-			windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
+	debug('%s heard. Load: %O', DOWNLOAD, load)
+	try {
+		const dispatchLoad = {
+			downloadPercent: 0,
+			meta: {
+				aid: load.aid,
+				datePublished: '11/20/1989',
+				earnings: 2134.33,
+				peers: 353,
+				price: load.price,
+			},
+			name: load.fileName,
+			size: 0,
+			status: 1,
+			path: makeAfsPath(load.aid)
 		}
-	}, errorHandler: () => {
-		console.log('Download failed')
-		dispatch({
-			type: DOWNLOAD_FAILED,
-			load: load.aid
+		debug('Dispatching %s . Load: %O', DOWNLOAD_START, dispatchLoad)
+		dispatch({ type: DOWNLOAD_START, load: dispatchLoad })
+
+		debug('Dispatching %s . Load: %s', DOWNLOAD_COMPLETE, load.price)
+		dispatch({ type: DOWNLOAD_COMPLETE, load: load.price })
+		afsManager.download({
+			did: load.aid, handler: (load) => {
+				if (load.percentage !== 1) {
+					debug('Dispatching %s', DOWNLOADING)
+					dispatch({ type: DOWNLOADING, load })
+					windowManager.pingView({ view: 'filemanager', event: DOWNLOADING })
+				} else {
+					debug('Dispatching %s . Load: %s', DOWNLOADED, load.aid)
+					dispatch({ type: DOWNLOADED, load: load.aid })
+					windowManager.pingView({ view: 'filemanager', event: DOWNLOADED })
+				}
+			}, errorHandler: () => {
+				debug('Download failed')
+				debug('Dispatching %s . Load: %s', DOWNLOAD_FAILED, load.aid)
+				dispatch({ type: DOWNLOAD_FAILED, load: load.aid })
+				windowManager.pingView({ view: 'filemanager', event: DOWNLOAD_FAILED })
+			}
 		})
-		windowManager.get('filemanager').object.webContents.send(DOWNLOAD_FAILED)
-	}})
+	} catch (err) {
+		debug('Error: %O', err)
+	}
 })
