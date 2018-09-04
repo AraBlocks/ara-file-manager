@@ -5,6 +5,7 @@ const {
   DOWNLOADED,
   DOWNLOADING,
   DOWNLOAD_FAILED,
+  DOWNLOADED_PUBLISHED,
   DOWNLOAD_START,
   PUBLISHED,
   PUBLISHING
@@ -22,12 +23,12 @@ module.exports = (state, { load, type }) => {
     case DOWNLOADED:
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = 1
-      file.status = 2
+      file.status = DOWNLOADED_PUBLISHED
       break
     case DOWNLOAD_FAILED:
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = 0
-      file.status = 4
+      file.status = DOWNLOAD_FAILED
       break
     case DOWNLOAD_START:
       state.purchased.push(load)
@@ -38,7 +39,7 @@ module.exports = (state, { load, type }) => {
     case PUBLISHED:
       file = state.published[state.published.length - 1]
       file.downloadPercent = 1
-      file.status = 2
+      file.status = DOWNLOADED_PUBLISHED
       file.meta.datePublished = new Date
     default:
     return state

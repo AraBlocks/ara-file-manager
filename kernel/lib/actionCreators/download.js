@@ -29,7 +29,7 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 			},
 			name: load.fileName,
 			size: 0,
-			status: 1,
+			status: DOWNLOADING,
 			path: makeAfsPath(load.aid)
 		}
 		debug('Dispatching %s . Load: %O', DOWNLOAD_START, dispatchLoad)
