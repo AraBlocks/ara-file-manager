@@ -1,6 +1,6 @@
 'use strict'
 
-const { copyToClipboard } = require('../../../windowManagement')
+const { copyDistributionLink } = require('../../../windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
 
@@ -27,8 +27,7 @@ module.exports = ({ meta, name }) => {
 					span.classList.add('fadeInUp')
 					span.addEventListener('animationend', () => span.classList.remove('fadeInUp'), false)
 
-					const encodedName = encodeURIComponent(name)
-					copyToClipboard(`lstr://download/${meta.aid}/${encodedName}`)
+					copyDistributionLink(meta.aid, name)
 				}}
 			>
 				Copy Distribution Link<span>Copied !</span>
