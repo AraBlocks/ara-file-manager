@@ -16,11 +16,13 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
   const account = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === load.afsId)[0]
   try {
     const accountAddress = await araContractsManager.getAccountAddress(account.ddo.id, load.password)
+    const araBalance = await araContractsManager.getAraBalance(accountAddress)
     const newState = dispatch({
       type: LOGIN_DEV,
       load: {
         account,
         accountAddress,
+        araBalance,
         password: load.password,
       }
     })

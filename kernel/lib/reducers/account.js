@@ -20,16 +20,16 @@ module.exports = async (state, { load, type }) => {
       state.aid = load.account
       state.aid.password = load.password
       state.aid.accountAddress = load.accountAddress
-      state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
+      state.araBalance = load.araBalance
       break
     case PUBLISHED:
-      state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
+      //state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
       break
     case UPLOAD_COMPLETE:
-      state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
+      //state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
       break
     case DOWNLOAD_COMPLETE:
-      state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
+      //state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
       break
     default:
     return state

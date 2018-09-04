@@ -2,6 +2,7 @@
 
 module.exports = {
   username: 'cryptokitter',
-  userBalance: 1335.23,
+  etherBalance: 1335.23,
+  araBalance: 0,
   aid: {}
 }

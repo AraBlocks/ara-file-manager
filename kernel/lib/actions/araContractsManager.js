@@ -25,7 +25,7 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
-async function getUserBalance(account) {
+async function getAraBalance(account) {
 	debug('Getting account balance')
 	try {
 		const balance = await call({
@@ -88,6 +88,6 @@ async function getEtherBalance(account) {
 module.exports = {
 	getAccountAddress,
 	getLibraryItems,
-	getUserBalance,
+	getAraBalance,
 	purchaseItem
 }
