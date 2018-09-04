@@ -1,5 +1,6 @@
 'use strict'
 
+const { DOWNLOADED_PUBLISHED }  = require('../../../../lib/constants/stateManagement')
 const { colors, fonts } = require('styleUtils')
 const { css } = require('css')
 
@@ -35,7 +36,7 @@ module.exports = {
   earnings(status) {
     return css`
       :host {
-        color: ${status === 2 ? 'black' : colors.araGrey};
+        color: ${status === DOWNLOADED_PUBLISHED ? 'black' : colors.araGrey};
         font-family: ${fonts.regular};
         font-size: 14px;
       }

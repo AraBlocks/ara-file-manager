@@ -1,10 +1,10 @@
 'use strict'
 
-const { colors, fonts } = require('styleUtils')
+const { AWAITING_DOWNLOAD } = require('../../../../lib/constants/stateManagement')
+const { fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-
   buttonHolder: css`
     :host {
       width: 100%;
@@ -53,7 +53,7 @@ module.exports = {
   sizeHolder(status) {
     return css`
       :host {
-        color: ${status === 0 ? 'grey' : 'black' };
+        color: ${status === AWAITING_DOWNLOAD ? 'grey' : 'black' };
         font-family: ${fonts.light};
         font-size: 13px;
       }

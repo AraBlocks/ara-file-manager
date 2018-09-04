@@ -60,8 +60,6 @@ class Container extends Nanocomponent {
     } = this
 
     tooltip({})
-
-    isDev && Object.assign(window, { container: this })
     return html`
       <div>
         <div class="${styles.container} container-container">

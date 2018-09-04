@@ -74,8 +74,8 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         },
         name: load.name,
         size: 1.67,
-        status: 3,
-        path: afsManager.makeAfsPath(load.did)
+        status: PUBLISHING,
+        path: makeAfsPath(load.did)
       }
     })
 

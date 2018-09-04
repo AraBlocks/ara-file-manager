@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acm:kernel:lib:lsWindowManager')
 const dispatch = require('./reducers/dispatch')
 const { FEED_MODAL } = require('../../lib/constants/stateManagement')
 const { getAFSPrice } = require('../lib/actions/afsManager')
@@ -68,7 +69,6 @@ windowManager.loadURL = (view) => {
   let file
   switch (view) {
     case 'filemanager':
-    case 'fManagerView':
       file = 'file-manager'
       break
     case 'developer':
@@ -96,14 +96,12 @@ windowManager.loadURL = (view) => {
 windowManager.makeFilePath = ({ file, parent }) => `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}.html`)}`
 
 windowManager.openDeepLinking = async (deepLinkingUrl) => {
-  
+  debug('Opening deeplink: %s', deepLinkingUrl)
   const fileInfo = parseLink()
   try {
     const price = await getAFSPrice({ did: fileInfo.aid })
-    dispatch({
-      type: FEED_MODAL,
-      load: { price, ...fileInfo }
-    })
+    dispatch({ type: FEED_MODAL, load: { price, ...fileInfo } })
+
     const modalName = 'reDownloadModal'
     if (windowManager.get(modalName).object != null) { return }
     windowManager.sharedData.set('current', modalName)
@@ -119,7 +117,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
       }
     ).open()
   } catch(err) {
-    console.log(err)
+    debug('Deeplink error: %O', err)
   }
 
   function parseLink() {
@@ -136,6 +134,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
 windowManager.modalOpenStatus = false
 
 windowManager.pingView = ({ view, event, load = null }) => {
+  debug('Pinging %s with %s', view, event)
   const window = windowManager.get(view)
   if (!window) { return }
   window.object.webContents.send(event, load)

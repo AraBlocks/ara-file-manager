@@ -46,7 +46,7 @@ class ItemRow extends Nanocomponent {
         <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
           ${children.fileDescriptor.render({ downloadPercent, status })}
         </div>
-        ${children.stats.render({ ...meta })}
+        ${children.stats.render({ ...meta, status })}
       </div>
     `
   }
