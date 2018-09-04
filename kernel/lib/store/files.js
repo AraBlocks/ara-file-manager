@@ -1,6 +1,11 @@
+const {
+  AWAITING_DOWNLOAD,
+  DOWNLOADED_PUBLISHED
+} = require('../../../lib/constants/stateManagement')
+
 module.exports = {
-  published: [],
-  purchased: []
+  published: [...mockFiles()],
+  purchased: [...mockFiles()]
 }
 
 function mockFiles() {
@@ -16,7 +21,7 @@ function mockFiles() {
       },
       name: 'Adobe Photoshop',
       size: 10.67,
-      status: 0,
+      status: AWAITING_DOWNLOAD,
     },
     {
       downloadPercent: 1,
@@ -29,7 +34,7 @@ function mockFiles() {
       },
       name: 'Microsoft Word',
       size: 4.67,
-      status: 2,
+      status: DOWNLOADED_PUBLISHED,
     },
     {
       downloadPercent: 0,
@@ -42,7 +47,7 @@ function mockFiles() {
       },
       name: 'Microsoft PowerPoint',
       size: 1.67,
-      status: 0,
+      status: AWAITING_DOWNLOAD,
     }
   ]
 }

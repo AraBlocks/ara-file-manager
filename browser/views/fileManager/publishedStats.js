@@ -1,5 +1,6 @@
 'use strict'
 
+const { AWAITING_DOWNLOAD, DOWNLOADING } = require('../../../lib/constants/stateManagement')
 const DynamicButton = require('../../components/dynamicButton')
 const styles = require('./styles/publishedStats')
 const html = require('choo/html')
@@ -22,11 +23,11 @@ class PublishedStats extends Nanocomponent {
       }
     }
     switch(status) {
-      case 0:
+      case AWAITING_DOWNLOAD:
         props.cssClass.opts.color = 'red'
         props.children = 'Download File'
         break
-      case 1:
+      case DOWNLOADING:
         props.cssClass.opts.color = 'grey'
         props.children = 'Downloading File'
         break
