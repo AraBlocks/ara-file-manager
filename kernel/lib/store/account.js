@@ -1,8 +1,8 @@
 'use strict'
 
 module.exports = {
-  username: 'cryptokitter',
-  etherBalance: 1335.23,
+  aid: {},
   araBalance: 0,
-  aid: {}
+  etherBalance: 1335.23,
+  username: 'cryptokitter'
 }

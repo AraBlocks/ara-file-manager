@@ -1,7 +1,6 @@
 'use strict'
 
 const debug = require('debug')('acms:account')
-
 const {
   DOWNLOAD_COMPLETE,
   LOGIN,
@@ -9,8 +8,6 @@ const {
   PUBLISHED,
   UPLOAD_COMPLETE
  } = require('../../../lib/constants/stateManagement')
-
- const araContractsManager = require('../actions/araContractsManager')
 
 module.exports = async (state, { load, type }) => {
   debug('Old state: %O', state)
