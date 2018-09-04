@@ -49,7 +49,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         const araBalance = await araContractsManager.getAraBalance(accountAddress)
         dispatch({ type: PUBLISHED, load: araBalance })
         debug('Dispatch %s . Load: %s', PUBLISHED, araBalance)
-        fileManagerOpen() && windowManager.get('filemanager').object.webContents.send(PUBLISHED)
         windowManager.pingView({ view: 'filemanager', event: PUBLISHED })
         // afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         // afsManager.broadcast(
