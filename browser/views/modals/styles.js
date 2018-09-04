@@ -35,6 +35,16 @@ module.exports = {
     }
   `,
 
+  clipboard: css`
+    :host span {
+      animation-duration: 1000ms;
+      color: red;
+      left: 39%;
+      opacity: 0;
+      position: absolute;
+    }
+  `,
+
   fileName: css`
     :host {
       font-family: ${fonts.boldSpecial};
@@ -46,6 +56,20 @@ module.exports = {
     :host {
       font-size: 12px;
       margin: 12px 0;
+    }
+  `,
+
+  horizontalContainer: css`
+    :host {
+      display: flex;
+      justify-content: center;
+    }
+  `,
+
+  link: css`
+    :host {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   `,
 
@@ -90,6 +114,12 @@ module.exports = {
         font-family: ${fonts.bold};
       }`
   },
+
+  smallPadding: css`
+    :host {
+      padding: 0px 2px;
+    }
+  `,
 
   spinnerHolder: css`
     :host {
