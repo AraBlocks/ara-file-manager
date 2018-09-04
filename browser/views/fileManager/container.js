@@ -18,7 +18,7 @@ class Container extends Nanocomponent {
     this.state = {
       activeTab: 0,
       files,
-      userBalance: account.userBalance
+      araBalance: account.araBalance
     }
 
     this.children = {
@@ -49,14 +49,14 @@ class Container extends Nanocomponent {
   }
 
   update(store){
-    this.state.userBalance = store.account.userBalance
+    this.state.araBalance = store.account.araBalance
     return true
   }
 
   createElement() {
     const {
       children,
-      state: { activeTab, files, userBalance }
+      state: { activeTab, files, araBalance }
     } = this
 
     tooltip({})
@@ -66,7 +66,7 @@ class Container extends Nanocomponent {
       <div>
         <div class="${styles.container} container-container">
           <div>
-            ${children.header.render({ activeTab, userBalance })}
+            ${children.header.render({ activeTab, araBalance })}
             <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
               ${files.published.length || files.purchased.length
                 ? renderSections().map(section => section.render({ files }))
