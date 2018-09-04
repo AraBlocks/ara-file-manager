@@ -23,12 +23,6 @@ module.exports = async (state, { load, type }) => {
       state.aid.password = load.password
       state.aid.accountAddress = load.accountAddress
       state.araBalance = load.araBalance
-      try {
-        araContractsManager.purchaseItem('532569b8f83957f6dbdab12f49fc196f804c9dd361e61a8ea97a3d5105b32437')
-
-      } catch(e) {
-        debug(e)
-      }
       break
     case PUBLISHED:
       state.userBalance = load
