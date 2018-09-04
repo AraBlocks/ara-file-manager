@@ -9,7 +9,7 @@ const {
   UPLOAD_COMPLETE
  } = require('../../../lib/constants/stateManagement')
 
-module.exports = (state, { load, type }) => {
+module.exports = async (state, { load, type }) => {
   debug('Old state: %O', state)
   switch (type) {
     case LOGIN:
@@ -18,16 +18,11 @@ module.exports = (state, { load, type }) => {
     case LOGIN_DEV:
       state.aid = load.account
       state.aid.password = load.password
+      state.aid.accountAddress = load.accountAddress
+      state.araBalance = load.araBalance
       break
-      case PUBLISHED:
-      state.userBalance = state.userBalance - load
-      break
-    case UPLOAD_COMPLETE:
-      state.userBalance = state.userBalance + Number(load)
-      state.userBalance
-      break
-    case DOWNLOAD_COMPLETE:
-      state.userBalance = state.userBalance - Number(load)
+    case PUBLISHED:
+      state.userBalance = load
       break
     default:
     return state
