@@ -1,12 +1,11 @@
 'use strict'
 
 const { abi } = require('ara-contracts/build/contracts/ARAToken.json')
+const Web3 = require('ara-context/web3')
 const { kARATokenAddress } = require('ara-contracts/constants')
 const { purchase, library } = require('ara-contracts')
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
-const Web3 = require('web3')
-const PROVIDER = 'ws://127.0.0.1:8546'
-
+const windowManager = require('electron-window-manager')
 const {
 	web3: {
 		account,
@@ -43,17 +42,19 @@ async function getAraBalance(account) {
 	}
 }
 
-async function purchaseItem({ requesterDid, password, contentDid }) {
+async function purchaseItem(contentDid) {
 	debug(`Purchasing item ${contentDid}`)
+	const { account: { aid }} = windowManager.sharedData.fetch('store')
+	const { password } = aid
 	try {
 		await purchase(
 			{
-				requesterDid,
+				requesterDid: aid.ddo.id,
 				contentDid,
 				password,
 				job: {
 					jobId: '0x0000000000000000000000000000000000000000000000000000000000000000',
-					budget: 100000
+					budget: 10
 				}
 			}
 		)
@@ -76,9 +77,10 @@ async function getLibraryItems(userAid) {
 
 async function getEtherBalance(account) {
 	try {
-		const web3 = new Web3(new Web3.providers.WebsocketProvider(PROVIDER))
+		const web3 = Web3.load()
 		const balanceInWei = await web3.eth.getBalance(account)
 		const balance = web3.utils.fromWei(balanceInWei, 'ether')
+		debug(`Ether balance is ${balance}`)
 		return balance
 	} catch(e) {
 		debug(e)
@@ -87,7 +89,8 @@ async function getEtherBalance(account) {
 
 module.exports = {
 	getAccountAddress,
-	getLibraryItems,
 	getAraBalance,
+	getEtherBalance,
+	getLibraryItems,
 	purchaseItem
 }

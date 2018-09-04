@@ -2,9 +2,12 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:publish')
 const dispatch = require('../reducers/dispatch')
-const { makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
-const { afsManager, publish } = require('../actions')
+const {
+  araContractsManager,
+  afsManager,
+  publish
+} = require('../actions')
 const {
   CONFIRM_PUBLISH,
   ESTIMATION,
@@ -34,14 +37,16 @@ ipcMain.on(PUBLISH, async (event, load) => {
 
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard. Load: %O', CONFIRM_PUBLISH, load)
-  const { account: { aid } } = windowManager.sharedData.fetch('store')
-  const { password } = aid
+  const { account } = windowManager.sharedData.fetch('store')
+  const { aid } = account
+  const { password, accountAddress } = aid
   try {
     debug('Committing AFS')
     publish.commit({ ...load, password })
-      .then(() => {
-        debug('Dispatch %s . Load: %s', PUBLISHED, load.cost)
-        dispatch({ type: PUBLISHED, load: load.cost })
+      .then(async () => {
+        const araBalance = await araContractsManager.getAraBalance(accountAddress)
+        dispatch({ type: PUBLISHED, load: araBalance })
+        debug('Dispatch %s . Load: %s', PUBLISHED, araBalance)
         fileManagerOpen() && windowManager.get('filemanager').object.webContents.send(PUBLISHED)
         // afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         // afsManager.broadcast(
@@ -68,7 +73,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         name: load.name,
         size: 1.67,
         status: 3,
-        path: makeAfsPath(load.did)
+        path: afsManager.makeAfsPath(load.did)
       }
     })
 
