@@ -35,7 +35,7 @@ module.exports = {
     }
   `,
 
-  copyAnimation: css`
+  clipboard: css`
     :host span {
       animation-duration: 1000ms;
       color: red;

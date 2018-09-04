@@ -17,10 +17,7 @@ module.exports = ({
 	})
 	const copyLinkButton = new Button({
 		children: 'Copy Link',
-		...styles.buttonSelector('blue'),
-		onclick: () => {
-			copyDistributionLink(aid, fileName)
-		}
+		...styles.buttonSelector('blue')
 	})
   return html`
     <div class="${styles.container} modals-container">
@@ -34,7 +31,14 @@ module.exports = ({
 					<b>${`lstr://download/${aid}/${encodedName}`}</b>
 				</div>
 			</div>
-			${copyLinkButton.render()}
+			<div class="${styles.clipboard}" onclick=${function(){
+				const span = this.children[1]
+				span.classList.add('fadeInUp')
+				span.addEventListener('animationend', () => span.classList.remove('fadeInUp'), false)
+				copyDistributionLink(aid, fileName)
+			}}>
+				${copyLinkButton.render()}<span>Copied !</span>
+			</div>
 			<div class="${styles.smallMessage({})} modal-smallMessage">
 				You can edit this file and retrieve the distribution link<br>
 				<div class="${styles.horizontalContainer}">
