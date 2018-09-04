@@ -4,8 +4,8 @@ const {
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = {
-  published: [...mockFiles()],
-  purchased: [...mockFiles()]
+  published: [],
+  purchased: []
 }
 
 function mockFiles() {
