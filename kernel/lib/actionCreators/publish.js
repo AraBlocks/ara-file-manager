@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:publish')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
-  afsManager,
+  afsManager: { makeAfsPath },
   araContractsManager,
   publish
 } = require('../actions')
@@ -38,9 +38,11 @@ ipcMain.on(PUBLISH, async (event, load) => {
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard. Load: %O', CONFIRM_PUBLISH, load)
   const { account } = windowManager.sharedData.fetch('store')
-  const { aid: {
-    accountAddress,
-    password }
+  const {
+     aid: {
+      accountAddress,
+      password
+    }
   } = account
   try {
     debug('Committing AFS')
