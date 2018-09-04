@@ -19,7 +19,7 @@ module.exports = async (state, { load, type }) => {
     case LOGIN_DEV:
       state.aid = load.account
       state.aid.password = load.password
-      state.aid.accountAddress = await araContractsManager.getAccountAddress(load.account.ddo.id, load.password)
+      state.aid.accountAddress = load.accountAddress
       state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
       break
     case PUBLISHED:
