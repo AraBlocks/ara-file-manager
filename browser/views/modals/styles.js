@@ -35,6 +35,16 @@ module.exports = {
     }
   `,
 
+  copyAnimation: css`
+    :host span {
+      animation-duration: 1000ms;
+      color: red;
+      left: 39%;
+      opacity: 0;
+      position: absolute;
+    }
+  `,
+
   fileName: css`
     :host {
       font-family: ${fonts.boldSpecial};
