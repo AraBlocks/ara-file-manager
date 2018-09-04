@@ -19,7 +19,7 @@ const FileManager = require('../views/fileManager/container')
 const fileManager = new FileManager(store)
 document.getElementById('container').appendChild(fileManager.render(store))
 
-const setListener = ({ event }) => {
+const setListener = (event) => {
   ipcRenderer.on(event, () => {
     debug('%s heard', event)
     fileManager.render(store)
