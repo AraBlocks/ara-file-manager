@@ -24,12 +24,6 @@ module.exports = async (state, { load, type }) => {
     case PUBLISHED:
       state.userBalance = load
       break
-    case UPLOAD_COMPLETE:
-      //state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
-      break
-    case DOWNLOAD_COMPLETE:
-      //state.userBalance = await araContractsManager.getUserBalance(state.aid.accountAddress)
-      break
     default:
     return state
   }
