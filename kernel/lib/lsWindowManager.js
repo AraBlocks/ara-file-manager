@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:lsWindowManager')
 const { PROMPT_PURCHASE, PURCHASE_INFO } = require('../../lib/constants/stateManagement')
-const EventEmitter = require('events');
+const EventEmitter = require('events')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
