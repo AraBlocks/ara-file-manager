@@ -8,9 +8,9 @@ const { emit, closeModal } = require('../../lib/tools/windowManagement')
 
 module.exports = ({
   aid,
-  fileName = 'Some File',
-  price = 45.11,
-  publisherName = 'Thomas Bahama'
+  fileName = 'No file name given',
+  price = 0,
+  publisherName = 'No publisher name given'
 }) => {
   const buyButton = new Button({ children: 'Buy Now' })
   const cancelbutton = new Button({
