@@ -41,6 +41,13 @@ module.exports = (state, { load, type }) => {
       file.downloadPercent = 1
       file.status = DOWNLOADED_PUBLISHED
       file.meta.datePublished = new Date
+      break
+    case PURCHASING:
+      //TODO
+      break
+    case PURCHASED:
+      //TODO
+      break
     default:
     return state
   }
