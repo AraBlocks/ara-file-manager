@@ -8,7 +8,9 @@ const {
   DOWNLOADED_PUBLISHED,
   DOWNLOAD_START,
   PUBLISHED,
-  PUBLISHING
+  PUBLISHING,
+  PURCHASED,
+  PURCHASING
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load, type }) => {
