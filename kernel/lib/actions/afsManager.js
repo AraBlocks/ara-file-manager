@@ -14,11 +14,11 @@ const araNetworkNodeDcdn = require('ara-network-node-dcdn')
 const { publishDID } = require('ara-network-node-dcdn/subnet')
 const path = require('path')
 const windowManager = require('electron-window-manager')
+const { account: { aid , username }} = windowManager.sharedData.fetch('store')
 
 async function broadcast(did) {
 	const fullDid = 'did:ara:' + did
 	debug('Broadcasting for %s', fullDid)
-	const { account: { aid } } = windowManager.sharedData.fetch('store')
 	try {
 		araNetworkNodeDcdn.start({
 			did: fullDid,
@@ -74,6 +74,22 @@ async function writeMetadata({ did, key, value }) {
 	}
 }
 
+async function writeFileMetaData({ did, title }) {
+	const fileData = {
+		title,
+		timestamp: new Date,
+		author: username
+	}
+	const fileDataString = JSON.stringify(fileData)
+	debug('Adding file metadata %s', fileDataString)
+	writeMetadata({ did, key: 'fileInfo', value: fileDataString })
+}
+
+async function readFileMetadata(did) {
+	const data = await readMetadata(did)
+	return JSON.parse(data.fileInfo)
+}
+
 async function readMetadata(did) {
 	try {
 		const data = await readFile(did)
@@ -89,7 +105,8 @@ module.exports = {
 	download,
 	getAFSPrice,
 	makeAfsPath,
-	readMetadata,
+	readFileMetadata,
 	unarchiveAFS,
+	writeFileMetaData,
 	writeMetadata
 }
