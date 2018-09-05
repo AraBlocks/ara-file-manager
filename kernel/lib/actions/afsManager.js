@@ -1,7 +1,14 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
-const { getPrice, unarchive } = require('ara-filesystem')
+const {
+	getPrice,
+	unarchive,
+	metadata: {
+		writeKey,
+		readFile
+	}
+} = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const araNetworkNodeDcdn = require('ara-network-node-dcdn')
 const { publishDID } = require('ara-network-node-dcdn/subnet')
@@ -58,10 +65,31 @@ function unarchiveAFS({ did, path }) {
 	unarchive({ did, path })
 }
 
+async function writeMetadata({ did, key, value }) {
+	try {
+		const updatedKeys = await writeKey({ did, key, value })
+		debug('Wrote key to metadata: %O', updatedKeys)
+	} catch(err) {
+		debug('Error writing key to metadata: %O', err)
+	}
+}
+
+async function readMetadata(did) {
+	try {
+		const data = await readFile(did)
+		debug('Read metadata: %O', data)
+		return data
+	} catch(err) {
+		debug('Error reading metadata: %O')
+	}
+}
+
 module.exports = {
 	broadcast,
 	download,
 	getAFSPrice,
 	makeAfsPath,
+	readMetadata,
 	unarchiveAFS,
+	writeMetadata
 }
