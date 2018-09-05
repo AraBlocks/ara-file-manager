@@ -7,11 +7,10 @@ const {
   DOWNLOAD_FAILED,
   PUBLISHED,
   PUBLISHING,
+  PURCHASING,
   UPLOAD_COMPLETE
 } = require('../../lib/constants/stateManagement')
-
 const { ipcRenderer, remote } = require('electron')
-const isDev = require('electron-is-dev')
 const windowManager = remote.require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
@@ -32,5 +31,6 @@ const setListener = (event) => {
   DOWNLOADED,
   PUBLISHING,
   PUBLISHED,
+  PURCHASING,
   UPLOAD_COMPLETE
 ].forEach(setListener)
