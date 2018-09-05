@@ -11,7 +11,7 @@ const {
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
 
-internalEmitter.on(PROMPT_PURCHASE, async (load) => {
+internalEmitter.once(PROMPT_PURCHASE, async (load) => {
   try {
     debug('%s heard. Load: %o', PROMPT_PURCHASE, load)
     const price = await getAFSPrice({ did: load.aid })
@@ -20,7 +20,4 @@ internalEmitter.on(PROMPT_PURCHASE, async (load) => {
   } catch (err) {
     debug('Error: %O', err)
   }
-})
-
-ipcMain.on(MAKE_PURCHASE, (event, load) => {
 })
