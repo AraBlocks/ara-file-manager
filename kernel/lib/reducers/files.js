@@ -2,6 +2,7 @@
 
 const debug = require('debug')('acms:files')
 const {
+  AWAITING_DOWNLOAD,
   DOWNLOADED,
   DOWNLOADING,
   DOWNLOAD_FAILED,
@@ -45,10 +46,11 @@ module.exports = (state, { load, type }) => {
       file.meta.datePublished = new Date
       break
     case PURCHASING:
-      //TODO
+      state.purchased.push(load)
       break
     case PURCHASED:
-      //TODO
+      file = state.purchased[state.purchased.length - 1]
+      file.status = AWAITING_DOWNLOAD
       break
     default:
     return state
