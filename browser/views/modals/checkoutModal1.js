@@ -3,17 +3,22 @@
 const html = require('choo/html')
 const styles = require('./styles')
 const Button = require('../../components/button')
-const { closeModal } = require('../../lib/tools/windowManagement')
+const { PURCHASE } = require('../../../lib/constants/stateManagement')
+const { emit, closeModal } = require('../../lib/tools/windowManagement')
 
 module.exports = ({
-  fileName = 'Some File',
-  price = 45.11,
-  publisherName = 'Thomas Bahama'
+  aid,
+  fileName = 'No file name given',
+  price = 0,
+  publisherName = 'No publisher name given'
 }) => {
   const buyButton = new Button({ children: 'Buy Now' })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => closeModal()
+    onclick: () => {
+      emit({ event: PURCHASE, load: aid })
+      closeModal()
+    }
    })
   return html`
     <div class="${styles.container} modals-container">
