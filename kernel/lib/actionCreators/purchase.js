@@ -1,18 +1,18 @@
 const debug = require('debug')('acm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
-const { ipcMain } = require('electron')
 const {
 	afsManager: { getAFSPrice, makeAfsPath },
   araContractsManager,
 } = require('../actions')
 const {
-  FEED_MODAL,
+	FEED_MODAL,
   PROMPT_PURCHASE,
   PURCHASE_INFO,
 	PURCHASE,
 	PURCHASED,
 	PURCHASING
 } = require('../../../lib/constants/stateManagement')
+const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 
@@ -34,16 +34,14 @@ ipcMain.on(PURCHASE, async (event, load) => {
 	}
 	araContractsManager.purchaseItem(load.aid)
 		.then(async () => {
-			debug('purchased')
 			dispatchLoad.status = PURCHASED
 			dispatch({ type: PURCHASED, load: dispatchLoad })
 			windowManager.pingView({ view: 'filemanager', event: PURCHASED })
 		}).catch(debug)
-	debug('hi')
+
 	dispatch({ type: PURCHASING, load: dispatchLoad })
 	windowManager.pingView({ view: 'filemanager', event: PURCHASING })
 })
-
 
 internalEmitter.once(PROMPT_PURCHASE, async (load) => {
   try {
