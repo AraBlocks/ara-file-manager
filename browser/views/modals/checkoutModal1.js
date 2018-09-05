@@ -12,11 +12,24 @@ module.exports = ({
   price = 0,
   publisherName = 'No publisher name given'
 }) => {
-  const buyButton = new Button({ children: 'Buy Now' })
+  const buyButton = new Button({
+    children: 'Buy Now',
+    onclick: () => {
+      emit({
+        event: PURCHASE,
+        load: {
+          aid,
+          fileName,
+          price
+        }
+      })
+      closeModal()
+    }
+  })
+
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
     onclick: () => {
-      emit({ event: PURCHASE, load: aid })
       closeModal()
     }
    })
