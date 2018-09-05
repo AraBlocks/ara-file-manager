@@ -1,11 +1,30 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:lsWindowManager')
-const dispatch = require('./reducers/dispatch')
-const { FEED_MODAL } = require('../../lib/constants/stateManagement')
-const { getAFSPrice } = require('../lib/actions/afsManager')
+const { PROMPT_PURCHASE, PURCHASE_INFO } = require('../../lib/constants/stateManagement')
+const EventEmitter = require('events');
 const path = require('path')
 const windowManager = require('electron-window-manager')
+
+windowManager.internalEmitter = new EventEmitter
+
+windowManager.internalEmitter.on(PURCHASE_INFO, () => {
+  debug('%s heard', PURCHASE_INFO)
+  const modalName = 'checkoutModal1'
+  if (windowManager.get(modalName).object != null) { return }
+  windowManager.sharedData.set('current', modalName)
+  windowManager.createNew(
+    modalName,
+    modalName,
+    windowManager.loadURL(modalName),
+    false,
+    {
+      backgroundColor: 'white',
+      frame: false,
+      ...windowManager.setSize(modalName),
+    }
+  ).open()
+})
 
 windowManager.setSize = (view) => {
   let width
@@ -101,25 +120,10 @@ windowManager.makeFilePath = ({ file, parent }) => `file://${path.resolve(__dirn
 
 windowManager.openDeepLinking = async (deepLinkingUrl) => {
   debug('Opening deeplink: %s', deepLinkingUrl)
-  const fileInfo = parseLink()
   try {
-    const price = await getAFSPrice({ did: fileInfo.aid })
-    dispatch({ type: FEED_MODAL, load: { price, ...fileInfo } })
-
-    const modalName = 'reDownloadModal'
-    if (windowManager.get(modalName).object != null) { return }
-    windowManager.sharedData.set('current', modalName)
-    windowManager.createNew(
-      modalName,
-      modalName,
-      windowManager.loadURL(modalName),
-      false,
-      {
-        backgroundColor: 'white',
-        frame: false,
-        ...windowManager.setSize(modalName),
-      }
-    ).open()
+    const fileInfo = parseLink()
+    windowManager.internalEmitter.emit(PROMPT_PURCHASE, fileInfo)
+    return
   } catch(err) {
     debug('Deeplink error: %O', err)
   }
