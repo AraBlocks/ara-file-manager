@@ -23,5 +23,4 @@ internalEmitter.on(PROMPT_PURCHASE, async (load) => {
 })
 
 ipcMain.on(MAKE_PURCHASE, (event, load) => {
-  
 })
