@@ -52,6 +52,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         dispatch({ type: PUBLISHED, load: araBalance })
         debug('Dispatch %s . Load: %s', PUBLISHED, araBalance)
         windowManager.pingView({ view: 'filemanager', event: PUBLISHED })
+        araContractsManager.savePublishedItem(load.did)
         // afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         // afsManager.broadcast(
         //   load.did,

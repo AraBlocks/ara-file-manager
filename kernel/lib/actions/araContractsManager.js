@@ -4,6 +4,9 @@ const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi } = require('ara-contracts/build/contracts/ARAToken.json')
 const { kARATokenAddress } = require('ara-contracts/constants')
 const { purchase, library } = require('ara-contracts')
+const fs = require('fs')
+const path = require('path')
+const userHome = require('user-home')
 const windowManager = require('electron-window-manager')
 const { web3 } = require('ara-context')()
 const {
@@ -81,10 +84,52 @@ async function getEtherBalance(account) {
 	}
 }
 
+function getAcmFilePath() {
+	const { account: { aid }} = windowManager.sharedData.fetch('store')
+	if(aid.ddo == null) {
+		debug('User has not logged in')
+		return null
+	}
+	const acmDirectory = path.resolve(userHome, '.acm')
+	fs.existsSync(acmDirectory) || fs.mkdirSync(acmDirectory)
+	const fileDirectory = path.resolve(userHome, '.acm', aid.ddo.id.slice(8))
+	return fileDirectory
+}
+
+async function getPublishedItems() {
+	return new Promise((resolve, reject) => {
+		const fileDirectory = getAcmFilePath()
+		if (fileDirectory == null) return
+		fs.readFile(fileDirectory, function (err, data) {
+			if (err) {
+				return reject(err)
+			}
+			const itemList = data.toString('utf8').slice(0,-1).split('\n')
+			debug(`Retrieved ${itemList.length} published items`)
+			return resolve(itemList)
+		})
+	})
+}
+
+function savePublishedItem(contentDid) {
+	try {
+		debug(`Saving published item ${contentDid}`)
+		const fileDirectory = getAcmFilePath()
+		if (fileDirectory == null) return
+		fs.appendFile(fileDirectory, `${contentDid}\n`, function (err) {
+			if (err) debug(err)
+		})
+	} catch(err) {
+		debug(err)
+	}
+}
+
 module.exports = {
 	getAccountAddress,
 	getAraBalance,
 	getEtherBalance,
 	getLibraryItems,
-	purchaseItem
+	getPublishedItems,
+	purchaseItem,
+	savePublishedItem
 }
