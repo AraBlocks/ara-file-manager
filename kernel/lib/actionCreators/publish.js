@@ -36,7 +36,7 @@ ipcMain.on(PUBLISH, async (event, load) => {
 })
 
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
-  debug('%s heard. Load: %O', CONFIRM_PUBLISH, load)
+  debug('%s heard. Load: %o', CONFIRM_PUBLISH, load)
   const { account } = windowManager.sharedData.fetch('store')
   const {
      aid: {

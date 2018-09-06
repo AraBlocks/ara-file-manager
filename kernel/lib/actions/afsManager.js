@@ -1,8 +1,12 @@
 'use strict'
 
+const { DOWNLOADED } = require('../../../lib/constants/stateManagement')
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const araNetworkNodeDcdn = require('ara-network-node-dcdn')
+const { createAFSKeyPath } = require('ara-filesystem/key-path')
+const fs = require('fs')
+const { getPrice, metadata, unarchive } = require('ara-filesystem')
 const { publishDID } = require('ara-network-node-dcdn/subnet')
 const path = require('path')
 const windowManager = require('electron-window-manager')
@@ -34,12 +38,12 @@ async function broadcast(did) {
 		})
 
 		publishDID(did, {
-      identity: aid,
-      secret: Buffer.from('ara-archiver'),
-      name: 'remote1',
-      keys: path.resolve(`/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`),
-    })
-	} catch(err) {
+			identity: aid,
+			secret: Buffer.from('ara-archiver'),
+			name: 'remote1',
+			keys: path.resolve(`/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`),
+		})
+	} catch (err) {
 		debug('Error broadcasting %O', err)
 	}
 }
@@ -58,7 +62,7 @@ async function download({ did, handler, errorHandler }) {
 			did: fullDid,
 			download: true
 		})
-	} catch(err) {
+	} catch (err) {
 		debug('Error downloading: %O', err)
 	}
 }
