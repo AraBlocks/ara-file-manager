@@ -63,7 +63,7 @@ async function purchaseItem(contentDid) {
 async function getLibraryItems(userAid) {
 	try {
 		const lib = await library.getLibrary(userAid)
-		debug('Got lib items. Count: %s', lib.length)
+		debug('Got %s lib items', lib.length)
 		return lib
 	} catch(e) {
 		debug(e)

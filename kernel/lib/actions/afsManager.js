@@ -1,31 +1,15 @@
 'use strict'
 
-const { DOWNLOADED } = require('../../../lib/constants/stateManagement')
+const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const araNetworkNodeDcdn = require('ara-network-node-dcdn')
-const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
 const { getPrice, metadata, unarchive } = require('ara-filesystem')
 const { publishDID } = require('ara-network-node-dcdn/subnet')
 const path = require('path')
 const windowManager = require('electron-window-manager')
-
-const {
-	getPrice,
-	unarchive,
-	metadata: {
-		writeKey,
-		readFile
-	}
-} = require('ara-filesystem')
-
-const {
-	account: {
-		aid ,
-		username
-	}
-} = windowManager.sharedData.fetch('store')
+const { account } = windowManager.sharedData.fetch('store')
 
 async function broadcast(did) {
 	const fullDid = 'did:ara:' + did
@@ -38,7 +22,7 @@ async function broadcast(did) {
 		})
 
 		publishDID(did, {
-			identity: aid,
+			identity: account.aid,
 			secret: Buffer.from('ara-archiver'),
 			name: 'remote1',
 			keys: path.resolve(`/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`),
@@ -78,11 +62,11 @@ function unarchiveAFS({ did, path }) {
 
 async function readFileMetadata(did) {
 	try {
-		const data = await readFile(did)
+		const data = await metadata.readFile(did)
 		debug('Read file metadata %O', data)
 		return JSON.parse(data.fileInfo)
-	} catch(e) {
-		debug(e)
+	} catch (err) {
+		debug(err)
 		return null
 	}
 }
@@ -92,13 +76,42 @@ async function writeFileMetaData({ did, title }) {
 		const fileData = {
 			title,
 			timestamp: new Date,
-			author: username
+			author: account.username
 		}
 		const fileDataString = JSON.stringify(fileData)
 		debug('Adding file metadata %s', fileDataString)
-		writeKey({ did, key: 'fileInfo', value: fileDataString })
-	} catch(e) {
+		metadata.writeKey({ did, key: 'fileInfo', value: fileDataString })
+	} catch (e) {
 		debug(e)
+	}
+}
+
+async function surfaceAFS(items) {
+	debug('Surfacing AFS')
+	let descriptor = {}
+	try {
+		return await Promise.all(items.map(async (did) => {
+			did = did.includes('x') ? did.slice(2) : did
+			const path = await createAFSKeyPath(did)
+			const AFSexists = fs.existsSync(path)
+			const meta = await readFileMetadata(did)
+
+			descriptor.downloadPercent = AFSexists ? 1 : 0
+			descriptor.meta = {
+				aid: 'did:ara' + did,
+				datePublished: meta ? meta.timestamp : null,
+				earnings: 0,
+				peers: 0,
+				price: Number(await getAFSPrice({ did }))
+			}
+			descriptor.name = meta ? meta.title : null
+			descriptor.size = 0
+			descriptor.status = AFSexists ? DOWNLOADED : AWAITING_DOWNLOAD
+
+			return descriptor
+		}))
+	} catch (err) {
+		debug(err)
 	}
 }
 
@@ -108,6 +121,7 @@ module.exports = {
 	getAFSPrice,
 	makeAfsPath,
 	readFileMetadata,
+	surfaceAFS,
 	unarchiveAFS,
 	writeFileMetaData,
 }
