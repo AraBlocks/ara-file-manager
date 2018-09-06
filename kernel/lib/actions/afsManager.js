@@ -1,17 +1,31 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
-const { getPrice, unarchive } = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const araNetworkNodeDcdn = require('ara-network-node-dcdn')
 const { publishDID } = require('ara-network-node-dcdn/subnet')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
+const {
+	getPrice,
+	unarchive,
+	metadata: {
+		writeKey,
+		readFile
+	}
+} = require('ara-filesystem')
+
+const {
+	account: {
+		aid ,
+		username
+	}
+} = windowManager.sharedData.fetch('store')
+
 async function broadcast(did) {
 	const fullDid = 'did:ara:' + did
 	debug('Broadcasting for %s', fullDid)
-	const { account: { aid } } = windowManager.sharedData.fetch('store')
 	try {
 		araNetworkNodeDcdn.start({
 			did: fullDid,
@@ -58,10 +72,38 @@ function unarchiveAFS({ did, path }) {
 	unarchive({ did, path })
 }
 
+async function readFileMetadata(did) {
+	try {
+		const data = await readFile(did)
+		debug('Read file metadata %O', data)
+		return JSON.parse(data.fileInfo)
+	} catch(e) {
+		debug(e)
+		return null
+	}
+}
+
+async function writeFileMetaData({ did, title }) {
+	try {
+		const fileData = {
+			title,
+			timestamp: new Date,
+			author: username
+		}
+		const fileDataString = JSON.stringify(fileData)
+		debug('Adding file metadata %s', fileDataString)
+		writeKey({ did, key: 'fileInfo', value: fileDataString })
+	} catch(e) {
+		debug(e)
+	}
+}
+
 module.exports = {
 	broadcast,
 	download,
 	getAFSPrice,
 	makeAfsPath,
+	readFileMetadata,
 	unarchiveAFS,
+	writeFileMetaData,
 }
