@@ -1,8 +1,14 @@
 'use strict'
 
+const debug = require('debug')('acm:kernel:lib:actionCreators:login')
 const araContractsManager = require('../actions/araContractsManager')
+const { surfacePublished } = require('../actions/afsManager')
 const dispatch = require('../reducers/dispatch')
-const { LOGIN_DEV, LOGIN, LOGGED_IN } = require('../../../lib/constants/stateManagement')
+const {
+  LOGIN_DEV,
+  LOGIN,
+  LOGGED_IN
+} = require('../../../lib/constants/stateManagement')
 const { accountSelection } = require('../actions/index')
 const windowManager = require('electron-window-manager')
 
@@ -13,11 +19,13 @@ windowManager.bridge.on(LOGIN, load => {
 })
 
 windowManager.bridge.on(LOGIN_DEV, async load => {
-  const account = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === load.afsId)[0]
+  debug('%s heard', LOGIN_DEV)
   try {
+    const [ account ] = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === load.afsId)
     const accountAddress = await araContractsManager.getAccountAddress(account.ddo.id, load.password)
     const araBalance = await araContractsManager.getAraBalance(accountAddress)
-    const newState = dispatch({
+
+    dispatch({
       type: LOGIN_DEV,
       load: {
         account,
@@ -26,8 +34,10 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
         password: load.password,
       }
     })
-    windowManager.bridge.emit(LOGGED_IN, newState)
-  } catch(e) {
-    console.log(e)
+
+    const library = await araContractsManager.getLibraryItems(account.ddo.id)
+    surfacePublished(library)
+  } catch(err) {
+    debug('Error: %O', err)
   }
 })
