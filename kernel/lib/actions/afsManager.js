@@ -1,6 +1,12 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
+const { createAFSKeyPath } = require('ara-filesystem/key-path')
+const araNetworkNodeDcdn = require('ara-network-node-dcdn')
+const { publishDID } = require('ara-network-node-dcdn/subnet')
+const path = require('path')
+const windowManager = require('electron-window-manager')
+
 const {
 	getPrice,
 	unarchive,
@@ -9,12 +15,13 @@ const {
 		readFile
 	}
 } = require('ara-filesystem')
-const { createAFSKeyPath } = require('ara-filesystem/key-path')
-const araNetworkNodeDcdn = require('ara-network-node-dcdn')
-const { publishDID } = require('ara-network-node-dcdn/subnet')
-const path = require('path')
-const windowManager = require('electron-window-manager')
-const { account: { aid , username }} = windowManager.sharedData.fetch('store')
+
+const {
+	account: {
+		aid ,
+		username
+	}
+} = windowManager.sharedData.fetch('store')
 
 async function broadcast(did) {
 	const fullDid = 'did:ara:' + did
@@ -65,6 +72,21 @@ function unarchiveAFS({ did, path }) {
 	unarchive({ did, path })
 }
 
+async function readFileMetadata(did) {
+	const data = await readMetadata(did)
+	return JSON.parse(data.fileInfo)
+}
+
+async function readMetadata(did) {
+	try {
+		const data = await readFile(did)
+		debug('Read metadata: %O', data)
+		return data
+	} catch(err) {
+		debug('Error reading metadata: %O')
+	}
+}
+
 async function writeMetadata({ did, key, value }) {
 	try {
 		const updatedKeys = await writeKey({ did, key, value })
@@ -83,21 +105,6 @@ async function writeFileMetaData({ did, title }) {
 	const fileDataString = JSON.stringify(fileData)
 	debug('Adding file metadata %s', fileDataString)
 	writeMetadata({ did, key: 'fileInfo', value: fileDataString })
-}
-
-async function readFileMetadata(did) {
-	const data = await readMetadata(did)
-	return JSON.parse(data.fileInfo)
-}
-
-async function readMetadata(did) {
-	try {
-		const data = await readFile(did)
-		debug('Read metadata: %O', data)
-		return data
-	} catch(err) {
-		debug('Error reading metadata: %O')
-	}
 }
 
 module.exports = {
