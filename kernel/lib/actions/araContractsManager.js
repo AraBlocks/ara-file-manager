@@ -101,9 +101,7 @@ async function getPublishedItems() {
 		const fileDirectory = getAcmFilePath()
 		if (fileDirectory == null) return
 		fs.readFile(fileDirectory, function (err, data) {
-			if (err) {
-				return reject(err)
-			}
+			if (err) return reject(err)
 			const itemList = data.toString('utf8').slice(0,-1).split('\n')
 			debug(`Retrieved ${itemList.length} published items`)
 			return resolve(itemList)
