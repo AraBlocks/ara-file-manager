@@ -2,6 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:publish')
 const afs = require('ara-filesystem')
+const { writeFileMetaData } = require('./afsManager')
 
 module.exports = {
   async addCreateEstimate({
@@ -34,6 +35,11 @@ module.exports = {
     } catch (err) {
       debug('Error adding file to AFS: %O', err)
     }
+
+    writeFileMetaData({
+      did: id,
+      title: name
+    })
 
     let gasEstimate
     try {
