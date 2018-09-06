@@ -73,38 +73,29 @@ function unarchiveAFS({ did, path }) {
 }
 
 async function readFileMetadata(did) {
-	const data = await readMetadata(did)
-	return JSON.parse(data.fileInfo)
-}
-
-async function readMetadata(did) {
 	try {
 		const data = await readFile(did)
-		debug('Read metadata: %O', data)
-		return data
-	} catch(err) {
-		debug('Error reading metadata: %O')
-	}
-}
-
-async function writeMetadata({ did, key, value }) {
-	try {
-		const updatedKeys = await writeKey({ did, key, value })
-		debug('Wrote key to metadata: %O', updatedKeys)
-	} catch(err) {
-		debug('Error writing key to metadata: %O', err)
+		debug('Read file metadata %O', data)
+		return JSON.parse(data.fileInfo)
+	} catch(e) {
+		debug(e)
+		return null
 	}
 }
 
 async function writeFileMetaData({ did, title }) {
-	const fileData = {
-		title,
-		timestamp: new Date,
-		author: username
+	try {
+		const fileData = {
+			title,
+			timestamp: new Date,
+			author: username
+		}
+		const fileDataString = JSON.stringify(fileData)
+		debug('Adding file metadata %s', fileDataString)
+		writeKey({ did, key: 'fileInfo', value: fileDataString })
+	} catch(e) {
+		debug(e)
 	}
-	const fileDataString = JSON.stringify(fileData)
-	debug('Adding file metadata %s', fileDataString)
-	writeMetadata({ did, key: 'fileInfo', value: fileDataString })
 }
 
 module.exports = {
@@ -115,5 +106,4 @@ module.exports = {
 	readFileMetadata,
 	unarchiveAFS,
 	writeFileMetaData,
-	writeMetadata
 }
