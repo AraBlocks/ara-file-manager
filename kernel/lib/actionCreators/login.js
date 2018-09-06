@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:login')
 const araContractsManager = require('../actions/araContractsManager')
-const { surfacePublished } = require('../actions/afsManager')
+const { surfaceAFS } = require('../actions/afsManager')
 const dispatch = require('../reducers/dispatch')
 const {
   LOGIN_DEV,
@@ -34,9 +34,9 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
         password: load.password,
       }
     })
-
     const library = await araContractsManager.getLibraryItems(account.ddo.id)
-    surfacePublished(library)
+    const purchased = await surfaceAFS(library)
+    debug('%O', purchased)
   } catch(err) {
     debug('Error: %O', err)
   }
