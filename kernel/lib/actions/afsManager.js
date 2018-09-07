@@ -92,7 +92,7 @@ async function surfaceAFS(items) {
 	try {
 		return await Promise.all(items.map(async (did) => {
 			did = did.includes('x') ? did.slice(2) : did
-			const path = await createAFSKeyPath(did)
+			const path = await makeAfsPath(did)
 			const AFSexists = fs.existsSync(path)
 			const meta = await readFileMetadata(did)
 
@@ -107,6 +107,7 @@ async function surfaceAFS(items) {
 			descriptor.name = meta ? meta.title : null
 			descriptor.size = 0
 			descriptor.status = AFSexists ? DOWNLOADED : AWAITING_DOWNLOAD
+			descriptor.path = path
 
 			return descriptor
 		}))

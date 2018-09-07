@@ -5,6 +5,8 @@ const araContractsManager = require('../actions/araContractsManager')
 const { surfaceAFS } = require('../actions/afsManager')
 const dispatch = require('../reducers/dispatch')
 const {
+  GOT_PUBLISHED_ITEMS,
+  GOT_PURCHASED_ITEMS,
   LOGIN_DEV,
   LOGIN,
   LOGGED_IN
@@ -36,7 +38,10 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
     })
     const library = await araContractsManager.getLibraryItems(account.ddo.id)
     const purchased = await surfaceAFS(library)
-    debug('%O', purchased)
+    const publishedItems = await araContractsManager.getPublishedItems()
+    const published = await surfaceAFS(publishedItems)
+    dispatch({ type: GOT_PURCHASED_ITEMS, load: purchased })
+    dispatch({ type: GOT_PUBLISHED_ITEMS, load: published })
   } catch(err) {
     debug('Error: %O', err)
   }
