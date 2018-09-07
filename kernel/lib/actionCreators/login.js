@@ -1,8 +1,11 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:login')
-const araContractsManager = require('../actions/araContractsManager')
-const { surfaceAFS } = require('../actions/afsManager')
+const {
+  accountSelection,
+  afsManager,
+  araContractsManager
+} = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const {
   GOT_PUBLISHED_ITEMS,
@@ -11,7 +14,6 @@ const {
   LOGIN,
   LOGGED_IN
 } = require('../../../lib/constants/stateManagement')
-const { accountSelection } = require('../actions/index')
 const windowManager = require('electron-window-manager')
 
 windowManager.bridge.on(LOGIN, load => {
@@ -23,7 +25,7 @@ windowManager.bridge.on(LOGIN, load => {
 windowManager.bridge.on(LOGIN_DEV, async load => {
   debug('%s heard', LOGIN_DEV)
   try {
-    const [ account ] = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === load.afsId)
+    const [account] = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === load.afsId)
     const accountAddress = await araContractsManager.getAccountAddress(account.ddo.id, load.password)
     const araBalance = await araContractsManager.getAraBalance(accountAddress)
 
@@ -37,12 +39,12 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
       }
     })
     const library = await araContractsManager.getLibraryItems(account.ddo.id)
-    const purchased = await surfaceAFS(library)
+    const purchased = await afsManager.surfaceAFS(library)
     const publishedItems = await araContractsManager.getPublishedItems()
-    const published = await surfaceAFS(publishedItems)
+    const published = await afsManager.surfaceAFS(publishedItems)
     dispatch({ type: GOT_PURCHASED_ITEMS, load: purchased })
     dispatch({ type: GOT_PUBLISHED_ITEMS, load: published })
-  } catch(err) {
+  } catch (err) {
     debug('Error: %O', err)
   }
 })
