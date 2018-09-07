@@ -8,6 +8,8 @@ const {
   DOWNLOAD_FAILED,
   DOWNLOADED_PUBLISHED,
   DOWNLOAD_START,
+  GOT_PUBLISHED_ITEMS,
+  GOT_PURCHASED_ITEMS,
   PUBLISHED,
   PUBLISHING,
   PURCHASED,
@@ -35,6 +37,12 @@ module.exports = (state, { load, type }) => {
       break
     case DOWNLOAD_START:
       state.purchased.push(load)
+      break
+    case GOT_PUBLISHED_ITEMS:
+      state.published = load
+      break
+    case GOT_PURCHASED_ITEMS:
+      state.purchased = load
       break
     case PUBLISHING:
       state.published.push(load)
