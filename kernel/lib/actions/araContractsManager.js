@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi } = require('ara-contracts/build/contracts/ARAToken.json')
-const { kARATokenAddress } = require('ara-contracts/constants')
+const { kAraTokenAddress } = require('ara-contracts/constants')
 const { purchase, library } = require('ara-contracts')
 const fs = require('fs')
 const path = require('path')
@@ -32,7 +32,7 @@ async function getAraBalance(account) {
 	try {
 		const balance = await call({
 			abi,
-			address: kARATokenAddress,
+			address: kAraTokenAddress,
 			functionName: 'balanceOf',
 			arguments: [
 				account
@@ -91,6 +91,7 @@ function getAcmFilePath() {
 		return null
 	}
 	const acmDirectory = path.resolve(userHome, '.acm')
+	console.log(fs.existsSync(acmDirectory))
 	fs.existsSync(acmDirectory) || fs.mkdirSync(acmDirectory)
 	const fileDirectory = path.resolve(userHome, '.acm', aid.ddo.id.slice(8))
 	return fileDirectory
@@ -101,7 +102,7 @@ async function getPublishedItems() {
 		const fileDirectory = getAcmFilePath()
 		if (fileDirectory == null) return
 		fs.readFile(fileDirectory, function (err, data) {
-			if (err) return reject(err)
+			if (err) return
 			const itemList = data.toString('utf8').slice(0,-1).split('\n')
 			debug(`Retrieved ${itemList.length} published items`)
 			return resolve(itemList)
