@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi } = require('ara-contracts/build/contracts/ARAToken.json')
-const { kARATokenAddress } = require('ara-contracts/constants')
+const { kAraTokenAddress } = require('ara-contracts/constants')
 const { purchase, library } = require('ara-contracts')
 const fs = require('fs')
 const path = require('path')
@@ -32,7 +32,7 @@ async function getAraBalance(account) {
 	try {
 		const balance = await call({
 			abi,
-			address: kARATokenAddress,
+			address: kAraTokenAddress,
 			functionName: 'balanceOf',
 			arguments: [
 				account
