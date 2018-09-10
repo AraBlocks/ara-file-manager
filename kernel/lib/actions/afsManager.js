@@ -62,10 +62,11 @@ function unarchiveAFS({ did, path }) {
 
 async function readFileMetadata(did) {
 	try {
-		const data = await metadata.readFile(did)
+		const data = await metadata.readFile({ did })
 		debug('Read file metadata %O', data)
 		return JSON.parse(data.fileInfo)
 	} catch (err) {
+		debug(err)
 		debug('No metadata for %s', did)
 		return null
 	}
@@ -104,7 +105,7 @@ async function descriptorGenerator (did, deeplinkData = null) {
       datePublished: meta ? meta.timestamp : null,
       earnings: 0,
       peers: 0,
-      price: Number(await getAFSPrice({ did }))
+			price: Number(await getAFSPrice({ did }))
     }
     descriptor.name = meta ? meta.title : deeplinkData ? deeplinkData.title : 'Unnamed File'
     descriptor.size = 0
