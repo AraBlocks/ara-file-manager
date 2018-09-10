@@ -5,7 +5,7 @@ const {
 
 module.exports = {
   published: [],
-  purchased: [...mockFiles()]
+  purchased: []
 }
 
 function mockFiles() {
