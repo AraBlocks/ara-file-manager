@@ -101,7 +101,7 @@ async function descriptorGenerator (did, deeplinkData = null) {
     const descriptor = {}
     descriptor.downloadPercent = AFSexists ? 1 : 0
     descriptor.meta = {
-      aid: 'did:ara' + did,
+      aid: 'did:ara:' + did,
       datePublished: meta ? meta.timestamp : null,
       earnings: 0,
       peers: 0,

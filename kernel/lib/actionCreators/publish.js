@@ -19,6 +19,7 @@ const {
   UPLOAD_COMPLETE
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(PUBLISH, async (event, load) => {
   debug('%s heard. Load: %O', PUBLISH, load)
@@ -37,7 +38,7 @@ ipcMain.on(PUBLISH, async (event, load) => {
 
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_PUBLISH, load)
-  const { account } = windowManager.sharedData.fetch('store')
+  const { account } = store
   const {
      aid: {
       accountAddress,
@@ -58,7 +59,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
           load.did,
           () => {
             dispatch({ type: UPLOAD_COMPLETE, load: load.price})
-            windowManager.get('filemanager') && windowManager.get('filemanager').object.webContents.send(UPLOAD_COMPLETE)
+            windowManager.pingView({ view: 'filemanager', event: UPLOAD_COMPLETE })
           }
         )
       })
