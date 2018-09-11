@@ -46,7 +46,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
     }
   } = account
   try {
-    debug('Committing AFS')
     publish.commit({ ...load, password })
       .then(async () => {
         const araBalance = await araContractsManager.getAraBalance(accountAddress)
