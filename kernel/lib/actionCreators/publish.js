@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:publish')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
-  afsManager: { makeAfsPath },
+  afsManager,
   araContractsManager,
   publish
 } = require('../actions')
@@ -53,14 +53,14 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         debug('Dispatch %s . Load: %s', PUBLISHED, araBalance)
         windowManager.pingView({ view: 'filemanager', event: PUBLISHED })
         araContractsManager.savePublishedItem(load.did)
-        // afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
-        // afsManager.broadcast(
-        //   load.did,
-        //   () => {
-        //     dispatch({ type: UPLOAD_COMPLETE, load: load.price})
-        //     windowManager.get('filemanager') && windowManager.get('filemanager').object.webContents.send(UPLOAD_COMPLETE)
-        //   }
-        // )
+        afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
+        afsManager.broadcast(
+          load.did,
+          () => {
+            dispatch({ type: UPLOAD_COMPLETE, load: load.price})
+            windowManager.get('filemanager') && windowManager.get('filemanager').object.webContents.send(UPLOAD_COMPLETE)
+          }
+        )
       })
       .catch(debug)
 
@@ -78,7 +78,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         name: load.name,
         size: 1.67,
         status: PUBLISHING,
-        path: makeAfsPath(load.did)
+        path: afsManager.makeAfsPath(load.did)
       }
     })
 
