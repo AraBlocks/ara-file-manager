@@ -22,7 +22,7 @@ async function broadcast(did) {
 		})
 
 		publishDID(did, {
-			identity: account.aid,
+			identity: account.aid.ddo.id,
 			secret: Buffer.from('ara-archiver'),
 			name: 'remote1',
 			keys: path.resolve(`/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`),
@@ -72,12 +72,13 @@ async function readFileMetadata(did) {
 	}
 }
 
-async function writeFileMetaData({ did, title }) {
+async function writeFileMetaData({ did, size, title }) {
 	try {
 		const fileData = {
+			author: account.username,
+			size,
 			title,
 			timestamp: new Date,
-			author: account.username
 		}
 		const fileDataString = JSON.stringify(fileData)
 		debug('Adding file metadata %s', fileDataString)
@@ -108,7 +109,7 @@ async function descriptorGenerator (did, deeplinkData = null) {
 			price: Number(await getAFSPrice({ did }))
     }
     descriptor.name = meta ? meta.title : deeplinkData ? deeplinkData.title : 'Unnamed File'
-    descriptor.size = 0
+    descriptor.size = meta ? meta.size : 0
 		descriptor.status = AFSexists ? DOWNLOADED : AWAITING_DOWNLOAD
 		descriptor.path = path
 
