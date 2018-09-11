@@ -3,6 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:publish')
 const afs = require('ara-filesystem')
 const { writeFileMetaData } = require('./afsManager')
+const fs = require('fs')
 
 module.exports = {
   async addCreateEstimate({
@@ -36,8 +37,16 @@ module.exports = {
       debug('Error adding file to AFS: %O', err)
     }
 
+    let size = 0
+    paths.forEach(file => {
+      const fileStats = fs.statSync(file)
+      size += fileStats.size
+    })
+    debug(`File size is ${size}`)
+
     writeFileMetaData({
       did: id,
+      size,
       title: name
     })
 
@@ -56,7 +65,8 @@ module.exports = {
         gasEstimate,
         name,
         paths,
-        price
+        price,
+        size
       }
     } catch (err) {
       debug('Error in estimating gas: %O', err)
