@@ -64,6 +64,7 @@ module.exports = {
   },
 
   async commit({ did, password, gasEstimate, price = null }) {
+    debug('Committing AFS')
     try {
       const result = await afs.commit({ did, password, gasEstimate })
       if (price != null) {

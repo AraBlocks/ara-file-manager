@@ -22,7 +22,7 @@ async function broadcast(did) {
 		})
 
 		publishDID(did, {
-			identity: account.aid,
+			identity: account.aid.ddo.id,
 			secret: Buffer.from('ara-archiver'),
 			name: 'remote1',
 			keys: path.resolve(`/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`),
