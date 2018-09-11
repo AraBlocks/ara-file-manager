@@ -5,6 +5,7 @@ const styles = require('./styles')
 const html = require('choo/html')
 
 module.exports = ({ meta, name }) => {
+	meta.aid = meta.aid.slice(-64)
 	return html`
 		<div class="${styles.fileTooltip} tooltip-fileTooltip">
 			<div>

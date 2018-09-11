@@ -34,8 +34,7 @@ ipcMain.on(PURCHASE, async (event, load) => {
 	}
 	araContractsManager.purchaseItem(load.aid)
 		.then(async () => {
-			dispatchLoad.status = PURCHASED
-			dispatch({ type: PURCHASED, load: dispatchLoad })
+			dispatch({ type: PURCHASED })
 			windowManager.pingView({ view: 'filemanager', event: PURCHASED })
 		}).catch(debug)
 

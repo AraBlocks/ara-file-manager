@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('acm:browser:views:fileManager:fileDescriptor')
 const {
   AWAITING_DOWNLOAD,
   DOWNLOADING,
@@ -35,7 +36,7 @@ class FileDescriptor extends Nanocomponent {
     }
 
     this.children = {
-      button: new DynamicButton(this.buttonProps(status)),
+      button: new DynamicButton(this.buttonProps(status, meta.aid)),
       progressRing: new ProgressRing({ status, downloadPercent }),
       tooltip: new Tooltip({
         id: meta.aid,
@@ -47,7 +48,7 @@ class FileDescriptor extends Nanocomponent {
     this.buttonProps = this.buttonProps.bind(this)
   }
 
-  buttonProps(status) {
+  buttonProps(status, did) {
     const props = {}
     switch(status) {
       case AWAITING_DOWNLOAD:
@@ -55,16 +56,17 @@ class FileDescriptor extends Nanocomponent {
         props.cssClass = {
           name: 'smallInvisible',
           opts: { color: 'red' }
-         }
-         break
+        }
+        props.onclick = () => emit({ event: DOWNLOAD, load: did })
+        break
       case DOWNLOADING:
          props.children = 'Cancel Download'
          props.cssClass = {
            name: 'smallInvisible',
            opts: { color: 'grey' }
-         }
-         props.onclick = () => {}
-         break
+        }
+        props.onclick = () => {}
+        break
       case PUBLISHING:
         props.children = 'Publishing'
         props.cssClass = {
@@ -110,6 +112,7 @@ class FileDescriptor extends Nanocomponent {
       children,
       props
     } = this
+
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
@@ -132,7 +135,7 @@ class FileDescriptor extends Nanocomponent {
               : filesize(props.size)}
           </div>
           <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
-            ${children.button.render(buttonProps(status))}
+            ${children.button.render(buttonProps(status, props.meta.aid))}
           </div>
         </div>
       </div>

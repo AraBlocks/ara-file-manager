@@ -11,27 +11,27 @@ const {
 	DOWNLOAD_FAILED,
 	DOWNLOAD_START
 } = require('../../../lib/constants/stateManagement')
-const { makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
 ipcMain.on(DOWNLOAD, async (event, load) => {
 	debug('%s heard. Load: %O', DOWNLOAD, load)
 	try {
-		const dispatchLoad = {
-			downloadPercent: 0,
-			meta: {
-				aid: load.aid,
-				datePublished: '11/20/1989',
-				earnings: 2134.33,
-				peers: 353,
-				price: load.price,
-			},
-			name: load.fileName,
-			size: 0,
-			status: DOWNLOADING,
-			path: makeAfsPath(load.aid)
-		}
+		const dispatchLoad = await afsManager.descriptorGenerator(load)
+		// const dispatchLoad = {
+		// 	downloadPercent: 0,
+		// 	meta: {
+		// 		aid: load.aid,
+		// 		datePublished: '11/20/1989',
+		// 		earnings: 2134.33,
+		// 		peers: 353,
+		// 		price: load.price,
+		// 	},
+		// 	name: load.fileName,
+		// 	size: 0,
+		// 	status: DOWNLOADING,
+		// 	path: afsManager.makeAfsPath(load.aid)
+		// }
 		debug('Dispatching %s . Load: %O', DOWNLOAD_START, dispatchLoad)
 		dispatch({ type: DOWNLOAD_START, load: dispatchLoad })
 
