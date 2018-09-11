@@ -3,13 +3,14 @@
 const debug = require('debug')('acm:browser:views:fileManager:fileDescriptor')
 const {
   AWAITING_DOWNLOAD,
+  DOWNLOAD,
   DOWNLOADING,
   DOWNLOAD_FAILED,
   PUBLISHING,
   PURCHASING
 } = require('../../../lib/constants/stateManagement')
 const DynamicButton = require('../../components/dynamicButton')
-const { openFolder } = require('../../lib/tools/windowManagement')
+const { emit, openFolder } = require('../../lib/tools/windowManagement')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
@@ -48,7 +49,7 @@ class FileDescriptor extends Nanocomponent {
     this.buttonProps = this.buttonProps.bind(this)
   }
 
-  buttonProps(status, did) {
+  buttonProps(status, aid) {
     const props = {}
     switch(status) {
       case AWAITING_DOWNLOAD:
@@ -57,7 +58,7 @@ class FileDescriptor extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'red' }
         }
-        props.onclick = () => emit({ event: DOWNLOAD, load: did })
+        props.onclick = () => emit({ event: DOWNLOAD, load: { aid } })
         break
       case DOWNLOADING:
          props.children = 'Cancel Download'
@@ -112,7 +113,6 @@ class FileDescriptor extends Nanocomponent {
       children,
       props
     } = this
-
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
