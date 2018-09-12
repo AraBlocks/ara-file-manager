@@ -1,6 +1,5 @@
 'use strict'
 
-const debug = require('debug')('acm:browser:js:fileManager')
 const {
   DOWNLOADED,
   DOWNLOADING,
@@ -20,10 +19,7 @@ const fileManager = new FileManager(store)
 document.getElementById('container').appendChild(fileManager.render(store))
 
 const setListener = (event) => {
-  ipcRenderer.on(event, () => {
-    debug('%s heard', event)
-    fileManager.render(store)
-  })
+  ipcRenderer.on(event, () => fileManager.render(store))
 }
 
 [

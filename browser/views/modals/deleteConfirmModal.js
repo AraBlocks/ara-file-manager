@@ -1,6 +1,5 @@
 'use strict'
 
-//const { CONFIRM_DELETE } = require('../../../lib/constants/stateManagement')
 const { closeModal, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
@@ -9,10 +8,7 @@ const html = require('choo/html')
 module.exports = ({ price = 0.09 }) => {
   const deleteButton = new Button({
     children: 'Delete File',
-    onclick: () => {
-      //emit({ event: CONFIRM_DELETE, load }),
-      closeModal()
-    }
+    onclick: () => closeModal()
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),

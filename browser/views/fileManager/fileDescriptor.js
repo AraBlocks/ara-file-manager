@@ -1,6 +1,5 @@
 'use strict'
 
-const debug = require('debug')('acm:browser:views:fileManager:fileDescriptor')
 const {
   AWAITING_DOWNLOAD,
   DOWNLOAD,
