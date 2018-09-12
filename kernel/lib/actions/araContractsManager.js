@@ -102,9 +102,9 @@ async function getPublishedItems() {
 		const fileDirectory = getAcmFilePath()
 		if (fileDirectory == null) return
 		fs.readFile(fileDirectory, function (err, data) {
-			if (err) return
+			if (err) return resolve([])
 			const itemList = data.toString('utf8').slice(0,-1).split('\n')
-			debug(`Retrieved ${itemList.length} published items`)
+			debug(`Retrieved %s published items`, itemList.length)
 			return resolve(itemList)
 		})
 	})

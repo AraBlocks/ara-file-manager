@@ -42,7 +42,7 @@ module.exports = {
       const fileStats = fs.statSync(file)
       size += fileStats.size
     })
-    debug(`File size is ${size}`)
+    debug('File size is %s', size)
 
     writeFileMetaData({
       did: id,
@@ -52,6 +52,7 @@ module.exports = {
 
     let gasEstimate
     try {
+      debug('Getting gas estimate..')
       gasEstimate = await afs.estimateCommitGasCost({ did: id, password })
       debug('Gas estimate for commit: %d', gasEstimate)
       if (price != null) {

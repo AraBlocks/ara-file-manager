@@ -8,8 +8,7 @@ const {
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const {
-  GOT_PUBLISHED_ITEMS,
-  GOT_PURCHASED_ITEMS,
+  GOT_LIBRARY,
   LOGIN_DEV,
   LOGIN,
   LOGGED_IN
@@ -38,12 +37,16 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
         password: load.password,
       }
     })
-    const library = await araContractsManager.getLibraryItems(account.ddo.id)
-    const purchased = await afsManager.surfaceAFS(library)
-    const publishedItems = await araContractsManager.getPublishedItems()
-    const published = await afsManager.surfaceAFS(publishedItems)
-    dispatch({ type: GOT_PURCHASED_ITEMS, load: purchased })
-    dispatch({ type: GOT_PUBLISHED_ITEMS, load: published })
+
+    const items = {}
+    araContractsManager.getLibraryItems(account.ddo.id)
+      .then(afsManager.surfaceAFS)
+      .then(purchased => items.purchased = purchased)
+      .then(araContractsManager.getPublishedItems)
+      .then(afsManager.surfaceAFS)
+      .then(published => items.published = published)
+      .then(() => dispatch({ type: GOT_LIBRARY, load: items }))
+      .catch(err => debug('getLibraryItems Err: %o', err))
   } catch (err) {
     debug('Error: %O', err)
   }
