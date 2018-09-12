@@ -89,7 +89,7 @@ async function surfaceAFS(items) {
 }
 
 function makeAfsPath(did) {
-	return createAFSKeyPath(did)
+	return path.join(createAFSKeyPath(did), 'home', 'content')
 }
 
 async function descriptorGenerator (did, deeplinkData = null) {
