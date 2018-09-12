@@ -1,6 +1,5 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:reducers:dispatch')
 const account = require('./account')
 const files = require('./files')
 const modal = require('./modal')

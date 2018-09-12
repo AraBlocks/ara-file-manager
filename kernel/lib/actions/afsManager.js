@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
-const { createAFSKeyPath } = require('ara-filesystem/key-path')
+const rc = require('ara-filesystem/rc')
 const araNetworkNodeDcdn = require('ara-network-node-dcdn')
 const fs = require('fs')
 const { getPrice, metadata, unarchive } = require('ara-filesystem')

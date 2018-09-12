@@ -1,6 +1,5 @@
 'use strict'
 
-const debug = require('debug')('acm:browser:views:registration')
 const Button = require('../components/button')
 const { closeWindow } = require('../lib/tools/windowManagement')
 const { emit } = require('../lib/tools/windowManagement')
@@ -48,7 +47,6 @@ class Registration extends Nanocomponent {
   register(e) {
     e.preventDefault()
     const { password } = this.state
-    debug('Emitting %s . Load: %s', REGISTER, password)
     emit({ event: REGISTER, load: password })
     this.render({ pending: true })
   }

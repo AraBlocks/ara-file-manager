@@ -1,6 +1,6 @@
 'use strict'
 
-const Menu= require('../components/hamburgerMenu/menu')
+const Menu = require('../components/hamburgerMenu/menu')
 const OptionsCheckbox = require('../components/optionsCheckbox')
 const UtilityButton = require('../components/utilityButton')
 const WalletInfo = require('./mainManager/walletInfo')
