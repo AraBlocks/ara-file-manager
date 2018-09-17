@@ -47,7 +47,7 @@ if (argv.includes('loggedin')) {
   void async function() {
     windowManager.bridge.emit(LOGIN_DEV, {
       password: argv[argv.length - 2],
-      afsId: argv[argv.length - 3]
+      userAid: argv[argv.length - 3]
     })
   }()
 }

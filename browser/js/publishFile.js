@@ -8,11 +8,11 @@ const {
 const PublishFile = require('../views/publishFile/container')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
-const { account: { aid } } = windowManager.sharedData.fetch('store')
+const { account } = windowManager.sharedData.fetch('store')
 
 const publishFile = new PublishFile({
-  did: aid.ddo.id,
-  password: aid.password
+  did: account.userAid,
+  password: account.password
  })
 document.getElementById('container').appendChild(publishFile.render({}))
 

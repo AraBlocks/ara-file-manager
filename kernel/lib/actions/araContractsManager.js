@@ -47,12 +47,16 @@ async function getAraBalance(account) {
 
 async function purchaseItem(contentDid) {
 	debug(`Purchasing item ${contentDid}`)
-	const { account: { aid }} = windowManager.sharedData.fetch('store')
-	const { password } = aid
+	const {
+		account: {
+			userAid,
+			password
+		}
+	} = windowManager.sharedData.fetch('store')
 	try {
 		await purchase(
 			{
-				requesterDid: aid.ddo.id,
+				requesterDid: userAid,
 				contentDid,
 				password,
 			}
@@ -85,15 +89,16 @@ async function getEtherBalance(account) {
 }
 
 function getAcmFilePath() {
-	const { account: { aid }} = windowManager.sharedData.fetch('store')
-	if(aid.ddo == null) {
+	const { account: { userAid }} = windowManager.sharedData.fetch('store')
+	debug(windowManager.sharedData.fetch('store'))
+	if(userAid == null) {
 		debug('User has not logged in')
 		return null
 	}
 	const acmDirectory = path.resolve(userHome, '.acm')
 	console.log(fs.existsSync(acmDirectory))
 	fs.existsSync(acmDirectory) || fs.mkdirSync(acmDirectory)
-	const fileDirectory = path.resolve(userHome, '.acm', aid.ddo.id.slice(8))
+	const fileDirectory = path.resolve(userHome, '.acm', userAid.slice(8))
 	return fileDirectory
 }
 
