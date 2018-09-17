@@ -15,7 +15,8 @@ module.exports = {
   smallInvisible({
     color  = 'red',
     fontSize = '14',
-    weight = 'bold'
+    weight = 'bold',
+    height = '30px'
   }) {
     return css`
       :host {
@@ -23,9 +24,9 @@ module.exports = {
         color: ${colorSelector(color)};
         font-family: ${fontSelector(weight)};
         font-size: ${fontSize}px;
-        height: 30px;
+        height: ${height};
         transition: all 100ms;
-        width: 90%;
+        width: 100%;
       }
 
       :host:hover {
