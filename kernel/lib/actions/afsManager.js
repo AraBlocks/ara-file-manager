@@ -3,6 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
 const araNetworkNodeDcdn = require('ara-network-node-dcdn')
+const dcdnFarm = require('ara-network-node-dcdn-farm')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
 const { getPrice, metadata, unarchive } = require('ara-filesystem')
@@ -12,21 +13,16 @@ const windowManager = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
 
-async function broadcast(did) {
-	const fullDid = 'did:ara:' + did
-	debug('Broadcasting for %s', fullDid)
+async function broadcast({ did , price = 0}) {
+	did = did.length === 64 ? did : 'did:ara:' + did
+	debug('Broadcasting for %s', did)
 	try {
-		araNetworkNodeDcdn.start({
-			did: fullDid,
+		araNetworkNodeDcdnFarm.start({
+			did,
 			download: false,
 			upload: true,
-		})
-
-		publishDID(did, {
-			identity: account.userAid,
-			secret: Buffer.from('ara-archiver'),
-			name: 'remote1',
-			keys: path.resolve(`/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`),
+			userID: account.userDID,
+			price,
 		})
 	} catch (err) {
 		debug('Error broadcasting %O', err)
@@ -92,31 +88,31 @@ function makeAfsPath(did) {
 	return path.join(createAFSKeyPath(did), 'home', 'content')
 }
 
-async function descriptorGenerator (did, deeplinkData = null) {
-  try {
-    did = did.slice(-64)
+async function descriptorGenerator(did, deeplinkData = null) {
+	try {
+		did = did.slice(-64)
 		const path = await makeAfsPath(did)
-    const AFSExists = fs.existsSync(path)
-    const meta = AFSExists ? await readFileMetadata(did) : null
+		const AFSExists = fs.existsSync(path)
+		const meta = AFSExists ? await readFileMetadata(did) : null
 
-    const descriptor = {}
-    descriptor.downloadPercent = AFSExists ? 1 : 0
-    descriptor.meta = {
+		const descriptor = {}
+		descriptor.downloadPercent = AFSExists ? 1 : 0
+		descriptor.meta = {
 			aid: did,
-      datePublished: meta ? meta.timestamp : null,
-      earnings: 0,
-      peers: 0,
+			datePublished: meta ? meta.timestamp : null,
+			earnings: 0,
+			peers: 0,
 			price: Number(await getAFSPrice({ did }))
-    }
-    descriptor.name = meta ? meta.title : deeplinkData ? deeplinkData.title : 'Unnamed File'
-    descriptor.size = meta ? meta.size : 0
+		}
+		descriptor.name = meta ? meta.title : deeplinkData ? deeplinkData.title : 'Unnamed File'
+		descriptor.size = meta ? meta.size : 0
 		descriptor.status = AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		descriptor.path = path
 
-    return descriptor
-  } catch (err) {
-    debug('descriptorGenerator Error:, %o', err)
-  }
+		return descriptor
+	} catch (err) {
+		debug('descriptorGenerator Error:, %o', err)
+	}
 }
 
 module.exports = {
