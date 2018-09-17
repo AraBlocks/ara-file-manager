@@ -6,6 +6,7 @@ const styles = require('./styles/container')
 const html = require('choo/html')
 const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
+const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
   constructor({
@@ -17,14 +18,13 @@ class Container extends Nanocomponent {
     this.state = {
       activeTab: 0,
       files,
-      userBalance: account.userBalance
+      araBalance: account.araBalance
     }
 
     this.children = {
       header: new Header({
         ...account,
-        parentRerender: this.rerender.bind(this),
-        parentState: this.state,
+        selectTab: this.selectTab.bind(this)
        }),
 
       publishedSection: new Section({
@@ -38,31 +38,37 @@ class Container extends Nanocomponent {
       })
     }
 
+    this.rerender = this.rerender.bind(this)
     if (isDev) { window.components = { fileManager: this } }
   }
 
+  selectTab(index) {
+    const { state, rerender } = this
+    state.activeTab = index
+    rerender()
+  }
+
   update(store){
-    this.state.userBalance = store.account.userBalance
+    this.state.araBalance = store.account.araBalance
     return true
   }
 
   createElement() {
     const {
       children,
-      state: { activeTab, files, userBalance }
+      state: { activeTab, files, araBalance }
     } = this
 
-    Object.assign(window, { container: this })
+    tooltip({})
     return html`
       <div>
         <div class="${styles.container} container-container">
           <div>
-            ${children.header.render({ activeTab, userBalance })}
+            ${children.header.render({ activeTab, araBalance })}
             <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
-              ${[ ...files.published, ...files.purchased ].length
+              ${files.published.length || files.purchased.length
                 ? renderSections().map(section => section.render({ files }))
-                : renderNoFilesMsg()
-              }
+                : renderNoFilesMsg()}
             </div>
           </div>
         </div>

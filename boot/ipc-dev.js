@@ -1,12 +1,13 @@
 'use strict'
 
-const isDev = require('electron-is-dev')
+'use strict'
+
 const fs = require('fs')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
 const views = path.resolve(__dirname, '..', 'browser', 'views')
-const modals = path.resolve(__dirname, '..', 'browser/views/modals')
+const modals = path.resolve(__dirname, '..', 'browser', 'views', 'modals')
 
 fs.readdirSync(views).forEach((view, i) => {
   view = view.slice(0, -3)

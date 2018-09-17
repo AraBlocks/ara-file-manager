@@ -22,8 +22,14 @@
   },
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
-    "ara-filesystem": "github:arablocks/ara-filesystem",
-    "ara-identity-archiver": "github:arablocks/ara-identity-archiver",
+    "ara-context": "github:arablocks/ara-context",
+    "ara-contracts": "../ara_blocks/ara-contracts",
+    "ara-crypto": "github:arablocks/ara-crypto",
+    "ara-filesystem": "github:arablocks/ara-filesystem#develop",
+    "ara-network": "github:arablocks/ara-network",
+    "ara-network-node-dcdn": "../ara_blocks/ara-network-node-dcdn",
+    "ara-network-node-dcdn-farm": "github:littlstar/ara-network-node-dcdn-farm",
+    "ara-util": "github:arablocks/ara-util",
     "body-parser": "^1.18.3",
     "choo": "^6.13.0",
     "cors": "^2.8.4",
@@ -32,11 +38,14 @@
     "electron-is-dev": "^0.3.0",
     "electron-positioner": "^3.0.1",
     "electron-window-manager": "^1.0.6",
+    "filesize": "^3.6.1",
     "md5-hex": "^2.0.0",
     "menubar": "*",
     "nanocomponent": "^6.5.2",
     "styleUtils": "file:browser/lib/styleUtils",
-    "user-home": "^2.0.0"
+    "typedarray-to-buffer": "^3.1.5",
+    "user-home": "^2.0.0",
+    "web3-providers-ws": "^1.0.0-beta.35"
   },
   "devDependencies": {
     "ava": "^0.25.0",
@@ -49,7 +58,7 @@
     "mocha": "^5.2.0"
   },
   "build": {
-    "appId": "yourappid",
+    "appId": "com.littlstar.ara-content-manager",
     "dmg": {
       "contents": [
         {
@@ -68,6 +77,12 @@
       "target": [
         "AppImage",
         "deb"
+      ]
+    },
+    "protocols": {
+      "name": "Ara Content Manager",
+      "schemes": [
+        "lstr"
       ]
     },
     "win": {}

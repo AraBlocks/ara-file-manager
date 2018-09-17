@@ -1,7 +1,7 @@
 'use strict'
 
 const Checkbox = require('./checkbox')
-const optionsTextProvider = require('../lib/tools/optionsTextProvider')
+const optionsTitleProvider = require('../lib/tools/optionsTitleProvider')
 const styles = require('./styles/optionsCheckbox')
 const Tooltip = require('./tooltip')
 const html = require('choo/html')
@@ -13,13 +13,13 @@ class OptionsCheckbox extends Nanocomponent {
 		parentState = {}
 	}) {
 		super()
-		this.props = { ...optionsTextProvider.getOptionsTitleDescription(field) }
+		this.props = { ...optionsTitleProvider(field) }
 		this.children = {
 			tooltip: new Tooltip({
-				tooltipText: optionsTextProvider.createTooltipText(field, styles.tooltip),
-				opts: {
-					maxWidth: 300
-				}
+				args: { optionType: field, cssClass: 'optionsTooltip' },
+				component: 'optionsTextProvider',
+				id: field,
+				opts: { maxWidth: 300 }
 			}),
 			checkbox: new Checkbox({
 				field,

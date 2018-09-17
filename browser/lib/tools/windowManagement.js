@@ -1,6 +1,6 @@
 'use strict'
 
-const isDev = require('electron-is-dev')
+const debug = require('debug')('browser:lib:tools:windowManagement')
 const {
 	clipboard,
 	ipcRenderer,
@@ -14,6 +14,11 @@ function changeMainManagerSize(expand) {
 	window.setSize(400, expand ? 525 : 325)
 }
 
+function closeModal(name = null) {
+	windowManager.modalIsOpen = false
+	closeWindow(name)
+}
+
 function closeWindow(name = null) {
 	name
 		? windowManager.get(name).object.close()
@@ -24,7 +29,13 @@ function copyToClipboard(text, modifier = (a) => a) {
 	clipboard.writeText(modifier(text))
 }
 
+function copyDistributionLink(aid, fileName) {
+	const encodedName = encodeURIComponent(fileName)
+	copyToClipboard(`lstr://download/${aid}/${encodedName}`)
+}
+
 function emit({ event, load }) {
+	debug('Emit: %o', { event, load })
 	ipcRenderer.send(event, load)
 }
 
@@ -41,7 +52,7 @@ function openModal(view = 'modal') {
 		windowManager.get('modal').focus()
 	} else {
 		windowManager.sharedData.set('current', view)
-		const modal = windowManager.open(
+		windowManager.open(
 			view,
 			view,
 			windowManager.loadURL(view),
@@ -91,7 +102,9 @@ function quitApp() {
 
 module.exports = {
 	changeMainManagerSize,
+	copyDistributionLink,
 	copyToClipboard,
+	closeModal,
 	closeWindow,
 	emit,
 	openModal,

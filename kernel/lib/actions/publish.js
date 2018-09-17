@@ -1,6 +1,9 @@
 'use strict'
 
+const debug = require('debug')('acm:kernel:lib:actions:publish')
 const afs = require('ara-filesystem')
+const { writeFileMetaData } = require('./afsManager')
+const fs = require('fs')
 
 module.exports = {
   async addCreateEstimate({
@@ -10,10 +13,17 @@ module.exports = {
     paths,
     price
   }) {
-
-    const arafs = await afs.create({ owner: did, password })
-    const { afs: { did: id }, mnemonic } = arafs
-    arafs.afs.close()
+    let arafs
+    let id
+    let mnemonic
+    try {
+      arafs = await afs.create({ owner: did, password });
+      ({ afs: { did: id }, mnemonic } = arafs)
+      arafs.afs.close()
+      debug('AFS successfully created')
+    } catch (err) {
+      debug('Error in creating AFS: %O', err)
+    }
 
     try {
       const newAfs = await afs.add({
@@ -22,45 +32,60 @@ module.exports = {
         password
       })
       newAfs.close()
-      console.log('added file succesfully')
-    } catch (e) {
-      console.warn('error in adding')
+      debug('Added file succesfully')
+    } catch (err) {
+      debug('Error adding file to AFS: %O', err)
     }
+
+    let size = 0
+    paths.forEach(file => {
+      const fileStats = fs.statSync(file)
+      size += fileStats.size
+    })
+    debug('File size is %s', size)
+
+    writeFileMetaData({
+      did: id,
+      size,
+      title: name
+    })
 
     let gasEstimate
     try {
+      debug('Getting gas estimate..')
       gasEstimate = await afs.estimateCommitGasCost({ did: id, password })
+      debug('Gas estimate for commit: %d', gasEstimate)
       if (price != null) {
         gasEstimate += await afs.estimateSetPriceGasCost({ did: id, password, price: Number(price) })
+        debug('Gas estimate for commit + setting price: %d', gasEstimate)
+      }
+
+      return {
+        did: id,
+        mnemonic,
+        gasEstimate,
+        name,
+        paths,
+        price,
+        size
       }
     } catch (err) {
-      console.log({ err })
-    }
-
-    return {
-      did: id,
-      mnemonic,
-      gasEstimate,
-      name,
-      paths,
-      price
+      debug('Error in estimating gas: %O', err)
     }
   },
 
-  async commit({ did, password, gasEstimate, price = null }){
-    const result = await afs.commit({ did, password, gasEstimate })
-    if (result instanceof Error) {
-      console.log(result)
-    } else {
-      console.log("file(s) successfully committed")
+  async commit({ did, password, gasEstimate, price = null }) {
+    debug('Committing AFS')
+    try {
+      const result = await afs.commit({ did, password, gasEstimate })
       if (price != null) {
-        try {
-          await afs.setPrice({ did, password, price: Number(price) })
-        } catch (err) {
-          console.log(err)
-        }
+        await afs.setPrice({ did, password, price: Number(price) })
+        debug('Price set succesfully: %s', price)
       }
+      debug('Committed AFS successfully')
+      return result
+    } catch (err) {
+      debug('Error: %O', err)
     }
-    return result
   }
 }

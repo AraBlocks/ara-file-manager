@@ -1,8 +1,19 @@
 'use strict'
 
+const debug = require('debug')('acm:kernel:lib:actionCreators:login')
+const {
+  accountSelection,
+  afsManager,
+  araContractsManager
+} = require('../actions')
 const dispatch = require('../reducers/dispatch')
-const { LOGIN_DEV, LOGIN, LOGGED_IN } = require('../../../lib/constants/stateManagement')
-const { accountSelection } = require('../actions/index')
+const {
+  GOT_EARNINGS,
+  GOT_LIBRARY,
+  LOGIN_DEV,
+  LOGIN,
+  LOGGED_IN
+} = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 
 windowManager.bridge.on(LOGIN, load => {
@@ -11,14 +22,34 @@ windowManager.bridge.on(LOGIN, load => {
   windowManager.bridge.emit(LOGGED_IN, newState)
 })
 
-windowManager.bridge.on(LOGIN_DEV, load => {
-  const account = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === load.afsId)[0]
-  const newState = dispatch({
-    type: LOGIN_DEV,
-    load: {
-      account,
-      password: load.password,
-    }
-  })
-  windowManager.bridge.emit(LOGGED_IN, newState)
+windowManager.bridge.on(LOGIN_DEV, async load => {
+  debug('%s heard', LOGIN_DEV)
+  try {
+    const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
+    const araBalance = await araContractsManager.getAraBalance(accountAddress)
+
+    dispatch({
+      type: LOGIN_DEV,
+      load: {
+        userAid: load.userAid,
+        accountAddress,
+        araBalance,
+        password: load.password,
+      }
+    })
+
+    const items = {}
+    araContractsManager.getLibraryItems(load.userAid)
+      .then(afsManager.surfaceAFS)
+      .then(purchased => items.purchased = purchased)
+      .then(araContractsManager.getPublishedItems)
+      .then(afsManager.surfaceAFS)
+      .then(published => items.published = published)
+      .then(() => dispatch({ type: GOT_LIBRARY, load: items }))
+      .then(() => araContractsManager.getEarnings(items.published))
+      .then(updatedItems => dispatch({ type: GOT_EARNINGS, load: updatedItems}))
+      .catch(err => debug('getLibraryItems Err: %o', err))
+  } catch (err) {
+    debug('Error: %O', err)
+  }
 })

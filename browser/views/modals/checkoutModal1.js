@@ -3,17 +3,35 @@
 const html = require('choo/html')
 const styles = require('./styles')
 const Button = require('../../components/button')
-const { closeWindow } = require('../../lib/tools/windowManagement')
+const { PURCHASE } = require('../../../lib/constants/stateManagement')
+const { emit, closeModal } = require('../../lib/tools/windowManagement')
 
 module.exports = ({
-  fileName = 'Some File',
-  price = 45.11,
-  publisherName = 'Thomas Bahama'
+  aid,
+  fileName = 'No file name given',
+  price = 0,
+  publisherName = 'No publisher name given'
 }) => {
-  const buyButton = new Button({ children: 'Buy Now' })
+  const buyButton = new Button({
+    children: 'Buy Now',
+    onclick: () => {
+      emit({
+        event: PURCHASE,
+        load: {
+          aid,
+          fileName,
+          price
+        }
+      })
+      closeModal()
+    }
+  })
+
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => closeWindow()
+    onclick: () => {
+      closeModal()
+    }
    })
   return html`
     <div class="${styles.container} modals-container">
@@ -31,7 +49,7 @@ module.exports = ({
           for
         </div>
       <div>
-        <span class="${styles.bigBold} modals-bigBold">${price}</span> ARA
+        <span class="${styles.bigBold} modals-bigBold">${price}</span> Ara
       </div>
       </div>
       <div>

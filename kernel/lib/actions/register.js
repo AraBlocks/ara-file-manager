@@ -2,9 +2,9 @@
 
 const context = require('ara-context')()
 const aid = require('ara-identity')
-const secrets = require('ara-network/secrets')
 
-const KEY = 'archiver'
+const SECRET = 'ara-archiver'
+const NAME = 'remote1'
 module.exports = {
   async create(password) {
     const araId = await aid.create({ context, password })
@@ -13,10 +13,11 @@ module.exports = {
   },
 
   async archive(araId) {
-    const doc = await secrets.load({ key: KEY })
-
-    const { keystore } = doc.public || doc.secret
-    await aid.archive(araId, { keystore, key: KEY })
+    await aid.archive(araId, {
+      secret: SECRET,
+      name: NAME,
+      keyring: `/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`
+    })
     return araId.did.reference
   }
 }

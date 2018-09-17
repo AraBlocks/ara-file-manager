@@ -1,27 +1,34 @@
 'use strict'
 
+const {
+  AWAITING_DOWNLOAD,
+  DOWNLOAD,
+  DOWNLOADING,
+  DOWNLOAD_FAILED,
+  PUBLISHING,
+  PURCHASING
+} = require('../../../lib/constants/stateManagement')
 const DynamicButton = require('../../components/dynamicButton')
-const { copyToClipboard, openFolder } = require('../../lib/tools/windowManagement')
+const { emit, openFolder } = require('../../lib/tools/windowManagement')
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/fileDescriptor')
 const Tooltip = require('../../components/tooltip')
+const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
-    demoDownload,
     downloadPercent,
-    meta,
+    meta = {},
     name,
     path,
-    size,
+    size = 0,
     status
   }) {
     super()
 
     this.props = {
-      demoDownload,
       meta,
       name,
       path,
@@ -29,47 +36,60 @@ class FileDescriptor extends Nanocomponent {
     }
 
     this.children = {
-      button: new DynamicButton(this.buttonProps(status)),
+      button: new DynamicButton(this.buttonProps(status, meta.aid)),
       progressRing: new ProgressRing({ status, downloadPercent }),
       tooltip: new Tooltip({
-        tooltipText: this.makeTooltipText(meta, name)
+        id: meta.aid,
+        component: 'fileTooltip',
+        args: { meta, name }
       })
     }
+
+    this.buttonProps = this.buttonProps.bind(this)
   }
 
-  buttonProps(status) {
+  buttonProps(status, aid) {
     const props = {}
     switch(status) {
-      case 0:
+      case AWAITING_DOWNLOAD:
         props.children = 'Download File'
         props.cssClass = {
           name: 'smallInvisible',
           opts: { color: 'red' }
-         }
-         break
-      case 1:
+        }
+        props.onclick = () => emit({ event: DOWNLOAD, load: { aid } })
+        break
+      case DOWNLOADING:
          props.children = 'Cancel Download'
          props.cssClass = {
            name: 'smallInvisible',
            opts: { color: 'grey' }
-         }
-         props.onclick = () => console.log('downloading')
-         break
-      case 3:
-        props.children = 'Cancel Publish'
+        }
+        props.onclick = () => {}
+        break
+      case PUBLISHING:
+        props.children = 'Publishing'
         props.cssClass = {
           name: 'smallInvisible',
           opts: { color: 'grey' }
         }
-        props.onclick = () => console.log('downloading')
+        props.onclick = () => {}
         break
-      case 4:
+      case PURCHASING:
+        props.children = 'Purchasing'
+        props.cssClass = {
+          name: 'smallInvisible',
+          opts: { color: 'grey' }
+        }
+        props.onclick = () => {}
+        break
+      case DOWNLOAD_FAILED:
         props.children = 'Download Failed'
         props.cssClass = {
           name: 'smallInvisible',
           opts: { color: 'red' }
         }
-        props.onclick = () => console.log('download failed')
+        props.onclick = () => {}
         break
       default:
         props.children = 'Open in Folder'
@@ -77,46 +97,10 @@ class FileDescriptor extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'blue' }
         }
-        props.onclick = () => {
-          openFolder(this.props.path)
-        }
+        props.onclick = () => openFolder(this.props.path)
     }
     return props
   }
-
-  makeTooltipText(meta, name) {
-    return html`
-      <div class="${styles.tooltip} fileDescriptor-tooltip">
-        <div>
-          <div>
-            AFS Id:
-          </div>
-          <div class="${styles.aid} fileDescriptor-aid">
-            ${meta.aid.slice(0, 30) + '...'}
-          </div>
-        </div>
-        <div
-          style="
-          position: relative;
-          width: 100%;
-          "
-          class="${styles.clipboard} fileDescriptor-clipboard"
-          onclick=${function(){
-            this.children[0].style.display = 'block'
-            const encodedName = encodeURIComponent(name)
-            copyToClipboard(`http://localhost:3001/download/${meta.aid}/${encodedName}`)
-            setTimeout(() => this.children[0].style.display = 'none', 1700)
-          }}
-        >
-          Copy Distribution Link<span>Copied !</span>
-        </div>
-        <div>
-          First Published: <span class="${styles.published} fileDescriptor-published">${meta.datePublished}</span>
-        </div>
-      </div>
-    `
-  }
-
 
   update() {
     return true
@@ -124,19 +108,16 @@ class FileDescriptor extends Nanocomponent {
 
   createElement({ downloadPercent, status }) {
     const {
+      buttonProps,
       children,
       props
     } = this
-
-    const buttonProps = this.buttonProps.bind(this)
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
-          ${
-            status === 3
-              ? html`<div class="spinner-small"></div>`
-              : children.progressRing.render({ downloadPercent, status })
-          }
+          ${status === PUBLISHING || status === PURCHASING
+            ? html`<div class="spinner-small-blue"></div>`
+            : children.progressRing.render({ downloadPercent, status })}
         </div>
         <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
           <div class="${styles.nameHolder} fileDescriptor-nameHolder">
@@ -148,27 +129,16 @@ class FileDescriptor extends Nanocomponent {
             </div>
           </div>
           <div class="${styles.sizeHolder(status)} fileDescriptor-sizeHolder">
-            ${renderSize()} gb
+            ${status === DOWNLOADING
+              ? `${Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
+              : filesize(props.size)}
           </div>
           <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
-            ${children.button.render(buttonProps(status))}
+            ${children.button.render(buttonProps(status, props.meta.aid))}
           </div>
         </div>
       </div>
     `
-
-    function renderSize() {
-      let text
-      switch(status) {
-        case 0:
-        case 2:
-          text = props.size
-          break
-        default:
-          text = `${Math.round(downloadPercent * props.size * 100) / 100}/${props.size}`
-      }
-      return text
-    }
   }
 }
 

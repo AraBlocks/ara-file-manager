@@ -10,20 +10,12 @@ const Nanocomponent = require('nanocomponent')
 
 class Header extends Nanocomponent {
   constructor({
-    parentRerender,
-    parentState,
-    userBalance,
+    selectTab,
     username
   }) {
     super()
 
-    this.props = {
-      parentRerender,
-      parentState,
-      username
-    }
-
-    this.state = { userBalance }
+    this.props = { username }
 
     this.children = {
       publishFilebutton: new Button({
@@ -38,20 +30,17 @@ class Header extends Nanocomponent {
       }),
       closeButton: new UtilityButton({ children: '✕' }),
       minimizeButton: new UtilityButton({ children: '–', onclick: minimizeWindow }),
-      tabs: this.makeTabs()
+      tabs: this.makeTabs(selectTab)
     }
   }
 
-  makeTabs() {
-    const { props } = this
+  makeTabs(selectTab) {
     const children = ['All Files', 'Published Files', 'Purchases']
     return children.map((child, index) =>
       new TabItem({
         children: child,
         index,
-        isActive: index === props.parentState.activeTab,
-        parentRerender: props.parentRerender,
-        parentState: props.parentState,
+        selectTab
       })
     )
   }
@@ -60,44 +49,40 @@ class Header extends Nanocomponent {
     return true
   }
 
-  createElement({ activeTab, userBalance }) {
-    const {
-      children,
-      props,
-      state
-    } = this
+  createElement({ activeTab, araBalance }) {
+    const { children, props } = this
 
     return html`
-     <div class="${styles.container} header-container">
-      <div class="${styles.subHeader} header-subheader">
-        <div>
-          LTLSTAR
-        </div>
-        <div class="${styles.windowControlsHolder} header-windowControlsHolder">
-          ${children.minimizeButton.render({ children: '–'})}
-          ${children.closeButton.render({ children: '✕'})}
-        </div>
-      </div>
-      <div class="${styles.subHeader} header-subheader">
-        <div class="${styles.titleHolder} header-titleHolder">
-          File Manager
-        </div>
-        <div class="${styles.userHolder} header-userHolder">
+      <div class="${styles.container} header-container">
+        <div class="${styles.subHeader} header-subheader">
           <div>
-            <b>${props.username}</b>
+            LTLSTAR
           </div>
-          <div>
-            ${userBalance} ARA
+          <div class="${styles.windowControlsHolder} header-windowControlsHolder">
+            ${children.minimizeButton.render({ children: '–'})}
+            ${children.closeButton.render({ children: '✕'})}
           </div>
         </div>
+        <div class="${styles.subHeader} header-subheader">
+          <div class="${styles.titleHolder} header-titleHolder">
+            File Manager
+          </div>
+          <div class="${styles.userHolder} header-userHolder">
+            <div>
+              <b>${props.username}</b>
+            </div>
+            <div>
+              ${araBalance} Ara
+            </div>
+          </div>
+        </div>
+        <div class="${styles.tabHolder} header-tabHolder">
+          ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index}))}
+        </div>
+        <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
+          ${children.publishFilebutton.render()}
+        </div>
       </div>
-      <div class="${styles.tabHolder} header-tabHolder">
-        ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index}))}
-      </div>
-      <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
-        ${children.publishFilebutton.render()}
-      </div>
-     </div>
     `
   }
 }
