@@ -2,7 +2,6 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
-const araNetworkNodeDcdn = require('ara-network-node-dcdn')
 const dcdnFarm = require('ara-network-node-dcdn-farm')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
@@ -13,14 +12,13 @@ const { account } = windowManager.sharedData.fetch('store')
 
 
 async function broadcast({ did , price = 0}) {
-	did = did.length === 64 ? did : 'did:ara:' + did
 	debug('Broadcasting for %s', did)
 	try {
 		dcdnFarm.start({
 			did,
 			download: false,
 			upload: true,
-			userID: account.userDID,
+			userID: account.userAid.slice(8),
 			price,
 		})
 	} catch (err) {
@@ -34,16 +32,42 @@ async function getAFSPrice({ did, password }) {
 	return result
 }
 
-async function download({ did, handler, errorHandler }) {
+async function download({
+	errorHandler,
+	did,
+	handler,
+	maxWorkers = 1,
+	price = 1
+}) {
 	debug('Downloading through DCDN: %s', did)
-	const fullDid = 'did:ara:' + did
 	try {
-		araNetworkNodeDcdn.start({
-			did: fullDid,
-			download: true
+		await dcdnFarm.start({
+			did: did,
+			download: true,
+			upload: false,
+			userID: account.userAid.slice(8),
+			price,
+			maxWorkers
+		})
+		const dcdn = await dcdnFarm.getInstance()
+		let totalBlocks = 0
+		let prevPercent = 0
+		dcdn.on('start', (did, total) => totalBlocks = total)
+		dcdn.on('progress', (did, value) => {
+			const perc = value/totalBlocks
+			if (perc >= prevPercent + 0.04) {
+				prevPercent = perc
+				if (value/totalBlocks != 1) {
+					handler({ downloadPercent: value/totalBlocks, aid: did })
+				}
+			}
+		})
+		dcdn.user.on('complete', () => {
+			handler({ downloadPercent: 1, aid: did })
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)
+		errorHandler()
 	}
 }
 
