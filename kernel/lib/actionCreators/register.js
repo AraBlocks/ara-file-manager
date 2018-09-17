@@ -1,7 +1,6 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:register')
-const accountSelection = require('../actions/accountSelection')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const { register } = require('../actions')

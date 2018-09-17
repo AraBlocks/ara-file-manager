@@ -3,9 +3,8 @@
 const debug = require('debug')('acm:kernel:lib:actions:register')
 const context = require('ara-context')()
 const aid = require('ara-identity')
+const { ARCHIVER_NAME, KEYRING, SECRET } = require('../../../lib/constants/networkKeys')
 
-const SECRET = 'bills!'
-const NAME = 'lara.archiver'
 module.exports = {
   async create(password) {
     try {
@@ -21,8 +20,8 @@ module.exports = {
     try {
       await aid.archive(araId, {
         secret: SECRET,
-        network: NAME,
-        keyring: 'http://45.33.29.246:3000/keyring.pub',
+        network: ARCHIVER_NAME,
+        keyring: KEYRING,
         timeout: 600000
       })
     } catch(e) {

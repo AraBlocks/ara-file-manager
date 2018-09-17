@@ -2,12 +2,10 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
-const araNetworkNodeDcdn = require('ara-network-node-dcdn')
 const dcdnFarm = require('ara-network-node-dcdn-farm')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
 const { getPrice, metadata, unarchive } = require('ara-filesystem')
-const { publishDID } = require('ara-network-node-dcdn/subnet')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
@@ -16,11 +14,11 @@ const { account } = windowManager.sharedData.fetch('store')
 async function broadcast({ did , price = 0}) {
 	debug('Broadcasting for %s', did)
 	try {
-		araNetworkNodeDcdnFarm.start({
+		dcdnFarm.start({
 			did,
 			download: false,
 			upload: true,
-			userID: account.userDID,
+			userID: account.userAid.slice(8),
 			price,
 		})
 	} catch (err) {
@@ -43,15 +41,15 @@ async function download({
 }) {
 	debug('Downloading through DCDN: %s', did)
 	try {
-		await araNetworkNodeDcdnFarm.start({
+		await dcdnFarm.start({
 			did: did,
 			download: true,
 			upload: false,
-			userID: '0c354f916a8c6059ab4d726eed4f9f2bf47db09f01c4f4111822483ccede7cf8',
+			userID: account.userAid.slice(8),
 			price,
 			maxWorkers
 		})
-		const dcdn = await araNetworkNodeDcdnFarm.getInstance()
+		const dcdn = await dcdnFarm.getInstance()
 		let totalBlocks = 0
 		let prevPercent = 0
 		dcdn.on('start', (did, total) => totalBlocks = total)
@@ -69,6 +67,7 @@ async function download({
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)
+		errorHandler()
 	}
 }
 
