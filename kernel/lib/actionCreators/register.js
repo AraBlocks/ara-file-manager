@@ -10,24 +10,24 @@ const {
   REGISTER,
   REGISTERED
 } = require('../../../lib/constants/stateManagement')
-const { blake2b } = require('ara-crypto')
-const { toHex } = require('ara-identity/util')
 
 ipcMain.on(REGISTER, async (event, password) => {
   debug('%s heard. load: %s', REGISTER, password)
   try {
-    const araId = await register.create(password)
-
-    const afsId = toHex(blake2b(araId.publicKey))
-    await register.archive(araId)
-    const [ account ] = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === afsId)
+    const userAid = await register.create(password)
+    await register.archive(userAid)
+    const accountAddress = await araContractsManager.getAccountAddress(userAid, password)
 
     debug('Dispatching %s', LOGIN_DEV)
     dispatch({
       type: LOGIN_DEV,
-      load: { account, password }
+      load: {
+        userAid,
+        accountAddress,
+        araBalance: 0,
+        password: load.password,
+      }
     })
-
     event.sender.send(REGISTERED)
   } catch (e) {
     debug('Error: %O', e)

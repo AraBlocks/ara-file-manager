@@ -2,6 +2,9 @@
 
 const fs = require('fs')
 const userHome = require('user-home')
+const { resolve } = require('ara-identity')
+const SECRET = 'bills!'
+const NAME = 'lara.archiver'
 
 module.exports = {
   osxSurfaceAids() {
@@ -25,5 +28,13 @@ module.exports = {
       }
       return acc
     }, [])
+  },
+  async resolveAid(aid) {
+    return resolve(aid, {
+      secret: SECRET,
+      network: NAME,
+      keyring: 'http://45.33.29.246:3000/keyring.pub',
+      timeout: 600000
+    })
   }
 }
