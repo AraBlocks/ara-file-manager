@@ -81,7 +81,6 @@ async function getEtherBalance(account) {
 
 function getAcmFilePath() {
 	const { account: { userAid }} = windowManager.sharedData.fetch('store')
-	debug(windowManager.sharedData.fetch('store'))
 	if(userAid == null) {
 		debug('User has not logged in')
 		return null
