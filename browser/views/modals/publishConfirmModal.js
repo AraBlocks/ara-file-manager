@@ -10,7 +10,7 @@ module.exports = (load) => {
   const publishButton = new Button({
     children: 'Publish',
     onclick: () => {
-      emit({ event: CONFIRM_PUBLISH, load: { ...load, cost: 59 } }),
+      emit({ event: CONFIRM_PUBLISH, load: { ...load, cost: 5 } }),
       closeModal()
     }
   })
@@ -33,7 +33,7 @@ module.exports = (load) => {
             Publishing this file will cost:
           </div>
           <span class="${styles.postheader} modals-postheader">
-            59 ARA
+            5 ARA
           </span>
         </div>
       </div>

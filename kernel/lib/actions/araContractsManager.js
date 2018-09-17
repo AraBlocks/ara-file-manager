@@ -1,7 +1,6 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
-
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const {
 	library,
@@ -9,6 +8,7 @@ const {
 	registry,
 	token
 } = require('ara-contracts')
+
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
