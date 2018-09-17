@@ -8,6 +8,7 @@ const {
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const {
+  GOT_EARNINGS,
   GOT_LIBRARY,
   LOGIN_DEV,
   LOGIN,
@@ -45,6 +46,8 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
       .then(afsManager.surfaceAFS)
       .then(published => items.published = published)
       .then(() => dispatch({ type: GOT_LIBRARY, load: items }))
+      .then(() => araContractsManager.getEarnings(items.published))
+      .then(updatedItems => dispatch({ type: GOT_EARNINGS, load: updatedItems}))
       .catch(err => debug('getLibraryItems Err: %o', err))
   } catch (err) {
     debug('Error: %O', err)
