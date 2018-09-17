@@ -1,8 +1,6 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
-const { abi } = require('ara-contracts/build/contracts/ARAToken.json')
-const { kAraTokenAddress } = require('ara-contracts/constants')
 const { library, purchase, token  } = require('ara-contracts')
 const fs = require('fs')
 const path = require('path')
@@ -12,7 +10,6 @@ const { web3 } = require('ara-context')()
 const {
 	web3: {
 		account,
-		call,
   }
 } = require('ara-util')
 
