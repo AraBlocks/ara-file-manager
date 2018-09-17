@@ -7,7 +7,6 @@ const dcdnFarm = require('ara-network-node-dcdn-farm')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
 const { getPrice, metadata, unarchive } = require('ara-filesystem')
-const { publishDID } = require('ara-network-node-dcdn/subnet')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
@@ -17,7 +16,7 @@ async function broadcast({ did , price = 0}) {
 	did = did.length === 64 ? did : 'did:ara:' + did
 	debug('Broadcasting for %s', did)
 	try {
-		araNetworkNodeDcdnFarm.start({
+		dcdnFarm.start({
 			did,
 			download: false,
 			upload: true,
