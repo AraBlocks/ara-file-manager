@@ -3,7 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi } = require('ara-contracts/build/contracts/ARAToken.json')
 const { kAraTokenAddress } = require('ara-contracts/constants')
-const { purchase, library } = require('ara-contracts')
+const { library, purchase, token  } = require('ara-contracts')
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
@@ -30,16 +30,7 @@ async function getAccountAddress(owner, password) {
 async function getAraBalance(account) {
 	debug('Getting account balance')
 	try {
-		const balance = await call({
-			abi,
-			address: kAraTokenAddress,
-			functionName: 'balanceOf',
-			arguments: [
-				account
-			]
-		})
-		debug(`Balance is ${balance} ARA`)
-		return balance
+		return token.balanceOf(account)
 	} catch(e) {
 		debug(e)
 	}

@@ -1,24 +1,33 @@
 'use strict'
 
+const debug = require('debug')('acm:kernel:lib:actions:register')
 const context = require('ara-context')()
 const aid = require('ara-identity')
 
-const SECRET = 'ara-archiver'
-const NAME = 'remote1'
+const SECRET = 'bills!'
+const NAME = 'lara.archiver'
 module.exports = {
   async create(password) {
-    const araId = await aid.create({ context, password })
-    await aid.util.writeIdentity(araId)
-    return araId
+    try {
+      const araId = await aid.create({ context, password })
+      await aid.util.writeIdentity(araId)
+      return araId
+    } catch(e) {
+      debug(e)
+    }
   },
 
   async archive(araId) {
-    await aid.archive(araId, {
-      secret: SECRET,
-      name: NAME,
-      keyring: `/Users/${process.argv[process.argv.length - 1]}/.ara/secret/ara-archiver.pub`
-    })
+    try {
+      await aid.archive(araId, {
+        secret: SECRET,
+        network: NAME,
+        keyring: 'http://45.33.29.246:3000/keyring.pub',
+        timeout: 600000
+      })
+    } catch(e) {
+      debug(e)
+    }
     return araId.did.reference
   }
 }
-

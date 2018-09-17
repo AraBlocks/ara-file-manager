@@ -14,7 +14,6 @@ const { account } = windowManager.sharedData.fetch('store')
 
 
 async function broadcast({ did , price = 0}) {
-	did = did.length === 64 ? did : 'did:ara:' + did
 	debug('Broadcasting for %s', did)
 	try {
 		araNetworkNodeDcdnFarm.start({
@@ -35,13 +34,38 @@ async function getAFSPrice({ did, password }) {
 	return result
 }
 
-async function download({ did, handler, errorHandler }) {
+async function download({
+	errorHandler,
+	did,
+	handler,
+	maxWorkers = 1,
+	price = 1
+}) {
 	debug('Downloading through DCDN: %s', did)
-	const fullDid = 'did:ara:' + did
 	try {
-		araNetworkNodeDcdn.start({
-			did: fullDid,
-			download: true
+		await araNetworkNodeDcdnFarm.start({
+			did: did,
+			download: true,
+			upload: false,
+			userID: '0c354f916a8c6059ab4d726eed4f9f2bf47db09f01c4f4111822483ccede7cf8',
+			price,
+			maxWorkers
+		})
+		const dcdn = await araNetworkNodeDcdnFarm.getInstance()
+		let totalBlocks = 0
+		let prevPercent = 0
+		dcdn.on('start', (did, total) => totalBlocks = total)
+		dcdn.on('progress', (did, value) => {
+			const perc = value/totalBlocks
+			if (perc >= prevPercent + 0.04) {
+				prevPercent = perc
+				if (value/totalBlocks != 1) {
+					handler({ downloadPercent: value/totalBlocks, aid: did })
+				}
+			}
+		})
+		dcdn.user.on('complete', () => {
+			handler({ downloadPercent: 1, aid: did })
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)

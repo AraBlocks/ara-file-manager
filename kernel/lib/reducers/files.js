@@ -6,7 +6,6 @@ const {
   DOWNLOADING,
   DOWNLOAD_FAILED,
   DOWNLOADED_PUBLISHED,
-  DOWNLOAD_START,
   GOT_LIBRARY,
   PUBLISHED,
   PUBLISHING,
@@ -31,9 +30,6 @@ module.exports = (state, { load, type }) => {
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = 0
       file.status = DOWNLOAD_FAILED
-      break
-    case DOWNLOAD_START:
-      state.purchased.push(load)
       break
     case GOT_LIBRARY:
       state.published = load.published
