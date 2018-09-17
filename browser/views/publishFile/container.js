@@ -1,6 +1,5 @@
 'use strict'
 
-const debug = require('debug')('acm:browser:views:publishFile:container')
 const Button = require('../../components/button')
 const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
@@ -11,22 +10,20 @@ const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
-	constructor({ did, password }) {
+	constructor({ account }) {
 		super()
 
 		this.state = {
 			currency: '',
 			fileName: 'Ara',
 			filePath: '',
-			price: null,
+			price: '9.99',
 			priceManagement: true,
 			supernode: true,
+			account
 		}
-
-		this.props = { did, password }
 
 		this.children = {
 			fileInfo: new FileInfo({
@@ -54,12 +51,17 @@ class Container extends Nanocomponent {
 
 	publishFile() {
 		const {
+			account: { aid },
 			fileName,
 			filePath,
 			price
 		} = this.state
-		const { did, password } = this.props
+		const {
+			ddo: { id: did },
+			password
+		} = aid
 
+		const event = PUBLISH
 		const load = {
 			did,
 			password,
@@ -67,17 +69,14 @@ class Container extends Nanocomponent {
 			name: fileName,
 			price
 		}
-
-		debug('Emitting %s . Load: %O', PUBLISH, load)
-		emit({ event: PUBLISH, load })
+		emit({ event, load })
 	}
 
-	createElement({ spinner = false }) {
-		tooltip({})
+	createElement(pending = false) {
 		const { children } = this
 		return html`
 			<div>
-				${overlay(spinner)}
+				${overlay(pending)}
 				<div class="${styles.container} PublishFileContainer-container">
 					<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
 						Publish File

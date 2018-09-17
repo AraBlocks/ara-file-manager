@@ -1,47 +1,54 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:download')
 const dispatch = require('../reducers/dispatch')
-const { afsManager } = require('../actions')
+const { download } = require('../actions')
 const {
 	DOWNLOAD,
 	DOWNLOADED,
+	DOWNLOADED_DEV,
 	DOWNLOADING,
 	DOWNLOAD_COMPLETE,
-	DOWNLOAD_FAILED,
-	DOWNLOAD_START
+	DOWNLOAD_FAILED
 } = require('../../../lib/constants/stateManagement')
+const { makeAfsPath } = require('../actions/afsManager')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
 ipcMain.on(DOWNLOAD, async (event, load) => {
-	debug('%s heard. Load: %O', DOWNLOAD, load)
-	try {
-		const dispatchLoad = await afsManager.descriptorGenerator(load)
-		debug('Dispatching %s . Load: %O', DOWNLOAD_START, dispatchLoad)
-		dispatch({ type: DOWNLOAD_START, load: dispatchLoad })
-
-		debug('Dispatching %s . Load: %s', DOWNLOAD_COMPLETE, load.price)
-		dispatch({ type: DOWNLOAD_COMPLETE, load: load.price })
-		afsManager.download({
-			did: load.aid, handler: (load) => {
-				if (load.percentage !== 1) {
-					debug('Dispatching %s', DOWNLOADING)
-					dispatch({ type: DOWNLOADING, load })
-					windowManager.pingView({ view: 'filemanager', event: DOWNLOADING })
-				} else {
-					debug('Dispatching %s . Load: %s', DOWNLOADED, load.aid)
-					dispatch({ type: DOWNLOADED, load: load.aid })
-					windowManager.pingView({ view: 'filemanager', event: DOWNLOADED })
-				}
-			}, errorHandler: () => {
-				debug('Download failed')
-				debug('Dispatching %s . Load: %s', DOWNLOAD_FAILED, load.aid)
-				dispatch({ type: DOWNLOAD_FAILED, load: load.aid })
-				windowManager.pingView({ view: 'filemanager', event: DOWNLOAD_FAILED })
+	dispatch({
+    type: DOWNLOADING,
+    load: {
+				downloadPercent: 0,
+				meta: {
+					aid: windowManager.fileInfo.aid,
+					datePublished: '11/20/1989',
+					earnings: 2134.33,
+					peers: 353,
+					price: windowManager.fileInfo.price,
+				},
+				name: windowManager.fileInfo.fileName,
+				size: 1.67,
+				status: 1,
+				path: makeAfsPath(windowManager.fileInfo.aid)
 			}
+	})
+
+	windowManager.get('filemanager').object.webContents.send(DOWNLOADING)
+	dispatch({ type: DOWNLOAD_COMPLETE, load: windowManager.fileInfo.price})
+	download({did: windowManager.fileInfo.aid, handler: () => {
+		dispatch({
+			type: DOWNLOADED,
+			load: windowManager.fileInfo.aid
 		})
-	} catch (err) {
-		debug('Error: %O', err)
-	}
+		windowManager.get('filemanager').object.webContents.send(DOWNLOADED)
+	}, errorHandler: () => {
+		console.log('Download failed')
+		dispatch({
+			type: DOWNLOAD_FAILED,
+			load: windowManager.fileInfo.aid
+		})
+		windowManager.get('filemanager').object.webContents.send(DOWNLOAD_FAILED)
+	}})
 })
+
+ipcMain.on(DOWNLOADED_DEV, () => dispatch({ type: DOWNLOADED, load: null }))

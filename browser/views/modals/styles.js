@@ -1,7 +1,7 @@
 'use strict'
 
 const { css } = require('css')
-const { buttonSelector, colorSelector, fonts } = require('styleUtils')
+const { buttonSelector, fonts } = require('styleUtils')
 
 module.exports = {
   buttonSelector,
@@ -10,12 +10,6 @@ module.exports = {
     :host {
       font-family: ${fonts.bold};
       font-size: 50px;
-    }
-  `,
-
-  bottomMargin: css`
-    :host {
-      margin-bottom: 10px;
     }
   `,
 
@@ -35,16 +29,6 @@ module.exports = {
     }
   `,
 
-  clipboard: css`
-    :host span {
-      animation-duration: 1000ms;
-      color: red;
-      left: 39%;
-      opacity: 0;
-      position: absolute;
-    }
-  `,
-
   fileName: css`
     :host {
       font-family: ${fonts.boldSpecial};
@@ -59,24 +43,11 @@ module.exports = {
     }
   `,
 
-  horizontalContainer: css`
-    :host {
-      display: flex;
-      justify-content: center;
-    }
-  `,
-
-  link: css`
-    :host {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  `,
-
   messageBold: css`
     :host {
       font-family: ${fonts.bold};
       font-size: 25px;
+      margin-bottom: 10px;
     }
   `,
 
@@ -101,31 +72,10 @@ module.exports = {
     }
   `,
 
-  smallMessage({
-    color  = 'black',
-  }) {
-    return css`
-      :host {
-        color: ${colorSelector(color)};
-        font-size: 12px;
-        margin-bottom: 2px;
-      }
-      :host b {
-        font-family: ${fonts.bold};
-      }`
-  },
-
-  smallPadding: css`
+  smallMessage: css`
     :host {
-      padding: 0px 2px;
-    }
-  `,
-
-  spinnerHolder: css`
-    :host {
-      display: flex;
-      justify-content: center;
-      font-size: 4px;
+      font-size: 12px;
+      margin-bottom: 2px;
     }
   `,
 

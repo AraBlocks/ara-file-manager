@@ -1,15 +1,13 @@
 'use strict'
 
-const {
-  AWAITING_DOWNLOAD,
-  DOWNLOADING,
-  DOWNLOAD_FAILED
-} = require('../../lib/constants/stateManagement')
 const styles = require('./styles/progressRing')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class ProgressRing extends Nanocomponent {
+  constructor(){
+    super()
+  }
 
   update() {
     return true
@@ -83,11 +81,13 @@ class ProgressRing extends Nanocomponent {
     function symbolSelector() {
       let symbol
       switch (status) {
-        case AWAITING_DOWNLOAD:
+        case 0:
           symbol = '✖'
           break
-        case DOWNLOADING:
-        case DOWNLOAD_FAILED:
+        case 1:
+          symbol = '⬇'
+          break
+        case 4:
           symbol = '⬇'
           break
         default:

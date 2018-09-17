@@ -1,35 +1,23 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:register')
-const accountSelection = require('../actions/accountSelection')
-const dispatch = require('../reducers/dispatch')
-const { ipcMain } = require('electron')
 const { register } = require('../actions')
 const {
   LOGIN_DEV,
   REGISTER,
+  REGISTERING,
   REGISTERED
 } = require('../../../lib/constants/stateManagement')
+const { blake2b } = require('ara-crypto')
+const { toHex } = require('ara-identity/util')
+const windowManager = require('electron-window-manager')
 
-ipcMain.on(REGISTER, async (event, password) => {
-  debug('%s heard. load: %s', REGISTER, password)
-  try {
-    const userAid = await register.create(password)
-    await register.archive(userAid)
-    const accountAddress = await araContractsManager.getAccountAddress(userAid, password)
+windowManager.bridge.on(REGISTER, async (password = 'abc') => {
+  windowManager.bridge.emit(REGISTERING)
+  const araId = await register.create(password)
 
-    debug('Dispatching %s', LOGIN_DEV)
-    dispatch({
-      type: LOGIN_DEV,
-      load: {
-        userAid,
-        accountAddress,
-        araBalance: 0,
-        password: load.password,
-      }
-    })
-    event.sender.send(REGISTERED)
-  } catch (e) {
-    debug('Error: %O', e)
-  }
+  const afsId = toHex(blake2b(araId.publicKey))
+  const load = await register.archive(araId)
+
+  windowManager.bridge.emit(LOGIN_DEV, { afsId, password })
+  windowManager.bridge.emit(REGISTERED, { load, araId })
 })

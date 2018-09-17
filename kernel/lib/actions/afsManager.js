@@ -1,127 +1,130 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:afsManager')
-const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
-const araNetworkNodeDcdn = require('ara-network-node-dcdn')
-const dcdnFarm = require('ara-network-node-dcdn-farm')
+const { create, getPrice, unarchive } = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
+const { createSwarm } = require('ara-network/discovery')
 const fs = require('fs')
-const { getPrice, metadata, unarchive } = require('ara-filesystem')
 const path = require('path')
-const windowManager = require('electron-window-manager')
-const { account } = windowManager.sharedData.fetch('store')
 
+async function broadcast(did, handler) {
+	// Create a swarm for uploading the content
+	const fullDid = 'did:ara:' + did
+	console.log('broadcasting for ', fullDid)
+	const { afs } = await create({ did: fullDid }).catch((e) => {
+		console.log(e)
+		console.log('Error creating afs when broadcasting')
+	})
 
-async function broadcast({ did , price = 0}) {
-	did = did.length === 64 ? did : 'did:ara:' + did
-	debug('Broadcasting for %s', did)
-	try {
-		dcdnFarm.start({
-			did,
-			download: false,
+	// Join the discovery swarm for the requested content
+	const opts = {
+		stream: stream,
+	}
+	console.log('Creating swarm...')
+	const swarm = createSwarm(opts)
+	swarm.once('connection', handleConnection)
+	swarm.join(fullDid)
+	console.log('Joined Swarm')
+
+	function stream(peer) {
+		const stream = afs.replicate({
 			upload: true,
-			userID: account.userDID,
-			price,
+			download: false,
 		})
-	} catch (err) {
-		debug('Error broadcasting %O', err)
+		stream.once('end', onend)
+		stream.peer = peer
+		return stream
+	}
+
+	async function onend() {
+		console.log(`Uploaded!`)
+	}
+
+	async function handleConnection(connection, info) {
+		handler()
+		console.log(`SWARM: New peer: ${info.host} on port: ${info.port}`)
 	}
 }
 
 async function getAFSPrice({ did, password }) {
-	debug('Getting price for %s', did)
 	const result = await getPrice({ did, password })
 	return result
 }
 
 async function download({ did, handler, errorHandler }) {
-	debug('Downloading through DCDN: %s', did)
+	console.log('Creating afs...')
+	// Create a swarm for downloading the content
 	const fullDid = 'did:ara:' + did
-	try {
-		araNetworkNodeDcdn.start({
-			did: fullDid,
+	const { afs } = await create({ did: fullDid }).catch(((err) => {
+		console.log(err)
+		errorHandler()
+	}))
+
+	afs.on('content', () => {
+		console.log("on content")
+		afs.partitions.resolve(afs.HOME).content.on('sync', onend)
+	})
+
+	// Join the discovery swarm for the requested content
+	console.log('Waiting for peer connection...')
+	const opts = {
+		stream: stream,
+	}
+	const swarm = createSwarm(opts)
+	swarm.once('connection', handleConnection)
+	swarm.join(fullDid)
+
+	function stream(peer) {
+		const stream = afs.replicate({
+			upload: false,
 			download: true
 		})
-	} catch (err) {
-		debug('Error downloading: %O', err)
+		stream.once('end', onend)
+		stream.peer = peer
+		return stream
 	}
+
+	async function onend() {
+		const files = await afs.readdir('.').catch((e) => {
+			console.log(e)
+			errorHandler()
+		})
+		unarchiveAFS({ did, path: makeAfsPath(did) })
+		console.log(files)
+		console.log(`Downloaded!`)
+		afs.close()
+		swarm.destroy()
+		handler()
+		console.log("Swarm destroyed")
+	}
+
+	async function handleConnection(connection, info) {
+		console.log(`SWARM: New peer: ${info.host} on port: ${info.port}`)
+		try {
+			await afs.download('.')
+		}
+		catch (err) {
+			console.log(`Error: ${err}`)
+			errorHandler()
+		}
+	}
+}
+
+function makeAfsPath(aid) {
+	return path.join(createAFSKeyPath(aid), 'home', 'content')
 }
 
 function unarchiveAFS({ did, path }) {
-	debug('Unarchiving %o', { did, path })
-	unarchive({ did, path })
-}
-
-async function readFileMetadata(did) {
 	try {
-		const data = await metadata.readFile({ did })
-		debug('Read file metadata %O', data)
-		return JSON.parse(data.fileInfo)
-	} catch (err) {
-		debug('No metadata for %s', did)
-		return null
-	}
-}
-
-async function writeFileMetaData({ did, size, title }) {
-	try {
-		const fileData = {
-			author: account.username,
-			size,
-			title,
-			timestamp: new Date,
-		}
-		const fileDataString = JSON.stringify(fileData)
-		debug('Adding file metadata %s', fileDataString)
-		metadata.writeKey({ did, key: 'fileInfo', value: fileDataString })
-	} catch (e) {
-		debug(e)
-	}
-}
-
-async function surfaceAFS(items) {
-	return Promise.all(items.map(item => descriptorGenerator(item)))
-}
-
-function makeAfsPath(did) {
-	return path.join(createAFSKeyPath(did), 'home', 'content')
-}
-
-async function descriptorGenerator(did, deeplinkData = null) {
-	try {
-		did = did.slice(-64)
-		const path = await makeAfsPath(did)
-		const AFSExists = fs.existsSync(path)
-		const meta = AFSExists ? await readFileMetadata(did) : null
-
-		const descriptor = {}
-		descriptor.downloadPercent = AFSExists ? 1 : 0
-		descriptor.meta = {
-			aid: did,
-			datePublished: meta ? meta.timestamp : null,
-			earnings: 0,
-			peers: 0,
-			price: Number(await getAFSPrice({ did }))
-		}
-		descriptor.name = meta ? meta.title : deeplinkData ? deeplinkData.title : 'Unnamed File'
-		descriptor.size = meta ? meta.size : 0
-		descriptor.status = AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
-		descriptor.path = path
-
-		return descriptor
-	} catch (err) {
-		debug('descriptorGenerator Error:, %o', err)
+		unarchive({ did, path })
+	} catch(err) {
+		console.log(err)
 	}
 }
 
 module.exports = {
 	broadcast,
-	descriptorGenerator,
 	download,
 	getAFSPrice,
 	makeAfsPath,
-	readFileMetadata,
-	surfaceAFS,
 	unarchiveAFS,
-	writeFileMetaData,
 }

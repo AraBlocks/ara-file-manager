@@ -1,6 +1,5 @@
 'use strict'
 
-const { AWAITING_DOWNLOAD, DOWNLOADING} = require('../../../../lib/constants/stateManagement')
 const {
   colors,
   colorSelector,
@@ -28,8 +27,8 @@ module.exports = {
   container(status) {
     let color
     switch (status) {
-      case AWAITING_DOWNLOAD:
-      case DOWNLOADING:
+      case 0:
+      case 1:
         color = colorSelector('grey')
         break
       default:

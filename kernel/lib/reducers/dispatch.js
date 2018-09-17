@@ -4,7 +4,6 @@ const account = require('./account')
 const files = require('./files')
 const modal = require('./modal')
 const state = require('../store')
-const windowManager = require('electron-window-manager')
 
 const reducers = [
   { property: 'account', reducer: account },
@@ -16,6 +15,8 @@ module.exports = (action) => reducers.forEach(({ property, reducer }) => {
   return reducer(state[property], action)
 })
 
+
+const windowManager = require('electron-window-manager')
 windowManager.sharedData.set('store', state)
 
 

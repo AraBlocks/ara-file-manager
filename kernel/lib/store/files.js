@@ -1,8 +1,3 @@
-const {
-  AWAITING_DOWNLOAD,
-  DOWNLOADED_PUBLISHED
-} = require('../../../lib/constants/stateManagement')
-
 module.exports = {
   published: [],
   purchased: []
@@ -10,10 +5,10 @@ module.exports = {
 
 function mockFiles() {
   return [
-    {
+  {
       downloadPercent: 0,
       meta: {
-        aid: 'did:ara:fdkgi6c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+        aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
         datePublished: '11/20/1989',
         earnings: 237.43,
         peers: 1003,
@@ -21,12 +16,12 @@ function mockFiles() {
       },
       name: 'Adobe Photoshop',
       size: 10.67,
-      status: AWAITING_DOWNLOAD,
+      status: 0,
     },
     {
       downloadPercent: 1,
       meta: {
-        aid: 'did:ara:oopd6c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+        aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
         datePublished: '11/20/1989',
         earnings: 54.33,
         peers: 33,
@@ -34,12 +29,12 @@ function mockFiles() {
       },
       name: 'Microsoft Word',
       size: 4.67,
-      status: DOWNLOADED_PUBLISHED,
+      status: 2,
     },
     {
       downloadPercent: 0,
       meta: {
-        aid: 'did:ara:kdi986c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+        aid: 'did:ara:c7b86c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
         datePublished: '11/20/1989',
         earnings: 2134.33,
         peers: 353,
@@ -47,7 +42,7 @@ function mockFiles() {
       },
       name: 'Microsoft PowerPoint',
       size: 1.67,
-      status: AWAITING_DOWNLOAD,
+      status: 0,
     }
   ]
 }

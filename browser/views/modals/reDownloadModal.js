@@ -6,18 +6,20 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
 
-module.exports = ({ aid, fileName, price }) => {
+module.exports = ({
+  price = windowManager.fileInfo.price
+}) => {
   const downloadButton = new Button({
     children: 'Download',
     onclick: () => {
       windowManagement.openWindow('filemanager')
-      windowManagement.emit({ event: DOWNLOAD, load: { aid, fileName, price } })
-      windowManagement.closeModal('reDownloadModal')
+      windowManagement.emit({ event: DOWNLOAD, load: windowManager.fileInfo.aid })
+      windowManagement.closeWindow('reDownloadModal')
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => windowManagement.closeModal('reDownloadModal')
+    onclick: windowManagement.closeWindow
   })
   return html`
     <div class="${styles.container} modals-container">
@@ -25,7 +27,7 @@ module.exports = ({ aid, fileName, price }) => {
         Download this file?
       </div>
       <div class="${styles.verticalContainer} modal-verticalContainer">
-        <div class="${styles.smallMessage({})} modal-smallMessage">
+        <div class="${styles.smallMessage} modal-smallMessage">
           The download will cost:
         </div>
         <span class="${styles.postheader} modals-postheader">${price} ARA</span>

@@ -6,9 +6,19 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Section extends Nanocomponent {
-  constructor({ type = '' }) {
+  constructor({
+    files = [],
+    type = ''
+   }) {
     super()
+
     this.props = { typeRow: type }
+    this.state = { files: this.makeRows(files[type]) }
+  }
+
+  makeRows(files) {
+    const { props: { typeRow } } = this
+    return files.map(file => new ItemRow({ ...file, typeRow }))
   }
 
   update() {
@@ -16,17 +26,33 @@ class Section extends Nanocomponent {
   }
 
   createElement({ files }) {
-    const { props: { typeRow } } = this
-    const fileRows = files[typeRow].map(file => new ItemRow({ ...file, typeRow }))
+    const { props, state } = this
+    state.files = this.makeRows(files[props.typeRow])
+
     return html`
       <div class="${styles.container} section-container">
         <div class="${styles.header} section-header">
-          ${typeRow === 'purchased' ? 'Purchased' : 'Published Files'}
+          ${headerText()}
         </div>
         <div class="${styles.separator} section-separator"></div>
-        ${fileRows.map((file, i) => file.render({ ...files[typeRow][i]}))}
+        ${state.files.map(file => file.render({
+          downloadPercent: file.downloadPercent,
+          status: file.status
+         }))}
       </div>
     `
+
+    function headerText() {
+      let text
+      switch (props.typeRow) {
+        case 'purchased':
+          text = 'Purchased'
+          break
+        default:
+          text = 'Published Files'
+      }
+      return text
+    }
   }
 }
 
