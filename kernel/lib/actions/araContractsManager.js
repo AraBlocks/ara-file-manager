@@ -13,6 +13,7 @@ const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
 const windowManager = require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 const { web3 } = require('ara-context')()
 const { web3: { account: araAccount } } = require('ara-util')
 
@@ -33,19 +34,19 @@ async function getAraBalance(address) {
 		const balance = await token.balanceOf(address)
 		debug('Balance is %s ARA', balance)
 		return balance
-	} catch (e) {
-		debug(e)
+	} catch (err) {
+		debug('Error getting ara balance: %o', err)
 	}
 }
 
 async function purchaseItem(contentDid) {
-	debug(`Purchasing item ${contentDid}`)
+	debug('Purchasing item: %s', contentDid)
 	const {
 		account: {
 			userAid,
 			password
 		}
-	} = windowManager.sharedData.fetch('store')
+	} = store
 	try {
 		await purchase(
 			{
@@ -55,8 +56,8 @@ async function purchaseItem(contentDid) {
 			}
 		)
 		debug('Purchase Completed')
-	} catch (e) {
-		debug(e)
+	} catch (err) {
+		debug('Error purchasing item: %o', e)
 	}
 }
 
@@ -65,8 +66,8 @@ async function getLibraryItems(userAid) {
 		const lib = await library.getLibrary(userAid)
 		debug('Got %s lib items', lib.length)
 		return lib
-	} catch (e) {
-		debug(e)
+	} catch (err) {
+		debug('Error getting lib items: %o', err)
 	}
 }
 
@@ -74,22 +75,20 @@ async function getEtherBalance(account) {
 	try {
 		const balanceInWei = await web3.eth.getBalance(account)
 		const balance = web3.utils.fromWei(balanceInWei, 'ether')
-		debug(`Ether balance is ${balance}`)
+		debug('Ether balance is %s', balance)
 		return balance
-	} catch (e) {
-		debug(e)
+	} catch (err) {
+		debug('Error getting eth balance: %o', err)
 	}
 }
 
 function getAcmFilePath() {
-	const { account: { userAid } } = windowManager.sharedData.fetch('store')
-	debug(windowManager.sharedData.fetch('store'))
+	const { account: { userAid } } = store
 	if (userAid == null) {
 		debug('User has not logged in')
 		return null
 	}
 	const acmDirectory = path.resolve(userHome, '.acm')
-	console.log(fs.existsSync(acmDirectory))
 	fs.existsSync(acmDirectory) || fs.mkdirSync(acmDirectory)
 	const fileDirectory = path.resolve(userHome, '.acm', userAid.slice(8))
 	return fileDirectory
