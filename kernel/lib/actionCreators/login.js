@@ -24,14 +24,13 @@ windowManager.bridge.on(LOGIN, load => {
 windowManager.bridge.on(LOGIN_DEV, async load => {
   debug('%s heard', LOGIN_DEV)
   try {
-    const [account] = accountSelection.osxSurfaceAids().filter(({ afs }) => afs === load.afsId)
-    const accountAddress = await araContractsManager.getAccountAddress(account.ddo.id, load.password)
+    const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(accountAddress)
 
     dispatch({
       type: LOGIN_DEV,
       load: {
-        account,
+        userAid: load.userAid,
         accountAddress,
         araBalance,
         password: load.password,
@@ -39,7 +38,7 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
     })
 
     const items = {}
-    araContractsManager.getLibraryItems(account.ddo.id)
+    araContractsManager.getLibraryItems(load.userAid)
       .then(afsManager.surfaceAFS)
       .then(purchased => items.purchased = purchased)
       .then(araContractsManager.getPublishedItems)

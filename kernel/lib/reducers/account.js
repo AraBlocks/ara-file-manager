@@ -14,9 +14,9 @@ module.exports = async (state, { load, type }) => {
       state.aid = load[0]
       break
     case LOGIN_DEV:
-      state.aid = load.account
-      state.aid.password = load.password
-      state.aid.accountAddress = load.accountAddress
+      state.userAid = load.userAid
+      state.password = load.password
+      state.accountAddress = load.accountAddress
       state.araBalance = load.araBalance
       break
     case PUBLISHED:
