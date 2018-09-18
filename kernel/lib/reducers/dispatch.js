@@ -12,9 +12,12 @@ const reducers = [
   { property: 'modal', reducer: modal }
 ]
 
-module.exports = (action) => reducers.forEach(({ property, reducer }) => {
-  return reducer(state[property], action)
-})
+module.exports = (action) => {
+  reducers.forEach(({ property, reducer }) => {
+    reducer(state[property], action)
+  })
+  return state
+}
 
 windowManager.sharedData.set('store', state)
 

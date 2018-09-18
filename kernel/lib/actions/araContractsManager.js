@@ -2,17 +2,18 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
+const { getAFSPrice } = require('./afsManager')
 const {
 	library,
 	purchase,
 	registry,
 	token
 } = require('ara-contracts')
-
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
 const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 const { web3 } = require('ara-context')()
 const { web3: { account: araAccount } } = require('ara-util')
@@ -118,57 +119,73 @@ function savePublishedItem(contentDid) {
 	}
 }
 
-async function getEarnings(items) {
+
+async function getPublishedEarnings(items) {
 	debug('Getting earnings for published items')
-	const opts = { fromBlock: 0, toBlock: 'latest' }
-
-	let AFSContract
-	let itemEarnings
-	let priceSets
-	let proxyAddress
-	let purchases
-	let updatedItem
-	let earnings = items.map(async (item) => {
-		try {
-			proxyAddress = await registry.getProxyAddress(item.meta.aid)
-			AFSContract = new web3.eth.Contract(AFSAbi, proxyAddress)
-
-			priceSets = (await AFSContract.getPastEvents('PriceSet', opts))
-				.map(event => ({
-					blockNumber: event.blockNumber,
-					price: Number(token.constrainTokenValue(event.returnValues[1]))
-				}))
-
-			purchases = (await AFSContract.getPastEvents('Purchased', opts))
-				.map(({ blockNumber }) => blockNumber)
-
-			itemEarnings = purchases.reduce((totalEarnings, current) => {
-				let earning
-				if (priceSets.length > 1) {
-					if (current.block < priceSets[1].blockNumber) {
-						earning = priceSets[0].price
-					} else {
-						priceSets.shift()
-						earning = priceSets[0].price
-					}
-				} else {
-					earning = priceSets[0].price
-				}
-				return totalEarnings += earning
-			}, 0)
-
-			updatedItem = {
-				...item,
-				meta: { ...item.meta, earnings: itemEarnings },
-			}
-
-			return updatedItem
-		} catch (err) {
-			debug('Error getting earnings for %s : %o', item.meta.aid, err)
+	const updatedEarnings = items.map(async (item) => {
+		const earnings = await getEarnings(item)
+		return {
+			...item,
+			meta: { ...item.meta, earnings }
 		}
 	})
 
-	return Promise.all(earnings)
+	return Promise.all(updatedEarnings)
+}
+
+async function getEarnings(item) {
+	const opts = { fromBlock: 0, toBlock: 'latest' }
+	try {
+		const AFSContract = await getAFSContract(item.meta.aid)
+		if (!AFSContract) return 0
+
+		const priceSets = (await AFSContract.getPastEvents('PriceSet', opts))
+			.map(event => ({
+				blockNumber: event.blockNumber,
+				price: Number(token.constrainTokenValue(event.returnValues[1]))
+			}))
+
+		const purchases = (await AFSContract.getPastEvents('Purchased', opts))
+			.map(({ blockNumber }) => blockNumber)
+
+		const itemEarnings = purchases.reduce((totalEarnings, current) => {
+			let earning
+			if (priceSets.length > 1) {
+				if (current.block < priceSets[1].blockNumber) {
+					earning = priceSets[0].price
+				} else {
+					priceSets.shift()
+					earning = priceSets[0].price
+				}
+			} else {
+				earning = priceSets[0].price
+			}
+			return totalEarnings += earning
+		}, 0)
+
+		return itemEarnings
+	} catch (err) {
+		debug('Error getting earnings for %s : %o', item.meta.aid, err)
+	}
+}
+
+async function purchaseSubscribe({ meta: { aid }}) {
+	try {
+		const AFSContract = await getAFSContract(aid)
+		if (!AFSContract) throw 'Not a valid proxy'
+
+		AFSContract.events.Purchased()
+			.on('data', () => internalEmitter.emit(UPDATE_EARNINGS, aid))
+			.on('error', e => { throw e })
+	} catch (err) {
+		debug('Error subscribing to %s : %o', aid, err)
+	}
+}
+
+async function getAFSContract(contentDID) {
+	if (!registry.proxyExists(contentDID)) return false
+	const proxyAddress = await registry.getProxyAddress(contentDID)
+	return new web3.eth.Contract(AFSAbi, proxyAddress)
 }
 
 module.exports = {
@@ -177,7 +194,9 @@ module.exports = {
 	getEarnings,
 	getEtherBalance,
 	getLibraryItems,
+	getPublishedEarnings,
 	getPublishedItems,
 	purchaseItem,
+	purchaseSubscribe,
 	savePublishedItem
 }

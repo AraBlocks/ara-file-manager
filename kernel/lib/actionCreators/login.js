@@ -46,8 +46,9 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
       .then(afsManager.surfaceAFS)
       .then(published => items.published = published)
       .then(() => dispatch({ type: GOT_LIBRARY, load: items }))
-      .then(() => araContractsManager.getEarnings(items.published))
+      .then(state => araContractsManager.getPublishedEarnings(state.files.published))
       .then(updatedItems => dispatch({ type: GOT_EARNINGS, load: updatedItems}))
+      .then(state => state.files.published.forEach(araContractsManager.purchaseSubscribe))
       .catch(err => debug('getLibraryItems Err: %o', err))
   } catch (err) {
     debug('Error: %O', err)

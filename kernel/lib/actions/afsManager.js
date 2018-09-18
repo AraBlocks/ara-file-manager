@@ -26,9 +26,9 @@ async function broadcast({ did , price = 0}) {
 	}
 }
 
-async function getAFSPrice({ did, password }) {
+async function getAFSPrice({ did }) {
 	debug('Getting price for %s', did)
-	const result = await getPrice({ did, password })
+	const result = await getPrice({ did })
 	return result
 }
 
