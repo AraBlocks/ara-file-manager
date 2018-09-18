@@ -1,7 +1,6 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
-
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const {
 	library,
@@ -117,6 +116,7 @@ function savePublishedItem(contentDid) {
 		debug(err)
 	}
 }
+
 
 async function getPublishedEarnings(items) {
 	debug('Getting earnings for published items')

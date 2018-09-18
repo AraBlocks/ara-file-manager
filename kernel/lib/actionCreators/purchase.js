@@ -23,8 +23,8 @@ ipcMain.on(PURCHASE, async (event, load) => {
 		meta: {
 			aid: load.aid,
 			datePublished: '11/20/1989',
-			earnings: 2134.33,
-			peers: 353,
+			earnings: 0,
+			peers: 1,
 			price: load.price,
 		},
 		name: load.fileName,
