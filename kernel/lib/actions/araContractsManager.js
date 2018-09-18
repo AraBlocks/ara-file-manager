@@ -145,7 +145,7 @@ async function getEarnings(items) {
 			itemEarnings = purchases.reduce((totalEarnings, current) => {
 				let earning
 				if (priceSets.length > 1) {
-					if (current > priceSets[0] && current.block < priceSets[1].blockNumber) {
+					if (current.block < priceSets[1].blockNumber) {
 						earning = priceSets[0].price
 					} else {
 						priceSets.shift()
