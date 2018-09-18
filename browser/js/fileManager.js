@@ -8,6 +8,9 @@ const {
   PUBLISHING,
   PURCHASING,
   PURCHASED,
+  UPDATE,
+  UPDATED,
+  UPDATING,
   UPLOAD_COMPLETE
 } = require('../../lib/constants/stateManagement')
 const { ipcRenderer, remote } = require('electron')
@@ -30,5 +33,8 @@ const setListener = (event) => {
   PUBLISHED,
   PURCHASING,
   PURCHASED,
+  UPDATE,
+  UPDATED,
+  UPDATING,
   UPLOAD_COMPLETE
 ].forEach(setListener)
