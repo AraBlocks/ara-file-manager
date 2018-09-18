@@ -61,7 +61,7 @@ class Container extends Nanocomponent {
 		const { did, password } = this.props
 
 		const load = {
-			did,
+			userAid: did,
 			password,
 			paths: filePath,
 			name: fileName,

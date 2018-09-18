@@ -67,10 +67,10 @@ class FileInfo extends Nanocomponent {
 			<div class=${styles.container}>
 				<div class=${styles.verticalContainer}>
 					<div class=${styles.infoTipHolder}>
-						${children.fileNameInput.render()}
+						${children.fileNameInput.render({})}
 					</div>
 					<div class=${styles.infoTipHolder}>
-						${children.priceInput.render()}
+						${children.priceInput.render({})}
 						<div class=${styles.araPriceHolder}>
 							<b>ARA Token Price:</b>
 							<div class=${styles.araPrice}>
@@ -80,11 +80,11 @@ class FileInfo extends Nanocomponent {
 					</div>
 				</div>
 				<b>Update File</b>
-				${children.fileSelector.render()}
+				${children.fileSelector.render({ filePath: props.parentState['filePath'] })}
 				<div class=${styles.distributionLink}>
 					<b>Distribution Link</b>
 				</div>
-				${children.distributionLink.render()}
+				${children.distributionLink.render({})}
 			</div>
 		`
 	}

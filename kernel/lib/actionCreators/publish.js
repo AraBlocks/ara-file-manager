@@ -16,7 +16,6 @@ const {
   PUBLISH,
   PUBLISHED,
   PUBLISHING,
-  UPLOAD_COMPLETE
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
@@ -76,7 +75,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
     })
 
     windowManager.pingView({ view: 'filemanager', event: PUBLISHING })
-    windowManager.get('publishFileView').close()
+    windowManager.closeWindow('publishFileView')
   } catch (err) {
     debug('Error: %O', err)
   }

@@ -107,7 +107,7 @@ windowManager.loadURL = (view) => {
       break
     case 'manager':
     case 'manageFileView':
-      file = `file://${path.resolve(__dirname, '..', '..', 'browser/manageFile.html')}`
+      file = 'manage-file'
       break
     case 'mainManagerView':
       file = 'index'
