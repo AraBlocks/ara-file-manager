@@ -170,7 +170,6 @@ async function getEarnings(item) {
 }
 
 async function subscribePublished(item) {
-	debug('Subscribing to Purchased events for published items')
 	const subscription = (await eventSubscription({ did: item.meta.aid, eventName: 'Purchased' }))
 		.on('data', async ({ returnValues }) => {
 			const did = returnValues._did.slice(-64)
