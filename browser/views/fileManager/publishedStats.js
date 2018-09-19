@@ -1,21 +1,28 @@
 'use strict'
 
-const { AWAITING_DOWNLOAD, DOWNLOADING } = require('../../../lib/constants/stateManagement')
+const { AWAITING_DOWNLOAD, DOWNLOADING, FEED_MANAGE_FILE } = require('../../../lib/constants/stateManagement')
 const DynamicButton = require('../../components/dynamicButton')
 const styles = require('./styles/publishedStats')
+const windowManagement = require('../../lib/tools/windowManagement')
+const { remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class PublishedStats extends Nanocomponent {
-  constructor({ status }){
+  constructor({ name, price, status, aid }){
     super()
-
+    this.props = {
+      name,
+      price,
+      aid
+    }
     this.children = {
-      button: new DynamicButton(this.buttonProps(status))
+      button: new DynamicButton(this.buttonProps(status, name, price, aid))
     }
   }
 
-  buttonProps(status) {
+  buttonProps(status, name, price, aid) {
     const props = {
       cssClass : {
         name: 'smallInvisible',
@@ -34,6 +41,17 @@ class PublishedStats extends Nanocomponent {
       default:
         props.cssClass.opts.color = 'blue'
         props.children = 'Manage File'
+        props.onclick = () => {
+          windowManagement.openWindow('manageFileView')
+          const load = {
+            aid,
+            fileName: name,
+            price
+          }
+          setTimeout(() => {
+            windowManager.bridge.emit(FEED_MANAGE_FILE, load)
+          }, 1000)
+        }
     }
     return props
   }

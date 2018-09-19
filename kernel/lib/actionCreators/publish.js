@@ -42,6 +42,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_PUBLISH, load)
   const {
     account: {
+      accountAddress,
       password
     }
   } = store

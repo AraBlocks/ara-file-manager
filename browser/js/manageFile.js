@@ -2,14 +2,16 @@ const ManageFileContainer = require('../views/manageFile/container')
 const { openModal} = require('../lib/tools/windowManagement')
 const {
   ESTIMATING_COST,
-  ESTIMATION,
+	ESTIMATION,
+	FEED_MANAGE_FILE
 } = require('../../lib/constants/stateManagement')
 const { ipcRenderer, remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
 
 const manageFileContainer = new ManageFileContainer({
-	currency: 'USD',
-	fileAid: '2ce870ea37886e80df8baf81e584f39b0153163eadc286886e9469dc8d3392bd',
-	fileName: 'My Awesome File',
+	currency: 'ARA',
+	fileAid: '',
+	fileName: '',
 	filePath: '',
 	price: null,
 	priceManagement: true,
@@ -19,3 +21,9 @@ const manageFileContainer = new ManageFileContainer({
 document.getElementById('container').appendChild(manageFileContainer.render({}))
 ipcRenderer.on(ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
 ipcRenderer.on(ESTIMATION, () => openModal('updateConfirmModal'))
+windowManager.bridge.on(FEED_MANAGE_FILE, load => {
+	manageFileContainer.state.fileAid = load.aid
+	manageFileContainer.state.fileName = load.fileName
+	manageFileContainer.state.price = load.price
+	manageFileContainer.render({})
+})
