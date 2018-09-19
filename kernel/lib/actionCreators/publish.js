@@ -13,7 +13,6 @@ const {
   ESTIMATION,
   ESTIMATING_COST,
   FEED_MODAL,
-  GOT_PUBLISHED_SUB,
   PUBLISH,
   PUBLISHED,
   PUBLISHING,
@@ -48,24 +47,33 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
     publish.commit({ ...load, password })
       .then(async () => {
         const araBalance = await araContractsManager.getAraBalance(accountAddress)
-        debug('Dispatching %s', PUBLISHED)
         dispatch({ type: PUBLISHED, load: araBalance })
-
-        const subscription = await araContractsManager.subscribePublished({ meta: { aid: load.did }})
-        debug('Dispatching %s', GOT_PUBLISHED_SUB)
-        dispatch({ type: GOT_PUBLISHED_SUB , load: subscription })
-
-        debug('Pinging Filemanager with %s', PUBLISHED)
+        debug('Dispatching %s', PUBLISHED)
         windowManager.pingView({ view: 'filemanager', event: PUBLISHED })
-
         araContractsManager.savePublishedItem(load.did)
+        araContractsManager.subscribePublished({ meta: { aid: load.did }})
         afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         afsManager.broadcast({ did: load.did })
       })
       .catch(debug)
 
-    debug('Dispatching %s %s', PUBLISHING, load.did)
-    dispatch({ type: PUBLISHING, load: await afsManager.descriptorGenerator(load.did, true) })
+    dispatch({
+      type: PUBLISHING,
+      load: {
+        downloadPercent: 0,
+        meta: {
+          aid: load.did,
+          datePublished: '',
+          earnings: 0,
+          peers: 0,
+          price: load.price,
+        },
+        name: load.name,
+        size: load.size,
+        status: PUBLISHING,
+        path: afsManager.makeAfsPath(load.did)
+      }
+    })
 
     windowManager.pingView({ view: 'filemanager', event: PUBLISHING })
     windowManager.get('publishFileView').close()

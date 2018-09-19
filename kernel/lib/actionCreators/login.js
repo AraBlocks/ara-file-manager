@@ -16,7 +16,6 @@ const {
   LOGGED_IN
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
-const { internalEmitter } = require('electron-window-manager')
 
 
 windowManager.bridge.on(LOGIN, load => {

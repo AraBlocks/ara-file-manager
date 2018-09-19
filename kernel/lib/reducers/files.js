@@ -18,6 +18,10 @@ const {
 
 module.exports = (state, { load, type }) => {
   let file
+  // let x = state.published.find(({ meta }) => meta.aid === '341abebb7764875be968572af63556f6c6e24fb6fef23cd47ae97a589f65a09')
+  // let  = state.published.find(({ meta }) => meta.aid === '341abebb7764875be968572af63556f6c6e24fb6fef23cd47ae97a589f65a091' )
+  // console.log(x)
+
   switch (type){
     case DOWNLOADING:
       file = state.purchased[state.purchased.length - 1]
@@ -61,6 +65,9 @@ module.exports = (state, { load, type }) => {
       file.status = AWAITING_DOWNLOAD
       break
     case UPDATE_EARNING:
+      file = state.published.find(({ meta }) => meta.aid === load.did)
+      file.meta.earnings = file.meta.earnings += Number(load.earning)
+      break
     default:
     return state
   }

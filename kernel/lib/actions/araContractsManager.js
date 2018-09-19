@@ -13,9 +13,8 @@ const {
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
-const windowManager = require('electron-window-manager')
-const { internalEmitter } = require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
+const { internalEmitter, sharedData } = require('electron-window-manager')
+const store = sharedData.fetch('store')
 const { web3 } = require('ara-context')()
 const { web3: { account: araAccount } } = require('ara-util')
 

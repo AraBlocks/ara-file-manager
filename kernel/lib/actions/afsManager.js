@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
-const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
+const { AWAITING_DOWNLOAD, DOWNLOADED, PUBLISHING } = require('../../../lib/constants/stateManagement')
 const dcdnFarm = require('ara-network-node-dcdn-farm')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
@@ -111,14 +111,14 @@ function makeAfsPath(did) {
 	return path.join(createAFSKeyPath(did), 'home', 'content')
 }
 
-async function descriptorGenerator(did, published = false) {
+async function descriptorGenerator(did, publishing = false) {
 	try {
 		did = did.slice(-64)
 		const path = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(path)
 		const meta = AFSExists ? await readFileMetadata(did) : null
 		const descriptor = {}
-		descriptor.downloadPercent = AFSExists || published ? 1 : 0
+		descriptor.downloadPercent = AFSExists || publishing ? 1 : 0
 		descriptor.meta = {
 			aid: did,
 			datePublished: meta ? meta.timestamp : null,
@@ -128,7 +128,7 @@ async function descriptorGenerator(did, published = false) {
 		}
 		descriptor.name = meta ? meta.title : 'Unnamed File'
 		descriptor.size = meta ? meta.size : 0
-		descriptor.status = AFSExists || published ? DOWNLOADED : AWAITING_DOWNLOAD
+		descriptor.status = publishing ? PUBLISHING : AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		descriptor.path = path
 
 		return descriptor

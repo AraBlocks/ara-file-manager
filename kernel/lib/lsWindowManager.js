@@ -8,7 +8,7 @@ const windowManager = require('electron-window-manager')
 
 windowManager.internalEmitter = new EventEmitter
 
-windowManager.internalEmitter.on(PURCHASE_INFO, () => {
+windowManager.internalEmitter.once(PURCHASE_INFO, () => {
   debug('%s heard', PURCHASE_INFO)
   const modalName = 'checkoutModal1'
   if (windowManager.get(modalName).object != null) { return }
