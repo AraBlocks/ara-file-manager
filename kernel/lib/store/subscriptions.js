@@ -1,3 +1,4 @@
 module.exports = {
-  published: []
+  published: [],
+  balance: null
 }
