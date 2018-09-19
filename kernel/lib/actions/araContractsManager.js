@@ -2,6 +2,8 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
+const { getAFSPrice } = require('./afsManager')
+const { UPDATE_EARNING } = require('../../../lib/constants/stateManagement')
 const {
 	library,
 	purchase,
@@ -11,8 +13,8 @@ const {
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
-const windowManager = require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
+const { internalEmitter, sharedData } = require('electron-window-manager')
+const store = sharedData.fetch('store')
 const { web3 } = require('ara-context')()
 const { web3: { account: araAccount } } = require('ara-util')
 
@@ -56,7 +58,7 @@ async function purchaseItem(contentDid) {
 		)
 		debug('Purchase Completed')
 	} catch (err) {
-		debug('Error purchasing item: %o', e)
+		debug('Error purchasing item: %o', err)
 	}
 }
 
@@ -134,8 +136,8 @@ async function getPublishedEarnings(items) {
 async function getEarnings(item) {
 	const opts = { fromBlock: 0, toBlock: 'latest' }
 	try {
-		const proxyAddress = await registry.getProxyAddress(item.meta.aid)
-		const AFSContract = new web3.eth.Contract(AFSAbi, proxyAddress)
+		const AFSContract = await getAFSContract(item.meta.aid)
+		if (!AFSContract) return 0
 
 		const priceSets = (await AFSContract.getPastEvents('PriceSet', opts))
 			.map(event => ({
@@ -167,7 +169,37 @@ async function getEarnings(item) {
 	}
 }
 
+async function subscribePublished(item) {
+	const subscription = (await eventSubscription({ did: item.meta.aid, eventName: 'Purchased' }))
+		.on('data', async ({ returnValues }) => {
+			const did = returnValues._did.slice(-64)
+			const earning = await getAFSPrice({ did })
+			internalEmitter.emit(UPDATE_EARNING, { did, earning })
+		})
+		.on('error', debug)
+
+	return subscription
+}
+
+async function eventSubscription({ did, eventName }) {
+	try {
+		const AFSContract = await getAFSContract(did)
+		if (!AFSContract) throw 'Not a valid proxy'
+
+		return AFSContract.events[eventName]()
+	} catch (err) {
+		debug('Error subscribing to %s : %o', aid, err)
+	}
+}
+
+async function getAFSContract(contentDID) {
+	if (!registry.proxyExists(contentDID)) return false
+	const proxyAddress = await registry.getProxyAddress(contentDID)
+	return new web3.eth.Contract(AFSAbi, proxyAddress)
+}
+
 module.exports = {
+	eventSubscription,
 	getAccountAddress,
 	getAraBalance,
 	getEarnings,
@@ -176,5 +208,6 @@ module.exports = {
 	getPublishedEarnings,
 	getPublishedItems,
 	purchaseItem,
-	savePublishedItem
+	savePublishedItem,
+	subscribePublished
 }

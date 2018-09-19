@@ -10,7 +10,8 @@ const {
   PURCHASED,
   UPDATED,
   UPDATING,
-  UPLOAD_COMPLETE
+  UPLOAD_COMPLETE,
+  UPDATE_EARNING,
 } = require('../../lib/constants/stateManagement')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
@@ -34,5 +35,6 @@ const setListener = (event) => {
   PURCHASED,
   UPDATED,
   UPDATING,
-  UPLOAD_COMPLETE
+  UPLOAD_COMPLETE,
+  UPDATE_EARNING
 ].forEach(setListener)

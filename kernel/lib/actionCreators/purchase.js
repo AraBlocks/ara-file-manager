@@ -1,3 +1,5 @@
+'use strict'
+
 const debug = require('debug')('acm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
 const {

@@ -15,7 +15,8 @@ const {
   PURCHASING,
   UPDATE,
   UPDATED,
-  UPDATING
+  UPDATING,
+  UPDATE_EARNING
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load, type }) => {
@@ -78,6 +79,9 @@ module.exports = (state, { load, type }) => {
       if(file !== null) {
         file.status = DOWNLOADED_PUBLISHED
       }
+    case UPDATE_EARNING:
+      file = state.published.find(({ meta }) => meta.aid === load.did)
+      file.meta.earnings = file.meta.earnings += Number(load.earning)
       break
     default:
     return state
