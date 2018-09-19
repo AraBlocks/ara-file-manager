@@ -42,15 +42,13 @@ class PublishedStats extends Nanocomponent {
         props.cssClass.opts.color = 'blue'
         props.children = 'Manage File'
         props.onclick = () => {
-          windowManagement.openWindow('manageFileView')
           const load = {
             aid,
             fileName: name,
             price
           }
-          setTimeout(() => {
-            windowManager.bridge.emit(FEED_MANAGE_FILE, load)
-          }, 1000)
+          windowManagement.emit({ event: FEED_MANAGE_FILE, load })
+          windowManagement.openWindow('manageFileView')
         }
     }
     return props

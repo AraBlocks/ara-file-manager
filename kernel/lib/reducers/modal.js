@@ -1,6 +1,6 @@
 'use strict'
 
-const { DUMP_MODAL_STATE, FEED_MODAL } = require('../../../lib/constants/stateManagement')
+const { DUMP_MODAL_STATE, FEED_MODAL, FEED_MANAGE_FILE } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load, type }) => {
   switch(type) {
@@ -10,6 +10,10 @@ module.exports = (state, { load, type }) => {
     case FEED_MODAL:
       state.data = load
       break
+    case FEED_MANAGE_FILE:
+      console.log('hello modal')
+      console.log(load)
+      state.manageFileData = load
     default:
     return state
   }
