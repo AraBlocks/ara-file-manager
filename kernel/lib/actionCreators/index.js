@@ -4,5 +4,6 @@ module.exports = {
   modal: require('./modal'),
   publish: require('./publish'),
   purchase: require('./purchase'),
-  register: require('./register')
+  register: require('./register'),
+  subscription: require('./subscription')
 }

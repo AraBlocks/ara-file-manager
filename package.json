@@ -27,7 +27,6 @@
     "ara-crypto": "github:arablocks/ara-crypto",
     "ara-filesystem": "github:arablocks/ara-filesystem#develop",
     "ara-network": "github:arablocks/ara-network",
-    "ara-network-node-dcdn": "../ara_blocks/ara-network-node-dcdn",
     "ara-network-node-dcdn-farm": "github:littlstar/ara-network-node-dcdn-farm",
     "ara-util": "github:arablocks/ara-util",
     "body-parser": "^1.18.3",
