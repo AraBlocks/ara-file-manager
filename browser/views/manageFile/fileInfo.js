@@ -55,36 +55,34 @@ class FileInfo extends Nanocomponent {
 	}
 
 	update({ parentState }) {
-		console.log(parentState)
 		this.props = { parentState }
 		return true
 	}
 
 	createElement() {
-		const { children, props } = this
-		console.log(props)
+		const { children, props: { parentState } } = this
 		return html`
 			<div class=${styles.container}>
 				<div class=${styles.verticalContainer}>
 					<div class=${styles.infoTipHolder}>
-						${children.fileNameInput.render({ value: props.parentState.fileName })}
+						${children.fileNameInput.render({ value: parentState.fileName })}
 					</div>
 					<div class=${styles.infoTipHolder}>
-						${children.priceInput.render({ value: props.parentState.price })}
+						${children.priceInput.render({ value: parentState.price })}
 						<div class=${styles.araPriceHolder}>
 							<b>ARA Token Price:</b>
 							<div class=${styles.araPrice}>
-								<b>${props.parentState['tokenPrice']} ARA</b>
+								<b>${parentState.tokenPrice} ARA</b>
 							</div>
 						</div>
 					</div>
 				</div>
 				<b>Update File</b>
-				${children.fileSelector.render({ filePath: props.parentState['filePath'] })}
+				${children.fileSelector.render({ filePath: parentState.filePath })}
 				<div class=${styles.distributionLink}>
 					<b>Distribution Link</b>
 				</div>
-				${children.distributionLink.render({ value: windowManagement.getDistributionLink(props.parentState.fileAid, props.parentState.fileName) })}
+				${children.distributionLink.render({ value: windowManagement.getDistributionLink(parentState.fileAid, parentState.fileName) })}
 			</div>
 		`
 	}

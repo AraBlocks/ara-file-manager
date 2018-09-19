@@ -1,5 +1,5 @@
 const ManageFileContainer = require('../views/manageFile/container')
-const { openModal} = require('../lib/tools/windowManagement')
+const { openModal } = require('../lib/tools/windowManagement')
 const {
   ESTIMATING_COST,
 	ESTIMATION,
@@ -11,7 +11,7 @@ const { modal: { manageFileData } } = windowManager.sharedData.fetch('store')
 const manageFileContainer = new ManageFileContainer({
 	currency: 'ARA',
 	fileAid: manageFileData.aid,
-	fileName: manageFileData.fileName,
+	fileName: manageFileData.name,
 	filePath: '',
 	price: manageFileData.price,
 	priceManagement: true,

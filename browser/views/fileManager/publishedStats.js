@@ -10,7 +10,12 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class PublishedStats extends Nanocomponent {
-  constructor({ name, price, status, aid }){
+  constructor({
+    aid,
+    name,
+    price,
+    status,
+  }){
     super()
     this.props = {
       name,
@@ -18,11 +23,11 @@ class PublishedStats extends Nanocomponent {
       aid
     }
     this.children = {
-      button: new DynamicButton(this.buttonProps(status, name, price, aid))
+      button: new DynamicButton(this.buttonProps(aid, name, price, status))
     }
   }
 
-  buttonProps(status, name, price, aid) {
+  buttonProps(aid, name, price, status) {
     const props = {
       cssClass : {
         name: 'smallInvisible',
@@ -44,7 +49,7 @@ class PublishedStats extends Nanocomponent {
         props.onclick = () => {
           const load = {
             aid,
-            fileName: name,
+            name,
             price
           }
           windowManagement.emit({ event: FEED_MANAGE_FILE, load })

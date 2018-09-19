@@ -2,13 +2,16 @@
 
 const debug = require('debug')('acm:browser:views:manageFile:container')
 const Button = require('../../components/button')
+const { emit, getDistributionLink } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
 const overlay = require('../../components/overlay')
 const { UPDATE } = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
-const { emit, getDistributionLink } = require('../../lib/tools/windowManagement')
+const { remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
+const { account } = windowManager.sharedData.fetch('store')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -73,9 +76,9 @@ class Container extends Nanocomponent {
 
 	updateFile() {
 		const load = {
-			userAid: 'did:ara:0c354f916a8c6059ab4d726eed4f9f2bf47db09f01c4f4111822483ccede7cf8',
+			userAid: account.userAid,
 			fileAid: this.state.fileAid,
-			password: 'abc',
+			password: account.password,
 			paths: this.state.filePath,
 			name: this.state.fileName,
 			price: this.state.price
@@ -87,8 +90,6 @@ class Container extends Nanocomponent {
 
 	createElement({ spinner = false }) {
 		const { children, state } = this
-		console.log('render')
-		console.log(state)
 		return html`
 			<div class="${styles.container} ManageFileContainer-container">
 				${overlay(spinner)}
