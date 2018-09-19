@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
-const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
+const { AWAITING_DOWNLOAD, DOWNLOADED, PUBLISHING } = require('../../../lib/constants/stateManagement')
 const dcdnFarm = require('ara-network-node-dcdn-farm')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
@@ -26,9 +26,9 @@ async function broadcast({ did , price = 0}) {
 	}
 }
 
-async function getAFSPrice({ did, password }) {
+async function getAFSPrice({ did }) {
 	debug('Getting price for %s', did)
-	const result = await getPrice({ did, password })
+	const result = await getPrice({ did })
 	return result
 }
 
@@ -111,15 +111,14 @@ function makeAfsPath(did) {
 	return path.join(createAFSKeyPath(did), 'home', 'content')
 }
 
-async function descriptorGenerator(did, deeplinkData = null) {
+async function descriptorGenerator(did, publishing = false) {
 	try {
 		did = did.slice(-64)
 		const path = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(path)
 		const meta = AFSExists ? await readFileMetadata(did) : null
-
 		const descriptor = {}
-		descriptor.downloadPercent = AFSExists ? 1 : 0
+		descriptor.downloadPercent = AFSExists || publishing ? 1 : 0
 		descriptor.meta = {
 			aid: did,
 			datePublished: meta ? meta.timestamp : null,
@@ -127,9 +126,9 @@ async function descriptorGenerator(did, deeplinkData = null) {
 			peers: 0,
 			price: Number(await getAFSPrice({ did }))
 		}
-		descriptor.name = meta ? meta.title : deeplinkData ? deeplinkData.title : 'Unnamed File'
+		descriptor.name = meta ? meta.title : 'Unnamed File'
 		descriptor.size = meta ? meta.size : 0
-		descriptor.status = AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
+		descriptor.status = publishing ? PUBLISHING : AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		descriptor.path = path
 
 		return descriptor
