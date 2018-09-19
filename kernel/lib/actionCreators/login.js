@@ -10,11 +10,14 @@ const dispatch = require('../reducers/dispatch')
 const {
   GOT_EARNINGS,
   GOT_LIBRARY,
+  GOT_PUBLISHED_SUBS,
   LOGIN_DEV,
   LOGIN,
   LOGGED_IN
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('electron-window-manager')
+
 
 windowManager.bridge.on(LOGIN, load => {
   const accounts = accountSelection.osxSurfaceAids()
@@ -47,8 +50,9 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
       .then(published => items.published = published)
       .then(() => dispatch({ type: GOT_LIBRARY, load: items }))
       .then(state => araContractsManager.getPublishedEarnings(state.files.published))
-      .then(updatedItems => dispatch({ type: GOT_EARNINGS, load: updatedItems}))
-      .then(state => state.files.published.forEach(araContractsManager.purchaseSubscribe))
+      .then(updatedItems => dispatch({ type: GOT_EARNINGS, load: updatedItems }))
+      .then(({ files }) => Promise.all(files.published.map(araContractsManager.subscribePublished)))
+      .then(subscriptions => dispatch({ type: GOT_PUBLISHED_SUBS, load: subscriptions }))
       .catch(err => debug('getLibraryItems Err: %o', err))
   } catch (err) {
     debug('Error: %O', err)

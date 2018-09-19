@@ -12,7 +12,8 @@ const {
   PUBLISHED,
   PUBLISHING,
   PURCHASED,
-  PURCHASING
+  PURCHASING,
+  UPDATE_EARNING
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load, type }) => {
@@ -59,6 +60,7 @@ module.exports = (state, { load, type }) => {
       file = state.purchased[state.purchased.length - 1]
       file.status = AWAITING_DOWNLOAD
       break
+    case UPDATE_EARNING:
     default:
     return state
   }

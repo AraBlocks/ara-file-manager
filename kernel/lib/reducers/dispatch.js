@@ -3,13 +3,15 @@
 const account = require('./account')
 const files = require('./files')
 const modal = require('./modal')
+const subscriptions = require('./subscriptions')
 const state = require('../store')
 const windowManager = require('electron-window-manager')
 
 const reducers = [
   { property: 'account', reducer: account },
   { property: 'files', reducer: files },
-  { property: 'modal', reducer: modal }
+  { property: 'modal', reducer: modal },
+  { property: 'subscriptions', reducer: subscriptions }
 ]
 
 module.exports = (action) => {

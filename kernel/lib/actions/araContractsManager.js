@@ -3,6 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const { getAFSPrice } = require('./afsManager')
+const { UPDATE_EARNING } = require('../../../lib/constants/stateManagement')
 const {
 	library,
 	purchase,
@@ -58,7 +59,7 @@ async function purchaseItem(contentDid) {
 		)
 		debug('Purchase Completed')
 	} catch (err) {
-		debug('Error purchasing item: %o', e)
+		debug('Error purchasing item: %o', err)
 	}
 }
 
@@ -169,14 +170,25 @@ async function getEarnings(item) {
 	}
 }
 
-async function purchaseSubscribe({ meta: { aid }}) {
+async function subscribePublished(item) {
+	debug('Subscribing to Purchased events for published items')
+	const subscription = (await eventSubscription({ did: item.meta.aid, eventName: 'Purchased' }))
+		.on('data', async ({ returnValues }) => {
+			const did = returnValues._did.slice(-64)
+			const earning = await getAFSPrice({ did })
+			internalEmitter.emit(UPDATE_EARNING, { did, earning })
+		})
+		.on('error', debug)
+
+	return subscription
+}
+
+async function eventSubscription({ did, eventName }) {
 	try {
-		const AFSContract = await getAFSContract(aid)
+		const AFSContract = await getAFSContract(did)
 		if (!AFSContract) throw 'Not a valid proxy'
 
-		AFSContract.events.Purchased()
-			.on('data', () => internalEmitter.emit(UPDATE_EARNINGS, aid))
-			.on('error', e => { throw e })
+		return AFSContract.events[eventName]()
 	} catch (err) {
 		debug('Error subscribing to %s : %o', aid, err)
 	}
@@ -189,6 +201,7 @@ async function getAFSContract(contentDID) {
 }
 
 module.exports = {
+	eventSubscription,
 	getAccountAddress,
 	getAraBalance,
 	getEarnings,
@@ -197,6 +210,6 @@ module.exports = {
 	getPublishedEarnings,
 	getPublishedItems,
 	purchaseItem,
-	purchaseSubscribe,
-	savePublishedItem
+	savePublishedItem,
+	subscribePublished
 }
