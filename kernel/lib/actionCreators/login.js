@@ -29,6 +29,8 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
   try {
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(accountAddress)
+    const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
+
 
     dispatch({
       type: LOGIN_DEV,
@@ -37,6 +39,7 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
         accountAddress,
         araBalance,
         password: load.password,
+        transferSubscription
       }
     })
 
