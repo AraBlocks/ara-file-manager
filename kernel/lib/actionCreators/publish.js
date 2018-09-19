@@ -65,7 +65,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
       .catch(debug)
 
     debug('Dispatching %s %s', PUBLISHING, load.did)
-    dispatch({ type: PUBLISHING, load: afsManager.descriptorGenerator(load.did) })
+    dispatch({ type: PUBLISHING, load: await afsManager.descriptorGenerator(load.did, true) })
 
     windowManager.pingView({ view: 'filemanager', event: PUBLISHING })
     windowManager.get('publishFileView').close()
