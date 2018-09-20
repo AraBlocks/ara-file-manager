@@ -117,19 +117,18 @@ async function descriptorGenerator(did, publishing = false) {
 		const path = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(path)
 		const meta = AFSExists ? await readFileMetadata(did) : null
-		const descriptor = {}
-		descriptor.downloadPercent = AFSExists || publishing ? 1 : 0
-		descriptor.meta = {
-			aid: did,
+		const descriptor = {
+			did,
+			downloadPercent: AFSExists || publishing ? 1 : 0,
 			datePublished: meta ? meta.timestamp : null,
 			earnings: 0,
+			name: meta ? meta.title : 'Unnamed File',
 			peers: 0,
-			price: Number(await getAFSPrice({ did }))
+			price: Number(await getAFSPrice({ did })),
+			path,
+			size: meta ? meta.size : 0,
+			status: publishing ? PUBLISHING : AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		}
-		descriptor.name = meta ? meta.title : 'Unnamed File'
-		descriptor.size = meta ? meta.size : 0
-		descriptor.status = publishing ? PUBLISHING : AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
-		descriptor.path = path
 
 		return descriptor
 	} catch (err) {
