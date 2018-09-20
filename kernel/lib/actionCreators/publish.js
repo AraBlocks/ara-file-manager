@@ -10,15 +10,12 @@ const {
 } = require('../actions')
 const {
   CONFIRM_PUBLISH,
-  CONFIRM_UPDATE,
   ESTIMATION,
   ESTIMATING_COST,
   FEED_MODAL,
   PUBLISH,
   PUBLISHED,
   PUBLISHING,
-  UPDATING,
-  UPDATED
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
@@ -80,41 +77,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
 
     windowManager.pingView({ view: 'filemanager', event: PUBLISHING })
     windowManager.get('publishFileView').close()
-  } catch (err) {
-    debug('Error: %O', err)
-  }
-})
-
-ipcMain.on(CONFIRM_UPDATE, async (event, load) => {
-  debug('%s heard. Load: %o', CONFIRM_UPDATE, load)
-  const {
-    account: {
-      password
-    }
-  } = store
-  try {
-    publish.commit({ ...load, password })
-      .then(async () => {
-        windowManager.pingView({ view: 'filemanager', event: UPDATED })
-        dispatch({ type: UPDATED, load: load.did })
-        debug('Dispatch %s . Load: %s', UPDATED, load.did)
-        araContractsManager.savePublishedItem(load.did)
-        afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
-        afsManager.broadcast({ did: load.did })
-      })
-      .catch(debug)
-
-    dispatch({
-      type: UPDATING,
-      load: {
-        aid: load.did,
-        name: load.name,
-        price: load.price
-      }
-    })
-
-    windowManager.pingView({ view: 'filemanager', event: UPDATING })
-    windowManager.get('manageFileView').close()
   } catch (err) {
     debug('Error: %O', err)
   }
