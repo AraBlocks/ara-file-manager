@@ -168,9 +168,9 @@ async function getEarnings({ did }) {
 	}
 }
 
-async function subscribePublished(item) {
+async function subscribePublished({ did }) {
 	try {
-		const AFSContract = await getAFSContract(item.meta.aid)
+		const AFSContract = await getAFSContract(did)
 		if (!AFSContract) throw 'Not a valid proxy'
 
 		const subscription = AFSContract.events.Purchased()
