@@ -9,7 +9,7 @@ internalEmitter.on(UPDATE_EARNING, async (load) => {
   try {
     debug('Dispatching %s', UPDATE_EARNING)
     dispatch({ type: UPDATE_EARNING, load })
-    pingView({ view: 'filemanager', event: UPDATE_EARNING })
+    pingView({ view: 'filemanager', event: REFRESH })
   } catch(err) {
     debug('Error: %o', err)
   }
@@ -19,7 +19,7 @@ internalEmitter.on(UPDATE_BALANCE, async (load) => {
   try {
     debug('Dispatching %s', UPDATE_BALANCE)
     dispatch({ type: UPDATE_BALANCE, load })
-    pingView({ view: 'filemanager', event: UPDATE_BALANCE })
+    pingView({ view: 'filemanager', event: REFRESH })
   } catch(err) {
 
   }

@@ -7,6 +7,7 @@ const {
   DOWNLOAD_FAILED,
   DOWNLOADED_PUBLISHED,
   DOWNLOAD_START,
+  ERROR_PUBLISHING,
   GOT_EARNINGS,
   GOT_LIBRARY,
   PUBLISHED,
@@ -36,6 +37,9 @@ module.exports = (state, { load, type }) => {
       break
     case DOWNLOAD_START:
       state.purchased.push(load)
+      break
+    case ERROR_PUBLISHING:
+      state.published = state.published.slice(0, state.published.length - 1)
       break
     case GOT_EARNINGS:
       state.published = load

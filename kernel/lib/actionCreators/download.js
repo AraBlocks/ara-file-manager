@@ -20,17 +20,17 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 				if (load.downloadPercent !== 1) {
 					debug('Dispatching %s', DOWNLOADING)
 					dispatch({ type: DOWNLOADING, load })
-					windowManager.pingView({ view: 'filemanager', event: DOWNLOADING })
+					windowManager.pingView({ view: 'filemanager', event: REFRESH })
 				} else {
 					debug('Dispatching %s . Load: %s', DOWNLOADED, load.aid)
 					dispatch({ type: DOWNLOADED, load: load.aid })
-					windowManager.pingView({ view: 'filemanager', event: DOWNLOADED })
+					windowManager.pingView({ view: 'filemanager', event: REFRESH })
 				}
 			}, errorHandler: () => {
 				debug('Download failed')
 				debug('Dispatching %s . Load: %s', DOWNLOAD_FAILED, load.aid)
 				dispatch({ type: DOWNLOAD_FAILED, load: load.aid })
-				windowManager.pingView({ view: 'filemanager', event: DOWNLOAD_FAILED })
+				windowManager.pingView({ view: 'filemanager', event: REFRESH })
 			}
 		})
 	} catch (err) {

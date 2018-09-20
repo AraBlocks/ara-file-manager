@@ -76,16 +76,13 @@ module.exports = {
 
   async commit({ did, password, gasEstimate, price = null }) {
     debug('Committing AFS')
-    try {
-      const result = await afs.commit({ did, password, gasEstimate })
-      if (price != null) {
-        await afs.setPrice({ did, password, price: Number(price) })
-        debug('Price set succesfully: %s', price)
-      }
-      debug('Committed AFS successfully')
-      return result
-    } catch (err) {
-      debug('Error: %O', err)
+    throw 'error'
+    const result = await afs.commit({ did, password, gasEstimate })
+    if (price != null) {
+      await afs.setPrice({ did, password, price: Number(price) })
+      debug('Price set succesfully: %s', price)
     }
+    debug('Committed AFS successfully')
+    return result
   }
 }
