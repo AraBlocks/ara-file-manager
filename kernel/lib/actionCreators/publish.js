@@ -31,7 +31,7 @@ ipcMain.on(PUBLISH, async (event, load) => {
     dispatch({ type: FEED_MODAL, load: estimate })
 
     event.sender.send(ESTIMATION)
-  } catch(err) {
+  } catch (err) {
     debug('Error: %O', err)
   }
 })
@@ -52,7 +52,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         debug('Dispatching %s', PUBLISHED)
         windowManager.pingView({ view: 'filemanager', event: PUBLISHED })
         araContractsManager.savePublishedItem(load.did)
-        araContractsManager.subscribePublished({ meta: { aid: load.did }})
+        araContractsManager.subscribePublished({ did: load.did })
         afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
         afsManager.broadcast({ did: load.did })
@@ -62,18 +62,16 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
     dispatch({
       type: PUBLISHING,
       load: {
+        datePublished: '',
+        did: load.did,
         downloadPercent: 0,
-        meta: {
-          aid: load.did,
-          datePublished: '',
-          earnings: 0,
-          peers: 0,
-          price: load.price,
-        },
+        earnings: 0,
         name: load.name,
+        path: afsManager.makeAfsPath(load.did),
+        peers: 0,
+        price: load.price,
         size: load.size,
-        status: PUBLISHING,
-        path: afsManager.makeAfsPath(load.did)
+        status: PUBLISHING
       }
     })
 

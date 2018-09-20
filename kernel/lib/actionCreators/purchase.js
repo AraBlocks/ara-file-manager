@@ -4,12 +4,12 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
 const {
 	afsManager: { getAFSPrice, makeAfsPath },
-  araContractsManager,
+	araContractsManager,
 } = require('../actions')
 const {
 	FEED_MODAL,
-  PROMPT_PURCHASE,
-  PURCHASE_INFO,
+	PROMPT_PURCHASE,
+	PURCHASE_INFO,
 	PURCHASE,
 	PURCHASED,
 	PURCHASING
@@ -22,13 +22,11 @@ ipcMain.on(PURCHASE, async (event, load) => {
 	debug('%s heard. Load: %O', PURCHASE, load)
 	const dispatchLoad = {
 		downloadPercent: 0,
-		meta: {
-			aid: load.aid,
-			datePublished: '11/20/1989',
-			earnings: 0,
-			peers: 1,
-			price: load.price,
-		},
+		did: load.aid,
+		datePublished: '11/20/1989',
+		earnings: 0,
+		peers: 1,
+		price: load.price,
 		name: load.fileName,
 		size: 0,
 		status: PURCHASING,
@@ -45,12 +43,12 @@ ipcMain.on(PURCHASE, async (event, load) => {
 })
 
 internalEmitter.once(PROMPT_PURCHASE, async (load) => {
-  try {
-    debug('%s heard. Load: %o', PROMPT_PURCHASE, load)
-    const price = await getAFSPrice({ did: load.aid })
-    dispatch({ type: FEED_MODAL, load: { price, ...load } })
-    internalEmitter.emit(PURCHASE_INFO)
-  } catch (err) {
-    debug('Error: %O', err)
-  }
+	try {
+		debug('%s heard. Load: %o', PROMPT_PURCHASE, load)
+		const price = await getAFSPrice({ did: load.aid })
+		dispatch({ type: FEED_MODAL, load: { price, ...load } })
+		internalEmitter.emit(PURCHASE_INFO)
+	} catch (err) {
+		debug('Error: %O', err)
+	}
 })

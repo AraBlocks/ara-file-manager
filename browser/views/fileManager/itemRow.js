@@ -8,30 +8,15 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class ItemRow extends Nanocomponent {
-  constructor({
-    downloadPercent,
-    name,
-    meta,
-    path,
-    size,
-    status,
-    typeRow
-  }) {
+  constructor({ file, typeRow }) {
     super()
 
     this.props = { typeRow }
     this.children = {
-      fileDescriptor: new FileDescriptor({
-        downloadPercent,
-        meta,
-        name,
-        path,
-        size,
-        status
-      }),
+      fileDescriptor: new FileDescriptor({ ...file }),
       stats: typeRow === 'published'
-        ? new PublishedStats({ ...meta, name, status })
-        : new PurchasedStats({ ...meta, name, status })
+        ? new PublishedStats({ status: file.status })
+        : new PurchasedStats()
     }
   }
 
@@ -39,14 +24,15 @@ class ItemRow extends Nanocomponent {
     return true
   }
 
-  createElement({ downloadPercent, status, meta }) {
+  createElement(file) {
+    const { downloadPercent, status } = file
     const { children } = this
     return html`
       <div class="${styles.container} ItemRow-container">
         <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
           ${children.fileDescriptor.render({ downloadPercent, status })}
         </div>
-        ${children.stats.render({ ...meta, status })}
+        ${children.stats.render({ ...file })}
       </div>
     `
   }

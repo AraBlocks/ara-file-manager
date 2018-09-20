@@ -4,8 +4,8 @@ const { copyDistributionLink } = require('../../../windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
 
-module.exports = ({ meta, name }) => {
-	meta.aid = meta.aid.slice(-64)
+module.exports = ({ did, datePublished, name }) => {
+	did = did.slice(-64)
 	return html`
 		<div class="${styles.fileTooltip} tooltip-fileTooltip">
 			<div>
@@ -13,7 +13,7 @@ module.exports = ({ meta, name }) => {
 					AFS Id:
 				</div>
 				<div class="${styles.aid} toolTip-aid">
-					${meta.aid.slice(0, 30) + '...'}
+					${did.slice(0, 30) + '...'}
 				</div>
 			</div>
 			<div
@@ -28,13 +28,13 @@ module.exports = ({ meta, name }) => {
 					span.classList.add('fadeInUp')
 					span.addEventListener('animationend', () => span.classList.remove('fadeInUp'), false)
 
-					copyDistributionLink(meta.aid, name)
+					copyDistributionLink(did, name)
 				}}
 			>
 				Copy Distribution Link<span>Copied !</span>
 			</div>
 			<div>
-				First Published: <span class="${styles.published} fileDescriptor-published">${meta.datePublished}</span>
+				First Published: <span class="${styles.published} fileDescriptor-published">${datePublished}</span>
 			</div>
 		</div>
 	`

@@ -54,7 +54,7 @@ module.exports = (state, { load, type }) => {
       file = state.published[state.published.length - 1]
       file.downloadPercent = 1
       file.status = DOWNLOADED_PUBLISHED
-      file.meta.datePublished = new Date
+      file.datePublished = new Date
       break
     case PURCHASING:
       state.purchased.push(load)
@@ -79,8 +79,8 @@ module.exports = (state, { load, type }) => {
       }
       break
     case UPDATE_EARNING:
-      file = state.published.find(({ meta }) => meta.aid === load.did)
-      file.meta.earnings = file.meta.earnings += Number(load.earning)
+      file = state.published.find(({ did }) => did === load.did)
+      file.earnings = file.earnings += Number(load.earning)
       break
     default:
     return state
