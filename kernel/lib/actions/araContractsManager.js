@@ -2,8 +2,10 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
+const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
 const { getAFSPrice } = require('./afsManager')
-const { UPDATE_EARNING } = require('../../../lib/constants/stateManagement')
+const { UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
+const { TOKEN_ADDRESS } = require('../../../lib/constants/ethAddresses')
 const {
 	library,
 	purchase,
@@ -29,10 +31,10 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
-async function getAraBalance(address) {
+async function getAraBalance(userAddress) {
 	debug('Getting account balance')
 	try {
-		const balance = await token.balanceOf(address)
+		const balance = await token.balanceOf(userAddress)
 		debug('Balance is %s ARA', balance)
 		return balance
 	} catch (err) {
@@ -170,25 +172,21 @@ async function getEarnings(item) {
 }
 
 async function subscribePublished(item) {
-	const subscription = (await eventSubscription({ did: item.meta.aid, eventName: 'Purchased' }))
-		.on('data', async ({ returnValues }) => {
-			const did = returnValues._did.slice(-64)
-			const earning = await getAFSPrice({ did })
-			internalEmitter.emit(UPDATE_EARNING, { did, earning })
-		})
-		.on('error', debug)
-
-	return subscription
-}
-
-async function eventSubscription({ did, eventName }) {
 	try {
-		const AFSContract = await getAFSContract(did)
+		const AFSContract = await getAFSContract(item.meta.aid)
 		if (!AFSContract) throw 'Not a valid proxy'
 
-		return AFSContract.events[eventName]()
+		const subscription = AFSContract.events.Purchased()
+			.on('data', async ({ returnValues }) => {
+				const did = returnValues._did.slice(-64)
+				const earning = await getAFSPrice({ did })
+				internalEmitter.emit(UPDATE_EARNING, { did, earning })
+			})
+			.on('error', debug)
+
+		return subscription
 	} catch (err) {
-		debug('Error subscribing to %s : %o', aid, err)
+		debug('Error: %o', err)
 	}
 }
 
@@ -198,8 +196,19 @@ async function getAFSContract(contentDID) {
 	return new web3.eth.Contract(AFSAbi, proxyAddress)
 }
 
+function subscribeTransfer(userAddress) {
+	const tokenContract = new web3.eth.Contract(tokenAbi, TOKEN_ADDRESS)
+	const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
+		.on('data', async () => {
+			const newBalance = await getAraBalance(userAddress)
+			internalEmitter.emit(UPDATE_BALANCE, newBalance)
+		})
+		.on('error', debug)
+
+	return transferSubscription
+}
+
 module.exports = {
-	eventSubscription,
 	getAccountAddress,
 	getAraBalance,
 	getEarnings,
@@ -209,5 +218,6 @@ module.exports = {
 	getPublishedItems,
 	purchaseItem,
 	savePublishedItem,
-	subscribePublished
+	subscribePublished,
+	subscribeTransfer
 }

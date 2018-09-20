@@ -1,11 +1,10 @@
 'use strict'
 
 const {
-  DOWNLOAD_COMPLETE,
   LOGIN,
   LOGIN_DEV,
   PUBLISHED,
-  UPLOAD_COMPLETE
+  UPDATE_BALANCE
  } = require('../../../lib/constants/stateManagement')
 
 module.exports = async (state, { load, type }) => {
@@ -22,6 +21,8 @@ module.exports = async (state, { load, type }) => {
     case PUBLISHED:
       state.userBalance = load
       break
+    case UPDATE_BALANCE:
+      state.araBalance = load
     default:
     return state
   }
