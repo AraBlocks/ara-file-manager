@@ -9,6 +9,7 @@ const {
   publish
 } = require('../actions')
 const {
+  CHANGE_BROADCASTING_STATE,
   CONFIRM_PUBLISH,
   ESTIMATION,
   ESTIMATING_COST,
@@ -53,6 +54,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         araContractsManager.savePublishedItem(load.did)
         araContractsManager.subscribePublished({ meta: { aid: load.did }})
         afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
+        dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
         afsManager.broadcast({ did: load.did })
       })
       .catch(debug)

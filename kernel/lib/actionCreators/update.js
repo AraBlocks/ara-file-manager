@@ -9,6 +9,7 @@ const {
   publish
 } = require('../actions')
 const {
+  CHANGE_BROADCASTING_STATE,
   CONFIRM_UPDATE,
   ESTIMATION,
   ESTIMATING_COST,
@@ -23,6 +24,7 @@ const { account } = windowManager.sharedData.fetch('store')
 ipcMain.on(UPDATE, async (event, load) => {
   debug('%s heard. Load: %O', UPDATE, load)
   afsManager.stopBroadcast()
+  dispatch({ type: CHANGE_BROADCASTING_STATE, load: false })
   try {
     const { afs } = await create({ did: load.fileAid })
     const result = await afs.readdir(afs.HOME)
@@ -51,6 +53,7 @@ ipcMain.on(CONFIRM_UPDATE, async (event, load) => {
         debug('Dispatch %s . Load: %s', UPDATED, load.did)
         afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         afsManager.broadcast({ did: load.did })
+        dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
       })
       .catch(debug)
 

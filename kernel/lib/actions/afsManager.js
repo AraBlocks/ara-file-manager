@@ -8,7 +8,7 @@ const fs = require('fs')
 const { getPrice, metadata, unarchive } = require('ara-filesystem')
 const path = require('path')
 const windowManager = require('electron-window-manager')
-const { account } = windowManager.sharedData.fetch('store')
+const { account, broadcastState } = windowManager.sharedData.fetch('store')
 
 
 async function broadcast({ did , price = 0}) {
@@ -27,8 +27,16 @@ async function broadcast({ did , price = 0}) {
 }
 
 async function stopBroadcast() {
-	debub('Stopping DCDN broadcast')
-	dcdnFarm.stop()
+	if (!broadcastState.isBroadcasting) {
+		debug('Currently not broadcasting')
+		return
+	}
+	debug('Stopping DCDN broadcast')
+	try {
+		await dcdnFarm.stop()
+	} catch(e) {
+		debug(e)
+	}
 }
 
 async function getAFSPrice({ did }) {
