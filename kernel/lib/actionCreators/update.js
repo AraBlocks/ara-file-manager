@@ -42,14 +42,9 @@ ipcMain.on(UPDATE, async (event, load) => {
 
 ipcMain.on(CONFIRM_UPDATE, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_UPDATE, load)
-  const {
-    account: {
-      password
-    }
-  } = store
   try {
-    debug('here')
-    publish.commit({ ...load, password })
+    console.log('committing')
+    publish.commit({ ...load, password: account.password })
       .then(async () => {
         windowManager.pingView({ view: 'filemanager', event: UPDATED })
         dispatch({ type: UPDATED, load: load.did })
