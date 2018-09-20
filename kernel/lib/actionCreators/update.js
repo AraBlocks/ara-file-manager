@@ -19,16 +19,15 @@ const {
   UPDATING,
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
+const { account } = windowManager.sharedData.fetch('store')
 
 ipcMain.on(UPDATE, async (event, load) => {
   debug('%s heard. Load: %O', UPDATE, load)
   try {
 		const { afs } = await create({ did: load.fileAid })
 		const result = await afs.readdir(afs.HOME)
-		console.log(result)
 		await afs.close()
-		const instance = await remove({ did: load.fileAid, password: 'abc', paths: result })
+		const instance = await remove({ did: load.fileAid, password: account.password, paths: result })
 		await instance.close()
 
     event.sender.send(ESTIMATING_COST)

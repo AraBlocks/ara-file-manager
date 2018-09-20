@@ -1,9 +1,9 @@
 const ManageFileContainer = require('../views/manageFile/container')
-const { openModal } = require('../lib/tools/windowManagement')
 const {
-  ESTIMATING_COST,
+	ESTIMATING_COST,
 	ESTIMATION,
 } = require('../../lib/constants/stateManagement')
+const { openModal } = require('../lib/tools/windowManagement')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { modal: { manageFileData } } = windowManager.sharedData.fetch('store')

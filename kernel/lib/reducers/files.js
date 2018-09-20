@@ -63,8 +63,6 @@ module.exports = (state, { load, type }) => {
       file = state.purchased[state.purchased.length - 1]
       file.status = AWAITING_DOWNLOAD
       break
-    case UPDATE:
-      break
     case UPDATING:
       file = findFile(load.aid, state.published)
       if(file !== null) {
@@ -79,6 +77,7 @@ module.exports = (state, { load, type }) => {
       if(file !== null) {
         file.status = DOWNLOADED_PUBLISHED
       }
+      break
     case UPDATE_EARNING:
       file = state.published.find(({ meta }) => meta.aid === load.did)
       file.meta.earnings = file.meta.earnings += Number(load.earning)
