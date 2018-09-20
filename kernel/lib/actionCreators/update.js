@@ -23,6 +23,7 @@ const { account } = windowManager.sharedData.fetch('store')
 
 ipcMain.on(UPDATE, async (event, load) => {
   debug('%s heard. Load: %O', UPDATE, load)
+  afsManager.stopBroadcast()
   try {
     const { afs } = await create({ did: load.fileAid })
     const result = await afs.readdir(afs.HOME)

@@ -26,6 +26,11 @@ async function broadcast({ did , price = 0}) {
 	}
 }
 
+async function stopBroadcast() {
+	debub('Stopping DCDN broadcast')
+	dcdnFarm.stop()
+}
+
 async function getAFSPrice({ did }) {
 	debug('Getting price for %s', did)
 	const result = await getPrice({ did })
@@ -145,6 +150,7 @@ module.exports = {
 	makeAfsPath,
 	readFileMetadata,
 	surfaceAFS,
+	stopBroadcast,
 	unarchiveAFS,
 	writeFileMetaData,
 }
