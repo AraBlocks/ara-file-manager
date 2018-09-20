@@ -10,9 +10,7 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class PublishedStats extends Nanocomponent {
-  constructor({
-    file
-  }){
+  constructor({ file }){
     super()
     this.props = {
       file
@@ -20,7 +18,6 @@ class PublishedStats extends Nanocomponent {
     this.children = {
       button: new DynamicButton(this.buttonProps(file))
     }
-    console.log(file)
   }
 
   buttonProps(file) {

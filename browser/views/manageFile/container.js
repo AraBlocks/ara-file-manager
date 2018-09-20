@@ -76,12 +76,12 @@ class Container extends Nanocomponent {
 
 	updateFile() {
 		const load = {
-			userAid: account.userAid,
 			fileAid: this.state.fileAid,
+			name: this.state.fileName,
 			password: account.password,
 			paths: this.state.filePath,
-			name: this.state.fileName,
-			price: this.state.price
+			price: this.state.price,
+			userAid: account.userAid
 		}
 
 		debug('Emitting %s . Load: %O', UPDATE, load)

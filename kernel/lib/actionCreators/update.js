@@ -35,7 +35,6 @@ ipcMain.on(UPDATE, async (event, load) => {
     const estimate = await publish.addCreateEstimate(load)
     debug('Dispatching %s . Load: %O', FEED_MODAL, estimate)
     dispatch({ type: FEED_MODAL, load: estimate })
-
     event.sender.send(ESTIMATION)
   } catch(err) {
     debug('Error: %O', err)
@@ -45,7 +44,6 @@ ipcMain.on(UPDATE, async (event, load) => {
 ipcMain.on(CONFIRM_UPDATE, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_UPDATE, load)
   try {
-    console.log('committing')
     publish.commit({ ...load, password: account.password })
       .then(async () => {
         windowManager.pingView({ view: 'filemanager', event: UPDATED })
