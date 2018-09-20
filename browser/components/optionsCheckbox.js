@@ -13,7 +13,7 @@ class OptionsCheckbox extends Nanocomponent {
 		parentState = {}
 	}) {
 		super()
-		this.props = { ...optionsTitleProvider(field) }
+		this.props = { ...optionsTitleProvider(field), parentState, field }
 		this.children = {
 			tooltip: new Tooltip({
 				args: { optionType: field, cssClass: 'optionsTooltip' },
@@ -28,7 +28,8 @@ class OptionsCheckbox extends Nanocomponent {
 		}
 	}
 
-	update() {
+	update({ parentState }) {
+		this.props.parentState = parentState
 		return true
 	}
 
@@ -36,7 +37,7 @@ class OptionsCheckbox extends Nanocomponent {
 		const { children, props } = this
 		return html`
 			<div class="${styles.container} OptionsCheckbox-container">
-				${children.checkbox.render({})}
+				${children.checkbox.render(props.parentState[props.field])}
 				<div class="${styles.textContainer} OptionsCheckbox-textContainer">
 					<div class="${styles.topContainer} OptionsCheckbox-topContainer">
 						<div class="${styles.title} OptionsCheckbox-title">

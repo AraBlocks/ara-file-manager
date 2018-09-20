@@ -10,27 +10,26 @@ const {
 } = require('../actions')
 const {
   CHANGE_BROADCASTING_STATE,
-  CONFIRM_UPDATE,
+  CONFIRM_UPDATE_FILE,
   ESTIMATION,
   ESTIMATING_COST,
   FEED_MODAL,
-  UPDATE,
-  UPDATED,
-  UPDATING,
+  FEED_MANAGE_FILE,
+  UPDATE_FILE,
+  UPDATED_FILE,
+  UPDATING_FILE,
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
-ipcMain.on(UPDATE, async (event, load) => {
-  debug('%s heard. Load: %O', UPDATE, load)
+ipcMain.on(FEED_MANAGE_FILE, (event, load) => dispatch({ type: FEED_MANAGE_FILE, load }))
+
+ipcMain.on(UPDATE_FILE, async (event, load) => {
+  debug('%s heard. Load: %O', UPDATE_FILE, load)
   afsManager.stopBroadcast()
   dispatch({ type: CHANGE_BROADCASTING_STATE, load: false })
   try {
-    const { afs } = await create({ did: load.fileAid })
-    const result = await afs.readdir(afs.HOME)
-    await afs.close()
-    const instance = await remove({ did: load.fileAid, password: account.password, paths: result })
-    await instance.close()
+    await afsManager.removeAllFiles({ did: load.fileAid })
     event.sender.send(ESTIMATING_COST)
     const estimate = await publish.addCreateEstimate(load)
     debug('Dispatching %s . Load: %O', FEED_MODAL, estimate)
@@ -41,14 +40,14 @@ ipcMain.on(UPDATE, async (event, load) => {
   }
 })
 
-ipcMain.on(CONFIRM_UPDATE, async (event, load) => {
-  debug('%s heard. Load: %o', CONFIRM_UPDATE, load)
+ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
+  debug('%s heard. Load: %o', CONFIRM_UPDATE_FILE, load)
   try {
     publish.commit({ ...load, password: account.password })
       .then(async () => {
-        windowManager.pingView({ view: 'filemanager', event: UPDATED })
-        dispatch({ type: UPDATED, load: load.did })
-        debug('Dispatch %s . Load: %s', UPDATED, load.did)
+        windowManager.pingView({ view: 'filemanager', event: UPDATED_FILE })
+        dispatch({ type: UPDATED_FILE, load: load.did })
+        debug('Dispatch %s . Load: %s', UPDATED_FILE, load.did)
         afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         afsManager.broadcast({ did: load.did })
         dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
@@ -56,7 +55,7 @@ ipcMain.on(CONFIRM_UPDATE, async (event, load) => {
       .catch(debug)
 
     dispatch({
-      type: UPDATING,
+      type: UPDATING_FILE,
       load: {
         aid: load.did,
         name: load.name,
@@ -64,7 +63,7 @@ ipcMain.on(CONFIRM_UPDATE, async (event, load) => {
       }
     })
 
-    windowManager.pingView({ view: 'filemanager', event: UPDATING })
+    windowManager.pingView({ view: 'filemanager', event: UPDATING_FILE })
     windowManager.get('manageFileView').close()
   } catch (err) {
     debug('Error: %O', err)

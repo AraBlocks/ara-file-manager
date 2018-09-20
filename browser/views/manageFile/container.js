@@ -1,12 +1,11 @@
 'use strict'
 
-const debug = require('debug')('acm:browser:views:manageFile:container')
 const Button = require('../../components/button')
 const { emit, getDistributionLink } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
 const overlay = require('../../components/overlay')
-const { UPDATE } = require('../../../lib/constants/stateManagement')
+const { UPDATE_FILE } = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
 const { remote } = require('electron')
@@ -83,9 +82,7 @@ class Container extends Nanocomponent {
 			price: this.state.price,
 			userAid: account.userAid
 		}
-
-		debug('Emitting %s . Load: %O', UPDATE, load)
-		emit({ event: UPDATE, load })
+		emit({ event: UPDATE_FILE, load })
 	}
 
 	createElement({ spinner = false }) {
@@ -104,8 +101,8 @@ class Container extends Nanocomponent {
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
 				<div class="${styles.horizontalContainer} ManageFileContainer-horizontalContainer">
-					${children.supernodeCheckbox.render()}
-					${children.priceManagementCheckbox.render()}
+					${children.supernodeCheckbox.render({ parentState: state })}
+					${children.priceManagementCheckbox.render({ parentState: state })}
 				</div>
 				${children.publishButton.render()}
 				${children.deleteButton.render()}
