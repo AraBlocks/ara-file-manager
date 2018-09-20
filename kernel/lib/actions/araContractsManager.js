@@ -126,25 +126,22 @@ async function getPublishedEarnings(items) {
 	debug('Getting earnings for published items')
 	const updatedEarnings = items.map(async (item) => {
 		const earnings = await getEarnings(item)
-		return {
-			...item,
-			meta: { ...item.meta, earnings }
-		}
+		return { ...item, earnings }
 	})
 
 	return Promise.all(updatedEarnings)
 }
 
-async function getEarnings(item) {
+async function getEarnings({ did }) {
 	const opts = { fromBlock: 0, toBlock: 'latest' }
 	try {
-		const AFSContract = await getAFSContract(item.meta.aid)
+		const AFSContract = await getAFSContract(did)
 		if (!AFSContract) return 0
 
 		const priceSets = (await AFSContract.getPastEvents('PriceSet', opts))
 			.map(event => ({
 				blockNumber: event.blockNumber,
-				price: Number(token.constrainTokenValue(event.returnValues[1]))
+				price: Number(token.constrainTokenValue(event.returnValues._price))
 			}))
 
 		const purchases = (await AFSContract.getPastEvents('Purchased', opts))
@@ -167,7 +164,7 @@ async function getEarnings(item) {
 
 		return itemEarnings
 	} catch (err) {
-		debug('Error getting earnings for %s : %o', item.meta.aid, err)
+		debug('Error getting earnings for %s : %o', did, err)
 	}
 }
 
