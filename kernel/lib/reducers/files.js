@@ -79,7 +79,7 @@ module.exports = (state, { load, type }) => {
       }
       break
     case UPDATE_EARNING:
-      file = state.published.find(({ did }) => did === load.did)
+      file = findFile(load.did, state.published)
       file.earnings = file.earnings += Number(load.earning)
       break
     default:
@@ -89,9 +89,5 @@ module.exports = (state, { load, type }) => {
 }
 
 function findFile(aid, files) {
-	const index = files.findIndex((file) => file.meta.aid === aid)
-	if (index !== -1) {
-		return files[index]
-	}
-	return null
+	return files.find(({ did }) => did === aid)
 }

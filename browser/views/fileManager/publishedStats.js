@@ -11,30 +11,26 @@ const Nanocomponent = require('nanocomponent')
 
 class PublishedStats extends Nanocomponent {
   constructor({
-    aid,
-    name,
-    price,
-    status,
+    file
   }){
     super()
     this.props = {
-      name,
-      price,
-      aid
+      file
     }
     this.children = {
-      button: new DynamicButton(this.buttonProps(aid, name, price, status))
+      button: new DynamicButton(this.buttonProps(file))
     }
+    console.log(file)
   }
 
-  buttonProps(aid, name, price, status) {
+  buttonProps(file) {
     const props = {
       cssClass : {
         name: 'smallInvisible',
         opts: { weight: 'light '}
       }
     }
-    switch(status) {
+    switch(file.status) {
       case AWAITING_DOWNLOAD:
         props.cssClass.opts.color = 'red'
         props.children = 'Download File'
@@ -48,9 +44,9 @@ class PublishedStats extends Nanocomponent {
         props.children = 'Manage File'
         props.onclick = () => {
           const load = {
-            aid,
-            name,
-            price
+            aid: file.did,
+            name: file.name,
+            price: file.price
           }
           windowManagement.emit({ event: FEED_MANAGE_FILE, load })
           windowManagement.openWindow('manageFileView')
