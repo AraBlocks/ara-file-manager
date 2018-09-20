@@ -117,7 +117,7 @@ class FileDescriptor extends Nanocomponent {
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
           ${status === PUBLISHING || status === PURCHASING
-            ? html`<div class="spinner-small-blue"></div>`
+            ? html`<div style="margin-left: 3px; margin-top: 3px;" class="spinner-small-blue"></div>`
             : children.progressRing.render({ downloadPercent, status })}
         </div>
         <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
@@ -135,7 +135,7 @@ class FileDescriptor extends Nanocomponent {
               : filesize(props.size)}
           </div>
           <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
-            ${children.button.render(buttonProps(status, did))}
+            ${children.button.render(buttonProps(status, props.did))}
           </div>
         </div>
       </div>
