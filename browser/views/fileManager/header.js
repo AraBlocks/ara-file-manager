@@ -9,10 +9,7 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Header extends Nanocomponent {
-  constructor({
-    selectTab,
-    username
-  }) {
+  constructor({ selectTab, username }) {
     super()
 
     this.props = { username }
@@ -20,12 +17,7 @@ class Header extends Nanocomponent {
     this.children = {
       publishFilebutton: new Button({
         children: 'Publish New File',
-        cssClass: {
-          opts: {
-            color: 'blue',
-            fontSize: 14
-           }
-        },
+        cssClass: { opts: { color: 'blue', fontSize: 14 } },
         onclick: () => openWindow('publishFileView')
       }),
       closeButton: new UtilityButton({ children: '✕' }),

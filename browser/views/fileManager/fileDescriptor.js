@@ -19,8 +19,9 @@ const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
+    datePublished,
+    did,
     downloadPercent,
-    meta = {},
     name,
     path,
     size = 0,
@@ -29,26 +30,26 @@ class FileDescriptor extends Nanocomponent {
     super()
 
     this.props = {
-      meta,
+      did,
       name,
       path,
       size
     }
 
     this.children = {
-      button: new DynamicButton(this.buttonProps(status, meta.aid)),
+      button: new DynamicButton(this.buttonProps(status, did)),
       progressRing: new ProgressRing({ status, downloadPercent }),
       tooltip: new Tooltip({
-        id: meta.aid,
+        id: did,
         component: 'fileTooltip',
-        args: { meta, name }
+        args: { datePublished, did , name }
       })
     }
 
     this.buttonProps = this.buttonProps.bind(this)
   }
 
-  buttonProps(status, aid) {
+  buttonProps(status, did) {
     const props = {}
     switch(status) {
       case AWAITING_DOWNLOAD:
@@ -57,7 +58,7 @@ class FileDescriptor extends Nanocomponent {
           name: 'smallInvisible',
           opts: { color: 'red' }
         }
-        props.onclick = () => emit({ event: DOWNLOAD, load: { aid } })
+        props.onclick = () => emit({ event: DOWNLOAD, load: { did } })
         break
       case DOWNLOADING:
          props.children = 'Cancel Download'
@@ -134,7 +135,7 @@ class FileDescriptor extends Nanocomponent {
               : filesize(props.size)}
           </div>
           <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
-            ${children.button.render(buttonProps(status, props.meta.aid))}
+            ${children.button.render(buttonProps(status, did))}
           </div>
         </div>
       </div>
