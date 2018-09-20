@@ -35,11 +35,11 @@ ipcMain.on(PURCHASE, async (event, load) => {
 	araContractsManager.purchaseItem(load.aid)
 		.then(async () => {
 			dispatch({ type: PURCHASED })
-			windowManager.pingView({ view: 'filemanager', event: PURCHASED })
+			windowManager.pingView({ view: 'filemanager', event: REFRESH })
 		}).catch(debug)
 
 	dispatch({ type: PURCHASING, load: dispatchLoad })
-	windowManager.pingView({ view: 'filemanager', event: PURCHASING })
+	windowManager.pingView({ view: 'filemanager', event: REFRESH })
 })
 
 internalEmitter.once(PROMPT_PURCHASE, async (load) => {
