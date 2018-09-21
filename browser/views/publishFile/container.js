@@ -47,7 +47,7 @@ class Container extends Nanocomponent {
 		}
 	}
 
-	update(){
+	update() {
 		return true
 	}
 
@@ -66,11 +66,12 @@ class Container extends Nanocomponent {
 			name: fileName || 'Unnamed',
 			price
 		}
-
-		emit({ event: PUBLISH, load })
+		filePath
+			? emit({ event: PUBLISH, load })
+			: this.render({ requiredIndicator: true })
 	}
 
-	createElement({ spinner = false }) {
+	createElement({ spinner = false, requiredIndicator = false }) {
 		tooltip({})
 		const { children, state } = this
 		return html`
@@ -88,7 +89,7 @@ class Container extends Nanocomponent {
 						to be able to download it.
 					</div>
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
-					${children.fileInfo.render()}
+					${children.fileInfo.render({ requiredIndicator })}
 					<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
 					${children.supernodeCheckbox.render({ parentState: state })}
 					${children.priceManagementCheckbox.render({ parentState: state })}
