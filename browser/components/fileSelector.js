@@ -46,7 +46,6 @@ class FileSelector extends Nanocomponent {
 				props.parentState[props.field] = fileNames
 				this.rerender()
 			})
-			.catch(console.log)
 	}
 
 	createElement() {

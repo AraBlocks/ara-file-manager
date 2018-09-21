@@ -8,8 +8,8 @@ const {
 } = require('../actions')
 const {
 	FEED_MODAL,
+	OPEN_MODAL,
 	PROMPT_PURCHASE,
-	PURCHASE_INFO,
 	PURCHASE,
 	PURCHASED,
 	PURCHASING
@@ -47,7 +47,7 @@ internalEmitter.once(PROMPT_PURCHASE, async (load) => {
 		debug('%s heard. Load: %o', PROMPT_PURCHASE, load)
 		const price = await getAFSPrice({ did: load.aid })
 		dispatch({ type: FEED_MODAL, load: { price, ...load } })
-		internalEmitter.emit(PURCHASE_INFO)
+		internalEmitter.emit(OPEN_MODAL, 'checkoutModal1')
 	} catch (err) {
 		debug('Error: %O', err)
 	}
