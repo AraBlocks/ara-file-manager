@@ -1,16 +1,15 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:lsWindowManager')
-const { PROMPT_PURCHASE, PURCHASE_INFO } = require('../../lib/constants/stateManagement')
+const { OPEN_MODAL, PROMPT_PURCHASE } = require('../../lib/constants/stateManagement')
 const EventEmitter = require('events')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
 windowManager.internalEmitter = new EventEmitter
 
-windowManager.internalEmitter.once(PURCHASE_INFO, () => {
-  debug('%s heard', PURCHASE_INFO)
-  const modalName = 'checkoutModal1'
+windowManager.internalEmitter.on(OPEN_MODAL, (modalName) => {
+  debug('%s heard', OPEN_MODAL)
   if (windowManager.get(modalName).object != null) { return }
   windowManager.sharedData.set('current', modalName)
   windowManager.createNew(

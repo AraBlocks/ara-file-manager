@@ -11,14 +11,18 @@ const {
 const {
   CHANGE_BROADCASTING_STATE,
   CONFIRM_PUBLISH,
+  ERROR_PUBLISHING,
   ESTIMATION,
   ESTIMATING_COST,
   FEED_MODAL,
+  OPEN_MODAL,
   PUBLISH,
   PUBLISHED,
   PUBLISHING,
+  REFRESH,
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('../../lib/lsWindowManager')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(PUBLISH, async (event, load) => {
@@ -50,15 +54,27 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         const araBalance = await araContractsManager.getAraBalance(accountAddress)
         dispatch({ type: PUBLISHED, load: araBalance })
         debug('Dispatching %s', PUBLISHED)
-        windowManager.pingView({ view: 'filemanager', event: PUBLISHED })
-        araContractsManager.savePublishedItem(load.did)
+        windowManager.pingView({ view: 'filemanager', event: REFRESH })
         araContractsManager.subscribePublished({ did: load.did })
         afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
         afsManager.broadcast({ did: load.did })
       })
-      .catch(debug)
+      .catch(err => {
+        debug('Error in committing: %o', err)
+        debug('Removing %s from .acm', load.did)
 
+        araContractsManager.removedPublishedItem(load.did)
+        dispatch({ type: ERROR_PUBLISHING })
+        windowManager.pingView({ view: 'filemanager', event: REFRESH })
+        //Needs short delay. Race conditions cause modal state to dump after its loaded
+        setTimeout(() => {
+          dispatch({ type: FEED_MODAL, load: { modalName: 'failureModal2' } })
+          internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+        }, 500)
+      })
+
+    araContractsManager.savePublishedItem(load.did)
     dispatch({
       type: PUBLISHING,
       load: {
@@ -75,7 +91,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
       }
     })
 
-    windowManager.pingView({ view: 'filemanager', event: PUBLISHING })
+    windowManager.pingView({ view: 'filemanager', event: REFRESH })
     windowManager.get('publishFileView').close()
   } catch (err) {
     debug('Error: %O', err)

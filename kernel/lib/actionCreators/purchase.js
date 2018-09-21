@@ -8,8 +8,8 @@ const {
 } = require('../actions')
 const {
 	FEED_MODAL,
+	OPEN_MODAL,
 	PROMPT_PURCHASE,
-	PURCHASE_INFO,
 	PURCHASE,
 	PURCHASED,
 	PURCHASING
@@ -35,11 +35,11 @@ ipcMain.on(PURCHASE, async (event, load) => {
 	araContractsManager.purchaseItem(load.aid)
 		.then(async () => {
 			dispatch({ type: PURCHASED })
-			windowManager.pingView({ view: 'filemanager', event: PURCHASED })
+			windowManager.pingView({ view: 'filemanager', event: REFRESH })
 		}).catch(debug)
 
 	dispatch({ type: PURCHASING, load: dispatchLoad })
-	windowManager.pingView({ view: 'filemanager', event: PURCHASING })
+	windowManager.pingView({ view: 'filemanager', event: REFRESH })
 })
 
 internalEmitter.once(PROMPT_PURCHASE, async (load) => {
@@ -47,7 +47,7 @@ internalEmitter.once(PROMPT_PURCHASE, async (load) => {
 		debug('%s heard. Load: %o', PROMPT_PURCHASE, load)
 		const price = await getAFSPrice({ did: load.aid })
 		dispatch({ type: FEED_MODAL, load: { price, ...load } })
-		internalEmitter.emit(PURCHASE_INFO)
+		internalEmitter.emit(OPEN_MODAL, 'checkoutModal1')
 	} catch (err) {
 		debug('Error: %O', err)
 	}

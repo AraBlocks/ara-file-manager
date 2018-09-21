@@ -1,6 +1,6 @@
 const {
   AWAITING_DOWNLOAD,
-  DOWNLOADED_PUBLISHED
+  DOWNLOADED_PUBLISHED,
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = {

@@ -122,5 +122,7 @@ module.exports = {
     } catch (err) {
       debug('Error: %O', err)
     }
+    debug('Committed AFS successfully')
+    return result
   }
 }

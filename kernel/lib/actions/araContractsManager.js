@@ -121,6 +121,18 @@ function savePublishedItem(contentDid) {
 	}
 }
 
+async function removedPublishedItem(contentDID) {
+  const items = await getPublishedItems()
+	const clean = items.filter(did => did !== contentDID)
+
+  const fileDirectory = getAcmFilePath()
+  fs.unlinkSync(fileDirectory)
+  if (clean.length) {
+    clean.forEach(did => fs.appendFileSync(fileDirectory, `${did}\n`))
+	}
+
+  return clean
+}
 
 async function getPublishedEarnings(items) {
 	debug('Getting earnings for published items')
@@ -214,6 +226,7 @@ module.exports = {
 	getPublishedEarnings,
 	getPublishedItems,
 	purchaseItem,
+	removedPublishedItem,
 	savePublishedItem,
 	subscribePublished,
 	subscribeTransfer
