@@ -60,7 +60,7 @@ class Container extends Nanocomponent {
 		const { did, password } = this.props
 
 		const load = {
-			did,
+			userAid: did,
 			password,
 			paths: filePath,
 			name: fileName || 'Unnamed',
@@ -72,7 +72,7 @@ class Container extends Nanocomponent {
 
 	createElement({ spinner = false }) {
 		tooltip({})
-		const { children } = this
+		const { children, state } = this
 		return html`
 			<div>
 				${overlay(spinner)}
@@ -90,8 +90,8 @@ class Container extends Nanocomponent {
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render()}
 					<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
-						${children.supernodeCheckbox.render()}
-						${children.priceManagementCheckbox.render()}
+					${children.supernodeCheckbox.render({ parentState: state })}
+					${children.priceManagementCheckbox.render({ parentState: state })}
 					</div>
 					${children.publishButton.render()}
 				</div>

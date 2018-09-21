@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:register')
+const araContractsManager = require('../actions/araContractsManager')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const { register } = require('../actions')
@@ -24,7 +25,7 @@ ipcMain.on(REGISTER, async (event, password) => {
         userAid,
         accountAddress,
         araBalance: 0,
-        password: load.password,
+        password: password,
       }
     })
     event.sender.send(REGISTERED)

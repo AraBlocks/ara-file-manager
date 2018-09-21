@@ -1,7 +1,7 @@
 'use strict'
 
 const { CONFIRM_PUBLISH } = require('../../../lib/constants/stateManagement')
-const { closeModal, emit } = require('../../lib/tools/windowManagement')
+const { closeModal, closeWindow, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
 const html = require('choo/html')
