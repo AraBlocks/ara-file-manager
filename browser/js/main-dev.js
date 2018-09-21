@@ -15,6 +15,7 @@ const exclude = [
   'modals',
   'fileManager',
   'mainManager',
+  'manageFile',
   'styles.js',
   'publishFile'
  ]
