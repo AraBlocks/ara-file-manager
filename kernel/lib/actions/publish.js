@@ -80,6 +80,7 @@ module.exports = {
 
   async setPriceGasEstimate({
     fileAid,
+    name,
     password,
     price
   }) {
@@ -93,6 +94,7 @@ module.exports = {
       return {
         did: fileAid,
         gasEstimate,
+        name,
         price,
         paths: []
       }
