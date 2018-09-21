@@ -27,16 +27,12 @@ class Input extends Nanocomponent {
     }
 
     this.state = {
-      value: parentState[field] || '',
-      selection: this.props.embeddedButton.optionList ? this.props.embeddedButton.optionList[0] : ''
+      requiredIndicator: false,
+      selection: this.props.embeddedButton.optionList ? this.props.embeddedButton.optionList[0] : '',
+      value: parentState[field] || ''
     }
 
     this.onchange = this.onchange.bind(this)
-  }
-
-  update({ value = null}) {
-    this.state.value = value || this.state.value
-    return true
   }
 
   onchange(e) {
@@ -51,6 +47,14 @@ class Input extends Nanocomponent {
     props.parentState[props.embeddedButton.field] = state.selection
   }
 
+  update({ value = null, requiredIndicator = false }) {
+    this.state.value = value || this.state.value
+    this.state.requiredIndicator = this.state.requiredIndicator !== requiredIndicator
+     ? requiredIndicator
+     : this.state.requiredIndicator
+    return true
+  }
+
   createElement() {
     const {
       onchange,
@@ -58,10 +62,18 @@ class Input extends Nanocomponent {
       select,
       state
     } = this
+
     return html`
-      <div class="${styles.container}">
+      <div class="
+        ${styles.container} input-container
+        ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
+        "
+      >
         <input
-          class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass"
+          class="
+            ${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass
+            ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
+          "
           onchange=${onchange}
           placeholder="${props.placeholder}"
           value="${state.value}"
@@ -78,7 +90,7 @@ class Input extends Nanocomponent {
       if (embeddedButton.option === 'button') {
         button = html`
           <button
-            class=${styles.button}
+            class="${styles.button} input-button"
             onclick=${embeddedButton.onclick}
           >
             ${embeddedButton.children}
@@ -86,7 +98,7 @@ class Input extends Nanocomponent {
       } else if (embeddedButton.option === 'selection' && embeddedButton.optionList != null) {
         props.parentState[embeddedButton.field] = embeddedButton.optionList[0]
         button = html`
-          <select class=${styles.selection} onchange=${select}>
+          <select class="${styles.selection} input-selection" onchange=${select}>
             ${embeddedButton.optionList.map(option => html`<option value=${option}>${option}</option>`)}
           </select>
         `
