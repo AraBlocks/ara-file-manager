@@ -7,27 +7,31 @@ const fs = require('fs')
 
 module.exports = {
   async addCreateEstimate({
-    did,
+    fileAid = null,
+    userAid,
     name,
     password,
     paths,
     price
   }) {
     let arafs
-    let id
     let mnemonic
-    try {
-      arafs = await afs.create({ owner: did, password });
-      ({ afs: { did: id }, mnemonic } = arafs)
-      arafs.afs.close()
-      debug('AFS successfully created')
-    } catch (err) {
-      debug('Error in creating AFS: %O', err)
+
+    if (fileAid == null) {
+      try {
+        arafs = await afs.create({ owner: userAid, password });
+        mnemonic = arafs.mnemonic
+        fileAid = arafs.afs.did
+        arafs.afs.close()
+        debug('AFS successfully created')
+      } catch (err) {
+        debug('Error in creating AFS: %O', err)
+      }
     }
 
     try {
       const newAfs = await afs.add({
-        did: id,
+        did: fileAid,
         paths: paths,
         password
       })
@@ -45,7 +49,7 @@ module.exports = {
     debug('File size is %s', size)
 
     writeFileMetaData({
-      did: id,
+      did: fileAid,
       size,
       title: name
     })
@@ -53,15 +57,15 @@ module.exports = {
     let gasEstimate
     try {
       debug('Getting gas estimate..')
-      gasEstimate = await afs.estimateCommitGasCost({ did: id, password })
+      gasEstimate = await afs.estimateCommitGasCost({ did: fileAid, password })
       debug('Gas estimate for commit: %d', gasEstimate)
       if (price != null) {
-        gasEstimate += await afs.estimateSetPriceGasCost({ did: id, password, price: Number(price) })
+        gasEstimate += await afs.estimateSetPriceGasCost({ did: fileAid, password, price: Number(price) })
         debug('Gas estimate for commit + setting price: %d', gasEstimate)
       }
 
       return {
-        did: id,
+        did: fileAid,
         mnemonic,
         gasEstimate,
         name,
@@ -74,12 +78,51 @@ module.exports = {
     }
   },
 
+  async setPriceGasEstimate({
+    fileAid,
+    name,
+    password,
+    price
+  }) {
+    if (price == null) {
+      debug('No price to be set.')
+      return
+    }
+    try {
+      const gasEstimate = await afs.estimateSetPriceGasCost({ did: fileAid, password, price: Number(price) })
+      debug('Gas estimate for setting price: %d', gasEstimate)
+      return {
+        did: fileAid,
+        gasEstimate,
+        name,
+        price,
+        paths: []
+      }
+    } catch(e) {
+      debug(e)
+    }
+  },
+
+  async setPrice({ did, password, price }) {
+    try {
+      if (price != null) {
+        await afs.setPrice({ did, password, price: Number(price) })
+        debug('Price set succesfully: %s', price)
+      }
+    } catch(err) {
+      debug('Error: %O', err)
+    }
+  },
+
   async commit({ did, password, gasEstimate, price = null }) {
     debug('Committing AFS')
-    const result = await afs.commit({ did, password, gasEstimate })
-    if (price != null) {
-      await afs.setPrice({ did, password, price: Number(price) })
-      debug('Price set succesfully: %s', price)
+    try {
+      const result = await afs.commit({ did, password, gasEstimate })
+      await this.setPrice({ did, password, price })
+      debug('Committed AFS successfully')
+      return result
+    } catch (err) {
+      debug('Error: %O', err)
     }
     debug('Committed AFS successfully')
     return result

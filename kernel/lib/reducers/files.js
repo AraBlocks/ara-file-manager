@@ -14,6 +14,9 @@ const {
   PUBLISHING,
   PURCHASED,
   PURCHASING,
+  UPDATE_FILE,
+  UPDATED_FILE,
+  UPDATING_FILE,
   UPDATE_EARNING
 } = require('../../../lib/constants/stateManagement')
 
@@ -64,12 +67,31 @@ module.exports = (state, { load, type }) => {
       file = state.purchased[state.purchased.length - 1]
       file.status = AWAITING_DOWNLOAD
       break
+    case UPDATING_FILE:
+      file = findFile(load.aid, state.published)
+      if(file !== null) {
+        file.name = load.name
+        file.price = load.price == null ? file.price : load.price
+        file.size = load.size == 0 ? file.size : load.size
+        file.status = UPDATING_FILE
+      }
+      break
+    case UPDATED_FILE:
+      file = findFile(load, state.published)
+      if(file !== null) {
+        file.status = DOWNLOADED_PUBLISHED
+      }
+      break
     case UPDATE_EARNING:
-      file = state.published.find(({ did }) => did === load.did)
+      file = findFile(load.did, state.published)
       file.earnings = file.earnings += Number(load.earning)
       break
     default:
     return state
   }
   return state
+}
+
+function findFile(aid, files) {
+	return files.find(({ did }) => did === aid)
 }

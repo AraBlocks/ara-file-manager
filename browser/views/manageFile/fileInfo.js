@@ -23,7 +23,9 @@ class FileInfo extends Nanocomponent {
 				embeddedButton: {
 					option: 'button',
 					children: 'Copy',
-					onclick: this.copyLink.bind(this)
+					onclick: () => {
+						windowManagement.copyDistributionLink(parentState.fileAid, parentState.fileName)
+					}
 				}
 			}),
 			fileNameInput: new Input({
@@ -52,39 +54,35 @@ class FileInfo extends Nanocomponent {
 		}
 	}
 
-	copyLink() {
-		const { children } = this
-		windowManagement.copyToClipboard(children.distributionLink.state.value)
-	}
-
-	update() {
+	update({ parentState }) {
+		this.props = { parentState }
 		return true
 	}
 
 	createElement() {
-		const { children, props } = this
+		const { children, props: { parentState } } = this
 		return html`
 			<div class=${styles.container}>
 				<div class=${styles.verticalContainer}>
 					<div class=${styles.infoTipHolder}>
-						${children.fileNameInput.render()}
+						${children.fileNameInput.render({ value: parentState.fileName })}
 					</div>
 					<div class=${styles.infoTipHolder}>
-						${children.priceInput.render()}
+						${children.priceInput.render({ value: parentState.price })}
 						<div class=${styles.araPriceHolder}>
 							<b>ARA Token Price:</b>
 							<div class=${styles.araPrice}>
-								<b>${props.parentState['tokenPrice']} ARA</b>
+								<b>${parentState.tokenPrice} ARA</b>
 							</div>
 						</div>
 					</div>
 				</div>
 				<b>Update File</b>
-				${children.fileSelector.render()}
+				${children.fileSelector.render({ filePath: parentState.filePath })}
 				<div class=${styles.distributionLink}>
 					<b>Distribution Link</b>
 				</div>
-				${children.distributionLink.render()}
+				${children.distributionLink.render({ value: windowManagement.getDistributionLink(parentState.fileAid, parentState.fileName) })}
 			</div>
 		`
 	}

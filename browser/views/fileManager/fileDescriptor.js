@@ -6,7 +6,8 @@ const {
   DOWNLOADING,
   DOWNLOAD_FAILED,
   PUBLISHING,
-  PURCHASING
+  PURCHASING,
+  UPDATING_FILE
 } = require('../../../lib/constants/stateManagement')
 const DynamicButton = require('../../components/dynamicButton')
 const { emit, openFolder } = require('../../lib/tools/windowManagement')
@@ -92,6 +93,14 @@ class FileDescriptor extends Nanocomponent {
         }
         props.onclick = () => {}
         break
+      case UPDATING_FILE:
+        props.children = 'Updating'
+        props.cssClass = {
+          name: 'smallInvisible',
+          opts: { color: 'grey' }
+        }
+        props.onclick = () => {}
+        break
       default:
         props.children = 'Open in Folder'
         props.cssClass = {
@@ -116,7 +125,7 @@ class FileDescriptor extends Nanocomponent {
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
-          ${status === PUBLISHING || status === PURCHASING
+          ${[PUBLISHING, PURCHASING, UPDATING_FILE].includes(status)
             ? html`<div style="margin-left: 3px; margin-top: 3px;" class="spinner-small-blue"></div>`
             : children.progressRing.render({ downloadPercent, status })}
         </div>

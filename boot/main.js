@@ -46,3 +46,8 @@ app.on('open-url', (event, url) => {
   deepLinkingUrl = url
   app.isReady() && windowManager.openDeepLinking(url)
 })
+
+app.on('before-quit', () => {
+  const { stopBroadcast } = require('../kernel/lib/actions/afsManager')
+  stopBroadcast()
+})

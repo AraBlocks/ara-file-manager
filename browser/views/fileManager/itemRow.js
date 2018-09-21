@@ -15,7 +15,7 @@ class ItemRow extends Nanocomponent {
     this.children = {
       fileDescriptor: new FileDescriptor({ ...file }),
       stats: typeRow === 'published'
-        ? new PublishedStats({ status: file.status })
+        ? new PublishedStats({ file })
         : new PurchasedStats()
     }
   }
