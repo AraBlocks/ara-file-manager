@@ -5,3 +5,4 @@ dist/
 .cfs
 release-builds/
 afses.json
+foo.js
