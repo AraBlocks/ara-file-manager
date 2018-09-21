@@ -6,6 +6,7 @@ const { Menu, Tray, screen } = require('electron')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
+const { internalEmitter } = require('electron-window-manager')
 const { LOGOUT } = require('../lib/constants/stateManagement')
 
 let tray
@@ -19,7 +20,7 @@ const buildTray = () => {
     { label: 'Login', type: 'normal', click: () => openWindow('login') },
     { label: 'File Manager', type: 'normal', click: () => openWindow('filemanager') },
     { label: 'Publish File', type: 'normal', click: () => openWindow('publishFileView') },
-    { label: 'Log Out', type: 'normal', click: () => windowManager.bridge.emit(LOGOUT) },
+    { label: 'Log Out', type: 'normal', click: () => internalEmitter.emit(LOGOUT, null) },
     { label: 'Quit', type: 'normal', role: 'quit' }
   ]
 

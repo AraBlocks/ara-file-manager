@@ -10,8 +10,7 @@ const { LOGIN_DEV } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const { remote } = require('electron')
-const windowManager = remote.require('electron-window-manager')
+const { emit } = require('../../browser/lib/tools/windowManagement')
 
 class Login extends Nanocomponent {
   constructor() {
@@ -66,12 +65,11 @@ class Login extends Nanocomponent {
   login(e) {
     e.preventDefault()
     const { usernameValue, passwordValue } = this.state
-    void async function() {
-      windowManager.bridge.emit(LOGIN_DEV, {
+    emit({ event: LOGIN_DEV, load: {
         password: passwordValue,
         userAid: usernameValue
-      })
-    }()
+      }
+    })
     closeWindow()
   }
 

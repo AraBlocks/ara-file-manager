@@ -12,27 +12,20 @@ const {
   GOT_LIBRARY,
   GOT_PUBLISHED_SUBS,
   LOGIN_DEV,
-  LOGIN,
-  LOGGED_IN,
   LOGOUT,
   REFRESH
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
+const { ipcMain } = require('electron')
+const { internalEmitter } = require('electron-window-manager')
 
-
-windowManager.bridge.on(LOGIN, load => {
-  const accounts = accountSelection.osxSurfaceAids()
-  const newState = dispatch({ type: LOGIN, load: accounts })
-  windowManager.bridge.emit(LOGGED_IN, newState)
-})
-
-windowManager.bridge.on(LOGOUT, load => {
+internalEmitter.on(LOGOUT, () => {
   dispatch({ type: LOGOUT, load: null })
   windowManager.pingView({ view: 'filemanager', event: REFRESH })
 })
 
-windowManager.bridge.on(LOGIN_DEV, async load => {
-  debug('%s heard', LOGIN_DEV)
+ipcMain.on(LOGIN_DEV, async (event, load) => {
+  debug('%s heard %O', LOGIN_DEV, load)
   try {
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(accountAddress)
