@@ -42,7 +42,7 @@ windowManager.bridge.on(LOGIN_DEV, async load => {
         transferSubscription
       }
     })
-
+    return
     const items = {}
     araContractsManager.getLibraryItems(load.userAid)
       .then(afsManager.surfaceAFS)
