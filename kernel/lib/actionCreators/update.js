@@ -18,6 +18,7 @@ const {
   UPDATE_FILE,
   UPDATED_FILE,
   UPDATING_FILE,
+  REFRESH
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
@@ -69,7 +70,7 @@ ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
       }
     })
 
-    windowManager.pingView({ view: 'filemanager', event: UPDATING_FILE })
+    windowManager.pingView({ view: 'filemanager', event: REFRESH })
     windowManager.get('manageFileView').close()
   } catch (err) {
     debug('Error: %O', err)
@@ -77,7 +78,7 @@ ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
 })
 
 function updateCompleteHandler(did) {
-  windowManager.pingView({ view: 'filemanager', event: UPDATED_FILE })
+  windowManager.pingView({ view: 'filemanager', event: REFRESH })
   dispatch({ type: UPDATED_FILE, load: did })
   debug('Dispatch %s . Load: %s', UPDATED_FILE, did)
   afsManager.unarchiveAFS({ did, path: afsManager.makeAfsPath(did) })
