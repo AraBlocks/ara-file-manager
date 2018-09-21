@@ -65,7 +65,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         araContractsManager.removedPublishedItem(load.did)
         dispatch({ type: ERROR_PUBLISHING })
         windowManager.pingView({ view: 'filemanager', event: REFRESH })
-
+        //Needs short delay. Race conditions cause modal state to dump after its loaded
         setTimeout(() => {
           dispatch({ type: FEED_MODAL, load: { modalName: 'failureModal2' } })
           internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
