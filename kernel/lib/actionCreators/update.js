@@ -48,7 +48,7 @@ ipcMain.on(UPDATE_FILE, async (event, load) => {
 ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_UPDATE_FILE, load)
   try {
-    if (load.paths == []) {
+    if (load.paths.length == 0) {
       debug('Updating price only')
       publish.setPrice({ ...load, password: account.password })
         .then(async () => updateCompleteHandler(load.did))

@@ -93,7 +93,8 @@ module.exports = {
       return {
         did: fileAid,
         gasEstimate,
-        price
+        price,
+        paths: []
       }
     } catch(e) {
       debug(e)
