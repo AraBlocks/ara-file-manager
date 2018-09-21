@@ -8,6 +8,7 @@ const {
 	DOWNLOADED,
 	DOWNLOADING,
 	DOWNLOAD_FAILED,
+	REFRESH
 } = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
