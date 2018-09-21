@@ -12,11 +12,13 @@ const {
 	PROMPT_PURCHASE,
 	PURCHASE,
 	PURCHASED,
-	PURCHASING
+	PURCHASING,
+	REFRESH
 } = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
+const { account } = windowManager.sharedData.fetch('store')
 
 ipcMain.on(PURCHASE, async (event, load) => {
 	debug('%s heard. Load: %O', PURCHASE, load)
@@ -42,9 +44,17 @@ ipcMain.on(PURCHASE, async (event, load) => {
 	windowManager.pingView({ view: 'filemanager', event: REFRESH })
 })
 
-internalEmitter.once(PROMPT_PURCHASE, async (load) => {
+internalEmitter.on(PROMPT_PURCHASE, async (load) => {
 	try {
 		debug('%s heard. Load: %o', PROMPT_PURCHASE, load)
+		const library = await araContractsManager.getLibraryItems(account.userAid)
+		if (library.includes( '0x' + load.aid.slice(-64))) {
+			debug('already own item')
+			dispatch({ type: FEED_MODAL, load: { modalName: 'alreadyOwn' } })
+			internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+			return
+		}
+
 		const price = await getAFSPrice({ did: load.aid })
 		dispatch({ type: FEED_MODAL, load: { price, ...load } })
 		internalEmitter.emit(OPEN_MODAL, 'checkoutModal1')
