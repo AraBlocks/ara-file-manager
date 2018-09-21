@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:subscription')
 const dispatch = require('../reducers/dispatch')
-const { UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
+const { REFRESH, UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
 const { internalEmitter, pingView } = require('electron-window-manager')
 
 internalEmitter.on(UPDATE_EARNING, async (load) => {
