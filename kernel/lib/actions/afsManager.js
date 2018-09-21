@@ -79,7 +79,7 @@ function unarchiveAFS({ did, path }) {
 async function readFileMetadata(did) {
 	try {
 		const data = await metadata.readFile({ did })
-		debug('Read file metadata %O', data)
+		debug('Read file metadata %s', did)
 		return JSON.parse(data.fileInfo)
 	} catch (err) {
 		debug('No metadata for %s', did)

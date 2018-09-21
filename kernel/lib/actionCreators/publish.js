@@ -14,12 +14,14 @@ const {
   ESTIMATION,
   ESTIMATING_COST,
   FEED_MODAL,
+  OPEN_MODAL,
   PUBLISH,
   PUBLISHED,
   PUBLISHING,
   REFRESH,
 } = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('../../lib/lsWindowManager')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(PUBLISH, async (event, load) => {
@@ -59,9 +61,15 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
       .catch(err => {
         debug('Error in committing: %o', err)
         debug('Removing %s from .acm', load.did)
+
         araContractsManager.removedPublishedItem(load.did)
         dispatch({ type: ERROR_PUBLISHING })
         windowManager.pingView({ view: 'filemanager', event: REFRESH })
+
+        setTimeout(() => {
+          dispatch({ type: FEED_MODAL, load: { modalName: 'failureModal2' } })
+          internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+        }, 500)
       })
 
     araContractsManager.savePublishedItem(load.did)
