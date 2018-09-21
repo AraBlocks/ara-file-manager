@@ -17,11 +17,6 @@ module.exports = {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      transition: background-color 180ms;
-    }
-
-    :host > input {
-      transition: background-color 180ms;
     }
   `,
 
