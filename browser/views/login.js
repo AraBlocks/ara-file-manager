@@ -1,15 +1,17 @@
 'use strict'
 
-const authenticate = require('../lib/login')
 const {
   closeWindow,
   transitionModal,
 } = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
+const { LOGIN_DEV } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const { remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
 
 class Login extends Nanocomponent {
   constructor() {
@@ -65,11 +67,12 @@ class Login extends Nanocomponent {
     e.preventDefault()
 
     const { usernameValue, passwordValue } = this.state
-    if (usernameValue === 'kit' && passwordValue === 'abc') {
-      authenticate()
-    } else {
-      return
-    }
+    void async function() {
+      windowManager.bridge.emit(LOGIN_DEV, {
+        password: passwordValue,
+        userAid: usernameValue
+      })
+    }()
   }
 
   update(){

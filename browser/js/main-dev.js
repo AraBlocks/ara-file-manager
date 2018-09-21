@@ -46,8 +46,8 @@ if (argv.includes('loggedin')) {
   const { LOGIN_DEV } = require('../../lib/constants/stateManagement')
   void async function() {
     windowManager.bridge.emit(LOGIN_DEV, {
-      password: argv[argv.length - 2],
-      userAid: argv[argv.length - 3]
+      password: argv[argv.length - 1],
+      userAid: argv[argv.length - 2]
     })
   }()
 }
