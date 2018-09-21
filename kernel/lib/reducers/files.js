@@ -67,8 +67,8 @@ module.exports = (state, { load, type }) => {
       file = findFile(load.aid, state.published)
       if(file !== null) {
         file.name = load.name
-        file.price = load.price
-        file.size = load.size
+        file.price = load.price == null ? file.price : load.price
+        file.size = load.size == 0 ? file.size : load.size
         file.status = UPDATING_FILE
       }
       break

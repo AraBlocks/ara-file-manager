@@ -29,9 +29,14 @@ ipcMain.on(UPDATE_FILE, async (event, load) => {
   afsManager.stopBroadcast()
   dispatch({ type: CHANGE_BROADCASTING_STATE, load: false })
   try {
-    await afsManager.removeAllFiles({ did: load.fileAid })
     event.sender.send(ESTIMATING_COST)
-    const estimate = await publish.addCreateEstimate(load)
+    let estimate
+    if (load.paths.length == 0) {
+      estimate = await publish.setPriceGasEstimate(load)
+    } else {
+      await afsManager.removeAllFiles({ did: load.fileAid })
+      estimate = await publish.addCreateEstimate(load)
+    }
     debug('Dispatching %s . Load: %O', FEED_MODAL, estimate)
     dispatch({ type: FEED_MODAL, load: estimate })
     event.sender.send(ESTIMATION)
@@ -43,16 +48,17 @@ ipcMain.on(UPDATE_FILE, async (event, load) => {
 ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_UPDATE_FILE, load)
   try {
-    publish.commit({ ...load, password: account.password })
-      .then(async () => {
-        windowManager.pingView({ view: 'filemanager', event: UPDATED_FILE })
-        dispatch({ type: UPDATED_FILE, load: load.did })
-        debug('Dispatch %s . Load: %s', UPDATED_FILE, load.did)
-        afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
-        afsManager.broadcast({ did: load.did })
-        dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
-      })
-      .catch(debug)
+    if (load.paths == []) {
+      debug('Updating price only')
+      publish.setPrice({ ...load, password: account.password })
+        .then(async () => updateCompleteHandler(load.did))
+        .catch(debug)
+    } else {
+      debug('Updating Files and/or Price')
+      publish.commit({ ...load, password: account.password })
+        .then(async () => updateCompleteHandler(load.did))
+        .catch(debug)
+    }
 
     dispatch({
       type: UPDATING_FILE,
@@ -69,3 +75,12 @@ ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
     debug('Error: %O', err)
   }
 })
+
+function updateCompleteHandler(did) {
+  windowManager.pingView({ view: 'filemanager', event: UPDATED_FILE })
+  dispatch({ type: UPDATED_FILE, load: did })
+  debug('Dispatch %s . Load: %s', UPDATED_FILE, did)
+  afsManager.unarchiveAFS({ did, path: afsManager.makeAfsPath(did) })
+  afsManager.broadcast({ did: did })
+  dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
+}

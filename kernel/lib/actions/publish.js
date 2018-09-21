@@ -78,14 +78,44 @@ module.exports = {
     }
   },
 
-  async commit({ did, password, gasEstimate, price = null }) {
-    debug('Committing AFS')
+  async setPriceGasEstimate({
+    fileAid,
+    password,
+    price
+  }) {
+    if (price == null) {
+      debug('No price to be set.')
+      return
+    }
     try {
-      const result = await afs.commit({ did, password, gasEstimate })
+      const gasEstimate = await afs.estimateSetPriceGasCost({ did: fileAid, password, price: Number(price) })
+      debug('Gas estimate for setting price: %d', gasEstimate)
+      return {
+        did: fileAid,
+        gasEstimate,
+        price
+      }
+    } catch(e) {
+      debug(e)
+    }
+  },
+
+  async setPrice({ did, password, price }) {
+    try {
       if (price != null) {
         await afs.setPrice({ did, password, price: Number(price) })
         debug('Price set succesfully: %s', price)
       }
+    } catch(err) {
+      debug('Error: %O', err)
+    }
+  },
+
+  async commit({ did, password, gasEstimate, price = null }) {
+    debug('Committing AFS')
+    try {
+      const result = await afs.commit({ did, password, gasEstimate })
+      await this.setPrice({ did, password, price })
       debug('Committed AFS successfully')
       return result
     } catch (err) {

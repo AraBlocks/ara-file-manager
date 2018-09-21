@@ -79,7 +79,7 @@ class Container extends Nanocomponent {
 			name: this.state.fileName,
 			password: account.password,
 			paths: this.state.filePath,
-			price: this.state.price,
+			price: this.state.price == "" ? null : this.state.price,
 			userAid: account.userAid
 		}
 		emit({ event: UPDATE_FILE, load })
