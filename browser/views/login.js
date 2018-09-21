@@ -65,7 +65,7 @@ class Login extends Nanocomponent {
 
   login(e) {
     e.preventDefault()
-
+    closeWindow()
     const { usernameValue, passwordValue } = this.state
     void async function() {
       windowManager.bridge.emit(LOGIN_DEV, {
