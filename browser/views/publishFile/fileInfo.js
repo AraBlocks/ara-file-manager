@@ -44,7 +44,7 @@ class FileInfo extends Nanocomponent {
 		return true
 	}
 
-	createElement() {
+	createElement({ requiredIndicator = false}) {
 		const { children } = this
 		return html`
 			<div class=${styles.container}>
@@ -67,7 +67,7 @@ class FileInfo extends Nanocomponent {
 					</div>
 				</div>
 				<div class=${styles.fileDirectoryHoler}>
-					${children.fileSelector.render({})}
+					${children.fileSelector.render({ requiredIndicator })}
 				</div>
 			</div>
 		`

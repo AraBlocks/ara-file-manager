@@ -28,15 +28,6 @@ class FileSelector extends Nanocomponent {
 		}
 	}
 
-	update({ filePath }) {
-		const { state } = this
-		const samePath = state.filePath === filePath
-		if (!samePath) {
-			state.filePath = filePath
-		}
-		return !samePath
-	}
-
 	selectFile() {
 		const { children, props, state } = this
 		fileSystemManager.showSelectFileDialog()
@@ -44,15 +35,24 @@ class FileSelector extends Nanocomponent {
 				state.filePath = fileNames
 				children.input.state.value = fileNames
 				props.parentState[props.field] = fileNames
-				this.rerender()
+				this.render({ requiredIndicator: false })
 			})
 	}
 
-	createElement() {
+	update({ filePath }) {
+		const { state } = this
+		const samePath = state.filePath === filePath
+		if (!samePath) {
+			state.filePath = filePath
+		}
+		return true
+	}
+
+	createElement({ requiredIndicator = false}) {
 		const { state, children } = this
 		return html`
 			<div>
-				${children.input.render({ value: state.filePath })}
+				${children.input.render({ value: state.filePath, requiredIndicator })}
 			</div>
 		`
 	}

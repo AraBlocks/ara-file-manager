@@ -17,6 +17,11 @@ module.exports = {
       display: flex;
       justify-content: space-between;
       width: 100%;
+      transition: background-color 180ms;
+    }
+
+    :host > input {
+      transition: background-color 180ms;
     }
   `,
 
@@ -29,6 +34,12 @@ module.exports = {
       height: 25px;
       margin: 10px;
       width: 70px;
+    }
+  `,
+
+  requiredIndicator: css`
+    :host {
+      background-color: ${colors.araPink};
     }
   `,
 
