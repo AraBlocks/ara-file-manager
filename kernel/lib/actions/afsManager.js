@@ -24,6 +24,7 @@ async function broadcast({ did , price = 0}) {
 	} catch (err) {
 		debug('Error broadcasting %O', err)
 	}
+	debug('donezo')
 }
 
 async function getAFSPrice({ did }) {
