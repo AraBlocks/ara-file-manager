@@ -20,7 +20,8 @@ class Container extends Nanocomponent {
       activeTab: 0,
       araBalance: account.araBalance,
       files,
-      loadingLibrary: files.loadingLibrary
+      loadingLibrary: files.loadingLibrary,
+      username: account.username
     }
 
     this.children = {
@@ -121,7 +122,7 @@ class Container extends Nanocomponent {
       children,
       renderSections,
       renderSpinnerBars,
-      state: { activeTab, araBalance, loadingLibrary }
+      state: { activeTab, araBalance, loadingLibrary, username }
     } = this
 
     tooltip({})
@@ -129,7 +130,7 @@ class Container extends Nanocomponent {
       <div>
         <div class="${styles.container} container-container">
           <div>
-            ${children.header.render({ activeTab, araBalance })}
+            ${children.header.render({ activeTab, araBalance, username })}
             ${loadingLibrary ? renderSpinnerBars() : renderSections()}
           </div>
         </div>
