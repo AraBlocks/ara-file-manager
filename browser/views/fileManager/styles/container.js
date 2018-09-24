@@ -44,7 +44,7 @@ module.exports = {
     }
 
     :host a:hover {
-      color: ${colorSelector('red', true)}
+      color: ${colorSelector('red', true)};
     }
   `,
 
@@ -52,6 +52,16 @@ module.exports = {
     :host {
       height: 525px;
       overflow-y: scroll;
+    }
+  `,
+
+  spinnerBarHolder: css`
+    :host {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
     }
   `
 }

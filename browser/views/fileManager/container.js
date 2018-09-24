@@ -2,6 +2,7 @@
 
 const Header = require('./header')
 const Section = require('./section')
+const spinnerBar = require('../../components/spinnerBar')
 const styles = require('./styles/container')
 const html = require('choo/html')
 const isDev = require('electron-is-dev')
@@ -17,15 +18,16 @@ class Container extends Nanocomponent {
 
     this.state = {
       activeTab: 0,
+      araBalance: account.araBalance,
       files,
-      araBalance: account.araBalance
+      loadingLibrary: files.loadingLibrary
     }
 
     this.children = {
       header: new Header({
         ...account,
         selectTab: this.selectTab.bind(this)
-       }),
+      }),
 
       publishedSection: new Section({
         files,
@@ -39,6 +41,7 @@ class Container extends Nanocomponent {
     }
 
     this.rerender = this.rerender.bind(this)
+    this.renderSections = this.renderSections.bind(this)
     if (isDev) { window.components = { fileManager: this } }
   }
 
@@ -48,15 +51,76 @@ class Container extends Nanocomponent {
     rerender()
   }
 
-  update(store){
+  renderSpinnerBars() {
+    return html`
+      <div class="${styles.spinnerBarHolder} container-spinnerBarHolder">
+        ${spinnerBar()}
+      </div>
+    `
+  }
+
+  renderSections() {
+    const {
+      children,
+      state: { activeTab, files },
+      renderNoFilesMsg
+    } = this
+
+    let sections = []
+    switch (activeTab) {
+      case 0:
+        sections.push(children.publishedSection, children.purchasedSection)
+        break
+      case 1:
+        sections.push(children.publishedSection)
+        break
+      default:
+        sections.push(children.purchasedSection)
+    }
+
+    return html`
+      <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+        ${files.published.length || files.purchased.length
+          ? sections.map(section => section.render({ files }))
+          : renderNoFilesMsg()}
+      </div>`
+  }
+
+  renderNoFilesMsg() {
+    return html`
+      <div class="${styles.noFilesContainer} fileManager-noFilesContainer">
+        <div class="${styles.noFilesHeader} fileManager-noFilesHeader">
+          There are no files associated with your account
+        </div>
+        <p>
+          You can download files from users with ARA-enabled links.
+          <br>
+          You can also publish your own files into the network for distribution.
+        </p>
+        <p>
+          Downloading and hosting files will earn you ARA token rewards,
+          <br>
+          which can be spent to purchase more content on the network.
+        </p>
+        <a href="">
+          Learn More
+        </a>
+      </div>
+    `
+  }
+
+  update({ account, files }) {
     this.state.araBalance = store.account.araBalance
+    this.state.loadingLibrary = store.files.loadingLibrary
     return true
   }
 
   createElement() {
     const {
       children,
-      state: { activeTab, files, araBalance }
+      renderSections,
+      renderSpinnerBars,
+      state: { activeTab, araBalance, loadingLibrary }
     } = this
 
     tooltip({})
@@ -65,54 +129,11 @@ class Container extends Nanocomponent {
         <div class="${styles.container} container-container">
           <div>
             ${children.header.render({ activeTab, araBalance })}
-            <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
-              ${files.published.length || files.purchased.length
-                ? renderSections().map(section => section.render({ files }))
-                : renderNoFilesMsg()}
-            </div>
+            ${loadingLibrary ? renderSpinnerBars() : renderSections()}
           </div>
         </div>
       </div>
     `
-
-    function renderSections() {
-      let sections = []
-      switch (activeTab) {
-        case 0:
-          sections.push(children.publishedSection, children.purchasedSection)
-          break
-        case 1:
-          sections.push(children.publishedSection)
-          break
-        default:
-          sections.push(children.purchasedSection)
-      }
-      return sections
-    }
-
-    function renderNoFilesMsg() {
-      return html`
-        <div class="${styles.noFilesContainer} fileManager-noFilesContainer">
-          <div class="${styles.noFilesHeader} fileManager-noFilesHeader">
-            There are no files associated with your account
-          </div>
-          <p>
-            You can download files from users with ARA-enabled links.
-            <br>
-            You can also publish your own files into the network for distribution.
-          </p>
-          <p>
-            Downloading and hosting files will earn you ARA token rewards,
-            <br>
-            which can be spent to purchase more content on the network.
-          </p>
-          <a href="">
-            Learn More
-          </a>
-        </div>
-
-      `
-    }
   }
 }
 
