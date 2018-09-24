@@ -6,5 +6,5 @@ module.exports = {
   accountAddress: null,
   araBalance: 0,
   etherBalance: 0,
-  username: 'cryptokitter'
+  username: 'Not Logged In'
 }
