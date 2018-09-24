@@ -2,7 +2,6 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:login')
 const {
-  accountSelection,
   afsManager,
   araContractsManager
 } = require('../actions')
@@ -44,24 +43,23 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
       }
     })
 
-    switchLoginState(true)
+    const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
+    const purchased = await afsManager.surfaceAFS(purchasedDIDs)
+    const publishedDIDs = await araContractsManager.getPublishedItems()
+    const published = await afsManager.surfaceAFS(publishedDIDs)
 
-    const items = {}
-    araContractsManager.getLibraryItems(load.userAid)
-      .then(afsManager.surfaceAFS)
-      .then(purchased => items.purchased = purchased)
-      .then(araContractsManager.getPublishedItems)
-      .then(afsManager.surfaceAFS)
-      .then(published => items.published = published)
-      .then(() => dispatch({ type: GOT_LIBRARY, load: items }))
-      .then(state => araContractsManager.getPublishedEarnings(state.files.published))
-      .then(updatedItems => dispatch({ type: GOT_EARNINGS, load: updatedItems }))
-      .then(({ files }) => Promise.all(files.published.map(araContractsManager.subscribePublished)))
-      .then(subscriptions => {
-        dispatch({ type: GOT_PUBLISHED_SUBS, load: subscriptions })
-        windowManager.pingView({ view: 'filemanager', event: REFRESH })
-      })
-      .catch(err => debug('getLibraryItems Err: %o', err))
+    let files;
+    ({ files } = dispatch({ type: GOT_LIBRARY, load: { published, purchased} }))
+    windowManager.pingView({ view: 'filemanager', event: REFRESH })
+
+    const updatedItems = await araContractsManager.getPublishedEarnings(files.published);
+    ({ files } = dispatch({ type: GOT_EARNINGS, load: updatedItems }))
+    windowManager.pingView({ view: 'filemanager', event: REFRESH })
+
+    const subscriptions = await Promise.all(files.published.map(araContractsManager.subscribePublished))
+    dispatch({ type: GOT_PUBLISHED_SUBS, load: subscriptions })
+
+    debug('Login complete')
   } catch (err) {
     debug('Error: %O', err)
   }
