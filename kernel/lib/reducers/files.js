@@ -15,7 +15,6 @@ const {
   PUBLISHING,
   PURCHASED,
   PURCHASING,
-  UPDATE_FILE,
   UPDATED_FILE,
   UPDATING_FILE,
   UPDATE_EARNING
@@ -49,6 +48,7 @@ module.exports = (state, { load, type }) => {
       state.published = load
       break
     case GOT_LIBRARY:
+      state.loadingLibrary = false
       state.published = load.published
       state.purchased = load.purchased
       break
