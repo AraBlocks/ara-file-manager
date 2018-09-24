@@ -3,6 +3,7 @@
 const {
   LOGIN,
   LOGIN_DEV,
+  LOGOUT,
   PUBLISHED,
   UPDATE_BALANCE
  } = require('../../../lib/constants/stateManagement')
@@ -17,6 +18,15 @@ module.exports = async (state, { load, type }) => {
       state.password = load.password
       state.accountAddress = load.accountAddress
       state.araBalance = load.araBalance
+      state.username = 'cryptokitter'
+      break
+    case LOGOUT:
+      state.userAid = null,
+      state.password = null,
+      state.accountAddress = null,
+      state.araBalance = 0,
+      state.etherBalance = 0,
+      state.username = 'Not Logged In'
       break
     case PUBLISHED:
       state.userBalance = load

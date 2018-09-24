@@ -9,10 +9,8 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Header extends Nanocomponent {
-  constructor({ selectTab, username }) {
+  constructor({ selectTab }) {
     super()
-
-    this.props = { username }
 
     this.children = {
       publishFilebutton: new Button({
@@ -41,7 +39,7 @@ class Header extends Nanocomponent {
     return true
   }
 
-  createElement({ activeTab, araBalance }) {
+  createElement({ activeTab, araBalance, username }) {
     const { children, props } = this
 
     return html`
@@ -61,7 +59,7 @@ class Header extends Nanocomponent {
           </div>
           <div class="${styles.userHolder} header-userHolder">
             <div>
-              <b>${props.username}</b>
+              <b>${username}</b>
             </div>
             <div>
               ${araBalance} Ara

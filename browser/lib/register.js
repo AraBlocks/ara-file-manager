@@ -1,7 +1,6 @@
 'use strict'
 
 const { REGISTER } = require('../../lib/constants/stateManagement')
-const { remote } = require('electron')
-const windowManager = remote.require('electron-window-manager')
+const { emit } = require('../../browser/lib/tools/windowManagement')
 
-module.exports = () => windowManager.bridge.emit(REGISTER)
+module.exports = () => emit({ event: REGISTER, load: null })

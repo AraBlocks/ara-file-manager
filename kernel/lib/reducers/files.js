@@ -10,6 +10,7 @@ const {
   ERROR_PUBLISHING,
   GOT_EARNINGS,
   GOT_LIBRARY,
+  LOGOUT,
   PUBLISHED,
   PUBLISHING,
   PURCHASED,
@@ -50,6 +51,10 @@ module.exports = (state, { load, type }) => {
     case GOT_LIBRARY:
       state.published = load.published
       state.purchased = load.purchased
+      break
+    case LOGOUT:
+      state.published = []
+      state.purchased = []
       break
     case PUBLISHING:
       state.published.push(load)
