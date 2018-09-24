@@ -1,15 +1,16 @@
 'use strict'
 
-const authenticate = require('../lib/login')
 const {
   closeWindow,
   transitionModal,
 } = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
+const { LOGIN_DEV } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const { emit } = require('../../browser/lib/tools/windowManagement')
 
 class Login extends Nanocomponent {
   constructor() {
@@ -63,13 +64,13 @@ class Login extends Nanocomponent {
 
   login(e) {
     e.preventDefault()
-
     const { usernameValue, passwordValue } = this.state
-    if (usernameValue === 'kit' && passwordValue === 'abc') {
-      authenticate()
-    } else {
-      return
-    }
+    emit({ event: LOGIN_DEV, load: {
+        password: passwordValue,
+        userAid: usernameValue
+      }
+    })
+    closeWindow()
   }
 
   update(){
