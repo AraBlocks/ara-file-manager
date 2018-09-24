@@ -17,8 +17,8 @@ const buildTray = () => {
   tray.setToolTip('Ara Content Manager')
 
   const menuItems = [
-    { label: 'File Manager', type: 'normal', click: () => openWindow('filemanager') },
-    { label: 'Publish File', type: 'normal', click: () => openWindow('publishFileView') },
+    { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
+    { label: 'Publish File', type: 'normal', visible: false, click: () => openWindow('publishFileView') },
     { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'Login', type: 'normal', click: () => openWindow('login') },
     { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(LOGOUT, null) },
@@ -65,7 +65,8 @@ const buildTray = () => {
 }
 
 function switchLoginState(loggedIn) {
-  contextMenu.commandsMap['48'].visible = !loggedIn //Register
+  contextMenu.commandsMap['46'].visible = loggedIn //FileManager
+  contextMenu.commandsMap['47'].visible = loggedIn //Publish File View
   contextMenu.commandsMap['49'].visible = !loggedIn //Login
   contextMenu.commandsMap['50'].visible = loggedIn  //Log out
 }
