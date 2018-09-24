@@ -31,7 +31,6 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
     const araBalance = await araContractsManager.getAraBalance(accountAddress)
     const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
 
-
     dispatch({
       type: LOGIN_DEV,
       load: {
@@ -42,7 +41,7 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
         transferSubscription
       }
     })
-    return
+
     const items = {}
     araContractsManager.getLibraryItems(load.userAid)
       .then(afsManager.surfaceAFS)
