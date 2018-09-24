@@ -8,6 +8,7 @@ const fs = require('fs')
 const remote = require('electron').remote;
 const { argv } = remote.process
 const windowManager = remote.require('electron-window-manager')
+const { emit } = require('../../browser/lib/tools/windowManagement')
 
 const exclude = [
   'fileManager.js',
@@ -15,6 +16,7 @@ const exclude = [
   'modals',
   'fileManager',
   'mainManager',
+  'manageFile',
   'styles.js',
   'publishFile'
  ]
@@ -44,12 +46,11 @@ function createElement(view, isModal = false) {
 
 if (argv.includes('loggedin')) {
   const { LOGIN_DEV } = require('../../lib/constants/stateManagement')
-  void async function() {
-    windowManager.bridge.emit(LOGIN_DEV, {
-      password: argv[argv.length - 2],
-      userAid: argv[argv.length - 3]
-    })
-  }()
+  emit({ event: LOGIN_DEV, load: {
+      password: argv[argv.length - 1],
+      userAid: argv[argv.length - 2]
+    }
+  })
 }
 
 window.store = windowManager.sharedData.fetch('store')

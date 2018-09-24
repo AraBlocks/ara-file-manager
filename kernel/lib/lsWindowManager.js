@@ -104,6 +104,9 @@ windowManager.loadURL = (view) => {
     case 'developer':
       file = 'index-dev'
       break
+    case 'login':
+      file = 'login'
+      break
     case 'manager':
     case 'manageFileView':
       file = 'manage-file'
