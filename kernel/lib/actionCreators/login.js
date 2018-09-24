@@ -18,9 +18,11 @@ const {
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
+const { switchLoginState } = require('../../../boot/tray')
 
 internalEmitter.on(LOGOUT, () => {
   dispatch({ type: LOGOUT, load: null })
+  switchLoginState(false)
   windowManager.pingView({ view: 'filemanager', event: REFRESH })
 })
 
@@ -30,7 +32,6 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(accountAddress)
     const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
-
 
     dispatch({
       type: LOGIN_DEV,
@@ -42,6 +43,8 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
         transferSubscription
       }
     })
+
+    switchLoginState(true)
 
     const items = {}
     araContractsManager.getLibraryItems(load.userAid)

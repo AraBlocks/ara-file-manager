@@ -10,17 +10,18 @@ const { internalEmitter } = require('electron-window-manager')
 const { LOGOUT } = require('../lib/constants/stateManagement')
 
 let tray
+let contextMenu
 const buildTray = () => {
   debug('Building tray')
   tray = new Tray(iconPath)
   tray.setToolTip('Ara Content Manager')
 
   const menuItems = [
-    { label: 'Register', type: 'normal', click: () => openWindow('registration') },
-    { label: 'Login', type: 'normal', click: () => openWindow('login') },
     { label: 'File Manager', type: 'normal', click: () => openWindow('filemanager') },
     { label: 'Publish File', type: 'normal', click: () => openWindow('publishFileView') },
-    { label: 'Log Out', type: 'normal', click: () => internalEmitter.emit(LOGOUT, null) },
+    { label: 'Register', type: 'normal', click: () => openWindow('registration') },
+    { label: 'Login', type: 'normal', click: () => openWindow('login') },
+    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(LOGOUT, null) },
     { label: 'Quit', type: 'normal', role: 'quit' }
   ]
 
@@ -28,7 +29,7 @@ const buildTray = () => {
   isDev && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer')})
 
   //Creates context menu and adds onclick listener to tray
-  const contextMenu = Menu.buildFromTemplate(menuItems)
+  contextMenu = Menu.buildFromTemplate(menuItems)
   tray.on('click', () => tray.popUpContextMenu(contextMenu))
 
   function openWindow(view) {
@@ -63,5 +64,14 @@ const buildTray = () => {
   isDev && openWindow('developer')
 }
 
+function switchLoginState(loggedIn) {
+  contextMenu.commandsMap['48'].visible = !loggedIn //Register
+  contextMenu.commandsMap['49'].visible = !loggedIn //Login
+  contextMenu.commandsMap['50'].visible = loggedIn  //Log out
+}
 
-module.exports = buildTray
+
+module.exports = {
+  buildTray,
+  switchLoginState
+}
