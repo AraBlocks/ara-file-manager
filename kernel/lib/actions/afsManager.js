@@ -86,6 +86,7 @@ async function download({
 		})
 		dcdn.user.on('complete', () => {
 			handler({ downloadPercent: 1, aid: did })
+			renameAfsFiles(did, 'movie.mov')
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)
@@ -158,6 +159,17 @@ async function descriptorGenerator(did, publishing = false) {
 	}
 }
 
+function renameAfsFiles(aid, fileName) {
+	const afsFolderPath = makeAfsPath(aid)
+	const afsFilePath = path.join(afsFolderPath, 'data')
+	const newPath = path.join(afsFolderPath, fileName)
+	fs.rename(afsFilePath, newPath, function(err) {
+		if (err) {
+			console.log('some error occurred when renaming afs files')
+		}
+	})
+}
+
 module.exports = {
 	broadcast,
 	descriptorGenerator,
@@ -166,6 +178,7 @@ module.exports = {
 	getAFSPrice,
 	makeAfsPath,
 	readFileMetadata,
+	renameAfsFiles,
 	surfaceAFS,
 	stopBroadcast,
 	unarchiveAFS,
