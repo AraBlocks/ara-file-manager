@@ -121,7 +121,7 @@ class Container extends Nanocomponent {
       children,
       renderSections,
       renderSpinnerBars,
-      state: { activeTab, araBalance, loadingLibrary, username }
+      state: { activeTab, araBalance, loadingLibrary }
     } = this
 
     tooltip({})
