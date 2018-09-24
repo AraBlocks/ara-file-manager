@@ -65,10 +65,17 @@ const buildTray = () => {
 }
 
 function switchLoginState(loggedIn) {
-  contextMenu.commandsMap['46'].visible = loggedIn //FileManager
-  contextMenu.commandsMap['47'].visible = loggedIn //Publish File View
-  contextMenu.commandsMap['49'].visible = !loggedIn //Login
-  contextMenu.commandsMap['50'].visible = loggedIn  //Log out
+  if (isDev) {
+    contextMenu.commandsMap['46'].visible = loggedIn //FileManager
+    contextMenu.commandsMap['47'].visible = loggedIn //Publish File View
+    contextMenu.commandsMap['49'].visible = !loggedIn //Login
+    contextMenu.commandsMap['50'].visible = loggedIn  //Log out
+  } else {
+    contextMenu.commandsMap['1'].visible = loggedIn //FileManager
+    contextMenu.commandsMap['2'].visible = loggedIn //Publish File View
+    contextMenu.commandsMap['4'].visible = !loggedIn //Login
+    contextMenu.commandsMap['5'].visible = loggedIn  //Log out
+  }
 }
 
 
