@@ -62,8 +62,8 @@ class Container extends Nanocomponent {
   renderSections() {
     const {
       children,
-      state: { activeTab, files },
-      renderNoFilesMsg
+      renderNoFilesMsg,
+      state: { activeTab, files }
     } = this
 
     let sections = []
