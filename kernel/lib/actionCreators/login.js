@@ -44,7 +44,7 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
     })
 
     switchLoginState(true)
-    
+
     const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
     const publishedDIDs = await araContractsManager.getPublishedItems()
