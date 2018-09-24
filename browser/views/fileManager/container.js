@@ -62,8 +62,8 @@ class Container extends Nanocomponent {
   renderSections() {
     const {
       children,
-      state: { activeTab, files },
-      renderNoFilesMsg
+      renderNoFilesMsg,
+      state: { activeTab, files }
     } = this
 
     let sections = []
@@ -110,8 +110,8 @@ class Container extends Nanocomponent {
   }
 
   update({ account, files }) {
-    this.state.araBalance = store.account.araBalance
-    this.state.loadingLibrary = store.files.loadingLibrary
+    this.state.araBalance = account.araBalance
+    this.state.loadingLibrary = files.loadingLibrary
     return true
   }
 
