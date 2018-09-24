@@ -32,6 +32,12 @@ module.exports = {
     }
   `,
 
+  requiredIndicator: css`
+    :host {
+      background-color: ${colors.araPink};
+    }
+  `,
+
   selection: css`
     :host {
       font-size: 12px;

@@ -25,13 +25,14 @@ function closeWindow(name = null) {
 		: windowManager.getCurrent().object.close()
 }
 
-function copyToClipboard(text, modifier = (a) => a) {
-	clipboard.writeText(modifier(text))
+function copyDistributionLink(aid, fileName) {
+	const link = getDistributionLink(aid, fileName)
+	clipboard.writeText(link)
 }
 
-function copyDistributionLink(aid, fileName) {
+function getDistributionLink(aid, fileName) {
 	const encodedName = encodeURIComponent(fileName)
-	copyToClipboard(`lstr://download/${aid}/${encodedName}`)
+	return `lstr://download/${aid}/${encodedName}`
 }
 
 function emit({ event, load }) {
@@ -103,10 +104,10 @@ function quitApp() {
 module.exports = {
 	changeMainManagerSize,
 	copyDistributionLink,
-	copyToClipboard,
 	closeModal,
 	closeWindow,
 	emit,
+	getDistributionLink,
 	openModal,
 	minimizeWindow,
 	transitionModal,

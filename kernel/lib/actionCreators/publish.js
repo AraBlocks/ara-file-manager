@@ -9,6 +9,7 @@ const {
   publish
 } = require('../actions')
 const {
+  CHANGE_BROADCASTING_STATE,
   CONFIRM_PUBLISH,
   ERROR_PUBLISHING,
   ESTIMATION,
@@ -56,6 +57,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         windowManager.pingView({ view: 'filemanager', event: REFRESH })
         araContractsManager.subscribePublished({ did: load.did })
         afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
+        dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
         afsManager.broadcast({ did: load.did })
       })
       .catch(err => {

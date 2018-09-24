@@ -6,6 +6,10 @@ function generalModalText(modalName, fileName) {
 	let title
 	let description
 	switch (modalName) {
+		case 'alreadyOwn':
+			title = 'You already own this content'
+			description = 'You can not purchase this content again'
+			break
 		case 'diskSpaceModal':
 			title = 'Not enough disk space'
 			description = 'You do not have enough space to download File Name at this time. \

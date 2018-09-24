@@ -47,7 +47,7 @@ class Container extends Nanocomponent {
 		}
 	}
 
-	update(){
+	update() {
 		return true
 	}
 
@@ -60,19 +60,20 @@ class Container extends Nanocomponent {
 		const { did, password } = this.props
 
 		const load = {
-			did,
+			userAid: did,
 			password,
 			paths: filePath,
 			name: fileName || 'Unnamed',
 			price
 		}
-
-		emit({ event: PUBLISH, load })
+		filePath
+			? emit({ event: PUBLISH, load })
+			: this.render({ requiredIndicator: true })
 	}
 
-	createElement({ spinner = false }) {
+	createElement({ spinner = false, requiredIndicator = false }) {
 		tooltip({})
-		const { children } = this
+		const { children, state } = this
 		return html`
 			<div>
 				${overlay(spinner)}
@@ -88,10 +89,10 @@ class Container extends Nanocomponent {
 						to be able to download it.
 					</div>
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
-					${children.fileInfo.render()}
+					${children.fileInfo.render({ requiredIndicator })}
 					<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
-						${children.supernodeCheckbox.render()}
-						${children.priceManagementCheckbox.render()}
+					${children.supernodeCheckbox.render({ parentState: state })}
+					${children.priceManagementCheckbox.render({ parentState: state })}
 					</div>
 					${children.publishButton.render()}
 				</div>

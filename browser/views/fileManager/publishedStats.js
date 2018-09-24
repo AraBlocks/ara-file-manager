@@ -1,28 +1,33 @@
 'use strict'
 
-const { AWAITING_DOWNLOAD, DOWNLOADING } = require('../../../lib/constants/stateManagement')
+const { AWAITING_DOWNLOAD, DOWNLOADING, FEED_MANAGE_FILE } = require('../../../lib/constants/stateManagement')
 const DynamicButton = require('../../components/dynamicButton')
 const styles = require('./styles/publishedStats')
+const windowManagement = require('../../lib/tools/windowManagement')
+const { remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class PublishedStats extends Nanocomponent {
-  constructor({ status }){
+  constructor({ file }){
     super()
-
+    this.props = {
+      file
+    }
     this.children = {
-      button: new DynamicButton(this.buttonProps(status))
+      button: new DynamicButton(this.buttonProps(file))
     }
   }
 
-  buttonProps(status) {
+  buttonProps(file) {
     const props = {
       cssClass : {
         name: 'smallInvisible',
         opts: { weight: 'light '}
       }
     }
-    switch(status) {
+    switch(file.status) {
       case AWAITING_DOWNLOAD:
         props.cssClass.opts.color = 'red'
         props.children = 'Download File'
@@ -34,6 +39,15 @@ class PublishedStats extends Nanocomponent {
       default:
         props.cssClass.opts.color = 'blue'
         props.children = 'Manage File'
+        props.onclick = () => {
+          const load = {
+            aid: file.did,
+            name: file.name,
+            price: file.price
+          }
+          windowManagement.emit({ event: FEED_MANAGE_FILE, load })
+          windowManagement.openWindow('manageFileView')
+        }
     }
     return props
   }

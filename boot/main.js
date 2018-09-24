@@ -116,3 +116,9 @@ function createMenu() {
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
+
+app.on('before-quit', () => {
+  const { stopBroadcast } = require('../kernel/lib/actions/afsManager')
+  stopBroadcast()
+})
+

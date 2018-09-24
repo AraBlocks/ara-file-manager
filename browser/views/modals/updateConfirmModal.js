@@ -1,7 +1,7 @@
 'use strict'
 
-const { CONFIRM_UPDATE } = require('../../../lib/constants/stateManagement')
-const { closeModal, emit } = require('../../lib/tools/windowManagement')
+const { CONFIRM_UPDATE_FILE } = require('../../../lib/constants/stateManagement')
+const { closeModal, closeWindow, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
 const html = require('choo/html')
@@ -10,14 +10,14 @@ module.exports = (load) => {
   const updateButton = new Button({
     children: 'Update',
     onclick: () => {
-      emit({ event: CONFIRM_UPDATE, load: { ...load, cost: 5 } }),
+      emit({ event: CONFIRM_UPDATE_FILE, load: { ...load, cost: 5 } }),
       closeModal()
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
     onclick: () => {
-      //closeWindow('manageFileView')
+      closeWindow('manageFileView')
       closeModal()
     }
   })

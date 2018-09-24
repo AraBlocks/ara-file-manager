@@ -5,10 +5,10 @@ const { AWAITING_DOWNLOAD, DOWNLOADED, PUBLISHING } = require('../../../lib/cons
 const dcdnFarm = require('ara-network-node-dcdn-farm')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
-const { getPrice, metadata, unarchive } = require('ara-filesystem')
+const araFilesystem = require('ara-filesystem')
 const path = require('path')
 const windowManager = require('electron-window-manager')
-const { account } = windowManager.sharedData.fetch('store')
+const { account, broadcastState } = windowManager.sharedData.fetch('store')
 
 
 async function broadcast({ did , price = 0}) {
@@ -24,12 +24,34 @@ async function broadcast({ did , price = 0}) {
 	} catch (err) {
 		debug('Error broadcasting %O', err)
 	}
+	debug('donezo')
+}
+
+async function stopBroadcast() {
+	if (!broadcastState.isBroadcasting) {
+		debug('Currently not broadcasting')
+		return
+	}
+	debug('Stopping DCDN broadcast')
+	try {
+		await dcdnFarm.stop()
+	} catch(e) {
+		debug(e)
+	}
 }
 
 async function getAFSPrice({ did }) {
 	debug('Getting price for %s', did)
-	const result = await getPrice({ did })
+	const result = await araFilesystem.getPrice({ did })
 	return result
+}
+
+async function removeAllFiles({ did }) {
+	const { afs } = await araFilesystem.create({ did })
+	const result = await afs.readdir(afs.HOME)
+	await afs.close()
+	const instance = await araFilesystem.remove({ did, password: account.password, paths: result })
+	await instance.close()
 }
 
 async function download({
@@ -73,13 +95,13 @@ async function download({
 
 function unarchiveAFS({ did, path }) {
 	debug('Unarchiving %o', { did, path })
-	unarchive({ did, path })
+	araFilesystem.unarchive({ did, path })
 }
 
 async function readFileMetadata(did) {
 	try {
-		const data = await metadata.readFile({ did })
-		debug('Read file metadata %s', did)
+		const data = await araFilesystem.metadata.readFile({ did })
+		debug('Read file metadata %O', data)
 		return JSON.parse(data.fileInfo)
 	} catch (err) {
 		debug('No metadata for %s', did)
@@ -97,7 +119,7 @@ async function writeFileMetaData({ did, size, title }) {
 		}
 		const fileDataString = JSON.stringify(fileData)
 		debug('Adding file metadata %s', fileDataString)
-		metadata.writeKey({ did, key: 'fileInfo', value: fileDataString })
+		araFilesystem.metadata.writeKey({ did, key: 'fileInfo', value: fileDataString })
 	} catch (e) {
 		debug(e)
 	}
@@ -140,10 +162,12 @@ module.exports = {
 	broadcast,
 	descriptorGenerator,
 	download,
+	removeAllFiles,
 	getAFSPrice,
 	makeAfsPath,
 	readFileMetadata,
 	surfaceAFS,
+	stopBroadcast,
 	unarchiveAFS,
 	writeFileMetaData,
 }

@@ -5,5 +5,6 @@ module.exports = {
   publish: require('./publish'),
   purchase: require('./purchase'),
   register: require('./register'),
+  update: require('./update'),
   subscription: require('./subscription')
 }

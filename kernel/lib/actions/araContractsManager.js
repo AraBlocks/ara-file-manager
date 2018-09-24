@@ -114,7 +114,7 @@ function savePublishedItem(contentDid) {
 	try {
 		debug(`Saving published item ${contentDid}`)
 		const fileDirectory = getAcmFilePath()
-		if (fileDirectory == null) return
+		if (fileDirectory == null || contentDid.length !== 64) return
 		fs.appendFileSync(fileDirectory, `${contentDid}\n`)
 	} catch (err) {
 		debug(err)
