@@ -52,6 +52,7 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
 
     const updatedItems = await araContractsManager.getPublishedEarnings(files.published);
     ({ files } = dispatch({ type: GOT_EARNINGS, load: updatedItems }))
+    windowManager.pingView({ view: 'filemanager', event: REFRESH })
 
     const subscriptions = await Promise.all(files.published.map(araContractsManager.subscribePublished))
     dispatch({ type: GOT_PUBLISHED_SUBS, load: subscriptions })
