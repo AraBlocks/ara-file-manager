@@ -10,7 +10,7 @@ const { LOGIN_DEV } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const { emit } = require('../../browser/lib/tools/windowManagement')
+const { emit, openWindow } = require('../../browser/lib/tools/windowManagement')
 
 class Login extends Nanocomponent {
   constructor() {
@@ -71,7 +71,8 @@ class Login extends Nanocomponent {
         userAid: usernameValue
       }
     })
-    closeWindow()
+    openWindow('filemanager')
+    closeWindow('login')
   }
 
   update(){
