@@ -17,9 +17,11 @@ const {
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
+const { switchLoginState } = require('../../../boot/tray')
 
 internalEmitter.on(LOGOUT, () => {
   dispatch({ type: LOGOUT, load: null })
+  switchLoginState(false)
   windowManager.pingView({ view: 'filemanager', event: REFRESH })
 })
 
@@ -41,6 +43,8 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
       }
     })
 
+    switchLoginState(true)
+    
     const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
     const publishedDIDs = await araContractsManager.getPublishedItems()

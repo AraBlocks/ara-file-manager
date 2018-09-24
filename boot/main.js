@@ -27,7 +27,8 @@ app.on('ready', () => {
   windowManager.init()
   require('../kernel/lib/actionCreators')
   //Creates tray menu
-  require('./tray')()
+  require('./tray').buildTray()
+  require('./menu')()
 
   //Registers command/control + \ to open dev tools
   globalShortcut.register('CommandOrControl+\\', () => windowManager.getCurrent().object.openDevTools())
