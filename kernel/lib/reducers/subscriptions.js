@@ -3,7 +3,7 @@
 const {
   GOT_PUBLISHED_SUB,
   GOT_PUBLISHED_SUBS,
-  LOGIN_DEV
+  LOGOUT
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load, type }) => {
@@ -14,8 +14,8 @@ module.exports = (state, { load, type }) => {
     case GOT_PUBLISHED_SUB:
       state.published.push(load)
       break
-    case LOGIN_DEV:
-      state.balance = load
+    case LOGOUT:
+      state.published = []
       break
     default:
       return state

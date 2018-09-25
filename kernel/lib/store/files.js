@@ -4,7 +4,7 @@ const {
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = {
-  loadingLibrary: true,
+  loadingLibrary: false,
   published: [],
   purchased: []
 }

@@ -1,6 +1,7 @@
 'use strict'
 
 const {
+  GETTING_USER_DATA,
   LOGIN,
   LOGIN_DEV,
   LOGOUT,
@@ -8,8 +9,12 @@ const {
   UPDATE_BALANCE
  } = require('../../../lib/constants/stateManagement')
 
-module.exports = async (state, { load, type }) => {
+module.exports = async (state, { load = null, type }) => {
   switch (type) {
+    case GETTING_USER_DATA:
+      state.username = 'Logging in'
+      state.araBalance = 0
+      break
     case LOGIN:
       state.aid = load[0]
       break
@@ -21,12 +26,7 @@ module.exports = async (state, { load, type }) => {
       state.username = 'cryptokitter'
       break
     case LOGOUT:
-      state.userAid = null,
-      state.password = null,
-      state.accountAddress = null,
-      state.araBalance = 0,
-      state.etherBalance = 0,
-      state.username = 'Not Logged In'
+      Object.keys(state).forEach(key => state[key] = null)
       break
     case PUBLISHED:
       state.userBalance = load

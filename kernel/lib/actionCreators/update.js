@@ -1,7 +1,6 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:publish')
-const { create, remove } = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {

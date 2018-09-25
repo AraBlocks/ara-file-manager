@@ -2,12 +2,14 @@
 
 const {
   AWAITING_DOWNLOAD,
+  CLEAN_UI,
   DOWNLOADED,
   DOWNLOADING,
   DOWNLOAD_FAILED,
   DOWNLOADED_PUBLISHED,
   DOWNLOAD_START,
   ERROR_PUBLISHING,
+  GETTING_USER_DATA,
   GOT_EARNINGS,
   GOT_LIBRARY,
   LOGOUT,
@@ -20,7 +22,7 @@ const {
   UPDATE_EARNING
 } = require('../../../lib/constants/stateManagement')
 
-module.exports = (state, { load, type }) => {
+module.exports = (state, { load = null, type }) => {
   let file
   switch (type){
     case DOWNLOADING:
@@ -52,9 +54,14 @@ module.exports = (state, { load, type }) => {
       state.published = load.published
       state.purchased = load.purchased
       break
+    case GETTING_USER_DATA:
+      state.loadingLibrary = true
+      break
     case LOGOUT:
+    case CLEAN_UI:
       state.published = []
       state.purchased = []
+      state.loadingLibrary = false
       break
     case PUBLISHING:
       state.published.push(load)
