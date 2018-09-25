@@ -80,7 +80,7 @@ class Container extends Nanocomponent {
 				<div class="${styles.container} PublishFileContainer-container">
 					<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
 						Publish File
-						${children.utilityButton.render({})}
+						${children.utilityButton.render({ children: '✕' })}
 					</div>
 					<div class="${styles.content} PublishFileContainer-content">
 						Publish your content for distribution on the ARA Network. You can publish a single file or an entire directory as a single
