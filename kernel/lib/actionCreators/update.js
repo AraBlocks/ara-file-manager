@@ -71,7 +71,7 @@ ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
     })
 
     windowManager.pingView({ view: 'filemanager', event: REFRESH })
-    windowManager.get('manageFileView').close()
+    windowManager.closeWindow('manageFileView')
   } catch (err) {
     debug('Error: %O', err)
   }

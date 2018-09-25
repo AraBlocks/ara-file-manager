@@ -38,7 +38,11 @@ ipcMain.on(PURCHASE, async (event, load) => {
 		.then(async () => {
 			dispatch({ type: PURCHASED })
 			windowManager.pingView({ view: 'filemanager', event: REFRESH })
-		}).catch(debug)
+		}).catch((error) => {
+			debug(error)
+			dispatch({ type: FEED_MODAL, load:  { modalName: 'failureModal2' } })
+      internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+		})
 
 	dispatch({ type: PURCHASING, load: dispatchLoad })
 	windowManager.pingView({ view: 'filemanager', event: REFRESH })
@@ -60,5 +64,7 @@ internalEmitter.on(PROMPT_PURCHASE, async (load) => {
 		internalEmitter.emit(OPEN_MODAL, 'checkoutModal1')
 	} catch (err) {
 		debug('Error: %O', err)
+		dispatch({ type: FEED_MODAL, load:  { modalName: 'failureModal2' } })
+		internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
 	}
 })
