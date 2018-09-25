@@ -66,16 +66,17 @@ class Login extends Nanocomponent {
   login(e) {
     e.preventDefault()
     const { usernameValue, passwordValue } = this.state
-    emit({ event: LOGIN_DEV, load: {
-        password: passwordValue,
-        userAid: usernameValue
-      }
-    })
-    // openWindow('filemanager')
+    emit({
+        event: LOGIN_DEV,
+        load: {
+          password: passwordValue,
+          userAid: usernameValue
+        }
+      })
     closeWindow('login')
   }
 
-  update(){
+  update() {
     return true
   }
 
