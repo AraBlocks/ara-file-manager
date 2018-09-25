@@ -35,7 +35,7 @@ function getDistributionLink(aid, fileName) {
 	return `lstr://download/${aid}/${encodedName}`
 }
 
-function emit({ event, load }) {
+function emit({ event, load = null}) {
 	debug('Emit: %o', { event, load })
 	ipcRenderer.send(event, load)
 }

@@ -1,10 +1,16 @@
 'use strict'
 
+
 const Button = require('../../components/button')
+const { CLEAN_UI } = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
-const { minimizeWindow, openWindow } = require('../../lib/tools/windowManagement')
+const {
+  emit ,
+  minimizeWindow,
+  openWindow,
+} = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -45,7 +51,7 @@ class Header extends Nanocomponent {
     return html`
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader">
-          <div>
+          <div onclick=${() => emit({ event: CLEAN_UI })}>
             LTLSTAR
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">

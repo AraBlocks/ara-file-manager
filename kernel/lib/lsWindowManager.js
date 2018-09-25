@@ -165,6 +165,22 @@ windowManager.closeWindow = (name) => {
   windowManager.get(name) && windowManager.get(name).object.close()
 }
 
+windowManager.openWindow = (view) => {
+	windowManager.get(view)
+		? windowManager.get(view).focus()
+		: windowManager.open(
+				view,
+				view,
+				windowManager.loadURL(view),
+				false,
+				{
+					backgroundColor: 'white',
+					frame: false,
+					...windowManager.setSize(view)
+				}
+			)
+}
+
 Object.defineProperty(windowManager, 'modalIsOpen', {
   get: function() { return this.modalOpenStatus },
   set: function(bool) { this.modalOpenStatus = bool }

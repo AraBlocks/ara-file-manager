@@ -23,6 +23,7 @@ const { web3: { account: araAccount } } = require('ara-util')
 async function getAccountAddress(owner, password) {
 	try {
 		debug('Getting account address', owner, password)
+		owner = owner.includes('did') ? owner : 'did:ara:' + owner
 		const acct = await araAccount.load({ did: owner, password })
 		debug('Account address is ', acct.address)
 		return acct.address
@@ -39,6 +40,17 @@ async function getAraBalance(userAddress) {
 		return balance
 	} catch (err) {
 		debug('Error getting ara balance: %o', err)
+	}
+}
+
+async function getEtherBalance(account) {
+	try {
+		const balanceInWei = await web3.eth.getBalance(account)
+		const balance = web3.utils.fromWei(balanceInWei, 'ether')
+		debug('Ether balance is %s', balance)
+		return balance
+	} catch (err) {
+		debug('Error getting eth balance: %o', err)
 	}
 }
 
@@ -71,17 +83,6 @@ async function getLibraryItems(userAid) {
 		return lib
 	} catch (err) {
 		debug('Error getting lib items: %o', err)
-	}
-}
-
-async function getEtherBalance(account) {
-	try {
-		const balanceInWei = await web3.eth.getBalance(account)
-		const balance = web3.utils.fromWei(balanceInWei, 'ether')
-		debug('Ether balance is %s', balance)
-		return balance
-	} catch (err) {
-		debug('Error getting eth balance: %o', err)
 	}
 }
 
