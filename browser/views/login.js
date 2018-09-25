@@ -71,7 +71,7 @@ class Login extends Nanocomponent {
         userAid: usernameValue
       }
     })
-    openWindow('filemanager')
+    // openWindow('filemanager')
     closeWindow('login')
   }
 
@@ -93,7 +93,7 @@ class Login extends Nanocomponent {
           Welcome to the <b>Littlstar Media Manager</b>. Use this
           app to buy, sell, share, and earn rewards for files on
           the ARA Network across the web.
-          <br>
+          <br><br>
           To get started, log in with your <b>ARA id</b>
         </p>
         <form class="${styles.form} login-form" onsubmit=${login}>

@@ -21,6 +21,7 @@ module.exports = {
       flex-direction: column;
       height: 547px;
       justify-content: space-around;
+      width: 95%;
     }
 
     :host > * {
@@ -42,7 +43,7 @@ module.exports = {
       flex-direction: column;
       height: 190px;
       justify-content: space-between;
-      width: 90%;
+      width: 95%;
     }
 
     :host button {

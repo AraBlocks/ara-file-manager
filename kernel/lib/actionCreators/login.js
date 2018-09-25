@@ -7,6 +7,7 @@ const {
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const {
+  GETTING_USER_DATA,
   GOT_EARNINGS,
   GOT_LIBRARY,
   GOT_PUBLISHED_SUBS,
@@ -20,7 +21,8 @@ const { internalEmitter } = require('electron-window-manager')
 const { switchLoginState } = require('../../../boot/tray')
 
 internalEmitter.on(LOGOUT, () => {
-  dispatch({ type: LOGOUT, load: null })
+  afsManager.stopBroadcast()
+  dispatch({ type: LOGOUT })
   switchLoginState(false)
   windowManager.closeWindow('filemanager')
   windowManager.closeWindow('publishFileView')
@@ -29,6 +31,8 @@ internalEmitter.on(LOGOUT, () => {
 ipcMain.on(LOGIN_DEV, async (event, load) => {
   debug('%s heard %O', LOGIN_DEV, load)
   try {
+    dispatch({ type: GETTING_USER_DATA })
+    windowManager.openWindow('filemanager')
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(accountAddress)
     const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
