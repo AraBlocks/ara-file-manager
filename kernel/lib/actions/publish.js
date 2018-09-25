@@ -26,6 +26,7 @@ module.exports = {
         debug('AFS successfully created')
       } catch (err) {
         debug('Error in creating AFS: %O', err)
+        return null
       }
     }
 
@@ -39,6 +40,7 @@ module.exports = {
       debug('Added file succesfully')
     } catch (err) {
       debug('Error adding file to AFS: %O', err)
+      return null
     }
 
     let size = 0
@@ -75,6 +77,7 @@ module.exports = {
       }
     } catch (err) {
       debug('Error in estimating gas: %O', err)
+      return null
     }
   },
 

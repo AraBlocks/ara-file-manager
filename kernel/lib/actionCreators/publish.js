@@ -31,6 +31,12 @@ ipcMain.on(PUBLISH, async (event, load) => {
     event.sender.send(ESTIMATING_COST)
 
     const estimate = await publish.addCreateEstimate(load)
+    if (estimate == null) {
+      dispatch({ type: FEED_MODAL, load:  { modalName: 'failureModal2' } })
+      internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+      windowManager.get('publishFileView').close()
+      return
+    }
     debug('Dispatching %s . Load: %O', FEED_MODAL, estimate)
     dispatch({ type: FEED_MODAL, load: estimate })
 
