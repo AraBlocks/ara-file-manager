@@ -22,7 +22,8 @@ const { switchLoginState } = require('../../../boot/tray')
 internalEmitter.on(LOGOUT, () => {
   dispatch({ type: LOGOUT, load: null })
   switchLoginState(false)
-  windowManager.pingView({ view: 'filemanager', event: REFRESH })
+  windowManager.get('filemanager').object.close()
+  windowManager.get('publishFileView').object.close()
 })
 
 ipcMain.on(LOGIN_DEV, async (event, load) => {
