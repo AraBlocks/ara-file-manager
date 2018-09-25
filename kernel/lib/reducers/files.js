@@ -29,6 +29,7 @@ module.exports = (state, { load = null, type }) => {
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = load.downloadPercent
       file.size = load.size || file.size
+      file.status = DOWNLOADING
       break
     case DOWNLOADED:
       file = state.purchased[state.purchased.length - 1]

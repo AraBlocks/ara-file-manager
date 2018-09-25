@@ -125,7 +125,7 @@ class FileDescriptor extends Nanocomponent {
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
-          ${[PUBLISHING, PURCHASING, UPDATING_FILE].includes(status)
+          ${[PUBLISHING, PURCHASING, UPDATING_FILE, DOWNLOADING].includes(status)
             ? html`<div style="margin-left: 3px; margin-top: 3px;" class="spinner-small-blue"></div>`
             : children.progressRing.render({ downloadPercent, status })}
         </div>

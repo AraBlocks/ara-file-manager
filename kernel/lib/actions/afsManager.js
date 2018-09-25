@@ -47,11 +47,15 @@ async function getAFSPrice({ did }) {
 }
 
 async function removeAllFiles({ did }) {
-	const { afs } = await araFilesystem.create({ did })
-	const result = await afs.readdir(afs.HOME)
-	await afs.close()
-	const instance = await araFilesystem.remove({ did, password: account.password, paths: result })
-	await instance.close()
+	try {
+		const { afs } = await araFilesystem.create({ did })
+		const result = await afs.readdir(afs.HOME)
+		await afs.close()
+		const instance = await araFilesystem.remove({ did, password: account.password, paths: result })
+		await instance.close()
+	} catch(e) {
+		debug(e)
+	}
 }
 
 async function download({
@@ -77,7 +81,7 @@ async function download({
 		dcdn.on('start', (did, total) => totalBlocks = total)
 		dcdn.on('progress', (did, value) => {
 			const perc = value/totalBlocks
-			if (perc >= prevPercent + 0.04) {
+			if (perc >= prevPercent + 0.1) {
 				prevPercent = perc
 				if (value/totalBlocks != 1) {
 					handler({ downloadPercent: value/totalBlocks, aid: did })
