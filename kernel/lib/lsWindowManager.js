@@ -161,6 +161,10 @@ windowManager.pingView = ({ view, event, load = null }) => {
   window.object.webContents.send(event, load)
 }
 
+windowManager.closeWindow = (name) => {
+  windowManager.get(name) && windowManager.get(name).object.close()
+}
+
 Object.defineProperty(windowManager, 'modalIsOpen', {
   get: function() { return this.modalOpenStatus },
   set: function(bool) { this.modalOpenStatus = bool }
