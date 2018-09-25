@@ -16,12 +16,15 @@ const windowManager = require('electron-window-manager')
 ipcMain.on(DOWNLOAD, async (event, load) => {
 	debug('%s heard. Load: %O', DOWNLOAD, load)
 	try {
+		debug('Dispatching %s', DOWNLOADING)
+		dispatch({ type: DOWNLOADING, load })
+		windowManager.pingView({ view: 'filemanager', event: REFRESH })
 		afsManager.download({
 			did: load.did, handler: (load) => {
 				if (load.downloadPercent !== 1) {
-					debug('Dispatching %s', DOWNLOADING)
-					dispatch({ type: DOWNLOADING, load })
-					windowManager.pingView({ view: 'filemanager', event: REFRESH })
+					// debug('Dispatching %s', DOWNLOADING)
+					// dispatch({ type: DOWNLOADING, load })
+					// windowManager.pingView({ view: 'filemanager', event: REFRESH })
 				} else {
 					debug('Dispatching %s . Load: %s', DOWNLOADED, load.did)
 					dispatch({ type: DOWNLOADED, load: load.did })
