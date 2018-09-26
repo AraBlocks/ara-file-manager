@@ -42,6 +42,10 @@ function generalModalText(modalName, fileName) {
 			title = 'Not enough ARA'
 			description = html `<div>You do not have enough ARA Tokens to publish<br> this file.</div>`
 			break
+		case 'notLoggedIn':
+			title = 'Not Logged In'
+			description = 'Please login before purchasing this file.'
+			break
 		case 'successModal':
 			title = 'Success!'
 			description = html `<div><b>${fileName}</b> is downloading now.<br><br>
