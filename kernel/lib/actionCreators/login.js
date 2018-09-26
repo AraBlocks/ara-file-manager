@@ -7,11 +7,13 @@ const {
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const {
+  FEED_MODAL,
   GETTING_USER_DATA,
   GOT_EARNINGS,
   GOT_LIBRARY,
   GOT_PUBLISHED_SUBS,
   LOGIN_DEV,
+  OPEN_MODAL,
   LOGOUT,
   REFRESH
 } = require('../../../lib/constants/stateManagement')
@@ -31,6 +33,11 @@ internalEmitter.on(LOGOUT, () => {
 ipcMain.on(LOGIN_DEV, async (event, load) => {
   debug('%s heard %O', LOGIN_DEV, load)
   try {
+    if (load.userAid.length !== 64 && load.userAid.length !== 72) {
+      dispatch({ type: FEED_MODAL, load: { modalName: 'loginFail' } })
+      internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+      return
+    }
     dispatch({ type: GETTING_USER_DATA })
     windowManager.openWindow('filemanager')
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
