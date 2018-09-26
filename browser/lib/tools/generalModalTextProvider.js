@@ -34,6 +34,10 @@ function generalModalText(modalName, fileName) {
 			description = html `<div><b>${fileName}</b> has been deleted or altered. You cannot share a file or earn rewards unless it matches the published file on the network.<br><br>
 			Please restore the file or download it again from the network.</div>`
 			break
+		case 'loginFail':
+			title = 'Login Failed'
+			description = 'Please check your aid and password'
+			break
 		case 'notEnoughAra':
 			title = 'Not enough ARA'
 			description = html `<div>You do not have enough ARA Tokens to complete<br> this transaction.</div>`
