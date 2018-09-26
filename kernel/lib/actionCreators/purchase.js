@@ -51,6 +51,12 @@ ipcMain.on(PURCHASE, async (event, load) => {
 internalEmitter.on(PROMPT_PURCHASE, async (load) => {
 	try {
 		debug('%s heard. Load: %o', PROMPT_PURCHASE, load)
+		if (account.userAid == null) {
+			debug('not logged in')
+			dispatch({ type: FEED_MODAL, load: { modalName: 'notLoggedIn' } })
+			internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+			return
+		}
 		const library = await araContractsManager.getLibraryItems(account.userAid)
 		if (library.includes( '0x' + load.aid.slice(-64))) {
 			debug('already own item')
