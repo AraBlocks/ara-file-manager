@@ -68,6 +68,7 @@ async function purchaseItem(contentDid) {
 				requesterDid: userAid,
 				contentDid,
 				password,
+				budget: 0
 			}
 		)
 		debug('Purchase Completed')
@@ -210,7 +211,7 @@ function subscribeTransfer(userAddress) {
 	const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
 	const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
 		.on('data', async () => {
-			const newBalance = await getAraBalance(userAddress)
+			const newBalance = await getAraBalance(store.account.userAid)
 			internalEmitter.emit(UPDATE_BALANCE, newBalance)
 		})
 		.on('error', debug)
