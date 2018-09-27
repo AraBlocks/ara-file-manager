@@ -5,7 +5,7 @@ const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
 const { getAFSPrice } = require('./afsManager')
 const { UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
-const { TOKEN_ADDRESS } = require('../../../lib/constants/ethAddresses')
+const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
 const {
 	library,
 	purchase,
@@ -32,10 +32,10 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
-async function getAraBalance(userAddress) {
+async function getAraBalance(userDID) {
 	debug('Getting account balance')
 	try {
-		const balance = await token.balanceOf(userAddress)
+		const balance = await token.balanceOf(userDID)
 		debug('Balance is %s ARA', balance)
 		return balance
 	} catch (err) {
@@ -76,9 +76,9 @@ async function purchaseItem(contentDid) {
 	}
 }
 
-async function getLibraryItems(userAid) {
+async function getLibraryItems(userDID) {
 	try {
-		const lib = await library.getLibrary(userAid)
+		const lib = await library.getLibrary(userDID)
 		debug('Got %s lib items', lib.length)
 		return lib
 	} catch (err) {
@@ -207,7 +207,7 @@ async function getAFSContract(contentDID) {
 }
 
 function subscribeTransfer(userAddress) {
-	const tokenContract = new web3.eth.Contract(tokenAbi, TOKEN_ADDRESS)
+	const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
 	const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
 		.on('data', async () => {
 			const newBalance = await getAraBalance(userAddress)

@@ -34,7 +34,7 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
     dispatch({ type: GETTING_USER_DATA })
     windowManager.openWindow('filemanager')
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
-    const araBalance = await araContractsManager.getAraBalance(accountAddress)
+    const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
 
     dispatch({
