@@ -11,7 +11,7 @@ const windowManager = require('electron-window-manager')
 const { account, broadcastState } = windowManager.sharedData.fetch('store')
 
 
-async function broadcast({ did , price = 0}) {
+async function broadcast({ did , price = 5}) {
 	debug('Broadcasting for %s', did)
 	try {
 		dcdnFarm.start({

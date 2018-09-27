@@ -48,16 +48,11 @@ ipcMain.on(PUBLISH, async (event, load) => {
 
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_PUBLISH, load)
-  const {
-    account: {
-      accountAddress,
-      password
-    }
-  } = store
+  const { account } = store
   try {
-    publish.commit({ ...load, password })
+    publish.commit({ ...load, password: account.password })
       .then(async () => {
-        const araBalance = await araContractsManager.getAraBalance(accountAddress)
+        const araBalance = await araContractsManager.getAraBalance(account.userAid)
         dispatch({ type: PUBLISHED, load: araBalance })
         debug('Dispatching %s', PUBLISHED)
         windowManager.pingView({ view: 'filemanager', event: REFRESH })
