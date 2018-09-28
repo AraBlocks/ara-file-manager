@@ -26,7 +26,7 @@
     "ara-context": "github:arablocks/ara-context",
     "ara-contracts": "../ara_blocks/ara-contracts",
     "ara-crypto": "github:arablocks/ara-crypto",
-    "ara-filesystem": "github:arablocks/ara-filesystem",
+    "ara-filesystem": "../ara_blocks/ara-filesystem",
     "ara-identity": "github:arablocks/ara-identity",
     "ara-network": "github:arablocks/ara-network",
     "ara-network-node-dcdn-farm": "github:littlstar/ara-network-node-dcdn-farm",
@@ -57,36 +57,6 @@
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
     "mocha": "^5.2.0"
-  },
-  "build": {
-    "appId": "com.littlstar.ara-content-manager",
-    "dmg": {
-      "contents": [
-        {
-          "x": 110,
-          "y": 150
-        },
-        {
-          "x": 240,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
-    },
-    "protocols": {
-      "name": "Ara Content Manager",
-      "schemes": [
-        "lstr"
-      ]
-    },
-    "win": {}
   },
   "ava": {
     "files": [
