@@ -14,7 +14,7 @@ let dcdn = new farmDCDN({
 	userID: 'did:ara:4156c6f5b852547a6c5e51699bffda1e500dfbe936dd18283aee164e01c0b53b',
 	password:'abc'
 })
-dcdn.start()
+// dcdn.start()
 
 
 async function broadcast({ did, price = 1 }) {
@@ -81,8 +81,12 @@ async function download({
 		// const dcdn = await dcdn.getInstance()
 		let totalBlocks = 0
 		let prevPercent = 0
-		dcdn.on('start', (did, total) => totalBlocks = total)
+		dcdn.on('start', (did, total) => {
+			console.log('START************')
+			totalBlocks = total
+		})
 		dcdn.on('progress', (did, value) => {
+			console.log('PROGRESS')
 			const perc = value / totalBlocks
 			if (perc >= prevPercent + 0.1) {
 				prevPercent = perc
@@ -91,9 +95,14 @@ async function download({
 				}
 			}
 		})
-		dcdn.user.on('complete', () => {
-			handler({ downloadPercent: 1, aid: did })
-			renameAfsFiles(did, 'movie.mov')
+		dcdn.on('complete', (retDID) => {
+			console.log('COMPLETE*********')
+			handler({ downloadPercent: 1, aid: retDID })
+			renameAfsFiles(retDID, 'movie.mov')
+		})
+		dcdn.on('requestcomplete',(retDID) => {
+			handler({ downloadPercent: 1, aid: retDID })
+			renameAfsFiles(retDID, 'movie.mov')
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)
