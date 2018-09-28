@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { AWAITING_DOWNLOAD, DOWNLOADED, PUBLISHING } = require('../../../lib/constants/stateManagement')
-const dcdnFarm = require('ara-network-node-dcdn-farm')
+const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
@@ -10,16 +10,21 @@ const path = require('path')
 const windowManager = require('electron-window-manager')
 const { account, broadcastState } = windowManager.sharedData.fetch('store')
 
+let dcdn = new farmDCDN({
+	userID: 'did:ara:4156c6f5b852547a6c5e51699bffda1e500dfbe936dd18283aee164e01c0b53b',
+	password:'abc'
+})
+dcdn.start()
 
-async function broadcast({ did , price = 5}) {
+
+async function broadcast({ did, price = 1 }) {
 	debug('Broadcasting for %s', did)
 	try {
-		dcdnFarm.start({
+		dcdn.join({
 			did,
 			download: false,
 			upload: true,
-			userID: account.userAid.slice(8),
-			price,
+			price
 		})
 	} catch (err) {
 		debug('Error broadcasting %O', err)
@@ -30,12 +35,11 @@ async function broadcast({ did , price = 5}) {
 async function stopBroadcast() {
 	if (!broadcastState.isBroadcasting) {
 		debug('Currently not broadcasting')
-		return
 	}
 	debug('Stopping DCDN broadcast')
 	try {
-		await dcdnFarm.stop()
-	} catch(e) {
+		// await dcdn.stop()
+	} catch (e) {
 		debug(e)
 	}
 }
@@ -53,7 +57,7 @@ async function removeAllFiles({ did }) {
 		await afs.close()
 		const instance = await araFilesystem.remove({ did, password: account.password, paths: result })
 		await instance.close()
-	} catch(e) {
+	} catch (e) {
 		debug(e)
 	}
 }
@@ -62,29 +66,28 @@ async function download({
 	errorHandler,
 	did,
 	handler,
-	maxWorkers = 1,
+	maxPeers = 1,
 	price = 1
 }) {
 	debug('Downloading through DCDN: %s', did)
 	try {
-		await dcdnFarm.start({
-			did: did,
+		await dcdn.join({
+			did,
 			download: true,
 			upload: false,
-			userID: account.userAid.slice(8),
 			price,
-			maxWorkers
+			maxPeers
 		})
-		const dcdn = await dcdnFarm.getInstance()
+		// const dcdn = await dcdn.getInstance()
 		let totalBlocks = 0
 		let prevPercent = 0
 		dcdn.on('start', (did, total) => totalBlocks = total)
 		dcdn.on('progress', (did, value) => {
-			const perc = value/totalBlocks
+			const perc = value / totalBlocks
 			if (perc >= prevPercent + 0.1) {
 				prevPercent = perc
-				if (value/totalBlocks != 1) {
-					handler({ downloadPercent: value/totalBlocks, aid: did })
+				if (value / totalBlocks != 1) {
+					handler({ downloadPercent: value / totalBlocks, aid: did })
 				}
 			}
 		})
@@ -167,7 +170,7 @@ function renameAfsFiles(aid, fileName) {
 	const afsFolderPath = makeAfsPath(aid)
 	const afsFilePath = path.join(afsFolderPath, 'data')
 	const newPath = path.join(afsFolderPath, fileName)
-	fs.rename(afsFilePath, newPath, function(err) {
+	fs.rename(afsFilePath, newPath, function (err) {
 		if (err) {
 			console.log('some error occurred when renaming afs files')
 		}
