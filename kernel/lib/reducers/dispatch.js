@@ -3,6 +3,7 @@
 const account = require('./account')
 const broadcastState = require('./broadcastState')
 const files = require('./files')
+const farmer = require('./farmer')
 const modal = require('./modal')
 const subscriptions = require('./subscriptions')
 const state = require('../store')
@@ -13,7 +14,8 @@ const reducers = [
   { property: 'broadcastState', reducer: broadcastState },
   { property: 'files', reducer: files },
   { property: 'modal', reducer: modal },
-  { property: 'subscriptions', reducer: subscriptions }
+  { property: 'subscriptions', reducer: subscriptions },
+  { property: 'farmer', reducer: farmer}
 ]
 
 module.exports = (action) => {

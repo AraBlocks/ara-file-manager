@@ -59,7 +59,7 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
         araContractsManager.subscribePublished({ did: load.did })
         afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
         dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
-        afsManager.broadcast({ did: load.did })
+        afsManager.broadcast({ farmer: store.farmer.farm, did: load.did })
       })
       .catch(err => {
         debug('Error in committing: %o', err)

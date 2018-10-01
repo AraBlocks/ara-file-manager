@@ -10,17 +10,15 @@ const path = require('path')
 const windowManager = require('electron-window-manager')
 const { account, broadcastState } = windowManager.sharedData.fetch('store')
 
-let dcdn = new farmDCDN({
-	userID: 'did:ara:4156c6f5b852547a6c5e51699bffda1e500dfbe936dd18283aee164e01c0b53b',
-	password:'abc'
-})
-// dcdn.start()
+function createFarmer({ did, password }) {
+	debug('Creating Farmer')
+	return new farmDCDN({ userID: did, password })
+}
 
-
-async function broadcast({ did, price = 1 }) {
+async function broadcast({ farmer, did, price = 1 }) {
 	debug('Broadcasting for %s', did)
 	try {
-		dcdn.join({
+		farmer.join({
 			did,
 			download: false,
 			upload: true,
@@ -63,6 +61,7 @@ async function removeAllFiles({ did }) {
 }
 
 async function download({
+	farmer,
 	errorHandler,
 	did,
 	handler,
@@ -71,22 +70,21 @@ async function download({
 }) {
 	debug('Downloading through DCDN: %s', did)
 	try {
-		await dcdn.join({
+		await farmer.join({
 			did,
 			download: true,
 			upload: false,
 			price,
 			maxPeers
 		})
-		// const dcdn = await dcdn.getInstance()
+
 		let totalBlocks = 0
 		let prevPercent = 0
-		dcdn.on('start', (did, total) => {
-			console.log('START************')
+		farmer.on('start', (did, total) => {
+			debug('Starting download')
 			totalBlocks = total
 		})
-		dcdn.on('progress', (did, value) => {
-			console.log('PROGRESS')
+		farmer.on('progress', (did, value) => {
 			const perc = value / totalBlocks
 			if (perc >= prevPercent + 0.1) {
 				prevPercent = perc
@@ -95,14 +93,13 @@ async function download({
 				}
 			}
 		})
-		dcdn.on('complete', (retDID) => {
-			console.log('COMPLETE*********')
-			handler({ downloadPercent: 1, aid: retDID })
-			renameAfsFiles(retDID, 'movie.mov')
+		farmer.on('complete', (did) => {
+			debug('Download complete!')
+			handler({ downloadPercent: 1, did })
+			renameAfsFiles(did, 'movie.mov')
 		})
-		dcdn.on('requestcomplete',(retDID) => {
-			handler({ downloadPercent: 1, aid: retDID })
-			renameAfsFiles(retDID, 'movie.mov')
+		farmer.on('requestcomplete', (did) => {
+			debug('Rewards allocated')
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)
@@ -193,6 +190,7 @@ function renameAfsFiles(aid, fileName) {
 
 module.exports = {
 	broadcast,
+	createFarmer,
 	descriptorGenerator,
 	download,
 	removeAllFiles,
