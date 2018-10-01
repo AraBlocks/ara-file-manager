@@ -68,7 +68,7 @@ class Header extends Nanocomponent {
               <b>${username}</b>
             </div>
             <div>
-              ${araBalance} Ara
+              ${Math.round(araBalance * 100) / 100} Ara
             </div>
           </div>
         </div>
