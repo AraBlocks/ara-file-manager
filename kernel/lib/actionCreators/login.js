@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:login')
+const araUtil = require('ara-util')
 const {
   afsManager,
   araContractsManager
@@ -33,13 +34,25 @@ internalEmitter.on(LOGOUT, () => {
 ipcMain.on(LOGIN_DEV, async (event, load) => {
   debug('%s heard %O', LOGIN_DEV, load)
   try {
-    if (load.userAid.length !== 64 && load.userAid.length !== 72) {
+    const ddo = await araUtil.resolveDDO(load.userAid)
+    if (!ddo) {
+      debug('No DDO found')
       dispatch({ type: FEED_MODAL, load: { modalName: 'loginFail' } })
       internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
       return
     }
+
+    const correctPW = await araUtil.isCorrectPassword({ ddo, password: load.password})
+    if (!correctPW) {
+      debug('Incorrect pw')
+      dispatch({ type: FEED_MODAL, load: { modalName: 'loginFail' } })
+      internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+      return
+    }
+
     dispatch({ type: GETTING_USER_DATA })
     windowManager.openWindow('filemanager')
+
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
