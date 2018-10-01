@@ -6,6 +6,7 @@ const {
   LOGIN_DEV,
   LOGOUT,
   PUBLISHED,
+  PURCHASED,
   UPDATE_BALANCE
  } = require('../../../lib/constants/stateManagement')
 
@@ -32,7 +33,9 @@ module.exports = async (state, { load = null, type }) => {
       state.userBalance = load
       break
     case UPDATE_BALANCE:
+    case PURCHASED:
       state.araBalance = load
+      break
     default:
     return state
   }
