@@ -112,7 +112,12 @@ async function download({
 
 function unarchiveAFS({ did, path }) {
 	debug('Unarchiving %o', { did, path })
-	araFilesystem.unarchive({ did, path })
+	try {
+		araFilesystem.unarchive({ did, path })
+
+	} catch (err) {
+		debug(err)
+	}
 }
 
 async function readFileMetadata(did) {

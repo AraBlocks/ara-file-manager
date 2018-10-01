@@ -36,9 +36,11 @@ ipcMain.on(PURCHASE, async (event, load) => {
 	}
 	araContractsManager.purchaseItem(load.aid)
 		.then(async () => {
-			dispatch({ type: PURCHASED })
+			const araBalance = await araContractsManager.getAraBalance(account.userAid)
+			dispatch({ type: PURCHASED, load: araBalance })
 			windowManager.pingView({ view: 'filemanager', event: REFRESH })
-		}).catch((error) => {
+		})
+		.catch((error) => {
 			debug(error)
 			dispatch({ type: FEED_MODAL, load:  { modalName: 'failureModal2' } })
       internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
