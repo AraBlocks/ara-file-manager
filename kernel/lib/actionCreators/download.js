@@ -12,6 +12,7 @@ const {
 } = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(DOWNLOAD, async (event, load) => {
 	debug('%s heard. Load: %O', DOWNLOAD, load)
@@ -20,13 +21,15 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 		dispatch({ type: DOWNLOADING, load })
 		windowManager.pingView({ view: 'filemanager', event: REFRESH })
 		afsManager.download({
-			did: load.did, handler: (load) => {
+			farmer: store.farmer.farm,
+			did: load.did,
+			handler: (load) => {
 				if (load.downloadPercent !== 1) {
 					// debug('Dispatching %s', DOWNLOADING)
 					// dispatch({ type: DOWNLOADING, load })
 					// windowManager.pingView({ view: 'filemanager', event: REFRESH })
 				} else {
-					debug('Dispatching %s . Load: %s', DOWNLOADED, load.did)
+					debug('Dispatching %s . Load: %s', DOWNLOADED, load.aid)
 					dispatch({ type: DOWNLOADED, load: load.did })
 					windowManager.pingView({ view: 'filemanager', event: REFRESH })
 				}

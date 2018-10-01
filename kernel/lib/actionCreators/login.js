@@ -43,6 +43,7 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
+    const farmer = afsManager.createFarmer({ did: load.userAid, password: load.password })
 
     dispatch({
       type: LOGIN_DEV,
@@ -51,7 +52,8 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
         accountAddress,
         araBalance,
         password: load.password,
-        transferSubscription
+        transferSubscription,
+        farmer
       }
     })
 
