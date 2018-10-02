@@ -32,7 +32,7 @@ ipcMain.on(PUBLISH, async (event, load) => {
 
     const estimate = await publish.addCreateEstimate(load)
     if (estimate == null) {
-      dispatch({ type: FEED_MODAL, load:  { modalName: 'failureModal2' } })
+      dispatch({ type: FEED_MODAL, load: { modalName: 'failureModal2' } })
       internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
       windowManager.closeWindow('publishFileView')
       return
@@ -50,51 +50,38 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_PUBLISH, load)
   const { account } = store
   try {
-    publish.commit({ ...load, password: account.password })
-      .then(async () => {
-        const araBalance = await araContractsManager.getAraBalance(account.userAid)
-        dispatch({ type: PUBLISHED, load: araBalance })
-        debug('Dispatching %s', PUBLISHED)
-        windowManager.pingView({ view: 'filemanager', event: REFRESH })
-        araContractsManager.subscribePublished({ did: load.did })
-        afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
-        dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
-        afsManager.broadcast({ farmer: store.farmer.farm, did: load.did })
-      })
-      .catch(err => {
-        debug('Error in committing: %o', err)
-        debug('Removing %s from .acm', load.did)
-
-        araContractsManager.removedPublishedItem(load.did)
-        dispatch({ type: ERROR_PUBLISHING })
-        windowManager.pingView({ view: 'filemanager', event: REFRESH })
-        //Needs short delay. Race conditions cause modal state to dump after its loaded
-        setTimeout(() => {
-          dispatch({ type: FEED_MODAL, load: { modalName: 'failureModal2' } })
-          internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
-        }, 500)
-      })
-
     araContractsManager.savePublishedItem(load.did)
-    dispatch({
-      type: PUBLISHING,
-      load: {
-        datePublished: '',
-        did: load.did,
-        downloadPercent: 0,
-        earnings: 0,
-        name: load.name,
-        path: afsManager.makeAfsPath(load.did),
-        peers: 0,
-        price: load.price,
-        size: load.size,
-        status: PUBLISHING
-      }
-    })
+    const descriptor = await afsManager.descriptorGeneratorPublishing({ ...load })
+    dispatch({ type: PUBLISHING, load: descriptor })
 
     windowManager.pingView({ view: 'filemanager', event: REFRESH })
     windowManager.closeWindow('publishFileView')
+
+    await publish.commit({ ...load, password: account.password })
+    const araBalance = await araContractsManager.getAraBalance(account.userAid)
+    debug('Dispatching %s', PUBLISHED)
+    dispatch({ type: PUBLISHED, load: araBalance })
+    windowManager.pingView({ view: 'filemanager', event: REFRESH })
+
+    araContractsManager.subscribePublished({ did: load.did })
+    afsManager.unarchiveAFS({ did: load.did, path: afsManager.makeAfsPath(load.did) })
+
+    debug('Dispatching %s', CHANGE_BROADCASTING_STATE)
+    dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
+    afsManager.broadcast({ farmer: store.farmer.farm, did: load.did })
+
   } catch (err) {
-    debug('Error: %O', err)
+    debug('Error in committing: %o', err)
+    debug('Removing %s from .acm', load.did)
+
+    araContractsManager.removedPublishedItem(load.did)
+    dispatch({ type: ERROR_PUBLISHING })
+
+    windowManager.pingView({ view: 'filemanager', event: REFRESH })
+    //Needs short delay. Race conditions cause modal state to dump after its loaded
+    setTimeout(() => {
+      dispatch({ type: FEED_MODAL, load: { modalName: 'failureModal2' } })
+      internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+    }, 500)
   }
 })

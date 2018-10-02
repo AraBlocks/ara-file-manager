@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
+const araUtil = require('ara-util')
 const { AWAITING_DOWNLOAD, DOWNLOADED, PUBLISHING } = require('../../../lib/constants/stateManagement')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
@@ -154,7 +155,7 @@ function makeAfsPath(did) {
 
 async function descriptorGenerator(did, publishing = false) {
 	try {
-		did = did.slice(-64)
+		did = araUtil.normalize(did)
 		const path = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(path)
 		const meta = AFSExists ? await readFileMetadata(did) : null
@@ -170,10 +171,30 @@ async function descriptorGenerator(did, publishing = false) {
 			size: meta ? meta.size : 0,
 			status: publishing ? PUBLISHING : AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		}
-
 		return descriptor
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
+	}
+}
+
+async function descriptorGeneratorPublishing({ did, name, price, size}) {
+	try {
+		did = araUtil.normalize(did)
+		const path = await makeAfsPath(did)
+		const descriptor = {
+			did,
+			downloadPercent: 1,
+			datePublished: new Date,
+			name,
+			peers: 0,
+			price,
+			path,
+			size,
+			status: PUBLISHING
+		}
+		return descriptor
+	} catch (err) {
+		debug('descriptorGeneratorPublishing Error:, %o', err)
 	}
 }
 
@@ -192,6 +213,7 @@ module.exports = {
 	broadcast,
 	createFarmer,
 	descriptorGenerator,
+	descriptorGeneratorPublishing,
 	download,
 	removeAllFiles,
 	getAFSPrice,
