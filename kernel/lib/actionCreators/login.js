@@ -74,6 +74,7 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
 
     const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
+    console.log(purchased)
     const publishedDIDs = await araContractsManager.getPublishedItems()
     const published = await afsManager.surfaceAFS(publishedDIDs)
 
