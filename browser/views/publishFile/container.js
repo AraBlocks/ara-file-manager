@@ -66,6 +66,7 @@ class Container extends Nanocomponent {
 			name: fileName || 'Unnamed',
 			price
 		}
+
 		filePath
 			? emit({ event: PUBLISH, load })
 			: this.render({ requiredIndicator: true })

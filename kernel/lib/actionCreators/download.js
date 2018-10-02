@@ -24,12 +24,14 @@ ipcMain.on(DOWNLOAD, async (event, load) => {
 			farmer: store.farmer.farm,
 			did: load.did,
 			handler: (load) => {
+				dispatch({ type: 'SET_SIZE', load: load.size })
+				windowManager.pingView({ view: 'filemanager', event: REFRESH })
 				if (load.downloadPercent !== 1) {
-					// debug('Dispatching %s', DOWNLOADING)
+					debug('Dispatching %s', DOWNLOADING)
 					// dispatch({ type: DOWNLOADING, load })
 					// windowManager.pingView({ view: 'filemanager', event: REFRESH })
 				} else {
-					debug('Dispatching %s . Load: %s', DOWNLOADED, load.aid)
+					debug('Dispatching %s', DOWNLOADED)
 					dispatch({ type: DOWNLOADED, load: load.did })
 					windowManager.pingView({ view: 'filemanager', event: REFRESH })
 				}
