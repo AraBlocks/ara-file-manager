@@ -99,6 +99,11 @@ module.exports = (state, { load = null, type }) => {
       file = findFile(load.did, state.published)
       file.earnings = file.earnings += Number(load.earning)
       break
+    case 'SET_SIZE':
+      file = state.purchased[state.purchased.length - 1]
+      file.size = file.size || load
+      console.log('FILESIZE:',file.size)
+      break
     default:
     return state
   }

@@ -1,10 +1,10 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
-const araUtil = require('ara-util')
 const { AWAITING_DOWNLOAD, DOWNLOADED, PUBLISHING } = require('../../../lib/constants/stateManagement')
-const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
+const filesize = require('filesize')
+const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
 const path = require('path')
@@ -82,7 +82,9 @@ async function download({
 		let totalBlocks = 0
 		let prevPercent = 0
 		farmer.on('start', (did, total) => {
-			debug('Starting download')
+			debug('Starting download', total)
+			const size = total * 6111 * 10
+			handler({ did, size })
 			totalBlocks = total
 		})
 		farmer.on('progress', (did, value) => {
@@ -155,7 +157,7 @@ function makeAfsPath(did) {
 
 async function descriptorGenerator(did, publishing = false) {
 	try {
-		did = araUtil.normalize(did)
+		did = did.slice(-64)
 		const path = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(path)
 		const meta = AFSExists ? await readFileMetadata(did) : null
@@ -179,7 +181,7 @@ async function descriptorGenerator(did, publishing = false) {
 
 async function descriptorGeneratorPublishing({ did, name, price, size}) {
 	try {
-		did = araUtil.normalize(did)
+		did = did.slice(-64)
 		const path = await makeAfsPath(did)
 		const descriptor = {
 			did,

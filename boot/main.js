@@ -4,9 +4,16 @@ const debug = require('debug')('acm:boot:main')
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const isDev = require('electron-is-dev')
+const fs = require('fs')
 const path = require('path')
 //Creates dev view
 isDev && require('./ipc-dev')
+
+//Remove farmer related stores. Seem to crash app sometimes.
+const storePath = path.resolve(__dirname, '..', 'store.json')
+const jobsPath = path.resolve(__dirname, '..', 'jobs.json')
+fs.existsSync(jobsPath) && fs.unlinkSync(jobsPath)
+fs.existsSync(storePath) && fs.unlinkSync(storePath)
 
 let deepLinkingUrl
 
