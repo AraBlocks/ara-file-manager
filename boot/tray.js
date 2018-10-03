@@ -34,10 +34,8 @@ const buildTray = () => {
 
   function openWindow(view) {
     const window = windowManager.get(view) || createWindow(view)
-    // const shouldMoveWindow = window.object === null
     window.open()
     window.object.show()
-    // if (shouldMoveWindow && view === 'manager') { adjustPosition(window) }
   }
 
   function createWindow(view) {
@@ -54,12 +52,6 @@ const buildTray = () => {
       }
     )
   }
-
-  // function adjustPosition({ name, object: window }) {
-  //   const screenSize = screen.getPrimaryDisplay().bounds
-  //   const offset = windowManager.setSize(name).width
-  //   window.setPosition(screenSize.width - offset, 0)
-  // }
 
   isDev && openWindow('developer')
 }

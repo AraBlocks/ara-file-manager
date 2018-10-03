@@ -3,17 +3,21 @@
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const { AWAITING_DOWNLOAD, DOWNLOADED, PUBLISHING } = require('../../../lib/constants/stateManagement')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
-const filesize = require('filesize')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 const { account, broadcastState } = windowManager.sharedData.fetch('store')
+const userHome = require('user-home')
 
 function createFarmer({ did, password }) {
 	debug('Creating Farmer')
-	return new farmDCDN({ userID: did, password })
+	return new farmDCDN({
+		userID: did,
+		password,
+		config: path.resolve(userHome, '.ara')
+	})
 }
 
 async function broadcast({ farmer, did, price = 1 }) {
@@ -31,20 +35,19 @@ async function broadcast({ farmer, did, price = 1 }) {
 	debug('donezo')
 }
 
-async function stopBroadcast() {
+async function stopBroadcast(farmer) {
 	if (!broadcastState.isBroadcasting) {
 		debug('Currently not broadcasting')
 	}
 	debug('Stopping DCDN broadcast')
 	try {
-		// await dcdn.stop()
+		await farmer.stop()
 	} catch (e) {
 		debug(e)
 	}
 }
 
 async function getAFSPrice({ did }) {
-	debug('Getting price for %s', did)
 	const result = await araFilesystem.getPrice({ did })
 	return result
 }

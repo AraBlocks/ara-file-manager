@@ -102,7 +102,6 @@ module.exports = (state, { load = null, type }) => {
     case 'SET_SIZE':
       file = state.purchased[state.purchased.length - 1]
       file.size = file.size || load
-      console.log('FILESIZE:',file.size)
       break
     default:
     return state
