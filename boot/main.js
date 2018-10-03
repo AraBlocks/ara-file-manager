@@ -6,12 +6,13 @@ const windowManager = require('../kernel/lib/lsWindowManager')
 const isDev = require('electron-is-dev')
 const fs = require('fs')
 const path = require('path')
+const userHome = require('user-home')
 //Creates dev view
 isDev && require('./ipc-dev')
 
 //Remove farmer related stores. Seem to crash app sometimes.
-const storePath = path.resolve(__dirname, '..', 'store.json')
-const jobsPath = path.resolve(__dirname, '..', 'jobs.json')
+const storePath = path.resolve(userHome, '.ara', 'store.json')
+const jobsPath = path.resolve(userHome, '.ara', 'jobs.json')
 fs.existsSync(jobsPath) && fs.unlinkSync(jobsPath)
 fs.existsSync(storePath) && fs.unlinkSync(storePath)
 
@@ -30,12 +31,14 @@ if (shouldQuit) {
 
 app.setName('Ara Content Manager')
 app.on('ready', () => {
-  debug('App is ready')
+  debug('App initialzed')
   windowManager.init()
-  require('../kernel/lib/actionCreators')
   //Creates tray menu
   require('./tray').buildTray()
+  debug('Creating menu')
   require('./menu')()
+  debug('Loading Dependencies')
+  require('../kernel/lib/actionCreators')
 
   //Registers command/control + \ to open dev tools
   globalShortcut.register('CommandOrControl+\\', () => windowManager.getCurrent().object.openDevTools())
@@ -59,5 +62,6 @@ app.on('open-url', (event, url) => {
 
 app.on('before-quit', () => {
   const { stopBroadcast } = require('../kernel/lib/actions/afsManager')
-  stopBroadcast()
+  const { store: { farmer : { farm } } } = require('../kernel/lib/actions/afsManager')
+  stopBroadcast(farm)
 })

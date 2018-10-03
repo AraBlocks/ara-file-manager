@@ -7,7 +7,6 @@ const styles = require('./styles')
 const html = require('choo/html')
 
 module.exports = (load) => {
-  console.log(load)
   const publishButton = new Button({
     children: 'Publish',
     onclick: () => {

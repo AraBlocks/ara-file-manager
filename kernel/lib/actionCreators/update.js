@@ -26,7 +26,6 @@ ipcMain.on(FEED_MANAGE_FILE, (event, load) => dispatch({ type: FEED_MANAGE_FILE,
 
 ipcMain.on(UPDATE_FILE, async (event, load) => {
   debug('%s heard. Load: %O', UPDATE_FILE, load)
-  afsManager.stopBroadcast()
   dispatch({ type: CHANGE_BROADCASTING_STATE, load: false })
   try {
     event.sender.send(ESTIMATING_COST)

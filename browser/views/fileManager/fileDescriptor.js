@@ -140,7 +140,7 @@ class FileDescriptor extends Nanocomponent {
           </div>
           <div class="${styles.sizeHolder(status)} fileDescriptor-sizeHolder">
             ${status === DOWNLOADING
-              ? `${Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)}`
+              ? `${filesize(props.size) /*Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)*/}`
               : filesize(props.size)}
           </div>
           <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
