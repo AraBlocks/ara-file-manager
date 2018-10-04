@@ -3,7 +3,6 @@
 const {
   GETTING_USER_DATA,
   LOGIN,
-  LOGIN_DEV,
   LOGOUT,
   PUBLISHED,
   PURCHASED,
@@ -17,9 +16,6 @@ module.exports = async (state, { load = null, type }) => {
       state.araBalance = 0
       break
     case LOGIN:
-      state.aid = load[0]
-      break
-    case LOGIN_DEV:
       state.userAid = load.userAid
       state.password = load.password
       state.accountAddress = load.accountAddress

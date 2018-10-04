@@ -3,6 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actionCreators:login')
 const araUtil = require('ara-util')
 const {
+  acmManager,
   afsManager,
   araContractsManager
 } = require('../actions')
@@ -13,7 +14,7 @@ const {
   GOT_EARNINGS,
   GOT_LIBRARY,
   GOT_PUBLISHED_SUBS,
-  LOGIN_DEV,
+  LOGIN,
   OPEN_MODAL,
   LOGOUT,
   REFRESH
@@ -33,25 +34,20 @@ internalEmitter.on(LOGOUT, () => {
   windowManager.closeWindow('publishFileView')
 })
 
-ipcMain.on(LOGIN_DEV, async (event, load) => {
-  debug('%s heard %O', LOGIN_DEV, load)
+ipcMain.on(LOGIN, async (event, load) => {
+  debug('%s heard %O', LOGIN, load)
   try {
     const ddo = await araUtil.resolveDDO(load.userAid, {keyringOpts:{secret:SECRET}})
-    if (!ddo) {
-      debug('No DDO found')
-      dispatch({ type: FEED_MODAL, load: { modalName: 'loginFail' } })
-      internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
-      return
-    }
+    const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password}))
+    if (incorrectPW) { throw 'IncorrectPW' }
+  } catch (err) {
+    debug('Login error: %o', err)
+    dispatch({ type: FEED_MODAL, load: { modalName: 'loginFail' } })
+    internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+    return
+  }
 
-    const correctPW = await araUtil.isCorrectPassword({ ddo, password: load.password})
-    if (!correctPW) {
-      debug('Incorrect pw')
-      dispatch({ type: FEED_MODAL, load: { modalName: 'loginFail' } })
-      internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
-      return
-    }
-
+  try {
     dispatch({ type: GETTING_USER_DATA })
     windowManager.openWindow('filemanager')
 
@@ -61,7 +57,7 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
     const farmer = afsManager.createFarmer({ did: load.userAid, password: load.password })
 
     dispatch({
-      type: LOGIN_DEV,
+      type: LOGIN,
       load: {
         userAid: load.userAid,
         accountAddress,
@@ -76,7 +72,7 @@ ipcMain.on(LOGIN_DEV, async (event, load) => {
 
     const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
-    const publishedDIDs = await araContractsManager.getPublishedItems()
+    const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS(publishedDIDs)
 
     let files;

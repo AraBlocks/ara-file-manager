@@ -13,9 +13,6 @@ const {
 	registry,
 	token
 } = require('ara-contracts')
-const fs = require('fs')
-const path = require('path')
-const userHome = require('user-home')
 const { internalEmitter, sharedData } = require('electron-window-manager')
 const store = sharedData.fetch('store')
 const { web3 } = require('ara-context')()
@@ -86,55 +83,6 @@ async function getLibraryItems(userDID) {
 	} catch (err) {
 		debug('Error getting lib items: %o', err)
 	}
-}
-
-function getAcmFilePath() {
-	const { account: { userAid } } = store
-	if (userAid == null) {
-		debug('User has not logged in')
-		return null
-	}
-	const acmDirectory = path.resolve(userHome, '.acm')
-	fs.existsSync(acmDirectory) || fs.mkdirSync(acmDirectory)
-	const fileDirectory = path.resolve(userHome, '.acm', userAid.slice(8))
-	return fileDirectory
-}
-
-async function getPublishedItems() {
-	return new Promise((resolve, reject) => {
-		const fileDirectory = getAcmFilePath()
-		if (fileDirectory == null) return
-		fs.readFile(fileDirectory, function (err, data) {
-			if (err) return resolve([])
-			const itemList = data.toString('utf8').slice(0, -1).split('\n')
-			debug(`Retrieved %s published items`, itemList.length)
-			return resolve(itemList)
-		})
-	})
-}
-
-function savePublishedItem(contentDid) {
-	try {
-		debug(`Saving published item ${contentDid}`)
-		const fileDirectory = getAcmFilePath()
-		if (fileDirectory == null || contentDid.length !== 64) return
-		fs.appendFileSync(fileDirectory, `${contentDid}\n`)
-	} catch (err) {
-		debug(err)
-	}
-}
-
-async function removedPublishedItem(contentDID) {
-  const items = await getPublishedItems()
-	const clean = items.filter(did => did !== contentDID)
-
-  const fileDirectory = getAcmFilePath()
-  fs.unlinkSync(fileDirectory)
-  if (clean.length) {
-    clean.forEach(did => fs.appendFileSync(fileDirectory, `${did}\n`))
-	}
-
-  return clean
 }
 
 async function getPublishedEarnings(items) {
@@ -227,10 +175,7 @@ module.exports = {
 	getEtherBalance,
 	getLibraryItems,
 	getPublishedEarnings,
-	getPublishedItems,
 	purchaseItem,
-	removedPublishedItem,
-	savePublishedItem,
 	subscribePublished,
 	subscribeTransfer
 }

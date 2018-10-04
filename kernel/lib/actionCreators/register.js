@@ -6,7 +6,7 @@ const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const { register } = require('../actions')
 const {
-  LOGIN_DEV,
+  LOGIN,
   REGISTER,
   REGISTERED
 } = require('../../../lib/constants/stateManagement')
@@ -18,9 +18,9 @@ ipcMain.on(REGISTER, async (event, password) => {
     await register.archive(userAid)
     const accountAddress = await araContractsManager.getAccountAddress(userAid, password)
 
-    debug('Dispatching %s', LOGIN_DEV)
+    debug('Dispatching %s', LOGIN)
     dispatch({
-      type: LOGIN_DEV,
+      type: LOGIN,
       load: {
         userAid,
         accountAddress,

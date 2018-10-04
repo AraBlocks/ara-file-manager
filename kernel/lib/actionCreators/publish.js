@@ -5,6 +5,7 @@ const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
   afsManager,
+  acmManager,
   araContractsManager,
   publish
 } = require('../actions')
@@ -48,9 +49,9 @@ ipcMain.on(PUBLISH, async (event, load) => {
 
 ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard. Load: %o', CONFIRM_PUBLISH, load)
-  const { account } = store
+  const { account, farmer } = store
   try {
-    araContractsManager.savePublishedItem(load.did)
+    acmManager.savePublishedItem(load.did, account.userAid)
     const descriptor = await afsManager.descriptorGeneratorPublishing({ ...load })
     dispatch({ type: PUBLISHING, load: descriptor })
 
@@ -68,12 +69,12 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
 
     debug('Dispatching %s', CHANGE_BROADCASTING_STATE)
     dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
-    afsManager.broadcast({ farmer: store.farmer.farm, did: load.did })
+    afsManager.broadcast({ farmer: farmer.farm, did: load.did })
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
 
-    araContractsManager.removedPublishedItem(load.did)
+    acmManager.removedPublishedItem(load.did, account.userAid)
     dispatch({ type: ERROR_PUBLISHING })
 
     windowManager.pingView({ view: 'filemanager', event: REFRESH })
