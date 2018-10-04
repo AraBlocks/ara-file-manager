@@ -18,6 +18,7 @@ const {
   LOGOUT,
   REFRESH
 } = require('../../../lib/constants/stateManagement')
+const { SECRET } = require('../../../lib/constants/networkKeys')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
@@ -35,7 +36,7 @@ internalEmitter.on(LOGOUT, () => {
 ipcMain.on(LOGIN_DEV, async (event, load) => {
   debug('%s heard %O', LOGIN_DEV, load)
   try {
-    const ddo = await araUtil.resolveDDO(load.userAid)
+    const ddo = await araUtil.resolveDDO(load.userAid, {keyringOpts:{secret:SECRET}})
     if (!ddo) {
       debug('No DDO found')
       dispatch({ type: FEED_MODAL, load: { modalName: 'loginFail' } })

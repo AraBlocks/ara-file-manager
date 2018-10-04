@@ -4,6 +4,8 @@ const debug = require('debug')('acm:kernel:lib:actions:publish')
 const afs = require('ara-filesystem')
 const { writeFileMetaData } = require('./afsManager')
 const fs = require('fs')
+const { SECRET } = require('../../../lib/constants/networkKeys')
+const keyringOpts = { secret: SECRET }
 
 module.exports = {
   async addCreateEstimate({
@@ -19,7 +21,7 @@ module.exports = {
 
     if (fileAid == null) {
       try {
-        arafs = await afs.create({ owner: userAid, password });
+        arafs = await afs.create({ owner: userAid, password, keyringOpts });
         mnemonic = arafs.mnemonic
         fileAid = arafs.afs.did
         arafs.afs.close()
@@ -34,7 +36,8 @@ module.exports = {
       const newAfs = await afs.add({
         did: fileAid,
         paths: paths,
-        password
+        password,
+        keyringOpts
       })
       newAfs.close()
       debug('Added file succesfully')
@@ -59,10 +62,10 @@ module.exports = {
     let gasEstimate
     try {
       debug('Getting gas estimate..')
-      gasEstimate = await afs.estimateCommitGasCost({ did: fileAid, password })
+      gasEstimate = await afs.estimateCommitGasCost({ did: fileAid, password, keyringOpts })
       debug('Gas estimate for commit: %d', gasEstimate)
       if (price != null) {
-        gasEstimate += await afs.estimateSetPriceGasCost({ did: fileAid, password, price: Number(price) })
+        gasEstimate += await afs.estimateSetPriceGasCost({ did: fileAid, password, price: Number(price), keyringOpts })
         debug('Gas estimate for commit + setting price: %d', gasEstimate)
       }
 
@@ -120,7 +123,7 @@ module.exports = {
   async commit({ did, password, gasEstimate, price = null }) {
     debug('Committing AFS')
     try {
-      const result = await afs.commit({ did, password, gasEstimate })
+      const result = await afs.commit({ did, password, gasEstimate, keyringOpts })
       await this.setPrice({ did, password, price })
       debug('Committed AFS successfully')
       return result
@@ -128,6 +131,6 @@ module.exports = {
       debug('Error: %O', err)
     }
     debug('Committed AFS successfully')
-    return result
+    return
   }
 }
