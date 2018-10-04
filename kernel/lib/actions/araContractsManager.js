@@ -5,6 +5,7 @@ const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
 const { getAFSPrice } = require('./afsManager')
 const { UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
+const { SECRET } = require('../../../lib/constants/networkKeys')
 const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
 const {
 	library,
@@ -35,7 +36,7 @@ async function getAccountAddress(owner, password) {
 async function getAraBalance(userDID) {
 	debug('Getting account balance')
 	try {
-		const balance = await token.balanceOf(userDID)
+		const balance = await token.balanceOf(userDID, {keyringOpts:{secret:SECRET}})
 		debug('Balance is %s ARA', balance)
 		return balance
 	} catch (err) {

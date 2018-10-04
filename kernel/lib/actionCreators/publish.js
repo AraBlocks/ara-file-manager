@@ -69,7 +69,6 @@ ipcMain.on(CONFIRM_PUBLISH, async (event, load) => {
     debug('Dispatching %s', CHANGE_BROADCASTING_STATE)
     dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
     afsManager.broadcast({ farmer: store.farmer.farm, did: load.did })
-
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
