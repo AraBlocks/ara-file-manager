@@ -5,20 +5,11 @@ const araUtil = require('ara-util')
 const {
   acmManager,
   afsManager,
-  araContractsManager
+  araContractsManager,
+  farmerManager
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
-const {
-  FEED_MODAL,
-  GETTING_USER_DATA,
-  GOT_EARNINGS,
-  GOT_LIBRARY,
-  GOT_PUBLISHED_SUBS,
-  LOGIN,
-  OPEN_MODAL,
-  LOGOUT,
-  REFRESH
-} = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const { SECRET } = require('../../../lib/constants/networkKeys')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
@@ -26,38 +17,38 @@ const { internalEmitter } = require('electron-window-manager')
 const { switchLoginState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
-internalEmitter.on(LOGOUT, () => {
-  afsManager.stopBroadcast(store.farmer.farm)
-  dispatch({ type: LOGOUT })
+internalEmitter.on(k.LOGOUT, () => {
+  farmerManager.stopBroadcast(store.farmer.farm)
+  dispatch({ type: k.LOGOUT })
   switchLoginState(false)
   windowManager.closeWindow('filemanager')
   windowManager.closeWindow('publishFileView')
 })
 
-ipcMain.on(LOGIN, async (event, load) => {
-  debug('%s heard %O', LOGIN, load)
+ipcMain.on(k.LOGIN, async (event, load) => {
+  debug('%s heard', k.LOGIN)
   try {
     const ddo = await araUtil.resolveDDO(load.userAid, {keyringOpts:{secret:SECRET}})
     const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password}))
     if (incorrectPW) { throw 'IncorrectPW' }
   } catch (err) {
     debug('Login error: %o', err)
-    dispatch({ type: FEED_MODAL, load: { modalName: 'loginFail' } })
-    internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'loginFail' } })
+    internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
     return
   }
 
   try {
-    dispatch({ type: GETTING_USER_DATA })
+    dispatch({ type: k.GETTING_USER_DATA })
     windowManager.openWindow('filemanager')
 
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
-    const farmer = afsManager.createFarmer({ did: load.userAid, password: load.password })
+    const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
 
     dispatch({
-      type: LOGIN,
+      type: k.LOGIN,
       load: {
         userAid: load.userAid,
         accountAddress,
@@ -74,17 +65,16 @@ ipcMain.on(LOGIN, async (event, load) => {
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
     const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS(publishedDIDs)
-
     let files;
-    ({ files } = dispatch({ type: GOT_LIBRARY, load: { published, purchased} }))
-    windowManager.pingView({ view: 'filemanager', event: REFRESH })
+    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased} }))
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const updatedItems = await araContractsManager.getPublishedEarnings(files.published);
-    ({ files } = dispatch({ type: GOT_EARNINGS, load: updatedItems }))
-    windowManager.pingView({ view: 'filemanager', event: REFRESH })
+    ({ files } = dispatch({ type: k.GOT_EARNINGS, load: updatedItems }))
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const subscriptions = await Promise.all(files.published.map(araContractsManager.subscribePublished))
-    dispatch({ type: GOT_PUBLISHED_SUBS, load: subscriptions })
+    dispatch({ type: k.GOT_PUBLISHED_SUBS, load: subscriptions })
 
     debug('Login complete')
   } catch (err) {

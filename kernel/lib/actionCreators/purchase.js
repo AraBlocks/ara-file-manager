@@ -3,25 +3,17 @@
 const debug = require('debug')('acm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
 const {
-	afsManager: { getAFSPrice, makeAfsPath },
+	afsManager: { makeAfsPath },
 	araContractsManager,
 } = require('../actions')
-const {
-	FEED_MODAL,
-	OPEN_MODAL,
-	PROMPT_PURCHASE,
-	PURCHASE,
-	PURCHASED,
-	PURCHASING,
-	REFRESH
-} = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
-ipcMain.on(PURCHASE, async (event, load) => {
-	debug('%s heard. Load: %O', PURCHASE, load)
+ipcMain.on(k.PURCHASE, async (event, load) => {
+	debug('%s heard. Load: %O', k.PURCHASE, load)
 	const dispatchLoad = {
 		downloadPercent: 0,
 		did: load.aid,
@@ -31,48 +23,48 @@ ipcMain.on(PURCHASE, async (event, load) => {
 		price: load.price,
 		name: load.fileName,
 		size: 0,
-		status: PURCHASING,
+		status: k.PURCHASING,
 		path: makeAfsPath(load.aid)
 	}
 	araContractsManager.purchaseItem(load.aid)
 		.then(async () => {
 			const araBalance = await araContractsManager.getAraBalance(account.userAid)
-			dispatch({ type: PURCHASED, load: araBalance })
-			windowManager.pingView({ view: 'filemanager', event: REFRESH })
+			dispatch({ type: k.PURCHASED, load: araBalance })
+			windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 		})
 		.catch((error) => {
 			debug(error)
-			dispatch({ type: FEED_MODAL, load:  { modalName: 'failureModal2' } })
-      internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+			dispatch({ type: k.FEED_MODAL, load:  { modalName: 'failureModal2' } })
+      internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
 		})
 
-	dispatch({ type: PURCHASING, load: dispatchLoad })
-	windowManager.pingView({ view: 'filemanager', event: REFRESH })
+	dispatch({ type: k.PURCHASING, load: dispatchLoad })
+	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 })
 
-internalEmitter.on(PROMPT_PURCHASE, async (load) => {
+internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 	try {
-		debug('%s heard. Load: %o', PROMPT_PURCHASE, load)
+		debug('%s heard. Load: %o', k.PROMPT_PURCHASE, load)
 		if (account.userAid == null) {
 			debug('not logged in')
-			dispatch({ type: FEED_MODAL, load: { modalName: 'notLoggedIn' } })
-			internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notLoggedIn' } })
+			internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
 			return
 		}
 		const library = await araContractsManager.getLibraryItems(account.userAid)
 		if (library.includes( '0x' + load.aid.slice(-64))) {
 			debug('already own item')
-			dispatch({ type: FEED_MODAL, load: { modalName: 'alreadyOwn' } })
-			internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
+			internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
 			return
 		}
 
-		const price = await getAFSPrice({ did: load.aid })
-		dispatch({ type: FEED_MODAL, load: { price, ...load } })
-		internalEmitter.emit(OPEN_MODAL, 'checkoutModal1')
+		const price = await araContractsManager.getAFSPrice({ did: load.aid })
+		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
+		internalEmitter.emit(k.OPEN_MODAL, 'checkoutModal1')
 	} catch (err) {
 		debug('Error: %O', err)
-		dispatch({ type: FEED_MODAL, load:  { modalName: 'failureModal2' } })
-		internalEmitter.emit(OPEN_MODAL, 'generalMessageModal')
+		dispatch({ type: k.FEED_MODAL, load:  { modalName: 'failureModal2' } })
+		internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
 	}
 })

@@ -3,18 +3,13 @@
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
-const { getAFSPrice } = require('./afsManager')
+const araFilesystem = require('ara-filesystem')
 const { UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
 const { SECRET } = require('../../../lib/constants/networkKeys')
 const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
-const {
-	library,
-	purchase,
-	registry,
-	token
-} = require('ara-contracts')
-const { internalEmitter, sharedData } = require('electron-window-manager')
-const store = sharedData.fetch('store')
+const araContracts = require('ara-contracts')
+const windowManager = require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 const { web3 } = require('ara-context')()
 const { web3: { account: araAccount } } = require('ara-util')
 
@@ -30,10 +25,15 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
+async function getAFSPrice({ did }) {
+	const result = await araFilesystem.getPrice({ did })
+	return result
+}
+
 async function getAraBalance(userDID) {
 	debug('Getting account balance')
 	try {
-		const balance = await token.balanceOf(userDID, {keyringOpts:{secret:SECRET}})
+		const balance = await araContracts.token.balanceOf(userDID, {keyringOpts:{secret:SECRET}})
 		debug('Balance is %s ARA', balance)
 		return balance
 	} catch (err) {
@@ -61,7 +61,7 @@ async function purchaseItem(contentDid) {
 		}
 	} = store
 	try {
-		await purchase(
+		await araContracts.purchase(
 			{
 				requesterDid: userAid,
 				contentDid,
@@ -77,7 +77,7 @@ async function purchaseItem(contentDid) {
 
 async function getLibraryItems(userDID) {
 	try {
-		const lib = await library.getLibrary(userDID)
+		const lib = await araContracts.library.getLibrary(userDID)
 		debug('Got %s lib items', lib.length)
 		return lib
 	} catch (err) {
@@ -104,7 +104,7 @@ async function getEarnings({ did }) {
 		const priceSets = (await AFSContract.getPastEvents('PriceSet', opts))
 			.map(event => ({
 				blockNumber: event.blockNumber,
-				price: Number(token.constrainTokenValue(event.returnValues._price))
+				price: Number(araContracts.token.constrainTokenValue(event.returnValues._price))
 			}))
 
 		const purchases = (await AFSContract.getPastEvents('Purchased', opts))
@@ -140,7 +140,7 @@ async function subscribePublished({ did }) {
 			.on('data', async ({ returnValues }) => {
 				const did = returnValues._did.slice(-64)
 				const earning = await getAFSPrice({ did })
-				internalEmitter.emit(UPDATE_EARNING, { did, earning })
+				windowManager.internalEmitter.emit(UPDATE_EARNING, { did, earning })
 			})
 			.on('error', debug)
 
@@ -151,8 +151,8 @@ async function subscribePublished({ did }) {
 }
 
 async function getAFSContract(contentDID) {
-	if (!registry.proxyExists(contentDID)) return false
-	const proxyAddress = await registry.getProxyAddress(contentDID)
+	if (!araContracts.registry.proxyExists(contentDID)) return false
+	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
 	return new web3.eth.Contract(AFSAbi, proxyAddress)
 }
 
@@ -170,6 +170,7 @@ function subscribeTransfer(userAddress) {
 
 module.exports = {
 	getAccountAddress,
+	getAFSPrice,
 	getAraBalance,
 	getEarnings,
 	getEtherBalance,

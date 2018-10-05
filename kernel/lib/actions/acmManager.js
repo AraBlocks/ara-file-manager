@@ -21,7 +21,7 @@ function getPublishedItems(userDID) {
 		debug('No published items found for %s', userDID)
 		return []
 	}
-	const itemList = data.toString('utf8').slice(-1).split('\n')
+	const itemList = data.toString('utf8').slice(0, -1).split('\n')
 	debug('Retrieved %s published items', itemList.length)
 	return itemList
 }

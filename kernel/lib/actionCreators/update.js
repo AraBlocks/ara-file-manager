@@ -5,6 +5,7 @@ const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
   afsManager,
+  farmerManager,
   publish
 } = require('../actions')
 const {
@@ -33,7 +34,7 @@ ipcMain.on(UPDATE_FILE, async (event, load) => {
     if (load.paths.length == 0) {
       estimate = await publish.setPriceGasEstimate(load)
     } else {
-      await afsManager.removeAllFiles({ did: load.fileAid })
+      await afsManager.removeAllFiles({ did: load.fileAid, password: account.password })
       estimate = await publish.addCreateEstimate(load)
     }
     debug('Dispatching %s . Load: %O', FEED_MODAL, estimate)
@@ -80,6 +81,6 @@ function updateCompleteHandler(did) {
   dispatch({ type: UPDATED_FILE, load: did })
   debug('Dispatch %s . Load: %s', UPDATED_FILE, did)
   afsManager.unarchiveAFS({ did, path: afsManager.makeAfsPath(did) })
-  afsManager.broadcast({ did: did })
+  farmerManager.broadcast({ did: did })
   dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
 }
