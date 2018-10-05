@@ -8,12 +8,15 @@ const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
 
-async function descriptorGenerator(did) {
+async function descriptorGenerator(did, opts = {}) {
 	try {
 		did = did.slice(-64)
 		const path = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(path)
 		const meta = AFSExists ? await readFileMetadata(did) : null
+		let price
+		try { price = Number(await araContractsManager.getAFSPrice({ did })) }
+		catch (err) {}
 		const descriptor = {
 			did,
 			downloadPercent: AFSExists ? 1 : 0,
@@ -21,18 +24,18 @@ async function descriptorGenerator(did) {
 			earnings: 0,
 			name: meta ? meta.title : 'Unnamed File',
 			peers: 0,
-			price: Number(await araContractsManager.getAFSPrice({ did })),
+			price,
 			path,
 			size: meta ? meta.size : 0,
 			status: AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		}
-		return descriptor
+		return { ...descriptor, ...opts }
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
 	}
 }
 
-async function descriptorGeneratorPublishing({ did, name, price, size}) {
+async function descriptorGeneratorPublishing({ did, name, price, size }) {
 	try {
 		did = did.slice(-64)
 		const path = await makeAfsPath(did)

@@ -18,12 +18,12 @@ async function removeAllFiles({ did, password }) {
 	}
 }
 
-function unarchiveAFS({ did, path }) {
-	debug('Unarchiving %o', { did, path })
+function unarchiveAFS({ did }) {
+	debug('Unarchiving %o', { did, path: actionsUtil.makeAfsPath(did) })
 	try {
-		araFilesystem.unarchive({ did, path })
+		araFilesystem.unarchive({ did, path: actionsUtil.makeAfsPath(did), keyringOpts: { secret: 'test-node'} })
 	} catch (err) {
-		debug(err)
+		debug('Error unarchiving: %o', err)
 	}
 }
 

@@ -80,7 +80,7 @@ function updateCompleteHandler(did) {
   windowManager.pingView({ view: 'filemanager', event: REFRESH })
   dispatch({ type: UPDATED_FILE, load: did })
   debug('Dispatch %s . Load: %s', UPDATED_FILE, did)
-  afsManager.unarchiveAFS({ did, path: afsManager.makeAfsPath(did) })
+  afsManager.unarchiveAFS({ did, path: did })
   farmerManager.broadcast({ did: did })
   dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
 }
