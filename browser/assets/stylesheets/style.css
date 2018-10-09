@@ -102,6 +102,11 @@ button {
   animation: spin 800ms infinite linear;
 }
 
+.fadeInUp {
+  animation: fadeInUp;
+  transition: all ease-in-out;
+}
+
 /* animations */
 @keyframes spin {
   0% {
@@ -124,12 +129,12 @@ button {
   }
 }
 
-.fadeInUp {
-  animation: fadeInUp;
-  transition: all ease-in-out;
-}
-
 @keyframes sk-stretchdelay {
   0%, 40%, 100% { transform: scaleY(0.4); }
   20% { transform: scaleY(1.0); }
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
