@@ -3,23 +3,16 @@
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
-const { getAFSPrice } = require('./afsManager')
+const araFilesystem = require('ara-filesystem')
 const { UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
 const { SECRET } = require('../../../lib/constants/networkKeys')
 const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
-const {
-	library,
-	purchase,
-	registry,
-	token
-} = require('ara-contracts')
-const fs = require('fs')
-const path = require('path')
-const userHome = require('user-home')
-const { internalEmitter, sharedData } = require('electron-window-manager')
-const store = sharedData.fetch('store')
+const araContracts = require('ara-contracts')
+const windowManager = require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 const { web3 } = require('ara-context')()
 const { web3: { account: araAccount } } = require('ara-util')
+const keyringOpts = { secret: 'test-node' }
 
 async function getAccountAddress(owner, password) {
 	try {
@@ -33,10 +26,15 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
+async function getAFSPrice({ did }) {
+	const result = await araFilesystem.getPrice({ did })
+	return result
+}
+
 async function getAraBalance(userDID) {
 	debug('Getting account balance')
 	try {
-		const balance = await token.balanceOf(userDID, {keyringOpts:{secret:SECRET}})
+		const balance = await araContracts.token.balanceOf(userDID)
 		debug('Balance is %s ARA', balance)
 		return balance
 	} catch (err) {
@@ -57,22 +55,18 @@ async function getEtherBalance(account) {
 
 async function purchaseItem(contentDid) {
 	debug('Purchasing item: %s', contentDid)
-	const {
-		account: {
-			userAid,
-			password
-		}
-	} = store
+	const { account } = store
 	try {
-		await purchase(
+		await araContracts.purchase(
 			{
-				requesterDid: userAid,
+				requesterDid: account.userAid,
 				contentDid,
-				password,
+				password: account.password,
 				budget: 0
 			}
 		)
 		debug('Purchase Completed')
+		return
 	} catch (err) {
 		debug('Error purchasing item: %o', err)
 	}
@@ -80,61 +74,12 @@ async function purchaseItem(contentDid) {
 
 async function getLibraryItems(userDID) {
 	try {
-		const lib = await library.getLibrary(userDID)
+		const lib = await araContracts.library.getLibrary(userDID)
 		debug('Got %s lib items', lib.length)
 		return lib
 	} catch (err) {
 		debug('Error getting lib items: %o', err)
 	}
-}
-
-function getAcmFilePath() {
-	const { account: { userAid } } = store
-	if (userAid == null) {
-		debug('User has not logged in')
-		return null
-	}
-	const acmDirectory = path.resolve(userHome, '.acm')
-	fs.existsSync(acmDirectory) || fs.mkdirSync(acmDirectory)
-	const fileDirectory = path.resolve(userHome, '.acm', userAid.slice(8))
-	return fileDirectory
-}
-
-async function getPublishedItems() {
-	return new Promise((resolve, reject) => {
-		const fileDirectory = getAcmFilePath()
-		if (fileDirectory == null) return
-		fs.readFile(fileDirectory, function (err, data) {
-			if (err) return resolve([])
-			const itemList = data.toString('utf8').slice(0, -1).split('\n')
-			debug(`Retrieved %s published items`, itemList.length)
-			return resolve(itemList)
-		})
-	})
-}
-
-function savePublishedItem(contentDid) {
-	try {
-		debug(`Saving published item ${contentDid}`)
-		const fileDirectory = getAcmFilePath()
-		if (fileDirectory == null || contentDid.length !== 64) return
-		fs.appendFileSync(fileDirectory, `${contentDid}\n`)
-	} catch (err) {
-		debug(err)
-	}
-}
-
-async function removedPublishedItem(contentDID) {
-  const items = await getPublishedItems()
-	const clean = items.filter(did => did !== contentDID)
-
-  const fileDirectory = getAcmFilePath()
-  fs.unlinkSync(fileDirectory)
-  if (clean.length) {
-    clean.forEach(did => fs.appendFileSync(fileDirectory, `${did}\n`))
-	}
-
-  return clean
 }
 
 async function getPublishedEarnings(items) {
@@ -156,7 +101,7 @@ async function getEarnings({ did }) {
 		const priceSets = (await AFSContract.getPastEvents('PriceSet', opts))
 			.map(event => ({
 				blockNumber: event.blockNumber,
-				price: Number(token.constrainTokenValue(event.returnValues._price))
+				price: Number(araContracts.token.constrainTokenValue(event.returnValues._price))
 			}))
 
 		const purchases = (await AFSContract.getPastEvents('Purchased', opts))
@@ -192,7 +137,7 @@ async function subscribePublished({ did }) {
 			.on('data', async ({ returnValues }) => {
 				const did = returnValues._did.slice(-64)
 				const earning = await getAFSPrice({ did })
-				internalEmitter.emit(UPDATE_EARNING, { did, earning })
+				windowManager.internalEmitter.emit(UPDATE_EARNING, { did, earning })
 			})
 			.on('error', debug)
 
@@ -203,34 +148,36 @@ async function subscribePublished({ did }) {
 }
 
 async function getAFSContract(contentDID) {
-	if (!registry.proxyExists(contentDID)) return false
-	const proxyAddress = await registry.getProxyAddress(contentDID)
+	if (!araContracts.registry.proxyExists(contentDID)) return false
+	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
 	return new web3.eth.Contract(AFSAbi, proxyAddress)
 }
 
 function subscribeTransfer(userAddress) {
-	const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
-	const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
+	try {
+		const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
+		const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
 		.on('data', async () => {
 			const newBalance = await getAraBalance(store.account.userAid)
-			internalEmitter.emit(UPDATE_BALANCE, newBalance)
+			windowManager.internalEmitter.emit(UPDATE_BALANCE, newBalance)
 		})
 		.on('error', debug)
 
-	return transferSubscription
+		return transferSubscription
+	} catch (err) {
+		debug('Error %o', err)
+	}
 }
 
 module.exports = {
 	getAccountAddress,
+	getAFSPrice,
 	getAraBalance,
 	getEarnings,
 	getEtherBalance,
 	getLibraryItems,
 	getPublishedEarnings,
-	getPublishedItems,
 	purchaseItem,
-	removedPublishedItem,
-	savePublishedItem,
 	subscribePublished,
 	subscribeTransfer
 }

@@ -1,9 +1,10 @@
 'use strict'
 
 module.exports = {
-  accountSelection: require('./accountSelection'),
-  publish: require('./publish'),
-  register: require('./register'),
+  acmManager: require('./acmManager'),
+  araContractsManager: require('./araContractsManager'),
+  utils: require('./utils'),
   afsManager: require('./afsManager'),
-  araContractsManager: require('./araContractsManager')
+  register: require('./register'),
+  farmerManager: require('./farmerManager')
 }

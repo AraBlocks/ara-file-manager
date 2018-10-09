@@ -5,62 +5,49 @@ const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
   afsManager,
+  farmerManager,
   publish
 } = require('../actions')
-const {
-  CHANGE_BROADCASTING_STATE,
-  CONFIRM_UPDATE_FILE,
-  ESTIMATION,
-  ESTIMATING_COST,
-  FEED_MODAL,
-  FEED_MANAGE_FILE,
-  UPDATE_FILE,
-  UPDATED_FILE,
-  UPDATING_FILE,
-  REFRESH
-} = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
-ipcMain.on(FEED_MANAGE_FILE, (event, load) => dispatch({ type: FEED_MANAGE_FILE, load }))
+ipcMain.on(k.FEED_MANAGE_FILE, (event, load) => dispatch({ type: k.FEED_MANAGE_FILE, load }))
 
-ipcMain.on(UPDATE_FILE, async (event, load) => {
-  debug('%s heard. Load: %O', UPDATE_FILE, load)
-  dispatch({ type: CHANGE_BROADCASTING_STATE, load: false })
+ipcMain.on(k.UPDATE_FILE, async (event, load) => {
+  debug('%s heard. Load: %O', k.UPDATE_FILE, load)
+  dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: false })
   try {
-    event.sender.send(ESTIMATING_COST)
+    event.sender.send(k.ESTIMATING_COST)
     let estimate
     if (load.paths.length == 0) {
       estimate = await publish.setPriceGasEstimate(load)
     } else {
-      await afsManager.removeAllFiles({ did: load.fileAid })
+      await afsManager.removeAllFiles({ did: load.fileAid, password: account.password })
       estimate = await publish.addCreateEstimate(load)
     }
-    debug('Dispatching %s . Load: %O', FEED_MODAL, estimate)
-    dispatch({ type: FEED_MODAL, load: estimate })
-    event.sender.send(ESTIMATION)
+    debug('Dispatching %s . Load: %O', k.FEED_MODAL, estimate)
+    dispatch({ type: k.FEED_MODAL, load: estimate })
+    event.sender.send(k.ESTIMATION)
   } catch(err) {
     debug('Error: %O', err)
   }
 })
 
-ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
-  debug('%s heard. Load: %o', CONFIRM_UPDATE_FILE, load)
+ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
+  debug('%s heard. Load: %o', k.CONFIRM_UPDATE_FILE, load)
   try {
     if (load.paths.length == 0) {
       debug('Updating price only')
-      publish.setPrice({ ...load, password: account.password })
-        .then(async () => updateCompleteHandler(load.did))
-        .catch(debug)
+      await publish.setPrice({ ...load, password: account.password })
     } else {
       debug('Updating Files and/or Price')
-      publish.commit({ ...load, password: account.password })
-        .then(async () => updateCompleteHandler(load.did))
-        .catch(debug)
+      await publish.commit({ ...load, password: account.password })
     }
+    updateCompleteHandler(load.did)
 
     dispatch({
-      type: UPDATING_FILE,
+      type: k.UPDATING_FILE,
       load: {
         aid: load.did,
         name: load.name,
@@ -68,7 +55,7 @@ ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
       }
     })
 
-    windowManager.pingView({ view: 'filemanager', event: REFRESH })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     windowManager.closeWindow('manageFileView')
   } catch (err) {
     debug('Error: %O', err)
@@ -76,10 +63,10 @@ ipcMain.on(CONFIRM_UPDATE_FILE, async (event, load) => {
 })
 
 function updateCompleteHandler(did) {
-  windowManager.pingView({ view: 'filemanager', event: REFRESH })
-  dispatch({ type: UPDATED_FILE, load: did })
-  debug('Dispatch %s . Load: %s', UPDATED_FILE, did)
-  afsManager.unarchiveAFS({ did, path: afsManager.makeAfsPath(did) })
-  afsManager.broadcast({ did: did })
-  dispatch({ type: CHANGE_BROADCASTING_STATE, load: true })
+  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+  dispatch({ type: k.UPDATED_FILE, load: did })
+  debug('Dispatch %s . Load: %s', k.UPDATED_FILE, did)
+  afsManager.unarchiveAFS({ did, path: did })
+  farmerManager.broadcast({ did })
+  dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: true })
 }

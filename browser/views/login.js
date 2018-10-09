@@ -6,7 +6,7 @@ const {
 } = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
-const { LOGIN_DEV } = require('../../lib/constants/stateManagement')
+const { LOGIN } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -67,7 +67,7 @@ class Login extends Nanocomponent {
     e.preventDefault()
     const { usernameValue, passwordValue } = this.state
     const load = { password: passwordValue, userAid: usernameValue }
-    emit({ event: LOGIN_DEV, load })
+    emit({ event: LOGIN, load })
     closeWindow('login')
   }
 

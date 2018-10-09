@@ -61,7 +61,7 @@ app.on('open-url', (event, url) => {
 })
 
 app.on('before-quit', () => {
-  const { stopBroadcast } = require('../kernel/lib/actions/afsManager')
+  const { farmerManager } = require('../kernel/lib/actions')
   const { farmer : { farm } } = require('../kernel/lib/store')
-  stopBroadcast(farm)
+  farmerManager.stopBroadcast(farm)
 })

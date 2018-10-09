@@ -1,6 +1,7 @@
 'use strict'
 
 const {
+  ADD_PUBLISHED_SUB,
   GOT_PUBLISHED_SUB,
   GOT_PUBLISHED_SUBS,
   LOGOUT
@@ -8,6 +9,7 @@ const {
 
 module.exports = (state, { load, type }) => {
   switch (type) {
+    case ADD_PUBLISHED_SUB:
     case GOT_PUBLISHED_SUBS:
       state.published.push(...load)
       break
