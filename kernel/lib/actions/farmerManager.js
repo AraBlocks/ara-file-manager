@@ -2,16 +2,10 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
-const path = require('path')
-const userHome = require('user-home')
 
-function createFarmer({ did, password }) {
+function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
-	return new farmDCDN({
-		userID: did,
-		password,
-		config: path.resolve(userHome, '.ara')
-	})
+	return new farmDCDN({ userID, password })
 }
 
 async function broadcast({ farmer, did, price = 1 }) {
