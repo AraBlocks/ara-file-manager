@@ -3,7 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:util')
 const afs = require('ara-filesystem')
 const araContractsManager = require('./araContractsManager')
-const { AWAITING_DOWNLOAD, DOWNLOADED, PUBLISHING } = require('../../../lib/constants/stateManagement')
+const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
@@ -32,27 +32,6 @@ async function descriptorGenerator(did, opts = {}) {
 		return { ...descriptor, ...opts }
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
-	}
-}
-
-async function descriptorGeneratorPublishing({ did, name, price, size }) {
-	try {
-		did = did.slice(-64)
-		const path = await makeAfsPath(did)
-		const descriptor = {
-			did,
-			downloadPercent: 1,
-			datePublished: new Date,
-			name,
-			peers: 0,
-			price,
-			path,
-			size,
-			status: PUBLISHING
-		}
-		return descriptor
-	} catch (err) {
-		debug('descriptorGeneratorPublishing Error:, %o', err)
 	}
 }
 
@@ -89,7 +68,6 @@ async function writeFileMetaData({ did, size, title, userDID = '' }) {
 
 module.exports = {
 	descriptorGenerator,
-	descriptorGeneratorPublishing,
 	makeAfsPath,
 	readFileMetadata,
 	writeFileMetaData

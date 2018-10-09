@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
-const actionsUtil = require('./util')
+const actionsUtil = require('./utils')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
 const path = require('path')
@@ -19,9 +19,9 @@ async function removeAllFiles({ did, password }) {
 }
 
 function unarchiveAFS({ did }) {
-	debug('Unarchiving %o', { did, path: actionsUtil.makeAfsPath(did) })
+	debug('Unarchiving %s', did)
 	try {
-		araFilesystem.unarchive({ did, path: actionsUtil.makeAfsPath(did), keyringOpts: { secret: 'test-node'} })
+		araFilesystem.unarchive({ did, path: actionsUtil.makeAfsPath(did) })
 	} catch (err) {
 		debug('Error unarchiving: %o', err)
 	}

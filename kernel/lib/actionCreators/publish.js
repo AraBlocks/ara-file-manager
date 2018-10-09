@@ -9,7 +9,7 @@ const {
   acmManager,
   araContractsManager,
   farmerManager,
-  util: actionsUtil
+  utils: actionsUtil
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
@@ -17,26 +17,24 @@ const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('../../lib/lsWindowManager')
 const store = windowManager.sharedData.fetch('store')
 
-const keyringOpts = { secret: 'test-node' }
-
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
   try {
     windowManager.pingView({ view: 'publishFileView', event: k.ESTIMATING_COST })
 
-    let { afs: newAFS, afs: { did } } = await afs.create({ owner: load.userAid, password, keyringOpts })
+    let { afs: newAFS, afs: { did } } = await afs.create({ owner: load.userAid, password })
     await newAFS.close();
-    (await afs.add({ did, paths: load.paths, password, keyringOpts })).close()
+    (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
     actionsUtil.writeFileMetaData({ did, size, title: load.name })
 
     debug('Estimating gas')
-    const commitEstimate = await afs.estimateCommitGasCost({ did, password, keyringOpts })
+    const commitEstimate = await afs.estimateCommitGasCost({ did, password })
     let setPriceEstimate = 0
     if (load.price != null) {
-      setPriceEstimate = await afs.estimateSetPriceGasCost({ did, password, price: Number(load.price), keyringOpts })
+      setPriceEstimate = await afs.estimateSetPriceGasCost({ did, password, price: Number(load.price) })
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
     debug('Gas estimate: %s', gasEstimate)
@@ -80,18 +78,19 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     windowManager.closeWindow('publishFileView')
 
-    await afs.commit({ did: load.did, price: Number(load.price), password: account.password, keyringOpts })
+    await afs.commit({ did: load.did, price: Number(load.price), password: account.password })
     const araBalance = await araContractsManager.getAraBalance(account.userAid)
     debug('Dispatching %s', k.PUBLISHED)
     dispatch({ type: k.PUBLISHED, load: araBalance })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    araContractsManager.subscribePublished({ did: load.did })
+    const subscription = await araContractsManager.subscribePublished({ did: load.did })
+    dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
     afsManager.unarchiveAFS({ did: load.did })
 
     debug('Dispatching %s', k.CHANGE_BROADCASTING_STATE)
     dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: true })
-    // farmerManager.broadcast({ farmer: farmer.farm, did: load.did })
+    farmerManager.broadcast({ farmer: farmer.farm, did: load.did })
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)

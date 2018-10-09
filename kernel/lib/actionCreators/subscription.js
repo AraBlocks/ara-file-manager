@@ -5,9 +5,10 @@ const dispatch = require('../reducers/dispatch')
 const { REFRESH, UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
 const { internalEmitter, pingView } = require('electron-window-manager')
 
-internalEmitter.on(UPDATE_EARNING, async (load) => {
+internalEmitter.on(UPDATE_EARNING, (load) => {
   try {
     debug('Dispatching %s', UPDATE_EARNING)
+    debug(load)
     dispatch({ type: UPDATE_EARNING, load })
     pingView({ view: 'filemanager', event: REFRESH })
   } catch(err) {
@@ -15,12 +16,12 @@ internalEmitter.on(UPDATE_EARNING, async (load) => {
   }
 })
 
-internalEmitter.on(UPDATE_BALANCE, async (load) => {
+internalEmitter.on(UPDATE_BALANCE, (load) => {
   try {
     debug('Dispatching %s', UPDATE_BALANCE)
     dispatch({ type: UPDATE_BALANCE, load })
     pingView({ view: 'filemanager', event: REFRESH })
   } catch(err) {
-
+    debug('Error: %o', err)
   }
 })

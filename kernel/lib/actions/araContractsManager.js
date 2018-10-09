@@ -12,6 +12,7 @@ const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 const { web3 } = require('ara-context')()
 const { web3: { account: araAccount } } = require('ara-util')
+const keyringOpts = { secret: 'test-node' }
 
 async function getAccountAddress(owner, password) {
 	try {
@@ -33,7 +34,7 @@ async function getAFSPrice({ did }) {
 async function getAraBalance(userDID) {
 	debug('Getting account balance')
 	try {
-		const balance = await araContracts.token.balanceOf(userDID, {keyringOpts:{secret:SECRET}})
+		const balance = await araContracts.token.balanceOf(userDID)
 		debug('Balance is %s ARA', balance)
 		return balance
 	} catch (err) {
@@ -54,22 +55,18 @@ async function getEtherBalance(account) {
 
 async function purchaseItem(contentDid) {
 	debug('Purchasing item: %s', contentDid)
-	const {
-		account: {
-			userAid,
-			password
-		}
-	} = store
+	const { account } = store
 	try {
 		await araContracts.purchase(
 			{
-				requesterDid: userAid,
+				requesterDid: account.userAid,
 				contentDid,
-				password,
+				password: account.password,
 				budget: 0
 			}
 		)
 		debug('Purchase Completed')
+		return
 	} catch (err) {
 		debug('Error purchasing item: %o', err)
 	}
@@ -157,15 +154,19 @@ async function getAFSContract(contentDID) {
 }
 
 function subscribeTransfer(userAddress) {
-	const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
-	const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
+	try {
+		const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
+		const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
 		.on('data', async () => {
 			const newBalance = await getAraBalance(store.account.userAid)
-			internalEmitter.emit(UPDATE_BALANCE, newBalance)
+			windowManager.internalEmitter.emit(UPDATE_BALANCE, newBalance)
 		})
 		.on('error', debug)
 
-	return transferSubscription
+		return transferSubscription
+	} catch (err) {
+		debug('Error %o', err)
+	}
 }
 
 module.exports = {

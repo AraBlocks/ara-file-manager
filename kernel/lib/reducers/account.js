@@ -20,7 +20,7 @@ module.exports = async (state, { load = null, type }) => {
       state.password = load.password
       state.accountAddress = load.accountAddress
       state.araBalance = load.araBalance
-      state.username = 'cryptokitter'
+      state.username = 'Test User'
       break
     case LOGOUT:
       Object.keys(state).forEach(key => state[key] = null)

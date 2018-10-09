@@ -1,14 +1,6 @@
 'use strict'
 
-const {
-  AWAITING_DOWNLOAD,
-  DOWNLOAD,
-  DOWNLOADING,
-  DOWNLOAD_FAILED,
-  PUBLISHING,
-  PURCHASING,
-  UPDATING_FILE
-} = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const DynamicButton = require('../../components/dynamicButton')
 const { emit, openFolder } = require('../../lib/tools/windowManagement')
 const ProgressRing = require('../../components/progressRing')
@@ -53,15 +45,15 @@ class FileDescriptor extends Nanocomponent {
   buttonProps(status, did) {
     const props = {}
     switch(status) {
-      case AWAITING_DOWNLOAD:
+      case k.AWAITING_DOWNLOAD:
         props.children = 'Download File'
         props.cssClass = {
           name: 'smallInvisible',
           opts: { color: 'red' }
         }
-        props.onclick = () => emit({ event: DOWNLOAD, load: { did } })
+        props.onclick = () => emit({ event: k.DOWNLOAD, load: { did } })
         break
-      case DOWNLOADING:
+      case k.DOWNLOADING:
          props.children = 'Cancel Download'
          props.cssClass = {
            name: 'smallInvisible',
@@ -69,7 +61,7 @@ class FileDescriptor extends Nanocomponent {
         }
         props.onclick = () => {}
         break
-      case PUBLISHING:
+      case k.PUBLISHING:
         props.children = 'Publishing'
         props.cssClass = {
           name: 'smallInvisible',
@@ -77,7 +69,7 @@ class FileDescriptor extends Nanocomponent {
         }
         props.onclick = () => {}
         break
-      case PURCHASING:
+      case k.PURCHASING:
         props.children = 'Purchasing'
         props.cssClass = {
           name: 'smallInvisible',
@@ -85,7 +77,7 @@ class FileDescriptor extends Nanocomponent {
         }
         props.onclick = () => {}
         break
-      case DOWNLOAD_FAILED:
+      case k.DOWNLOAD_FAILED:
         props.children = 'Download Failed'
         props.cssClass = {
           name: 'smallInvisible',
@@ -93,7 +85,7 @@ class FileDescriptor extends Nanocomponent {
         }
         props.onclick = () => {}
         break
-      case UPDATING_FILE:
+      case k.UPDATING_FILE:
         props.children = 'Updating'
         props.cssClass = {
           name: 'smallInvisible',
@@ -122,10 +114,11 @@ class FileDescriptor extends Nanocomponent {
       children,
       props
     } = this
+
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.iconHolder} fileDescriptor-iconHolder">
-          ${[PUBLISHING, PURCHASING, UPDATING_FILE, DOWNLOADING].includes(status)
+          ${[k.PUBLISHING, k.PURCHASING, k.UPDATING_FILE, k.DOWNLOADING].includes(status)
             ? html`<div style="margin-left: 3px; margin-top: 3px;" class="spinner-small-blue"></div>`
             : children.progressRing.render({ downloadPercent, status })}
         </div>
@@ -139,7 +132,7 @@ class FileDescriptor extends Nanocomponent {
             </div>
           </div>
           <div class="${styles.sizeHolder(status)} fileDescriptor-sizeHolder">
-            ${status === DOWNLOADING
+            ${status === k.DOWNLOADING
               ? `${filesize(props.size) /*Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)*/}`
               : filesize(props.size)}
           </div>

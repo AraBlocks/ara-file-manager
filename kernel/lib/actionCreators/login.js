@@ -2,6 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:login')
 const araUtil = require('ara-util')
+const aid = require('ara-identity')
 const {
   acmManager,
   afsManager,
@@ -28,7 +29,7 @@ internalEmitter.on(k.LOGOUT, () => {
 ipcMain.on(k.LOGIN, async (event, load) => {
   debug('%s heard', k.LOGIN)
   try {
-    const ddo = await araUtil.resolveDDO(load.userAid, {keyringOpts:{secret:SECRET}})
+    const ddo = await aid.resolve(load.userAid)
     const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password}))
     if (incorrectPW) { throw 'IncorrectPW' }
   } catch (err) {

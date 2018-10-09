@@ -3,7 +3,7 @@
 module.exports = {
   acmManager: require('./acmManager'),
   araContractsManager: require('./araContractsManager'),
-  util: require('./util'),
+  utils: require('./utils'),
   afsManager: require('./afsManager'),
   register: require('./register'),
   farmerManager: require('./farmerManager')
