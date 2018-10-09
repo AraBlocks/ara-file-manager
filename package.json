@@ -26,7 +26,7 @@
     "ara-context": "github:arablocks/ara-context",
     "ara-identity": "github:arablocks/ara-identity",
     "ara-network-node-dcdn-farm": "github:littlstar/ara-network-node-dcdn-farm",
-    "ara-contracts": "github:arablocks/ara-contracts#cck-testnet-deploy",
+    "ara-contracts": "github:arablocks/ara-contracts",
     "ara-filesystem": "github:arablocks/ara-filesystem",
     "ara-util": "github:arablocks/ara-util",
     "choo": "^6.13.0",
