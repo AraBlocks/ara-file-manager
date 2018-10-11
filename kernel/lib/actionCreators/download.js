@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:download')
 const dispatch = require('../reducers/dispatch')
-const { afsManager } = require('../actions')
+const { farmerManager } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
@@ -14,7 +14,7 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 		debug('Dispatching %s', k.DOWNLOADING)
 		dispatch({ type: k.DOWNLOADING, load })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-		afsManager.download({
+		farmerManager.download({
 			farmer: store.farmer.farm,
 			did: load.did,
 			handler: (load) => {
