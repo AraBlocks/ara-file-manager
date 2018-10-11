@@ -11,8 +11,8 @@ const userHome = require('user-home')
 isDev && require('./ipc-dev')
 
 //Remove farmer related stores. Seem to crash app sometimes.
-const storePath = path.resolve(userHome, '.ara', 'store.json')
-const jobsPath = path.resolve(userHome, '.ara', 'jobs.json')
+const storePath = path.resolve(userHome, '.ara', 'dcdn', 'store.json')
+const jobsPath = path.resolve(userHome, '.ara', 'dcdn', 'jobs.json')
 fs.existsSync(jobsPath) && fs.unlinkSync(jobsPath)
 fs.existsSync(storePath) && fs.unlinkSync(storePath)
 
@@ -42,8 +42,6 @@ app.on('ready', () => {
 
   //Registers command/control + \ to open dev tools
   globalShortcut.register('CommandOrControl+\\', () => windowManager.getCurrent().object.openDevTools())
-  //Registers command/control + R to Refresh
-  globalShortcut.register('CommandOrControl+R', () => windowManager.getCurrent().object.reload())
   if (process.platform == 'win32') { deepLinkingUrl = process.argv.slice(1) }
   deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
   //Hot reloads browser side changes

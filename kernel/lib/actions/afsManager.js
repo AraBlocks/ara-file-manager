@@ -32,7 +32,7 @@ async function surfaceAFS(items) {
 }
 
 function renameAfsFiles(aid, fileName) {
-	const afsFolderPath = makeAfsPath(aid)
+	const afsFolderPath = actionsUtil.makeAfsPath(aid)
 	const afsFilePath = path.join(afsFolderPath, 'data')
 	const newPath = path.join(afsFolderPath, fileName)
 	fs.rename(afsFilePath, newPath, function (err) {
