@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
-
+const afsManager = require('./afsManager')
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
 	return new farmDCDN({ userID, password })
@@ -72,7 +72,7 @@ async function download({
 		farmer.on('complete', (did) => {
 			debug('Download complete!')
 			handler({ downloadPercent: 1, did })
-			renameAfsFiles(did, 'movie.mov')
+			afsManager.renameAfsFiles(did, 'movie.mov')
 		})
 		farmer.on('requestcomplete', (did) => {
 			debug('Rewards allocated')
