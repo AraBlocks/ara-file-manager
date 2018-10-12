@@ -4,7 +4,5 @@ package-lock.json
 dist/
 .cfs
 release-builds/
-afses.json
 foo.js
-store.json
-jobs.json
+bar.js

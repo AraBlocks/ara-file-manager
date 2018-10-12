@@ -62,9 +62,9 @@ ipcMain.on(k.LOGIN, async (event, load) => {
 
     switchLoginState(true)
 
-    const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
+    const purchasedDIDs = []//await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
-    const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
+    const publishedDIDs = []//await acmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS(publishedDIDs)
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased} }))
