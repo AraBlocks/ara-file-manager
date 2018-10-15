@@ -1,7 +1,7 @@
 'use strict'
 
-const { AWAITING_DOWNLOAD } = require('../../../../lib/constants/stateManagement')
-const { fonts } = require('styleUtils')
+const { AWAITING_DOWNLOAD, DOWNLOADING } = require('../../../../lib/constants/stateManagement')
+const { fonts, colorSelector } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
@@ -20,16 +20,29 @@ module.exports = {
   container: css`
     :host {
       display: flex;
-      height: 75px;
       width: 100%;
     }
   `,
 
-  iconHolder: css`
+  exclamation: css`
+    :host {
+      color: red;
+      font-size: 20px;
+    }
+  `,
+
+  hamburgerHolder: css`
     :host {
       display: flex;
-      justify-content: left;
-      width: 12%;
+      align-items: center;
+      width: 9%;
+    }
+  `,
+
+  hamburger: css`
+    :host {
+      height: 8px;
+      width: 40%;
     }
   `,
 
@@ -44,18 +57,31 @@ module.exports = {
   nameHolder: css`
     :host {
       display: flex;
-      font-family: ${fonts.bold};
-      font-size: 16px;
+      font-family: ${fonts.bold} !important;
+      font-weight: bold;
+      font-size: 17px;
+      margin-bottom: 2px;
       width: 75%;
     }
   `,
 
   sizeHolder(status) {
+    let color
+    switch (status) {
+      case AWAITING_DOWNLOAD:
+        color = 'grey'
+        break
+      case DOWNLOADING:
+        color = 'red'
+        break
+      default:
+        color = 'blue'
+    }
     return css`
       :host {
-        color: ${status === AWAITING_DOWNLOAD ? 'grey' : 'black' };
+        color: ${colorSelector(color)};
         font-family: ${fonts.light};
-        font-size: 13px;
+        font-size: 12px;
       }
     `
   },
