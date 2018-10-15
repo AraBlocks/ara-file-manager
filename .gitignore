@@ -6,3 +6,4 @@ dist/
 release-builds/
 foo.js
 bar.js
+package-lock.json
