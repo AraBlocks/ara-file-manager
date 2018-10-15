@@ -3,6 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const afsManager = require('./afsManager')
+const windowManager = require('electron-window-manager')
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
 	return new farmDCDN({ userID, password })
@@ -19,6 +20,19 @@ async function broadcast({ farmer, did, price = 1 }) {
 		debug('Broadcasting for %s', did)
 	} catch (err) {
 		debug('Error broadcasting %O', err)
+	}
+}
+
+async function braodcastAll(farmer) {
+	try {
+		debug('Broadcasting all afses')
+		const { files } = windowManager.sharedData.fetch('store')
+		const didList = files.published.filter(file => file.shouldBroadcast).map(file => file.did)
+		didList.forEach(did => {
+			broadcast({ farmer, did })
+		})
+	} catch(err) {
+		debug(err)
 	}
 }
 
@@ -86,6 +100,7 @@ async function download({
 module.exports = {
 	createFarmer,
 	broadcast,
+	braodcastAll,
 	stopBroadcast,
 	download
 }

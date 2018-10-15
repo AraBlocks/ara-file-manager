@@ -26,6 +26,7 @@ async function descriptorGenerator(did, opts = {}) {
 			peers: 0,
 			price,
 			path,
+			shouldBroadcast: true,
 			size: meta ? meta.size : 0,
 			status: AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		}

@@ -64,11 +64,14 @@ ipcMain.on(k.LOGIN, async (event, load) => {
 
     const purchasedDIDs = []//await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
-    const publishedDIDs = []//await acmManager.getPublishedItems(load.userAid)
+    const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS(publishedDIDs)
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased} }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+    farmerManager.braodcastAll(store.farmer.farm)
+    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: true })
 
     const updatedItems = await araContractsManager.getPublishedEarnings(files.published);
     ({ files } = dispatch({ type: k.GOT_EARNINGS, load: updatedItems }))
