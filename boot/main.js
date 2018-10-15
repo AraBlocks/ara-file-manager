@@ -61,5 +61,5 @@ app.on('open-url', (event, url) => {
 app.on('before-quit', () => {
   const { farmerManager } = require('../kernel/lib/actions')
   const { farmer : { farm } } = require('../kernel/lib/store')
-  farmerManager.stopBroadcast(farm)
+  farmerManager.stopAllBroadcast(farm)
 })

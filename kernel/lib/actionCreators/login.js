@@ -19,7 +19,7 @@ const { switchLoginState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
-  farmerManager.stopBroadcast(store.farmer.farm)
+  farmerManager.stopAllBroadcast(store.farmer.farm)
   dispatch({ type: k.LOGOUT })
   switchLoginState(false)
   windowManager.closeWindow('filemanager')

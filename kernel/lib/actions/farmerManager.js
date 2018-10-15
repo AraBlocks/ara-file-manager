@@ -36,7 +36,17 @@ async function braodcastAll(farmer) {
 	}
 }
 
-async function stopBroadcast(farmer) {
+async function stopBroadcast({ farmer, did }) {
+	try {
+		farmer.unjoin({
+			did
+		})
+	} catch(err) {
+		debug('Error stopping broadcast for %s: %O', did, err)
+	}
+}
+
+async function stopAllBroadcast(farmer) {
 	debug('Stopping DCDN broadcast')
 	if (farmer == null) { return }
 	try {
@@ -99,6 +109,7 @@ module.exports = {
 	createFarmer,
 	broadcast,
 	braodcastAll,
+	stopAllBroadcast,
 	stopBroadcast,
 	download
 }
