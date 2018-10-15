@@ -25,12 +25,12 @@ class ItemRow extends Nanocomponent {
   }
 
   createElement(file) {
-    const { downloadPercent, status } = file
+    const { downloadPercent, status, outOfSync } = file
     const { children } = this
     return html`
       <div class="${styles.container} ItemRow-container">
         <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
-          ${children.fileDescriptor.render({ downloadPercent, status })}
+          ${children.fileDescriptor.render({ downloadPercent, status, outOfSync })}
         </div>
         ${children.stats.render({ ...file })}
       </div>

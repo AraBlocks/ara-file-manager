@@ -10,6 +10,7 @@ module.exports = {
 	container: css`
 		:host {
 			cursor: pointer;
+			height: 100%;
 		}
 
 		:host:hover div {
@@ -29,8 +30,8 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
-			height: 25px;
-			justify-content: space-around;
+			justify-content: space-between;
+			height: 100%;
 		}
 	`,
 
@@ -53,8 +54,7 @@ module.exports = {
 	menuBar: css`
 		:host {
 			background-color: black;
-			height: 3px;
-			width: 20px;
+			height: 25%;
 		}
 	`
 }
