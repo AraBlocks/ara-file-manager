@@ -37,10 +37,8 @@ async function braodcastAll(farmer) {
 }
 
 async function stopBroadcast(farmer) {
-	if (!broadcastState.isBroadcasting) {
-		debug('Currently not broadcasting')
-	}
 	debug('Stopping DCDN broadcast')
+	if (farmer == null) { return }
 	try {
 		await farmer.stop()
 	} catch (e) {

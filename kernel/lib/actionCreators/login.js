@@ -71,7 +71,6 @@ ipcMain.on(k.LOGIN, async (event, load) => {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     farmerManager.braodcastAll(store.farmer.farm)
-    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: true })
 
     const updatedItems = await araContractsManager.getPublishedEarnings(files.published);
     ({ files } = dispatch({ type: k.GOT_EARNINGS, load: updatedItems }))

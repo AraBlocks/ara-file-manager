@@ -88,8 +88,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
     // afsManager.unarchiveAFS({ did: load.did })
 
-    debug('Dispatching %s', k.CHANGE_BROADCASTING_STATE)
-    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: true })
     farmerManager.broadcast({ farmer: farmer.farm, did: load.did })
   } catch (err) {
     debug('Error in committing: %o', err)
