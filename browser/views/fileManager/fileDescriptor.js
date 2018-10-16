@@ -27,7 +27,7 @@ class FileDescriptor extends Nanocomponent {
     this.createSummary = this.createSummary.bind(this)
   }
 
-  createSummary({ status, name, size, downloadPercent }) {
+  createSummary({ status, name, downloadPercent, seeding }) {
     const nameDiv = [ k.OUT_OF_SYNC, k.UPDATE_AVAILABLE ].includes(status)
       ? html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
@@ -43,19 +43,21 @@ class FileDescriptor extends Nanocomponent {
           </div>
         </div>
       `
-    const sizeDiv = this.styleSize({ size, status, downloadPercent })
+    const sizeDiv = this.styleSize({ status, downloadPercent, seeding })
 
     return [ nameDiv, sizeDiv ]
   }
 
-  styleSize({ size, status, downloadPercent }) {
+  styleSize({ status, downloadPercent, seeding }) {
+    const { size } = this.props
     let spanColor
     let msg
     let unitColor
     let downloadingModifer
+
     switch (status) {
       case k.DOWNLOADED_PUBLISHED:
-        spanColor = 'blue'
+        spanColor = seeding ? 'blue' : 'black'
         break
       case k.AWAITING_DOWNLOAD:
         spanColor = 'grey'
@@ -94,7 +96,7 @@ class FileDescriptor extends Nanocomponent {
     return true
   }
 
-  createElement({ status, downloadPercent }) {
+  createElement({ status, downloadPercent, seeding }) {
     const {
       children,
       props,
@@ -113,6 +115,7 @@ class FileDescriptor extends Nanocomponent {
             status,
             downloadPercent,
             name: props.name,
+            seeding,
             size: props.size
           })}
         </div>
