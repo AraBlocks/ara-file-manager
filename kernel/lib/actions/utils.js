@@ -7,6 +7,8 @@ const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateM
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
+const farmConfig = require('ara-network-node-dcdn-farm/src/rc')()
+let dcdnFarmStore  = null
 
 async function descriptorGenerator(did, opts = {}) {
 	try {
@@ -26,7 +28,7 @@ async function descriptorGenerator(did, opts = {}) {
 			peers: 0,
 			price,
 			path,
-			shouldBroadcast: true,
+			shouldBroadcast: getBroadcastingState(did),
 			size: meta ? meta.size : 0,
 			status: AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		}
@@ -38,6 +40,33 @@ async function descriptorGenerator(did, opts = {}) {
 
 function makeAfsPath(did) {
 	return path.join(createAFSKeyPath(did), 'home', 'content')
+}
+
+function getBroadcastingState(did) {
+	if (dcdnFarmStore == null) {
+		loadDcdnStore()
+	}
+	const fileData = dcdnFarmStore[did]
+	if (fileData == null) {
+		return true
+	}
+	try {
+		return JSON.parse(fileData).upload
+	} catch (err) {
+		return true
+	}
+}
+
+function loadDcdnStore() {
+	const fileDirectory = farmConfig.dcdn.config
+	let data
+	try {
+		data = fs.readFileSync(fileDirectory)
+		const itemList = JSON.parse(data)
+		dcdnFarmStore = itemList
+	} catch (err) {
+		debug('Can\'t load DCDN farm store')
+	}
 }
 
 async function readFileMetadata(did) {

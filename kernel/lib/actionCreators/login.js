@@ -47,6 +47,7 @@ ipcMain.on(k.LOGIN, async (event, load) => {
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
+    farmerManager.startBroadcast(farmer)
 
     dispatch({
       type: k.LOGIN,
@@ -66,11 +67,10 @@ ipcMain.on(k.LOGIN, async (event, load) => {
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
     const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS(publishedDIDs)
+
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased} }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-
-    farmerManager.broadcastAll(store.farmer.farm)
 
     const updatedItems = await araContractsManager.getPublishedEarnings(files.published);
     ({ files } = dispatch({ type: k.GOT_EARNINGS, load: updatedItems }))
