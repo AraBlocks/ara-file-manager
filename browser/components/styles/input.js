@@ -13,7 +13,7 @@ module.exports = {
   container: css`
     :host {
       align-items: center;
-      border: 1px solid var(--ara-input-grey);
+      border: 1px solid var(--ara-grey);
       display: flex;
       justify-content: space-between;
       width: 100%;
