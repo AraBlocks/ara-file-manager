@@ -108,7 +108,7 @@ async function download({
 module.exports = {
 	createFarmer,
 	broadcast,
-	braodcastAll,
+	broadcastAll,
 	stopAllBroadcast,
 	stopBroadcast,
 	download
