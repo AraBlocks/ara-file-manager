@@ -19,7 +19,7 @@ const { switchLoginState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
-  farmerManager.stopBroadcast(store.farmer.farm)
+  farmerManager.stopAllBroadcast(store.farmer.farm)
   dispatch({ type: k.LOGOUT })
   switchLoginState(false)
   windowManager.closeWindow('filemanager')
@@ -64,11 +64,13 @@ ipcMain.on(k.LOGIN, async (event, load) => {
 
     const purchasedDIDs = []//await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs)
-    const publishedDIDs = []//await acmManager.getPublishedItems(load.userAid)
+    const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS(publishedDIDs)
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased} }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+    farmerManager.broadcastAll(store.farmer.farm)
 
     const updatedItems = await araContractsManager.getPublishedEarnings(files.published);
     ({ files } = dispatch({ type: k.GOT_EARNINGS, load: updatedItems }))
