@@ -23,7 +23,7 @@ async function broadcast({ farmer, did, price = 1 }) {
 	}
 }
 
-async function braodcastAll(farmer) {
+async function broadcastAll(farmer) {
 	try {
 		debug('Broadcasting all afses')
 		const { files } = windowManager.sharedData.fetch('store')

@@ -65,15 +65,12 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
       debug('Updating Files and/or Price')
       await afs.commit({ did: load.did, price: Number(load.price), password: account.password })
     }
-    updateCompleteHandler(load.did)
+
+    dispatch({ type: k.UPDATED_FILE, load: load.did })
+    debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load.did)
+    farmerManager.broadcast({ did: load.did, farmer: farmer.farm })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
     debug('Error: %O', err)
   }
 })
-
-function updateCompleteHandler(did) {
-  dispatch({ type: k.UPDATED_FILE, load: did })
-  debug('Dispatch %s . Load: %s', k.UPDATED_FILE, did)
-  farmerManager.broadcast({ did, farmer: farmer.farm })
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-}
