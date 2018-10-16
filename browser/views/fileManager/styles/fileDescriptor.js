@@ -20,7 +20,6 @@ module.exports = {
   container: css`
     :host {
       display: flex;
-      width: 100%;
     }
   `,
 
@@ -61,7 +60,6 @@ module.exports = {
       font-weight: bold;
       font-size: 17px;
       margin-bottom: 2px;
-      width: 75%;
     }
   `,
 
