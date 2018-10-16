@@ -9,7 +9,7 @@ function createFarmer({ did: userID, password }) {
 	return new farmDCDN({ userID, password })
 }
 
-async function joinBroadcast({ farmer, did, price = 1 }) {
+function joinBroadcast({ farmer, did, price = 1 }) {
 	try {
 		farmer.join({
 			did,
@@ -17,9 +17,9 @@ async function joinBroadcast({ farmer, did, price = 1 }) {
 			upload: true,
 			price
 		})
-		debug('Broadcasting for %s', did)
+		debug('Joining broadcast for %s', did)
 	} catch (err) {
-		debug('Error broadcasting %O', err)
+		debug('Error joining broadcasting %O', err)
 	}
 }
 
@@ -36,7 +36,8 @@ async function broadcastAll(farmer) {
 	}
 }
 
-async function unjoinBroadcast({ farmer, did }) {
+function unjoinBroadcast({ farmer, did }) {
+	debug('Unjoining broadcast for %s', did)
 	try {
 		farmer.unjoin({
 			did
@@ -111,12 +112,11 @@ async function download({
 }
 
 module.exports = {
+	broadcastAll,
 	createFarmer,
 	joinBroadcast,
-	broadcastAll,
 	startBroadcast,
 	stopAllBroadcast,
-	joinBroadcast,
 	unjoinBroadcast,
 	download
 }
