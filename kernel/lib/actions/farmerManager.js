@@ -3,6 +3,8 @@
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const afsManager = require('./afsManager')
+const fs = require('fs')
+const farmConfig = require('ara-network-node-dcdn-farm/src/rc')()
 const windowManager = require('electron-window-manager')
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
@@ -23,17 +25,33 @@ function joinBroadcast({ farmer, did, price = 1 }) {
 	}
 }
 
-async function broadcastAll(farmer) {
-	try {
-		debug('Broadcasting all afses')
-		const { files } = windowManager.sharedData.fetch('store')
-		const didList = files.published.filter(file => file.shouldBroadcast).map(file => file.did)
-		didList.forEach(did => {
-			broadcast({ farmer, did })
-		})
-	} catch(err) {
-		debug(err)
-	}
+function getBroadcastingState({ did, dcdnFarmStore }) {
+	debug('getting braodcasting state')
+  try {
+		if (dcdnFarmStore == null) {
+			dcdnFarmStore = loadDcdnStore()
+		}
+		const fileData = dcdnFarmStore[did]
+		if (fileData == null) {
+			return false
+		}
+    return JSON.parse(fileData).upload
+  } catch (err) {
+    return false
+  }
+}
+
+function loadDcdnStore() {
+	debug('loading dcdn farm store')
+  try {
+    const fileDirectory = farmConfig.dcdn.config
+    const data = fs.readFileSync(fileDirectory)
+    const itemList = JSON.parse(data)
+    return itemList
+  } catch (err) {
+    debug('Can\'t load DCDN farm store')
+    return {}
+  }
 }
 
 function unjoinBroadcast({ farmer, did }) {
@@ -112,8 +130,9 @@ async function download({
 }
 
 module.exports = {
-	broadcastAll,
 	createFarmer,
+	getBroadcastingState,
+	loadDcdnStore,
 	joinBroadcast,
 	startBroadcast,
 	stopAllBroadcast,

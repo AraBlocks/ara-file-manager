@@ -64,7 +64,7 @@ ipcMain.on(k.LOGIN, async (event, load) => {
 
     switchLoginState(true)
 
-    const farmerStoreList = actionsUtil.loadDcdnStore()
+    const farmerStoreList = farmerManager.loadDcdnStore()
     const purchasedDIDs = []//await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs, farmerStoreList)
     const publishedDIDs = await acmManager.getPublishedItems(load.userAid)

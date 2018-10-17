@@ -30,7 +30,7 @@ function unarchiveAFS({ did }) {
 
 async function surfaceAFS(items, dcdnFarmStore) {
 	return Promise.all(items.map(item => actionsUtil.descriptorGenerator(item, {
-		shouldBroadcast: actionsUtil.getBroadcastingState({ did: item, dcdnFarmStore })
+		shouldBroadcast: farmerManager.getBroadcastingState({ did: item, dcdnFarmStore })
 	})))
 }
 
