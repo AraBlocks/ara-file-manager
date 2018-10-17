@@ -5,6 +5,7 @@ const actionsUtil = require('./utils')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
 const path = require('path')
+const farmerManager = require('../actions/farmerManager')
 
 async function removeAllFiles({ did, password }) {
 	try {
@@ -27,8 +28,10 @@ function unarchiveAFS({ did }) {
 	}
 }
 
-async function surfaceAFS(items) {
-	return Promise.all(items.map(item => actionsUtil.descriptorGenerator(item)))
+async function surfaceAFS(items, dcdnFarmStore) {
+	return Promise.all(items.map(item => actionsUtil.descriptorGenerator(item, {
+		shouldBroadcast: farmerManager.getBroadcastingState({ did: item, dcdnFarmStore })
+	})))
 }
 
 function renameAfsFiles(aid, fileName) {

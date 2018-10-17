@@ -88,7 +88,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
     // afsManager.unarchiveAFS({ did: load.did })
 
-    farmerManager.broadcast({ farmer: farmer.farm, did: load.did })
+    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)

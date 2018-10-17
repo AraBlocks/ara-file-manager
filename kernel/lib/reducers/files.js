@@ -1,105 +1,89 @@
 'use strict'
 
-const {
-  AWAITING_DOWNLOAD,
-  CLEAN_UI,
-  DOWNLOADED,
-  DOWNLOADING,
-  DOWNLOAD_FAILED,
-  DOWNLOADED_PUBLISHED,
-  DOWNLOAD_START,
-  ERROR_PUBLISHING,
-  GETTING_USER_DATA,
-  GOT_EARNINGS,
-  GOT_LIBRARY,
-  LOGOUT,
-  PUBLISHED,
-  PUBLISHING,
-  PURCHASED,
-  PURCHASING,
-  UPDATED_FILE,
-  UPDATING_FILE,
-  UPDATE_EARNING
-} = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load = null, type }) => {
   let file
   switch (type){
-    case DOWNLOADING:
+    case k.CHANGE_BROADCASTING_STATE:
+      file = findFile(load.did, state.published)
+      file.shouldBroadcast = load.shouldBroadcast
+      break
+    case k.DOWNLOADING:
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = load.downloadPercent
       file.size = load.size || file.size
-      file.status = DOWNLOADING
+      file.status = k.DOWNLOADING
       break
-    case DOWNLOADED:
+    case k.DOWNLOADED:
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = 1
-      file.status = DOWNLOADED_PUBLISHED
+      file.status = k.DOWNLOADED_PUBLISHED
       break
-    case DOWNLOAD_FAILED:
+    case k.DOWNLOAD_FAILED:
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = 0
-      file.status = DOWNLOAD_FAILED
+      file.status = k.DOWNLOAD_FAILED
       break
-    case DOWNLOAD_START:
+    case k.DOWNLOAD_START:
       state.purchased.push(load)
       break
-    case ERROR_PUBLISHING:
+    case k.ERROR_PUBLISHING:
       state.published = state.published.slice(0, state.published.length - 1)
       break
-    case GOT_EARNINGS:
+    case k.GOT_EARNINGS:
       state.published = load
       break
-    case GOT_LIBRARY:
+    case k.GOT_LIBRARY:
       state.loadingLibrary = false
       state.published = load.published
       state.purchased = load.purchased
       break
-    case GETTING_USER_DATA:
+    case k.GETTING_USER_DATA:
       state.loadingLibrary = true
       break
-    case LOGOUT:
-    case CLEAN_UI:
+    case k.LOGOUT:
+    case k.CLEAN_UI:
       state.published = []
       state.purchased = []
       state.loadingLibrary = false
       break
-    case PUBLISHING:
+    case k.PUBLISHING:
       state.published.push(load)
       break
-    case PUBLISHED:
+    case k.PUBLISHED:
       file = state.published[state.published.length - 1]
       file.downloadPercent = 1
-      file.status = DOWNLOADED_PUBLISHED
+      file.status = k.DOWNLOADED_PUBLISHED
       file.datePublished = new Date
       break
-    case PURCHASING:
+    case k.PURCHASING:
       state.purchased.push(load)
       break
-    case PURCHASED:
+    case k.PURCHASED:
       file = state.purchased[state.purchased.length - 1]
-      file.status = AWAITING_DOWNLOAD
+      file.status = k.AWAITING_DOWNLOAD
       break
-    case UPDATING_FILE:
+    case k.UPDATING_FILE:
       file = findFile(load.aid, state.published)
       if(file !== null) {
         file.name = load.name
         file.price = load.price == null ? file.price : load.price
         file.size = load.size == 0 ? file.size : load.size
-        file.status = UPDATING_FILE
+        file.status = k.UPDATING_FILE
       }
       break
-    case UPDATED_FILE:
+    case k.UPDATED_FILE:
       file = findFile(load, state.published)
       if(file !== null) {
-        file.status = DOWNLOADED_PUBLISHED
+        file.status = k.DOWNLOADED_PUBLISHED
       }
       break
-    case UPDATE_EARNING:
+    case k.UPDATE_EARNING:
       file = findFile(load.did, state.published)
       file.earnings = file.earnings += Number(load.earning)
       break
-    case 'SET_SIZE':
+    case k.SET_SIZE:
       file = state.purchased[state.purchased.length - 1]
       file.size = file.size || load
       break

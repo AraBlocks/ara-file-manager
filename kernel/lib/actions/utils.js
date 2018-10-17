@@ -7,6 +7,7 @@ const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateM
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
+const { farmerManager } = require('../actions')
 
 async function descriptorGenerator(did, opts = {}) {
 	try {
@@ -26,7 +27,7 @@ async function descriptorGenerator(did, opts = {}) {
 			peers: 0,
 			price,
 			path,
-			shouldBroadcast: true,
+			shouldBroadcast: false,
 			size: meta ? meta.size : 0,
 			status: AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		}

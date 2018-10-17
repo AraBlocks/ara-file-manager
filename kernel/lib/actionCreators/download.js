@@ -18,7 +18,7 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 			farmer: store.farmer.farm,
 			did: load.did,
 			handler: (load) => {
-				dispatch({ type: 'SET_SIZE', load: load.size })
+				dispatch({ type: k.SET_SIZE, load: load.size })
 				windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 				if (load.downloadPercent !== 1) {
 					debug('Dispatching %s', k.DOWNLOADING)
