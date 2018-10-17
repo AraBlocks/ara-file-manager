@@ -7,7 +7,6 @@ const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateM
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
-const farmConfig = require('ara-network-node-dcdn-farm/src/rc')()
 const { farmerManager } = require('../actions')
 
 async function descriptorGenerator(did, opts = {}) {

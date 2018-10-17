@@ -26,7 +26,7 @@ function joinBroadcast({ farmer, did, price = 1 }) {
 }
 
 function getBroadcastingState({ did, dcdnFarmStore }) {
-	debug('getting braodcasting state')
+	debug('getting broadcasting state')
   try {
 		if (dcdnFarmStore == null) {
 			dcdnFarmStore = loadDcdnStore()
@@ -131,11 +131,11 @@ async function download({
 
 module.exports = {
 	createFarmer,
+	download,
 	getBroadcastingState,
 	loadDcdnStore,
 	joinBroadcast,
 	startBroadcast,
 	stopAllBroadcast,
-	unjoinBroadcast,
-	download
+	unjoinBroadcast
 }
