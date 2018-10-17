@@ -3,6 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const afsManager = require('./afsManager')
+
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
 	return new farmDCDN({ userID, password })
