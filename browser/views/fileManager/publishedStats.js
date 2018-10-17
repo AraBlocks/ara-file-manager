@@ -12,7 +12,44 @@ const Nanocomponent = require('nanocomponent')
 class PublishedStats extends Nanocomponent {
   constructor({ file }){
     super()
-    this.props = { file }
+    this.props = {
+      file
+    }
+    this.children = {
+      button: new DynamicButton(this.buttonProps(file))
+    }
+  }
+
+  buttonProps(file) {
+    const props = {
+      cssClass : {
+        name: 'smallInvisible',
+        opts: { weight: 'light '}
+      }
+    }
+    switch(file.status) {
+      case AWAITING_DOWNLOAD:
+        props.cssClass.opts.color = 'red'
+        props.children = 'Download File'
+        break
+      case DOWNLOADING:
+        props.cssClass.opts.color = 'grey'
+        props.children = 'Downloading File'
+        break
+      default:
+        props.cssClass.opts.color = 'blue'
+        props.children = 'Manage File'
+        props.onclick = () => {
+          const load = {
+            aid: file.did,
+            name: file.name,
+            price: file.price
+          }
+          windowManagement.emit({ event: FEED_MANAGE_FILE, load })
+          windowManagement.openWindow('manageFileView')
+        }
+    }
+    return props
   }
 
   update() {
@@ -25,6 +62,10 @@ class PublishedStats extends Nanocomponent {
     price,
     status
   }) {
+    const {
+      children,
+      buttonProps,
+    } = this
 
     return html`
       <div class="${styles.container(status)} publishedStats-container">
@@ -33,14 +74,17 @@ class PublishedStats extends Nanocomponent {
         </div>
         <div class="${styles.stats} publishedStats-stats">
           <div>
-            <span class="${styles.bolden} publishedStats-bolden">Peers:</span > ${peers}
+            <b>Peers:</b> ${peers}
           </div>
           <div class="${styles.divider} publishedStats-divider">
             |
           </div>
           <div>
-          <span class="${styles.bolden} publishedStats-bolden">Earnings:</span> ${earnings} Ara
+            <b>Earnings:</b> ${earnings} Ara
           </div>
+        </div>
+        <div class="${styles.buttonHolder} publishedStats-buttonHolder">
+          ${children.button.render(buttonProps(status))}
         </div>
       </div>
     `
