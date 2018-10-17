@@ -6,13 +6,13 @@ module.exports = {
   container: css`
     :host {
       display: flex;
-      height: 50px;
       justify-content: space-between;
     }
   `,
 
   fileDescriptorHolder: css`
     :host {
+      min-height: 85px;
       min-width: 220px;
     }
   `,
