@@ -22,11 +22,10 @@ class ProgressBar extends Nanocomponent {
       default:
         color = 'red'
     }
-    console.log(styles.colorSelector(color))
 
     return html`
       <div class="${styles.holder} progressBar-holder">
-        <div style="background-color: ${styles.colorSelector(color)}; width:${((downloadPercent * 100)||1) + '%'};"></div>
+        <div style="background-color: ${styles.colorSelector(color)}; width:${(downloadPercent * 100) + '%'};"></div>
       </div>
     `
   }

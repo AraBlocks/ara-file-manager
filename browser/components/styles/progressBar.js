@@ -15,7 +15,7 @@ module.exports = {
 
     :host > div {
       height: 1px;
-      transition: width 1000ms;
+      transition: width 100ms;
     }
   `,
 }
