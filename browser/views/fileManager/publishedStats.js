@@ -5,6 +5,11 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class PublishedStats extends Nanocomponent {
+  constructor({ file }){
+    super()
+    this.props = { file }
+  }
+
   update() {
     return true
   }
