@@ -42,7 +42,6 @@ class FileDescriptor extends Nanocomponent {
     let downloadedSpanColor
     let msg
     let unitColor
-    let downloadingModifer
     switch (status) {
       case k.DOWNLOADED_PUBLISHED:
         spanColor = seeding ? 'blue' : 'black'
