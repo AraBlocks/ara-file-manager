@@ -65,12 +65,26 @@ module.exports = {
     }
   `,
 
-  sizeHolder: css`
-    :host {
-      font-family: ${fonts.light};
-      font-size: 12px;
+  sizeHolder(status) {
+    let color
+    switch (status) {
+      case AWAITING_DOWNLOAD:
+        color = 'grey'
+        break
+      case DOWNLOADING:
+        color = 'red'
+        break
+      default:
+        color = 'blue'
     }
-  `,
+    return css`
+      :host {
+        color: ${colorSelector(color)};
+        font-family: ${fonts.light};
+        font-size: 12px;
+      }
+    `
+  },
 
   summaryHolder: css`
     :host {

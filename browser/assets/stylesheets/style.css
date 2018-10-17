@@ -23,7 +23,7 @@ button {
 /* CSS variables */
 
 :root {
-  --ara-grey: #cbcbcb;
+  --ara-input-grey: #cbcbcb;
   --ara-blue: #1e7dfa;
   --ara-red: #fc2636;
 }
