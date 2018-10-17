@@ -1,9 +1,7 @@
 const {
   AWAITING_DOWNLOAD,
   DOWNLOADED_PUBLISHED,
-  DOWNLOADING,
-  OUT_OF_SYNC,
-  UPDATE_AVAILABLE,
+  DOWNLOADING
 } = require('../../../lib/constants/stateManagement')
 
 module.exports = {
@@ -22,8 +20,10 @@ function mockFiles() {
       peers: 1003,
       price: 56.99,
       name: 'Adobe Photoshop',
+      outOfSync: true,
       size: 10000043 * 100,
       status: AWAITING_DOWNLOAD,
+      updateAvailable: false,
     },
     {
       downloadPercent: 1,
@@ -33,8 +33,10 @@ function mockFiles() {
       peers: 33,
       price: 10.99,
       name: 'Microsoft Word',
+      outOfSync: false,
       size: 12030043 * 100,
       status: DOWNLOADED_PUBLISHED,
+      updateAvailable: false,
     },
     {
       downloadPercent: 0,
@@ -44,8 +46,10 @@ function mockFiles() {
       peers: 353,
       price: 3.99,
       name: 'Microsoft PowerPoint',
+      outOfSync: false,
       size: 19033043 * 100,
       status: AWAITING_DOWNLOAD,
+      updateAvailable: false,
     },
     {
       downloadPercent: .50,
@@ -55,8 +59,10 @@ function mockFiles() {
       peers: 1003,
       price: 56.99,
       name: 'Adobe Photoshop',
+      outOfSync: false,
       size: 10000043 * 100,
       status: DOWNLOADING,
+      updateAvailable: false,
     },
     {
       downloadPercent: 1,
@@ -66,8 +72,10 @@ function mockFiles() {
       peers: 33,
       price: 10.99,
       name: 'Microsoft Word',
+      outOfSync: false,
       size: 12030043 * 100,
-      status: OUT_OF_SYNC,
+      status: DOWNLOADED_PUBLISHED,
+      updateAvailable: false,
     },
     {
       downloadPercent: 1,
@@ -77,8 +85,10 @@ function mockFiles() {
       peers: 33,
       price: 10.99,
       name: 'Microsoft Word',
+      outOfSync: false,
       size: 12030043 * 100,
-      status: UPDATE_AVAILABLE,
+      status: DOWNLOADED_PUBLISHED,
+      updateAvailable: true,
     }
   ]
 }
