@@ -2,6 +2,7 @@
 
 * {
   border: none;
+  font-family: 'ProximaNova-Regular';
   margin: 0;
   outline: none;
   padding: 0;
@@ -9,7 +10,6 @@
 
 body {
   -webkit-app-region: drag;
-  font-family: 'ProximaNova-Regular';
 }
 
 button {

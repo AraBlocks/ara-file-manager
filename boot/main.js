@@ -42,9 +42,6 @@ app.on('ready', () => {
 
   //Registers command/control + \ to open dev tools
   globalShortcut.register('CommandOrControl+\\', () => windowManager.getCurrent().object.openDevTools())
-  globalShortcut.register('CommandOrControl+r', () => {
-    try { windowManager.getCurrent().object.reload() } catch (e) {}
-  })
   if (process.platform == 'win32') { deepLinkingUrl = process.argv.slice(1) }
   deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
   //Hot reloads browser side changes
