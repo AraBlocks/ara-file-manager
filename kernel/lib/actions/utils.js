@@ -27,7 +27,7 @@ async function descriptorGenerator(did, opts = {}) {
 			peers: 0,
 			price,
 			path,
-			shouldBroadcast: opts.shouldBroadcast == null ? farmerManager.getBroadcastingState({ did }) : false,
+			shouldBroadcast: false,
 			size: meta ? meta.size : 0,
 			status: AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
 		}

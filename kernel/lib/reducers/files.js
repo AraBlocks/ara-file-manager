@@ -6,7 +6,7 @@ module.exports = (state, { load = null, type }) => {
   let file
   switch (type){
     case k.CHANGE_BROADCASTING_STATE:
-      file = findFile(load.aid, state.published)
+      file = findFile(load.did, state.published)
       file.shouldBroadcast = load.shouldBroadcast
       break
     case k.DOWNLOADING:

@@ -1,11 +1,12 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
+const dispatch = require('../reducers/dispatch')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const afsManager = require('./afsManager')
 const fs = require('fs')
 const farmConfig = require('ara-network-node-dcdn-farm/src/rc')()
-const windowManager = require('electron-window-manager')
+const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
 	return new farmDCDN({ userID, password })
@@ -19,18 +20,16 @@ function joinBroadcast({ farmer, did, price = 1 }) {
 			upload: true,
 			price
 		})
+		dispatch({ type: CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: true } })
 		debug('Joining broadcast for %s', did)
 	} catch (err) {
 		debug('Error joining broadcasting %O', err)
 	}
 }
 
-function getBroadcastingState({ did, dcdnFarmStore }) {
+function getBroadcastingState({ did, dcdnFarmStore = {} }) {
 	debug('getting broadcasting state')
   try {
-		if (dcdnFarmStore == null) {
-			dcdnFarmStore = loadDcdnStore()
-		}
 		const fileData = dcdnFarmStore[did]
 		if (fileData == null) {
 			return false
@@ -60,6 +59,7 @@ function unjoinBroadcast({ farmer, did }) {
 		farmer.unjoin({
 			did
 		})
+		dispatch({ type: CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: false } })
 	} catch(err) {
 		debug('Error stopping broadcast for %s: %O', did, err)
 	}
@@ -119,6 +119,7 @@ async function download({
 			debug('Download complete!')
 			handler({ downloadPercent: 1, did })
 			afsManager.renameAfsFiles(did, 'movie.mov')
+			joinBroadcast({ farmer, did })
 		})
 		farmer.on('requestcomplete', (did) => {
 			debug('Rewards allocated')
