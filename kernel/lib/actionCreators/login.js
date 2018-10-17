@@ -17,6 +17,7 @@ const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
 const { switchLoginState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
+const actionsUtil = require('../actions/utils')
 
 internalEmitter.on(k.LOGOUT, () => {
   farmerManager.stopAllBroadcast(store.farmer.farm)
@@ -63,10 +64,11 @@ ipcMain.on(k.LOGIN, async (event, load) => {
 
     switchLoginState(true)
 
+    const farmerStoreList = actionsUtil.loadDcdnStore()
     const purchasedDIDs = []//await araContractsManager.getLibraryItems(load.userAid)
-    const purchased = await afsManager.surfaceAFS(purchasedDIDs)
+    const purchased = await afsManager.surfaceAFS(purchasedDIDs, farmerStoreList)
     const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
-    const published = await afsManager.surfaceAFS(publishedDIDs)
+    const published = await afsManager.surfaceAFS(publishedDIDs, farmerStoreList)
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased} }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
