@@ -1,6 +1,6 @@
 'use strict'
 
-const k = require('../../../../lib/constants/stateManagement')
+const { AWAITING_DOWNLOAD, DOWNLOADING} = require('../../../../lib/constants/stateManagement')
 const {
   colors,
   colorSelector,
@@ -25,21 +25,25 @@ module.exports = {
     }
   `,
 
-  bolden: css`
-    :host {
-      font-family:${fonts.bold};
-    }
-  `,
-
   container(status) {
-    const color = status === k.DOWNLOADED_PUBLISHED ? 'black' : 'grey'
+    let color
+    switch (status) {
+      case AWAITING_DOWNLOAD:
+      case DOWNLOADING:
+        color = colorSelector('grey')
+        break
+      default:
+        color = colorSelector('black')
+    }
+
     return css`
       :host {
         align-items: flex-end;
         display: flex;
         flex-direction: column;
+        height: 75px;
         width: 100%;
-        color: ${colorSelector(color)};
+        color: ${color};
       }
     `
   },
@@ -53,7 +57,7 @@ module.exports = {
   price: css`
     :host {
       font-family: ${fonts.bold};
-      font-size: 14px;
+      font-size: 16px;
     }
   `,
 
@@ -61,7 +65,7 @@ module.exports = {
     :host {
       display: flex;
       font-family: ${fonts.regular};
-      font-size: 12px;
+      font-size: 14px;
       justify-content: flex-end;
     }
   `
