@@ -1,10 +1,4 @@
-const {
-  AWAITING_DOWNLOAD,
-  DOWNLOADED_PUBLISHED,
-  DOWNLOADING,
-  OUT_OF_SYNC,
-  UPDATE_AVAILABLE,
-} = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 
 module.exports = {
   loadingLibrary: false,
@@ -22,9 +16,9 @@ function mockFiles() {
       peers: 1003,
       price: 56.99,
       name: 'Adobe Photoshop',
-      seeding: false,
+      shouldBroadcast: false,
       size: 10000043 * 100,
-      status: AWAITING_DOWNLOAD,
+      status: k.AWAITING_DOWNLOAD,
     },
     {
       downloadPercent: 1,
@@ -34,9 +28,9 @@ function mockFiles() {
       peers: 33,
       price: 10.99,
       name: 'Microsoft Word',
-      seeding: true,
+      shouldBroadcast: true,
       size: 12030043 * 100,
-      status: DOWNLOADED_PUBLISHED,
+      status: k.DOWNLOADED_PUBLISHED,
     },
     {
       downloadPercent: 1,
@@ -46,9 +40,9 @@ function mockFiles() {
       peers: 33,
       price: 10.99,
       name: 'Spirited Away',
-      seeding: false,
+      shouldBroadcast: false,
       size: 12030043 * 100,
-      status: DOWNLOADED_PUBLISHED,
+      status: k.DOWNLOADED_PUBLISHED,
     },
     {
       downloadPercent: 0,
@@ -58,9 +52,9 @@ function mockFiles() {
       peers: 353,
       price: 3.99,
       name: 'Microsoft PowerPoint',
-      seeding: false,
+      shouldBroadcast: false,
       size: 19033043 * 100,
-      status: AWAITING_DOWNLOAD,
+      status: k.AWAITING_DOWNLOAD,
     },
     {
       downloadPercent: .50,
@@ -70,9 +64,9 @@ function mockFiles() {
       peers: 1003,
       price: 56.99,
       name: 'Adobe Photoshop',
-      seeding: false,
+      shouldBroadcast: false,
       size: 10000043 * 100,
-      status: DOWNLOADING,
+      status: k.DOWNLOADING,
     },
     {
       downloadPercent: 1,
@@ -82,9 +76,21 @@ function mockFiles() {
       peers: 33,
       price: 10.99,
       name: 'Microsoft Word',
-      seeding: false,
+      shouldBroadcast: false,
       size: 12030043 * 100,
-      status: OUT_OF_SYNC,
+      status: k.OUT_OF_SYNC,
+    },
+    {
+      downloadPercent: .70,
+      did: 'did:ara:fdkgi6c29be073c0ceb27da22c03f10e7fadb9eb32dcf4a362639993cf963e6a6',
+      datePublished: '11/20/1989',
+      earnings: 237.43,
+      peers: 1003,
+      price: 56.99,
+      name: 'Movie Film',
+      shouldBroadcast: false,
+      size: 10000043 * 100,
+      status: k.PAUSED,
     },
     {
       downloadPercent: 1,
@@ -94,9 +100,9 @@ function mockFiles() {
       peers: 33,
       price: 10.99,
       name: 'Microsoft Word',
-      seeding: false,
+      shouldBroadcast: false,
       size: 12030043 * 100,
-      status: UPDATE_AVAILABLE,
+      status: k.UPDATE_AVAILABLE,
     }
   ]
 }

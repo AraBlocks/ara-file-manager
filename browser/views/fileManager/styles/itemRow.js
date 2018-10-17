@@ -6,7 +6,7 @@ module.exports = {
   container: css`
     :host {
       display: flex;
-      height: 50px;
+      height: 40px;
       justify-content: space-between;
     }
   `,
