@@ -57,7 +57,7 @@ module.exports = {
       }
 
       :host::placeholder {
-        color: var(--ara-grey);
+        color: var(--ara-input-grey);
         text-indent: 10px;
       }
     `
