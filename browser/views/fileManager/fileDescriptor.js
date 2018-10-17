@@ -39,10 +39,10 @@ class FileDescriptor extends Nanocomponent {
   styleSize({ status, downloadPercent, seeding }) {
     const { size } = this.props
     let spanColor
+    let downloadedSpanColor
     let msg
     let unitColor
     let downloadingModifer
-
     switch (status) {
       case k.DOWNLOADED_PUBLISHED:
         spanColor = seeding ? 'blue' : 'black'
@@ -56,26 +56,30 @@ class FileDescriptor extends Nanocomponent {
         msg = '(Out of Sync)'
         break
       case k.DOWNLOADING:
-        spanColor = 'red'
-        downloadingModifer = Math.round(filesize(downloadPercent * size).slice(0, -2)) + ' / '
+        downloadedSpanColor = 'red'
         break
       case k.PAUSED:
         spanColor = 'grey'
-        downloadingModifer = Math.round(filesize(downloadPercent * size).slice(0, -2)) + ' / '
+        downloadedSpanColor = 'grey'
         msg = '(Paused)'
+        break
       case k.UPDATE_AVAILABLE:
         spanColor = 'red'
         msg = '(Update Available)'
     }
 
     const [_size, unit] = filesize(size, { output: 'array' })
-    const sizeSpan = html`<span style="color:var(--ara-${spanColor});">${_size}</span>`
+    const downloaded = Math.round(filesize(downloadPercent * size).slice(0, -2))
+    const downloadedSpan = [k.DOWNLOADING, k.PAUSED].includes(status)
+      ? [ html`<span style="color:var(--ara-${downloadedSpanColor});">${downloaded}</span>`, ' /']
+      : null
+    const sizeSpan = html`<span style="color:var(--ara-${spanColor});"> ${_size}</span>`
     const unitSpan = html`<span style="color:var(--ara-${unitColor});"> ${unit.toLocaleLowerCase()}</span>`
     const msgSpan = msg ? html`<span style="color:var(--ara-${spanColor});"> ${msg}</span>` : null
 
     return html`
       <div class="${styles.sizeHolder} fileDescriptor-sizeHolder">
-        ${[ downloadingModifer, sizeSpan, unitSpan, msgSpan ]}
+        ${[ downloadedSpan, sizeSpan, unitSpan, msgSpan ]}
       </div>
     `
   }
