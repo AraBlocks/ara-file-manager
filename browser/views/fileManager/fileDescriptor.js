@@ -8,32 +8,44 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
-  constructor({ name, size = 0 }) {
+  constructor({
+    did,
+    name,
+    path,
+    size = 0,
+  }) {
     super()
 
-    this.props = { name, size }
+    this.props = {
+      did,
+      name,
+      path,
+      size
+    }
+
     this.children = { hamburger: new Hamburger({}) }
     this.createSummary = this.createSummary.bind(this)
   }
 
-  createSummary({ status, downloadPercent, seeding }) {
-    const { name } = this.props
-    const nameDiv = html`
+  createSummary({ status, name, downloadPercent, seeding }) {
+    const nameDiv = [ k.OUT_OF_SYNC, k.UPDATE_AVAILABLE ].includes(status)
+      ? html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
           <div class="${styles.name} fileDescriptor-name">
-            ${[ k.OUT_OF_SYNC, k.UPDATE_AVAILABLE ].includes(status)
-                ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
-                : name}
+            ${[html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]}
+          </div>
+        </div>
+      `
+      : html`
+        <div class="${styles.nameHolder} fileDescriptor-nameHolder">
+          <div class="${styles.name} fileDescriptor-name">
+            ${name}
           </div>
         </div>
       `
     const sizeDiv = this.styleSize({ status, downloadPercent, seeding })
 
-    return html`
-      <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
-        ${[ nameDiv, sizeDiv ]}
-      </div>
-    `
+    return [ nameDiv, sizeDiv ]
   }
 
   styleSize({ status, downloadPercent, seeding }) {
@@ -85,7 +97,11 @@ class FileDescriptor extends Nanocomponent {
   }
 
   createElement({ status, downloadPercent, seeding }) {
-    const { children, createSummary } = this
+    const {
+      children,
+      props,
+      createSummary
+    } = this
 
     return html`
       <div class="${styles.container} fileDescriptor-container">
@@ -94,11 +110,15 @@ class FileDescriptor extends Nanocomponent {
             ${children.hamburger.render({})}
           </div>
         </div>
-        ${createSummary({
-          status,
-          downloadPercent,
-          seeding
-        })}
+        <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
+          ${createSummary({
+            status,
+            downloadPercent,
+            name: props.name,
+            seeding,
+            size: props.size
+          })}
+        </div>
       </div>
     `
   }
