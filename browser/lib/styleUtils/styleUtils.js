@@ -58,7 +58,6 @@ module.exports = {
         selectedColor = !hoverState ? '#1e7dfa' : '#005ed9'
         break
       case 'grey':
-      case 'gray':
         selectedColor = '#cbcbcb'
         break
       case 'light black':
