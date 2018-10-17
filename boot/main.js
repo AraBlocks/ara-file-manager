@@ -10,12 +10,6 @@ const userHome = require('user-home')
 //Creates dev view
 isDev && require('./ipc-dev')
 
-//Remove farmer related stores. Seem to crash app sometimes.
-const storePath = path.resolve(userHome, '.ara', 'dcdn', 'store.json')
-const jobsPath = path.resolve(userHome, '.ara', 'dcdn', 'jobs.json')
-fs.existsSync(jobsPath) && fs.unlinkSync(jobsPath)
-fs.existsSync(storePath) && fs.unlinkSync(storePath)
-
 let deepLinkingUrl
 
 const shouldQuit = app.makeSingleInstance(argv => {

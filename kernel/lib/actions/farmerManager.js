@@ -1,15 +1,18 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
+const dispatch = require('../reducers/dispatch')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const afsManager = require('./afsManager')
-const windowManager = require('electron-window-manager')
+const fs = require('fs')
+const farmConfig = require('ara-network-node-dcdn-farm/src/rc')()
+const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
 	return new farmDCDN({ userID, password })
 }
 
-async function broadcast({ farmer, did, price = 1 }) {
+function joinBroadcast({ farmer, did, price = 1 }) {
 	try {
 		farmer.join({
 			did,
@@ -17,30 +20,46 @@ async function broadcast({ farmer, did, price = 1 }) {
 			upload: true,
 			price
 		})
-		debug('Broadcasting for %s', did)
+		dispatch({ type: CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: true } })
+		debug('Joining broadcast for %s', did)
 	} catch (err) {
-		debug('Error broadcasting %O', err)
+		debug('Error joining broadcasting %O', err)
 	}
 }
 
-async function broadcastAll(farmer) {
-	try {
-		debug('Broadcasting all afses')
-		const { files } = windowManager.sharedData.fetch('store')
-		const didList = files.published.filter(file => file.shouldBroadcast).map(file => file.did)
-		didList.forEach(did => {
-			broadcast({ farmer, did })
-		})
-	} catch(err) {
-		debug(err)
-	}
+function getBroadcastingState({ did, dcdnFarmStore = {} }) {
+	debug('getting broadcasting state')
+  try {
+		const fileData = dcdnFarmStore[did]
+		if (fileData == null) {
+			return false
+		}
+    return JSON.parse(fileData).upload
+  } catch (err) {
+    return false
+  }
 }
 
-async function stopBroadcast({ farmer, did }) {
+function loadDcdnStore() {
+	debug('loading dcdn farm store')
+  try {
+    const fileDirectory = farmConfig.dcdn.config
+    const data = fs.readFileSync(fileDirectory)
+    const itemList = JSON.parse(data)
+    return itemList
+  } catch (err) {
+    debug('Can\'t load DCDN farm store')
+    return {}
+  }
+}
+
+function unjoinBroadcast({ farmer, did }) {
+	debug('Unjoining broadcast for %s', did)
 	try {
 		farmer.unjoin({
 			did
 		})
+		dispatch({ type: CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: false } })
 	} catch(err) {
 		debug('Error stopping broadcast for %s: %O', did, err)
 	}
@@ -54,6 +73,11 @@ async function stopAllBroadcast(farmer) {
 	} catch (e) {
 		debug(e)
 	}
+}
+
+function startBroadcast(farmer) {
+	debug('Starting DCDN broadcast')
+	farmer.start()
 }
 
 async function download({
@@ -95,6 +119,7 @@ async function download({
 			debug('Download complete!')
 			handler({ downloadPercent: 1, did })
 			afsManager.renameAfsFiles(did, 'movie.mov')
+			joinBroadcast({ farmer, did })
 		})
 		farmer.on('requestcomplete', (did) => {
 			debug('Rewards allocated')
@@ -107,9 +132,11 @@ async function download({
 
 module.exports = {
 	createFarmer,
-	broadcast,
-	broadcastAll,
+	download,
+	getBroadcastingState,
+	loadDcdnStore,
+	joinBroadcast,
+	startBroadcast,
 	stopAllBroadcast,
-	stopBroadcast,
-	download
+	unjoinBroadcast
 }
