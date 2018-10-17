@@ -1,27 +1,35 @@
 'use strict'
 
+const k = require('../../lib/constants/stateManagement')
 const styles = require('./styles/progressBar')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-class className extends Nanocomponent {
-  constructor() {
-    super()
-    this.props = {}
-  }
-
-  update(){
+class ProgressBar extends Nanocomponent {
+  update() {
     return true
   }
 
-  createElement() {
-    const { props } = this
+  createElement({ downloadPercent, status, shouldBroadcast }) {
+    let color
+    switch (status) {
+      case k.DOWNLOADED_PUBLISHED:
+        color = shouldBroadcast ? 'blue' : 'black'
+        break
+      case k.PAUSED:
+        color = 'black'
+        break
+      default:
+        color = 'red'
+    }
+    console.log(styles.colorSelector(color))
+
     return html`
       <div class="${styles.holder} progressBar-holder">
-        <div class="${styles.progress} progressBar-progress"></div>
+        <div style="background-color: ${styles.colorSelector(color)}; width:${((downloadPercent * 100)||1) + '%'};"></div>
       </div>
     `
   }
 }
 
-module.exports = className
+module.exports = ProgressBar
