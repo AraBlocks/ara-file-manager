@@ -4,9 +4,7 @@ const debug = require('debug')('acm:boot:main')
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const isDev = require('electron-is-dev')
-const fs = require('fs')
 const path = require('path')
-const userHome = require('user-home')
 //Creates dev view
 isDev && require('./ipc-dev')
 
