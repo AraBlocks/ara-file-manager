@@ -98,6 +98,9 @@ windowManager.setSize = (view) => {
 windowManager.loadURL = (view) => {
   let file
   switch (view) {
+    case 'afsExplorer':
+      file = 'afs-explorer'
+      break
     case 'filemanager':
       file = 'file-manager'
       break
