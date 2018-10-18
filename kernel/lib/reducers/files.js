@@ -52,10 +52,10 @@ module.exports = (state, { load = null, type }) => {
       state.published.push(load)
       break
     case k.PUBLISHED:
-      file = state.published[state.published.length - 1]
-      file.downloadPercent = 1
-      file.status = k.DOWNLOADED_PUBLISHED
+      file = findFile(load.did, state.published)
+      file.status = k.DOWNLOADED_PUBLISHED,
       file.datePublished = new Date
+      file.owner = true
       break
     case k.PURCHASING:
       state.purchased.push(load)
