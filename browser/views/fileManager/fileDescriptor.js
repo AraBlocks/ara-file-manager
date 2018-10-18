@@ -13,7 +13,6 @@ class FileDescriptor extends Nanocomponent {
     size = 0,
     status,
     shouldBroadcast,
-    did,
     owner
   }) {
     super()
