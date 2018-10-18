@@ -54,7 +54,6 @@ async function getFileSize(did, path) {
 	}
 }
 
-
 async function removeAllFiles({ did, password }) {
 	try {
 		const fileList = getFileList(did)
