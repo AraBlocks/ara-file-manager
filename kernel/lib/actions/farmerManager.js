@@ -4,9 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const dispatch = require('../reducers/dispatch')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const afsManager = require('./afsManager')
-const fs = require('fs')
-const farmConfig = require('ara-network-node-dcdn-farm/src/rc')()
-const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
+
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
 	return new farmDCDN({ userID, password })

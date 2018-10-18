@@ -13,7 +13,7 @@ module.exports = {
   container: css`
     :host {
       align-items: center;
-      border: 1px solid var(--ara-input-grey);
+      border: 1px solid var(--ara-grey);
       display: flex;
       justify-content: space-between;
       width: 100%;
@@ -57,7 +57,7 @@ module.exports = {
       }
 
       :host::placeholder {
-        color: var(--ara-input-grey);
+        color: var(--ara-grey);
         text-indent: 10px;
       }
     `
