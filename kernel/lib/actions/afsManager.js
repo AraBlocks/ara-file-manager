@@ -9,13 +9,47 @@ const farmerManager = require('../actions/farmerManager')
 
 async function removeAllFiles({ did, password }) {
 	try {
-		const { afs } = await araFilesystem.create({ did })
-		const result = await afs.readdir(afs.HOME)
-		await afs.close()
-		const instance = await araFilesystem.remove({ did, password, paths: result })
+		const fileList = getFileList(did)
+		const instance = await araFilesystem.remove({ did, password, paths: fileList })
 		await instance.close()
 	} catch (err) {
 		debug('Error removing files: %o', err)
+	}
+}
+
+async function getFileList(did) {
+	debug('Getting file list in AFS')
+	try {
+		const { afs } = await araFilesystem.create({ did })
+		const result = await afs.readdir(afs.HOME)
+		await afs.close()
+		return result
+	} catch (err) {
+		debug('Error getting file list in afs: %o', err)
+	}
+}
+
+async function getFileSize(did, path) {
+	debug('Getting file size in AFS')
+	try {
+    const { afs } = await araFilesystem.create({ did })
+    const res = await afs.stat(path)
+    afs.close()
+    return res.size
+  } catch (err) {
+		debug('Error getting file size for %s', did)
+	}
+}
+
+async function exportFile({ did, exportPath, filePath }) {
+	debug('Exporting file %s to %s', filePath, exportPath)
+	try {
+    const { afs } = await araFilesystem.create({ did })
+    const fileData = await afs.readFile(filePath)
+    afs.close()
+    fs.writeFileSync(exportPath, fileData)
+  } catch (err) {
+		debug('Error exporting file %s to %s', filePath, exportPath)
 	}
 }
 
@@ -46,6 +80,9 @@ function renameAfsFiles(aid, fileName) {
 }
 
 module.exports = {
+	getFileList,
+	getFileSize,
+	exportFile,
 	removeAllFiles,
 	renameAfsFiles,
 	surfaceAFS,
