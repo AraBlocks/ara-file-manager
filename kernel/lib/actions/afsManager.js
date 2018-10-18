@@ -7,13 +7,26 @@ const araFilesystem = require('ara-filesystem')
 const path = require('path')
 const farmerManager = require('../actions/farmerManager')
 
-async function removeAllFiles({ did, password }) {
+async function afsPathIsFile({ did, path }) {
 	try {
-		const fileList = getFileList(did)
-		const instance = await araFilesystem.remove({ did, password, paths: fileList })
-		await instance.close()
-	} catch (err) {
-		debug('Error removing files: %o', err)
+    const { afs } = await araFilesystem.create({ did })
+    const res = await afs.stat(path)
+    afs.close()
+    return res.isFile()
+  } catch (err) {
+		debug('Error getting file size for %s', did)
+	}
+}
+
+async function exportFile({ did, exportPath, filePath }) {
+	debug('Exporting file %s to %s', filePath, exportPath)
+	try {
+    const { afs } = await araFilesystem.create({ did })
+    const fileData = await afs.readFile(filePath)
+    afs.close()
+    fs.writeFileSync(exportPath, fileData)
+  } catch (err) {
+		debug('Error exporting file %s to %s', filePath, exportPath)
 	}
 }
 
@@ -41,42 +54,15 @@ async function getFileSize(did, path) {
 	}
 }
 
-async function exportFile({ did, exportPath, filePath }) {
-	debug('Exporting file %s to %s', filePath, exportPath)
-	try {
-    const { afs } = await araFilesystem.create({ did })
-    const fileData = await afs.readFile(filePath)
-    afs.close()
-    fs.writeFileSync(exportPath, fileData)
-  } catch (err) {
-		debug('Error exporting file %s to %s', filePath, exportPath)
-	}
-}
 
-async function afsPathIsFile({ did, path }) {
+async function removeAllFiles({ did, password }) {
 	try {
-    const { afs } = await araFilesystem.create({ did })
-    const res = await afs.stat(path)
-    afs.close()
-    return res.isFile()
-  } catch (err) {
-		debug('Error getting file size for %s', did)
-	}
-}
-
-function unarchiveAFS({ did }) {
-	debug('Unarchiving %s', did)
-	try {
-		araFilesystem.unarchive({ did, path: actionsUtil.makeAfsPath(did) })
+		const fileList = getFileList(did)
+		const instance = await araFilesystem.remove({ did, password, paths: fileList })
+		await instance.close()
 	} catch (err) {
-		debug('Error unarchiving: %o', err)
+		debug('Error removing files: %o', err)
 	}
-}
-
-async function surfaceAFS(items, dcdnFarmStore) {
-	return Promise.all(items.map(item => actionsUtil.descriptorGenerator(item, {
-		shouldBroadcast: farmerManager.getBroadcastingState({ did: item, dcdnFarmStore })
-	})))
 }
 
 function renameAfsFiles(aid, fileName) {
@@ -90,11 +76,26 @@ function renameAfsFiles(aid, fileName) {
 	})
 }
 
+async function surfaceAFS(items, dcdnFarmStore) {
+	return Promise.all(items.map(item => actionsUtil.descriptorGenerator(item, {
+		shouldBroadcast: farmerManager.getBroadcastingState({ did: item, dcdnFarmStore })
+	})))
+}
+
+function unarchiveAFS({ did }) {
+	debug('Unarchiving %s', did)
+	try {
+		araFilesystem.unarchive({ did, path: actionsUtil.makeAfsPath(did) })
+	} catch (err) {
+		debug('Error unarchiving: %o', err)
+	}
+}
+
 module.exports = {
 	afsPathIsFile,
+	exportFile,
 	getFileList,
 	getFileSize,
-	exportFile,
 	removeAllFiles,
 	renameAfsFiles,
 	surfaceAFS,
