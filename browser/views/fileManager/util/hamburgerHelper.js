@@ -3,7 +3,7 @@
 const k = require('../../../../lib/constants/stateManagement')
 const Hamburger = require('../../../components/hamburgerMenu')
 
-module.exports = ({ did, shouldBroadcast, status, owner }) => {
+module.exports = ({ shouldBroadcast, status, owner }) => {
   const menuItems = [{ children: `Copy Link` }]
 
   switch (status) {
