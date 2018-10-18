@@ -13,7 +13,7 @@ class FileDescriptor extends Nanocomponent {
 
     this.props = { name, size }
     this.children = {
-      hamburger: new Hamburger()
+      hamburger: new Hamburger([])
     }
     this.createSummary = this.createSummary.bind(this)
   }
@@ -24,8 +24,8 @@ class FileDescriptor extends Nanocomponent {
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
           <div class="${styles.name} fileDescriptor-name">
             ${[k.OUT_OF_SYNC, k.UPDATE_AVAILABLE].includes(status)
-        ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
-        : name}
+              ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
+              : name}
           </div>
         </div>
       `
@@ -100,10 +100,10 @@ class FileDescriptor extends Nanocomponent {
           </div>
         </div>
         ${createSummary({
-        status,
-        downloadPercent,
-        seeding
-      })}
+          status,
+          downloadPercent,
+          seeding
+        })}
       </div>
     `
   }
