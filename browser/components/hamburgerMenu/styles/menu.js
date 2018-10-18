@@ -12,6 +12,7 @@ module.exports = {
 			cursor: pointer;
 			height: 100%;
 			font-size: 12px;
+			position: relative;
 		}
 
 		:host:hover > div {
@@ -46,8 +47,8 @@ module.exports = {
 			display: none;
 			flex-direction: column;
 			justify-content: space-between;
+			min-width: 130px;
 			position: absolute;
-			max-width: 130px;
 			z-index: 1;
     }
 	`,
