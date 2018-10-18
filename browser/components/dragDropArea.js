@@ -5,16 +5,15 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class DragDropArea extends Nanocomponent {
-	constructor({ field, parentState }) {
+	constructor({ onFileDrop }) {
 		super()
 		this.props = {
-			field,
-			parentState
+			onFileDrop
 		}
-		this.state = { fileList: null }
-		this.ondrop = this.ondrop.bind(this)
 		this.highlight = this.highlight.bind(this)
 		this.unhilight = this.unhilight.bind(this)
+		this.ondrop = this.ondrop.bind(this)
+		this.preventDefault = this.preventDefault.bind(this)
 	}
 
 	update(){
@@ -22,37 +21,35 @@ class DragDropArea extends Nanocomponent {
 	}
 
 	highlight(e) {
-		e.preventDefault()
-		e.stopPropagation()
-		e.target.classList.add(styles.selected)
+		this.preventDefault(e)
+		this.render({ highlighted: true })
 	}
 
 	unhilight(e) {
+		this.preventDefault(e)
+		this.render({ highlighted: false })
+	}
+
+	preventDefault(e) {
 		e.preventDefault()
 		e.stopPropagation()
-		e.target.classList.remove(styles.selected)
 	}
 
 	ondrop(e) {
-		e.preventDefault()
-		e.stopPropagation()
-		e.target.classList.remove(styles.selected)
-		const { state, props } = this
-		const data = e.dataTransfer
-		const files = data.files
-		state.fileList = files
-		props.parentState[props.field] = files
-		console.log(files)
+		const { props } = this
+		this.preventDefault(e)
+		props.onFileDrop(e)
+		this.render({ highlighted: false })
 	}
 
-	createElement() {
-		const { highlight, ondrop, unhilight } = this
+	createElement({ highlighted = false }) {
+		const { highlight, ondrop, preventDefault, unhilight } = this
 		return html`
 			<div
-				class="${styles.container}"
+				class="${styles.container(highlighted)}"
 				ondrop=${ondrop}
 				ondragenter=${highlight}
-				ondragover=${highlight}
+				ongragover=${preventDefault}
 				ondragleave=${unhilight}
 			>
 			</div>
