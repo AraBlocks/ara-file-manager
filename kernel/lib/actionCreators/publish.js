@@ -72,16 +72,17 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       size: load.size,
       status: k.PUBLISHING
     }
-    const descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
+    let descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     windowManager.closeWindow('publishFileView')
 
     await afs.commit({ did: load.did, price: Number(load.price), password: account.password })
-    const araBalance = await araContractsManager.getAraBalance(account.userAid)
+
+    const balance = await araContractsManager.getAraBalance(account.userAid)
     debug('Dispatching %s', k.PUBLISHED)
-    dispatch({ type: k.PUBLISHED, load: araBalance })
+    dispatch({ type: k.PUBLISHED, load: { balance, did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const subscription = await araContractsManager.subscribePublished({ did: load.did })

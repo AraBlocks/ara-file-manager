@@ -105,10 +105,10 @@ class FileDescriptor extends Nanocomponent {
           </div>
         </div>
         ${createSummary({
-        status,
-        downloadPercent,
-        shouldBroadcast
-      })}
+          status,
+          downloadPercent,
+          shouldBroadcast
+        })}
       </div>
     `
   }
