@@ -63,7 +63,8 @@ ipcMain.on(k.LOGIN, async (event, load) => {
     })
 
     switchLoginState(true)
-
+    dispatch({ type: k.GOT_LIBRARY, load: { published:store.files.published, purchased:store.files.purchased } })
+    return windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     const farmerStoreList = farmerManager.loadDcdnStore()
     const purchasedDIDs = []//await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs, farmerStoreList)
