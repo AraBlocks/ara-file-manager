@@ -2,7 +2,6 @@
 
 * {
   border: none;
-  font-family: 'ProximaNova-Regular';
   margin: 0;
   outline: none;
   padding: 0;
@@ -10,6 +9,7 @@
 
 body {
   -webkit-app-region: drag;
+  font-family: 'ProximaNova-Regular';
 }
 
 button {
@@ -23,7 +23,8 @@ button {
 /* CSS variables */
 
 :root {
-  --ara-input-grey: #cbcbcb;
+
+  --ara-grey: #cbcbcb;
   --ara-blue: #1e7dfa;
   --ara-red: #fc2636;
 }

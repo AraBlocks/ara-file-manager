@@ -1,145 +1,109 @@
 'use strict'
 
 const k = require('../../../lib/constants/stateManagement')
-const DynamicButton = require('../../components/dynamicButton')
-const { emit, openFolder } = require('../../lib/tools/windowManagement')
-const ProgressRing = require('../../components/progressRing')
+const Hamburger = require('../../components/hamburgerMenu/menu')
 const styles = require('./styles/fileDescriptor')
-const Tooltip = require('../../components/tooltip')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
-  constructor({
-    datePublished,
-    did,
-    downloadPercent,
-    name,
-    path,
-    size = 0,
-    status
-  }) {
+  constructor({ name, size = 0 }) {
     super()
 
-    this.props = {
-      did,
-      name,
-      path,
-      size
-    }
-
+    this.props = { name, size }
     this.children = {
-      button: new DynamicButton(this.buttonProps(status, did)),
-      progressRing: new ProgressRing({ status, downloadPercent }),
-      tooltip: new Tooltip({
-        id: did,
-        component: 'fileTooltip',
-        args: { datePublished, did , name }
-      })
+      hamburger: new Hamburger([])
     }
-
-    this.buttonProps = this.buttonProps.bind(this)
+    this.createSummary = this.createSummary.bind(this)
   }
 
-  buttonProps(status, did) {
-    const props = {}
-    switch(status) {
+  createSummary({ status, downloadPercent, shouldBroadcast }) {
+    const { name } = this.props
+    const nameDiv = html`
+        <div class="${styles.nameHolder} fileDescriptor-nameHolder">
+          <div class="${styles.name} fileDescriptor-name">
+            ${[ k.OUT_OF_SYNC, k.UPDATE_AVAILABLE ].includes(status)
+              ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
+              : name}
+          </div>
+        </div>
+      `
+    const sizeDiv = this.styleSize({ status, downloadPercent, shouldBroadcast })
+
+    return html`
+      <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
+        ${[nameDiv, sizeDiv]}
+      </div>
+    `
+  }
+
+  styleSize({ status, downloadPercent, shouldBroadcast }) {
+    const { size } = this.props
+    let spanColor
+    let downloadedSpanColor
+    let msg
+    let unitColor
+    switch (status) {
+      case k.DOWNLOADED_PUBLISHED:
+        spanColor = shouldBroadcast ? 'blue' : 'black'
+        break
       case k.AWAITING_DOWNLOAD:
-        props.children = 'Download File'
-        props.cssClass = {
-          name: 'smallInvisible',
-          opts: { color: 'red' }
-        }
-        props.onclick = () => emit({ event: k.DOWNLOAD, load: { did } })
+        spanColor = 'grey'
+        unitColor = 'grey'
+        break
+      case k.OUT_OF_SYNC:
+        spanColor = 'red'
+        msg = '(Out of Sync)'
         break
       case k.DOWNLOADING:
-         props.children = 'Cancel Download'
-         props.cssClass = {
-           name: 'smallInvisible',
-           opts: { color: 'grey' }
-        }
-        props.onclick = () => {}
+        downloadedSpanColor = 'red'
         break
-      case k.PUBLISHING:
-        props.children = 'Publishing'
-        props.cssClass = {
-          name: 'smallInvisible',
-          opts: { color: 'grey' }
-        }
-        props.onclick = () => {}
+      case k.PAUSED:
+        spanColor = 'grey'
+        downloadedSpanColor = 'grey'
+        msg = '(Paused)'
         break
-      case k.PURCHASING:
-        props.children = 'Purchasing'
-        props.cssClass = {
-          name: 'smallInvisible',
-          opts: { color: 'grey' }
-        }
-        props.onclick = () => {}
-        break
-      case k.DOWNLOAD_FAILED:
-        props.children = 'Download Failed'
-        props.cssClass = {
-          name: 'smallInvisible',
-          opts: { color: 'red' }
-        }
-        props.onclick = () => {}
-        break
-      case k.UPDATING_FILE:
-        props.children = 'Updating'
-        props.cssClass = {
-          name: 'smallInvisible',
-          opts: { color: 'grey' }
-        }
-        props.onclick = () => {}
-        break
-      default:
-        props.children = 'Open in Folder'
-        props.cssClass = {
-          name: 'smallInvisible',
-          opts: { color: 'blue' }
-        }
-        props.onclick = () => openFolder(this.props.path)
+      case k.UPDATE_AVAILABLE:
+        spanColor = 'red'
+        msg = '(Update Available)'
     }
-    return props
+
+    const [_size, unit] = filesize(size, { output: 'array' })
+    const downloaded = Math.round(filesize(downloadPercent * size).slice(0, -2))
+    const downloadedSpan = [k.DOWNLOADING, k.PAUSED].includes(status)
+      ? [html`<span style="color:var(--ara-${downloadedSpanColor});">${downloaded}</span>`, ' /']
+      : null
+    const sizeSpan = html`<span style="color:var(--ara-${spanColor});"> ${_size}</span>`
+    const unitSpan = html`<span style="color:var(--ara-${unitColor});"> ${unit.toLocaleLowerCase()}</span>`
+    const msgSpan = msg ? html`<span style="color:var(--ara-${spanColor});"> ${msg}</span>` : null
+
+    return html`
+      <div class="${styles.sizeHolder} fileDescriptor-sizeHolder">
+        ${[downloadedSpan, sizeSpan, unitSpan, msgSpan]}
+      </div>
+    `
   }
 
   update() {
     return true
   }
 
-  createElement({ downloadPercent, status }) {
-    const {
-      buttonProps,
-      children,
-      props
-    } = this
+  createElement({ status, downloadPercent, shouldBroadcast }) {
+    const { children, createSummary } = this
 
     return html`
       <div class="${styles.container} fileDescriptor-container">
-        <div class="${styles.iconHolder} fileDescriptor-iconHolder">
-          ${[k.PUBLISHING, k.PURCHASING, k.UPDATING_FILE, k.DOWNLOADING].includes(status)
-            ? html`<div style="margin-left: 3px; margin-top: 3px;" class="spinner-small-blue"></div>`
-            : children.progressRing.render({ downloadPercent, status })}
-        </div>
-        <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
-          <div class="${styles.nameHolder} fileDescriptor-nameHolder">
-            <div class="${styles.name} fileDescriptor-name">
-              ${props.name}
-            </div>
-            <div class="${styles.tooltipHolder} fileDescriptor-tooltipHolder">
-              ${children.tooltip.render()}
-            </div>
-          </div>
-          <div class="${styles.sizeHolder(status)} fileDescriptor-sizeHolder">
-            ${status === k.DOWNLOADING
-              ? `${filesize(props.size) /*Math.round(downloadPercent * props.size * 100) / 100}/${filesize(props.size)*/}`
-              : filesize(props.size)}
-          </div>
-          <div class="${styles.buttonHolder} fileDescriptor-buttonHolder">
-            ${children.button.render(buttonProps(status, props.did))}
+        <div class="${styles.hamburgerHolder} fileDescriptor-hamburgerHolder">
+          <div class="${styles.hamburger} fileDescriptor-hamburger">
+            ${children.hamburger.render({})}
           </div>
         </div>
+        ${createSummary({
+          status,
+          downloadPercent,
+          shouldBroadcast
+        })}
       </div>
     `
   }

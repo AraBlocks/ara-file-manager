@@ -10,9 +10,11 @@ module.exports = {
 	container: css`
 		:host {
 			cursor: pointer;
+			height: 100%;
+			font-size: 12px;
 		}
 
-		:host:hover div {
+		:host:hover > div {
 			display: flex;
 		}
 	`,
@@ -29,8 +31,8 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
-			height: 25px;
-			justify-content: space-around;
+			justify-content: space-between;
+			height: 100%;
 		}
 	`,
 
@@ -45,7 +47,7 @@ module.exports = {
 			flex-direction: column;
 			justify-content: space-between;
 			position: absolute;
-			width: 115px;
+			max-width: 130px;
 			z-index: 1;
     }
 	`,
@@ -53,8 +55,7 @@ module.exports = {
 	menuBar: css`
 		:host {
 			background-color: black;
-			height: 3px;
-			width: 20px;
+			height: 25%;
 		}
 	`
 }

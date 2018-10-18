@@ -31,7 +31,7 @@ ipcMain.on(k.LOGIN, async (event, load) => {
   debug('%s heard', k.LOGIN)
   try {
     const ddo = await aid.resolve(load.userAid)
-    const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password}))
+    const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password }))
     if (incorrectPW) { throw 'IncorrectPW' }
   } catch (err) {
     debug('Login error: %o', err)
@@ -63,14 +63,15 @@ ipcMain.on(k.LOGIN, async (event, load) => {
     })
 
     switchLoginState(true)
-
+    dispatch({ type: k.GOT_LIBRARY, load: { published:store.files.published, purchased:store.files.purchased } })
+    return windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     const farmerStoreList = farmerManager.loadDcdnStore()
     const purchasedDIDs = []//await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS(purchasedDIDs, farmerStoreList)
     const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS(publishedDIDs, farmerStoreList)
     let files;
-    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased} }))
+    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const updatedItems = await araContractsManager.getPublishedEarnings(files.published);

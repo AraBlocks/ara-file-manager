@@ -11,12 +11,16 @@ module.exports = {
     :host {
       align-items: center;
       background-color: white;
-      display: flex;
-      font-family: ${fonts.light};
-      font-size: 16px;
-      padding-left: 10px;
-      height: 35px;
       cursor: pointer;
+      display: block;
+      font-family: ${fonts.light};
+      height: 2em;
+      line-height: 2em;
+      overflow: hidden;
+      padding: 0 5px;
+      text-align: center;
+      text-overflow: ellipsis;
+      vertical-align: middle;
     }
 
     :host:hover {

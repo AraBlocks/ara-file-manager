@@ -4,15 +4,10 @@ const { colors, fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-  container: css`
-    :host > div {
-      font-size: 18px;
-    }
-  `,
-
   header: css`
     :host {
       font-family: ${fonts.boldSpecial};
+      font-size: 14px;
     }
   `,
 
@@ -20,7 +15,7 @@ module.exports = {
     :host {
       background-color: ${colors.araGrey};
       height: 1px;
-      margin: 13px 0;
+      margin: 13px 0 18px 0;
       width: 100%;
     }
   `

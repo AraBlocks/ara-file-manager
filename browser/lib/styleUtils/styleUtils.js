@@ -52,13 +52,14 @@ module.exports = {
     let selectedColor
     switch (color) {
       case 'red':
-        selectedColor = !hoverState ? '#fc2636' : '#e50112'
+        selectedColor = !hoverState ? 'var(--ara-red)' : '#e50112'
         break
       case 'blue':
-        selectedColor = !hoverState ? '#1e7dfa' : '#005ed9'
+        selectedColor = !hoverState ? 'var(--ara-blue)' : '#005ed9'
         break
       case 'grey':
-        selectedColor = '#cbcbcb'
+      case 'gray':
+        selectedColor = 'var(--ara-grey)'
         break
       case 'light black':
         selectedColor = '#444444'
@@ -67,7 +68,7 @@ module.exports = {
         selectedColor = '#000000'
         break
       default:
-        selectedColor = !hoverState ? '#fc2636' : 'green'
+        selectedColor = !hoverState ? 'var(--ara-red)' : 'green'
     }
 
     return selectedColor
