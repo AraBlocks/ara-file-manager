@@ -75,9 +75,11 @@ function renameAfsFiles(aid, fileName) {
 	})
 }
 
-async function surfaceAFS(items, dcdnFarmStore) {
-	return Promise.all(items.map(item => actionsUtil.descriptorGenerator(item, {
-		shouldBroadcast: farmerManager.getBroadcastingState({ did: item, dcdnFarmStore })
+async function surfaceAFS({ dids, published = false }) {
+	const dcdnFarmStore = farmerManager.loadDcdnStore()
+	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
+		shouldBroadcast: farmerManager.getBroadcastingState({ did, dcdnFarmStore }),
+		owner: published
 	})))
 }
 

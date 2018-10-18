@@ -3,11 +3,10 @@
 const debug = require('debug')('acm:kernel:lib:actions:util')
 const afs = require('ara-filesystem')
 const araContractsManager = require('./araContractsManager')
-const { AWAITING_DOWNLOAD, DOWNLOADED } = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
-const { farmerManager } = require('../actions')
 
 async function descriptorGenerator(did, opts = {}) {
 	try {
@@ -29,7 +28,7 @@ async function descriptorGenerator(did, opts = {}) {
 			path,
 			shouldBroadcast: false,
 			size: meta ? meta.size : 0,
-			status: AFSExists ? DOWNLOADED : AWAITING_DOWNLOAD
+			status: AFSExists ? k.DOWNLOADED_PUBLISHED : k.AWAITING_DOWNLOAD
 		}
 		return { ...descriptor, ...opts }
 	} catch (err) {
