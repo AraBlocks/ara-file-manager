@@ -1,16 +1,22 @@
 'use strict'
 
 const k = require('../../../lib/constants/stateManagement')
-const Hamburger = require('../../components/hamburgerMenu/menu')
+const { hamburgerHelper } = require('./util')
 const styles = require('./styles/fileDescriptor')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
-  constructor({ name, size = 0 }) {
+  constructor({
+    name,
+    size = 0,
+    status,
+    shouldBroadcast,
+    did,
+    owner
+  }) {
     super()
-
     this.props = { name, size }
     this.children = {
       hamburger: new Hamburger([{children:'Test test test'}])
@@ -23,9 +29,9 @@ class FileDescriptor extends Nanocomponent {
     const nameDiv = html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
           <div class="${styles.name} fileDescriptor-name">
-            ${[ k.OUT_OF_SYNC, k.UPDATE_AVAILABLE ].includes(status)
-              ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
-              : name}
+            ${[k.OUT_OF_SYNC, k.UPDATE_AVAILABLE].includes(status)
+        ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
+        : name}
           </div>
         </div>
       `
@@ -100,10 +106,10 @@ class FileDescriptor extends Nanocomponent {
           </div>
         </div>
         ${createSummary({
-          status,
-          downloadPercent,
-          shouldBroadcast
-        })}
+        status,
+        downloadPercent,
+        shouldBroadcast
+      })}
       </div>
     `
   }
