@@ -12,7 +12,13 @@ class FileDescriptor extends Nanocomponent {
     super()
 
     this.props = { name, size }
-    this.children = { hamburger: new Hamburger({}) }
+    this.children = {
+      hamburger: new Hamburger([
+        { children: 'item item item item1' },
+        { children: 'item 2' },
+        { children: 'item 3' },
+      ])
+    }
     this.createSummary = this.createSummary.bind(this)
   }
 
@@ -21,9 +27,9 @@ class FileDescriptor extends Nanocomponent {
     const nameDiv = html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
           <div class="${styles.name} fileDescriptor-name">
-            ${[ k.OUT_OF_SYNC, k.UPDATE_AVAILABLE ].includes(status)
-                ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
-                : name}
+            ${[k.OUT_OF_SYNC, k.UPDATE_AVAILABLE].includes(status)
+        ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
+        : name}
           </div>
         </div>
       `
@@ -31,7 +37,7 @@ class FileDescriptor extends Nanocomponent {
 
     return html`
       <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
-        ${[ nameDiv, sizeDiv ]}
+        ${[nameDiv, sizeDiv]}
       </div>
     `
   }
@@ -70,7 +76,7 @@ class FileDescriptor extends Nanocomponent {
     const [_size, unit] = filesize(size, { output: 'array' })
     const downloaded = Math.round(filesize(downloadPercent * size).slice(0, -2))
     const downloadedSpan = [k.DOWNLOADING, k.PAUSED].includes(status)
-      ? [ html`<span style="color:var(--ara-${downloadedSpanColor});">${downloaded}</span>`, ' /']
+      ? [html`<span style="color:var(--ara-${downloadedSpanColor});">${downloaded}</span>`, ' /']
       : null
     const sizeSpan = html`<span style="color:var(--ara-${spanColor});"> ${_size}</span>`
     const unitSpan = html`<span style="color:var(--ara-${unitColor});"> ${unit.toLocaleLowerCase()}</span>`
@@ -78,7 +84,7 @@ class FileDescriptor extends Nanocomponent {
 
     return html`
       <div class="${styles.sizeHolder} fileDescriptor-sizeHolder">
-        ${[ downloadedSpan, sizeSpan, unitSpan, msgSpan ]}
+        ${[downloadedSpan, sizeSpan, unitSpan, msgSpan]}
       </div>
     `
   }
@@ -98,10 +104,10 @@ class FileDescriptor extends Nanocomponent {
           </div>
         </div>
         ${createSummary({
-          status,
-          downloadPercent,
-          seeding
-        })}
+        status,
+        downloadPercent,
+        seeding
+      })}
       </div>
     `
   }

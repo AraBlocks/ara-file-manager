@@ -6,19 +6,9 @@ const styles = require('./styles/menu')
 const Nanocomponent = require('nanocomponent')
 
 class Menu extends Nanocomponent {
-	constructor({
-		items = []
-	}) {
+	constructor(items = []) {
 		super()
-		this.props = {
-			items: this.makeButtons(items)
-		}
-		this.state = { displayed: false }
-	}
-
-	showItems() {
-		this.state.displayed = !this.state.displayed
-		this.rerender()
+		this.props = { items: this.makeButtons(items) }
 	}
 
 	makeButtons(items) {
@@ -30,25 +20,23 @@ class Menu extends Nanocomponent {
 	}
 
 	createElement() {
-		const { props, state: { displayed } } = this
-		const showItems = this.showItems.bind(this)
+		const { props } = this
 
 		return html`
 			<div class="${styles.container} Menu-container">
-				<div class="${styles.hamburger} Menu-hamburger" onclick=${showItems}>
+				<div class="${styles.hamburger} Menu-hamburger">
 					<div class="${styles.menuBar}" Menu-menuBar></div>
 					<div class="${styles.menuBar}" Menu-menuBar></div>
 					<div class="${styles.menuBar}" Menu-menuBar></div>
 				</div>
 				<div class="${styles.menu} Menu-menu" >
-					${props.items.map(item => [item.render(), divider()])}
+					${props.items.map(item => [
+						item.render(),
+						html`<div class="${styles.divider} Menu-divider"></div>`
+					])}
 				</div>
 			</div>
 		`
-
-		function divider() {
-			return html`<div class="${styles.divider} Menu-divider"></div>`
-		}
 	}
 }
 
