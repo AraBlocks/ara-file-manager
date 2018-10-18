@@ -9,15 +9,8 @@ module.exports = {
 
 	container: css`
 		:host {
-			border: 2px solid white;
-			width: 100%;
-			height: 100%;
+			width: 296px;
+			height: 296px;
 		}
 	`,
-
-	selected: css`
-		:host {
-			border: 2px solid var(--ara-grey);
-		}
-	`
 }

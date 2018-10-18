@@ -1,8 +1,8 @@
 'use strict'
-const DragDropArea = require('../components/dragDropArea')
-const state = { fileList: null }
-const dragDropArea = new DragDropArea({ field: 'fileList', parentState: state })
-document.getElementById('container').appendChild(dragDropArea.render())
+const AFSExlorer = require('../views/afsExplorer/container')
+const afsExplorer = new AFSExlorer()
+document.getElementById('container').appendChild(afsExplorer.render())
+
 ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   document.body.addEventListener(eventName, preventDefaults, false)
 })
