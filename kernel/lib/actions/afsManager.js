@@ -53,6 +53,17 @@ async function exportFile({ did, exportPath, filePath }) {
 	}
 }
 
+async function afsPathIsFile({ did, path }) {
+	try {
+    const { afs } = await araFilesystem.create({ did })
+    const res = await afs.stat(path)
+    afs.close()
+    return res.isFile()
+  } catch (err) {
+		debug('Error getting file size for %s', did)
+	}
+}
+
 function unarchiveAFS({ did }) {
 	debug('Unarchiving %s', did)
 	try {
@@ -80,6 +91,7 @@ function renameAfsFiles(aid, fileName) {
 }
 
 module.exports = {
+	afsPathIsFile,
 	getFileList,
 	getFileSize,
 	exportFile,
