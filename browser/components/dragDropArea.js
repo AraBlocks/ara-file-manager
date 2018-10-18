@@ -43,13 +43,18 @@ class DragDropArea extends Nanocomponent {
 	}
 
 	createElement({ highlighted = false }) {
-		const { highlight, ondrop, preventDefault, unhilight } = this
+		const {
+			highlight,
+			ondrop,
+			preventDefault,
+			unhilight
+		} = this
 		return html`
 			<div
 				class="${styles.container(highlighted)}"
 				ondrop=${ondrop}
 				ondragenter=${highlight}
-				ongragover=${preventDefault}
+				ondragover=${preventDefault}
 				ondragleave=${unhilight}
 			>
 			</div>

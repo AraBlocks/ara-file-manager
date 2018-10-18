@@ -8,22 +8,12 @@ module.exports = {
 	fonts,
 
 	container(highlighted) {
-		if (highlighted) {
-			return css`
-				:host {
-					border: 2px solid var(--ara-grey);
-					height: 100%;
-					width: 100%;
-				}
-			`
-		} else {
-			return  css`
-				:host {
-					border: 2px solid white;
-					height: 100%;
-					width: 100%;
-				}
-			`
-		}
+		return  css`
+			:host {
+				border: 2px solid ${highlighted ? 'var(--ara-grey)' : 'white'};
+				height: 100%;
+				width: 100%;
+			}
+		`
  	}
 }
