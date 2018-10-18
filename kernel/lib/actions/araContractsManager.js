@@ -5,14 +5,12 @@ const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
 const araFilesystem = require('ara-filesystem')
 const { UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
-const { SECRET } = require('../../../lib/constants/networkKeys')
 const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 const { web3 } = require('ara-context')()
 const { web3: { account: araAccount } } = require('ara-util')
-const keyringOpts = { secret: 'test-node' }
 
 async function getAccountAddress(owner, password) {
 	try {
