@@ -10,8 +10,8 @@ module.exports = {
 	container: css`
 		:host {
 			border: 2px solid white;
-			width: 100%;
 			height: 100%;
+			width: 100%;
 		}
 	`,
 

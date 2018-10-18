@@ -40,7 +40,7 @@ class DragDropArea extends Nanocomponent {
 		const { state, props } = this
 		const data = e.dataTransfer
 		const files = data.files
-		state.filePath = files
+		state.fileList = files
 		props.parentState[props.field] = files
 		console.log(files)
 	}
