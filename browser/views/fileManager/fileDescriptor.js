@@ -13,11 +13,7 @@ class FileDescriptor extends Nanocomponent {
 
     this.props = { name, size }
     this.children = {
-      hamburger: new Hamburger([
-        { children: 'item item item item1' },
-        { children: 'item 2' },
-        { children: 'item 3' },
-      ])
+      hamburger: new Hamburger()
     }
     this.createSummary = this.createSummary.bind(this)
   }
