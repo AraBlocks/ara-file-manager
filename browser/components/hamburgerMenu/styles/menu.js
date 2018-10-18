@@ -11,9 +11,10 @@ module.exports = {
 		:host {
 			cursor: pointer;
 			height: 100%;
+			font-size: 12px;
 		}
 
-		:host:hover div {
+		:host:hover > div {
 			display: flex;
 		}
 	`,
@@ -46,7 +47,7 @@ module.exports = {
 			flex-direction: column;
 			justify-content: space-between;
 			position: absolute;
-			width: 115px;
+			max-width: 130px;
 			z-index: 1;
     }
 	`,
