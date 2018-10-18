@@ -1,39 +1,32 @@
 'use strict'
 
-const {
-  GETTING_USER_DATA,
-  LOGIN,
-  LOGOUT,
-  PUBLISHED,
-  PURCHASED,
-  UPDATE_BALANCE
- } = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 
 module.exports = async (state, { load = null, type }) => {
   switch (type) {
-    case GETTING_USER_DATA:
+    case k.GETTING_USER_DATA:
       state.username = 'Logging in'
       state.araBalance = 0
       break
-    case LOGIN:
+    case k.LOGIN:
       state.userAid = load.userAid
       state.password = load.password
       state.accountAddress = load.accountAddress
       state.araBalance = load.araBalance
       state.username = 'Test User'
       break
-    case LOGOUT:
+    case k.LOGOUT:
       Object.keys(state).forEach(key => state[key] = null)
       break
-    case PUBLISHED:
-      state.userBalance = load
+    case k.PUBLISHED:
+      state.userBalance = load.balance
       break
-    case UPDATE_BALANCE:
-    case PURCHASED:
+    case k.UPDATE_BALANCE:
+    case k.PURCHASED:
       state.araBalance = load
       break
     default:
-    return state
+      return state
   }
   return state
 }

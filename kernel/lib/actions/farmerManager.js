@@ -1,9 +1,12 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
+const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
+const afsManager = require('./afsManager')
 const dispatch = require('../reducers/dispatch')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
-const afsManager = require('./afsManager')
+const fs = require('fs')
+const { dcdn: dcdnRC } = require('ara-runtime-configuration')()
 
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
@@ -26,7 +29,7 @@ function joinBroadcast({ farmer, did, price = 1 }) {
 }
 
 function getBroadcastingState({ did, dcdnFarmStore = {} }) {
-	debug('getting broadcasting state')
+	debug('getting broadcasting state %', dcdnFarmStore[did])
   try {
 		const fileData = dcdnFarmStore[did]
 		if (fileData == null) {
@@ -41,12 +44,13 @@ function getBroadcastingState({ did, dcdnFarmStore = {} }) {
 function loadDcdnStore() {
 	debug('loading dcdn farm store')
   try {
-    const fileDirectory = farmConfig.dcdn.config
+		console.log({dcdnRC})
+    const fileDirectory = dcdnRC.config
     const data = fs.readFileSync(fileDirectory)
     const itemList = JSON.parse(data)
     return itemList
   } catch (err) {
-    debug('Can\'t load DCDN farm store')
+    debug('Can\'t load DCDN farm store: %o', err)
     return {}
   }
 }
@@ -54,9 +58,7 @@ function loadDcdnStore() {
 function unjoinBroadcast({ farmer, did }) {
 	debug('Unjoining broadcast for %s', did)
 	try {
-		farmer.unjoin({
-			did
-		})
+		farmer.unjoin({ did })
 		dispatch({ type: CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: false } })
 	} catch(err) {
 		debug('Error stopping broadcast for %s: %O', did, err)
