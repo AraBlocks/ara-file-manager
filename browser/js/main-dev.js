@@ -11,6 +11,7 @@ const windowManager = remote.require('electron-window-manager')
 const { emit } = require('../../browser/lib/tools/windowManagement')
 
 const exclude = [
+  'afsExplorer',
   'fileManager.js',
   'styles',
   'modals',
