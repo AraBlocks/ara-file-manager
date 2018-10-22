@@ -7,5 +7,6 @@ module.exports = {
   register: require('./register'),
   update: require('./update'),
   utils: require('./utils'),
-  subscription: require('./subscription')
+  subscription: require('./subscription'),
+  seed: require('./seed')
 }

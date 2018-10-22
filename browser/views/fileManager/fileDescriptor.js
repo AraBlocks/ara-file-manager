@@ -9,16 +9,17 @@ const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
+    did,
     name,
+    owner,
     size = 0,
     status,
-    shouldBroadcast,
-    owner
+    shouldBroadcast
   }) {
     super()
     this.props = { name, size }
     this.children = {
-      hamburger: hamburgerHelper({ owner, shouldBroadcast, status })
+      hamburger: hamburgerHelper({ did, owner, shouldBroadcast, status })
     }
     this.createSummary = this.createSummary.bind(this)
   }
