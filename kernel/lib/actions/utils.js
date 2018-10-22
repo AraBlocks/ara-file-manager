@@ -43,7 +43,6 @@ function makeAfsPath(did) {
 async function readFileMetadata(did) {
 	try {
 		const data = await afs.metadata.readFile({ did })
-		debug('Reading file metadata for %s', did)
 		return JSON.parse(data.fileInfo)
 	} catch (err) {
 		debug('No metadata for %s', did)

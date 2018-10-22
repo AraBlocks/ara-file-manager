@@ -29,7 +29,6 @@ function joinBroadcast({ farmer, did, price = 1 }) {
 }
 
 function getBroadcastingState({ did, dcdnFarmStore = {} }) {
-	debug('getting broadcasting state %', dcdnFarmStore[did])
   try {
 		const fileData = dcdnFarmStore[did]
 		if (fileData == null) {
@@ -44,7 +43,6 @@ function getBroadcastingState({ did, dcdnFarmStore = {} }) {
 function loadDcdnStore() {
 	debug('loading dcdn farm store')
   try {
-		console.log({dcdnRC})
     const fileDirectory = dcdnRC.config
     const data = fs.readFileSync(fileDirectory)
     const itemList = JSON.parse(data)
@@ -59,7 +57,6 @@ function unjoinBroadcast({ farmer, did }) {
 	debug('Unjoining broadcast for %s', did)
 	try {
 		farmer.unjoin({ did })
-		dispatch({ type: CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: false } })
 	} catch(err) {
 		debug('Error stopping broadcast for %s: %O', did, err)
 	}
