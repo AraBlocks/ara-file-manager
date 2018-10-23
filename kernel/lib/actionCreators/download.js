@@ -16,7 +16,7 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 		farmerManager.download({
 			farmer: store.farmer.farm,
-			did: load.did,
+			did: load,
 			handler: (load) => {
 				dispatch({ type: k.SET_SIZE, load: load.size })
 				windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
