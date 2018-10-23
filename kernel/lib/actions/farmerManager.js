@@ -2,11 +2,10 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
-const afsManager = require('./afsManager')
 const dispatch = require('../reducers/dispatch')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const fs = require('fs')
-const { dcdn: dcdnRC } = require('ara-runtime-configuration')()
+const rc = require('ara-network-node-dcdn-farm/src/rc')()
 
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
@@ -43,7 +42,7 @@ function getBroadcastingState({ did, dcdnFarmStore = {} }) {
 function loadDcdnStore() {
 	debug('loading dcdn farm store')
   try {
-    const fileDirectory = dcdnRC.config
+    const fileDirectory = rc.dcdn.config
     const data = fs.readFileSync(fileDirectory)
     const itemList = JSON.parse(data)
     return itemList
@@ -110,7 +109,7 @@ async function download({
 		farmer.on('complete', (did) => {
 			debug('Download complete!')
 			handler({ downloadPercent: 1, did })
-			afsManager.renameAfsFiles(did, 'movie.mov')
+			renameAfsFiles(did, 'movie.mov')
 			joinBroadcast({ farmer, did })
 		})
 		farmer.on('requestcomplete', (did) => {
@@ -120,6 +119,17 @@ async function download({
 		debug('Error downloading: %O', err)
 		errorHandler()
 	}
+}
+
+function renameAfsFiles(did, fileName) {
+	const afsFolderPath = actionsUtil.makeAfsPath(did)
+	const afsFilePath = path.join(afsFolderPath, 'data')
+	const newPath = path.join(afsFolderPath, fileName)
+	fs.rename(afsFilePath, newPath, function (err) {
+		if (err) {
+			debug('some error occurred when renaming afs files')
+		}
+	})
 }
 
 module.exports = {

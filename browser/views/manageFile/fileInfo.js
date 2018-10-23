@@ -3,7 +3,7 @@
 const FileSelector = require('../../components/fileSelector')
 const Input = require('../../components/input')
 const styles = require('./styles/fileInfo')
-const deeplink = require('../../lib/tools/deeplink')
+const deeplink = require('../../lib/tools/')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 

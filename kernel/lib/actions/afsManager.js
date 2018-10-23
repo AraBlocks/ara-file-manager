@@ -64,17 +64,6 @@ async function removeAllFiles({ did, password }) {
 	}
 }
 
-function renameAfsFiles(aid, fileName) {
-	const afsFolderPath = actionsUtil.makeAfsPath(aid)
-	const afsFilePath = path.join(afsFolderPath, 'data')
-	const newPath = path.join(afsFolderPath, fileName)
-	fs.rename(afsFilePath, newPath, function (err) {
-		if (err) {
-			debug('some error occurred when renaming afs files')
-		}
-	})
-}
-
 async function surfaceAFS({ dids, published = false }) {
 	const dcdnFarmStore = farmerManager.loadDcdnStore()
 	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
@@ -98,7 +87,6 @@ module.exports = {
 	getFileList,
 	getFileSize,
 	removeAllFiles,
-	renameAfsFiles,
 	surfaceAFS,
 	unarchiveAFS,
 }
