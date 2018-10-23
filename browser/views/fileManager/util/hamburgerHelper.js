@@ -24,6 +24,7 @@ module.exports = ({
         shouldBroadcast
           ? menuItems.addItem('Stop Seeding AFS', k.STOP_SEEDING)
           : menuItems.addItem('Seed AFS', k.START_SEEDING)
+          menuItems.addItem('Open AFS', k.OPEN_AFS)
         if (owner) menuItems.addItem('Manage File', k.UPDATE_FILE)
         break
       case k.AWAITING_DOWNLOAD:
