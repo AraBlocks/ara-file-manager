@@ -1,7 +1,8 @@
 'use strict'
 
 const remote = require('electron').remote
-const dialog = remote.dialog
+
+const { dialog, shell} = remote
 
 module.exports = {
 	showSelectFileDialog() {
@@ -17,5 +18,9 @@ module.exports = {
 				fileNames ? resolve(fileNames) : reject(error)
 			})
 		})
+	},
+
+	openDirectory(path) {
+		shell.showItemInFolder(path)
 	}
 }
