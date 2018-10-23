@@ -2,12 +2,14 @@
 
 const k = require('../../../../lib/constants/stateManagement')
 const Hamburger = require('../../../components/hamburgerMenu')
-const windowManagement = require('../../../lib/tools/windowManagement')
+const { deeplink, windowManagement } = require('../../../lib/tools/')
 
 module.exports = ({ shouldBroadcast, status, owner, did }) => {
   try {
-
-    const menuItems = [{ children: `Copy Link` }]
+    const menuItems = [{
+      children: `Copy Link`,
+      onclick: () => deeplink.copyDeeplink(did, name)
+    }]
     menuItems.addItem = function (children, event) {
       this.push({ children, onclick: () => windowManagement.emit({ event, load: did }) })
     }
@@ -16,7 +18,7 @@ module.exports = ({ shouldBroadcast, status, owner, did }) => {
       case k.DOWNLOADED_PUBLISHED:
         shouldBroadcast
           ? menuItems.addItem('Stop Seeding AFS', k.STOP_SEEDING)
-          : menuItems.addItem('Seed AFS', k.SEED)
+          : menuItems.addItem('Seed AFS', k.START_SEEDING)
         if (owner) menuItems.addItem('Manage File', k.UPDATE_FILE)
         break
       case k.AWAITING_DOWNLOAD:
@@ -36,8 +38,8 @@ module.exports = ({ shouldBroadcast, status, owner, did }) => {
     }
 
     return new Hamburger(menuItems)
-  } catch (err) { 
-    console.log(err) 
+  } catch (err) {
+    debug('Error helping the hamburger:', err)
     return new Hamburger
   }
 }

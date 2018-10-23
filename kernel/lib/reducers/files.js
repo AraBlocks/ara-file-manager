@@ -93,6 +93,6 @@ module.exports = (state, { load = null, type }) => {
   return state
 }
 
-function findFile(aid, files) {
-	return files.find(({ did }) => did === aid)
+function findFile(did, files) {
+	return files.find(file => file.did === did)
 }

@@ -3,7 +3,7 @@
 const FileSelector = require('../../components/fileSelector')
 const Input = require('../../components/input')
 const styles = require('./styles/fileInfo')
-const windowManagement = require('../../lib/tools/windowManagement')
+const deeplink = require('../../lib/tools/deeplink')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -24,7 +24,7 @@ class FileInfo extends Nanocomponent {
 					option: 'button',
 					children: 'Copy',
 					onclick: () => {
-						windowManagement.copyDistributionLink(parentState.fileAid, parentState.fileName)
+						deeplink.copyDeeplink(parentState.did, parentState.name)
 					}
 				}
 			}),
@@ -65,7 +65,7 @@ class FileInfo extends Nanocomponent {
 			<div class=${styles.container}>
 				<div class=${styles.verticalContainer}>
 					<div class=${styles.infoTipHolder}>
-						${children.fileNameInput.render({ value: parentState.fileName })}
+						${children.fileNameInput.render({ value: parentState.name })}
 					</div>
 					<div class=${styles.infoTipHolder}>
 						${children.priceInput.render({ value: parentState.price })}
@@ -82,7 +82,7 @@ class FileInfo extends Nanocomponent {
 				<div class=${styles.distributionLink}>
 					<b>Distribution Link</b>
 				</div>
-				${children.distributionLink.render({ value: windowManagement.getDistributionLink(parentState.fileAid, parentState.fileName) })}
+				${children.distributionLink.render({ value: deeplink.getDeeplink(parentState.did, parentState.name) })}
 			</div>
 		`
 	}

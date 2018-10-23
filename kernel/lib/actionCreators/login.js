@@ -46,9 +46,9 @@ ipcMain.on(k.LOGIN, async (event, load) => {
 
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
-    const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
+    const transferSubscription =  araContractsManager.subscribeTransfer(accountAddress)
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
-    farmerManager.startBroadcast(farmer)
+    farmer.start()
 
     dispatch({
       type: k.LOGIN,
@@ -63,7 +63,8 @@ ipcMain.on(k.LOGIN, async (event, load) => {
     })
 
     switchLoginState(true)
-    const purchasedDIDs = []//await araContractsManager.getLibraryItems(load.userAid)
+
+    const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
     const purchased = await afsManager.surfaceAFS({ dids: purchasedDIDs })
     const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS({ dids: publishedDIDs, published: true })
