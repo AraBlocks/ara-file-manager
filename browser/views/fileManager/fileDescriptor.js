@@ -30,8 +30,8 @@ class FileDescriptor extends Nanocomponent {
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
           <div class="${styles.name} fileDescriptor-name">
             ${[k.OUT_OF_SYNC, k.UPDATE_AVAILABLE].includes(status)
-        ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
-        : name}
+              ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
+              : name}
           </div>
         </div>
       `

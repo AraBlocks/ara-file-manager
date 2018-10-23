@@ -72,11 +72,6 @@ async function stopAllBroadcast(farmer) {
 	}
 }
 
-function startBroadcast(farmer) {
-	debug('Starting DCDN broadcast')
-	farmer.start()
-}
-
 async function download({
 	farmer,
 	errorHandler,
@@ -133,7 +128,6 @@ module.exports = {
 	getBroadcastingState,
 	loadDcdnStore,
 	joinBroadcast,
-	startBroadcast,
 	stopAllBroadcast,
 	unjoinBroadcast
 }

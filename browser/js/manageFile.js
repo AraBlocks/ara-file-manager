@@ -10,8 +10,8 @@ const { modal: { manageFileData } } = windowManager.sharedData.fetch('store')
 
 const manageFileContainer = new ManageFileContainer({
 	currency: 'ARA',
-	fileAid: manageFileData.aid,
-	fileName: manageFileData.name,
+	did: manageFileData.did,
+	name: manageFileData.name,
 	filePath: [],
 	price: manageFileData.price,
 	priceManagement: true,

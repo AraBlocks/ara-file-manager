@@ -2,7 +2,7 @@
 
 const Button = require('../../components/button')
 const { closeModal } = require('../../lib/tools/windowManagement')
-const { copyDistributionLink } = require('../../lib/tools/windowManagement')
+const { deeplink } = require('../../lib/tools/')
 const html = require('choo/html')
 const styles = require('./styles')
 
@@ -35,7 +35,7 @@ module.exports = ({
 				const span = this.children[1]
 				span.classList.add('fadeInUp')
 				span.addEventListener('animationend', () => span.classList.remove('fadeInUp'), false)
-				copyDistributionLink(aid, fileName)
+				deeplink.copyDeeplink(aid, fileName)
 			}}>
 				${copyLinkButton.render()}<span>Copied !</span>
 			</div>

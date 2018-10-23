@@ -1,6 +1,6 @@
 'use strict'
 
-const { copyDistributionLink } = require('../../../windowManagement')
+const { deeplink } = require('../../../windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
 
@@ -28,7 +28,7 @@ module.exports = ({ did, datePublished, name }) => {
 					span.classList.add('fadeInUp')
 					span.addEventListener('animationend', () => span.classList.remove('fadeInUp'), false)
 
-					copyDistributionLink(did, name)
+					deeplink.copyDeeplink(did, name)
 				}}
 			>
 				Copy Distribution Link<span>Copied !</span>

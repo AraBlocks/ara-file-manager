@@ -2,7 +2,6 @@
 
 const debug = require('debug')('browser:lib:tools:windowManagement')
 const {
-	clipboard,
 	ipcRenderer,
 	remote,
 	shell
@@ -23,16 +22,6 @@ function closeWindow(name = null) {
 	name
 		? windowManager.get(name).object.close()
 		: windowManager.getCurrent().object.close()
-}
-
-function copyDistributionLink(aid, fileName) {
-	const link = getDistributionLink(aid, fileName)
-	clipboard.writeText(link)
-}
-
-function getDistributionLink(aid, fileName) {
-	const encodedName = encodeURIComponent(fileName)
-	return `lstr://download/${aid}/${encodedName}`
 }
 
 function emit({ event, load = null}) {
@@ -103,11 +92,9 @@ function quitApp() {
 
 module.exports = {
 	changeMainManagerSize,
-	copyDistributionLink,
 	closeModal,
 	closeWindow,
 	emit,
-	getDistributionLink,
 	openModal,
 	minimizeWindow,
 	transitionModal,

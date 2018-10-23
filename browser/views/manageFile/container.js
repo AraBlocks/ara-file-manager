@@ -1,7 +1,7 @@
 'use strict'
 
 const Button = require('../../components/button')
-const { emit, getDistributionLink } = require('../../lib/tools/windowManagement')
+const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
 const overlay = require('../../components/overlay')
@@ -17,8 +17,8 @@ const Nanocomponent = require('nanocomponent')
 class Container extends Nanocomponent {
 	constructor({
 		currency,
-		fileAid,
-		fileName,
+		did,
+		name,
 		filePath,
 		price,
 		priceManagement,
@@ -28,9 +28,8 @@ class Container extends Nanocomponent {
 		super()
 		this.state = {
 			currency,
-			distributionLink: getDistributionLink(fileAid, fileName),
-			fileAid,
-			fileName,
+			did,
+			name,
 			filePath,
 			price,
 			priceManagement,
@@ -75,8 +74,8 @@ class Container extends Nanocomponent {
 
 	updateFile() {
 		const load = {
-			fileAid: this.state.fileAid,
-			name: this.state.fileName,
+			did: this.state.did,
+			name: this.state.name,
 			password: account.password,
 			paths: this.state.filePath,
 			price: this.state.price == "" ? null : this.state.price,
