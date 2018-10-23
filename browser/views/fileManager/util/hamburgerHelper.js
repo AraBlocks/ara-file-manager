@@ -4,10 +4,16 @@ const k = require('../../../../lib/constants/stateManagement')
 const Hamburger = require('../../../components/hamburgerMenu')
 const { deeplink, windowManagement } = require('../../../lib/tools/')
 
-module.exports = ({ shouldBroadcast, status, owner, did }) => {
+module.exports = ({
+  did,
+  name,
+  owner,
+  shouldBroadcast,
+  status
+}) => {
   try {
     const menuItems = [{
-      children: `Copy Link`,
+      children: 'Copy Link',
       onclick: () => deeplink.copyDeeplink(did, name)
     }]
     menuItems.addItem = function (children, event) {

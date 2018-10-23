@@ -19,7 +19,13 @@ class FileDescriptor extends Nanocomponent {
     super()
     this.props = { name, size }
     this.children = {
-      hamburger: hamburgerHelper({ did, owner, shouldBroadcast, status })
+      hamburger: hamburgerHelper({
+        did,
+        name,
+        owner,
+        shouldBroadcast,
+        status
+      })
     }
     this.createSummary = this.createSummary.bind(this)
   }
