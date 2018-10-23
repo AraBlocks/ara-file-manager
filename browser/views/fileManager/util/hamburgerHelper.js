@@ -11,7 +11,6 @@ module.exports = ({
   shouldBroadcast,
   status
 }) => {
-  try {
     const menuItems = [{
       children: 'Copy Link',
       onclick: () => deeplink.copyDeeplink(did, name)
@@ -44,8 +43,5 @@ module.exports = ({
     }
 
     return new Hamburger(menuItems)
-  } catch (err) {
-    debug('Error helping the hamburger:', err)
-    return new Hamburger
-  }
+
 }
