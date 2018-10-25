@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const actionsUtils = require('./utils')
 const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
-const farmDCDN = require('ara-network-node-dcdn-farm/src/dcdn')
+const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const fs = require('fs')
 const path = require('path')
 const rc = require('ara-network-node-dcdn-farm/src/rc')()
@@ -93,7 +93,7 @@ async function download({
 			upload: false,
 			price,
 			maxPeers,
-			jobId
+			jobId: jobId.slice(2)
 		})
 
 		let totalBlocks = 0
