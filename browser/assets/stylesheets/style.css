@@ -108,7 +108,7 @@ button {
   transition: all ease-in-out;
 }
 
-#demo-2 {
+.ants {
   animation: border-dance 24s linear infinite;
   background-image: linear-gradient(
     to right,
