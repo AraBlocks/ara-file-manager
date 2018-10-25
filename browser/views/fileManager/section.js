@@ -6,7 +6,7 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Section extends Nanocomponent {
-  constructor({ type = '' }) {
+  constructor({ type = '', files }) {
     super()
     this.props = { typeRow: type }
   }

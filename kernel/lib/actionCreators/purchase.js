@@ -40,21 +40,21 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 })
 
 ipcMain.on(k.PURCHASE, async (event, load) => {
-	debug('%s heard: %s', k.PURCHASE, load.aid)
+	debug('%s heard: %s', k.PURCHASE, load.did)
 	try {
 		const descriptorOpts = {
 			peers: 1,
 			name: load.fileName,
 			status: k.PURCHASING,
 		}
-		const descriptor = await actionsUtil.descriptorGenerator(load.aid, descriptorOpts)
+		const descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
 		dispatch({ type: k.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-		await araContractsManager.purchaseItem(load.aid)
+		const jobId  = await araContractsManager.purchaseItem(load.did)
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 
-		dispatch({ type: k.PURCHASED, load: araBalance })
+		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 	} catch (err) {
 		debug(err)

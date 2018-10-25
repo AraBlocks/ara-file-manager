@@ -12,31 +12,45 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 	debug('%s heard. Load: %O', k.DOWNLOAD, load)
 	try {
 		debug('Dispatching %s', k.DOWNLOADING)
+
+		const { jobId } = store.files.purchased.find(({ did }) => did === load)
 		dispatch({ type: k.DOWNLOADING, load })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
 		farmerManager.download({
-			farmer: store.farmer.farm,
 			did: load,
-			handler: (load) => {
-				dispatch({ type: k.SET_SIZE, load: load.size })
-				windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-				if (load.downloadPercent !== 1) {
-					debug('Dispatching %s', k.DOWNLOADING)
-					// dispatch({ type: DOWNLOADING, load })
-					// windowManager.pingView({ view: 'filemanager', event: REFRESH })
-				} else {
-					debug('Dispatching %s', k.DOWNLOADED)
-					dispatch({ type: k.DOWNLOADED, load: load.did })
-					windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-				}
-			}, errorHandler: () => {
-				debug('Download failed')
-				debug('Dispatching %s . Load: %s', k.DOWNLOAD_FAILED, load.did)
-				dispatch({ type: k.DOWNLOAD_FAILED, load: load.did })
-				windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-			}
+			jobId,
+			farmer: store.farmer.farm,
+			startHandler,
+			progressHandler,
+			completeHandler,
+			errorHandler
 		})
 	} catch (err) {
 		debug('Error: %O', err)
 	}
 })
+
+function startHandler(size) {
+	dispatch({ type: k.SET_SIZE, load: size })
+	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+}
+
+function progressHandler(load) {
+	debug('Dispatching %s', k.DOWNLOADING)
+	dispatch({ type: k.DOWNLOADING, load })
+	windowManager.pingView({ view: 'filemanager', event: REFRESH })
+}
+
+function completeHandler(did) {
+	debug('Dispatching %s', k.DOWNLOADED)
+	dispatch({ type: k.DOWNLOADED, load: did })
+	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+}
+
+function errorHandler(did) {
+	debug('Download failed')
+	debug('Dispatching %s . Load: %s', k.DOWNLOAD_FAILED, did)
+	dispatch({ type: k.DOWNLOAD_FAILED, load: did })
+	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+}
