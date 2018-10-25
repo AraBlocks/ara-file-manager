@@ -6,13 +6,13 @@ module.exports = (state, { load = null, type }) => {
   let file
   switch (type){
     case k.CHANGE_BROADCASTING_STATE:
-      file = findFile(load.did, state.published)
+      console.log(load)
+      file = findFile(load.did, state.published) || findFile(load.did, state.purchased)
       file.shouldBroadcast = load.shouldBroadcast
       break
     case k.DOWNLOADING:
       file = state.purchased[state.purchased.length - 1]
       file.downloadPercent = load.downloadPercent || 0
-      file.size = load.size || file.size
       file.status = k.DOWNLOADING
       break
     case k.DOWNLOADED:
@@ -87,7 +87,7 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.SET_SIZE:
       file = state.purchased[state.purchased.length - 1]
-      file.size = file.size || load
+      file.size = file.size || load.size
       break
     default:
     return state
