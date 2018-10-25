@@ -155,11 +155,11 @@ function subscribeTransfer(userAddress) {
 	try {
 		const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
 		const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
-		.on('data', async () => {
-			const newBalance = await getAraBalance(store.account.userAid)
-			windowManager.internalEmitter.emit(UPDATE_BALANCE, newBalance)
-		})
-		.on('error', debug)
+			.on('data', async () => {
+				const newBalance = await getAraBalance(store.account.userAid)
+				windowManager.internalEmitter.emit(UPDATE_BALANCE, { araBalance: newBalance })
+			})
+			.on('error', debug)
 
 		return transferSubscription
 	} catch (err) {
