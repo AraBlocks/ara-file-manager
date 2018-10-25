@@ -93,7 +93,7 @@ async function download({
 			upload: false,
 			price,
 			maxPeers,
-			jobId
+			jobId: jobId.slice(2)
 		})
 
 		let totalBlocks = 0
