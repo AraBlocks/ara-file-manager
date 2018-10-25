@@ -42,7 +42,7 @@ windowManager.setSize = (view) => {
       width = 340
       height = 485
       break
-    case 'fManagerView':
+    case 'afsExplorer':
     case 'filemanager':
       width = 490
       height = 730
