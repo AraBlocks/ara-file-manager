@@ -6,11 +6,16 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class ProgressBar extends Nanocomponent {
+  constructor() {
+    super()
+  }
+
   update() {
     return true
   }
 
   createElement({ downloadPercent, status, shouldBroadcast }) {
+
     let color
     switch (status) {
       case k.DOWNLOADED_PUBLISHED:
@@ -19,8 +24,16 @@ class ProgressBar extends Nanocomponent {
       case k.PAUSED:
         color = 'black'
         break
-      default:
+      case k.AWAITING_DOWNLOAD:
+      case k.DOWNLOADING:
         color = 'red'
+        break
+      default:
+        return html`
+          <div class="${styles.holder} progressBar-holder" style="background-color: rgba(0,0,0,0);">
+            <div id="demo-2"></div>
+          </div>
+        `
     }
 
     return html`

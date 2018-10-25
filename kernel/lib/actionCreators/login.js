@@ -17,7 +17,6 @@ const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
 const { switchLoginState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
-const actionsUtil = require('../actions/utils')
 
 internalEmitter.on(k.LOGOUT, () => {
   farmerManager.stopAllBroadcast(store.farmer.farm)

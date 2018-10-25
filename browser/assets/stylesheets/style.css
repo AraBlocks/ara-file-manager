@@ -108,6 +108,19 @@ button {
   transition: all ease-in-out;
 }
 
+#demo-2 {
+  animation: border-dance 24s linear infinite;
+  background-image: linear-gradient(
+    to right,
+    silver 50%,
+    transparent 0%
+  );
+  background-size: 8px 4px;
+  background-repeat: repeat-x;
+  background-position: 0% bottom;
+  height:1px;
+}
+
 /* animations */
 @keyframes spin {
   0% {
@@ -138,4 +151,13 @@ button {
 @keyframes fadein {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+@keyframes border-dance {
+  from {
+    background-position: 0% bottom;
+  }
+  to {
+    background-position: 100% bottom;
+  }
 }

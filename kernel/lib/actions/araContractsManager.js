@@ -55,16 +55,16 @@ async function purchaseItem(contentDid) {
 	debug('Purchasing item: %s', contentDid)
 	const { account } = store
 	try {
-		await araContracts.purchase(
+		const { jobId } = await araContracts.purchase(
 			{
 				requesterDid: account.userAid,
 				contentDid,
 				password: account.password,
-				budget: 0
+				budget: 1
 			}
 		)
 		debug('Purchase Completed')
-		return
+		return jobId
 	} catch (err) {
 		debug('Error purchasing item: %o', err)
 	}

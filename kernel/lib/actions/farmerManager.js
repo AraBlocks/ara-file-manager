@@ -1,10 +1,12 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
+const actionsUtils = require('./utils')
 const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
-const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
+const farmDCDN = require('ara-network-node-dcdn-farm/src/dcdn')
 const fs = require('fs')
+const path = require('path')
 const rc = require('ara-network-node-dcdn-farm/src/rc')()
 
 function createFarmer({ did: userID, password }) {
@@ -73,11 +75,13 @@ async function stopAllBroadcast(farmer) {
 
 async function download({
 	farmer,
-	errorHandler,
 	did,
-	handler,
 	maxPeers = 1,
-	price = 1
+	price = 1,
+	errorHandler,
+	startHandler,
+	progressHandler,
+	completeHandler
 }) {
 	debug('Downloading through DCDN: %s', did)
 	try {
@@ -94,17 +98,17 @@ async function download({
 		farmer.on('start', (did, total) => {
 			debug('Starting download', total)
 			const size = total * 6111 * 10
-			handler({ did, size })
+			startHandler({ did, size })
 			totalBlocks = total
 		})
 		farmer.on('progress', (did, value) => {
-			const perc = value / totalBlocks
-			if (perc >= prevPercent + 0.1) {
-				prevPercent = perc
-				if (value / totalBlocks != 1) {
-					handler({ downloadPercent: value / totalBlocks, aid: did })
-				}
-			}
+			// const perc = value / totalBlocks
+			// if (perc >= prevPercent + 0.1) {
+				// prevPercent = perc
+				// if (value / totalBlocks != 1) {
+					progressHandler({ downloadPercent: value / totalBlocks, did })
+				// }
+			// }
 		})
 		farmer.on('complete', (did) => {
 			debug('Download complete!')
@@ -117,12 +121,12 @@ async function download({
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)
-		errorHandler()
+		errorHandler(did)
 	}
 }
 
 function renameAfsFiles(did, fileName) {
-	const afsFolderPath = actionsUtil.makeAfsPath(did)
+	const afsFolderPath = actionsUtils.makeAfsPath(did)
 	const afsFilePath = path.join(afsFolderPath, 'data')
 	const newPath = path.join(afsFolderPath, fileName)
 	fs.rename(afsFilePath, newPath, function (err) {

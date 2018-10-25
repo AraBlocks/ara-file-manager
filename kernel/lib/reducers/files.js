@@ -11,7 +11,7 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.DOWNLOADING:
       file = state.purchased[state.purchased.length - 1]
-      file.downloadPercent = load.downloadPercent
+      file.downloadPercent = load.downloadPercent || 0
       file.size = load.size || file.size
       file.status = k.DOWNLOADING
       break
@@ -61,7 +61,8 @@ module.exports = (state, { load = null, type }) => {
       state.purchased.push(load)
       break
     case k.PURCHASED:
-      file = state.purchased[state.purchased.length - 1]
+      file = findFile(load.did, state.purchased)
+      file.jobId = load.jobId
       file.status = k.AWAITING_DOWNLOAD
       break
     case k.UPDATING_FILE:
