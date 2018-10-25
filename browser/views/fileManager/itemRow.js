@@ -11,17 +11,6 @@ const Nanocomponent = require('nanocomponent')
 class ItemRow extends Nanocomponent {
   constructor({ file, typeRow }) {
     super()
-    const {
-      downloadPercent,
-      status,
-      shouldBroadcast
-    } = file
-
-    this.state = {
-      downloadPercent,
-      status,
-      shouldBroadcast
-    }
     this.props = { typeRow }
     this.children = {
       fileDescriptor: new FileDescriptor({ ...file }),
@@ -48,7 +37,7 @@ class ItemRow extends Nanocomponent {
           </div>
           ${children.stats.render({ ...file })}
         </div>
-        ${children.progressBar.render(file)}
+        ${children.progressBar.render({ downloadPercent, status, shouldBroadcast })}
       </div>
     `
   }

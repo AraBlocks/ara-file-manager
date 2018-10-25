@@ -76,6 +76,7 @@ async function stopAllBroadcast(farmer) {
 async function download({
 	farmer,
 	did,
+	jobId,
 	maxPeers = 1,
 	price = 1,
 	errorHandler,
@@ -84,13 +85,15 @@ async function download({
 	completeHandler
 }) {
 	debug('Downloading through DCDN: %s', did)
+	debug({jobId})
 	try {
 		await farmer.join({
 			did,
 			download: true,
 			upload: false,
 			price,
-			maxPeers
+			maxPeers,
+			jobId
 		})
 
 		let totalBlocks = 0
@@ -112,7 +115,7 @@ async function download({
 		})
 		farmer.on('complete', (did) => {
 			debug('Download complete!')
-			handler({ downloadPercent: 1, did })
+			completeHandler(did)
 			renameAfsFiles(did, 'movie.mov')
 			joinBroadcast({ farmer, did })
 		})

@@ -14,6 +14,7 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 		debug('Dispatching %s', k.DOWNLOADING)
 
 		const { jobId } = store.files.purchased.find(({ did }) => did === load)
+		debug({jobId})
 		dispatch({ type: k.DOWNLOADING, load })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
