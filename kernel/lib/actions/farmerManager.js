@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const actionsUtils = require('./utils')
 const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
-const farmDCDN = require('ara-network-node-dcdn-farm/src/dcdn')
+const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const fs = require('fs')
 const path = require('path')
 const rc = require('ara-network-node-dcdn-farm/src/rc')()
@@ -105,13 +105,13 @@ async function download({
 			totalBlocks = total
 		})
 		farmer.on('progress', (did, value) => {
-			// const perc = value / totalBlocks
-			// if (perc >= prevPercent + 0.1) {
-				// prevPercent = perc
-				// if (value / totalBlocks != 1) {
+			const perc = value / totalBlocks
+			if (perc >= prevPercent + 0.1) {
+				prevPercent = perc
+				if (value / totalBlocks != 1) {
 					progressHandler({ downloadPercent: value / totalBlocks, did })
-				// }
-			// }
+				}
+			}
 		})
 		farmer.on('complete', (did) => {
 			debug('Download complete!')

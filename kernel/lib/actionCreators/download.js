@@ -33,6 +33,7 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 })
 
 function startHandler(size) {
+	console.log({ size })
 	dispatch({ type: k.SET_SIZE, load: size })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }
@@ -40,7 +41,7 @@ function startHandler(size) {
 function progressHandler(load) {
 	debug('Dispatching %s', k.DOWNLOADING)
 	dispatch({ type: k.DOWNLOADING, load })
-	windowManager.pingView({ view: 'filemanager', event: REFRESH })
+	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }
 
 function completeHandler(did) {
