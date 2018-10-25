@@ -25,6 +25,8 @@ class ProgressBar extends Nanocomponent {
         color = 'black'
         break
       case k.AWAITING_DOWNLOAD:
+        color = 'grey'
+        break
       case k.DOWNLOADING:
         color = 'red'
         break

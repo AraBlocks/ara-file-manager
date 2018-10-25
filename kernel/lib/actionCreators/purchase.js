@@ -53,7 +53,7 @@ ipcMain.on(k.PURCHASE, async (event, load) => {
 
 		const jobId  = await araContractsManager.purchaseItem(load.did)
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
-
+		debug({jobId})
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 	} catch (err) {
