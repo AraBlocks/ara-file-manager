@@ -31,7 +31,7 @@ class ProgressBar extends Nanocomponent {
       default:
         return html`
           <div class="${styles.holder} progressBar-holder" style="background-color: rgba(0,0,0,0);">
-            <div id="demo-2"></div>
+            <div class="ants"></div>
           </div>
         `
     }
