@@ -18,6 +18,7 @@ class FileDescriptor extends Nanocomponent {
   }) {
     super()
     this.props = { name, size }
+
     this.children = {
       hamburger: hamburgerHelper({
         did,
@@ -30,7 +31,11 @@ class FileDescriptor extends Nanocomponent {
     this.createSummary = this.createSummary.bind(this)
   }
 
-  createSummary({ status, downloadPercent, shouldBroadcast }) {
+  createSummary({
+    downloadPercent,
+    shouldBroadcast,
+    status
+  }) {
     const { name } = this.props
     const nameDiv = html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">

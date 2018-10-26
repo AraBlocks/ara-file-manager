@@ -7,7 +7,7 @@ const { PURCHASE } = require('../../../lib/constants/stateManagement')
 const { emit, closeModal } = require('../../lib/tools/windowManagement')
 
 module.exports = ({
-  aid,
+  aid: did,
   fileName = 'No file name given',
   price = 0,
   publisherName = 'No publisher name given'
@@ -18,7 +18,7 @@ module.exports = ({
       emit({
         event: PURCHASE,
         load: {
-          aid,
+          did,
           fileName,
           price
         }

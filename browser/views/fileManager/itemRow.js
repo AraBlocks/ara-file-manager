@@ -1,7 +1,7 @@
 'use strict'
 
 const FileDescriptor = require('./fileDescriptor')
-const ProgressBar = require('../../components/progressBar')
+const progressBar = require('./progressBar')
 const PublishedStats = require('./publishedStats')
 const PurchasedStats = require('./purchasedStats')
 const styles = require('./styles/itemRow')
@@ -11,11 +11,9 @@ const Nanocomponent = require('nanocomponent')
 class ItemRow extends Nanocomponent {
   constructor({ file, typeRow }) {
     super()
-
     this.props = { typeRow }
     this.children = {
       fileDescriptor: new FileDescriptor({ ...file }),
-      progressBar: new ProgressBar,
       stats: typeRow === 'published'
         ? new PublishedStats({ file })
         : new PurchasedStats
@@ -29,6 +27,7 @@ class ItemRow extends Nanocomponent {
   createElement(file) {
     const { downloadPercent, status, shouldBroadcast } = file
     const { children } = this
+
     return html`
       <div>
         <div class="${styles.container} ItemRow-container">
@@ -37,7 +36,7 @@ class ItemRow extends Nanocomponent {
           </div>
           ${children.stats.render({ ...file })}
         </div>
-        ${children.progressBar.render({ downloadPercent, status, shouldBroadcast })}
+        ${progressBar({ downloadPercent, status, shouldBroadcast })}
       </div>
     `
   }
