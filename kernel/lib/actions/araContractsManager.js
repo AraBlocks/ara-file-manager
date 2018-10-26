@@ -55,16 +55,16 @@ async function purchaseItem(contentDid) {
 	debug('Purchasing item: %s', contentDid)
 	const { account } = store
 	try {
-		await araContracts.purchase(
+		const { jobId } = await araContracts.purchase(
 			{
 				requesterDid: account.userAid,
 				contentDid,
 				password: account.password,
-				budget: 0
+				budget: 1
 			}
 		)
 		debug('Purchase Completed')
-		return
+		return jobId
 	} catch (err) {
 		debug('Error purchasing item: %o', err)
 	}
@@ -155,11 +155,11 @@ function subscribeTransfer(userAddress) {
 	try {
 		const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
 		const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
-		.on('data', async () => {
-			const newBalance = await getAraBalance(store.account.userAid)
-			windowManager.internalEmitter.emit(UPDATE_BALANCE, newBalance)
-		})
-		.on('error', debug)
+			.on('data', async () => {
+				const newBalance = await getAraBalance(store.account.userAid)
+				windowManager.internalEmitter.emit(UPDATE_BALANCE, { araBalance: newBalance })
+			})
+			.on('error', debug)
 
 		return transferSubscription
 	} catch (err) {

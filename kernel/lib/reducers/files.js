@@ -6,13 +6,12 @@ module.exports = (state, { load = null, type }) => {
   let file
   switch (type){
     case k.CHANGE_BROADCASTING_STATE:
-      file = findFile(load.did, state.published)
+      file = findFile(load.did, state.published.concat(state.purchased))
       file.shouldBroadcast = load.shouldBroadcast
       break
     case k.DOWNLOADING:
       file = state.purchased[state.purchased.length - 1]
-      file.downloadPercent = load.downloadPercent
-      file.size = load.size || file.size
+      file.downloadPercent = load.downloadPercent || 0
       file.status = k.DOWNLOADING
       break
     case k.DOWNLOADED:
@@ -61,7 +60,8 @@ module.exports = (state, { load = null, type }) => {
       state.purchased.push(load)
       break
     case k.PURCHASED:
-      file = state.purchased[state.purchased.length - 1]
+      file = findFile(load.did, state.purchased)
+      file.jobId = load.jobId
       file.status = k.AWAITING_DOWNLOAD
       break
     case k.UPDATING_FILE:
@@ -85,7 +85,7 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.SET_SIZE:
       file = state.purchased[state.purchased.length - 1]
-      file.size = file.size || load
+      file.size = file.size || load.size
       break
     default:
     return state

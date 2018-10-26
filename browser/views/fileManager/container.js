@@ -7,13 +7,9 @@ const styles = require('./styles/container')
 const html = require('choo/html')
 const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
-const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
-  constructor({
-    account,
-    files
-  }) {
+  constructor({ account, files }) {
     super()
 
     this.state = {
@@ -125,7 +121,6 @@ class Container extends Nanocomponent {
       state: { activeTab, araBalance, loadingLibrary, username }
     } = this
 
-    tooltip({})
     return html`
       <div>
         <div class="${styles.container} container-container">
