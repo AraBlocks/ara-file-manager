@@ -9,7 +9,7 @@ module.exports = {
 
 	container: css`
 		:host {
-			width: 296px;
+			width: 490px;
 			height: 296px;
 		}
 	`,
