@@ -31,7 +31,11 @@ class FileDescriptor extends Nanocomponent {
     this.createSummary = this.createSummary.bind(this)
   }
 
-  createSummary({ status, downloadPercent, shouldBroadcast }) {
+  createSummary({
+    downloadPercent,
+    shouldBroadcast,
+    status
+  }) {
     const { name } = this.props
     const nameDiv = html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
@@ -82,7 +86,7 @@ class FileDescriptor extends Nanocomponent {
         msg = '(Update Available)'
     }
 
-    const [_size, unit] = filesize(size || 0, { output: 'array' })
+    const [_size, unit] = filesize(size, { output: 'array' })
     const downloaded = Math.round(filesize(downloadPercent * size).slice(0, -2))
     const downloadedSpan = [k.DOWNLOADING, k.PAUSED].includes(status)
       ? [html`<span style="color:var(--ara-${downloadedSpanColor});">${downloaded}</span>`, ' /']
