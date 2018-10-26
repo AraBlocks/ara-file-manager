@@ -11,6 +11,9 @@ class AfsFileRow extends Nanocomponent {
 		super()
 		this.props = {
 			fileInfo,
+		}
+
+		this.children = {
 			menuItem: this.makeMenu(fileInfo)
 		}
 	}
@@ -27,17 +30,27 @@ class AfsFileRow extends Nanocomponent {
 		return items.map((item) => new menuItem(item))
 	}
 
+	fileIconSelector(fileType) {
+		let fileName = ''
+		switch(fileType) {
+			case 'Folder':
+				fileName = 'folder.png'
+				break
+			default:
+				fileName = 'file.png'
+		}
+		return html`<img src="../assets/images/${fileName}" alt="fileIcon" class=${styles.fileImage}>`
+	}
+
 	createElement() {
-		const { props } = this
+		const { children, props } = this
 		return html`
-			<tr
-				class="${styles.fileRow} afsFileRow-fileRow"
-			>
+			<tr class="${styles.fileRow} afsFileRow-fileRow">
 				<td class="${styles.fileNameCell} afsFileRow-fileNameCell">
-					<img src="../assets/images/folder.png" alt="fileIcon" class=${styles.fileImage}>
+					${this.fileIconSelector(props.fileInfo.type)}
 					${props.fileInfo.name}
 					<div class="${styles.menu} afsFileRow-menu" >
-						${props.menuItem.map(item => [
+						${children.menuItem.map(item => [
 							item.render(),
 							html`<div class="${styles.divider} afsFileRow-divider"></div>`
 						])}

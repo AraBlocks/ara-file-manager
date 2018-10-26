@@ -21,7 +21,7 @@ class Container extends Nanocomponent {
 				fileList: [
 					{ name: 'buff_cat', size: 10000, type: 'Video File', did: '123'},
 					{ name: 'grump_cat', size: 20000, type: 'PNG File', did: '456' },
-					{ name: 'mango!', size: 30000, type: 'JPEG File', did: '679' }
+					{ name: 'mango!', size: 30000, type: 'Folder', did: '679' }
 				]
 			})
 		}

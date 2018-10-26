@@ -9,8 +9,8 @@ module.exports = {
 
 	fileNameCell: css`
 		:host {
-			display: flex;
 			align-items: center;
+			display: flex;
 			height: 2em;
 			justify-content: left;
 			padding-left: 20px;
@@ -19,9 +19,9 @@ module.exports = {
 
 	fileImage: css`
 		:host {
-			width:22px;
 			height:22px;
 			padding-right: 10px;
+			width:22px;
 		}
 	`,
 
