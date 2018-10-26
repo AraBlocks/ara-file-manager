@@ -9,12 +9,10 @@ const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.DOWNLOAD, async (event, load) => {
-	debug('%s heard. Load: %O', k.DOWNLOAD, load)
+	debug('%s heard', k.DOWNLOAD)
 	try {
-		debug('Dispatching %s', k.DOWNLOADING)
-
 		const { jobId } = store.files.purchased.find(({ did }) => did === load)
-		debug({jobId})
+		debug('Dispatching %s', k.DOWNLOADING)
 		dispatch({ type: k.DOWNLOADING, load })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
@@ -33,7 +31,6 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 })
 
 function startHandler(size) {
-	console.log({ size })
 	dispatch({ type: k.SET_SIZE, load: size })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }
@@ -52,7 +49,7 @@ function completeHandler(did) {
 
 function errorHandler(did) {
 	debug('Download failed')
-	debug('Dispatching %s . Load: %s', k.DOWNLOAD_FAILED, did)
+	debug('Dispatching %s', did)
 	dispatch({ type: k.DOWNLOAD_FAILED, load: did })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }
