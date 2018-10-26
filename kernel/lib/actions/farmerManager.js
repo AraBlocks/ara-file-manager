@@ -105,13 +105,13 @@ async function download({
 			totalBlocks = total
 		})
 		farmer.on('progress', (did, value) => {
-			// const perc = value / totalBlocks
-			// if (perc >= prevPercent + 0.1) {
-				// prevPercent = perc
-				// if (value / totalBlocks != 1) {
+			const perc = value / totalBlocks
+			if (perc >= prevPercent + 0.1) {
+				prevPercent = perc
+				if (value / totalBlocks != 1) {
 					progressHandler({ downloadPercent: value / totalBlocks, did })
-				// }
-			// }
+				}
+			}
 		})
 		farmer.on('complete', (did) => {
 			debug('Download complete!')
