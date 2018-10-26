@@ -1,6 +1,7 @@
 'use strict'
 
 const DragDropArea = require('../../components/dragDropArea')
+const AfsFileDescriptor = require('../../components/afsFileTable/afsFileTable')
 const styles = require('./styles/container')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -14,7 +15,15 @@ class Container extends Nanocomponent {
 		}
 		this.onFileDrop = this.onFileDrop.bind(this)
 		this.children = {
-			dragDropArea: new DragDropArea({ onFileDrop: this.onFileDrop })
+			dragDropArea: new DragDropArea({ onFileDrop: this.onFileDrop }),
+			afsFileDescriptor: new AfsFileDescriptor({
+				parentDirectory: 'Cats!!',
+				fileList: [
+					{ name: 'buff_cat', size: 10000, type: 'Video File', did: '123'},
+					{ name: 'grump_cat', size: 20000, type: 'PNG File', did: '456' },
+					{ name: 'mango!', size: 30000, type: 'Folder', did: '679' }
+				]
+			})
 		}
 	}
 
@@ -34,6 +43,7 @@ class Container extends Nanocomponent {
 		const { children } = this
 		return html`
 			<div class=${styles.container}>
+				${children.afsFileDescriptor.render()}
 				${children.dragDropArea.render({})}
 			</div>
 		`
