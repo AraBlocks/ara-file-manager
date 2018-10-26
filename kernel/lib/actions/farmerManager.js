@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const actionsUtils = require('./utils')
-const { CHANGE_BROADCASTING_STATE } = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
 const farmDCDN = require('ara-network-node-dcdn-farm/src/farmDCDN')
 const fs = require('fs')
@@ -22,7 +22,7 @@ function joinBroadcast({ farmer, did, price = 1 }) {
 			upload: true,
 			price
 		})
-		dispatch({ type: CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: true } })
+		dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: true } })
 		debug('Joining broadcast for %s', did)
 	} catch (err) {
 		debug('Error joining broadcasting %O', err)
@@ -32,10 +32,7 @@ function joinBroadcast({ farmer, did, price = 1 }) {
 function getBroadcastingState({ did, dcdnFarmStore = {} }) {
   try {
 		const fileData = dcdnFarmStore[did]
-		if (fileData == null) {
-			return false
-		}
-    return JSON.parse(fileData).upload
+    return fileData ? JSON.parse(fileData).upload : false
   } catch (err) {
     return false
   }
@@ -85,7 +82,6 @@ async function download({
 	completeHandler
 }) {
 	debug('Downloading through DCDN: %s', did)
-	debug({jobId})
 	try {
 		await farmer.join({
 			did,
