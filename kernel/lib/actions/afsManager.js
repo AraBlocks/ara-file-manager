@@ -4,7 +4,6 @@ const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const actionsUtil = require('./utils')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
-const path = require('path')
 const farmerManager = require('../actions/farmerManager')
 
 async function afsPathIsFile({ did, path }) {
