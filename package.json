@@ -24,7 +24,7 @@
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
     "ara-context": "github:arablocks/ara-context#semver:0.3.x",
-    "ara-contracts": "github:arablocks/ara-contracts#semver:0.2.12",
+    "ara-contracts": "github:arablocks/ara-contracts#semver:0.2.x",
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.2.4",
     "ara-identity": "github:arablocks/ara-identity#semver:0.25.x",
     "ara-network-node-dcdn-farm": "github:littlstar/ara-network-node-dcdn-farm#semver:0.0.2",
