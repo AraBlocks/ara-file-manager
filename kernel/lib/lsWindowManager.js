@@ -29,6 +29,10 @@ windowManager.setSize = (view) => {
   let width
   let height
   switch (view) {
+    case 'afsContentViewer':
+      width = 600
+      height = 700
+      break
     case 'reDownloadModal':
     case 'generalMessageModal':
       width = 340
@@ -42,7 +46,6 @@ windowManager.setSize = (view) => {
       width = 340
       height = 485
       break
-    case 'afsExplorer':
     case 'filemanager':
       width = 490
       height = 730
@@ -98,8 +101,8 @@ windowManager.setSize = (view) => {
 windowManager.loadURL = (view) => {
   let file
   switch (view) {
-    case 'afsExplorer':
-      file = 'afs-explorer'
+    case 'afsContentViewer':
+      file = 'afs-content-viewer'
       break
     case 'filemanager':
       file = 'file-manager'
