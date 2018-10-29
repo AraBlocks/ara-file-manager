@@ -5,6 +5,7 @@ const actionsUtil = require('./utils')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
 const farmerManager = require('../actions/farmerManager')
+const path = require('path')
 
 async function afsPathIsFile({ did, path }) {
 	try {
@@ -33,13 +34,103 @@ async function getFileList(did) {
 	debug('Getting file list in AFS')
 	try {
 		const { afs } = await araFilesystem.create({ did })
-		const result = await afs.readdir(afs.HOME)
+		const result = await _getContentsInFolder(afs, afs.HOME)
 		await afs.close()
 		return result
 	} catch (err) {
 		debug('Error getting file list in afs: %o', err)
 	}
 }
+
+async function _getContentsInFolder(afs, folderPath) {
+  try {
+    const result = []
+    const contents = await afs.readdir(folderPath)
+    for (let i = 0; i < contents.length; i ++) {
+      const subPath = contents[i]
+      const fullPath = path.join(folderPath, subPath)
+      const fileStats = await afs.stat(fullPath)
+      if (fileStats.isFile()) {
+        result.push({
+          isFile: true,
+          subPath,
+          size: fileStats.size
+        })
+      } else {
+        const items = await _getContentsInFolder(afs, fullPath)
+        const itemList = {
+          isFile: false,
+          subPath,
+          size: fileStats.size,
+          items
+        }
+        result.push(itemList)
+      }
+    }
+    return result
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+// async function _getContentsInFolder(afs, folderPath) {
+//   try {
+//     const result = []
+//     const contents = await afs.readdir(folderPath)
+//     for (let i = 0; i < contents.length; i ++) {
+//       const subPath = contents[i]
+//       const fullPath = path.join(folderPath, subPath)
+//       const fileStats = await afs.stat(fullPath)
+//       if (fileStats.isFile()) {
+//         result.push({
+//           isFile: true,
+//           data: {
+//             subPath,
+//             size: fileStats.size
+//           }
+//         })
+//       } else {
+//         const item = await _getContentsInFolder(afs, fullPath)
+//         const itemList = {}
+//         itemList[subPath] = {
+//           isFile: false,
+//           data: {
+//             item
+//           }
+//         }
+//         result.push(itemList)
+//       }
+//     }
+//     return result
+//   } catch(e) {
+//     console.log(e)
+//   }
+// }
+
+// This function does not open/close afs.
+// async function _getContentsInFolder(afs, folderPath) {
+//   try {
+//     const result = []
+//     const contents = await afs.readdir(folderPath)
+//     for (let i = 0; i < contents.length; i ++) {
+//       const subPath = contents[i]
+//       const fullPath = path.join(folderPath, subPath)
+//       const isFile = (await afs.stat(fullPath)).isFile()
+//       if (isFile) {
+//         result.push(subPath)
+//       } else {
+//         const item = await _getContentsInFolder(afs, fullPath)
+//         const itemList = {}
+//         itemList[subPath] = item
+//         result.push(itemList)
+//       }
+//     }
+//     return result
+//   } catch(e) {
+// 		console.log(e)
+// 		return []
+//   }
+// }
 
 async function getFileSize(did, path) {
 	debug('Getting file size in AFS')
@@ -50,16 +141,6 @@ async function getFileSize(did, path) {
     return res.size
   } catch (err) {
 		debug('Error getting file size for %s', did)
-	}
-}
-
-async function removeAllFiles({ did, password }) {
-	try {
-		const fileList = getFileList(did)
-		const instance = await araFilesystem.remove({ did, password, paths: fileList })
-		await instance.close()
-	} catch (err) {
-		debug('Error removing files: %o', err)
 	}
 }
 
@@ -85,7 +166,6 @@ module.exports = {
 	exportFile,
 	getFileList,
 	getFileSize,
-	removeAllFiles,
 	surfaceAFS,
 	unarchiveAFS,
 }

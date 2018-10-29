@@ -1,13 +1,32 @@
 'use strict'
 const AFSExlorer = require('../views/afsContentViewer/container')
+const { ipcRenderer, remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
+const { modal: { contentViewerData } } = windowManager.sharedData.fetch('store')
+console.log(contentViewerData)
 const afsExplorer = new AFSExlorer({
   afsName: "Awesome Cats Collection",
   fileList: [
-    { name: 'buff_cat', size: 10000, type: 'Video File', did: '123'},
-    { name: 'grump_cat', size: 20000, type: 'PNG File', did: '456' },
-    { name: 'mango!', size: 30000, type: 'Folder', did: '679' }
-  ],
-  parentDirectory: "Cats"
+    { isFile: false, size: 10000, subPath: 'panda', items: [
+      {
+        isFile: true,
+        size: 10000,
+        subPath: 'panda.png'
+      },
+      {
+        isFile: false,
+        size: 10000,
+        subPath: 'Fat_panda',
+        items: [
+          {
+            isFile: true,
+            size: 10000,
+            subPath: 'fat_panda.png'
+          }
+        ]
+      }
+    ]}
+  ]
 })
 document.getElementById('container').appendChild(afsExplorer.render())
 

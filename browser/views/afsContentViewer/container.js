@@ -2,7 +2,6 @@
 
 const AfsFileDescriptor = require('../../components/afsFileTable/afsFileTable')
 const Button = require('../../components/button')
-const DragDropArea = require('../../components/dragDropArea')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
 const html = require('choo/html')
@@ -15,7 +14,7 @@ class Container extends Nanocomponent {
 			afsName
 		}
 		this.state = {
-			fileList: null
+			fileList
 		}
 		this.children = {
 			afsFileDescriptor: new AfsFileDescriptor({
@@ -55,11 +54,11 @@ class Container extends Nanocomponent {
 					${children.utilityButton.render({ children: '✕' })}
 				</div>
 				<div class="${styles.content} AfsContentViewerContainer-content">
-					You’re currently viewing the contents of <b>Angry Frank</b>. You can export files to your hard drive by dragging them out 
+					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export files to your hard drive by dragging them out
 					from this window, or by clicking “export all”.
 				</div>
 				<div class="${styles.fileTable} AfsContentViewerContainer-fileTable">
-					${children.afsFileDescriptor.render()}
+				${children.afsFileDescriptor.render({ currentFileList: this.state.fileList, parentDirectory: []})}
 				</div>
 				${children.exportAllButton.render()}
 				${children.downloadUpdateButton.render()}

@@ -13,6 +13,8 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.FEED_MANAGE_FILE:
       state.manageFileData = load
+    case k.FEED_CONTENT_VIEWER:
+      state.contentViewerData = load
     default:
     return state
   }

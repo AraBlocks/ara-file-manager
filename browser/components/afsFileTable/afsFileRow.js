@@ -7,15 +7,20 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class AfsFileRow extends Nanocomponent {
-	constructor(fileInfo) {
+	constructor({
+		fileInfo,
+		fileRowClicked
+	}) {
 		super()
 		this.props = {
 			fileInfo,
+			fileRowClicked
 		}
 
 		this.children = {
 			menuItem: this.makeMenu(fileInfo)
 		}
+		this.onclick = this.onclick.bind(this)
 	}
 
 	update(){
@@ -30,25 +35,32 @@ class AfsFileRow extends Nanocomponent {
 		return items.map((item) => new menuItem(item))
 	}
 
-	fileIconSelector(fileType) {
+	fileIconSelector(isFile) {
 		let fileName = ''
-		switch(fileType) {
-			case 'Folder':
-				fileName = 'folder.png'
-				break
-			default:
-				fileName = 'file.png'
+		if (isFile) {
+			fileName = 'file.png'
+		} else {
+			fileName = 'folder.png'
 		}
 		return html`<img src="../assets/images/${fileName}" alt="fileIcon" class=${styles.fileImage}>`
 	}
 
+	onclick() {
+		const { props } = this
+		if (props.fileInfo.isFile) { return }
+		props.fileRowClicked(props.fileInfo.subPath, props.fileInfo.items)
+	}
+
 	createElement() {
-		const { children, props } = this
+		const { children, onclick, props } = this
 		return html`
-			<tr class="${styles.fileRow} afsFileRow-fileRow">
+			<tr
+				class="${styles.fileRow} afsFileRow-fileRow"
+				onclick=${onclick}
+			>
 				<td class="${styles.fileNameCell} afsFileRow-fileNameCell">
-					${this.fileIconSelector(props.fileInfo.type)}
-					${props.fileInfo.name}
+					${this.fileIconSelector(props.fileInfo.isFile)}
+					${props.fileInfo.subPath}
 					<div class="${styles.menu} afsFileRow-menu" >
 						${children.menuItem.map(item => [
 							item.render(),
@@ -56,7 +68,7 @@ class AfsFileRow extends Nanocomponent {
 						])}
 					</div>
 				</td>
-				<td>${props.fileInfo.type}</td>
+				<td>${props.fileInfo.type ? 'File' : 'Folder'}</td>
 				<td>${filesize(props.fileInfo.size)}</td>
 			</tr>
 		`
