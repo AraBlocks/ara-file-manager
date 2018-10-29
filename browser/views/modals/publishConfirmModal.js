@@ -33,7 +33,7 @@ module.exports = (load) => {
             Publishing this file will cost:
           </div>
           <span class="${styles.postheader} modals-postheader">
-            5 ARA
+            ${Math.round(load.gasEstimate * 1000)/1000} eth
           </span>
         </div>
       </div>

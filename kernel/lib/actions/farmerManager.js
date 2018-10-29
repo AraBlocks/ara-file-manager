@@ -46,7 +46,7 @@ function loadDcdnStore() {
     const itemList = JSON.parse(data)
     return itemList
   } catch (err) {
-    debug('Can\'t load DCDN farm store: %o', err)
+    debug('No DCDN farm store')
     return {}
   }
 }
