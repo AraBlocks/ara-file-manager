@@ -2,8 +2,8 @@ const k = require('../../../lib/constants/stateManagement')
 
 module.exports = {
   loadingLibrary: false,
-  published: [...mockFiles()].map(file => ({...file, owner: true})),
-  purchased: [...mockFiles()].map(file => ({...file, owner: !true})),
+  published: [],
+  purchased: [],
 }
 
 function mockFiles() {

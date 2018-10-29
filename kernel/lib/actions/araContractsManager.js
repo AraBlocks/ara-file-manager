@@ -14,10 +14,9 @@ const { web3: { account: araAccount } } = require('ara-util')
 
 async function getAccountAddress(owner, password) {
 	try {
-		debug('Getting account address', owner, password)
+		debug('Getting account address')
 		owner = owner.includes('did') ? owner : 'did:ara:' + owner
 		const acct = await araAccount.load({ did: owner, password })
-		debug('Account address is ', acct.address)
 		return acct.address
 	} catch (e) {
 		debug('Error getting account Address: %o', e)

@@ -80,6 +80,33 @@ module.exports = {
     }
   `,
 
+  copyMnemonicContainer: css`
+    :host {
+      padding-top: 8px;
+      justify-content: center !important;
+      display: flex !important;
+      width: 100%;
+    }
+
+    :host > div {
+      width: 35%;
+    }
+  `,
+
+  mnemonicContainer: css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      width: 70%;
+    }
+
+    :host > div {
+      display: flex;
+      justify-content: space-between;
+    }
+  `
+  ,
+
   postheader: css`
     :host {
       font-family: ${fonts.bold};
