@@ -29,8 +29,7 @@ class AfsFileRow extends Nanocomponent {
 
 	makeMenu(fileInfo) {
 		const items = [
-			{ children: 'Export', onclick: () => {} },
-			{ children: 'Delete', onclick: () => {} }
+			{ children: 'Export', onclick: () => {} }
 		]
 		return items.map((item) => new menuItem(item))
 	}
@@ -51,6 +50,18 @@ class AfsFileRow extends Nanocomponent {
 		props.fileRowClicked(props.fileInfo.subPath, props.fileInfo.items)
 	}
 
+	renderFileType() {
+		const { props } = this
+		if (!props.fileInfo.isFile) { return 'Folder' }
+
+		const fileNameSplit = props.fileInfo.subPath.split('.')
+		if (fileNameSplit.length === 2) {
+			return `${fileNameSplit[1].toUpperCase()} File`
+		} else {
+			return 'Unknown'
+		}
+	}
+
 	createElement() {
 		const { children, onclick, props } = this
 		return html`
@@ -68,7 +79,7 @@ class AfsFileRow extends Nanocomponent {
 						])}
 					</div>
 				</td>
-				<td>${props.fileInfo.type ? 'File' : 'Folder'}</td>
+				<td>${this.renderFileType()}</td>
 				<td>${filesize(props.fileInfo.size)}</td>
 			</tr>
 		`
