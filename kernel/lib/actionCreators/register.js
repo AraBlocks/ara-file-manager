@@ -1,35 +1,37 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:register')
+const k = require('../../../lib/constants/stateManagement')
 const araContractsManager = require('../actions/araContractsManager')
-const dispatch = require('../reducers/dispatch')
-const { ipcMain } = require('electron')
 const { register } = require('../actions')
-const {
-  LOGIN,
-  REGISTER,
-  REGISTERED
-} = require('../../../lib/constants/stateManagement')
+const dispatch = require('../reducers/dispatch')
+const windowManager = require('electron-window-manager')
+const { ipcMain } = require('electron')
 
-ipcMain.on(REGISTER, async (event, password) => {
-  debug('%s heard. load: %s', REGISTER, password)
+ipcMain.on(k.REGISTER, async (event, password) => {
+  debug('%s heard. load: %s', k.REGISTER, password)
   try {
-    const userAid = await register.create(password)
-    await register.archive(userAid)
-    const accountAddress = await araContractsManager.getAccountAddress(userAid, password)
+    windowManager.pingView({ view: 'registration', event: k.REGISTERING })
 
-    debug('Dispatching %s', LOGIN)
+    const identity = await register.create(password)
+    await register.archive(identity)
+
+    const { did: { did }, mnemonic } = identity
+    const accountAddress = await araContractsManager.getAccountAddress(did, password)
+    debug('Dispatching %s', k.LOGIN)
     dispatch({
-      type: LOGIN,
+      type: k.REGISTERED,
       load: {
-        userAid,
         accountAddress,
         araBalance: 0,
+        mnemonic,
         password: password,
+        userAid: did
       }
     })
-    event.sender.send(REGISTERED)
-  } catch (e) {
-    debug('Error: %O', e)
+
+    windowManager.pingView({ view: 'registration', event: k.REGISTERED })
+  } catch (err) {
+    debug('Error registering: %O', err)
   }
 })

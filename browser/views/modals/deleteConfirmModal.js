@@ -7,7 +7,7 @@ const html = require('choo/html')
 
 module.exports = ({ price = 0.09 }) => {
   const deleteButton = new Button({
-    children: 'Delete File',
+		children: 'Delete File',
     onclick: () => closeModal()
   })
   const cancelbutton = new Button({

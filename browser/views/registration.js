@@ -6,7 +6,7 @@ const { emit } = require('../lib/tools/windowManagement')
 const Input = require('../components/input')
 const overlay = require('../components/overlay')
 const styles = require('./styles/registration')
-const { REGISTER } = require('../../lib/constants/stateManagement')
+const k = require('../../lib/constants/stateManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -14,7 +14,7 @@ class Registration extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { password : 'abc' }
+    this.state = { password : '' }
 
     this.passwordInput = new Input({
       placeholder: 'Password',
@@ -47,8 +47,7 @@ class Registration extends Nanocomponent {
   register(e) {
     e.preventDefault()
     const { password } = this.state
-    emit({ event: REGISTER, load: password })
-    this.render({ pending: true })
+    emit({ event: k.REGISTER, load: password })
   }
 
   update() {
