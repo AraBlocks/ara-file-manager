@@ -15,8 +15,8 @@ ipcMain.on(k.CLEAN_UI, () => {
 
 ipcMain.on(k.OPEN_AFS, async (event, load) => {
   debug('%s heard', k.OPEN_AFS)
-  shell.openItem(utils.makeAfsPath(load.did))
+  //shell.openItem(utils.makeAfsPath(load.did))
   const fileList = await afsManager.getFileList(load.did)
-  console.log(fileList)
-  dispatch({ type: k.FEED_CONTENT_VIEWER, load: load })
+  dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList }})
+  windowManager.openWindow('afsContentViewer')
 })

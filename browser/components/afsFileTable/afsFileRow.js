@@ -18,7 +18,7 @@ class AfsFileRow extends Nanocomponent {
 		}
 
 		this.children = {
-			menuItem: this.makeMenu(fileInfo)
+			menuItem: this.makeMenu()
 		}
 		this.onclick = this.onclick.bind(this)
 	}
@@ -27,7 +27,7 @@ class AfsFileRow extends Nanocomponent {
 		return true
 	}
 
-	makeMenu(fileInfo) {
+	makeMenu() {
 		const items = [
 			{ children: 'Export', onclick: () => {} }
 		]
