@@ -42,6 +42,7 @@ async function getFileList(did) {
 	}
 }
 
+// This function does not open/close afs.
 async function _getContentsInFolder(afs, folderPath) {
   try {
     const result = []
@@ -72,65 +73,6 @@ async function _getContentsInFolder(afs, folderPath) {
     console.log(e)
   }
 }
-
-// async function _getContentsInFolder(afs, folderPath) {
-//   try {
-//     const result = []
-//     const contents = await afs.readdir(folderPath)
-//     for (let i = 0; i < contents.length; i ++) {
-//       const subPath = contents[i]
-//       const fullPath = path.join(folderPath, subPath)
-//       const fileStats = await afs.stat(fullPath)
-//       if (fileStats.isFile()) {
-//         result.push({
-//           isFile: true,
-//           data: {
-//             subPath,
-//             size: fileStats.size
-//           }
-//         })
-//       } else {
-//         const item = await _getContentsInFolder(afs, fullPath)
-//         const itemList = {}
-//         itemList[subPath] = {
-//           isFile: false,
-//           data: {
-//             item
-//           }
-//         }
-//         result.push(itemList)
-//       }
-//     }
-//     return result
-//   } catch(e) {
-//     console.log(e)
-//   }
-// }
-
-// This function does not open/close afs.
-// async function _getContentsInFolder(afs, folderPath) {
-//   try {
-//     const result = []
-//     const contents = await afs.readdir(folderPath)
-//     for (let i = 0; i < contents.length; i ++) {
-//       const subPath = contents[i]
-//       const fullPath = path.join(folderPath, subPath)
-//       const isFile = (await afs.stat(fullPath)).isFile()
-//       if (isFile) {
-//         result.push(subPath)
-//       } else {
-//         const item = await _getContentsInFolder(afs, fullPath)
-//         const itemList = {}
-//         itemList[subPath] = item
-//         result.push(itemList)
-//       }
-//     }
-//     return result
-//   } catch(e) {
-// 		console.log(e)
-// 		return []
-//   }
-// }
 
 async function getFileSize(did, path) {
 	debug('Getting file size in AFS')

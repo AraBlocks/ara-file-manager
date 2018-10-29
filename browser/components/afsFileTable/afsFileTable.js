@@ -18,10 +18,6 @@ class afsFileTable extends Nanocomponent {
 		this.props = {
 			fileList,
 		}
-		this.children = {
-			fileRows: this.makeFileRows(this.state.currentFileList),
-			backButton: this.makeBackButton(this.state.parentDirectory)
-		}
 		this.backToParentDirectory = this.backToParentDirectory.bind(this)
 	}
 
@@ -31,7 +27,6 @@ class afsFileTable extends Nanocomponent {
 
 	makeBackButton(parentDirectory) {
 		const { backToParentDirectory, state } = this
-		state.parentDirectory = parentDirectory
 		return state.parentDirectory.length === 0 ? html`` : html`
 			<tr>
 				<td colspan=3>
