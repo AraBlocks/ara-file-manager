@@ -9,6 +9,7 @@ module.exports = async (state, { load = null, type }) => {
       state.araBalance = 0
       break
     case k.LOGIN:
+    case k.REGISTERED:
       state.userAid = load.userAid
       state.password = load.password
       state.accountAddress = load.accountAddress
