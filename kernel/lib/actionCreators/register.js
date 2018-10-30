@@ -46,22 +46,25 @@ ipcMain.on(k.IMPORT, async (event, load) => {
     const identity = await register.import(load)
     await register.archive(identity)
 
-    const { did: { did }, mnemonic } = identity
-    const accountAddress = await araContractsManager.getAccountAddress(did, load.password)
-    debug('Dispatching %s', k.LOGIN)
-    dispatch({
-      type: k.REGISTERED,
-      load: {
-        accountAddress,
-        araBalance: 0,
-        mnemonic,
-        password: load.password,
-        userAid: did
-      }
-    })
-
+    await dispatchLogin(identity, load.password)
     windowManager.pingView({ view: 'import', event: k.IMPORTED })
   } catch (err) {
     debug('Error importing acct: %o', err)
   }
 })
+
+async function dispatchLogin(identity, password) {
+  const { did: { did }, mnemonic } = identity
+  const accountAddress = await araContractsManager.getAccountAddress(did, password)
+  debug('Dispatching %s', k.LOGIN)
+  dispatch({
+    type: k.REGISTERED,
+    load: {
+      accountAddress,
+      araBalance: 0,
+      mnemonic,
+      password: password,
+      userAid: did
+    }
+  })
+}
