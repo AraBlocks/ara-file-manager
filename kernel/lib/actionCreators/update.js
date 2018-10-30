@@ -24,7 +24,8 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
     if (load.paths.length == 0) {
       estimate = await afs.estimateSetPriceGasCost({ did: load.fileAid, password: account.password, price: Number(load.price) })
     } else {
-      await afsManager.removeAllFiles({ did: load.fileAid, password: account.password })
+      //await afsManager.removeAllFiles({ did: load.fileAid, password: account.password })
+      // TODO: update method after changing UI
       estimate = await afs.estimateCommitGasCost({ did: load.fileAid, password: account.password })
     }
 

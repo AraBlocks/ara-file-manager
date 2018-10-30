@@ -3,8 +3,8 @@
 const debug = require('debug')('acm:kernel:lib:actionCreators:utils')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
-const { utils } = require('../actions')
-const { ipcMain, shell } = require('electron')
+const { afsManager } = require('../actions')
+const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
 ipcMain.on(k.CLEAN_UI, () => {
@@ -13,7 +13,9 @@ ipcMain.on(k.CLEAN_UI, () => {
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 })
 
-ipcMain.on(k.OPEN_AFS, (event, load) => {
+ipcMain.on(k.OPEN_AFS, async (event, load) => {
   debug('%s heard', k.OPEN_AFS)
-  shell.openItem(utils.makeAfsPath(load))
+  const fileList = await afsManager.getFileList(load.did)
+  dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList }})
+  windowManager.openWindow('afsExplorerView')
 })
