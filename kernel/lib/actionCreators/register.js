@@ -39,7 +39,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
 })
 
 ipcMain.on(k.IMPORT, async (event, load) => {
-  debug('%s heard. load: %s', k.IMPORT)
+  debug('%s heard', k.IMPORT)
   try {
     windowManager.pingView({ view: 'import', event: k.IMPORTING })
 
@@ -55,7 +55,7 @@ ipcMain.on(k.IMPORT, async (event, load) => {
         accountAddress,
         araBalance: 0,
         mnemonic,
-        password: password,
+        password: load.password,
         userAid: did
       }
     })
