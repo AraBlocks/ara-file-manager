@@ -11,13 +11,13 @@ const store = windowManager.sharedData.fetch('store')
 ipcMain.on(k.DOWNLOAD, async (event, load) => {
 	debug('%s heard', k.DOWNLOAD)
 	try {
-		const { jobId } = store.files.purchased.find(({ did }) => did === load)
+		const { jobId } = store.files.purchased.find(({ did }) => did === load.did)
 		debug('Dispatching %s', k.DOWNLOADING)
-		dispatch({ type: k.DOWNLOADING, load })
+		dispatch({ type: k.DOWNLOADING, load: load.did })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
 		farmerManager.download({
-			did: load,
+			did: load.did,
 			jobId,
 			farmer: store.farmer.farm,
 			startHandler,
