@@ -22,5 +22,15 @@ module.exports = {
       debug('Error archiving: ', err)
     }
     return araId.did.reference
+  },
+
+  async import({ mnemonic, password }) {
+    try {
+      const araId = await aid.recover({ context, mnemonic, password})
+      await aid.util.writeIdentity(araId)
+      return araId
+    } catch (err) {
+      debug('Err importing identity: %o', err)
+    }
   }
 }
