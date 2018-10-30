@@ -41,9 +41,7 @@ class Login extends Nanocomponent {
       registerButton: new Button({
         children: 'Create One',
         cssClass: { name: 'smallInvisible' },
-        onclick: () => {
-          transitionModal('registration')
-        }
+        onclick: () => transitionModal('registration')
       }),
 
       passwordInput: new Input({
@@ -98,7 +96,7 @@ class Login extends Nanocomponent {
           ${children.loginButton.render()}
         </form>
         <div class="${styles.buttonHolder} login-buttonHolder">
-          <b>Don't have a password?</b>
+          <b>Don't have an account?</b>
           ${children.registerButton.render()}
           ${children.cancelButton.render()}
         </div>
