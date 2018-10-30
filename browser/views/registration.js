@@ -1,7 +1,7 @@
 'use strict'
 
 const Button = require('../components/button')
-const { closeWindow } = require('../lib/tools/windowManagement')
+const windowManagement = require('../lib/tools/windowManagement')
 const { emit } = require('../lib/tools/windowManagement')
 const Input = require('../components/input')
 const overlay = require('../components/overlay')
@@ -16,29 +16,44 @@ class Registration extends Nanocomponent {
 
     this.state = { password : '' }
 
-    this.passwordInput = new Input({
-      placeholder: 'Password',
-      parentState: this.state,
-      field: 'password',
-      type: 'password'
-    })
+    this.children = {
+      passwordInput: new Input({
+        placeholder: 'Password',
+        parentState: this.state,
+        field: 'password',
+        type: 'password'
+      }),
 
-    this.submitButton = new Button({
-      children: 'Register',
-      type: 'submit'
-    })
+      submitButton: new Button({
+        children: 'Register',
+        type: 'submit'
+      }),
 
-    this.cancelButton = new Button({
-      children: 'Cancel',
-      cssClass: {
-        name: 'smallInvisible',
-        opts: {
-          color: 'blue',
-          weight: 'light'
+      importButton: new Button({
+        children: 'Import account with Mnemonic',
+        cssClass: {
+          name: 'smallInvisible',
+          opts: { color: 'blue', weight: 'light' }
+        },
+        onclick: () => {
+          windowManagement.openWindow('import')
+          windowManagement.closeWindow('registration')
         }
-      },
-      onclick: () => closeWindow()
-    })
+      }),
+
+      cancelButton: new Button({
+        children: 'Cancel',
+        cssClass: {
+          name: 'smallInvisible',
+          opts: {
+            color: 'blue',
+            height: '15',
+            weight: 'light'
+          }
+        },
+        onclick: () => windowManagement.closeWindow()
+      })
+    }
 
     this.register = this.register.bind(this)
     this.render = this.render.bind(this)
@@ -56,9 +71,7 @@ class Registration extends Nanocomponent {
 
   createElement({ pending = false }) {
     const {
-      cancelButton,
-      passwordInput,
-      submitButton,
+      children,
       register
     } = this
 
@@ -72,10 +85,14 @@ class Registration extends Nanocomponent {
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
         <form class=${styles.registerForm} onsubmit=${register}>
-          ${passwordInput.render({})}
-          ${submitButton.render({})}
+          ${children.passwordInput.render({})}
+          ${children.submitButton.render({})}
         </form>
-        ${cancelButton.render({})}
+        ${children.cancelButton.render({})}
+        <div class="${styles.importContainer} modal-importContainer">
+          <div>Importing account?</div>
+          ${children.importButton.render({})}
+        </div>
       </div>
     `
   }

@@ -24,6 +24,18 @@ module.exports = {
     }
   `,
 
+  importContainer: css`
+    :host {
+      align-self: start;
+      font-size: 12px;
+      padding-left: 20px;
+    }
+
+    :host button {
+       font-size: 12px;
+       height: 15px;
+    }
+  `,
   registerForm: css`
     :host {
       align-items: center;
