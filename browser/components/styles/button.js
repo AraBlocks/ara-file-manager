@@ -16,7 +16,7 @@ module.exports = {
     color  = 'red',
     fontSize = '14',
     weight = 'bold',
-    height = '30px'
+    height = '30'
   }) {
     return css`
       :host {
@@ -24,7 +24,7 @@ module.exports = {
         color: ${colorSelector(color)};
         font-family: ${fontSelector(weight)};
         font-size: ${fontSize}px;
-        height: ${height};
+        height: ${height}px;
         transition: all 100ms;
         width: 100%;
       }
@@ -38,7 +38,8 @@ module.exports = {
   standard({
     color  = 'red',
     fontSize = '18',
-    weight = 'bold'
+    weight = 'bold',
+    height = '2'
   }) {
     return css`
       :host {
@@ -46,7 +47,7 @@ module.exports = {
         color: white;
         font-family: ${fontSelector(weight)};
         font-size: ${fontSize}px;
-        height: 2em;
+        height: ${height}em;
         transition: all 100ms;
         width: 100%;
       }

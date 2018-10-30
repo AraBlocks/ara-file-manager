@@ -81,6 +81,7 @@ windowManager.setSize = (view) => {
       height = 360
       break
     case 'registration':
+    case 'import':
       width = 400
       height = 350
       break
@@ -110,6 +111,9 @@ windowManager.loadURL = (view) => {
       break
     case 'developer':
       file = 'index-dev'
+      break
+    case 'import':
+      file = 'import'
       break
     case 'login':
       file = 'login'
