@@ -2,11 +2,11 @@
 
 
 const AfsFileRow = require('./afsFileRow')
-const styles = require('./styles/afsFileTable')
+const styles = require('./styles/AfsFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-class afsFileTable extends Nanocomponent {
+class AfsFileTable extends Nanocomponent {
 	constructor({
 		fileList
 	}) {
@@ -30,10 +30,10 @@ class afsFileTable extends Nanocomponent {
 		return state.parentDirectory.length === 0 ? html`` : html`
 			<tr>
 				<td colspan=3>
-					<div class="${styles.backButton} afsFileTable-backButton" onclick=${backToParentDirectory}>
+					<div class="${styles.backButton} AfsFileTable-backButton" onclick=${backToParentDirectory}>
 						${`< Go back to ${parentDirectory[parentDirectory.length - 1]}`}
 					</div>
-					<div class="${styles.divider} afsFileTable-divider"></div>
+					<div class="${styles.divider} AfsFileTable-divider"></div>
 				</td>
 			</tr>
 		`
@@ -50,9 +50,7 @@ class afsFileTable extends Nanocomponent {
 	}
 
 	makeFileRows(fileList) {
-		return fileList.map(fileInfo => {
-			return new AfsFileRow({ fileInfo, fileRowClicked: this.fileRowClicked.bind(this)})
-		})
+		return fileList.map(fileInfo => new AfsFileRow({ fileInfo, fileRowClicked: this.fileRowClicked.bind(this)}))
 	}
 
 	backToParentDirectory() {
@@ -74,12 +72,13 @@ class afsFileTable extends Nanocomponent {
 		return fileList
 	}
 
-	createElement({ currentFileList, parentDirectory }) {
-		const fileRows = this.makeFileRows(currentFileList)
-		const backButton = this.makeBackButton(parentDirectory)
+	createElement() {
+		const { state } = this
+ 		const fileRows = this.makeFileRows(state.currentFileList)
+		const backButton = this.makeBackButton(state.parentDirectory)
 		return html`
 		<div>
-			<table class="${styles.container} afsFileTable-container">
+			<table class="${styles.container} AfsFileTable-container">
 				<colgroup>
 					<col span="1" style="width: 40%;">
 					<col span="1" style="width: 30%;">
@@ -98,4 +97,4 @@ class afsFileTable extends Nanocomponent {
 	}
 }
 
-module.exports = afsFileTable
+module.exports = AfsFileTable

@@ -1,5 +1,5 @@
 'use strict'
-const AFSExlorer = require('../views/afsContentViewer/container')
+const AFSExlorer = require('../views/afsExplorerView/container')
 const { remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { modal: { contentViewerData } } = windowManager.sharedData.fetch('store')

@@ -17,5 +17,5 @@ ipcMain.on(k.OPEN_AFS, async (event, load) => {
   debug('%s heard', k.OPEN_AFS)
   const fileList = await afsManager.getFileList(load.did)
   dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList }})
-  windowManager.openWindow('afsContentViewer')
+  windowManager.openWindow('afsExplorerView')
 })

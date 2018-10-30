@@ -20,7 +20,7 @@ class AfsFileRow extends Nanocomponent {
 		this.children = {
 			menuItem: this.makeMenu()
 		}
-		this.onclick = this.onclick.bind(this)
+		this.fileClicked = this.fileClicked.bind(this)
 	}
 
 	update(){
@@ -36,15 +36,11 @@ class AfsFileRow extends Nanocomponent {
 
 	fileIconSelector(isFile) {
 		let fileName = ''
-		if (isFile) {
-			fileName = 'file.png'
-		} else {
-			fileName = 'folder.png'
-		}
+		isFile ? fileName = 'file.png' : fileName = 'folder.png'
 		return html`<img src="../assets/images/${fileName}" alt="fileIcon" class=${styles.fileImage}>`
 	}
 
-	onclick() {
+	fileClicked() {
 		const { props } = this
 		if (props.fileInfo.isFile) { return }
 		props.fileRowClicked(props.fileInfo.subPath, props.fileInfo.items)
@@ -55,19 +51,19 @@ class AfsFileRow extends Nanocomponent {
 		if (!props.fileInfo.isFile) { return 'Folder' }
 
 		const fileNameSplit = props.fileInfo.subPath.split('.')
-		if (fileNameSplit.length === 2) {
-			return `${fileNameSplit[1].toUpperCase()} File`
-		} else {
-			return 'Unknown'
-		}
+		let fileType = ""
+		fileNameSplit.length >= 2
+		? fileType = `${fileNameSplit[fileNameSplit.length - 1].toUpperCase()} File`
+		: fileType = "Unknown"
+		return fileType
 	}
 
 	createElement() {
-		const { children, onclick, props } = this
+		const { children, fileClicked, props } = this
 		return html`
 			<tr
 				class="${styles.fileRow} afsFileRow-fileRow"
-				onclick=${onclick}
+				onclick=${fileClicked}
 			>
 				<td class="${styles.fileNameCell} afsFileRow-fileNameCell">
 					${this.fileIconSelector(props.fileInfo.isFile)}

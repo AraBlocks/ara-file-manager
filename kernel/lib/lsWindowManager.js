@@ -29,7 +29,7 @@ windowManager.setSize = (view) => {
   let width
   let height
   switch (view) {
-    case 'afsContentViewer':
+    case 'afsExplorerView':
       width = 600
       height = 700
       break
@@ -101,8 +101,8 @@ windowManager.setSize = (view) => {
 windowManager.loadURL = (view) => {
   let file
   switch (view) {
-    case 'afsContentViewer':
-      file = 'afs-content-viewer'
+    case 'afsExplorerView':
+      file = 'afs-explorer-view'
       break
     case 'filemanager':
       file = 'file-manager'

@@ -17,5 +17,18 @@ module.exports = {
 				fileNames ? resolve(fileNames) : reject(error)
 			})
 		})
+	},
+
+	showSelectDirectoryDialog() {
+		const opts = {
+			properties: [
+				'openDirectory',
+			]
+		}
+		return new Promise((resolve, reject) => {
+			dialog.showOpenDialog(opts, (folderName, error) => {
+				folderName ? resolve(folderName) : reject(error)
+			})
+		})
 	}
 }

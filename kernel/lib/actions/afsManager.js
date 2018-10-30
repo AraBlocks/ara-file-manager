@@ -52,11 +52,13 @@ async function _getContentsInFolder(afs, folderPath) {
       const fullPath = path.join(folderPath, subPath)
       const fileStats = await afs.stat(fullPath)
       if (fileStats.isFile()) {
-        result.push({
-          isFile: true,
-          subPath,
-          size: fileStats.size
-        })
+        if (subPath !== ".DS_Store") {
+          result.push({
+            isFile: true,
+            subPath,
+            size: fileStats.size
+          })
+        }
       } else {
         const items = await _getContentsInFolder(afs, fullPath)
         const itemList = {
@@ -70,7 +72,7 @@ async function _getContentsInFolder(afs, folderPath) {
     }
     return result
   } catch(e) {
-    console.log(e)
+    debug('Error getting contents: %o', err)
   }
 }
 

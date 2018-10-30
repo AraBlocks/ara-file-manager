@@ -1,6 +1,6 @@
 'use strict'
 
-const AfsFileDescriptor = require('../../components/afsFileTable/afsFileTable')
+const AfsFileTable = require('../../components/afsFileTable/afsFileTable')
 const Button = require('../../components/button')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
@@ -8,7 +8,7 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-	constructor({ afsName, fileList, parentDirectory }) {
+	constructor({ afsName, fileList }) {
 		super()
 		this.props = {
 			afsName
@@ -17,8 +17,7 @@ class Container extends Nanocomponent {
 			fileList
 		}
 		this.children = {
-			afsFileDescriptor: new AfsFileDescriptor({
-				parentDirectory,
+			afsFileDescriptor: new AfsFileTable({
 				fileList
 			}),
 			exportAllButton: new Button({
@@ -48,17 +47,17 @@ class Container extends Nanocomponent {
 	createElement() {
 		const { children, props } = this
 		return html`
-			<div class="${styles.container} AfsContentViewerContainer-container">
-				<div class="${styles.horizontalContainer} ${styles.title} AfsContentViewerContainer-horizontalContainer,title">
+			<div class="${styles.container} AfsExplorerViewContainer-container">
+				<div class="${styles.horizontalContainer} ${styles.title} AfsExplorerViewContainer-horizontalContainer,title">
 					${props.afsName}
 					${children.utilityButton.render({ children: '✕' })}
 				</div>
-				<div class="${styles.content} AfsContentViewerContainer-content">
+				<div class="${styles.content} AfsExplorerViewContainer-content">
 					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export files to your hard drive by dragging them out
 					from this window, or by clicking “export all”.
 				</div>
-				<div class="${styles.fileTable} AfsContentViewerContainer-fileTable">
-				${children.afsFileDescriptor.render({ currentFileList: this.state.fileList, parentDirectory: []})}
+				<div class="${styles.fileTable} AfsExplorerViewContainer-fileTable">
+					${children.afsFileDescriptor.render()}
 				</div>
 				${children.exportAllButton.render()}
 				${children.downloadUpdateButton.render()}
