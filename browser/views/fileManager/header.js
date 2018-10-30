@@ -47,12 +47,11 @@ class Header extends Nanocomponent {
 
   createElement({ activeTab, araBalance, username }) {
     const { children, props } = this
-
     return html`
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader">
           <div onclick=${() => emit({ event: CLEAN_UI })}>
-            LTLSTAR
+            <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
             ${children.minimizeButton.render({ children: '–'})}
