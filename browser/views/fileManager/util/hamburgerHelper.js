@@ -16,7 +16,7 @@ module.exports = ({
       onclick: () => deeplink.copyDeeplink(did, name)
     }]
     menuItems.addItem = function (children, event) {
-      this.push({ children, onclick: () => windowManagement.emit({ event, load: did }) })
+      this.push({ children, onclick: () => windowManagement.emit({ event, load: { did, name } })})
     }
 
     switch (status) {

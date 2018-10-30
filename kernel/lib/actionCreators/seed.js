@@ -13,8 +13,8 @@ ipcMain.on(k.START_SEEDING, (event, load) => {
   debug
   const { farmer } = store
   try {
-    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load })
-    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load, shouldBroadcast: true } })
+    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
+    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
     debug('Error starting seed: %o', err)
@@ -25,8 +25,8 @@ ipcMain.on(k.STOP_SEEDING, (event, load) => {
   debug('%s HEARD', k.STOP_SEEDING)
   const { farmer } = store
   try {
-    farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load})
-    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load, shouldBroadcast: false } })
+    farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did})
+    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
     debug('Error stopping seed: %o', err)
