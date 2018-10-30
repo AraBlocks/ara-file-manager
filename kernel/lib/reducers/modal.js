@@ -8,10 +8,13 @@ module.exports = (state, { load = null, type }) => {
     case k.LOGOUT:
       state.data = {}
       break
-    case k.FEED_MANAGE_FILE:
     case k.FEED_MODAL:
       state.data = load
       break
+    case k.FEED_MANAGE_FILE:
+      state.manageFileData = load
+    case k.FEED_CONTENT_VIEWER:
+      state.contentViewerData = load
     case k.REGISTERED:
       state.data = load.mnemonic
       break

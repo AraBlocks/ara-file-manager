@@ -2,23 +2,21 @@
 
 
 const AfsFileRow = require('./afsFileRow')
-const styles = require('./styles/afsFileTable')
+const styles = require('./styles/AfsFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-class afsFileTable extends Nanocomponent {
+class AfsFileTable extends Nanocomponent {
 	constructor({
-		fileList,
-		parentDirectory
+		fileList
 	}) {
 		super()
+		this.state = {
+			currentFileList: fileList,
+			parentDirectory: []
+		}
 		this.props = {
 			fileList,
-			parentDirectory
-		}
-		this.children = {
-			fileRows: this.makeFileRows(fileList),
-			backButton: this.makeBackButton(parentDirectory)
 		}
 		this.backToParentDirectory = this.backToParentDirectory.bind(this)
 	}
@@ -28,34 +26,56 @@ class afsFileTable extends Nanocomponent {
 	}
 
 	makeBackButton(parentDirectory) {
-		const { backToParentDirectory } = this
-		return parentDirectory == null ? html`` : html`
+		const { backToParentDirectory, state } = this
+		return state.parentDirectory.length === 0 ? html`` : html`
 			<tr>
 				<td colspan=3>
-					<div class="${styles.backButton} afsFileTable-backButton" onclick=${backToParentDirectory}>
-						${`< Go back to ${parentDirectory}`}
+					<div class="${styles.backButton} AfsFileTable-backButton" onclick=${backToParentDirectory}>
+						${`< Go back to ${parentDirectory[parentDirectory.length - 1]}`}
 					</div>
-					<div class="${styles.divider} afsFileTable-divider"></div>
+					<div class="${styles.divider} AfsFileTable-divider"></div>
 				</td>
 			</tr>
 		`
 	}
 
-	makeFileRows(fileList) {
-		return fileList.map(fileInfo => {
-			return new AfsFileRow(fileInfo)
+	fileRowClicked(parentDirectory, fileList) {
+		const { state } = this
+		state.parentDirectory.push(parentDirectory)
+		state.currentFileList = fileList
+		this.render({
+			currentFileList: fileList,
+			parentDirectory: state.parentDirectory
 		})
 	}
 
+	makeFileRows(fileList) {
+		return fileList.map(fileInfo => new AfsFileRow({ fileInfo, fileRowClicked: this.fileRowClicked.bind(this)}))
+	}
+
 	backToParentDirectory() {
-		console.log('back to parent directory')
+		const { state } = this
+		state.parentDirectory.pop()
+		state.currentFileList = this.getCurrentFiles(state.parentDirectory)
+		this.render()
+	}
+
+	getCurrentFiles(parentList) {
+		const { props } = this
+		let fileList = props.fileList
+		parentList.forEach(parentPath => {
+			fileList = fileList.find(file => file.subPath === parentPath).items
+		})
+		return fileList
 	}
 
 	createElement() {
-		const { children } = this
+		const { state } = this
+ 		const fileRows = this.makeFileRows(state.currentFileList)
+		const backButton = this.makeBackButton(state.parentDirectory)
 		return html`
 		<div>
-			<table class="${styles.container} afsFileTable-container">
+			<table class="${styles.container} AfsFileTable-container">
 				<colgroup>
 					<col span="1" style="width: 40%;">
 					<col span="1" style="width: 30%;">
@@ -66,12 +86,12 @@ class afsFileTable extends Nanocomponent {
 					<th>Type</th>
 					<th>Size</th>
 				</tr>
-				${children.backButton}
-				${children.fileRows.map(fileRow => fileRow.render())}
+				${backButton}
+				${fileRows.map(fileRow => fileRow.render())}
 			</table>
 			</div>
 		`
 	}
 }
 
-module.exports = afsFileTable
+module.exports = AfsFileTable
