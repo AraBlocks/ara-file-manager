@@ -57,10 +57,7 @@ class AfsFileTable extends Nanocomponent {
 		const { state } = this
 		state.parentDirectory.pop()
 		state.currentFileList = this.getCurrentFiles(state.parentDirectory)
-		this.render({
-			currentFileList: state.currentFileList,
-			parentDirectory: state.parentDirectory
-		})
+		this.render()
 	}
 
 	getCurrentFiles(parentList) {
