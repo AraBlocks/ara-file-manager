@@ -34,10 +34,8 @@ class className extends Nanocomponent {
 
   import() {
     const { password, mnemonic } = this.state
-    const mnemonicArr = mnemonic.split(' ')
-    console.log(mnemonicArr)
-    if (mnemonicArr.length !== 12) { return }
-    windowManagement.emit({ type: k.IMPORT , load: { password, mnemonicArr } })
+    if (mnemonic.split(' ').length !== 12) { return }
+    windowManagement.emit({ event: k.IMPORT , load: { password, mnemonic } })
   }
 
   update() {
@@ -46,6 +44,7 @@ class className extends Nanocomponent {
 
   createElement({ pending = false }) {
     const { children, state } = this
+    window.importComponent = this
     return html`
       <div class="${styles.container} import-container">
         ${overlay(pending)}
