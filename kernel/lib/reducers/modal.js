@@ -15,8 +15,11 @@ module.exports = (state, { load = null, type }) => {
       state.manageFileData = load
     case k.FEED_CONTENT_VIEWER:
       state.contentViewerData = load
+    case k.REGISTERED:
+      state.data = load.mnemonic
+      break
     default:
-    return state
+      return state
   }
   return state
 }

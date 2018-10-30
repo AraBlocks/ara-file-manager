@@ -64,6 +64,7 @@ windowManager.setSize = (view) => {
       break
     case 'mainManagerView':
     case 'manager':
+    case 'mnemonicWarning':
       width = 400
       height = 325
       break

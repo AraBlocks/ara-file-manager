@@ -1,6 +1,6 @@
 'use strict'
 
-const { CONFIRM_PUBLISH } = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const { closeModal, closeWindow, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
@@ -10,7 +10,7 @@ module.exports = (load) => {
   const publishButton = new Button({
     children: 'Publish',
     onclick: () => {
-      emit({ event: CONFIRM_PUBLISH, load: { ...load, cost: 5 } }),
+      emit({ event: k.CONFIRM_PUBLISH, load: { ...load } }),
       closeModal()
     }
   })
@@ -33,7 +33,7 @@ module.exports = (load) => {
             Publishing this file will cost:
           </div>
           <span class="${styles.postheader} modals-postheader">
-            5 ARA
+            ${Math.round(load.gasEstimate * 1000)/1000} eth
           </span>
         </div>
       </div>

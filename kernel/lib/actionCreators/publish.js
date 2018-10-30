@@ -5,7 +5,6 @@ const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
-  afsManager,
   acmManager,
   araContractsManager,
   farmerManager,
@@ -87,7 +86,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
 
     const subscription = await araContractsManager.subscribePublished({ did: load.did })
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
-    // afsManager.unarchiveAFS({ did: load.did })
 
     farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
   } catch (err) {

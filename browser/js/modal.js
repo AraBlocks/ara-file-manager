@@ -2,11 +2,13 @@
 
 const { emit } = require('../../browser/lib/tools/windowManagement')
 const { DUMP_MODAL_STATE } = require('../../lib/constants/stateManagement')
-const remote = require('electron').remote;
+const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
+const isDev = require('electron-is-dev')
 
 const current = windowManager.sharedData.fetch('current')
-const { modal: { data } } = windowManager.sharedData.fetch('store')
+const store = windowManager.sharedData.fetch('store')
+const { modal: { data } } = store
 
 let Component
 let functionalComponent
@@ -26,3 +28,5 @@ window.onunload = () => {
   windowManager.modalIsOpen = false
   emit({ event: DUMP_MODAL_STATE })
 }
+
+if(isDev) { window.store = store }
