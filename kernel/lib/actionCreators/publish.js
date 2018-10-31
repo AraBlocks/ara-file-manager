@@ -30,10 +30,11 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     actionsUtil.writeFileMetaData({ did, size, title: load.name })
 
     debug('Estimating gas')
-    const commitEstimate = await afs.estimateCommitGasCost({ did, password })
+    const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
+    console.log(commitEstimate)
     let setPriceEstimate = 0
     if (load.price != null) {
-      setPriceEstimate = await afs.estimateSetPriceGasCost({ did, password, price: Number(load.price) })
+      setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
     debug('Gas estimate: %s', gasEstimate)
