@@ -17,21 +17,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     const identity = await register.create(password)
     await register.archive(identity)
 
-    const { did: { did }, mnemonic } = identity
-    const accountAddress = await araContractsManager.getAccountAddress(did, password)
-    debug('Dispatching %s', k.LOGIN)
-    dispatch({
-      type: k.REGISTERED,
-      load: {
-        accountAddress,
-        araBalance: 0,
-        mnemonic,
-        password: password,
-        userAid: did
-      }
-    })
-
-    switchLoginState(true)
+    await dispatchLogin(identity, password)
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
   } catch (err) {
     debug('Error registering: %O', err)
@@ -67,4 +53,5 @@ async function dispatchLogin(identity, password) {
       userAid: did
     }
   })
+  switchLoginState(true)
 }
