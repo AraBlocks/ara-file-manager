@@ -1,20 +1,27 @@
 'use strict'
 
-const filesize = require('filesize')
+const { emit } = require('../../lib/tools/windowManagement')
+const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
+const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const menuItem = require('../hamburgerMenu/menuItem')
 const styles = require('./styles/afsFileRow')
+const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class AfsFileRow extends Nanocomponent {
 	constructor({
+		did,
 		fileInfo,
-		fileRowClicked
+		fileRowClicked,
+		parentDirectory
 	}) {
 		super()
 		this.props = {
+			did,
 			fileInfo,
-			fileRowClicked
+			fileRowClicked,
+			parentDirectory
 		}
 
 		this.children = {
@@ -28,8 +35,27 @@ class AfsFileRow extends Nanocomponent {
 	}
 
 	makeMenu() {
+		const { props } = this
 		const items = [
-			{ children: 'Export', onclick: () => {} }
+			{
+				children: 'Export',
+				onclick: (e) => {
+					e.stopPropagation()
+					fileSystemManager.showSelectDirectoryDialog()
+						.then(folderName => {
+							emit({
+								event: EXPORT_FILE,
+								load: {
+									...props.fileInfo,
+									did: props.did,
+									folderName,
+									parentDirectory:
+									props.parentDirectory
+								}
+							})
+						})
+				}
+			}
 		]
 		return items.map((item) => new menuItem(item))
 	}
