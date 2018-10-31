@@ -11,7 +11,11 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-	constructor({ afsName, fileList, did }) {
+	constructor({
+		afsName,
+		did,
+		fileList
+	}) {
 		super()
 		this.props = {
 			afsName,
