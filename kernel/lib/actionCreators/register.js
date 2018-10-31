@@ -3,8 +3,9 @@
 const debug = require('debug')('acm:kernel:lib:actionCreators:register')
 const k = require('../../../lib/constants/stateManagement')
 const araContractsManager = require('../actions/araContractsManager')
-const { register } = require('../actions')
 const dispatch = require('../reducers/dispatch')
+const { register } = require('../actions')
+const { switchLoginState } = require('../../../boot/tray')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 
@@ -30,6 +31,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
       }
     })
 
+    switchLoginState(true)
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
   } catch (err) {
     debug('Error registering: %O', err)
