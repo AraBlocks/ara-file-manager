@@ -1,5 +1,6 @@
 module.exports = {
   download: require('./download'),
+  export: require('./export'),
   login: require('./login'),
   modal: require('./modal'),
   publish: require('./publish'),
