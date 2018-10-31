@@ -9,7 +9,7 @@ const path = require('path')
 ipcMain.on(k.EXPORT_FILE, async (event, load) => {
 	debug('%s heard', k.EXPORT_FILE)
 	try {
-		const fileDirectory = load.parentDirectory.reduce((fullPath, subpath) => path.join(fullPath, subpath), "")
+		const fileDirectory = path.join(...load.parentDirectory)
 		const filePath = path.join(fileDirectory, load.subPath)
 		const exportPath = path.join(load.folderName[0], load.subPath)
 		if (load.isFile) {

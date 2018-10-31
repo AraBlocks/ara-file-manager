@@ -42,9 +42,18 @@ class AfsFileRow extends Nanocomponent {
 				onclick: (e) => {
 					e.stopPropagation()
 					fileSystemManager.showSelectDirectoryDialog()
-					.then(folderName => {
-						emit({ event: EXPORT_FILE, load: {...props.fileInfo, did: props.did, folderName, parentDirectory: props.parentDirectory }})
-					})
+						.then(folderName => {
+							emit({
+								event: EXPORT_FILE,
+								load: {
+									...props.fileInfo,
+									did: props.did,
+									folderName,
+									parentDirectory:
+									props.parentDirectory
+								}
+							})
+						})
 				}
 			}
 		]
