@@ -27,13 +27,13 @@ class AfsFileTable extends Nanocomponent {
 		return true
 	}
 
-	makeBackButton(parentDirectory) {
+	makeBackButton() {
 		const { backToParentDirectory, state } = this
 		return state.parentDirectory.length === 0 ? html`` : html`
 			<tr>
 				<td colspan=3>
 					<div class="${styles.backButton} AfsFileTable-backButton" onclick=${backToParentDirectory}>
-						${`< Go back to ${parentDirectory[parentDirectory.length - 1]}`}
+						${`< Go back to ${state.parentDirectory[state.parentDirectory.length - 1]}`}
 					</div>
 					<div class="${styles.divider} AfsFileTable-divider"></div>
 				</td>
@@ -51,9 +51,7 @@ class AfsFileTable extends Nanocomponent {
 	makeFileRows() {
 		const { state } = this
 		const { props } = this
-		console.log(props.fileList)
-		console.log(state.currentFileList)
-		return state.currentFileList.map(fileInfo => new AfsFileRow({ 
+		return state.currentFileList.map(fileInfo => new AfsFileRow({
 			did: props.did,
 			fileInfo,
 			fileRowClicked: this.fileRowClicked.bind(this),
@@ -78,9 +76,8 @@ class AfsFileTable extends Nanocomponent {
 	}
 
 	createElement() {
-		const { state } = this
  		const fileRows = this.makeFileRows()
-		const backButton = this.makeBackButton(state.parentDirectory)
+		const backButton = this.makeBackButton()
 		return html`
 		<div>
 			<table class="${styles.container} AfsFileTable-container">

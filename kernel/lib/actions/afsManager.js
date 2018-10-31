@@ -8,17 +8,6 @@ const farmerManager = require('../actions/farmerManager')
 const mirror = require('mirror-folder')
 const path = require('path')
 
-async function afsPathIsFile({ did, path }) {
-	try {
-    const { afs } = await araFilesystem.create({ did })
-    const res = await afs.stat(path)
-    afs.close()
-    return res.isFile()
-  } catch (err) {
-		debug('Error getting file size for %s', did)
-	}
-}
-
 async function exportFile({ did, exportPath, filePath }) {
 	debug('Exporting file %s to %s', filePath, exportPath)
 	try {
@@ -28,7 +17,6 @@ async function exportFile({ did, exportPath, filePath }) {
     afs.close()
     fs.writeFileSync(exportPath, fileData)
   } catch (err) {
-    debug(err)
 		debug('Error exporting file %s to %s: %o', filePath, exportPath, err)
 	}
 }
@@ -38,7 +26,7 @@ async function exportFolder({ did, exportPath, folderPath }) {
     const { afs } = await araFilesystem.create({ did })
     const fullPath = path.join(afs.HOME, folderPath)
     const result = await afs.readdir(fullPath)
-    if (0 === result.length) {
+    if (result.length === 0) {
       throw new Error('Can only export a non-empty AFS Folders.')
     }
 
@@ -100,18 +88,6 @@ async function _getContentsInFolder(afs, folderPath) {
   }
 }
 
-async function getFileSize(did, path) {
-	debug('Getting file size in AFS')
-	try {
-    const { afs } = await araFilesystem.create({ did })
-    const res = await afs.stat(path)
-    afs.close()
-    return res.size
-  } catch (err) {
-		debug('Error getting file size for %s', did)
-	}
-}
-
 async function surfaceAFS({ dids, published = false }) {
 	const dcdnFarmStore = farmerManager.loadDcdnStore()
 	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
@@ -130,11 +106,9 @@ function unarchiveAFS({ did }) {
 }
 
 module.exports = {
-	afsPathIsFile,
   exportFile,
   exportFolder,
 	getFileList,
-	getFileSize,
 	surfaceAFS,
 	unarchiveAFS,
 }

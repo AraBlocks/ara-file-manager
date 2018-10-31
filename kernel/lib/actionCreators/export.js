@@ -1,12 +1,9 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:export')
-const dispatch = require('../reducers/dispatch')
 const { afsManager } = require('../actions')
-const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
-const windowManager = require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
+const k = require('../../../lib/constants/stateManagement')
 const path = require('path')
 
 ipcMain.on(k.EXPORT_FILE, async (event, load) => {

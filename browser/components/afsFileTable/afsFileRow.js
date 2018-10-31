@@ -1,11 +1,11 @@
 'use strict'
 
-const filesize = require('filesize')
 const { emit } = require('../../lib/tools/windowManagement')
 const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const menuItem = require('../hamburgerMenu/menuItem')
 const styles = require('./styles/afsFileRow')
+const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
