@@ -60,7 +60,7 @@ async function writeFileMetaData({ did, size, title, userDID = '' }) {
 		}
 		const fileDataString = JSON.stringify(fileData)
 		debug('Adding file metadata for %s', did)
-		afs.metadata.writeKey({ did, key: 'fileInfo', value: fileDataString })
+		await afs.metadata.writeKey({ did, key: 'fileInfo', value: fileDataString })
 	} catch (e) {
 		debug(e)
 	}
