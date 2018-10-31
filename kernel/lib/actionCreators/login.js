@@ -70,8 +70,16 @@ ipcMain.on(k.LOGIN, async (event, load) => {
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const updatedItems = await araContractsManager.getPublishedEarnings(files.published);
-    ({ files } = dispatch({ type: k.GOT_EARNINGS, load: updatedItems }))
+    let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
+    updatedPublishedItems = await Promise.all(files.published.map((item) =>
+      araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
+    const updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
+      araContractsManager.getAllocatedRewards(item, load.userAid, load.password)));
+
+    ({ files } = dispatch({
+      type: k.GOT_EARNINGS_AND_REWARDS,
+      load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
+    }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const subscriptions = await Promise.all(files.published.map(araContractsManager.subscribePublished))
