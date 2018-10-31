@@ -30,8 +30,9 @@ module.exports = (state, { load = null, type }) => {
     case k.ERROR_PUBLISHING:
       state.published = state.published.slice(0, state.published.length - 1)
       break
-    case k.GOT_EARNINGS:
-      state.published = load
+    case k.GOT_EARNINGS_AND_REWARDS:
+      state.published = load.published
+      state.purchased = load.purchased
       break
     case k.GOT_LIBRARY:
       state.loadingLibrary = false

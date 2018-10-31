@@ -89,6 +89,17 @@ async function getPublishedEarnings(items) {
 	return Promise.all(updatedEarnings)
 }
 
+async function getAllocatedRewards(item, userDID, password) {
+	return {
+		...item,
+		allocatedRewards: Number(await araContracts.rewards.getRewardsBalance({
+			farmerDid: userDID,
+			contentDid: 'did:ara:' + item.did,
+			password
+		}))
+	}
+}
+
 async function getEarnings({ did }) {
 	const opts = { fromBlock: 0, toBlock: 'latest' }
 	try {
@@ -169,6 +180,7 @@ function subscribeTransfer(userAddress) {
 module.exports = {
 	getAccountAddress,
 	getAFSPrice,
+	getAllocatedRewards,
 	getAraBalance,
 	getEarnings,
 	getEtherBalance,
