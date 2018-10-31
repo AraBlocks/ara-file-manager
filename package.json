@@ -37,6 +37,7 @@
     "electron-window-manager": "^1.0.6",
     "filesize": "^3.6.1",
     "md5-hex": "^2.0.0",
+    "mirror-folder": "^3.0.0",
     "nanocomponent": "^6.5.2",
     "styleUtils": "file:browser/lib/styleUtils",
     "user-home": "^2.0.0",

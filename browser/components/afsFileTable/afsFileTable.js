@@ -8,6 +8,7 @@ const Nanocomponent = require('nanocomponent')
 
 class AfsFileTable extends Nanocomponent {
 	constructor({
+		did,
 		fileList
 	}) {
 		super()
@@ -16,6 +17,7 @@ class AfsFileTable extends Nanocomponent {
 			parentDirectory: []
 		}
 		this.props = {
+			did,
 			fileList,
 		}
 		this.backToParentDirectory = this.backToParentDirectory.bind(this)
@@ -43,14 +45,20 @@ class AfsFileTable extends Nanocomponent {
 		const { state } = this
 		state.parentDirectory.push(parentDirectory)
 		state.currentFileList = fileList
-		this.render({
-			currentFileList: fileList,
-			parentDirectory: state.parentDirectory
-		})
+		this.render()
 	}
 
-	makeFileRows(fileList) {
-		return fileList.map(fileInfo => new AfsFileRow({ fileInfo, fileRowClicked: this.fileRowClicked.bind(this)}))
+	makeFileRows() {
+		const { state } = this
+		const { props } = this
+		console.log(props.fileList)
+		console.log(state.currentFileList)
+		return state.currentFileList.map(fileInfo => new AfsFileRow({ 
+			did: props.did,
+			fileInfo,
+			fileRowClicked: this.fileRowClicked.bind(this),
+			parentDirectory: state.parentDirectory
+		}))
 	}
 
 	backToParentDirectory() {
@@ -71,7 +79,7 @@ class AfsFileTable extends Nanocomponent {
 
 	createElement() {
 		const { state } = this
- 		const fileRows = this.makeFileRows(state.currentFileList)
+ 		const fileRows = this.makeFileRows()
 		const backButton = this.makeBackButton(state.parentDirectory)
 		return html`
 		<div>

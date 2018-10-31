@@ -2,22 +2,27 @@
 
 const AfsFileTable = require('../../components/afsFileTable/afsFileTable')
 const Button = require('../../components/button')
+const { emit } = require('../../lib/tools/windowManagement')
+const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
+const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-	constructor({ afsName, fileList }) {
+	constructor({ afsName, fileList, did }) {
 		super()
 		this.props = {
-			afsName
+			afsName,
+			did
 		}
 		this.state = {
 			fileList
 		}
 		this.children = {
-			afsFileDescriptor: new AfsFileTable({
+			afsFileTable: new AfsFileTable({
+				did,
 				fileList
 			}),
 			exportAllButton: new Button({
@@ -33,7 +38,20 @@ class Container extends Nanocomponent {
 	}
 
 	exportAll() {
-
+		const { props } = this
+		const { children } = this
+		fileSystemManager.showSelectDirectoryDialog()
+		.then(folderName => {
+			emit({
+				event: EXPORT_FILE,
+				load: {
+					subPath: "",
+					did: props.did,
+					folderName,
+					parentDirectory: children.afsFileTable.state.parentDirectory
+				}
+			})
+		})
 	}
 
 	downloadUpdate() {
@@ -57,7 +75,7 @@ class Container extends Nanocomponent {
 					from this window, or by clicking “export all”.
 				</div>
 				<div class="${styles.fileTable} AfsExplorerViewContainer-fileTable">
-					${children.afsFileDescriptor.render()}
+					${children.afsFileTable.render()}
 				</div>
 				${children.exportAllButton.render()}
 				${children.downloadUpdateButton.render()}
