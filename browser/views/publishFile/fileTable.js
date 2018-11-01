@@ -10,10 +10,14 @@ const path = require('path')
 const fs = require('fs')
 
 class FileTable extends Nanocomponent {
-	constructor() {
+	constructor({
+		field,
+		parentState
+	}) {
 		super()
-		this.state = {
-			fileList: []
+		this.props = {
+			field,
+			parentState
 		}
 		this.ondrop = this.ondrop.bind(this)
 		this.preventDefault = this.preventDefault.bind(this)
@@ -25,8 +29,8 @@ class FileTable extends Nanocomponent {
 	}
 
 	makeFileRows() {
-		const { state, deleteFile } = this
-		return state.fileList.map(fileInfo => new AfsFileRow({
+		const { props, deleteFile } = this
+		return props.parentState[props.field].map(fileInfo => new AfsFileRow({
 			fileInfo,
 			deleteFile: deleteFile
 		}))
@@ -39,7 +43,7 @@ class FileTable extends Nanocomponent {
 
 	ondrop(e) {
 		this.preventDefault(e)
-		const { state } = this
+		const { props } = this
 		const rawFileData = e.dataTransfer.files
 		const fileData = Array.from(rawFileData).map(file => {
 			return {
@@ -49,13 +53,13 @@ class FileTable extends Nanocomponent {
 				size: file.size
 			}
 		})
-		state.fileList.push(...fileData)
+		props.parentState[props.field].push(...fileData)
 		this.render()
 	}
 
 	deleteFile(fileFullPath) {
-		const { state } = this
-		state.fileList = state.fileList.filter(file =>
+		const { props } = this
+		props.parentState[props.field] = props.parentState[props.field].filter(file =>
 			file.fullPath !== fileFullPath
 		)
 		this.render()

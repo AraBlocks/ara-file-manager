@@ -35,8 +35,8 @@ class FileInfo extends Nanocomponent {
 				}
 			}),
 			fileSelector: new FileTable({
-				did: "",
-				fileList: []
+				parentState,
+				field: 'fileList'
 			})
 		}
 	}

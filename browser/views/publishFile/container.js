@@ -19,7 +19,7 @@ class Container extends Nanocomponent {
 		this.state = {
 			currency: '',
 			fileName: '',
-			filePath: [],
+			fileList: [],
 			price: null,
 			priceManagement: true,
 			supernode: true,
@@ -46,20 +46,20 @@ class Container extends Nanocomponent {
 	publishFile() {
 		const {
 			fileName,
-			filePath,
+			fileList,
 			price
 		} = this.state
 		const { did, password } = this.props
-
+		const paths = fileList.map(file => file.fullPath)
 		const load = {
 			userAid: did,
 			password,
-			paths: filePath,
+			paths,
 			name: fileName || 'Unnamed',
 			price
 		}
 
-		filePath
+		fileList
 			? emit({ event: PUBLISH, load })
 			: this.render({ requiredIndicator: true })
 	}
