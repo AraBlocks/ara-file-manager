@@ -11,7 +11,7 @@ module.exports = {
 		:host {
 			width: 100%;
 			height: 100%;
-			background-color: yellow;
+			overflow: scroll;
 		}
 	`,
 	fileTable: css`
@@ -20,7 +20,6 @@ module.exports = {
 			text-align: left;
 			width: 100%;
 			border-collapse: collapse;
-			background-color: green;
 		}
 
 		:host th {

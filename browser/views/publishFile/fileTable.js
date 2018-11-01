@@ -17,9 +17,7 @@ class FileTable extends Nanocomponent {
 		}
 		this.ondrop = this.ondrop.bind(this)
 		this.preventDefault = this.preventDefault.bind(this)
-		this.drag = new Drag({
-			onFileDrop: () => { console.log('dropped') }
-		})
+		this.deleteFile = this.deleteFile.bind(this)
 	}
 
 	update(){
@@ -27,9 +25,10 @@ class FileTable extends Nanocomponent {
 	}
 
 	makeFileRows() {
-		const { state } = this
+		const { state, deleteFile } = this
 		return state.fileList.map(fileInfo => new AfsFileRow({
 			fileInfo,
+			deleteFile: deleteFile
 		}))
 	}
 
@@ -39,25 +38,31 @@ class FileTable extends Nanocomponent {
 	}
 
 	ondrop(e) {
-		const { props } = this
 		this.preventDefault(e)
 		const { state } = this
-	 	const file = e.dataTransfer.files[0]
-		console.log(file)
-		const fileData = {
-			isFile: file.type !== "",
-			subPath: file.name,
-			fullPath: file.path,
-			size: file.size
-		}
-		console.log(fileData)
-		state.fileList.push(fileData)
+		const rawFileData = e.dataTransfer.files
+		const fileData = Array.from(rawFileData).map(file => {
+			return {
+				isFile: file.type !== "",
+				subPath: file.name,
+				fullPath: file.path,
+				size: file.size
+			}
+		})
+		state.fileList.push(...fileData)
 		this.render()
 	}
 
+	deleteFile(fileFullPath) {
+		const { state } = this
+		state.fileList = state.fileList.filter(file =>
+			file.fullPath !== fileFullPath
+		)
+		this.render()
+	}
 
 	createElement() {
-		const { preventDefault, ondrop, drag } = this
+		const { preventDefault, ondrop } = this
  		const fileRows = this.makeFileRows()
 		return html`
 		<div class=${styles.container}

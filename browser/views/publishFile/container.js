@@ -19,7 +19,7 @@ class Container extends Nanocomponent {
 		this.state = {
 			currency: '',
 			fileName: '',
-			filePath: '',
+			filePath: [],
 			price: null,
 			priceManagement: true,
 			supernode: true,

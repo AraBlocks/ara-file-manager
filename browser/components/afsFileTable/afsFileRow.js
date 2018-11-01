@@ -8,17 +8,20 @@ const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const path = require('path')
 
 class AfsFileRow extends Nanocomponent {
 	constructor({
 		did = null,
 		fileInfo,
 		fileRowClicked = () => {},
+		deleteFile,
 		parentDirectory = [],
 	}) {
 		super()
 		this.props = {
 			did,
+			deleteFile,
 			fileInfo,
 			fileRowClicked,
 			parentDirectory,
@@ -35,13 +38,25 @@ class AfsFileRow extends Nanocomponent {
 	}
 
 	makeMenu() {
+		const { props } = this
 		const items = [
 			{
 				children: 'Export',
 				onclick: this.exportFile.bind(this)
 			}
 		]
+		if (props.deleteFile !== null) {
+			items.push({
+				children: 'Delete',
+				onclick: this.deleteFile.bind(this)
+			})
+		}
 		return items.map((item) => new menuItem(item))
+	}
+
+	deleteFile(e) {
+		const { props } = this
+		props.deleteFile(props.fileInfo.fullPath)
 	}
 
 	exportFile(e) {
@@ -77,11 +92,9 @@ class AfsFileRow extends Nanocomponent {
 	renderFileType() {
 		const { props } = this
 		if (!props.fileInfo.isFile) { return 'Folder' }
-
-		const fileNameSplit = props.fileInfo.subPath.split('.')
-		let fileType = ""
-		fileNameSplit.length >= 2
-		? fileType = `${fileNameSplit[fileNameSplit.length - 1].toUpperCase()} File`
+		let fileType = path.extname(props.fileInfo.subPath)
+		fileType !== ""
+		? fileType = `${(fileType.slice(1)).toUpperCase()} File`
 		: fileType = "Unknown"
 		return fileType
 	}
