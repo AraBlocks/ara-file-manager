@@ -11,10 +11,10 @@ const Nanocomponent = require('nanocomponent')
 
 class AfsFileRow extends Nanocomponent {
 	constructor({
-		did,
+		did = null,
 		fileInfo,
-		fileRowClicked,
-		parentDirectory,
+		fileRowClicked = () => {},
+		parentDirectory = [],
 	}) {
 		super()
 		this.props = {
@@ -46,6 +46,7 @@ class AfsFileRow extends Nanocomponent {
 
 	exportFile(e) {
 		const { props } = this
+		if (props.did == null) { return }
 		e.stopPropagation()
 		fileSystemManager.showSelectDirectoryDialog()
 			.then(folderName => {

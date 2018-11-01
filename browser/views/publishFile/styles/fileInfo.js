@@ -44,6 +44,7 @@ module.exports = {
 		:host {
 			padding-top: 10px;
 			height: 320px;
+			background-color: blue;
 		}
 	`,
 

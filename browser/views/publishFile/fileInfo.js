@@ -1,7 +1,7 @@
 'use strict'
 
 const FileSelector = require('../../components/fileSelector')
-const AfsFileTable = require('../../components/afsFileTable/afsFileTable')
+const FileTable = require('./fileTable')
 const Input = require('../../components/input')
 const styles = require('./styles/fileInfo')
 const html = require('choo/html')
@@ -34,7 +34,7 @@ class FileInfo extends Nanocomponent {
 					field: 'currency'
 				}
 			}),
-			fileSelector: new AfsFileTable({
+			fileSelector: new FileTable({
 				did: "",
 				fileList: []
 			})
