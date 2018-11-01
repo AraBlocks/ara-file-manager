@@ -31,14 +31,6 @@ class Container extends Nanocomponent {
 			fileInfo: new FileInfo({
 				parentState: this.state
 			}),
-			supernodeCheckbox: new OptionsCheckbox({
-				field: 'supernode',
-				parentState: this.state
-			}),
-			priceManagementCheckbox: new OptionsCheckbox({
-				field: 'priceManagement',
-				parentState: this.state
-			}),
 			publishButton: new Button({
 				children: 'Publish',
 				onclick: this.publishFile.bind(this)
@@ -91,10 +83,6 @@ class Container extends Nanocomponent {
 					</div>
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({ requiredIndicator })}
-					<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
-					${children.supernodeCheckbox.render({ parentState: state })}
-					${children.priceManagementCheckbox.render({ parentState: state })}
-					</div>
 					${children.publishButton.render()}
 				</div>
 			</div>

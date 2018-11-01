@@ -14,14 +14,14 @@ class AfsFileRow extends Nanocomponent {
 		did,
 		fileInfo,
 		fileRowClicked,
-		parentDirectory
+		parentDirectory,
 	}) {
 		super()
 		this.props = {
 			did,
 			fileInfo,
 			fileRowClicked,
-			parentDirectory
+			parentDirectory,
 		}
 
 		this.children = {
@@ -35,29 +35,30 @@ class AfsFileRow extends Nanocomponent {
 	}
 
 	makeMenu() {
-		const { props } = this
 		const items = [
 			{
 				children: 'Export',
-				onclick: (e) => {
-					e.stopPropagation()
-					fileSystemManager.showSelectDirectoryDialog()
-						.then(folderName => {
-							emit({
-								event: EXPORT_FILE,
-								load: {
-									...props.fileInfo,
-									did: props.did,
-									folderName,
-									parentDirectory:
-									props.parentDirectory
-								}
-							})
-						})
-				}
+				onclick: this.exportFile.bind(this)
 			}
 		]
 		return items.map((item) => new menuItem(item))
+	}
+
+	exportFile(e) {
+		const { props } = this
+		e.stopPropagation()
+		fileSystemManager.showSelectDirectoryDialog()
+			.then(folderName => {
+				emit({
+					event: EXPORT_FILE,
+					load: {
+						...props.fileInfo,
+						did: props.did,
+						folderName,
+						parentDirectory: props.parentDirectory
+					}
+				})
+			})
 	}
 
 	fileIconSelector(isFile) {

@@ -13,7 +13,7 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
-			height: 450px;
+			height: 690px;
 			justify-content: space-between;
 			margin: 20px;
 		}

@@ -40,9 +40,10 @@ module.exports = {
 		}
 	`,
 
-	fileDirectoryHoler: css`
+	fileDirectoryHolder: css`
 		:host {
 			padding-top: 10px;
+			height: 320px;
 		}
 	`,
 
