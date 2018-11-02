@@ -3,6 +3,7 @@
 const { emit } = require('../../lib/tools/windowManagement')
 const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
+const k = require('../../../lib/constants/stateManagement')
 const menuItem = require('../hamburgerMenu/menuItem')
 const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
@@ -12,11 +13,12 @@ const path = require('path')
 
 class AfsFileRow extends Nanocomponent {
 	constructor({
-		did = null,
+		did,
 		fileInfo,
 		fileRowClicked = () => {},
 		deleteFile,
 		parentDirectory = [],
+		rowType
 	}) {
 		super()
 		this.props = {
@@ -25,6 +27,7 @@ class AfsFileRow extends Nanocomponent {
 			fileInfo,
 			fileRowClicked,
 			parentDirectory,
+			rowType
 		}
 
 		this.children = {
@@ -39,17 +42,23 @@ class AfsFileRow extends Nanocomponent {
 
 	makeMenu() {
 		const { props } = this
-		const items = [
-			{
-				children: 'Export',
-				onclick: this.exportFile.bind(this)
-			}
-		]
-		if (props.deleteFile !== null) {
-			items.push({
-				children: 'Delete',
-				onclick: this.deleteFile.bind(this)
-			})
+		const items = []
+		const exportButton = {
+			children: 'Export',
+			onclick: this.exportFile.bind(this)
+		}
+		const deleteButton = {
+			children: 'Delete',
+			onclick: this.deleteFile.bind(this)
+		}
+
+		switch (props.rowType) {
+			case k.PUBLISH:
+				items.push(deleteButton)
+				break
+			default:
+				items.push(exportButton)
+				break
 		}
 		return items.map((item) => new menuItem(item))
 	}

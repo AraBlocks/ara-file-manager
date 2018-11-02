@@ -2,7 +2,7 @@
 
 
 const AfsFileRow = require('../../components/afsFileTable/afsFileRow')
-const Drag = require('../../components/dragDropArea')
+const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/fileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -32,7 +32,8 @@ class FileTable extends Nanocomponent {
 		const { props, deleteFile } = this
 		return props.parentState[props.field].map(fileInfo => new AfsFileRow({
 			fileInfo,
-			deleteFile: deleteFile
+			deleteFile,
+			rowType: k.PUBLISH
 		}))
 	}
 
