@@ -10,7 +10,7 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
-			height: 260px;
+			height: 460px;
 			justify-content: space-between;
 			padding-top: 25px;
 		}
@@ -36,6 +36,13 @@ module.exports = {
 	distributionLink: css`
 		:host {
 			padding-top: 10px;
+		}
+	`,
+
+	fileTable: css`
+		:host {
+			padding-top: 10px;
+			height: 270px;
 		}
 	`,
 

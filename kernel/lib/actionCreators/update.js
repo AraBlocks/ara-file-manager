@@ -9,12 +9,12 @@ const k = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(k.FEED_MANAGE_FILE, (event, load) => {
-  console.log(load)
+ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
   const { files } = store
   const file = files.published.find(({ did }) => did === load.did)
-  console.log(file)
-  dispatch({ type: k.FEED_MANAGE_FILE, load: { did: load.did, price: file.price, name: load.name } })
+  const fileList = await afsManager.getFileList(load.did)
+  dispatch({ type: k.FEED_MANAGE_FILE, load: { did: load.did, price: file.price, name: load.name, fileList } })
+  windowManager.openWindow('manageFileView')
 })
 
 ipcMain.on(k.UPDATE_FILE, async (event, load) => {

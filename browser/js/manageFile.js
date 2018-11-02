@@ -12,7 +12,7 @@ const manageFileContainer = new ManageFileContainer({
 	currency: 'ARA',
 	did: manageFileData.did,
 	name: manageFileData.name,
-	filePath: [],
+	fileList: manageFileData.fileList,
 	price: manageFileData.price,
 	priceManagement: true,
 	supernode: false,

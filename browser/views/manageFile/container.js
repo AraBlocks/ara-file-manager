@@ -20,7 +20,7 @@ class Container extends Nanocomponent {
 		currency,
 		did,
 		name,
-		filePath,
+		fileList,
 		price,
 		priceManagement,
 		supernode,
@@ -32,11 +32,16 @@ class Container extends Nanocomponent {
 			did,
 			distributionLink: deeplink.getDeeplink(did, name),
 			name,
-			filePath,
+			fileList,
+			oldFileList: fileList,
 			price,
 			priceManagement,
 			supernode,
 			tokenPrice,
+		}
+
+		this.props = {
+			afsContents: fileList
 		}
 
 		console.log(this.state.name)
@@ -54,6 +59,7 @@ class Container extends Nanocomponent {
 			// 	}
 			// }),
 			fileInfo: new FileInfo({
+				did,
 				parentState: this.state,
 			}),
 			publishButton: new Button({
@@ -69,15 +75,26 @@ class Container extends Nanocomponent {
 	}
 
 	updateFile() {
+		const { state, props } = this
+		const subPaths = state.fileList.map(file => file.subPath)
+		const removePaths = props.afsContents.filter(file =>
+			!subPaths.includes(file.subPath)
+		).map(file => file.subPath)
+		const addPaths = state.fileList.filter(file =>
+			file.fullPath != null
+		).map(file => file.fullPath)
+
 		const load = {
-			did: this.state.did,
-			name: this.state.name,
+			addPaths,
+			did: state.did,
+			name: state.name,
 			password: account.password,
-			paths: this.state.filePath,
-			price: this.state.price == "" ? null : this.state.price,
+			removePaths,
+			price: state.price == "" ? null : state.price,
 			userAid: account.userAid
 		}
-		emit({ event: UPDATE_FILE, load })
+		console.log(load)
+		//emit({ event: UPDATE_FILE, load })
 	}
 
 	createElement({ spinner = false }) {
