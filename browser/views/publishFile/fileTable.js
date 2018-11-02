@@ -6,8 +6,6 @@ const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/fileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const path = require('path')
-const fs = require('fs')
 
 class FileTable extends Nanocomponent {
 	constructor({
@@ -19,7 +17,7 @@ class FileTable extends Nanocomponent {
 			field,
 			parentState
 		}
-		this.ondrop = this.ondrop.bind(this)
+		this.onFileDrop = this.onFileDrop.bind(this)
 		this.preventDefault = this.preventDefault.bind(this)
 		this.deleteFile = this.deleteFile.bind(this)
 	}
@@ -42,7 +40,7 @@ class FileTable extends Nanocomponent {
 		e.stopPropagation()
 	}
 
-	ondrop(e) {
+	onFileDrop(e) {
 		this.preventDefault(e)
 		const { props } = this
 		const rawFileData = e.dataTransfer.files
@@ -67,11 +65,11 @@ class FileTable extends Nanocomponent {
 	}
 
 	createElement() {
-		const { preventDefault, ondrop } = this
+		const { preventDefault, onFileDrop } = this
  		const fileRows = this.makeFileRows()
 		return html`
 		<div class=${styles.container}
-			ondrop=${ondrop}
+			ondrop=${onFileDrop}
 			ondragover=${preventDefault}
 			ondragenter=${preventDefault}
 			ondragleave=${preventDefault}

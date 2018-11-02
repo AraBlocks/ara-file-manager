@@ -9,17 +9,17 @@ module.exports = {
 
 	container: css`
 		:host {
-			width: 100%;
 			height: 100%;
 			overflow: scroll;
+			width: 100%;
 		}
 	`,
 	fileTable: css`
 		:host {
+			border-collapse: collapse;
 			font-family: ${fonts.regular};
 			text-align: left;
 			width: 100%;
-			border-collapse: collapse;
 		}
 
 		:host th {
@@ -40,8 +40,8 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
-			justify-content: space-around;
 			height: 30px;
+			justify-content: space-around;
 		}
 	`,
 
