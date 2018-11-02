@@ -6,6 +6,7 @@ const { modal: { contentViewerData } } = windowManager.sharedData.fetch('store')
 
 const afsExplorer = new AFSExlorer({
   afsName: contentViewerData.name,
+  did: contentViewerData.did,
   fileList: contentViewerData.fileList
 })
 document.getElementById('container').appendChild(afsExplorer.render())
