@@ -66,7 +66,9 @@ module.exports = (state, { load = null, type }) => {
       file.status = k.AWAITING_DOWNLOAD
       break
     case k.UPDATING_FILE:
-      file = findFile(load.aid, state.published)
+      file = findFile(load.did, state.published)
+      console.log(file)
+      console.log(load)
       if(file !== null) {
         file.name = load.name
         file.price = load.price == null ? file.price : load.price

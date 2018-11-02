@@ -3,7 +3,6 @@
 const Button = require('../../components/button')
 const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
-const OptionsCheckbox = require('../../components/optionsCheckbox')
 const { PUBLISH } = require('../../../lib/constants/stateManagement')
 const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')

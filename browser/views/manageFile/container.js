@@ -94,7 +94,7 @@ class Container extends Nanocomponent {
 			userAid: account.userAid
 		}
 		console.log(load)
-		//emit({ event: UPDATE_FILE, load })
+		emit({ event: UPDATE_FILE, load })
 	}
 
 	createElement({ spinner = false }) {
