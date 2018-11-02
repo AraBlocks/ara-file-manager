@@ -5,7 +5,6 @@ const isDev = require('electron-is-dev')
 const { Menu, Tray, screen } = require('electron')
 const path = require('path')
 const windowManager = require('electron-window-manager')
-const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
 const { internalEmitter } = require('electron-window-manager')
 const { LOGOUT } = require('../lib/constants/stateManagement')
 
@@ -13,7 +12,7 @@ let tray
 let contextMenu
 const buildTray = () => {
   debug('Building tray')
-  tray = new Tray(iconPath)
+  tray = new Tray( path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png'))
   tray.setToolTip('Ara Content Manager')
 
   const menuItems = [
