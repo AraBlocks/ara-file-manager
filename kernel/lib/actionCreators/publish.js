@@ -27,7 +27,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
-    actionsUtil.writeFileMetaData({ did, size, title: load.name })
+    await actionsUtil.writeFileMetaData({ did, size, title: load.name })
 
     debug('Estimating gas')
     const commitEstimate = await afs.estimateCommitGasCost({ did, password })
