@@ -1,6 +1,7 @@
 'use strict'
 
 const Button = require('../../components/button')
+const deeplink = require('../../lib/tools/deeplink')
 const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
 const OptionsCheckbox = require('../../components/optionsCheckbox')
@@ -29,6 +30,7 @@ class Container extends Nanocomponent {
 		this.state = {
 			currency,
 			did,
+			distributionLink: deeplink.getDeeplink(did, name),
 			name,
 			filePath,
 			price,
@@ -37,31 +39,25 @@ class Container extends Nanocomponent {
 			tokenPrice,
 		}
 
+		console.log(this.state.name)
+
 		this.children = {
-			deleteButton: new Button({
-				children: 'Delete From Network',
-				cssClass: {
-					name: 'smallInvisible',
-					opts: {
-						color: 'blue',
-						weight: 'bold',
-						height: '36px'
-					}
-				}
-			}),
+			// deleteButton: new Button({
+			// 	children: 'Delete From Network',
+			// 	cssClass: {
+			// 		name: 'smallInvisible',
+			// 		opts: {
+			// 			color: 'blue',
+			// 			weight: 'bold',
+			// 			height: '36px'
+			// 		}
+			// 	}
+			// }),
 			fileInfo: new FileInfo({
 				parentState: this.state,
 			}),
-			supernodeCheckbox: new OptionsCheckbox({
-				field: 'supernode',
-				parentState: this.state
-			}),
-			priceManagementCheckbox: new OptionsCheckbox({
-				field: 'priceManagement',
-				parentState: this.state
-			}),
 			publishButton: new Button({
-				children: 'Update',
+				children: 'Publish Update',
 				onclick: this.updateFile.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
@@ -99,12 +95,7 @@ class Container extends Nanocomponent {
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
-				<div class="${styles.horizontalContainer} ManageFileContainer-horizontalContainer">
-					${children.supernodeCheckbox.render({ parentState: state })}
-					${children.priceManagementCheckbox.render({ parentState: state })}
-				</div>
 				${children.publishButton.render()}
-				${children.deleteButton.render()}
 			</div>
 		`
 	}

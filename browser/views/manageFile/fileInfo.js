@@ -3,7 +3,7 @@
 const FileSelector = require('../../components/fileSelector')
 const Input = require('../../components/input')
 const styles = require('./styles/fileInfo')
-const deeplink = require('../../lib/tools/')
+const deeplink = require('../../lib/tools/deeplink')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -29,7 +29,7 @@ class FileInfo extends Nanocomponent {
 				}
 			}),
 			fileNameInput: new Input({
-				field: 'fileName',
+				field: 'name',
 				placeholder: 'File Name',
 				parentState
 			}),
@@ -46,7 +46,6 @@ class FileInfo extends Nanocomponent {
 					option: 'selection',
 					optionList: [
 						'ARA',
-						'USD'
 					],
 					field: 'currency'
 				}
@@ -77,8 +76,6 @@ class FileInfo extends Nanocomponent {
 						</div>
 					</div>
 				</div>
-				<b>Update File</b>
-				${children.fileSelector.render({ filePath: parentState.filePath })}
 				<div class=${styles.distributionLink}>
 					<b>Distribution Link</b>
 				</div>
