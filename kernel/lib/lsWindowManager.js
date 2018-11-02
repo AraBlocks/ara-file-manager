@@ -70,7 +70,7 @@ windowManager.setSize = (view) => {
       break
     case 'publishFileView':
       width = 650
-      height = 490
+      height = 730
       break
     case 'publishConfirmModal':
       width = 360

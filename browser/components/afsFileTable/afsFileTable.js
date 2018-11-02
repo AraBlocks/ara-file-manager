@@ -2,6 +2,7 @@
 
 
 const AfsFileRow = require('./afsFileRow')
+const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/AfsFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -55,7 +56,8 @@ class AfsFileTable extends Nanocomponent {
 			did: props.did,
 			fileInfo,
 			fileRowClicked: this.fileRowClicked.bind(this),
-			parentDirectory: state.parentDirectory
+			parentDirectory: state.parentDirectory,
+			rowType: k.DOWNLOADED
 		}))
 	}
 

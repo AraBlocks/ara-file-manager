@@ -1,6 +1,7 @@
 'use strict'
 
 const FileSelector = require('../../components/fileSelector')
+const FileTable = require('./fileTable')
 const Input = require('../../components/input')
 const styles = require('./styles/fileInfo')
 const html = require('choo/html')
@@ -33,9 +34,9 @@ class FileInfo extends Nanocomponent {
 					field: 'currency'
 				}
 			}),
-			fileSelector: new FileSelector({
-				field: 'filePath',
-				parentState
+			fileSelector: new FileTable({
+				parentState,
+				field: 'fileList'
 			})
 		}
 	}
@@ -66,8 +67,8 @@ class FileInfo extends Nanocomponent {
 						</div>
 					</div>
 				</div>
-				<div class=${styles.fileDirectoryHoler}>
-					${children.fileSelector.render({ requiredIndicator })}
+				<div class=${styles.fileDirectoryHolder}>
+					${children.fileSelector.render()}
 				</div>
 			</div>
 		`
