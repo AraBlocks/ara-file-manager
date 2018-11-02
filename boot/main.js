@@ -10,7 +10,8 @@ const path = require('path')
 isDev && require('./ipc-dev')
 
 //Writes .ara and keyrings if doesn't exist
-if(writeFiles() === false) { debug('.ara folder exists, not writing directory') }
+if (writeFiles.writeRoot() === false) { debug('.ara folder exists, not writing directory') }
+if (writeFiles.writeAraRC() === false) { debug('.ararc exists, not writing file') }
 
 let deepLinkingUrl
 const shouldQuit = app.makeSingleInstance(argv => {
