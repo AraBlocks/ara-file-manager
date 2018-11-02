@@ -3,25 +3,31 @@
 const { emit } = require('../../lib/tools/windowManagement')
 const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
+const k = require('../../../lib/constants/stateManagement')
 const menuItem = require('../hamburgerMenu/menuItem')
 const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const path = require('path')
 
 class AfsFileRow extends Nanocomponent {
 	constructor({
 		did,
 		fileInfo,
-		fileRowClicked,
-		parentDirectory
+		fileRowClicked = () => {},
+		deleteFile,
+		parentDirectory = [],
+		rowType
 	}) {
 		super()
 		this.props = {
 			did,
+			deleteFile,
 			fileInfo,
 			fileRowClicked,
-			parentDirectory
+			parentDirectory,
+			rowType
 		}
 
 		this.children = {
@@ -36,28 +42,48 @@ class AfsFileRow extends Nanocomponent {
 
 	makeMenu() {
 		const { props } = this
-		const items = [
-			{
-				children: 'Export',
-				onclick: (e) => {
-					e.stopPropagation()
-					fileSystemManager.showSelectDirectoryDialog()
-						.then(folderName => {
-							emit({
-								event: EXPORT_FILE,
-								load: {
-									...props.fileInfo,
-									did: props.did,
-									folderName,
-									parentDirectory:
-									props.parentDirectory
-								}
-							})
-						})
-				}
-			}
-		]
+		const items = []
+		const exportButton = {
+			children: 'Export',
+			onclick: this.exportFile.bind(this)
+		}
+		const deleteButton = {
+			children: 'Delete',
+			onclick: this.deleteFile.bind(this)
+		}
+
+		switch (props.rowType) {
+			case k.PUBLISH:
+				items.push(deleteButton)
+				break
+			default:
+				items.push(exportButton)
+				break
+		}
 		return items.map((item) => new menuItem(item))
+	}
+
+	deleteFile(e) {
+		const { props } = this
+		props.deleteFile(props.fileInfo.fullPath)
+	}
+
+	exportFile(e) {
+		const { props } = this
+		if (props.did == null) { return }
+		e.stopPropagation()
+		fileSystemManager.showSelectDirectoryDialog()
+			.then(folderName => {
+				emit({
+					event: EXPORT_FILE,
+					load: {
+						...props.fileInfo,
+						did: props.did,
+						folderName,
+						parentDirectory: props.parentDirectory
+					}
+				})
+			})
 	}
 
 	fileIconSelector(isFile) {
@@ -75,11 +101,9 @@ class AfsFileRow extends Nanocomponent {
 	renderFileType() {
 		const { props } = this
 		if (!props.fileInfo.isFile) { return 'Folder' }
-
-		const fileNameSplit = props.fileInfo.subPath.split('.')
-		let fileType = ""
-		fileNameSplit.length >= 2
-		? fileType = `${fileNameSplit[fileNameSplit.length - 1].toUpperCase()} File`
+		let fileType = path.extname(props.fileInfo.subPath)
+		fileType !== ""
+		? fileType = `${(fileType.slice(1)).toUpperCase()} File`
 		: fileType = "Unknown"
 		return fileType
 	}

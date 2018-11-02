@@ -12,3 +12,13 @@ document.getElementById('container').appendChild(publishFile.render({}))
 
 ipcRenderer.on(ESTIMATING_COST, () => publishFile.render({ spinner: true }))
 ipcRenderer.on(ESTIMATION, () => openModal('publishConfirmModal'))
+
+
+;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+  document.body.addEventListener(eventName, preventDefaults, false)
+})
+
+function preventDefaults (e) {
+  e.preventDefault()
+  e.stopPropagation()
+}

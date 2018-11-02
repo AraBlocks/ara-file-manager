@@ -19,7 +19,7 @@ class Container extends Nanocomponent {
 		this.state = {
 			currency: '',
 			fileName: '',
-			filePath: '',
+			fileList: [],
 			price: null,
 			priceManagement: true,
 			supernode: true,
@@ -29,14 +29,6 @@ class Container extends Nanocomponent {
 
 		this.children = {
 			fileInfo: new FileInfo({
-				parentState: this.state
-			}),
-			supernodeCheckbox: new OptionsCheckbox({
-				field: 'supernode',
-				parentState: this.state
-			}),
-			priceManagementCheckbox: new OptionsCheckbox({
-				field: 'priceManagement',
 				parentState: this.state
 			}),
 			publishButton: new Button({
@@ -54,20 +46,20 @@ class Container extends Nanocomponent {
 	publishFile() {
 		const {
 			fileName,
-			filePath,
+			fileList,
 			price
 		} = this.state
 		const { did, password } = this.props
-
+		const paths = fileList.map(file => file.fullPath)
 		const load = {
 			userAid: did,
 			password,
-			paths: filePath,
+			paths,
 			name: fileName || 'Unnamed',
 			price
 		}
 
-		filePath
+		fileList
 			? emit({ event: PUBLISH, load })
 			: this.render({ requiredIndicator: true })
 	}
@@ -91,10 +83,6 @@ class Container extends Nanocomponent {
 					</div>
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({ requiredIndicator })}
-					<div class="${styles.horizontalContainer} PublishFileContainer-horizontalContainer">
-					${children.supernodeCheckbox.render({ parentState: state })}
-					${children.priceManagementCheckbox.render({ parentState: state })}
-					</div>
 					${children.publishButton.render()}
 				</div>
 			</div>
