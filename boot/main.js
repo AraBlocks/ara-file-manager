@@ -3,13 +3,16 @@
 const debug = require('debug')('acm:boot:main')
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
+const writeFiles = require('./writeFiles')
 const isDev = require('electron-is-dev')
 const path = require('path')
 //Creates dev view
 isDev && require('./ipc-dev')
 
-let deepLinkingUrl
+//Writes .ara and keyrings if doesn't exist
+if(writeFiles() === false) { debug('.ara folder exists, not writing directory') }
 
+let deepLinkingUrl
 const shouldQuit = app.makeSingleInstance(argv => {
   if (process.platform == 'win32') {
     deepLinkingUrl = argv.slice(1)
@@ -31,11 +34,14 @@ app.on('ready', () => {
   require('./menu')()
   debug('Loading Dependencies')
   require('../kernel/lib/actionCreators')
-
+  debug('Dependencies loaded!')
   //Registers command/control + \ to open dev tools
-  globalShortcut.register('CommandOrControl+\\', () => windowManager.getCurrent().object.openDevTools())
+  globalShortcut.register('CommandOrControl+\\', () => {
+    try { windowManager.getCurrent().object.openDevTools() } catch (e) { }
+  })
+  //Registers command/control + r to refresh
   globalShortcut.register('CommandOrControl+r', () => {
-    try { windowManager.getCurrent().object.reload() } catch (e) {}
+    try { windowManager.getCurrent().object.reload() } catch (e) { }
   })
   if (process.platform == 'win32') { deepLinkingUrl = process.argv.slice(1) }
   deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
@@ -43,7 +49,7 @@ app.on('ready', () => {
   isDev && require('electron-reload')(path.resolve('browser'))
 })
 //Prevents app from closing when all windows are shut
-app.on('window-all-closed', () => {})
+app.on('window-all-closed', () => { })
 
 // For Deep Linking
 app.setAsDefaultProtocolClient('lstr')
@@ -55,6 +61,6 @@ app.on('open-url', (event, url) => {
 
 app.on('before-quit', () => {
   const { farmerManager } = require('../kernel/lib/actions')
-  const { farmer : { farm } } = require('../kernel/lib/store')
+  const { farmer: { farm } } = require('../kernel/lib/store')
   farmerManager.stopAllBroadcast(farm)
 })

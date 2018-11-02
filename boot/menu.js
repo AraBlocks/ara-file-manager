@@ -1,3 +1,5 @@
+'use strict'
+
 const { Menu } = require('electron')
 
 function createMenu() {
