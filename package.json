@@ -9,7 +9,8 @@
     "test": "electron test/main.js",
     "postinstall": "install-app-deps",
     "pack": "build --dir",
-    "dist": "build"
+    "dist": "build",
+    "debug": "DEBUG=* ./release-builds/Ara\\ Content\\ Manager-darwin-x64/Ara\\ Content\\ Manager.app/Contents/MacOS/Ara\\ Content\\ Manager"
   },
   "repository": {
     "type": "git",
