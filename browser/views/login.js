@@ -13,8 +13,8 @@ class Login extends Nanocomponent {
     super()
 
     this.state = {
-      passwordValue: '',
-      usernameValue: ''
+      password: '',
+      userDID: ''
     }
 
     this.children = {
@@ -48,15 +48,15 @@ class Login extends Nanocomponent {
 
       passwordInput: new Input({
         parentState: this.state,
-        field: 'passwordValue',
+        field: 'password',
         placeholder: 'Password',
         type: 'password'
       }),
 
-      usernameInput: new Input({
+      userDIDInput: new Input({
         parentState: this.state,
-        field: 'usernameValue',
-        placeholder: 'Username'
+        field: 'userDID',
+        placeholder: 'Ara Identity'
       }),
     }
 
@@ -65,8 +65,8 @@ class Login extends Nanocomponent {
 
   login(e) {
     e.preventDefault()
-    const { usernameValue, passwordValue } = this.state
-    const load = { password: passwordValue, userAid: usernameValue }
+    const { userDID, password } = this.state
+    const load = { password, userAid: userDID }
     windowManagement.emit({ event: LOGIN, load })
     closeWindow('login')
   }
@@ -93,7 +93,7 @@ class Login extends Nanocomponent {
           To get started, log in with your <b>ARA id</b>
         </p>
         <form class="${styles.form} login-form" onsubmit=${login}>
-          ${children.usernameInput.render()}
+          ${children.userDIDInput.render()}
           ${children.passwordInput.render()}
           ${children.loginButton.render()}
         </form>
