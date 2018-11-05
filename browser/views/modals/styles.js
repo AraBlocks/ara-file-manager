@@ -104,7 +104,7 @@ module.exports = {
     }
   `,
 
-  copyMnemonicContainer: css`
+  copyItemContainer: css`
     :host {
       padding-top: 8px;
       justify-content: center !important;

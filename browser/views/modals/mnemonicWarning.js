@@ -9,7 +9,7 @@ const windowManager = remote.require('electron-window-manager')
 
 module.exports = (mnemonic) => {
   mnemonic = 'run sound drop adult magic false couchvessel brief easily spin divide false'
-  const copyMnemonic = new Button({
+  const copyMnemonicButton = new Button({
     children: "Copy Mnemonic",
     cssClass: {
       opts: { color: 'blue', fontSize: '10px' }
@@ -26,8 +26,14 @@ module.exports = (mnemonic) => {
 
   return html`
     <div class="${styles.container} modals-container">
+      <div class="${styles.logo} modals-logo">
+        <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
+      </div>
       <div>
-        <div class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin">
+        <div
+          class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin"
+          style="font-size: 20px;"
+        >
           DO NOT LOSE THIS MNEMONIC
         </div>
         <div class="${styles.smallMessage({})} modal-smallMessage">
@@ -40,8 +46,8 @@ module.exports = (mnemonic) => {
         <div>${mnemonic.split(' ').slice(0,4).map(word => html`<b> ${word}</b>`)}</div>
         <div>${mnemonic.split(' ').slice(4,8).map(word => html`<b> ${word}</b>`)}</div>
         <div>${mnemonic.split(' ').slice(8).map(word => html`<b> ${word}</b>`)}</div>
-        <div class="${styles.copyMnemonicContainer} modal-copyMnemonicContainer" >
-          <div>${copyMnemonic.render()}</div>
+        <div class="${styles.copyItemContainer} modal-copyItemContainer" >
+          <div>${copyMnemonicButton.render()}</div>
         </div>
       </div>
       ${confirmButton.render()}
