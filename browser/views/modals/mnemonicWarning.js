@@ -7,8 +7,7 @@ const html = require('choo/html')
 const {	clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
-module.exports = (mnemonic) => {
-  mnemonic = 'run sound drop adult magic false couchvessel brief easily spin divide false'
+module.exports = ({ mnemonic }) => {
   const copyMnemonicButton = new Button({
     children: "Copy Mnemonic",
     cssClass: {
