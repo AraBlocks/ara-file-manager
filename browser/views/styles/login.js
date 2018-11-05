@@ -56,7 +56,10 @@ module.exports = {
       align-content: center;
       display: flex;
       justify-content: center;
-      font-size: 12px;
+    }
+
+    :host > img {
+      height: 7px;
     }
 
     :host > input {

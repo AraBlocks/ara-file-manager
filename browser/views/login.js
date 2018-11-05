@@ -38,6 +38,12 @@ class Login extends Nanocomponent {
         children: 'Log In'
       }),
 
+      recoverButton: new Button ({
+        children: 'Recover',
+        cssClass: { name: 'smallInvisible' },
+        onclick: () => transitionModal('recover')
+      }),
+
       registerButton: new Button({
         children: 'Create One',
         cssClass: { name: 'smallInvisible' },
@@ -78,7 +84,7 @@ class Login extends Nanocomponent {
     return html`
       <div class="${styles.container} login-container">
         <div class="${styles.logo} login-logo">
-          LTLSTAR
+          <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
         </div>
         <div class="${styles.title} login-title">
           Log In
@@ -96,6 +102,9 @@ class Login extends Nanocomponent {
           ${children.loginButton.render()}
         </form>
         <div class="${styles.buttonHolder} login-buttonHolder">
+          <b>Need to recover your id?</b>
+          ${children.recoverButton.render()}
+          <div style="height: 10px;"></div>
           <b>Don't have an account?</b>
           ${children.registerButton.render()}
           ${children.cancelButton.render()}

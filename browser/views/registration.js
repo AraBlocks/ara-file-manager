@@ -29,18 +29,6 @@ class Registration extends Nanocomponent {
         type: 'submit'
       }),
 
-      importButton: new Button({
-        children: 'Import account with Mnemonic',
-        cssClass: {
-          name: 'smallInvisible',
-          opts: { color: 'blue', weight: 'light' }
-        },
-        onclick: () => {
-          windowManagement.openWindow('import')
-          windowManagement.closeWindow('registration')
-        }
-      }),
-
       cancelButton: new Button({
         children: 'Cancel',
         cssClass: {
@@ -70,11 +58,7 @@ class Registration extends Nanocomponent {
   }
 
   createElement({ pending = false }) {
-    const {
-      children,
-      register
-    } = this
-
+    const { children, register } = this
     return html`
       <div class="modal">
         ${overlay(pending)}
@@ -89,10 +73,6 @@ class Registration extends Nanocomponent {
           ${children.submitButton.render({})}
         </form>
         ${children.cancelButton.render({})}
-        <div class="${styles.importContainer} modal-importContainer">
-          <div>Importing account?</div>
-          ${children.importButton.render({})}
-        </div>
       </div>
     `
   }
