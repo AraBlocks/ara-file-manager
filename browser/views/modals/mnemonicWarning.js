@@ -4,10 +4,13 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
 const html = require('choo/html')
-const {	clipboard, remote } = require('electron')
+const { clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 module.exports = (mnemonic) => {
+  mnemonic = 'march sea pride slide glad birth rail try bamboo physical bounce love'
+  let userDID = 'did:ara:d4c32a1b72cdf5315ae438dd58d348565424714bc3ba4e5e15fad1ecc87d4f03'
+
   const copyMnemonic = new Button({
     children: "Copy Mnemonic",
     cssClass: {
@@ -36,8 +39,8 @@ module.exports = (mnemonic) => {
         </div>
       </div>
       <div class="${styles.mnemonicContainer} modal-mnemonicContainer">
-        <div>${mnemonic.split(' ').slice(0,4).map(word => html`<b> ${word}</b>`)}</div>
-        <div>${mnemonic.split(' ').slice(4,8).map(word => html`<b> ${word}</b>`)}</div>
+        <div>${mnemonic.split(' ').slice(0, 4).map(word => html`<b> ${word}</b>`)}</div>
+        <div>${mnemonic.split(' ').slice(4, 8).map(word => html`<b> ${word}</b>`)}</div>
         <div>${mnemonic.split(' ').slice(8).map(word => html`<b> ${word}</b>`)}</div>
         <div class="${styles.copyMnemonicContainer} modal-copyMnemonicContainer" >
           <div>${copyMnemonic.render()}</div>
