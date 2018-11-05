@@ -28,19 +28,16 @@ class Container extends Nanocomponent {
 	}) {
 		super()
 		this.state = {
+			afsContents: [],
 			currency,
 			did,
 			distributionLink: deeplink.getDeeplink(did, name),
 			name,
-			fileList,
+			fileList: [],
 			price,
 			priceManagement,
 			supernode,
 			tokenPrice,
-		}
-
-		this.props = {
-			afsContents: fileList
 		}
 
 		this.children = {
@@ -67,14 +64,19 @@ class Container extends Nanocomponent {
 		}
 	}
 
-	update(){
+	update({ fileList }){
+		const { state } = this
+		if (fileList != null) {
+			state.fileList = fileList
+			state.afsContents = fileList
+		}
 		return true
 	}
 
 	updateFile() {
-		const { state, props } = this
+		const { state } = this
 		const subPaths = state.fileList.map(file => file.subPath)
-		const removePaths = props.afsContents.filter(file =>
+		const removePaths = state.afsContents.filter(file =>
 			!subPaths.includes(file.subPath)
 		).map(file => file.subPath)
 		const addPaths = state.fileList.filter(file =>
@@ -93,8 +95,8 @@ class Container extends Nanocomponent {
 		emit({ event: UPDATE_FILE, load })
 	}
 
-	createElement({ spinner = false }) {
-		const { children, state } = this
+	createElement({ spinner = false, fileList }) {
+		const { children, state, props } = this
 		return html`
 			<div class="${styles.container} ManageFileContainer-container">
 				${overlay(spinner)}

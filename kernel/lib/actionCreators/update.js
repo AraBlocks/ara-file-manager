@@ -13,9 +13,11 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
   try {
     const { files } = store
     const file = files.published.find(({ did }) => did === load.did)
+    dispatch({ type: k.FEED_MANAGE_FILE, load: { did: load.did, price: file.price, name: load.name, fileList: [] } })
+    windowManager.openWindow('manageFileView')
     const fileList = await afsManager.getFileList(load.did)
     dispatch({ type: k.FEED_MANAGE_FILE, load: { did: load.did, price: file.price, name: load.name, fileList } })
-    windowManager.openWindow('manageFileView')
+    windowManager.pingView({ view: 'manageFileView', event: k.REFRESH })
   } catch(err) {
     debug('Error: %o', err)
   }
