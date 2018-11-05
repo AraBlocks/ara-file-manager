@@ -7,7 +7,8 @@ const {
   acmManager,
   afsManager,
   araContractsManager,
-  farmerManager
+  farmerManager,
+  identityManager
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
@@ -25,7 +26,25 @@ internalEmitter.on(k.LOGOUT, () => {
   windowManager.closeWindow('publishFileView')
 })
 
-ipcMain.on(k.LOGIN, async (event, load) => {
+ipcMain.on(k.LOGIN, login)
+
+ipcMain.on(k.RECOVER, async (event, load) => {
+  debug('%s heard', k.RECOVER)
+  try {
+    windowManager.pingView({ view: 'recover', event: k.RECOVERING })
+
+    const identity = await identityManager.recover(load)
+    await identityManager.archive(identity)
+
+    const { did: { did } } = identity
+    login(null, { userAid: did, password: load.password })
+    windowManager.pingView({ view: 'recover', event: k.RECOVERED })
+  } catch (err) {
+    debug('Error recovering acct: %o', err)
+  }
+})
+
+async function login(_, load) {
   debug('%s heard', k.LOGIN)
   try {
     const ddo = await aid.resolve(load.userAid)
@@ -44,7 +63,7 @@ ipcMain.on(k.LOGIN, async (event, load) => {
 
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
-    const transferSubscription =  araContractsManager.subscribeTransfer(accountAddress)
+    const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
     farmer.start()
 
@@ -89,4 +108,4 @@ ipcMain.on(k.LOGIN, async (event, load) => {
   } catch (err) {
     debug('Error: %O', err)
   }
-})
+}
