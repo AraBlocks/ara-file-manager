@@ -39,11 +39,11 @@ function generalModalText(modalName, fileName) {
 			description = 'Please check your aid and password'
 			break
 		case 'notEnoughAra':
-			title = 'Not enough ARA'
+			title = 'Not enough Ara'
 			description = html `<div>You do not have enough Ara Tokens to complete<br> this transaction.</div>`
 			break
 		case 'notEnoughAra2':
-			title = 'Not enough ARA'
+			title = 'Not enough Ara'
 			description = html `<div>You do not have enough Ara Tokens to publish<br> this file.</div>`
 			break
 		case 'notLoggedIn':
@@ -54,7 +54,7 @@ function generalModalText(modalName, fileName) {
 			title = 'Success!'
 			description = html `<div><b>${fileName}</b> is downloading now.<br><br>
 			Keep files on your computer and host them on
-			the network to earn ARA Token rewards.</div>`
+			the network to earn Ara Token rewards.</div>`
 			break
 		case 'walletEmpty':
 			title = 'Not enough ARA'
