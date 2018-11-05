@@ -95,8 +95,8 @@ class Container extends Nanocomponent {
 		emit({ event: UPDATE_FILE, load })
 	}
 
-	createElement({ spinner = false, fileList }) {
-		const { children, state, props } = this
+	createElement({ spinner = false }) {
+		const { children, state } = this
 		return html`
 			<div class="${styles.container} ManageFileContainer-container">
 				${overlay(spinner)}
