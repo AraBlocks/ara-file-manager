@@ -14,10 +14,6 @@ app.on('ready', () => {
     'testing',
     windowManager.loadURL('testing'),
     false,
-    {
-      backgroundColor: 'white',
-      resizable: true,
-      ...windowManager.setSize('testing')
-    }
+    { backgroundColor: 'white', ...windowManager.setSize('testing') }
   )
 })
