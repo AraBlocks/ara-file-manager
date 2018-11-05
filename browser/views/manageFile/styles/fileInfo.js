@@ -41,8 +41,8 @@ module.exports = {
 
 	fileTable: css`
 		:host {
-			padding-top: 10px;
 			height: 270px;
+			padding-top: 10px;
 		}
 	`,
 

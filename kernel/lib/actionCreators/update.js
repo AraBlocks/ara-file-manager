@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:publish')
+const debug = require('debug')('acm:kernel:lib:actionCreators:update')
 const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
@@ -38,14 +38,14 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
       // TODO: Show some nothing to update modal
       return
     } else if (shouldUpdatePrice && !shouldCommit) {
-      debug('set Price only')
+      debug('Estimating gas for set price')
       estimate = await afs.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
     } else {
       (await afs.add({ did: load.did, paths: load.addPaths, password: account.password })).close()
       const instance = await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })
       instance.close()
       if (shouldUpdatePrice) {
-        debug('Commit and Setting Price')
+        debug('Estimate gas for commit and set price')
         estimate = await afs.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
       } else {
         debug('commit only')
@@ -93,6 +93,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
       debug('Updating Files')
       await afs.commit({ did: load.did, password: account.password })
     } else {
+      debug('Updating Files and Price')
       await afs.commit({ did: load.did, password: account.password, price: Number(load.price) })
     }
 

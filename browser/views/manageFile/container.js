@@ -33,7 +33,6 @@ class Container extends Nanocomponent {
 			distributionLink: deeplink.getDeeplink(did, name),
 			name,
 			fileList,
-			oldFileList: fileList,
 			price,
 			priceManagement,
 			supernode,
@@ -93,7 +92,6 @@ class Container extends Nanocomponent {
 			price: state.price == "" ? null : state.price,
 			userAid: account.userAid
 		}
-		console.log(load)
 		emit({ event: UPDATE_FILE, load })
 	}
 

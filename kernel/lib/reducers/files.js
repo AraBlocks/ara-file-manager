@@ -67,8 +67,6 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.UPDATING_FILE:
       file = findFile(load.did, state.published)
-      console.log(file)
-      console.log(load)
       if(file !== null) {
         file.name = load.name
         file.price = load.price == null ? file.price : load.price
