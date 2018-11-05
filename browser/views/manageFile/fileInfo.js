@@ -46,7 +46,6 @@ class FileInfo extends Nanocomponent {
 					option: 'selection',
 					optionList: [
 						'ARA',
-						'USD'
 					],
 					field: 'currency'
 				}
@@ -70,9 +69,9 @@ class FileInfo extends Nanocomponent {
 					<div class=${styles.infoTipHolder}>
 						${children.priceInput.render({ value: parentState.price })}
 						<div class=${styles.araPriceHolder}>
-							<b>ARA Token Price:</b>
+							<b>Ara Token Price:</b>
 							<div class=${styles.araPrice}>
-								<b>${parentState.tokenPrice} ARA</b>
+								<b>${parentState.tokenPrice} Ara</b>
 							</div>
 						</div>
 					</div>

@@ -39,7 +39,7 @@ class WalletInfo extends Nanocomponent {
 					</div>
 				</div>
 				<div class="${styles.exchangeRate} StylesUtil-proxiContent">
-					<b>Current Exchange Value</b>: 1.0 ARA = $ ${state.exchangeRate} USD
+					<b>Current Exchange Value</b>: 1.0 Ara = $ ${state.exchangeRate} USD
 				</div>
 			</div>
 		`

@@ -30,7 +30,7 @@ module.exports = ({ price = 0.09 }) => {
 						<div class="${styles.smallMessage({ color: 'red' })} modal-smallMessage">
 							<b>This will permanently remove your file from<br>the network.</b><br><br>
 						</div>
-						You will not be able to continue distributing this file, and will not be able to earn ARA Token rewards for hosting it.<br><br>
+						You will not be able to continue distributing this file, and will not be able to earn Ara Token rewards for hosting it.<br><br>
 						Any users currently synced to the network will lose<br>
 						this file, although this process is not instantaneous.<br><br>
 						This does not guarantee that all copies of your file will be erased, as users may have backed the file up or disconnected from the network.<br><br>

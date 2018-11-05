@@ -65,7 +65,7 @@ class Registration extends Nanocomponent {
         <div class=${styles.header}>LTLSTAR</div>
         <div class=${styles.header}>Register</div>
         <p class=${styles.description}>
-          To use the <b>Littlstar Media Manager</b>, you'll need to create an ARA id. We will generate the ID
+          To use the <b>Littlstar Media Manager</b>, you'll need to create an Ara id. We will generate the ID
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
         <form class=${styles.registerForm} onsubmit=${register}>
