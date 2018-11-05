@@ -41,14 +41,13 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
       debug('Estimating gas for set price')
       estimate = await afs.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
     } else {
-      (await afs.add({ did: load.did, paths: load.addPaths, password: account.password })).close()
-      const instance = await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })
-      instance.close()
+      (await afs.add({ did: load.did, paths: load.addPaths, password: account.password })).close();
+      (await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })).close();
       if (shouldUpdatePrice) {
         debug('Estimate gas for commit and set price')
         estimate = await afs.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
       } else {
-        debug('commit only')
+        debug('Estimating gas for commit only')
         estimate = await afs.commit({ did: load.did, password: account.password, estimate: true })
       }
     }
