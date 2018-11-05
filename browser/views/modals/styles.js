@@ -6,6 +6,16 @@ const { buttonSelector, colorSelector, fonts } = require('styleUtils')
 module.exports = {
   buttonSelector,
 
+  araIDHolder: css`
+    :host {
+      background-color: #e6f9ff;
+      font-size: 12px;
+      margin-top: 20px;
+      padding: 10px 2px;
+      word-wrap: break-word;
+    }
+  `,
+
   bigBold: css`
     :host {
       font-family: ${fonts.bold};
@@ -34,6 +44,20 @@ module.exports = {
       width: 95%;
     }
   `,
+
+  containerLeft: css`
+  :host {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 95%;
+    width: 90%;
+  }
+
+  :host > * {
+    width: 95%;
+  }
+`,
 
   clipboard: css`
     :host span {
@@ -90,6 +114,18 @@ module.exports = {
 
     :host > div {
       width: 35%;
+    }
+  `,
+
+  logo: css`
+    :host {
+      align-content: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    :host > img {
+      height: 7px;
     }
   `,
 
@@ -153,6 +189,13 @@ module.exports = {
       display: flex;
       justify-content: center;
       font-size: 4px;
+    }
+  `,
+
+  title: css`
+    :host {
+      font-family: ${fonts.boldSpecial};
+      font-size: 20px;
     }
   `,
 
