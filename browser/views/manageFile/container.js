@@ -43,8 +43,6 @@ class Container extends Nanocomponent {
 			afsContents: fileList
 		}
 
-		console.log(this.state.name)
-
 		this.children = {
 			// deleteButton: new Button({
 			// 	children: 'Delete From Network',
