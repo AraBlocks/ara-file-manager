@@ -1,16 +1,12 @@
 'use strict'
 
-const {
-  closeWindow,
-  transitionModal,
-} = require('../lib/tools/windowManagement')
+const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
 const { LOGIN } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const { emit, openWindow } = require('../../browser/lib/tools/windowManagement')
 
 class Login extends Nanocomponent {
   constructor() {
@@ -31,7 +27,7 @@ class Login extends Nanocomponent {
             weight: 'light'
           }
         },
-        onclick: () => closeWindow()
+        onclick: () => windowManagement.closeWindow()
       }),
 
       loginButton: new Button({
@@ -41,13 +37,13 @@ class Login extends Nanocomponent {
       recoverButton: new Button ({
         children: 'Recover',
         cssClass: { name: 'smallInvisible' },
-        onclick: () => transitionModal('recover')
+        onclick: () => windowManagement.transitionModal('recover')
       }),
 
       registerButton: new Button({
         children: 'Create One',
         cssClass: { name: 'smallInvisible' },
-        onclick: () => transitionModal('registration')
+        onclick: () => windowManagement.transitionModal('registration')
       }),
 
       passwordInput: new Input({
@@ -71,7 +67,7 @@ class Login extends Nanocomponent {
     e.preventDefault()
     const { usernameValue, passwordValue } = this.state
     const load = { password: passwordValue, userAid: usernameValue }
-    emit({ event: LOGIN, load })
+    windowManagement.emit({ event: LOGIN, load })
     closeWindow('login')
   }
 

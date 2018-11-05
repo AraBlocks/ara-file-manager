@@ -6,7 +6,7 @@ const { css } = require('css')
 module.exports = {
   colors,
   fonts,
-  
+
   header: css`
     :host {
       display: flex;
