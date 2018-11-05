@@ -7,21 +7,17 @@ const html = require('choo/html')
 const {	clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
-module.exports = (identity) => {
-  identity = 'did:ara:e27e2ef7b14adf94d72d858964fb307dad6b061481ec4435d62b7fac38a67c5c'
-  const copyMnemonic = new Button({
+module.exports = ({ userDID }) => {
+  const copyIDButton = new Button({
     children: "Copy Identity",
     cssClass: {
       opts: { color: 'blue', fontSize: '10px' }
     },
-    onclick: () => clipboard.writeText(mnemonic)
+    onclick: () => clipboard.writeText(userDID)
   })
   const confirmButton = new Button({
-    children: "I've saved my mnemonic",
-    onclick: () => {
-      windowManager.openWindow('filemanager')
-      windowManagement.closeModal('mnemonicWarning')
-    }
+    children: "I've saved my Ara Identity",
+    onclick: () => windowManagement.transitionModal('mnemonicWarning')
   })
 
   return html`
@@ -38,9 +34,9 @@ module.exports = (identity) => {
         <div class="${styles.smallMessage({})} modal-smallMessage">
           The following string of characters is your <b>Ara Identity</b>. Please copy it and keep it in a safe place.
         </div>
-        <div class="${styles.araIDHolder} modal-araIDHolder">${identity}</div>
-        <div class="${styles.copyMnemonicContainer} modal-copyMnemonicContainer" >
-          <div>${copyMnemonic.render()}</div>
+        <div class="${styles.araIDHolder} modal-araIDHolder">${userDID}</div>
+        <div class="${styles.copyItemContainer} modal-copyItemContainer" >
+          <div>${copyIDButton.render()}</div>
         </div>
       </div>
       ${confirmButton.render()}

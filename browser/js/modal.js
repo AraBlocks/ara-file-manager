@@ -26,7 +26,9 @@ document.getElementById('container').appendChild(
 
 window.onunload = () => {
   windowManager.modalIsOpen = false
-  emit({ event: DUMP_MODAL_STATE })
+  if (data.freezeData == false) {
+    emit({ event: DUMP_MODAL_STATE })
+  }
 }
 
 if(isDev) { window.store = store }
