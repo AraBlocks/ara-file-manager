@@ -51,7 +51,7 @@ class Header extends Nanocomponent {
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader">
           <div onclick=${() => emit({ event: CLEAN_UI })}>
-            <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
+            <img style="height: 7px;" src="../assets/images/LTLSTR_Logo_FileManager.png"/>
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
             ${children.minimizeButton.render({ children: '–'})}
