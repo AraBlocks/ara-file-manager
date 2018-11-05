@@ -90,12 +90,12 @@ class Container extends Nanocomponent {
           There are no files associated with your account
         </div>
         <p>
-          You can download files from users with ARA-enabled links.
+          You can download files from users with Ara-enabled links.
           <br>
           You can also publish your own files into the network for distribution.
         </p>
         <p>
-          Downloading and hosting files will earn you ARA token rewards,
+          Downloading and hosting files will earn you Ara token rewards,
           <br>
           which can be spent to purchase more content on the network.
         </p>
