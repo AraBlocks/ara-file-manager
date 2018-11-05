@@ -37,13 +37,19 @@ class Login extends Nanocomponent {
       recoverButton: new Button ({
         children: 'Recover',
         cssClass: { name: 'smallInvisible' },
-        onclick: () => windowManagement.transitionModal('recover')
+        onclick: () => {
+          windowManagement.openWindow('recover')
+          windowManagement.closeWindow('login')
+        }
       }),
 
       registerButton: new Button({
         children: 'Create One',
         cssClass: { name: 'smallInvisible' },
-        onclick: () => windowManagement.transitionModal('registration')
+        onclick: () => {
+          windowManagement.openWindow('registration')
+          windowManagement.closeWindow('login')
+        }
       }),
 
       passwordInput: new Input({
