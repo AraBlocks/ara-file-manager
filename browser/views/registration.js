@@ -62,7 +62,9 @@ class Registration extends Nanocomponent {
     return html`
       <div class="modal">
         ${overlay(pending)}
-        <div class=${styles.header}>LTLSTAR</div>
+        <div class="${styles.logo} login-logo">
+          <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
+        </div>
         <div class=${styles.header}>Register</div>
         <p class=${styles.description}>
           To use the <b>Littlstar Media Manager</b>, you'll need to create an ARA id. We will generate the ID
