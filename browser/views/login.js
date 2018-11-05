@@ -1,24 +1,20 @@
 'use strict'
 
-const {
-  closeWindow,
-  transitionModal,
-} = require('../lib/tools/windowManagement')
+const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
 const { LOGIN } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/login')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const { emit, openWindow } = require('../../browser/lib/tools/windowManagement')
 
 class Login extends Nanocomponent {
   constructor() {
     super()
 
     this.state = {
-      passwordValue: '',
-      usernameValue: ''
+      password: '',
+      userDID: ''
     }
 
     this.children = {
@@ -31,7 +27,7 @@ class Login extends Nanocomponent {
             weight: 'light'
           }
         },
-        onclick: () => closeWindow()
+        onclick: () => windowManagement.closeWindow()
       }),
 
       loginButton: new Button({
@@ -41,26 +37,32 @@ class Login extends Nanocomponent {
       recoverButton: new Button ({
         children: 'Recover',
         cssClass: { name: 'smallInvisible' },
-        onclick: () => transitionModal('recover')
+        onclick: () => {
+          windowManagement.openWindow('recover')
+          windowManagement.closeWindow('login')
+        }
       }),
 
       registerButton: new Button({
         children: 'Create One',
         cssClass: { name: 'smallInvisible' },
-        onclick: () => transitionModal('registration')
+        onclick: () => {
+          windowManagement.openWindow('registration')
+          windowManagement.closeWindow('login')
+        }
       }),
 
       passwordInput: new Input({
         parentState: this.state,
-        field: 'passwordValue',
+        field: 'password',
         placeholder: 'Password',
         type: 'password'
       }),
 
-      usernameInput: new Input({
+      userDIDInput: new Input({
         parentState: this.state,
-        field: 'usernameValue',
-        placeholder: 'Username'
+        field: 'userDID',
+        placeholder: 'Ara Identity'
       }),
     }
 
@@ -69,9 +71,9 @@ class Login extends Nanocomponent {
 
   login(e) {
     e.preventDefault()
-    const { usernameValue, passwordValue } = this.state
-    const load = { password: passwordValue, userAid: usernameValue }
-    emit({ event: LOGIN, load })
+    const { userDID, password } = this.state
+    const load = { password, userAid: userDID }
+    windowManagement.emit({ event: LOGIN, load })
     closeWindow('login')
   }
 
@@ -97,7 +99,7 @@ class Login extends Nanocomponent {
           To get started, log in with your <b>ARA id</b>
         </p>
         <form class="${styles.form} login-form" onsubmit=${login}>
-          ${children.usernameInput.render()}
+          ${children.userDIDInput.render()}
           ${children.passwordInput.render()}
           ${children.loginButton.render()}
         </form>

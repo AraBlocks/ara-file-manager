@@ -13,6 +13,6 @@ ipcRenderer.on(k.REGISTERING, () => {
 })
 
 ipcRenderer.on(k.REGISTERED, () => {
-  windowManagement.openModal('mnemonicWarning')
+  windowManagement.openModal('araIDWarning')
   windowManagement.closeWindow('registration')
 })

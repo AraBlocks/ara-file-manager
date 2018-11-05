@@ -6,7 +6,7 @@ const { css } = require('css')
 module.exports = {
   colors,
   fonts,
-  
+
   header: css`
     :host {
       display: flex;
@@ -36,6 +36,19 @@ module.exports = {
        height: 15px;
     }
   `,
+
+  logo: css`
+    :host {
+      align-content: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    :host > img {
+      height: 7px;
+    }
+  `,
+
   registerForm: css`
     :host {
       align-items: center;
