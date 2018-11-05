@@ -5,6 +5,6 @@ module.exports = {
   araContractsManager: require('./araContractsManager'),
   utils: require('./utils'),
   afsManager: require('./afsManager'),
-  register: require('./register'),
+  identityManager: require('./identityManager'),
   farmerManager: require('./farmerManager')
 }
