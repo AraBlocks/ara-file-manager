@@ -1,19 +1,22 @@
 'use strict'
 
 const FileSelector = require('../../components/fileSelector')
+const FileTable = require('../../components/afsFileTable/editableFileTable')
 const Input = require('../../components/input')
+const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/fileInfo')
-const deeplink = require('../../lib/tools/')
+const deeplink = require('../../lib/tools/deeplink')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileInfo extends Nanocomponent {
 	constructor({
+		did,
 		parentState
 	}) {
 		super()
 
-		this.props = { parentState }
+		this.props = { did, parentState }
 		this.children = {
 			distributionLink: new Input({
 				placeholder: 'Distribution Link',
@@ -28,8 +31,14 @@ class FileInfo extends Nanocomponent {
 					}
 				}
 			}),
+			fileTable: new FileTable({
+				did,
+				parentState,
+				field: 'fileList',
+				tableType: k.UPDATE_FILE
+			}),
 			fileNameInput: new Input({
-				field: 'fileName',
+				field: 'name',
 				placeholder: 'File Name',
 				parentState
 			}),
@@ -76,12 +85,13 @@ class FileInfo extends Nanocomponent {
 						</div>
 					</div>
 				</div>
-				<b>Update File</b>
-				${children.fileSelector.render({ filePath: parentState.filePath })}
 				<div class=${styles.distributionLink}>
 					<b>Distribution Link</b>
 				</div>
 				${children.distributionLink.render({ value: deeplink.getDeeplink(parentState.did, parentState.name) })}
+				<div class=${styles.fileTable}>
+					${children.fileTable.render()}
+				</div>
 			</div>
 		`
 	}

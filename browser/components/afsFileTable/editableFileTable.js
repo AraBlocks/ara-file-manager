@@ -1,21 +1,24 @@
 'use strict'
 
 
-const AfsFileRow = require('../../components/afsFileTable/afsFileRow')
-const k = require('../../../lib/constants/stateManagement')
-const styles = require('./styles/fileTable')
+const AfsFileRow = require('./afsFileRow')
+const styles = require('./styles/editableFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-class FileTable extends Nanocomponent {
+class EditableFileTable extends Nanocomponent {
 	constructor({
+		did,
 		field,
-		parentState
+		parentState,
+		tableType
 	}) {
 		super()
 		this.props = {
+			did,
 			field,
-			parentState
+			parentState,
+			tableType
 		}
 		this.onFileDrop = this.onFileDrop.bind(this)
 		this.preventDefault = this.preventDefault.bind(this)
@@ -29,9 +32,10 @@ class FileTable extends Nanocomponent {
 	makeFileRows() {
 		const { props, deleteFile } = this
 		return props.parentState[props.field].map(fileInfo => new AfsFileRow({
+			did: props.did,
 			fileInfo,
 			deleteFile,
-			rowType: k.PUBLISH
+			rowType: props.tableType
 		}))
 	}
 
@@ -74,7 +78,7 @@ class FileTable extends Nanocomponent {
 			ondragenter=${preventDefault}
 			ondragleave=${preventDefault}
 		>
-			<table class="${styles.fileTable} FileTable-container">
+			<table class="${styles.fileTable} EditableFileTable-container">
 				<colgroup>
 					<col span="1" style="width: 40%;">
 					<col span="1" style="width: 30%;">
@@ -92,4 +96,4 @@ class FileTable extends Nanocomponent {
 	}
 }
 
-module.exports = FileTable
+module.exports = EditableFileTable

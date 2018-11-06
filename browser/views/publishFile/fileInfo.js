@@ -1,7 +1,7 @@
 'use strict'
 
-const FileSelector = require('../../components/fileSelector')
-const FileTable = require('./fileTable')
+const FileTable = require('../../components/afsFileTable/editableFileTable')
+const k = require('../../../lib/constants/stateManagement')
 const Input = require('../../components/input')
 const styles = require('./styles/fileInfo')
 const html = require('choo/html')
@@ -36,7 +36,8 @@ class FileInfo extends Nanocomponent {
 			}),
 			fileSelector: new FileTable({
 				parentState,
-				field: 'fileList'
+				field: 'fileList',
+				tableType: k.PUBLISH
 			})
 		}
 	}

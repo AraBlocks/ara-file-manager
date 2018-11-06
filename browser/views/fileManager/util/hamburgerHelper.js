@@ -25,7 +25,7 @@ module.exports = ({
           ? menuItems.addItem('Stop Seeding AFS', k.STOP_SEEDING)
           : menuItems.addItem('Seed AFS', k.START_SEEDING)
           menuItems.addItem('Open AFS', k.OPEN_AFS)
-        if (owner) menuItems.addItem('Manage File', k.UPDATE_FILE)
+        if (owner) menuItems.addItem('Manage File', k.FEED_MANAGE_FILE)
         break
       case k.AWAITING_DOWNLOAD:
         menuItems.addItem('Download AFS', k.DOWNLOAD)
@@ -40,6 +40,7 @@ module.exports = ({
         menuItems.addItem('Pause Download', k.PAUSE_DOWNLOAD)
         break
       case k.OUT_OF_SYNC:
+        //TODO: this event is not correct
         menuItems.addItem('Sync AFS', k.UPDATE_FILE)
     }
 
