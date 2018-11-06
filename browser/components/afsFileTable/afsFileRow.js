@@ -56,6 +56,9 @@ class AfsFileRow extends Nanocomponent {
 			case k.PUBLISH:
 				items.push(deleteButton)
 				break
+			case k.UPDATE_FILE:
+				items.push(exportButton, deleteButton)
+				break
 			default:
 				items.push(exportButton)
 				break

@@ -24,7 +24,12 @@ class AfsFileTable extends Nanocomponent {
 		this.backToParentDirectory = this.backToParentDirectory.bind(this)
 	}
 
-	update(){
+	update({ fileList }){
+		const { props } = this
+		if (props.fileList.length === 0) {
+			props.fileList = fileList
+			this.state.currentFileList = fileList
+		}
 		return true
 	}
 

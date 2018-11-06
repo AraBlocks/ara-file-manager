@@ -65,10 +65,6 @@ windowManager.setSize = (view) => {
       width = 350
       height = 547
       break
-    case 'manageFileView':
-      width = 650
-      height = 600
-      break
     case 'mainManagerView':
     case 'manager':
     case 'mnemonicWarning':
@@ -76,6 +72,7 @@ windowManager.setSize = (view) => {
       width = 400
       height = 325
       break
+    case 'manageFileView':
     case 'publishFileView':
       width = 650
       height = 730

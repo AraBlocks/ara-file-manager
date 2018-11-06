@@ -1,9 +1,9 @@
 'use strict'
 
 const Button = require('../../components/button')
+const deeplink = require('../../lib/tools/deeplink')
 const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
-const OptionsCheckbox = require('../../components/optionsCheckbox')
 const overlay = require('../../components/overlay')
 const { UPDATE_FILE } = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/container')
@@ -19,7 +19,7 @@ class Container extends Nanocomponent {
 		currency,
 		did,
 		name,
-		filePath,
+		fileList,
 		price,
 		priceManagement,
 		supernode,
@@ -27,10 +27,12 @@ class Container extends Nanocomponent {
 	}) {
 		super()
 		this.state = {
+			afsContents: fileList,
 			currency,
 			did,
+			distributionLink: deeplink.getDeeplink(did, name),
 			name,
-			filePath,
+			fileList,
 			price,
 			priceManagement,
 			supernode,
@@ -38,47 +40,55 @@ class Container extends Nanocomponent {
 		}
 
 		this.children = {
-			deleteButton: new Button({
-				children: 'Delete From Network',
-				cssClass: {
-					name: 'smallInvisible',
-					opts: {
-						color: 'blue',
-						weight: 'bold',
-						height: '36px'
-					}
-				}
-			}),
+			// deleteButton: new Button({
+			// 	children: 'Delete From Network',
+			// 	cssClass: {
+			// 		name: 'smallInvisible',
+			// 		opts: {
+			// 			color: 'blue',
+			// 			weight: 'bold',
+			// 			height: '36px'
+			// 		}
+			// 	}
+			// }),
 			fileInfo: new FileInfo({
+				did,
 				parentState: this.state,
 			}),
-			supernodeCheckbox: new OptionsCheckbox({
-				field: 'supernode',
-				parentState: this.state
-			}),
-			priceManagementCheckbox: new OptionsCheckbox({
-				field: 'priceManagement',
-				parentState: this.state
-			}),
 			publishButton: new Button({
-				children: 'Update',
+				children: 'Publish Update',
 				onclick: this.updateFile.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
 		}
 	}
 
-	update(){
+	update({ fileList }){
+		const { state } = this
+		if (fileList != null) {
+			state.fileList = fileList
+			state.afsContents = fileList
+		}
 		return true
 	}
 
 	updateFile() {
+		const { state } = this
+		const subPaths = state.fileList.map(file => file.subPath)
+		const removePaths = state.afsContents.filter(file =>
+			!subPaths.includes(file.subPath)
+		).map(file => file.subPath)
+		const addPaths = state.fileList.filter(file =>
+			file.fullPath != null
+		).map(file => file.fullPath)
+
 		const load = {
-			did: this.state.did,
-			name: this.state.name,
+			addPaths,
+			did: state.did,
+			name: state.name,
 			password: account.password,
-			paths: this.state.filePath,
-			price: this.state.price == "" ? null : this.state.price,
+			removePaths,
+			price: state.price == "" ? null : state.price,
 			userAid: account.userAid
 		}
 		emit({ event: UPDATE_FILE, load })
@@ -99,12 +109,7 @@ class Container extends Nanocomponent {
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
-				<div class="${styles.horizontalContainer} ManageFileContainer-horizontalContainer">
-					${children.supernodeCheckbox.render({ parentState: state })}
-					${children.priceManagementCheckbox.render({ parentState: state })}
-				</div>
 				${children.publishButton.render()}
-				${children.deleteButton.render()}
 			</div>
 		`
 	}

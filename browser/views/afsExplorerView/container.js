@@ -5,6 +5,7 @@ const Button = require('../../components/button')
 const { emit } = require('../../lib/tools/windowManagement')
 const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
+const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
 const html = require('choo/html')
@@ -62,14 +63,19 @@ class Container extends Nanocomponent {
 
 	}
 
-	update(){
+	update({ fileList }){
+		const { state } = this
+		if (fileList != null) {
+			state.fileList = fileList
+		}
 		return true
 	}
 
-	createElement() {
-		const { children, props } = this
+	createElement({ spinner = false }) {
+		const { children, props, state } = this
 		return html`
 			<div class="${styles.container} AfsExplorerViewContainer-container">
+				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} AfsExplorerViewContainer-horizontalContainer,title">
 					${props.afsName}
 					${children.utilityButton.render({ children: '✕' })}
@@ -79,7 +85,7 @@ class Container extends Nanocomponent {
 					from this window, or by clicking “export all”.
 				</div>
 				<div class="${styles.fileTable} AfsExplorerViewContainer-fileTable">
-					${children.afsFileTable.render()}
+					${children.afsFileTable.render({ fileList: state.fileList })}
 				</div>
 				${children.exportAllButton.render()}
 				${children.downloadUpdateButton.render()}
