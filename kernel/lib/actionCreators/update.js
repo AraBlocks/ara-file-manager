@@ -10,7 +10,7 @@ const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
-  debug('%s heard. Load: %O', k.FEED_MANAGE_FILE, load)
+  debug('%s heard', k.FEED_MANAGE_FILE)
   try {
     const { files } = store
     const file = files.published.find(({ did }) => did === load.did)
