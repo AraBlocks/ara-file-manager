@@ -81,14 +81,14 @@ async function login(_, load) {
 
     switchLoginState(true)
 
-    const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
-    const purchased = await afsManager.surfaceAFS({ dids: purchasedDIDs })
-    const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
-    const published = await afsManager.surfaceAFS({ dids: publishedDIDs, published: true })
+    // const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
+    // const purchased = await afsManager.surfaceAFS({ dids: purchasedDIDs })
+    // const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
+    // const published = await afsManager.surfaceAFS({ dids: publishedDIDs, published: true })
     let files;
-    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
+    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published: store.files.published, purchased: store.files.purchased } }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-
+    return
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     updatedPublishedItems = await Promise.all(files.published.map((item) =>
       araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
