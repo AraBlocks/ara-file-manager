@@ -94,9 +94,9 @@ class Login extends Nanocomponent {
         <p class="${styles.descriptionHolder} login-descriptionHolder">
           Welcome to the <b>Littlstar Media Manager</b>. Use this
           app to buy, sell, share, and earn rewards for files on
-          the ARA Network across the web.
+          the Ara Network across the web.
           <br><br>
-          To get started, log in with your <b>ARA id</b>
+          To get started, log in with your <b>Ara id</b>
         </p>
         <form class="${styles.form} login-form" onsubmit=${login}>
           ${children.userDIDInput.render()}

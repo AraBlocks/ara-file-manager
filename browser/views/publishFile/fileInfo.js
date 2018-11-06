@@ -55,14 +55,14 @@ class FileInfo extends Nanocomponent {
 						<div class=${styles.infoTip}>
 							<div>
 								<b>Recommended:</b> If this field is left blank, users will only
-								see the file’s generic ARA id.
+								see the file’s generic Ara identity.
 							</div>
 						</div>
 					</div>
 					<div class=${styles.infoTipHolder}>
 						${children.priceInput.render({})}
 						<div class=${styles.infoTip}>
-							Price is converted to the equivalent value in ARA Tokens.
+							Price is converted to the equivalent value in Ara Tokens.
 							Leave blank if you do not want to charge for this file.
 						</div>
 					</div>
