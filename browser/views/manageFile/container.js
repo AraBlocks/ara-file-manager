@@ -4,7 +4,6 @@ const Button = require('../../components/button')
 const deeplink = require('../../lib/tools/deeplink')
 const { emit } = require('../../lib/tools/windowManagement')
 const FileInfo = require('./fileInfo')
-const OptionsCheckbox = require('../../components/optionsCheckbox')
 const overlay = require('../../components/overlay')
 const { UPDATE_FILE } = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/container')
@@ -28,12 +27,12 @@ class Container extends Nanocomponent {
 	}) {
 		super()
 		this.state = {
-			afsContents: [],
+			afsContents: fileList,
 			currency,
 			did,
 			distributionLink: deeplink.getDeeplink(did, name),
 			name,
-			fileList: [],
+			fileList,
 			price,
 			priceManagement,
 			supernode,
