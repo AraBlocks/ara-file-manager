@@ -165,6 +165,10 @@ async function getAFSContract(contentDID) {
 	return new web3.eth.Contract(AFSAbi, proxyAddress)
 }
 
+async function redeemRewards(userDID, password, contentDID) {
+	return await araContracts.redeemRewards({ farmerDid: userDID, password, contentDid: contentDID })
+}
+
 function subscribeTransfer(userAddress) {
 	try {
 		const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
@@ -191,6 +195,7 @@ module.exports = {
 	getLibraryItems,
 	getPublishedEarnings,
 	purchaseItem,
+	redeemRewards,
 	subscribePublished,
 	subscribeTransfer
 }
