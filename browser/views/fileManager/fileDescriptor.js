@@ -14,7 +14,8 @@ class FileDescriptor extends Nanocomponent {
     owner,
     size = 0,
     status,
-    shouldBroadcast
+    shouldBroadcast,
+    unclaimed
   }) {
     super()
     this.props = { name, size }
@@ -25,7 +26,8 @@ class FileDescriptor extends Nanocomponent {
         name,
         owner,
         shouldBroadcast,
-        status
+        status,
+        unclaimed
       })
     }
     this.createSummary = this.createSummary.bind(this)
