@@ -4,8 +4,6 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
 const html = require('choo/html')
-const {	clipboard, remote } = require('electron')
-const windowManager = remote.require('electron-window-manager')
 
 module.exports = ({ userDID }) => {
   const copyIDButton = new Button({

@@ -1,15 +1,15 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:lsWindowManager')
-const { OPEN_MODAL, PROMPT_PURCHASE } = require('../../lib/constants/stateManagement')
+const k = require('../../lib/constants/stateManagement')
 const EventEmitter = require('events')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
 windowManager.internalEmitter = new EventEmitter
 
-windowManager.internalEmitter.on(OPEN_MODAL, (modalName) => {
-  debug('%s heard', OPEN_MODAL)
+windowManager.internalEmitter.on(k.OPEN_MODAL, (modalName) => {
+  debug('%s heard', k.OPEN_MODAL)
   if (windowManager.get(modalName).object != null) { return }
   windowManager.sharedData.set('current', modalName)
   windowManager.createNew(
@@ -23,6 +23,13 @@ windowManager.internalEmitter.on(OPEN_MODAL, (modalName) => {
       ...windowManager.setSize(modalName),
     }
   ).open()
+})
+
+windowManager.internalEmitter.on(k.CLOSE_MODAL, (modalName) => {
+  debug('%s heard', k.CLOSE_MODAL)
+  windowManager.get(modalName).object
+    ? windowManager.get(modalName).object.close()
+    : null
 })
 
 windowManager.setSize = (view) => {
@@ -147,7 +154,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
   debug('Opening deeplink: %s', deepLinkingUrl)
   try {
     const fileInfo = parseLink()
-    windowManager.internalEmitter.emit(PROMPT_PURCHASE, fileInfo)
+    windowManager.internalEmitter.emit(k.PROMPT_PURCHASE, fileInfo)
     return
   } catch(err) {
     debug('Deeplink error: %O', err)
