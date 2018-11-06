@@ -84,12 +84,16 @@ module.exports = (state, { load = null, type }) => {
       file = findFile(load.did, state.published)
       file.earnings = file.earnings += Number(load.earning)
       break
+    case k.REWARDS_REDEEMED:
+      file = findFile(load, state.published.concat(state.purchased))
+      file.unclaimed = 0
+      break
     case k.SET_SIZE:
       file = state.purchased[state.purchased.length - 1]
       file.size = file.size || load.size
       break
     default:
-    return state
+      return state
   }
   return state
 }
