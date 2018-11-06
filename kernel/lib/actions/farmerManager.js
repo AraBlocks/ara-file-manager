@@ -14,15 +14,14 @@ function createFarmer({ did: userID, password }) {
 	return new farmDCDN({ userID, password })
 }
 
-function joinBroadcast({ farmer, did, price = 1 }) {
+async function joinBroadcast({ farmer, did, price = 1 }) {
 	try {
-		farmer.join({
+		await farmer.join({
 			did,
 			download: false,
 			upload: true,
 			price
 		})
-		dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: true } })
 		debug('Joining broadcast for %s', did)
 	} catch (err) {
 		debug('Error joining broadcasting %O', err)
@@ -51,10 +50,10 @@ function loadDcdnStore() {
   }
 }
 
-function unjoinBroadcast({ farmer, did }) {
+async function unjoinBroadcast({ farmer, did }) {
 	debug('Unjoining broadcast for %s', did)
 	try {
-		farmer.unjoin({ did })
+		await farmer.unjoin({ did })
 	} catch(err) {
 		debug('Error stopping broadcast for %s: %O', did, err)
 	}
