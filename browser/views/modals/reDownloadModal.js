@@ -28,7 +28,7 @@ module.exports = ({ aid, fileName, price }) => {
         <div class="${styles.smallMessage({})} modal-smallMessage">
           The download will cost:
         </div>
-        <span class="${styles.postheader} modals-postheader">${price} ARA</span>
+        <span class="${styles.postheader} modals-postheader">${price} Ara</span>
       </div>
       <div>
         ${downloadButton.render()}

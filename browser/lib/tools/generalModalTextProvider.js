@@ -39,12 +39,12 @@ function generalModalText(modalName, fileName) {
 			description = 'Please check your aid and password'
 			break
 		case 'notEnoughAra':
-			title = 'Not enough ARA'
-			description = html `<div>You do not have enough ARA Tokens to complete<br> this transaction.</div>`
+			title = 'Not enough Ara'
+			description = html `<div>You do not have enough Ara Tokens to complete<br> this transaction.</div>`
 			break
 		case 'notEnoughAra2':
-			title = 'Not enough ARA'
-			description = html `<div>You do not have enough ARA Tokens to publish<br> this file.</div>`
+			title = 'Not enough Ara'
+			description = html `<div>You do not have enough Ara Tokens to publish<br> this file.</div>`
 			break
 		case 'notLoggedIn':
 			title = 'Not Logged In'
@@ -54,11 +54,11 @@ function generalModalText(modalName, fileName) {
 			title = 'Success!'
 			description = html `<div><b>${fileName}</b> is downloading now.<br><br>
 			Keep files on your computer and host them on
-			the network to earn ARA Token rewards.</div>`
+			the network to earn Ara Token rewards.</div>`
 			break
 		case 'walletEmpty':
 			title = 'Not enough ARA'
-			description = html `<div>You do not have enough ARA Tokens to continue using your current File Manager services.<br><br>
+			description = html `<div>You do not have enough Ara Tokens to continue using your current File Manager services.<br><br>
 			<b>Price Maintenance</b> and <b>Littlstar Supernode</b> support has been deactivated accross your account.</div>`
 			break
 	}
@@ -74,11 +74,11 @@ function waitModalText(modalName, fileName) {
 			waitTime = 'This can take up to 15 seconds.'
 			break
 		case 'pleaseWaitUploading':
-			description = html `<div>Publishing <b>${fileName}</b> to ARA Network and uploading to Littlstar Supernode.</div>`
+			description = html `<div>Publishing <b>${fileName}</b> to Ara Network and uploading to Littlstar Supernode.</div>`
 			waitTime = html `<div>This may take a while.<br><b>Do not close File Manager.</b></div>`
 			break
 		case 'pleaseWaitUploading2':
-			description = html `<div>Updating <b>${fileName}</b> on the ARA Network.</div>`
+			description = html `<div>Updating <b>${fileName}</b> on the Ara Network.</div>`
 			waitTime = html `<div>This may take a while.<br><b>Do not close File Manager.</b></div>`
 			break
 	}

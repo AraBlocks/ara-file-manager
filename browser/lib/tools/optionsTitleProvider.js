@@ -8,11 +8,11 @@ module.exports = (optionType) => {
 	switch (optionType) {
 		case 'supernode':
 			title = 'Host on Littlstar Supernode'
-			description = '5.00 ARA per month'
+			description = '5.00 Ara per month'
 			break
 		case 'priceManagement':
 			title = 'Turn on Price Maintenance'
-			description = 'Hourly fee based on current network costs (~0.01 - 0.05 ARA)'
+			description = 'Hourly fee based on current network costs (~0.01 - 0.05 Ara)'
 			break
 		default:
 			break
