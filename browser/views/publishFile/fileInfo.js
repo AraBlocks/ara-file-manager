@@ -29,7 +29,7 @@ class FileInfo extends Nanocomponent {
 					option: 'selection',
 					optionList: [
 						'ARA',
-						'USD'
+						// 'USD'
 					],
 					field: 'currency'
 				}

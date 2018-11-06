@@ -4,8 +4,8 @@ const { waitModalText } = require('../../lib/tools/generalModalTextProvider')
 const html = require('choo/html')
 const styles = require('./styles')
 
-module.exports = ({ modalName = 'pleaseWait', fileName = 'Grump Cat' }) => {
-	const { description, waitTime } = waitModalText(modalName, fileName)
+module.exports = ({ modalName = null, name = null }) => {
+	const { description, waitTime } = waitModalText(modalName, name)
   return html`
     <div class="${styles.container} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
