@@ -26,17 +26,6 @@ function getPublishedItems(userDID) {
 	return itemList
 }
 
-function savePublishedItem(contentDID, userDID) {
-	try {
-		debug('Saving published item %s', contentDID)
-		const fileDirectory = getACMPath(userDID)
-		fs.appendFileSync(fileDirectory, `${contentDID}\n`)
-		return
-	} catch (err) {
-		debug('Err: %o', err)
-	}
-}
-
 async function removedPublishedItem(contentDID, userDID) {
 	const items = await getPublishedItems(contentDID, userDID)
 	const clean = items.filter(did => did !== contentDID)
@@ -48,6 +37,17 @@ async function removedPublishedItem(contentDID, userDID) {
 	}
 
 	return clean
+}
+
+function savePublishedItem(contentDID, userDID) {
+	try {
+		debug('Saving published item %s', contentDID)
+		const fileDirectory = getACMPath(userDID)
+		fs.appendFileSync(fileDirectory, `${contentDID}\n`)
+		return
+	} catch (err) {
+		debug('Err: %o', err)
+	}
 }
 
 module.exports = {

@@ -30,7 +30,7 @@ class PublishedStats extends Nanocomponent {
           </div>
           <div>
           <span class="${styles.bolden} publishedStats-bolden">
-            Earnings:</span> ${earnings} ${unclaimed ? html`<span>(+${unclaimed})</span>` : null} Ara
+            Earnings:</span> ${earnings} ${unclaimed ? html`<span style="color:green;">(+${unclaimed})</span>` : null} Ara
           </div>
         </div>
       </div>
