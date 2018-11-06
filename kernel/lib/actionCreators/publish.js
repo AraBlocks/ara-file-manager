@@ -20,6 +20,8 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
   try {
+    let dispatchLoad = { name: load.name }
+    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.pingView({ view: 'publishFileView', event: k.ESTIMATING_COST })
 
     let { afs: newAFS, afs: { did } } = await afs.create({ owner: load.userAid, password })
@@ -31,7 +33,6 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
 
     debug('Estimating gas')
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
-    console.log(commitEstimate)
     let setPriceEstimate = 0
     if (load.price != null) {
       setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
@@ -39,7 +40,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
     debug('Gas estimate: %s', gasEstimate)
     debug('Dispatching %s', k.FEED_MODAL)
-    const dispatchLoad = {
+    dispatchLoad = {
       did,
       gasEstimate,
       name: load.name,
@@ -52,9 +53,9 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     windowManager.pingView({ view: 'publishFileView', event: k.ESTIMATION })
   } catch (err) {
     debug('Error publishing file %o:', err)
+    internalEmitter.emit(k.CLOSE_MODAL, 'generalPleaseWaitModal')
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
     internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
-    windowManager.closeWindow('publishFileView')
     return
   }
 })
@@ -97,6 +98,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.ERROR_PUBLISHING })
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    internalEmitter.emit(k.CLOSE_MODAL, 'generalPleaseWaitModal')
     //Needs short delay. Race conditions cause modal state to dump after its loaded
     setTimeout(() => {
       dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })

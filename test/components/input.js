@@ -20,7 +20,7 @@ describe('Input Component', () => {
         option: 'selection',
         optionList: [
           'ARA',
-          'USD'
+          // 'USD'
 				],
 				field: 'currency'
       },

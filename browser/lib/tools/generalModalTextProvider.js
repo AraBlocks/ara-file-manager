@@ -67,11 +67,9 @@ function generalModalText(modalName, fileName) {
 
 function waitModalText(modalName, fileName) {
 	let description
-	let waitTime
 	switch (modalName) {
 		case 'pleaseWait':
-			description = html `<div>Completing transaction and connecting to<br>peers on the network.</div>`
-			waitTime = 'This can take up to 15 seconds.'
+			description = html`<div>Completing transaction and connecting to<br>peers on the network.</div>`
 			break
 		case 'pleaseWaitUploading':
 			description = html `<div>Publishing <b>${fileName}</b> to Ara Network and uploading to Littlstar Supernode.</div>`
@@ -81,7 +79,18 @@ function waitModalText(modalName, fileName) {
 			description = html `<div>Updating <b>${fileName}</b> on the Ara Network.</div>`
 			waitTime = html `<div>This may take a while.<br><b>Do not close File Manager.</b></div>`
 			break
+		default:
+			description = fileName === 'Unnamed'
+				? html`<div>Getting publish estimate for your file</div>`
+				: html`<div>Getting publish estimate for <b>${fileName}</b>.</div>`
 	}
+	const waitTime = html`
+		<div>
+			This may take a while.
+			<br>
+			<b>Do not close File Manager.</b>
+		</div>
+	`
 	return { description, waitTime }
 }
 
