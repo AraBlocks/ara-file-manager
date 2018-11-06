@@ -10,7 +10,12 @@ class PurchasedStats extends Nanocomponent {
     return true
   }
 
-  createElement({ earnings, peers, status }) {
+  createElement({
+    earnings,
+    peers,
+    status,
+    unclaimed
+   }) {
     return html`
       <div class="${styles.container} purchasedStats-container">
         <div class="${styles.stats} purchasedStats-stats">
@@ -24,7 +29,8 @@ class PurchasedStats extends Nanocomponent {
             ]
             : null}
           <div class="${styles.earnings(status)} purchasedStats-earnings">
-            <span class="${styles.bolden} puchasedStats-bolden">Earnings:</span> ${earnings} Ara
+            <span class="${styles.bolden} puchasedStats-bolden">
+              Earnings:</span> ${earnings} ${unclaimed ? `<span>(+${unclaimed})</span>` : null} Ara
           </div>
         </div>
       </div>
