@@ -9,7 +9,7 @@ const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
 
-ipcMain.on(k.REDEEM_REWARDS, (event, load) => {
+ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
   debug('%s HEARD', k.REDEEM_REWARDS)
   try {
     const { account }= store
