@@ -16,7 +16,7 @@ const manageFileContainer = new ManageFileContainer({
 	name: modal.manageFileData.name,
 	price: modal.manageFileData.price
 })
-document.getElementById('container').appendChild(manageFileContainer.render({ spinner: (modal.manageFileData.fileList === 0) }))
+document.getElementById('container').appendChild(manageFileContainer.render({ spinner: (modal.manageFileData.fileList.length === 0) }))
 
 ipcRenderer.on(ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
 ipcRenderer.on(ESTIMATION, () => openModal('updateConfirmModal'))

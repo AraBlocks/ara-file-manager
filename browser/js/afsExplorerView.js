@@ -10,6 +10,6 @@ const afsExplorer = new AFSExlorer({
   did: modal.contentViewerData.did,
   fileList: modal.contentViewerData.fileList
 })
-document.getElementById('container').appendChild(afsExplorer.render({ spinner: (modal.contentViewerData.fileList.length === 0) }))
+document.getElementById('container').appendChild(afsExplorer.render({ spinner: modal.contentViewerData.fileList.length === 0 }))
 
 ipcRenderer.on(REFRESH, () => afsExplorer.render({ spinner: false, fileList: modal.contentViewerData.fileList }))
