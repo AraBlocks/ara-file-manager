@@ -9,11 +9,12 @@ const Nanocomponent = require('nanocomponent')
 
 class FileInfo extends Nanocomponent {
 	constructor({
-		parentState
+		parentState,
+		renderView
 	}) {
 		super()
 
-		this.props = { parentState }
+		this.props = { parentState, renderView }
 		this.children = {
 			fileNameInput: new Input({
 				field: 'fileName',
@@ -37,7 +38,8 @@ class FileInfo extends Nanocomponent {
 			fileSelector: new FileTable({
 				parentState,
 				field: 'fileList',
-				tableType: k.PUBLISH
+				tableType: k.PUBLISH,
+				renderView
 			})
 		}
 	}
