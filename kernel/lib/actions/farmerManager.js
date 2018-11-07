@@ -88,7 +88,7 @@ async function download({
 			upload: false,
 			price,
 			maxPeers,
-			jobId: jobId.slice(2)
+			jobId: jobId ? jobId.slice(2) : null
 		})
 
 		let totalBlocks = 0
@@ -111,7 +111,6 @@ async function download({
 		farmer.on('complete', (did) => {
 			debug('Download complete!')
 			completeHandler(did)
-			renameAfsFiles(did, 'movie.mov')
 			joinBroadcast({ farmer, did })
 		})
 		farmer.on('requestcomplete', (did) => {
