@@ -1,6 +1,5 @@
 'use strict'
 
-
 const AfsFileRow = require('./afsFileRow')
 const styles = require('./styles/editableFileTable')
 const html = require('choo/html')
@@ -93,8 +92,13 @@ class EditableFileTable extends Nanocomponent {
 					<th>Type</th>
 					<th>Size</th>
 				</tr>
-				${fileRows.map(fileRow => fileRow.render())}
+				${fileRows.map((fileRow, index) => fileRow.render(index))}
 			</table>
+			${fileRows.length === 0
+				? html`<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">Drop files here</div>`
+				: null
+			}
+
 		</div>
 		`
 	}

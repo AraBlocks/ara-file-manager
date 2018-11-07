@@ -12,7 +12,9 @@ const store = windowManager.sharedData.fetch('store')
 ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
   debug('%s heard', k.FEED_MANAGE_FILE)
   try {
-    const { files } = store
+    const { files, farmer } = store
+    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
+    await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     const file = files.published.find(({ did }) => did === load.did)
     dispatch({
       type: k.FEED_MANAGE_FILE,
@@ -42,10 +44,9 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
 
 ipcMain.on(k.UPDATE_FILE, async (event, load) => {
   debug('%s heard. Load: %O', k.UPDATE_FILE, load)
-  const { account, farmer } = store
+  const { account } = store
   try {
     event.sender.send(k.ESTIMATING_COST)
-    await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     let estimate
 
     if (load.shouldUpdatePrice && !load.shouldCommit) {
@@ -113,6 +114,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
 
     dispatch({ type: k.UPDATED_FILE, load: load.did })
     debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load.did)
+    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
     farmerManager.joinBroadcast({ did: load.did, farmer: farmer.farm })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {

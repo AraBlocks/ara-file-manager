@@ -9,15 +9,13 @@ module.exports = ({
   name,
   owner,
   shouldBroadcast,
-  status
+  status,
+  unclaimed
 }) => {
-    const menuItems = [{
-      children: 'Copy Link',
-      onclick: () => deeplink.copyDeeplink(did, name)
-    }]
-    menuItems.addItem = function (children, event) {
-      this.push({ children, onclick: () => windowManagement.emit({ event, load: { did, name } })})
-    }
+  const menuItems = [{ children: 'Copy Link', onclick: () => deeplink.copyDeeplink(did, name) }]
+  menuItems.addItem = function (children, event) {
+    this.push({ children, onclick: () => windowManagement.emit({ event, load: { did, name } }) })
+  }
 
     switch (status) {
       case k.DOWNLOADED_PUBLISHED:
@@ -44,6 +42,6 @@ module.exports = ({
         menuItems.addItem('Sync AFS', k.UPDATE_FILE)
     }
 
-    return new Hamburger(menuItems)
-
+  if (unclaimed) { menuItems.addItem('Reedeem Rewards', k.REDEEM_REWARDS) }
+  return new Hamburger(menuItems)
 }

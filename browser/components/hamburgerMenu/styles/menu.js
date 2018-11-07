@@ -49,7 +49,7 @@ module.exports = {
 			justify-content: space-between;
 			min-width: 130px;
 			position: absolute;
-			z-index: 1;
+			z-index: 999;
     }
 	`,
 

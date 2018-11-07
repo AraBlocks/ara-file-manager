@@ -7,11 +7,13 @@ const araFilesystem = require('ara-filesystem')
 const farmerManager = require('../actions/farmerManager')
 const mirror = require('mirror-folder')
 const path = require('path')
+const windowManager = require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 
 async function exportFile({ did, exportPath, filePath }) {
 	debug('Exporting file %s to %s', filePath, exportPath)
 	try {
-    const { afs } = await araFilesystem.create({ did })
+    const { afs } = await araFilesystem.create({ did, password: store.account.password })
     const fullPath = path.join(afs.HOME, filePath)
     const fileData = await afs.readFile(fullPath)
     afs.close()
@@ -23,7 +25,7 @@ async function exportFile({ did, exportPath, filePath }) {
 
 async function exportFolder({ did, exportPath, folderPath }) {
   try {
-    const { afs } = await araFilesystem.create({ did })
+    const { afs } = await araFilesystem.create({ did, password: store.account.password })
     const fullPath = path.join(afs.HOME, folderPath)
     const result = await afs.readdir(fullPath)
     if (result.length === 0) {
@@ -35,7 +37,7 @@ async function exportFolder({ did, exportPath, folderPath }) {
       fs: afs
     }, { name: exportPath }, { keepExisting: true })
     await new Promise((accept, reject) => progress.once('end', accept).once('error', reject))
-    afs.close()
+    await afs.close()
     debug('Successfully exported folder')
   } catch (err) {
     debug('Error exporting folder: %o', err)
@@ -45,7 +47,7 @@ async function exportFolder({ did, exportPath, folderPath }) {
 async function getFileList(did) {
 	debug('Getting file list in AFS')
 	try {
-		const { afs } = await araFilesystem.create({ did })
+		const { afs } = await araFilesystem.create({ did, password: store.account.password })
 		const result = await _getContentsInFolder(afs, afs.HOME)
 		await afs.close()
 		return result

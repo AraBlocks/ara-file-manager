@@ -114,11 +114,12 @@ class AfsFileRow extends Nanocomponent {
 		return fileType
 	}
 
-	createElement() {
+	createElement(index) {
 		const { children, fileClicked, props } = this
 		return html`
 			<tr
 				class="${styles.fileRow} afsFileRow-fileRow"
+				style="background-color: ${index % 2 ? 'white' : '#f1f1f1'};"
 				onclick=${fileClicked}
 			>
 				<td class="${styles.fileNameCell} afsFileRow-fileNameCell">

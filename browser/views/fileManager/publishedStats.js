@@ -13,9 +13,9 @@ class PublishedStats extends Nanocomponent {
     earnings,
     peers,
     price,
-    status
+    status,
+    unclaimed
   }) {
-
     return html`
       <div class="${styles.container(status)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
@@ -29,7 +29,8 @@ class PublishedStats extends Nanocomponent {
             |
           </div>
           <div>
-          <span class="${styles.bolden} publishedStats-bolden">Earnings:</span> ${earnings} Ara
+          <span class="${styles.bolden} publishedStats-bolden">
+            Earnings:</span> ${earnings} ${unclaimed ? html`<span style="color:green;">(+${unclaimed})</span>` : null} Ara
           </div>
         </div>
       </div>
