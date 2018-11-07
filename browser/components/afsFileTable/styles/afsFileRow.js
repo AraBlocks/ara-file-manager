@@ -9,11 +9,10 @@ module.exports = {
 
 	fileNameCell: css`
 		:host {
-			align-items: center;
-			display: flex;
 			height: 2em;
-			justify-content: left;
 			padding-left: 20px;
+			min-width: 390px;
+			max-width: 390px;
 		}
 	`,
 

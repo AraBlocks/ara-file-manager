@@ -92,7 +92,7 @@ class AfsFileRow extends Nanocomponent {
 	fileIconSelector(isFile) {
 		let fileName = ''
 		isFile ? fileName = 'file.png' : fileName = 'folder.png'
-		return html`<img src="../assets/images/${fileName}" alt="fileIcon" class=${styles.fileImage}>`
+		return html`<img align="center" src="../assets/images/${fileName}" alt="fileIcon" class=${styles.fileImage}>`
 	}
 
 	fileClicked() {
@@ -129,7 +129,7 @@ class AfsFileRow extends Nanocomponent {
 						])}
 					</div>
 				</td>
-				<td>${this.renderFileType()}</td>
+				<td style="width: 80px;">${this.renderFileType()}</td>
 				<td>${filesize(props.fileInfo.size)}</td>
 			</tr>
 		`
