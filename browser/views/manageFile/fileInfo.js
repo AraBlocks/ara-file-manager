@@ -12,11 +12,12 @@ const Nanocomponent = require('nanocomponent')
 class FileInfo extends Nanocomponent {
 	constructor({
 		did,
-		parentState
+		parentState,
+		renderView
 	}) {
 		super()
 
-		this.props = { did, parentState }
+		this.props = { did, parentState, renderView }
 		this.children = {
 			distributionLink: new Input({
 				placeholder: 'Distribution Link',
@@ -35,7 +36,8 @@ class FileInfo extends Nanocomponent {
 				did,
 				parentState,
 				field: 'fileList',
-				tableType: k.UPDATE_FILE
+				tableType: k.UPDATE_FILE,
+				renderView
 			}),
 			fileNameInput: new Input({
 				field: 'name',

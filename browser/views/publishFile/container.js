@@ -28,10 +28,12 @@ class Container extends Nanocomponent {
 
 		this.children = {
 			fileInfo: new FileInfo({
-				parentState: this.state
+				parentState: this.state,
+				renderView: this.renderView.bind(this)
 			}),
 			publishButton: new Button({
 				children: 'Publish',
+				cssClass: { name: 'thinBorder'},
 				onclick: this.publishFile.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
@@ -40,6 +42,10 @@ class Container extends Nanocomponent {
 
 	update() {
 		return true
+	}
+
+	renderView() {
+		this.render({})
 	}
 
 	publishFile() {
@@ -57,8 +63,8 @@ class Container extends Nanocomponent {
 			name: fileName || 'Unnamed',
 			price
 		}
-
-		fileList
+		console.log(fileList.length)
+		fileList.length != 0
 			? emit({ event: PUBLISH, load })
 			: this.render({ requiredIndicator: true })
 	}
@@ -82,7 +88,7 @@ class Container extends Nanocomponent {
 					</div>
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({ requiredIndicator })}
-					${children.publishButton.render()}
+					${children.publishButton.render(state.fileList.length === 0 ? { name: 'thinBorder' } : { name: 'standard' })}
 				</div>
 			</div>
 		`

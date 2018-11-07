@@ -57,4 +57,24 @@ module.exports = {
       }
     `
   } ,
+
+  thinBorder({
+    color  = 'gray',
+    fontSize = '18',
+    height = '2',
+    weight = 'bold'
+  }) {
+    return css`
+      :host {
+        background-color: white;
+        border: 1px solid ${colorSelector(color)};
+        color: ${colorSelector(color)};
+        font-family: ${fontSelector(weight)};
+        font-size: ${fontSize}px;
+        height: ${height}em;
+        transition: all 100ms;
+        width: 100%;
+      }
+    `
+  } ,
 }

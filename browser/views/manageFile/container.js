@@ -33,6 +33,7 @@ class Container extends Nanocomponent {
 			distributionLink: deeplink.getDeeplink(did, name),
 			name,
 			fileList,
+			oldPrice: price,
 			price,
 			priceManagement,
 			supernode,
@@ -54,13 +55,25 @@ class Container extends Nanocomponent {
 			fileInfo: new FileInfo({
 				did,
 				parentState: this.state,
+				renderView: this.renderView.bind(this)
 			}),
 			publishButton: new Button({
 				children: 'Publish Update',
+				cssClass: { name: 'thinBorder' },
 				onclick: this.updateFile.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
 		}
+	}
+
+	fileInfoChanged() {
+		const { state } = this
+		const priceChanged = state.oldPrice != state.price
+
+	}
+
+	renderView() {
+		this.render({})
 	}
 
 	update({ fileList }){
@@ -109,7 +122,7 @@ class Container extends Nanocomponent {
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
-				${children.publishButton.render()}
+				${children.publishButton.render(state.fileList.length === 0 ? { name: 'thinBorder' } : { name: 'standard' })}
 			</div>
 		`
 	}
