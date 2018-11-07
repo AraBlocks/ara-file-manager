@@ -6,8 +6,13 @@ const { css } = require('css')
 module.exports = {
   header: css`
     :host {
+      background-color: white;
       font-family: ${fonts.boldSpecial};
       font-size: 14px;
+
+      position: sticky;
+      top: 0px;
+      z-index: 99;
     }
   `,
 
