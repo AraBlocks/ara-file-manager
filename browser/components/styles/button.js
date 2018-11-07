@@ -74,6 +74,7 @@ module.exports = {
         height: ${height}em;
         transition: all 100ms;
         width: 100%;
+        cursor: default;
       }
     `
   } ,
