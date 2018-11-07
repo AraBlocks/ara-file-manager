@@ -38,6 +38,7 @@ module.exports = {
 
 		:host th {
 			border: 1px solid var(--ara-grey);
+			height: 30px;
 			padding-left: 20px;
 		}
 
@@ -46,7 +47,18 @@ module.exports = {
 		}
 
 		:host tr {
+			display: block;
 			height: 2em;
+		}
+
+		:host tbody {
+			display: block;
+			overflow: auto;
+		}
+
+		:host thead {
+			display: block;
+
 		}
 	`,
 

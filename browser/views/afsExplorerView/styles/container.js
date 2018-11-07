@@ -40,7 +40,8 @@ module.exports = {
 
 	fileTable: css`
 		:host {
-			height: 420px;
+			// height: 420px;
+			// overflow: scroll;
 		}
 	`
 }
