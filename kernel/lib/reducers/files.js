@@ -55,6 +55,7 @@ module.exports = (state, { load = null, type }) => {
       file = findFile(load.did, state.published)
       file.status = k.DOWNLOADED_PUBLISHED,
       file.datePublished = new Date
+      file.shouldBroadcast = true
       file.owner = true
       break
     case k.PURCHASING:
