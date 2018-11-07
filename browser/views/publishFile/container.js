@@ -63,7 +63,6 @@ class Container extends Nanocomponent {
 			name: fileName || 'Unnamed',
 			price
 		}
-		console.log(fileList.length)
 		fileList.length != 0
 			? emit({ event: PUBLISH, load })
 			: this.render({ requiredIndicator: true })
