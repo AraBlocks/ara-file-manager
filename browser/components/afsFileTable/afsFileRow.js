@@ -129,7 +129,7 @@ class AfsFileRow extends Nanocomponent {
 						])}
 					</div>
 				</td>
-				<td style="width: 80px;">${this.renderFileType()}</td>
+				<td style="width: 100px;">${this.renderFileType()}</td>
 				<td>${filesize(props.fileInfo.size)}</td>
 			</tr>
 		`

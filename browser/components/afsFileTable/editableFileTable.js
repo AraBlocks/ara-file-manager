@@ -84,9 +84,9 @@ class EditableFileTable extends Nanocomponent {
 			<table class="${styles.fileTable} EditableFileTable-container">
 				<thead>
 					<tr>
-						<th style="width: 390px;">Name</th>
-						<th style="width: 79px;">Type</th>
-						<th style="width: 79px;">Size</th>
+						<th style="width: 350px;">Name</th>
+						<th style="width: 99px;">Type</th>
+						<th style="width: 99px;">Size</th>
 					</tr>
 				</thead>
 				<tbody style="height: ${fileRows.length ? 285 : 0}px;">
