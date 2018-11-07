@@ -82,17 +82,16 @@ class EditableFileTable extends Nanocomponent {
 			ondragleave=${preventDefault}
 		>
 			<table class="${styles.fileTable} EditableFileTable-container">
-				<colgroup>
-					<col span="1" style="width: 40%;">
-					<col span="1" style="width: 30%;">
-					<col span="1" style="width: 30%;">
-				</colgroup>
-				<tr>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Size</th>
-				</tr>
-				${fileRows.map((fileRow, index) => fileRow.render(index))}
+				<thead>
+					<tr>
+						<th style="width: 390px;">Name</th>
+						<th style="width: 79px;">Type</th>
+						<th style="width: 79px;">Size</th>
+					</tr>
+				</thead>
+				<tbody style="height: ${fileRows.length ? 285 : 0}px;">
+					${fileRows.map((fileRow, index) => fileRow.render(index))}
+				</tbody>
 			</table>
 			${fileRows.length === 0
 				? html`<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">Drop files here</div>`

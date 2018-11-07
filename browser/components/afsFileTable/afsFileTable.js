@@ -99,7 +99,7 @@ class AfsFileTable extends Nanocomponent {
 					<th>Size</th>
 				</tr>
 				${backButton}
-				${fileRows.map((fileRow, index) => fileRow.render('a'))}
+				${fileRows.map((fileRow, index) => fileRow.render(index))}
 			</table>
 			</div>
 		`
