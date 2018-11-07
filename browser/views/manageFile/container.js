@@ -64,12 +64,17 @@ class Container extends Nanocomponent {
 			}),
 			utilityButton: new UtilityButton({})
 		}
+		this.getPathDiff = this.getPathDiff.bind(this)
+		this.fileInfoChanged = this.fileInfoChanged.bind(this)
 	}
 
 	fileInfoChanged() {
 		const { state } = this
+		const { addPaths, removePaths } = this.getPathDiff()
 		const priceChanged = state.oldPrice != state.price
-
+		const shouldCommit = !(addPaths.length == 0 && removePaths.length == 0)
+		const notEmpty = state.fileList.length != 0
+		return (priceChanged || shouldCommit) && notEmpty
 	}
 
 	renderView() {
@@ -85,30 +90,39 @@ class Container extends Nanocomponent {
 		return true
 	}
 
-	updateFile() {
+	getPathDiff() {
 		const { state } = this
 		const subPaths = state.fileList.map(file => file.subPath)
 		const removePaths = state.afsContents.filter(file =>
-			!subPaths.includes(file.subPath)
+			!subPaths.includes(file.subPath) && file.fullPath == null
 		).map(file => file.subPath)
 		const addPaths = state.fileList.filter(file =>
 			file.fullPath != null
 		).map(file => file.fullPath)
+		return { addPaths, removePaths }
+	}
 
+	updateFile() {
+		const { state } = this
+		const { addPaths, removePaths } = this.getPathDiff()
 		const load = {
 			addPaths,
 			did: state.did,
 			name: state.name,
 			password: account.password,
 			removePaths,
+			shouldCommit: !(addPaths.length == 0 && removePaths.length == 0),
+			shouldUpdatePrice: state.oldPrice != state.price,
 			price: state.price == "" ? null : state.price,
 			userAid: account.userAid
 		}
-		emit({ event: UPDATE_FILE, load })
+		if (this.fileInfoChanged()) {
+			emit({ event: UPDATE_FILE, load })
+		}
 	}
 
 	createElement({ spinner = false }) {
-		const { children, state } = this
+		const { children, state, fileInfoChanged } = this
 		return html`
 			<div class="${styles.container} ManageFileContainer-container">
 				${overlay(spinner)}
@@ -122,7 +136,7 @@ class Container extends Nanocomponent {
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
-				${children.publishButton.render(state.fileList.length === 0 ? { name: 'thinBorder' } : { name: 'standard' })}
+				${children.publishButton.render(fileInfoChanged() ? { name: 'standard' } : { name: 'thinBorder' })}
 			</div>
 		`
 	}

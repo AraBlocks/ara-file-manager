@@ -62,10 +62,12 @@ class EditableFileTable extends Nanocomponent {
 		props.renderView()
 	}
 
-	deleteFile(fileFullPath) {
+	deleteFile({ fileFullPath, fileSubPath }) {
 		const { props } = this
 		props.parentState[props.field] = props.parentState[props.field].filter(file =>
-			file.fullPath !== fileFullPath
+			fileFullPath == null
+				? file.subPath !== fileSubPath
+				: file.fullPath !== fileFullPath
 		)
 		props.renderView()
 	}

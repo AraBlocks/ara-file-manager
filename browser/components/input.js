@@ -12,6 +12,7 @@ class Input extends Nanocomponent {
     parentState = {},
     placeholder = '',
     readOnly = false,
+    renderView = () => {},
     type = 'text'
   }) {
     super()
@@ -23,6 +24,7 @@ class Input extends Nanocomponent {
       parentState,
       placeholder,
       readOnly,
+      renderView,
       type
     }
 
@@ -39,6 +41,7 @@ class Input extends Nanocomponent {
     const { props, state } = this
     state.value = e.target.value
     props.parentState[props.field] = state.value
+    props.renderView()
   }
 
   select(e) {

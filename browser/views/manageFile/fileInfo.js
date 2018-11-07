@@ -59,7 +59,8 @@ class FileInfo extends Nanocomponent {
 						'ARA',
 					],
 					field: 'currency'
-				}
+				},
+				renderView
 			})
 		}
 	}

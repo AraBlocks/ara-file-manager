@@ -68,7 +68,10 @@ class AfsFileRow extends Nanocomponent {
 
 	deleteFile(e) {
 		const { props } = this
-		props.deleteFile(props.fileInfo.fullPath)
+		props.deleteFile({ 
+			fileFullPath: props.fileInfo.fullPath,
+			fileSubPath: props.fileInfo.subPath
+		})
 	}
 
 	exportFile(e) {
