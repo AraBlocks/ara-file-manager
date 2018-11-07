@@ -21,7 +21,7 @@ class Section extends Nanocomponent {
     return html`
       <div class="${styles.container} section-container">
         <div class="${styles.header} section-header">
-          ${typeRow === 'purchased' ? 'Purchased' : 'Published Files'}
+          ${typeRow === 'purchased' ? 'Purchased Files' : 'Published Files'}
         </div>
         <div class="${styles.separator} section-separator"></div>
         ${fileRows.map((file, i) => file.render({ ...files[typeRow][i]}))}
