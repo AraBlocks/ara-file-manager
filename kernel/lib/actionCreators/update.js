@@ -47,23 +47,19 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
   const { account } = store
   try {
     event.sender.send(k.ESTIMATING_COST)
-    const previousPrice = await araContractsManager.getAFSPrice({ did: load.did })
-    const shouldCommit = !(load.addPaths.length == 0 && load.removePaths.length == 0)
-    const shouldUpdatePrice = previousPrice != load.price
     let estimate
 
-    if (!shouldCommit && !shouldUpdatePrice) {
-      debug('nothing to update')
-      windowManager.closeWindow('manageFileView')
-      // TODO: Show some nothing to update modal
-      return
-    } else if (shouldUpdatePrice && !shouldCommit) {
+    if (load.shouldUpdatePrice && !load.shouldCommit) {
       debug('Estimating gas for set price')
       estimate = await afs.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
     } else {
-      await (await afs.add({ did: load.did, paths: load.addPaths, password: account.password })).close();
-      await (await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })).close();
-      if (shouldUpdatePrice) {
+      if (load.addPaths.length != 0) {
+        await (await afs.add({ did: load.did, paths: load.addPaths, password: account.password })).close();
+      }
+      if (load.removePaths.length != 0) {
+        await (await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })).close();
+      }
+      if (load.shouldUpdatePrice) {
         debug('Estimate gas for commit and set price')
         estimate = await afs.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
       } else {
@@ -77,8 +73,8 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
       gasEstimate: Number(estimate),
       name: load.name,
       price: load.price,
-      shouldUpdatePrice,
-      shouldCommit
+      shouldUpdatePrice: load.shouldUpdatePrice,
+      shouldCommit: load.shouldCommit
     }
 
     debug('Dispatching %s . Load: %O', k.FEED_MODAL, dispatchLoad)

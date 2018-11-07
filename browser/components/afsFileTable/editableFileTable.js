@@ -10,6 +10,7 @@ class EditableFileTable extends Nanocomponent {
 		did,
 		field,
 		parentState,
+		renderView,
 		tableType
 	}) {
 		super()
@@ -17,6 +18,7 @@ class EditableFileTable extends Nanocomponent {
 			did,
 			field,
 			parentState,
+			renderView,
 			tableType
 		}
 		this.onFileDrop = this.onFileDrop.bind(this)
@@ -56,15 +58,17 @@ class EditableFileTable extends Nanocomponent {
 			}
 		})
 		props.parentState[props.field].push(...fileData)
-		this.render()
+		props.renderView()
 	}
 
-	deleteFile(fileFullPath) {
+	deleteFile(fileInfo) {
 		const { props } = this
 		props.parentState[props.field] = props.parentState[props.field].filter(file =>
-			file.fullPath !== fileFullPath
+			fileInfo.fullPath == null
+				? file.subPath !== fileInfo.subPath
+				: file.fullPath !== fileInfo.fullPath
 		)
-		this.render()
+		props.renderView()
 	}
 
 	createElement() {

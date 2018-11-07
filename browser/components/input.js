@@ -12,6 +12,7 @@ class Input extends Nanocomponent {
     parentState = {},
     placeholder = '',
     readOnly = false,
+    renderView = () => {},
     type = 'text'
   }) {
     super()
@@ -23,6 +24,7 @@ class Input extends Nanocomponent {
       parentState,
       placeholder,
       readOnly,
+      renderView,
       type
     }
 
@@ -32,13 +34,14 @@ class Input extends Nanocomponent {
       value: parentState[field] || ''
     }
 
-    this.onchange = this.onchange.bind(this)
+    this.oninput = this.oninput.bind(this)
   }
 
-  onchange(e) {
+  oninput(e) {
     const { props, state } = this
     state.value = e.target.value
     props.parentState[props.field] = state.value
+    props.renderView()
   }
 
   select(e) {
@@ -57,7 +60,7 @@ class Input extends Nanocomponent {
 
   createElement() {
     const {
-      onchange,
+      oninput,
       props,
       select,
       state
@@ -74,7 +77,7 @@ class Input extends Nanocomponent {
             ${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass
             ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
           "
-          onchange=${onchange}
+          oninput=${oninput}
           placeholder="${props.placeholder}"
           value="${state.value}"
           type=${props.type}
