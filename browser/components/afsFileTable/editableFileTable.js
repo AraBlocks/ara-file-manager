@@ -88,7 +88,7 @@ class EditableFileTable extends Nanocomponent {
 					<th>Type</th>
 					<th>Size</th>
 				</tr>
-				${fileRows.map(fileRow => fileRow.render())}
+				${fileRows.map((fileRow, index) => fileRow.render(index))}
 			</table>
 			${fileRows.length === 0
 				? html`<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">Drop files here</div>`

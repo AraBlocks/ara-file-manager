@@ -24,7 +24,7 @@ class AfsFileTable extends Nanocomponent {
 		this.backToParentDirectory = this.backToParentDirectory.bind(this)
 	}
 
-	update({ fileList }){
+	update({ fileList }) {
 		const { props } = this
 		if (props.fileList.length === 0) {
 			props.fileList = fileList
@@ -83,7 +83,7 @@ class AfsFileTable extends Nanocomponent {
 	}
 
 	createElement() {
- 		const fileRows = this.makeFileRows()
+		const fileRows = this.makeFileRows()
 		const backButton = this.makeBackButton()
 		return html`
 		<div>
@@ -99,7 +99,7 @@ class AfsFileTable extends Nanocomponent {
 					<th>Size</th>
 				</tr>
 				${backButton}
-				${fileRows.map(fileRow => fileRow.render())}
+				${fileRows.map((fileRow, index) => fileRow.render('a'))}
 			</table>
 			</div>
 		`
