@@ -11,8 +11,11 @@ module.exports = {
 		:host {
 			height: 2em;
 			padding-left: 20px;
-			min-width: 390px;
-			max-width: 390px;
+			min-width: 350px;
+			max-width: 350px;
+			overflow: hidden;
+    	text-overflow: ellipsis;
+    	white-space: nowrap;
 		}
 	`,
 
