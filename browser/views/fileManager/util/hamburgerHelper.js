@@ -42,8 +42,6 @@ module.exports = ({
         menuItems.addItem('Sync AFS', k.UPDATE_FILE)
     }
 
-    return new Hamburger(menuItems)
-
   if (unclaimed) { menuItems.addItem('Reedeem Rewards', k.REDEEM_REWARDS) }
   return new Hamburger(menuItems)
 }
