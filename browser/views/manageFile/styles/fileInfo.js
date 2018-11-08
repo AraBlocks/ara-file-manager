@@ -22,7 +22,7 @@ module.exports = {
 
 	araPriceHolder: css`
 		:host {
-			display: flex;
+			display: none;
 		}
 	`,
 
