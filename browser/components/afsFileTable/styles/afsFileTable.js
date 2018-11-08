@@ -17,15 +17,22 @@ module.exports = {
 
 		:host th {
 			border: 1px solid var(--ara-grey);
-			padding-left: 20px;
-		}
-
-		:host td {
+			height: 30px;
 			padding-left: 20px;
 		}
 
 		:host tr {
+			display: block;
 			height: 2em;
+		}
+
+		:host tbody {
+			height: 460px;
+			overflow: auto;
+		}
+
+		:host thead {
+			display: block;
 		}
 	`,
 
@@ -46,9 +53,46 @@ module.exports = {
 		}
 	`,
 
+	headerHolder: css`
+		:host {
+			display: flex;
+			background-color: white;
+			border: 1px solid var(--ara-grey);
+			position: sticky;
+			top: 0;
+		}
+
+		:host div {
+			height: 2em;
+			padding-left: 5px;
+			display: flex;
+			align-items: center;
+		}
+	`,
+
+	nameHeader: css`
+		:host {
+			border-right: 1px solid var(--ara-grey);
+			width: 60%;
+		}
+	`,
+
+	sizeHeader: css`
+		:host {
+			width: 20%;
+		}
+	`,
+
 	textHolder: css`
 		:host {
 			width: 100%;
+		}
+	`,
+
+	typeHeader: css`
+		:host {
+			border-right: 1px solid var(--ara-grey);
+			width: 17%;
 		}
 	`
 }

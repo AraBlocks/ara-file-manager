@@ -69,6 +69,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const descriptorOpts = {
       datePublished: new Date,
       name: load.name,
+      owner: true,
       price: load.price,
       size: load.size,
       status: k.PUBLISHING
