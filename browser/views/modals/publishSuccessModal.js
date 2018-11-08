@@ -7,10 +7,10 @@ const html = require('choo/html')
 const styles = require('./styles')
 
 module.exports = ({
-	aid = 'e89160647bd617d33ac386ed89f069d366711cafec9036d90805894761a58ebb',
-	fileName = 'Grump Cat'
+	did = 'e89160647bd617d33ac386ed89f069d366711cafec9036d90805894761a58ebb',
+	name = 'Grump Cat'
 }) => {
-	const encodedName = encodeURIComponent(fileName)
+	const encodedName = encodeURIComponent(name)
 	const confirmButton = new Button({
 		children: 'Confirm',
 		onclick: () => closeModal()
@@ -22,20 +22,20 @@ module.exports = ({
   return html`
     <div class="${styles.container} modals-container">
       <div class="${styles.fileName} modal-messageBold">
-				${fileName}
+				${name}
       </div>
 			<div class="${styles.smallMessage({})} modal-smallMessage">
 				has been successfully published!<br><br>
 				Use this link to distribute this file to other users:<br>
 				<div class="${styles.link}">
-					<b>${`lstr://download/${aid}/${encodedName}`}</b>
+					<b>${`lstr://download/${did}/${encodedName}`}</b>
 				</div>
 			</div>
 			<div class="${styles.clipboard}" onclick=${function(){
 				const span = this.children[1]
 				span.classList.add('fadeInUp')
 				span.addEventListener('animationend', () => span.classList.remove('fadeInUp'), false)
-				deeplink.copyDeeplink(aid, fileName)
+				deeplink.copyDeeplink(did, name)
 			}}>
 				${copyLinkButton.render()}<span>Copied !</span>
 			</div>

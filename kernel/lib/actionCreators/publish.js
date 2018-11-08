@@ -90,6 +90,14 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
 
     farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
+
+    debug('Dispatching %s', k.FEED_MODAL)
+    dispatch({ type: k.FEED_MODAL, load: {
+      did: load.did,
+      name: load.name,
+      }
+    })
+    internalEmitter.emit(k.OPEN_MODAL, 'publishSuccessModal')
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
