@@ -51,7 +51,7 @@ class AfsFileTable extends Nanocomponent {
 		const { state } = this
 		state.parentDirectory.push(parentDirectory)
 		state.currentFileList = fileList
-		this.render()
+		this.render({})
 	}
 
 	makeFileRows() {
@@ -70,7 +70,7 @@ class AfsFileTable extends Nanocomponent {
 		const { state } = this
 		state.parentDirectory.pop()
 		state.currentFileList = this.getCurrentFiles(state.parentDirectory)
-		this.render()
+		this.render({})
 	}
 
 	getCurrentFiles(parentList) {

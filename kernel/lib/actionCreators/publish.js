@@ -45,7 +45,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
       gasEstimate,
       name: load.name,
       paths: load.paths,
-      price: load.price,
+      price: load.price ? load.price : 0,
       size
     }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
