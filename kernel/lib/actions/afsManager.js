@@ -50,7 +50,7 @@ async function getFileList(did) {
 		const { afs } = await araFilesystem.create({ did })
 		const result = await _getContentsInFolder(afs, afs.HOME)
 		await afs.close()
-		return result
+		return result.fileList
 	} catch (err) {
 		debug('Error getting file list in afs: %o', err)
 	}
@@ -59,6 +59,7 @@ async function getFileList(did) {
 // This function does not open/close afs.
 async function _getContentsInFolder(afs, folderPath) {
   try {
+    let totalSize = 0
     const result = []
     const contents = await afs.readdir(folderPath)
     for (let i = 0; i < contents.length; i ++) {
@@ -73,19 +74,21 @@ async function _getContentsInFolder(afs, folderPath) {
             size: fileStats.size
           })
         }
+        totalSize += fileStats.size
       } else {
         const items = await _getContentsInFolder(afs, fullPath)
         const itemList = {
           isFile: false,
           subPath,
-          size: fileStats.size,
-          items
+          size: items.totalSize,
+          items: items.fileList
         }
         result.push(itemList)
+        totalSize += items.totalSize
       }
     }
-    return result
-  } catch(e) {
+    return { fileList: result, totalSize }
+  } catch(err) {
     debug('Error getting contents: %o', err)
   }
 }

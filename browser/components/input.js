@@ -31,7 +31,7 @@ class Input extends Nanocomponent {
     this.state = {
       requiredIndicator: false,
       selection: this.props.embeddedButton.optionList ? this.props.embeddedButton.optionList[0] : '',
-      value: parentState[field] || ''
+      value: parentState[field]
     }
 
     this.oninput = this.oninput.bind(this)
