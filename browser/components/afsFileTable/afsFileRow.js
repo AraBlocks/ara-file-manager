@@ -63,7 +63,7 @@ class AfsFileRow extends Nanocomponent {
 				items.push(exportButton)
 				break
 		}
-		return items.map((item) => new menuItem(item))
+		return items.map((item) => [ new menuItem(item).render(), html`<div class="${styles.divider} afsFileRow-divider"></div>` ])
 	}
 
 	deleteFile(e) {
@@ -111,28 +111,48 @@ class AfsFileRow extends Nanocomponent {
 		return fileType
 	}
 
+	renderContextMenu(e) {
+		const contextMenu = document.getElementById('context-menu')
+		contextMenu.style.left = e.clientX - 1 + 'px'
+		contextMenu.style.top = e.clientY - 1 + 'px'
+		contextMenu.style.display = 'block'
+		contextMenu.addEventListener('mouseout', () => contextMenu.style.display = 'none')
+	}
+
 	createElement(index) {
-		const { children, fileClicked, props } = this
+		const {
+			children,
+			fileClicked,
+			props,
+			renderContextMenu
+		} = this
+
 		return html`
 			<tr
 				class="${styles.fileRow} afsFileRow-fileRow"
 				style="background-color: ${index % 2 ? 'white' : '#f1f1f1'};"
 				onclick=${fileClicked}
+				oncontextmenu=${renderContextMenu}
 			>
-				<td class="${styles.fileNameCell} afsFileRow-fileNameCell">
+				<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
+					<div>Export</div>
+					<div>Delete</div>
+				</div>
+				<td class="${styles.fileNameCell} afsFileRow-fileNameCell" >
 					${this.fileIconSelector(props.fileInfo.isFile)}
 					${props.fileInfo.subPath}
-					<div class="${styles.menu} afsFileRow-menu" >
-						${children.menuItem.map(item => [
-							item.render(),
-							html`<div class="${styles.divider} afsFileRow-divider"></div>`
-						])}
-					</div>
 				</td>
 				<td style="width: 100px;">${this.renderFileType()}</td>
 				<td>${filesize(props.fileInfo.size)}</td>
 			</tr>
 		`
+
+	// 	<div class="${styles.menu} afsFileRow-menu" >
+	// 	${children.menuItem.map(item => [
+	// 		item.render(),
+	// 		html`<div class="${styles.divider} afsFileRow-divider"></div>`
+	// 	])}
+	// </div>
 	}
 }
 

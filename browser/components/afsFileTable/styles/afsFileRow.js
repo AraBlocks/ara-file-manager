@@ -7,6 +7,16 @@ module.exports = {
 	colors,
 	fonts,
 
+	contextMenu: css`
+		:host {
+			background-color: red;
+			display: none;
+			width: 50px;
+			height: 50px;
+			position: absolute;
+		}
+	`,
+
 	fileNameCell: css`
 		:host {
 			height: 2em;
