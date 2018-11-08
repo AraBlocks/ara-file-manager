@@ -112,8 +112,8 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
       await afs.commit({ did: load.did, password: account.password, price: Number(load.price) })
     }
 
-    dispatch({ type: k.UPDATED_FILE, load: load.did })
-    debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load.did)
+    dispatch({ type: k.UPDATED_FILE, load: load })
+    debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load)
     dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
     farmerManager.joinBroadcast({ did: load.did, farmer: farmer.farm })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })

@@ -10,23 +10,20 @@ module.exports = (state, { load = null, type }) => {
       file.shouldBroadcast = load.shouldBroadcast
       break
     case k.DOWNLOADING:
-      file = state.purchased[state.purchased.length - 1]
+      file = findFile(load.did, state.purchased)
       file.downloadPercent = load.downloadPercent || 0
       file.status = k.DOWNLOADING
       break
     case k.DOWNLOADED:
-      file = state.purchased[state.purchased.length - 1]
+      file = findFile(load.did, state.purchased)
       file.downloadPercent = 1
       file.status = k.DOWNLOADED_PUBLISHED
       file.shouldBroadcast = true
       break
     case k.DOWNLOAD_FAILED:
-      file = state.purchased[state.purchased.length - 1]
+      file = findFile(load.did, state.purchased)
       file.downloadPercent = 0
       file.status = k.DOWNLOAD_FAILED
-      break
-    case k.DOWNLOAD_START:
-      state.purchased.push(load)
       break
     case k.ERROR_PUBLISHING:
       state.published = state.published.slice(0, state.published.length - 1)
@@ -64,12 +61,14 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.PURCHASED:
       file = findFile(load.did, state.purchased)
-      file.jobId = load.jobId
-      file.status = k.AWAITING_DOWNLOAD
+      if (file != null) {
+        file.jobId = load.jobId
+        file.status = k.AWAITING_DOWNLOAD
+      }
       break
     case k.UPDATING_FILE:
       file = findFile(load.did, state.published)
-      if(file !== null) {
+      if(file != null) {
         file.name = load.name
         file.price = load.price == null ? file.price : load.price
         file.size = load.size == 0 ? file.size : load.size
@@ -77,8 +76,8 @@ module.exports = (state, { load = null, type }) => {
       }
       break
     case k.UPDATED_FILE:
-      file = findFile(load, state.published)
-      if(file !== null) {
+      file = findFile(load.did, state.published)
+      if(file != null) {
         file.status = k.DOWNLOADED_PUBLISHED
       }
       break
@@ -87,12 +86,17 @@ module.exports = (state, { load = null, type }) => {
       file.earnings = file.earnings += Number(load.earning)
       break
     case k.REWARDS_REDEEMED:
-      file = findFile(load, state.published.concat(state.purchased))
+      file = findFile(load.did, state.published.concat(state.purchased))
       file.unclaimed = 0
       break
     case k.SET_SIZE:
-      file = state.purchased[state.purchased.length - 1]
+      file = findFile(load.did, state.purchased)
       file.size = file.size || load.size
+      break
+    case k.SUBMITTING_JOB:
+      file = findFile(load.did, state.purchased)
+      file.downloadPercent = 0
+      file.status = k.SUBMITTING_JOB
       break
     default:
       return state
