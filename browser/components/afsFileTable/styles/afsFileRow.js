@@ -9,11 +9,9 @@ module.exports = {
 
 	contextMenu: css`
 		:host {
-			background-color: red;
 			display: none;
-			width: 50px;
-			height: 50px;
 			position: absolute;
+			border: 1px solid var(--ara-grey);
 		}
 	`,
 
@@ -67,4 +65,23 @@ module.exports = {
 			z-index: 1;
 		}
 	`,
+
+	menuItem: css`
+		:host {
+			background-color: white;
+			cursor: pointer;
+			font-family: ${fonts.light};
+			height: 2em;
+			line-height: 2em;
+			padding: 0 5px;
+      text-align: center;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+			width: 100px;
+		}
+
+		:host:hover {
+      background-color: #f2f2f2;
+    }
+	`
 }
