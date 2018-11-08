@@ -75,30 +75,30 @@ class EditableFileTable extends Nanocomponent {
 		const { preventDefault, onFileDrop } = this
  		const fileRows = this.makeFileRows()
 		return html`
-		<div class=${styles.container}
-			ondrop=${onFileDrop}
-			ondragover=${preventDefault}
-			ondragenter=${preventDefault}
-			ondragleave=${preventDefault}
-		>
-			<table class="${styles.fileTable} EditableFileTable-container">
-				<thead>
-					<tr>
-						<th style="width: 350px;">Name</th>
-						<th style="width: 99px;">Type</th>
-						<th style="width: 99px;">Size</th>
-					</tr>
-				</thead>
-				<tbody style="height: ${fileRows.length ? 285 : 0}px;">
-					${fileRows.map((fileRow, index) => fileRow.render(index))}
-				</tbody>
-			</table>
-			${fileRows.length === 0
-				? html`<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">Drop files here</div>`
-				: null
-			}
+			<div class=${styles.container}
+				ondrop=${onFileDrop}
+				ondragover=${preventDefault}
+				ondragenter=${preventDefault}
+				ondragleave=${preventDefault}
+			>
+				<table class="${styles.fileTable} EditableFileTable-container">
+					<thead>
+						<tr>
+							<th style="width: 350px;">Name</th>
+							<th style="width: 99px;">Type</th>
+							<th style="width: 99px;">Size</th>
+						</tr>
+					</thead>
+					<tbody style="height: ${fileRows.length ? 285 : 0}px;">
+						${fileRows.map((fileRow, index) => fileRow.render(index))}
+					</tbody>
+				</table>
+				${fileRows.length === 0
+					? html`<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">Drop files here</div>`
+					: null
+				}
 
-		</div>
+			</div>
 		`
 	}
 }
