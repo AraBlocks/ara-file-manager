@@ -23,6 +23,7 @@ async function descriptorGenerator(did, opts = {}) {
 			datePublished: meta ? meta.timestamp : null,
 			earnings: 0,
 			name: meta ? meta.title : 'Unnamed File',
+			owner: false,
 			peers: 0,
 			price,
 			path,
