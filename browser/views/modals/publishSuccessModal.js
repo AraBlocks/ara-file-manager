@@ -7,8 +7,8 @@ const html = require('choo/html')
 const styles = require('./styles')
 
 module.exports = ({
-	did = 'e89160647bd617d33ac386ed89f069d366711cafec9036d90805894761a58ebb',
-	name = 'Grump Cat'
+	did,
+	name
 }) => {
 	const encodedName = encodeURIComponent(name)
 	const confirmButton = new Button({
