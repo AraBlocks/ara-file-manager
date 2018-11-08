@@ -6,6 +6,7 @@ const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const k = require('../../../lib/constants/stateManagement')
 const menuItem = require('../hamburgerMenu/menuItem')
 const styles = require('./styles/afsFileRow')
+const menuStyles = require('../hamburgerMenu/styles/menuItem')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -34,36 +35,47 @@ class AfsFileRow extends Nanocomponent {
 			menuItem: this.makeMenu()
 		}
 		this.fileClicked = this.fileClicked.bind(this)
+		this.exportFile = this.exportFile.bind(this)
 	}
 
-	update(){
+	update() {
 		return true
 	}
 
 	makeMenu() {
 		const { props } = this
-		const items = []
-		const exportButton = {
-			children: 'Export',
-			onclick: this.exportFile.bind(this)
-		}
-		const deleteButton = {
-			children: 'Delete',
-			onclick: this.deleteFile.bind(this)
-		}
+	// 	<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
+	// 	<div class="${styles.menuItem}" onclick=${exportFile}>Export</div>
+	// 	<div class="${styles.divider} afsFileRow-divider"></div>
+	// 	<div class="${styles.menuItem}">Delete</div>
+	// </div>
 
+		let items
 		switch (props.rowType) {
 			case k.PUBLISH:
-				items.push(deleteButton)
+				items = html`
+					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
+						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
+					</div>
+				`
 				break
 			case k.UPDATE_FILE:
-				items.push(exportButton, deleteButton)
+				items = html`
+					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
+						<div class="${styles.menuItem}" onclick=${this.exportFile.bind(this)}>Export</div>
+						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
+					</div>
+				`
 				break
 			default:
-				items.push(exportButton)
+				items = html`
+					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
+						<div class="${styles.menuItem}" onclick=${this.exportFile.bind(this)}>Export</div>
+					</div>
+				`
 				break
 		}
-		return items.map((item) => [ new menuItem(item).render(), html`<div class="${styles.divider} afsFileRow-divider"></div>` ])
+		return items
 	}
 
 	deleteFile(e) {
@@ -75,6 +87,8 @@ class AfsFileRow extends Nanocomponent {
 		const { props } = this
 		if (props.did == null) { return }
 		e.stopPropagation()
+		e.target.parentNode.style.display = 'none'
+
 		fileSystemManager.showSelectDirectoryDialog()
 			.then(folderName => {
 				emit({
@@ -87,6 +101,7 @@ class AfsFileRow extends Nanocomponent {
 					}
 				})
 			})
+			.catch(() => {})
 	}
 
 	fileIconSelector(isFile) {
@@ -106,38 +121,41 @@ class AfsFileRow extends Nanocomponent {
 		if (!props.fileInfo.isFile) { return 'Folder' }
 		let fileType = path.extname(props.fileInfo.subPath)
 		fileType !== ""
-		? fileType = `${(fileType.slice(1)).toUpperCase()} File`
-		: fileType = "Unknown"
+			? fileType = `${(fileType.slice(1)).toUpperCase()} File`
+			: fileType = "Unknown"
 		return fileType
 	}
 
 	renderContextMenu(e) {
-		const contextMenu = document.getElementById('context-menu')
+		const contextMenu = e.target.closest('tr').children[0]
 		contextMenu.style.left = e.clientX - 1 + 'px'
 		contextMenu.style.top = e.clientY - 1 + 'px'
 		contextMenu.style.display = 'block'
-		contextMenu.addEventListener('mouseout', () => contextMenu.style.display = 'none')
+		contextMenu.addEventListener('mouseout', function (event) {
+			try {
+				const e = event.toElement || event.relatedTarget;
+				e.parentNode == this || e == this
+				? null
+				: contextMenu.style.display = 'none'
+			} catch (e) {}
+		})
 	}
 
 	createElement(index) {
 		const {
-			children,
 			fileClicked,
+			children,
 			props,
 			renderContextMenu
 		} = this
 
 		return html`
 			<tr
-				class="${styles.fileRow} afsFileRow-fileRow"
 				style="background-color: ${index % 2 ? 'white' : '#f1f1f1'};"
 				onclick=${fileClicked}
 				oncontextmenu=${renderContextMenu}
 			>
-				<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
-					<div>Export</div>
-					<div>Delete</div>
-				</div>
+				${children.menuItem}
 				<td class="${styles.fileNameCell} afsFileRow-fileNameCell" >
 					${this.fileIconSelector(props.fileInfo.isFile)}
 					${props.fileInfo.subPath}
@@ -146,13 +164,6 @@ class AfsFileRow extends Nanocomponent {
 				<td>${filesize(props.fileInfo.size)}</td>
 			</tr>
 		`
-
-	// 	<div class="${styles.menu} afsFileRow-menu" >
-	// 	${children.menuItem.map(item => [
-	// 		item.render(),
-	// 		html`<div class="${styles.divider} afsFileRow-divider"></div>`
-	// 	])}
-	// </div>
 	}
 }
 
