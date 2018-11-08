@@ -86,18 +86,18 @@ class AfsFileTable extends Nanocomponent {
 		const fileRows = this.makeFileRows()
 		const backButton = this.makeBackButton()
 		return html`
-		<div>
-			<div class="${styles.headerHolder} afsFileTable-headerHolder">
-				<div class="${styles.nameHeader} afsFileTable-nameHeader">Name</div>
-				<div class="${styles.typeHeader} afsFileTable-typeHeader">Type</div>
-				<div class="${styles.sizeHeader} afsFileTable-sizeHeader">Size</div>
-			</div>
-			<table class="${styles.container} AfsFileTable-container">
-				${backButton}
-				<tbody>
-					${fileRows.map((fileRow, index) => fileRow.render(index))}
-				</tbody>
-			</table>
+			<div>
+				<div class="${styles.headerHolder} afsFileTable-headerHolder">
+					<div class="${styles.nameHeader} afsFileTable-nameHeader">Name</div>
+					<div class="${styles.typeHeader} afsFileTable-typeHeader">Type</div>
+					<div class="${styles.sizeHeader} afsFileTable-sizeHeader">Size</div>
+				</div>
+				<table class="${styles.container} AfsFileTable-container">
+					${backButton}
+					<tbody>
+						${fileRows.map((fileRow, index) => fileRow.render(index))}
+					</tbody>
+				</table>
 			</div>
 		`
 	}
