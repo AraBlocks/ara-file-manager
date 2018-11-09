@@ -55,7 +55,7 @@ class AfsFileRow extends Nanocomponent {
 			case k.UPDATE_FILE:
 				menu = html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
-						<div class="${styles.menuItem}" onclick=${this.exportFile.bind(this)}>Export</div>
+						<div class="${styles.menuItem}" style="border-bottom: none;" onclick=${this.exportFile.bind(this)}>Export</div>
 						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
 					</div>
 				`
@@ -127,8 +127,8 @@ class AfsFileRow extends Nanocomponent {
 
 	renderContextMenu(e) {
 		const contextMenu = e.target.closest('tr').children[0]
-		contextMenu.style.left = e.clientX + 'px'
-		contextMenu.style.top = e.clientY + 'px'
+		contextMenu.style.left = e.clientX + 1 + 'px'
+		contextMenu.style.top = e.clientY + 1 + 'px'
 		contextMenu.style.display = 'block'
 		contextMenu.addEventListener('mouseout', function (event) {
 			try {

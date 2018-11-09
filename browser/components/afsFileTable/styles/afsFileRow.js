@@ -13,7 +13,6 @@ module.exports = {
 			height: 0;
 			display: none;
 			position: absolute;
-			border: 1px solid var(--ara-grey);
 		}
 	`,
 
@@ -71,6 +70,7 @@ module.exports = {
 	menuItem: css`
 		:host {
 			background-color: white;
+			border: 1px solid var(--ara-grey);
 			cursor: pointer;
 			font-family: ${fonts.light};
 			height: 2em;
