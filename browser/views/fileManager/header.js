@@ -15,8 +15,10 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Header extends Nanocomponent {
-  constructor({ selectTab }) {
+  constructor({ selectTab, userAid }) {
     super()
+
+    this.props = { userDID: userAid }
 
     this.children = {
       publishFilebutton: new Button({
@@ -45,7 +47,8 @@ class Header extends Nanocomponent {
     return true
   }
 
-  createElement({ activeTab, araBalance, username }) {
+  createElement({ activeTab, araBalance }) {
+    console.log('araBalance ',araBalance)
     const { children, props } = this
     return html`
       <div class="${styles.container} header-container">
@@ -64,10 +67,10 @@ class Header extends Nanocomponent {
           </div>
           <div class="${styles.userHolder} header-userHolder">
             <div>
-              <b>${username}</b>
+              <b>ID: ${props.userDID.slice(8,14)}...</b>
             </div>
             <div>
-              ${Math.round(araBalance * 100) / 100} Ara
+              ${araBalance ? Math.round(araBalance * 100) / 100 + ' Ara' : 'Calculating Balance...'} 
             </div>
           </div>
         </div>
