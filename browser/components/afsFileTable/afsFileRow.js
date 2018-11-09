@@ -4,9 +4,7 @@ const { emit } = require('../../lib/tools/windowManagement')
 const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const k = require('../../../lib/constants/stateManagement')
-const menuItem = require('../hamburgerMenu/menuItem')
 const styles = require('./styles/afsFileRow')
-const menuStyles = require('../hamburgerMenu/styles/menuItem')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -44,23 +42,18 @@ class AfsFileRow extends Nanocomponent {
 
 	makeMenu() {
 		const { props } = this
-	// 	<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
-	// 	<div class="${styles.menuItem}" onclick=${exportFile}>Export</div>
-	// 	<div class="${styles.divider} afsFileRow-divider"></div>
-	// 	<div class="${styles.menuItem}">Delete</div>
-	// </div>
 
-		let items
+		let menu
 		switch (props.rowType) {
 			case k.PUBLISH:
-				items = html`
+				menu = html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
 						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
 					</div>
 				`
 				break
 			case k.UPDATE_FILE:
-				items = html`
+				menu = html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
 						<div class="${styles.menuItem}" onclick=${this.exportFile.bind(this)}>Export</div>
 						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
@@ -68,14 +61,14 @@ class AfsFileRow extends Nanocomponent {
 				`
 				break
 			default:
-				items = html`
+				menu = html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
 						<div class="${styles.menuItem}" onclick=${this.exportFile.bind(this)}>Export</div>
 					</div>
 				`
 				break
 		}
-		return items
+		return menu
 	}
 
 	deleteFile(e) {
@@ -105,15 +98,21 @@ class AfsFileRow extends Nanocomponent {
 	}
 
 	fileIconSelector(isFile) {
-		let fileName = ''
-		isFile ? fileName = 'file.png' : fileName = 'folder.png'
-		return html`<img align="center" src="../assets/images/${fileName}" alt="fileIcon" class=${styles.fileImage}>`
+		return html`
+			<img
+				align="center"
+				src="../assets/images/${isFile ? 'file.png' : 'folder.png'}"
+				alt="fileIcon"
+				class=${styles.fileImage}
+			>
+		`
 	}
 
 	fileClicked() {
 		const { props } = this
-		if (props.fileInfo.isFile) { return }
-		props.fileRowClicked(props.fileInfo.subPath, props.fileInfo.items)
+		return props.fileInfo.isFile === false
+			? props.fileRowClicked(props.fileInfo.subPath, props.fileInfo.items)
+			: null
 	}
 
 	renderFileType() {
