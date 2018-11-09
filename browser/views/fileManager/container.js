@@ -17,7 +17,6 @@ class Container extends Nanocomponent {
       araBalance: account.araBalance,
       files,
       loadingLibrary: files.loadingLibrary,
-      username: account.username
     }
 
     this.children = {
@@ -78,8 +77,8 @@ class Container extends Nanocomponent {
     return html`
       <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
         ${files.published.length || files.purchased.length
-          ? sections.map(section => section.render({ files }))
-          : renderNoFilesMsg()}
+        ? sections.map(section => section.render({ files }))
+        : renderNoFilesMsg()}
       </div>`
   }
 
@@ -108,7 +107,6 @@ class Container extends Nanocomponent {
 
   update({ account, files }) {
     this.state.araBalance = account.araBalance
-    this.state.username = account.username
     this.state.loadingLibrary = files.loadingLibrary
     return true
   }
@@ -118,14 +116,14 @@ class Container extends Nanocomponent {
       children,
       renderSections,
       renderSpinnerBars,
-      state: { activeTab, araBalance, loadingLibrary, username }
+      state: { activeTab, araBalance, loadingLibrary }
     } = this
 
     return html`
       <div>
         <div class="${styles.container} container-container">
           <div>
-            ${children.header.render({ activeTab, araBalance, username })}
+            ${children.header.render({ activeTab, araBalance })}
             ${loadingLibrary ? renderSpinnerBars() : renderSections()}
           </div>
         </div>

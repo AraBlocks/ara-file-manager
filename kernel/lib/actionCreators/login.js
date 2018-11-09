@@ -58,7 +58,7 @@ async function login(_, load) {
   }
 
   try {
-    dispatch({ type: k.GETTING_USER_DATA })
+    dispatch({ type: k.GETTING_USER_DATA, load: { userAid: load.userAid } })
     windowManager.openWindow('filemanager')
 
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
