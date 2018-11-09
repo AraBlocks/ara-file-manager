@@ -9,6 +9,8 @@ module.exports = {
 
 	contextMenu: css`
 		:host {
+			width: 0;
+			height: 0;
 			display: none;
 			position: absolute;
 			border: 1px solid var(--ara-grey);
@@ -81,7 +83,7 @@ module.exports = {
 		}
 
 		:host:hover {
-      background-color: #f2f2f2;
+      background-color: #c9c9c9;
     }
 	`
 }
