@@ -24,6 +24,11 @@ module.exports = {
 		:host tr {
 			display: block;
 			height: 2em;
+			cursor: default;
+		}
+
+		:host tr:hover {
+			box-shadow: inset 0 0 4px 1px #7fc0ee;
 		}
 
 		:host tbody {
