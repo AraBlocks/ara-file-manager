@@ -37,7 +37,7 @@ module.exports = ({
 				span.addEventListener('animationend', () => span.classList.remove('fadeInUp'), false)
 				deeplink.copyDeeplink(did, name)
 			}}>
-				${copyLinkButton.render()}<span>Copied !</span>
+				${copyLinkButton.render({})}<span>Copied !</span>
 			</div>
 			<div class="${styles.smallMessage({})} modal-smallMessage">
 				You can edit this file and retrieve the distribution link<br>
@@ -49,7 +49,7 @@ module.exports = ({
 					in the full file list.
 				</div>
 			</div>
-			${confirmButton.render()}
+			${confirmButton.render({})}
     </div>
   `
 }

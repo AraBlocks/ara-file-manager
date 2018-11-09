@@ -48,7 +48,7 @@ class FileInfo extends Nanocomponent {
 		return true
 	}
 
-	createElement({ requiredIndicator = false}) {
+	createElement() {
 		const { children } = this
 		return html`
 			<div class=${styles.container}>

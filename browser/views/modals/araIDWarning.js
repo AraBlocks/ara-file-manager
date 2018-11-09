@@ -34,10 +34,10 @@ module.exports = ({ userDID }) => {
         </div>
         <div class="${styles.araIDHolder} modal-araIDHolder">${userDID}</div>
         <div class="${styles.copyItemContainer} modal-copyItemContainer" >
-          <div>${copyIDButton.render()}</div>
+          <div>${copyIDButton.render({})}</div>
         </div>
       </div>
-      ${confirmButton.render()}
+      ${confirmButton.render({})}
     </div>
   `
 }

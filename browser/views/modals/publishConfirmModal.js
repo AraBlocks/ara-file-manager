@@ -41,8 +41,8 @@ module.exports = (load) => {
           </span>
         </div>
       </div>
-      ${publishButton.render()}
-      ${cancelbutton.render()}
+      ${publishButton.render({})}
+      ${cancelbutton.render({})}
     </div>
   `
 }

@@ -21,7 +21,7 @@ module.exports = ({ modalName = 'fileMissing', fileName = 'Grump Cat' }) => {
 				${description}
 			</div>
       <div>
-        ${confirmButton.render()}
+        ${confirmButton.render({})}
       </div>
     </div>
   `
