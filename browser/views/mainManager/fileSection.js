@@ -70,7 +70,7 @@ class FileSection extends Nanocomponent {
 					}))}
 				</div>
 				${state.expanded ? divider() : null}
-				${children.fileManagerButton.render()}
+				${children.fileManagerButton.render({})}
 			</div>
 		`
 		function divider() {

@@ -11,6 +11,7 @@ const UtilityButton = require('../../components/utilityButton')
 const { remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
+const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -136,7 +137,10 @@ class Container extends Nanocomponent {
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
-				${children.publishButton.render(fileInfoChanged() ? { name: 'standard' } : { name: 'thinBorder' })}
+				${children.publishButton.render({
+					cssClass: fileInfoChanged() ? { name: 'standard' } : { name: 'thinBorder' },
+					children: `Publish Update ( ${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) } )`
+				})}
 			</div>
 		`
 	}

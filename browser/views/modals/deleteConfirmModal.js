@@ -42,8 +42,8 @@ module.exports = ({ price = 0.09 }) => {
 			<span class="${styles.postheader} modals-postheader">
 				${price} Ara
 			</span>
-      ${deleteButton.render()}
-      ${cancelbutton.render()}
+      ${deleteButton.render({})}
+      ${cancelbutton.render({})}
     </div>
   `
 }

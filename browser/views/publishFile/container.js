@@ -7,6 +7,7 @@ const { PUBLISH } = require('../../../lib/constants/stateManagement')
 const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
+const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const tooltip = require('../../lib/tools/electron-tooltip')
@@ -38,6 +39,7 @@ class Container extends Nanocomponent {
 			}),
 			utilityButton: new UtilityButton({})
 		}
+
 	}
 
 	update() {
@@ -65,10 +67,10 @@ class Container extends Nanocomponent {
 		}
 		fileList.length != 0
 			? emit({ event: PUBLISH, load })
-			: this.render({ requiredIndicator: true })
+			: this.render({})
 	}
 
-	createElement({ spinner = false, requiredIndicator = false }) {
+	createElement({ spinner = false }) {
 		tooltip({})
 		const { children, state } = this
 		return html`
@@ -86,8 +88,11 @@ class Container extends Nanocomponent {
 						to be able to download it.
 					</div>
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
-					${children.fileInfo.render({ requiredIndicator })}
-					${children.publishButton.render(state.fileList.length === 0 ? { name: 'thinBorder' } : { name: 'standard' })}
+					${children.fileInfo.render({})}
+					${children.publishButton.render({
+						cssClass: state.fileList.length === 0 ? { name: 'thinBorder' } : { name: 'standard' },
+						children: `Publish ( ${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) } )`
+					})}
 				</div>
 			</div>
 		`

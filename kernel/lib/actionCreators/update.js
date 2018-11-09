@@ -4,6 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:update')
 const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
+const { internalEmitter } = require('electron-window-manager')
 const { afsManager, farmerManager, araContractsManager } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
@@ -13,8 +14,6 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
   debug('%s heard', k.FEED_MANAGE_FILE)
   try {
     const { files, farmer } = store
-    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
-    await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     const file = files.published.find(({ did }) => did === load.did)
     dispatch({
       type: k.FEED_MANAGE_FILE,
@@ -26,6 +25,8 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
       }
     })
     windowManager.openWindow('manageFileView')
+    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
+    await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     const fileList = await afsManager.getFileList(load.did)
     dispatch({
       type: k.FEED_MANAGE_FILE,
@@ -112,11 +113,14 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
       await afs.commit({ did: load.did, password: account.password, price: Number(load.price) })
     }
 
-    dispatch({ type: k.UPDATED_FILE, load: load.did })
-    debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load.did)
+    dispatch({ type: k.UPDATED_FILE, load })
+    debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load)
     dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
     farmerManager.joinBroadcast({ did: load.did, farmer: farmer.farm })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', fileName: load.name } })
+    internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
   } catch (err) {
     debug('Error: %O', err)
   }

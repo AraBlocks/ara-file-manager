@@ -39,8 +39,8 @@ module.exports = (load) => {
           </span>
         </div>
       </div>
-      ${updateButton.render()}
-      ${cancelbutton.render()}
+      ${updateButton.render({})}
+      ${cancelbutton.render({})}
     </div>
   `
 }

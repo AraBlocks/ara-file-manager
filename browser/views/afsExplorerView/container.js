@@ -87,8 +87,8 @@ class Container extends Nanocomponent {
 				<div class="${styles.fileTable} AfsExplorerViewContainer-fileTable">
 					${children.afsFileTable.render({ fileList: state.fileList })}
 				</div>
-				${children.exportAllButton.render()}
-				${children.downloadUpdateButton.render()}
+				${children.exportAllButton.render({})}
+				${children.downloadUpdateButton.render({})}
 			</div>
 		`
 	}
