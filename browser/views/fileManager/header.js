@@ -12,11 +12,10 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
 
-let bad = true
 tt({
   position: 'top',
   customContent() {
-    return bad ? 'Copy To Clipboard' : 'Copied'
+    return 'Copy To Clipboard'
   }
 })
 
