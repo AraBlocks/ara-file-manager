@@ -92,7 +92,7 @@ class FileInfo extends Nanocomponent {
 					<b>Distribution Link</b>
 				</div>
 				${children.distributionLink.render({ value: deeplink.getDeeplink(parentState.did, parentState.name) })}
-				<div class=${styles.fileTable}>
+				<div class="${styles.fileTable} manageFile-fileTable">
 					${children.fileTable.render()}
 				</div>
 			</div>
