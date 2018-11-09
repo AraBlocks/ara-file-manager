@@ -77,8 +77,8 @@ class Container extends Nanocomponent {
     return html`
       <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
         ${files.published.length || files.purchased.length
-        ? sections.map(section => section.render({ files }))
-        : renderNoFilesMsg()}
+          ? sections.map(section => section.render({ files }))
+          : renderNoFilesMsg()}
       </div>`
   }
 
