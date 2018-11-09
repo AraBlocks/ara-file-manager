@@ -134,8 +134,8 @@ class AfsFileRow extends Nanocomponent {
 			try {
 				const e = event.toElement || event.relatedTarget;
 				e.parentNode == this || e == this
-				? null
-				: contextMenu.style.display = 'none'
+					? null
+					: contextMenu.style.display = 'none'
 			} catch (e) {}
 		})
 	}
