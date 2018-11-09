@@ -4,10 +4,10 @@ const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const actionsUtils = require('./utils')
 const k = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
-const farmDCDN = require('ara-network-node-dcdn-farm/src/dcdn')
+const farmDCDN = require('ara-farming-dcdn/src/dcdn')
 const fs = require('fs')
 const path = require('path')
-const rc = require('ara-network-node-dcdn-farm/src/rc')()
+const rc = require('ara-farming-dcdn/src/rc')()
 
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
