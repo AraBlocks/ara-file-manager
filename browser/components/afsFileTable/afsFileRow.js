@@ -127,8 +127,8 @@ class AfsFileRow extends Nanocomponent {
 
 	renderContextMenu(e) {
 		const contextMenu = e.target.closest('tr').children[0]
-		contextMenu.style.left = e.clientX - 1 + 'px'
-		contextMenu.style.top = e.clientY - 1 + 'px'
+		contextMenu.style.left = e.clientX + 'px'
+		contextMenu.style.top = e.clientY + 'px'
 		contextMenu.style.display = 'block'
 		contextMenu.addEventListener('mouseout', function (event) {
 			try {
