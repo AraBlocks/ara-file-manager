@@ -7,6 +7,19 @@ module.exports = {
   colors,
   fonts,
 
+  didHolder: css`
+    :host {
+      border-radius: 7px;
+      cursor: pointer;
+      padding: 0 6px;
+      transition: all ease-in-out;
+    }
+
+    :host:hover {
+      background-color: #d0d0d0;
+    }
+  `,
+
   container: css`
     :host {
       display: flex;
