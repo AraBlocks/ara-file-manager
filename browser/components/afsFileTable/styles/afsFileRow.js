@@ -83,7 +83,7 @@ module.exports = {
 		}
 
 		:host:hover {
-      background-color: #c9c9c9;
+			background-color: #c9c9c9;
     }
 	`
 }
