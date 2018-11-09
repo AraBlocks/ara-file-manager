@@ -1,5 +1,6 @@
 'use strict'
 
+const k = require('../../../lib/constants/stateManagement')
 const AfsFileRow = require('./afsFileRow')
 const styles = require('./styles/editableFileTable')
 const html = require('choo/html')
@@ -26,7 +27,7 @@ class EditableFileTable extends Nanocomponent {
 		this.deleteFile = this.deleteFile.bind(this)
 	}
 
-	update(){
+	update() {
 		return true
 	}
 
@@ -72,8 +73,10 @@ class EditableFileTable extends Nanocomponent {
 	}
 
 	createElement() {
+		const tableSize = this.props.tableType === k.UPDATE_FILE ? 225 : 285
 		const { preventDefault, onFileDrop } = this
- 		const fileRows = this.makeFileRows()
+		const fileRows = this.makeFileRows()
+
 		return html`
 			<div class=${styles.container}
 				ondrop=${onFileDrop}
@@ -89,14 +92,14 @@ class EditableFileTable extends Nanocomponent {
 							<th style="width: 99px;">Size</th>
 						</tr>
 					</thead>
-					<tbody style="height: ${fileRows.length ? 285 : 0}px;">
+					<tbody style="height: ${fileRows.length ? tableSize : 0}px;">
 						${fileRows.map((fileRow, index) => fileRow.render(index))}
 					</tbody>
 				</table>
 				${fileRows.length === 0
-					? html`<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">Drop files here</div>`
-					: null
-				}
+				? html`<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">Drop files here</div>`
+				: null
+			}
 
 			</div>
 		`
