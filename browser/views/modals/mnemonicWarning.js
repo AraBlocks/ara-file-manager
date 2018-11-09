@@ -46,10 +46,10 @@ module.exports = ({ mnemonic }) => {
         <div>${mnemonic.split(' ').slice(4,8).map(word => html`<b> ${word}</b>`)}</div>
         <div>${mnemonic.split(' ').slice(8).map(word => html`<b> ${word}</b>`)}</div>
         <div class="${styles.copyItemContainer} modal-copyItemContainer" >
-          <div>${copyMnemonicButton.render()}</div>
+          <div>${copyMnemonicButton.render({})}</div>
         </div>
       </div>
-      ${confirmButton.render()}
+      ${confirmButton.render({})}
     </div>
   `
 }

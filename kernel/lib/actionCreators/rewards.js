@@ -18,7 +18,7 @@ ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
       password: account.password,
       contentDid: load.did
     })
-    dispatch({ type: k.REWARDS_REDEEMED, load: value })
+    dispatch({ type: k.REWARDS_REDEEMED, load: { did: load.did, value } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
     debug('Error redeeming rewards: %o', err)

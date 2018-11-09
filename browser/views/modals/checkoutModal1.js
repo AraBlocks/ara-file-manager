@@ -53,8 +53,8 @@ module.exports = ({
       </div>
       </div>
       <div>
-        ${buyButton.render()}
-        ${cancelbutton.render()}
+        ${buyButton.render({})}
+        ${cancelbutton.render({})}
       </div>
     </div>
   `

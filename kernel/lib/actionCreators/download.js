@@ -12,8 +12,8 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 	debug('%s heard', k.DOWNLOAD)
 	try {
 		const { jobId } = store.files.purchased.find(({ did }) => did === load.did)
-		debug('Dispatching %s', k.DOWNLOADING)
-		dispatch({ type: k.DOWNLOADING, load: load.did })
+		debug('Dispatching %s', k.SUBMITTING_JOB)
+		dispatch({ type: k.SUBMITTING_JOB, load })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
 		farmerManager.download({
@@ -30,8 +30,8 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 	}
 })
 
-function startHandler(size) {
-	dispatch({ type: k.SET_SIZE, load: size })
+function startHandler(load) {
+	dispatch({ type: k.SET_SIZE, load })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }
 
@@ -43,13 +43,13 @@ function progressHandler(load) {
 
 function completeHandler(did) {
 	debug('Dispatching %s', k.DOWNLOADED)
-	dispatch({ type: k.DOWNLOADED, load: did })
+	dispatch({ type: k.DOWNLOADED, load: { did } })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }
 
 function errorHandler(did) {
 	debug('Download failed')
 	debug('Dispatching %s', did)
-	dispatch({ type: k.DOWNLOAD_FAILED, load: did })
+	dispatch({ type: k.DOWNLOAD_FAILED, load: { did } })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }

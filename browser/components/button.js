@@ -25,11 +25,10 @@ class Button extends Nanocomponent {
     }
   }
 
-  update(cssClass) {
+  update({ cssClass, children }) {
     const { props } = this
-    if (cssClass != null) {
-      props.cssClass = cssClass
-    }
+    props.cssClass = cssClass ? cssClass : props.cssClass
+    props.children = children ? children : props.children
     return true
   }
 

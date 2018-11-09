@@ -75,7 +75,7 @@ class Header extends Nanocomponent {
           ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index}))}
         </div>
         <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
-          ${children.publishFilebutton.render()}
+          ${children.publishFilebutton.render({})}
         </div>
       </div>
     `

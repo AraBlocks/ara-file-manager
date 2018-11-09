@@ -101,15 +101,15 @@ class Login extends Nanocomponent {
         <form class="${styles.form} login-form" onsubmit=${login}>
           ${children.userDIDInput.render()}
           ${children.passwordInput.render()}
-          ${children.loginButton.render()}
+          ${children.loginButton.render({})}
         </form>
         <div class="${styles.buttonHolder} login-buttonHolder">
           <b>Need to recover your id?</b>
-          ${children.recoverButton.render()}
+          ${children.recoverButton.render({})}
           <div style="height: 10px;"></div>
           <b>Don't have an account?</b>
-          ${children.registerButton.render()}
-          ${children.cancelButton.render()}
+          ${children.registerButton.render({})}
+          ${children.cancelButton.render({})}
         </div>
       </div>
     `

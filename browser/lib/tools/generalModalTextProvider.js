@@ -56,6 +56,12 @@ function generalModalText(modalName, fileName) {
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
+		case 'updateSuccessModal':
+			title = 'Success!'
+			description = html `<div><b>${fileName}</b> has been updated on the network.<br><br>
+			Keep files on your computer and host them on
+			the network to earn Ara Token rewards.</div>`
+			break
 		case 'walletEmpty':
 			title = 'Not enough ARA'
 			description = html `<div>You do not have enough Ara Tokens to continue using your current File Manager services.<br><br>
