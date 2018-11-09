@@ -28,7 +28,7 @@ async function getAFSPrice({ did }) {
 		const result = await araFilesystem.getPrice({ did })
 		return result
 	} catch(err) {
-		debug('Error getting price: %o', e)
+		debug('Error getting price: %o', err)
 	}
 }
 
