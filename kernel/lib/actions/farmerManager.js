@@ -5,7 +5,6 @@ const actionsUtils = require('./utils')
 const farmDCDN = require('ara-farming-dcdn/src/dcdn')
 const fs = require('fs')
 const path = require('path')
-const rc = require('ara-farming-dcdn/src/rc')()
 
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
