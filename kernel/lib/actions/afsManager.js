@@ -7,7 +7,6 @@ const araFilesystem = require('ara-filesystem')
 const farmerManager = require('../actions/farmerManager')
 const mirror = require('mirror-folder')
 const path = require('path')
-const windowManager = require('electron-window-manager')
 
 async function exportFile({ did, exportPath, filePath }) {
 	debug('Exporting file %s to %s', filePath, exportPath)
@@ -93,10 +92,9 @@ async function _getContentsInFolder(afs, folderPath) {
   }
 }
 
-async function surfaceAFS({ dids, published = false }) {
-	const dcdnFarmStore = farmerManager.loadDcdnStore()
+async function surfaceAFS({ dids, DCDNStore, published = false }) {
 	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
-		shouldBroadcast: farmerManager.getBroadcastingState({ did, dcdnFarmStore }),
+		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
 		owner: published
 	})))
 }

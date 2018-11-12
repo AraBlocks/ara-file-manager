@@ -2,8 +2,6 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const actionsUtils = require('./utils')
-const k = require('../../../lib/constants/stateManagement')
-const dispatch = require('../reducers/dispatch')
 const farmDCDN = require('ara-farming-dcdn/src/dcdn')
 const fs = require('fs')
 const path = require('path')
@@ -28,23 +26,20 @@ async function joinBroadcast({ farmer, did, price = 1 }) {
 	}
 }
 
-function getBroadcastingState({ did, dcdnFarmStore = {} }) {
+function getBroadcastingState({ did, DCDNStore }) {
   try {
-		const fileData = dcdnFarmStore[did]
-    return fileData ? JSON.parse(fileData).upload : false
+    return JSON.parse(DCDNStore[did]).upload
   } catch (err) {
     return false
   }
 }
 
-function loadDcdnStore() {
+function loadDCDNStore(farmer) {
 	debug('loading dcdn farm store')
   try {
-    const fileDirectory = rc.dcdn.config
-    const data = fs.readFileSync(fileDirectory)
-    const itemList = JSON.parse(data)
-    return itemList
+		return JSON.parse(fs.readFileSync(farmer.config).toString())
   } catch (err) {
+		debug(err)
     debug('No DCDN farm store')
     return {}
   }
@@ -137,7 +132,7 @@ module.exports = {
 	createFarmer,
 	download,
 	getBroadcastingState,
-	loadDcdnStore,
+	loadDCDNStore,
 	joinBroadcast,
 	stopAllBroadcast,
 	unjoinBroadcast
