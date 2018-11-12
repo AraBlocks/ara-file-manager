@@ -3,6 +3,7 @@
 
 const AfsFileRow = require('./afsFileRow')
 const k = require('../../../lib/constants/stateManagement')
+const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/AfsFileTable')
 const html = require('choo/html')
@@ -16,14 +17,24 @@ class AfsFileTable extends Nanocomponent {
 		super()
 		this.children = {
 			sortFileButton: new UtilityButton({
-				children: '▼',
+				children: '▲',
 				onclick: this.sortFileName.bind(this)
+			}),
+			sortTypeButton: new UtilityButton({
+				children: '▼',
+				onclick: this.sortFileType.bind(this)
+			}),
+			sortSizeButton: new UtilityButton({
+				children: '▼',
+				onclick: this.sortFileSize.bind(this)
 			}),
 		}
 		this.state = {
 			currentFileList: fileList,
 			parentDirectory: [],
-			sortAlphabetically: true
+			sortNameReversed: true,
+			sortSizeReversed: false,
+			sortTypeReversed: false
 		}
 		this.props = {
 			did,
@@ -57,19 +68,35 @@ class AfsFileTable extends Nanocomponent {
 
 	sortFileName() {
 		const { props, state } = this
-		props.fileList.sort((a, b) => {
-			const fileName1 = a.subPath.toUpperCase()
-			const fileName2 = b.subPath.toUpperCase()
-			if (fileName1 < fileName2) {
-				return state.sortAlphabetically ? -1 : 1
-			} else if (fileName1 > fileName2) {
-				return state.sortAlphabetically ? 1 : -1
-			}
-			return 0
+		fileListSorter.sortTextAttribute({
+			fileList: props.fileList,
+			attribute: 'subPath',
+			reversed: state.sortNameReversed
 		})
 		this.render({})
-		state.sortAlphabetically = !state.sortAlphabetically
- 	}
+		state.sortNameReversed = !state.sortNameReversed
+	}
+
+	 sortFileSize() {
+		 const { props, state } = this
+		 fileListSorter.sortNumericAttribute({
+			 fileList: props.fileList,
+			 attribute: 'size',
+			 reversed: state.sortSizeReversed
+		 })
+		 this.render({})
+		 state.sortSizeReversed = !state.sortSizeReversed
+	}
+
+	sortFileType() {
+		const { props, state } = this
+		fileListSorter.sortFileType({
+			fileList: props.fileList,
+			reversed: state.sortTypeReversed
+		})
+		this.render({})
+		state.sortTypeReversed = !state.sortTypeReversed
+	}
 
 	fileRowClicked(parentDirectory, fileList) {
 		const { state } = this
@@ -115,10 +142,16 @@ class AfsFileTable extends Nanocomponent {
 				<div class="${styles.headerHolder} afsFileTable-headerHolder">
 					<div class="${styles.nameHeader} afsFileTable-nameHeader">
 						Name
-						${children.sortFileButton.render({ children: state.sortAlphabetically ? '▼' : '▲' })}
+						${children.sortFileButton.render({ children: state.sortNameReversed ? '▲' : '▼' })}
 					</div>
-					<div class="${styles.typeHeader} afsFileTable-typeHeader">Type</div>
-					<div class="${styles.sizeHeader} afsFileTable-sizeHeader">Size</div>
+					<div class="${styles.typeHeader} afsFileTable-typeHeader">
+						Type
+						${children.sortTypeButton.render({ children: state.sortTypeReversed ? '▲' : '▼' })}
+					</div>
+					<div class="${styles.sizeHeader} afsFileTable-sizeHeader">
+						Size
+						${children.sortSizeButton.render({ children: state.sortSizeReversed ? '▲' : '▼' })}
+					</div>
 				</div>
 				<table class="${styles.container} AfsFileTable-container">
 					${backButton}

@@ -90,12 +90,13 @@ module.exports = {
 		}
 	`,
 
-	nameHolder: css`
+	headerHolder: css`
 		:host {
 			align-items: center;
 			display: flex;
 			justify-content:
-			space-between; width: 350px;
+			space-between;
+			width: 100%;
 		}
 	`
 }
