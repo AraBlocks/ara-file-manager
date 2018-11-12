@@ -21,7 +21,7 @@ module.exports = ({ userDID }) => {
   return html`
     <div class="${styles.containerLeft} modals-containerLeft">
       <div class="${styles.logo} modals-logo">
-        <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
+        <img src="../assets/images/ARA_logo_horizontal.png"/>
       </div>
       <div>
         <div class="${styles.title} modals-title">

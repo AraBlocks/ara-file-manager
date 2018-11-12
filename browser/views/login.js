@@ -86,7 +86,7 @@ class Login extends Nanocomponent {
     return html`
       <div class="${styles.container} login-container">
         <div class="${styles.logo} login-logo">
-          <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
+          <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
         <div class="${styles.title} login-title">
           Log In
