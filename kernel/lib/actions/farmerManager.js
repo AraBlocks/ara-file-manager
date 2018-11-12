@@ -79,7 +79,7 @@ async function download({
 		await farmer.join({
 			did,
 			download: true,
-			upload: false,
+			upload: true,
 			price,
 			maxPeers,
 			jobId: jobId ? jobId.slice(2) : null
@@ -105,7 +105,6 @@ async function download({
 		farmer.on('complete', (did) => {
 			debug('Download complete!')
 			completeHandler(did)
-			joinBroadcast({ farmer, did })
 		})
 		farmer.on('requestcomplete', (did) => {
 			debug('Rewards allocated')
