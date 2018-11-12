@@ -7,10 +7,22 @@ module.exports = {
   colors,
   fonts,
 
+  container: css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      font-family: ${fonts.light};
+      height: 150px;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+  `,
+
   didHolder: css`
     :host {
       border-radius: 7px;
       cursor: pointer;
+      margin-bottom: 5px;
       padding: 0 6px;
       transition: all ease-in-out;
     }
@@ -20,14 +32,11 @@ module.exports = {
     }
   `,
 
-  container: css`
+  iconHolder: css`
     :host {
-      display: flex;
-      flex-direction: column;
-      font-family: ${fonts.light};
-      height: 150px;
-      justify-content: space-between;
-      margin-bottom: 40px;
+      margin-right: 3px;
+      width: 15px;
+      vertical-align: bottom;
     }
   `,
 

@@ -50,6 +50,13 @@ module.exports = {
     }
   `,
 
+  iconHolder: css`
+    :host {
+      margin-right: 3px;
+      width: 11px;
+    }
+  `,
+
   price: css`
     :host {
       font-family: ${fonts.bold};

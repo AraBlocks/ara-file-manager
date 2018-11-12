@@ -54,6 +54,10 @@ class Header extends Nanocomponent {
 
   createElement({ activeTab, araBalance }) {
     const { children, props } = this
+    const balanceElements = [
+      html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/ara_token.png"/>`,
+      Math.round(araBalance * 100) / 100
+    ]
     return html`
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader">
@@ -78,7 +82,7 @@ class Header extends Nanocomponent {
               <b>ID: ${props.userDID.slice(8,14)}...</b>
             </div>
             <div>
-              ${araBalance ? Math.round(araBalance * 100) / 100 + ' Ara' : 'Calculating Balance...'}
+              ${araBalance ? balanceElements : 'Calculating Balance...'}
             </div>
           </div>
         </div>
