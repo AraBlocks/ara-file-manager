@@ -95,23 +95,6 @@ class EditableFileTable extends Nanocomponent {
 
 	sortFileName() {
 		const { props, state } = this
-		const fileList = props.parentState[props.field]
-		fileList.sort((a, b) => {
-			const fileName1 = a.subPath.toUpperCase()
-			const fileName2 = b.subPath.toUpperCase()
-			if (fileName1 < fileName2) {
-				return state.sortAlphabetically ? -1 : 1
-			} else if (fileName1 > fileName2) {
-				return state.sortAlphabetically ? 1 : -1
-			}
-			return 0
-		})
-		props.renderView()
-		state.sortAlphabetically = !state.sortAlphabetically
-	 }
-
-	 sortFileName() {
-		const { props, state } = this
 		fileListSorter.sortTextAttribute({
 			fileList: props.parentState[props.field],
 			attribute: 'subPath',
@@ -121,15 +104,15 @@ class EditableFileTable extends Nanocomponent {
 		props.renderView()
 	}
 
-	 sortFileSize() {
-		 const { props, state } = this
-		 fileListSorter.sortNumericAttribute({
-			 fileList: props.parentState[props.field],
-			 attribute: 'size',
-			 reversed: state.sortSizeReversed
-		 })
-		 state.sortSizeReversed = !state.sortSizeReversed
-		 props.renderView()
+	sortFileSize() {
+		const { props, state } = this
+		fileListSorter.sortNumericAttribute({
+			fileList: props.parentState[props.field],
+			attribute: 'size',
+			reversed: state.sortSizeReversed
+		})
+		state.sortSizeReversed = !state.sortSizeReversed
+		props.renderView()
 	}
 
 	sortFileType() {
