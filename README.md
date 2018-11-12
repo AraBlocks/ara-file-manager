@@ -1,21 +1,19 @@
 # ara-content-manager
 
 ## Status
-This project is still in active developement.
+This project is in active developement. `dev` is stable branch.
 
 ## Dependencies
 - [Node](https://nodejs.org/en/download/)
 
 ## Installation
 ```
-$ npm run build
+$ npm install electron-packager -g
+$ npm install
+$ electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icons/mac/ara.icns --prune=true --out=release-builds --app-bundle-id=“com.littlstar.araContentManager”
+$ npm run start-dev
 ```
 
-## Usage
-To trigger a purchase request
-```
-node mockDapp.js
-```
 Press the purchase button. In ~15 seconds a transaction receipt object should be logged to the console.
 
 ## Example
@@ -26,6 +24,7 @@ Press the purchase button. In ~15 seconds a transaction receipt object should be
 - [How to contribute](https://github.com/littlstar/ara-content-manager/blob/master/CONTRIBUTING.md)
 
 ## See also
+- External [link](https://goo.gl/67cqTC)
 
 ## License
 LGPL-3.0
