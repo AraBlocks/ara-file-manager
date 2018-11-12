@@ -80,11 +80,20 @@ async function login(_, load) {
     })
 
     switchLoginState(true)
-
+    const DCDNStore = farmerManager.loadDCDNStore(farmer)
     const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
-    const purchased = await afsManager.surfaceAFS({ dids: purchasedDIDs })
+    const purchased = await afsManager.surfaceAFS({
+      dids: purchasedDIDs,
+      userDID: load.userAid,
+      DCDNStore
+    })
     const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
-    const published = await afsManager.surfaceAFS({ dids: publishedDIDs, published: true })
+    const published = await afsManager.surfaceAFS({
+      dids: publishedDIDs,
+      userDID: load.userAid,
+      published: true,
+      DCDNStore
+    })
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
