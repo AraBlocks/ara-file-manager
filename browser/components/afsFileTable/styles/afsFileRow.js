@@ -73,6 +73,7 @@ module.exports = {
 			border: 1px solid var(--ara-grey);
 			cursor: pointer;
 			font-family: ${fonts.light};
+			font-size: 13px;
 			height: 2em;
 			line-height: 2em;
 			padding: 0 5px;
