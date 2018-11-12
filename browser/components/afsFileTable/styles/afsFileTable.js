@@ -77,7 +77,11 @@ module.exports = {
 
 	nameHeader: css`
 		:host {
+			align-items: center;
 			border-right: 1px solid var(--ara-grey);
+			display: flex;
+			justify-content: space-between;
+			padding-right: 5px;
 			width: 60%;
 		}
 	`,

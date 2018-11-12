@@ -2,6 +2,7 @@
 
 const k = require('../../../lib/constants/stateManagement')
 const AfsFileRow = require('./afsFileRow')
+const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/editableFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -21,6 +22,13 @@ class EditableFileTable extends Nanocomponent {
 			parentState,
 			renderView,
 			tableType
+		}
+		this.state = { sortAlphabetically: true }
+		this.children = {
+			sortFileButton: new UtilityButton({
+				children: '▼',
+				onclick: this.sortFileName.bind(this)
+			}),
 		}
 		this.onFileDrop = this.onFileDrop.bind(this)
 		this.preventDefault = this.preventDefault.bind(this)
@@ -72,9 +80,31 @@ class EditableFileTable extends Nanocomponent {
 		props.renderView()
 	}
 
+	sortFileName() {
+		const { props, state } = this
+		const fileList = props.parentState[props.field]
+		fileList.sort((a, b) => {
+			const fileName1 = a.subPath.toUpperCase()
+			const fileName2 = b.subPath.toUpperCase()
+			if (fileName1 < fileName2) {
+				return state.sortAlphabetically ? -1 : 1
+			} else if (fileName1 > fileName2) {
+				return state.sortAlphabetically ? 1 : -1
+			}
+			return 0
+		})
+		props.renderView()
+		state.sortAlphabetically = !state.sortAlphabetically
+ 	}
+
 	createElement() {
 		const tableSize = this.props.tableType === k.UPDATE_FILE ? 225 : 285
-		const { preventDefault, onFileDrop } = this
+		const {
+			children,
+			preventDefault,
+			onFileDrop,
+			state
+		} = this
 		const fileRows = this.makeFileRows()
 
 		return html`
@@ -87,7 +117,12 @@ class EditableFileTable extends Nanocomponent {
 				<table class="${styles.fileTable} EditableFileTable-container">
 					<thead>
 						<tr>
-							<th style="width: 350px;">Name</th>
+							<th style="width: 350px;">
+								<div class="${styles.nameHolder} EditableFileTable-nameHolder">
+										Name
+										${children.sortFileButton.render({ children: state.sortAlphabetically ? '▼' : '▲' })}
+								</div>
+							</th>
 							<th style="width: 99px;">Type</th>
 							<th style="width: 99px;">Size</th>
 						</tr>

@@ -40,6 +40,7 @@ module.exports = {
 			border: 1px solid var(--ara-grey);
 			height: 30px;
 			padding-left: 20px;
+			padding-right: 5px;
 		}
 
 		:host td {
@@ -86,6 +87,15 @@ module.exports = {
 	textHolder: css`
 		:host {
 			width: 100%;
+		}
+	`,
+
+	nameHolder: css`
+		:host {
+			align-items: center;
+			display: flex;
+			justify-content:
+			space-between; width: 350px;
 		}
 	`
 }

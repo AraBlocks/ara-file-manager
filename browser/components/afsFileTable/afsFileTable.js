@@ -3,6 +3,7 @@
 
 const AfsFileRow = require('./afsFileRow')
 const k = require('../../../lib/constants/stateManagement')
+const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/AfsFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -13,9 +14,16 @@ class AfsFileTable extends Nanocomponent {
 		fileList
 	}) {
 		super()
+		this.children = {
+			sortFileButton: new UtilityButton({
+				children: '▼',
+				onclick: this.sortFileName.bind(this)
+			}),
+		}
 		this.state = {
 			currentFileList: fileList,
-			parentDirectory: []
+			parentDirectory: [],
+			sortAlphabetically: true
 		}
 		this.props = {
 			did,
@@ -46,6 +54,22 @@ class AfsFileTable extends Nanocomponent {
 			</tr>
 		`
 	}
+
+	sortFileName() {
+		const { props, state } = this
+		props.fileList.sort((a, b) => {
+			const fileName1 = a.subPath.toUpperCase()
+			const fileName2 = b.subPath.toUpperCase()
+			if (fileName1 < fileName2) {
+				return state.sortAlphabetically ? -1 : 1
+			} else if (fileName1 > fileName2) {
+				return state.sortAlphabetically ? 1 : -1
+			}
+			return 0
+		})
+		this.render({})
+		state.sortAlphabetically = !state.sortAlphabetically
+ 	}
 
 	fileRowClicked(parentDirectory, fileList) {
 		const { state } = this
@@ -83,12 +107,16 @@ class AfsFileTable extends Nanocomponent {
 	}
 
 	createElement() {
+		const { children, state } = this
 		const fileRows = this.makeFileRows()
 		const backButton = this.makeBackButton()
 		return html`
 			<div>
 				<div class="${styles.headerHolder} afsFileTable-headerHolder">
-					<div class="${styles.nameHeader} afsFileTable-nameHeader">Name</div>
+					<div class="${styles.nameHeader} afsFileTable-nameHeader">
+						Name
+						${children.sortFileButton.render({ children: state.sortAlphabetically ? '▼' : '▲' })}
+					</div>
 					<div class="${styles.typeHeader} afsFileTable-typeHeader">Type</div>
 					<div class="${styles.sizeHeader} afsFileTable-sizeHeader">Size</div>
 				</div>
