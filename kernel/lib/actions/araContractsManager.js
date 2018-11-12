@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
 const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
 const araFilesystem = require('ara-filesystem')
-const { UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
 const windowManager = require('electron-window-manager')
@@ -149,7 +149,7 @@ async function subscribePublished({ did }) {
 			.on('data', async ({ returnValues }) => {
 				const did = returnValues._did.slice(-64)
 				const earning = await getAFSPrice({ did })
-				windowManager.internalEmitter.emit(UPDATE_EARNING, { did, earning })
+				windowManager.internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
 			})
 			.on('error', debug)
 
@@ -165,13 +165,30 @@ async function getAFSContract(contentDID) {
 	return new web3.eth.Contract(AFSAbi, proxyAddress)
 }
 
+async function subscribeRewardsAllocated(contentDID, userDID) {
+	try {
+		const AFSContract = await getAFSContract(contentDID)
+		const rewardsSubscription = AFSContract.events.RewardsAllocated({ filter: { _farmer: userDID } })
+		.on('data', async () => {
+			console.log('joooo hearrrrrrd')
+			const rewardsBalance = await getRewardsBalance(contentDID, userDID)
+			windowManager.internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
+		})
+		.on('error', debug)
+
+		return rewardsSubscription
+	} catch (err) {
+		debug('Error subscribing to rewards: %o', err)
+	}
+}
+
 function subscribeTransfer(userAddress) {
 	try {
 		const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
 		const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
 			.on('data', async () => {
 				const newBalance = await getAraBalance(store.account.userAid)
-				windowManager.internalEmitter.emit(UPDATE_BALANCE, { araBalance: newBalance })
+				windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
 			})
 			.on('error', debug)
 
@@ -192,5 +209,6 @@ module.exports = {
 	getPublishedEarnings,
 	purchaseItem,
 	subscribePublished,
+	subscribeRewardsAllocated,
 	subscribeTransfer
 }
