@@ -50,6 +50,10 @@ function generalModalText(modalName, fileName) {
 			title = 'Not Logged In'
 			description = 'Please login before purchasing this file.'
 			break
+		case 'pendingTransaction':
+			title = "Pending Transaction"
+			description = "Please wait for your previous transaction to finish"
+			break
 		case 'successModal':
 			title = 'Success!'
 			description = html `<div><b>${fileName}</b> is downloading now.<br><br>

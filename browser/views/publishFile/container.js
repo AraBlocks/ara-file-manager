@@ -10,7 +10,10 @@ const styles = require('./styles/container')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const { remote } = require('electron')
 const tooltip = require('../../lib/tools/electron-tooltip')
+const windowManager = remote.require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 
 class Container extends Nanocomponent {
 	constructor({ did, password }) {
@@ -65,9 +68,10 @@ class Container extends Nanocomponent {
 			name: fileName || 'Unnamed',
 			price
 		}
-		fileList.length != 0
-			? emit({ event: PUBLISH, load })
-			: this.render({})
+		if (fileList.length != 0 && !store.account.pendingTransaction) {
+			emit({ event: PUBLISH, load })
+		}
+		this.render({})
 	}
 
 	createElement({ spinner = false }) {
@@ -90,7 +94,8 @@ class Container extends Nanocomponent {
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({})}
 					${children.publishButton.render({
-						cssClass: state.fileList.length === 0 ? { name: 'thinBorder' } : { name: 'standard' },
+						cssClass: (state.fileList.length === 0) || store.account.pendingTransaction
+							? { name: 'thinBorder' } : { name: 'standard' },
 						children: `Publish ( ${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) } )`
 					})}
 				</div>

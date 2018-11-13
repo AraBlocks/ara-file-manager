@@ -11,6 +11,9 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
+const { remote } = require('electron')
+const windowManager = remote.require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 
 tt({
   position: 'top',
@@ -29,7 +32,10 @@ class Header extends Nanocomponent {
       publishFilebutton: new Button({
         children: 'Publish New File',
         cssClass: { opts: { color: 'blue', fontSize: 14 } },
-        onclick: () => windowManagement.openWindow('publishFileView')
+        onclick: () => {
+          if (store.account.pendingTransaction) { return }
+          windowManagement.openWindow('publishFileView')
+        }
       }),
       closeButton: new UtilityButton({ children: '✕' }),
       minimizeButton: new UtilityButton({ children: '–', onclick: windowManagement.minimizeWindow }),
@@ -90,7 +96,11 @@ class Header extends Nanocomponent {
           ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index}))}
         </div>
         <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
-          ${children.publishFilebutton.render({})}
+          ${children.publishFilebutton.render({
+            cssClass: store.account.pendingTransaction
+              ? { name: 'thinBorder', opts: { fontSize: 14 }}
+              : { opts: { color: 'blue', fontSize: 14 } }
+          })}
         </div>
       </div>
     `
