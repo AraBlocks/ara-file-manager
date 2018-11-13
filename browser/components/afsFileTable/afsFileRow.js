@@ -3,12 +3,13 @@
 const { emit } = require('../../lib/tools/windowManagement')
 const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
+const fileListUtil = require('../../lib/tools/fileListUtil')
 const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const path = require('path')
+
 
 class AfsFileRow extends Nanocomponent {
 	constructor({
@@ -117,12 +118,7 @@ class AfsFileRow extends Nanocomponent {
 
 	renderFileType() {
 		const { props } = this
-		if (!props.fileInfo.isFile) { return 'Folder' }
-		let fileType = path.extname(props.fileInfo.subPath)
-		fileType !== ""
-			? fileType = `${(fileType.slice(1)).toUpperCase()} File`
-			: fileType = "Unknown"
-		return fileType
+		return fileListUtil.getFileType({ isFile: props.fileInfo.isFile, subPath: props.fileInfo.subPath })
 	}
 
 	renderContextMenu(e) {

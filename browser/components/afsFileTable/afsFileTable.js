@@ -3,6 +3,8 @@
 
 const AfsFileRow = require('./afsFileRow')
 const k = require('../../../lib/constants/stateManagement')
+const fileListSorter = require('../../lib/tools/fileListUtil')
+const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/AfsFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -13,9 +15,26 @@ class AfsFileTable extends Nanocomponent {
 		fileList
 	}) {
 		super()
+		this.children = {
+			sortFileButton: new UtilityButton({
+				children: '▲',
+				onclick: this.sortFileName.bind(this)
+			}),
+			sortTypeButton: new UtilityButton({
+				children: '▼',
+				onclick: this.sortFileType.bind(this)
+			}),
+			sortSizeButton: new UtilityButton({
+				children: '▼',
+				onclick: this.sortFileSize.bind(this)
+			}),
+		}
 		this.state = {
 			currentFileList: fileList,
-			parentDirectory: []
+			parentDirectory: [],
+			sortNameReversed: true,
+			sortSizeReversed: false,
+			sortTypeReversed: false
 		}
 		this.props = {
 			did,
@@ -45,6 +64,38 @@ class AfsFileTable extends Nanocomponent {
 				</td>
 			</tr>
 		`
+	}
+
+	sortFileName() {
+		const { props, state } = this
+		fileListSorter.sortTextAttribute({
+			fileList: props.fileList,
+			attribute: 'subPath',
+			reversed: state.sortNameReversed
+		})
+		state.sortNameReversed = !state.sortNameReversed
+		this.render({})
+	}
+
+	 sortFileSize() {
+		 const { props, state } = this
+		 fileListSorter.sortNumericAttribute({
+			 fileList: props.fileList,
+			 attribute: 'size',
+			 reversed: state.sortSizeReversed
+		 })
+		 state.sortSizeReversed = !state.sortSizeReversed
+		 this.render({})
+	}
+
+	sortFileType() {
+		const { props, state } = this
+		fileListSorter.sortFileType({
+			fileList: props.fileList,
+			reversed: state.sortTypeReversed
+		})
+		state.sortTypeReversed = !state.sortTypeReversed
+		this.render({})
 	}
 
 	fileRowClicked(parentDirectory, fileList) {
@@ -83,14 +134,24 @@ class AfsFileTable extends Nanocomponent {
 	}
 
 	createElement() {
+		const { children, state } = this
 		const fileRows = this.makeFileRows()
 		const backButton = this.makeBackButton()
 		return html`
 			<div>
 				<div class="${styles.headerHolder} afsFileTable-headerHolder">
-					<div class="${styles.nameHeader} afsFileTable-nameHeader">Name</div>
-					<div class="${styles.typeHeader} afsFileTable-typeHeader">Type</div>
-					<div class="${styles.sizeHeader} afsFileTable-sizeHeader">Size</div>
+					<div class="${styles.nameHeader} afsFileTable-nameHeader">
+						Name
+						${children.sortFileButton.render({ children: state.sortNameReversed ? '▲' : '▼' })}
+					</div>
+					<div class="${styles.typeHeader} afsFileTable-typeHeader">
+						Type
+						${children.sortTypeButton.render({ children: state.sortTypeReversed ? '▲' : '▼' })}
+					</div>
+					<div class="${styles.sizeHeader} afsFileTable-sizeHeader">
+						Size
+						${children.sortSizeButton.render({ children: state.sortSizeReversed ? '▲' : '▼' })}
+					</div>
 				</div>
 				<table class="${styles.container} AfsFileTable-container">
 					${backButton}
