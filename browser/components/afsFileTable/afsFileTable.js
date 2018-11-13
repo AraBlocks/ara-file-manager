@@ -73,8 +73,8 @@ class AfsFileTable extends Nanocomponent {
 			attribute: 'subPath',
 			reversed: state.sortNameReversed
 		})
-		this.render({})
 		state.sortNameReversed = !state.sortNameReversed
+		this.render({})
 	}
 
 	 sortFileSize() {
@@ -84,8 +84,8 @@ class AfsFileTable extends Nanocomponent {
 			 attribute: 'size',
 			 reversed: state.sortSizeReversed
 		 })
-		 this.render({})
 		 state.sortSizeReversed = !state.sortSizeReversed
+		 this.render({})
 	}
 
 	sortFileType() {
@@ -94,8 +94,8 @@ class AfsFileTable extends Nanocomponent {
 			fileList: props.fileList,
 			reversed: state.sortTypeReversed
 		})
-		this.render({})
 		state.sortTypeReversed = !state.sortTypeReversed
+		this.render({})
 	}
 
 	fileRowClicked(parentDirectory, fileList) {

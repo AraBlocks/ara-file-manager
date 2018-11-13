@@ -92,7 +92,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const subscription = await araContractsManager.subscribePublished({ did: load.did })
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
 
-    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
+    await farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
 
     debug('Dispatching %s', k.FEED_MODAL)
     dispatch({ type: k.FEED_MODAL, load: {
