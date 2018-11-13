@@ -31,7 +31,7 @@ class Header extends Nanocomponent {
     this.children = {
       publishFilebutton: new Button({
         children: 'Publish New File',
-        cssClass: { opts: { color: 'blue', fontSize: 14 } },
+        cssClass: { opts: { fontSize: 14 } },
         onclick: () => {
           if (store.account.pendingTransaction) { return }
           windowManagement.openWindow('publishFileView')
@@ -99,7 +99,7 @@ class Header extends Nanocomponent {
           ${children.publishFilebutton.render({
             cssClass: store.account.pendingTransaction
               ? { name: 'thinBorder', opts: { fontSize: 14 }}
-              : { opts: { color: 'blue', fontSize: 14 } }
+              : { opts: { fontSize: 14 } }
           })}
         </div>
       </div>
