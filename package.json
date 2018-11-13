@@ -1,7 +1,7 @@
 {
   "name": "ara-content-manager",
   "productName": "Ara Content Manager",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "boot/main.js",
   "scripts": {
