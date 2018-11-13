@@ -26,7 +26,7 @@ module.exports = ({ mnemonic }) => {
   return html`
     <div class="${styles.container} modals-container">
       <div class="${styles.logo} modals-logo">
-        <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
+        <img src="../assets/images/ARA_logo_horizontal.png"/>
       </div>
       <div>
         <div

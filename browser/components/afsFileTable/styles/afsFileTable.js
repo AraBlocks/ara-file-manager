@@ -77,13 +77,21 @@ module.exports = {
 
 	nameHeader: css`
 		:host {
+			align-items: center;
 			border-right: 1px solid var(--ara-grey);
+			display: flex;
+			justify-content: space-between;
+			padding-right: 5px;
 			width: 60%;
 		}
 	`,
 
 	sizeHeader: css`
 		:host {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			padding-right: 5px;
 			width: 20%;
 		}
 	`,
@@ -96,7 +104,11 @@ module.exports = {
 
 	typeHeader: css`
 		:host {
+			align-items: center;
 			border-right: 1px solid var(--ara-grey);
+			display: flex;
+			justify-content: space-between;
+			padding-right: 5px;
 			width: 17%;
 		}
 	`

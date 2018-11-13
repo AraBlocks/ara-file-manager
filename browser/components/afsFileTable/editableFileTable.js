@@ -2,6 +2,8 @@
 
 const k = require('../../../lib/constants/stateManagement')
 const AfsFileRow = require('./afsFileRow')
+const fileListSorter = require('../../lib/tools/fileListUtil')
+const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/editableFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -21,6 +23,25 @@ class EditableFileTable extends Nanocomponent {
 			parentState,
 			renderView,
 			tableType
+		}
+		this.state = {
+			sortNameReversed: true,
+			sortSizeReversed: false,
+			sortTypeReversed: false
+		}
+		this.children = {
+			sortFileButton: new UtilityButton({
+				children: '▲',
+				onclick: this.sortFileName.bind(this)
+			}),
+			sortTypeButton: new UtilityButton({
+				children: '▼',
+				onclick: this.sortFileType.bind(this)
+			}),
+			sortSizeButton: new UtilityButton({
+				children: '▼',
+				onclick: this.sortFileSize.bind(this)
+			}),
 		}
 		this.onFileDrop = this.onFileDrop.bind(this)
 		this.preventDefault = this.preventDefault.bind(this)
@@ -72,9 +93,46 @@ class EditableFileTable extends Nanocomponent {
 		props.renderView()
 	}
 
+	sortFileName() {
+		const { props, state } = this
+		fileListSorter.sortTextAttribute({
+			fileList: props.parentState[props.field],
+			attribute: 'subPath',
+			reversed: state.sortNameReversed
+		})
+		state.sortNameReversed = !state.sortNameReversed
+		props.renderView()
+	}
+
+	sortFileSize() {
+		const { props, state } = this
+		fileListSorter.sortNumericAttribute({
+			fileList: props.parentState[props.field],
+			attribute: 'size',
+			reversed: state.sortSizeReversed
+		})
+		state.sortSizeReversed = !state.sortSizeReversed
+		props.renderView()
+	}
+
+	sortFileType() {
+		const { props, state } = this
+		fileListSorter.sortFileType({
+			fileList: props.parentState[props.field],
+			reversed: state.sortTypeReversed
+		})
+		state.sortTypeReversed = !state.sortTypeReversed
+		props.renderView()
+	}
+
 	createElement() {
 		const tableSize = this.props.tableType === k.UPDATE_FILE ? 225 : 285
-		const { preventDefault, onFileDrop } = this
+		const {
+			children,
+			preventDefault,
+			onFileDrop,
+			state
+		} = this
 		const fileRows = this.makeFileRows()
 
 		return html`
@@ -87,9 +145,24 @@ class EditableFileTable extends Nanocomponent {
 				<table class="${styles.fileTable} EditableFileTable-container">
 					<thead>
 						<tr>
-							<th style="width: 350px;">Name</th>
-							<th style="width: 99px;">Type</th>
-							<th style="width: 99px;">Size</th>
+							<th style="width: 350px;">
+								<div class="${styles.headerHolder} EditableFileTable-headerHolder">
+										Name
+										${children.sortFileButton.render({ children: state.sortNameReversed ? '▲' : '▼' })}
+								</div>
+							</th>
+							<th style="width: 99px;">
+								<div class="${styles.headerHolder} EditableFileTable-headerHolder">
+									Type
+									${children.sortTypeButton.render({ children: state.sortTypeReversed ? '▲' : '▼' })}
+								</div>
+							</th>
+							<th style="width: 99px;">
+								<div class="${styles.headerHolder} EditableFileTable-headerHolder">
+									Size
+									${children.sortSizeButton.render({ children: state.sortSizeReversed ? '▲' : '▼' })}
+								</div>
+							</th>
 						</tr>
 					</thead>
 					<tbody style="height: ${fileRows.length ? tableSize : 0}px;">

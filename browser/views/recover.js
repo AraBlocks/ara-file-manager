@@ -68,7 +68,7 @@ class Recover extends Nanocomponent {
       <div class="${styles.container} recover-container">
         ${overlay(pending)}
         <div class="${styles.logo} login-logo">
-          <img src="../assets/images/LTLSTR_Logo_FileManager.png"/>
+          <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
         <div class="${styles.title} login-title">
           Recover
