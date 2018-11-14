@@ -1,6 +1,6 @@
 'use strict'
 
-const { DOWNLOADED_PUBLISHED } = require('../../../../lib/constants/stateManagement')
+const { DOWNLOADED_PUBLISHED }  = require('../../../../lib/constants/stateManagement')
 const { colors, fonts } = require('styleUtils')
 const { css } = require('css')
 
@@ -50,12 +50,6 @@ module.exports = {
   peers: css`
     :host {
       font-family: ${fonts.regular};
-    }
-  `,
-
-  redeemSpinner: css`
-    :host {
-      display: inline-block;
     }
   `,
 

@@ -9,21 +9,13 @@ class PublishedStats extends Nanocomponent {
     return true
   }
 
-  renderEarnings(reedming, earnings, allocatedRewards) {
-    return reedming
-      ? html`<div class="${styles.redeemSpinner} publishedStats-redeemSpinner spinner-tiny-red"></div>`
-      : [earnings, allocatedRewards ? html`<span style="color:green;">(+${allocatedRewards})</span>` : null]
-  }
-
   createElement({
-    allocatedRewards,
     earnings,
     peers,
     price,
-    redeeming,
-    status
+    status,
+    unclaimed
   }) {
-    const { renderEarnings } = this
     return html`
       <div class="${styles.container(status)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
@@ -38,8 +30,8 @@ class PublishedStats extends Nanocomponent {
             |
           </div>
           <div>
-            <span class="${styles.bolden} publishedStats-bolden">Earnings:</span>
-            ${renderEarnings(redeeming, earnings, allocatedRewards)}
+          <span class="${styles.bolden} publishedStats-bolden">
+            Earnings:</span> ${earnings} ${unclaimed ? html`<span style="color:green;">(+${unclaimed})</span>` : null}
           </div>
         </div>
       </div>
