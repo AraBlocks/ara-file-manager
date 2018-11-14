@@ -7,7 +7,7 @@ module.exports = {
   tab(isActive) {
     return css`
       :host {
-        color: ${isActive ? colors.araRed : 'black'};
+        color: ${isActive ? 'var(--ara-green)' : 'black'};
         font-family: ${fonts.regular};
         font-size: 14px;
         transition: all 50ms ease-in-out;

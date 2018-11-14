@@ -43,6 +43,14 @@ module.exports = {
             }
           }
         }
+      case 'green':
+        opts = {
+          cssClass: {
+            opts: {
+              color: 'green'
+            }
+          }
+        }
       default:
     }
     return opts
@@ -51,8 +59,8 @@ module.exports = {
   colorSelector(color, hoverState = false) {
     let selectedColor
     switch (color) {
-      case 'red':
-        selectedColor = !hoverState ? 'var(--ara-red)' : '#e50112'
+      case 'black':
+        selectedColor = '#000000'
         break
       case 'blue':
         selectedColor = !hoverState ? 'var(--ara-blue)' : '#005ed9'
@@ -61,11 +69,20 @@ module.exports = {
       case 'gray':
         selectedColor = 'var(--ara-grey)'
         break
+      case 'green':
+        selectedColor = 'var(--ara-green)'
+        break
       case 'light black':
         selectedColor = '#444444'
         break
-      case 'black':
-        selectedColor = '#000000'
+      case 'orange':
+        selectedColor = 'var(--ara-orange)'
+        break
+      case 'red':
+        selectedColor = !hoverState ? 'var(--ara-red)' : '#e50112'
+        break
+      case 'teal':
+        selectedColor = 'var(--ara-teal)'
         break
       default:
         selectedColor = !hoverState ? 'var(--ara-red)' : 'green'

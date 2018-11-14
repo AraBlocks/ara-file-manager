@@ -18,30 +18,38 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		if (account.userAid == null) {
 			debug('not logged in')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notLoggedIn' } })
-			internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
+			windowManager.openModal('generalMessageModal')
 			return
 		}
 		const library = await araContractsManager.getLibraryItems(account.userAid)
 		if (library.includes('0x' + load.aid.slice(-64))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
-			internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
+			windowManager.openModal('generalMessageModal')
+			return
+		}
+
+		if (account.pendingTransaction) {
+			debug('pending transaction')
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'pendingTransaction' } })
+			windowManager.openModal('generalMessageModal')
 			return
 		}
 
 		const price = await araContractsManager.getAFSPrice({ did: load.aid })
 		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
-		internalEmitter.emit(k.OPEN_MODAL, 'checkoutModal1')
+		windowManager.openModal('checkoutModal1')
 	} catch (err) {
 		debug('Error: %O', err)
 		dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
-		internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
+		windowManager.openModal('generalMessageModal')
 	}
 })
 
 ipcMain.on(k.PURCHASE, async (event, load) => {
 	debug('%s heard: %s', k.PURCHASE, load.did)
 	try {
+		dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: true } })
 		const descriptorOpts = {
 			peers: 1,
 			name: load.fileName,
@@ -54,10 +62,13 @@ ipcMain.on(k.PURCHASE, async (event, load) => {
 		const jobId  = await araContractsManager.purchaseItem(load.did)
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
+		dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 	} catch (err) {
 		debug(err)
 		dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
-		internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
+		windowManager.openModal('generalMessageModal')
+		dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
+		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 	}
 })
