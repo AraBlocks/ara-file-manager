@@ -95,8 +95,9 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const subscription = await araContractsManager.subscribePublished({ did: load.did })
-    dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
+    const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
+    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid, )
+    dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
     await farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
 

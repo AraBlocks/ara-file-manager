@@ -64,6 +64,9 @@ ipcMain.on(k.PURCHASE, async (event, load) => {
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
 		dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
+		dispatch({ type: k.GOT_REWARDS_SUB, load: { rewardsSub } })
 	} catch (err) {
 		debug(err)
 		dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
