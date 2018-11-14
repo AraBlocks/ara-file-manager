@@ -62,7 +62,7 @@ module.exports = {
   clipboard: css`
     :host span {
       animation-duration: 1000ms;
-      color: red;
+      color: ${colorSelector('orange')};
       left: 39%;
       opacity: 0;
       position: absolute;
