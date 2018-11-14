@@ -1,7 +1,7 @@
 {
   "name": "ara-content-manager",
   "productName": "Ara Content Manager",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "boot/main.js",
   "scripts": {
@@ -11,6 +11,8 @@
     "pack": "build --dir",
     "dist": "build",
     "debug": "DEBUG=acm* release-builds/Ara\\ Content\\ Manager-darwin-x64/Ara\\ Content\\ Manager.app/Contents/MacOS/Ara\\ Content\\ Manager"
+    "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
+    "version": "npm run changelog && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -48,6 +50,7 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "chai": "^4.1.2",
+    "conventional-changelog-cli": "^2.0.11",
     "debug": "^3.1.0",
     "electron": "^2.0.5",
     "electron-builder": "^20.22.0",
