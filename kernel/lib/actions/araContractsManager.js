@@ -27,7 +27,7 @@ async function getAFSPrice({ did }) {
 	try {
 		const result = await araFilesystem.getPrice({ did })
 		return result
-	} catch (err) {
+	} catch(err) {
 		debug('Error getting price: %o', err)
 	}
 }
@@ -166,16 +166,15 @@ async function getAFSContract(contentDID) {
 }
 
 async function subscribeRewardsAllocated(contentDID, userDID) {
-	const { rewards } = araContracts
 	try {
 		const AFSContract = await getAFSContract(contentDID)
 		const rewardsSubscription = AFSContract.events.RewardsAllocated({ filter: { _farmer: userDID } })
-			.on('data', async () => {
-				console.log('joooo hearrrrrrd')
-				const rewardsBalance = await rewards.getRewardsBalance({ contentDid: contentDID, farmerDid: userDID })
-				windowManager.internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
-			})
-			.on('error', debug)
+		.on('data', async () => {
+			console.log('joooo hearrrrrrd')
+			const rewardsBalance = await getRewardsBalance(contentDID, userDID)
+			windowManager.internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
+		})
+		.on('error', debug)
 
 		return rewardsSubscription
 	} catch (err) {
