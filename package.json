@@ -10,7 +10,7 @@
     "postinstall": "install-app-deps",
     "pack": "build --dir",
     "dist": "build",
-    "debug": "DEBUG=* ./release-builds/Ara\\ Content\\ Manager-darwin-x64/Ara\\ Content\\ Manager.app/Contents/MacOS/Ara\\ Content\\ Manager"
+    "debug": "DEBUG=acm* release-builds/Ara\\ Content\\ Manager-darwin-x64/Ara\\ Content\\ Manager.app/Contents/MacOS/Ara\\ Content\\ Manager"
   },
   "repository": {
     "type": "git",

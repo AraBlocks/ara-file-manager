@@ -5,12 +5,13 @@ const Hamburger = require('../../../components/hamburgerMenu')
 const { deeplink, windowManagement } = require('../../../lib/tools/')
 
 module.exports = ({
+  allocatedRewards,
   did,
   name,
   owner,
+  redeeming,
   shouldBroadcast,
-  status,
-  unclaimed
+  status
 }) => {
   const menuItems = [{ children: 'Copy Link', onclick: () => deeplink.copyDeeplink(did, name) }]
   menuItems.addItem = function (children, event) {
@@ -42,6 +43,8 @@ module.exports = ({
         menuItems.addItem('Sync AFS', k.UPDATE_FILE)
     }
 
-  if (unclaimed) { menuItems.addItem('Reedeem Rewards', k.REDEEM_REWARDS) }
+  if (allocatedRewards && redeeming === false) {
+    menuItems.addItem('Reedeem Rewards', k.REDEEM_REWARDS)
+  }
   return new Hamburger(menuItems)
 }
