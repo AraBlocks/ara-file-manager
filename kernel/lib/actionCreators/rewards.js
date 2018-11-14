@@ -34,7 +34,6 @@ ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
 internalEmitter.on(k.REWARDS_ALLOCATED, (load) => {
   debug('%s HEARD', k.REWARDS_ALLOCATED)
   try {
-    debug(load)
     dispatch({ type: k.REWARDS_ALLOCATED, load })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
