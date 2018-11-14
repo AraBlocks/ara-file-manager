@@ -190,6 +190,7 @@ async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 		const AFSContract = await getAFSContract(contentDID)
 		const rewardsSubscription = AFSContract.events.RewardsAllocated({ filter: { _farmer: userDID } })
 			.on('data', async ({ returnValues }) => {
+				debug(returnValues._farmer, ethereumAddress)
 				if (returnValues._farmer !== ethereumAddress) { return }
 
 				const rewardsBalance = await rewards.getRewardsBalance({ contentDid: contentDID, farmerDid: userDID })
