@@ -32,10 +32,12 @@ class Container extends Nanocomponent {
 			}),
 			exportAllButton: new Button({
 				children: 'Export All',
+				cssClass: { opts: { color: 'green' } },
 				onclick: this.exportAll.bind(this)
 			}),
 			downloadUpdateButton: new Button({
 				children: 'Download Update',
+				cssClass: { opts: { color: 'orange' } },
 				onclick: this.exportAll.bind(this)
 			}),
 			utilityButton: new UtilityButton({})

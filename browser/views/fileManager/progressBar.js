@@ -12,7 +12,7 @@ module.exports = ({
   let color
   switch (status) {
     case k.DOWNLOADED_PUBLISHED:
-      color = shouldBroadcast ? 'blue' : 'black'
+      color = shouldBroadcast ? 'teal' : 'black'
       break
     case k.PAUSED:
       color = 'black'
@@ -21,7 +21,7 @@ module.exports = ({
       color = 'grey'
       break
     case k.DOWNLOADING:
-      color = 'red'
+      color = 'orange'
       break
     default:
       return html`
