@@ -89,17 +89,14 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.PUBLISHED, load: { balance, did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const subscription = await araContractsManager.subscribePublished({ did: load.did })
-    dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
+    const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
+    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid, )
+    dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
     await farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
 
     debug('Dispatching %s', k.FEED_MODAL)
-    dispatch({ type: k.FEED_MODAL, load: {
-      did: load.did,
-      name: load.name,
-      }
-    })
+    dispatch({ type: k.FEED_MODAL, load: { did: load.did, name: load.name } })
     internalEmitter.emit(k.OPEN_MODAL, 'publishSuccessModal')
   } catch (err) {
     debug('Error in committing: %o', err)

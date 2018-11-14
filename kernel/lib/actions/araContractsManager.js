@@ -93,6 +93,12 @@ async function getPublishedEarnings(items) {
 	return Promise.all(updatedEarnings)
 }
 
+async function getAFSContract(contentDID) {
+	if (!araContracts.registry.proxyExists(contentDID)) return false
+	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
+	return new web3.eth.Contract(AFSAbi, proxyAddress)
+}
+
 async function getAllocatedRewards(item, userDID, password) {
 	return {
 		...item,
@@ -140,6 +146,25 @@ async function getEarnings({ did }) {
 	}
 }
 
+async function getRewards(item, userEthAddress) {
+	const opts = { fromBlock: 0, toBlock: 'latest' }
+	try {
+		const AFSContract = await getAFSContract(item.did)
+		if (!AFSContract) return 0
+
+		const totalRewards = (await AFSContract.getPastEvents('Redeemed', opts))
+			.reduce((sum, { returnValues }) =>
+				returnValues._sender === userEthAddress
+					? sum += Number(araContracts.token.constrainTokenValue(returnValues._amount))
+					: sum
+				, 0)
+
+		return { ...item, earnings: item.earnings += totalRewards }
+	} catch (err) {
+		debug('Error getting rewards for %s : %o', item.did, err)
+	}
+}
+
 async function subscribePublished({ did }) {
 	try {
 		const AFSContract = await getAFSContract(did)
@@ -159,19 +184,15 @@ async function subscribePublished({ did }) {
 	}
 }
 
-async function getAFSContract(contentDID) {
-	if (!araContracts.registry.proxyExists(contentDID)) return false
-	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
-	return new web3.eth.Contract(AFSAbi, proxyAddress)
-}
-
-async function subscribeRewardsAllocated(contentDID, userDID) {
+async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 	const { rewards } = araContracts
 	try {
 		const AFSContract = await getAFSContract(contentDID)
 		const rewardsSubscription = AFSContract.events.RewardsAllocated({ filter: { _farmer: userDID } })
-			.on('data', async () => {
-				console.log('joooo hearrrrrrd')
+			.on('data', async ({ returnValues }) => {
+				debug(returnValues._farmer, ethereumAddress)
+				if (returnValues._farmer !== ethereumAddress) { return }
+
 				const rewardsBalance = await rewards.getRewardsBalance({ contentDid: contentDID, farmerDid: userDID })
 				windowManager.internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
 			})
@@ -208,6 +229,7 @@ module.exports = {
 	getEtherBalance,
 	getLibraryItems,
 	getPublishedEarnings,
+	getRewards,
 	purchaseItem,
 	subscribePublished,
 	subscribeRewardsAllocated,
