@@ -1,5 +1,6 @@
 'use strict'
 
+const { renderEarnings } = require('./util')
 const styles = require('./styles/publishedStats')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -7,12 +8,6 @@ const Nanocomponent = require('nanocomponent')
 class PublishedStats extends Nanocomponent {
   update() {
     return true
-  }
-
-  renderEarnings(reedming, earnings, allocatedRewards) {
-    return reedming
-      ? html`<div class="${styles.redeemSpinner} publishedStats-redeemSpinner spinner-tiny-red"></div>`
-      : [earnings, allocatedRewards ? html`<span style="color:green;">(+${allocatedRewards})</span>` : null]
   }
 
   createElement({
@@ -23,7 +18,6 @@ class PublishedStats extends Nanocomponent {
     redeeming,
     status
   }) {
-    const { renderEarnings } = this
     return html`
       <div class="${styles.container(status)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
