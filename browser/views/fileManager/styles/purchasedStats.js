@@ -53,12 +53,6 @@ module.exports = {
     }
   `,
 
-  redeemSpinner: css`
-    :host {
-      display: inline-block;
-    }
-  `,
-
   stats: css`
     :host {
       display: flex;
