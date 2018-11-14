@@ -11,9 +11,6 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
-const { remote } = require('electron')
-const windowManager = remote.require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
 
 tt({
   position: 'top',

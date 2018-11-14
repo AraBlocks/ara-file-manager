@@ -49,7 +49,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 ipcMain.on(k.PURCHASE, async (event, load) => {
 	debug('%s heard: %s', k.PURCHASE, load.did)
 	try {
-		account.pendingTransaction = true
+		dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: true } })
 		const descriptorOpts = {
 			peers: 1,
 			name: load.fileName,
@@ -62,13 +62,13 @@ ipcMain.on(k.PURCHASE, async (event, load) => {
 		const jobId  = await araContractsManager.purchaseItem(load.did)
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
-		account.pendingTransaction = false
+		dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 	} catch (err) {
 		debug(err)
 		dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
 		windowManager.openModal('generalMessageModal')
-		account.pendingTransaction = false
+		dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 	}
 })
