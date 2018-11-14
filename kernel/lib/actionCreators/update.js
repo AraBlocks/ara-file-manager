@@ -4,8 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:update')
 const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
-const { internalEmitter } = require('electron-window-manager')
-const { afsManager, farmerManager, araContractsManager } = require('../actions')
+const { afsManager, farmerManager } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
@@ -120,7 +119,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', fileName: load.name } })
-    internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
+    windowManager.openModal('generalMessageModal')
   } catch (err) {
     debug('Error: %O', err)
   }

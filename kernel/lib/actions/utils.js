@@ -18,6 +18,7 @@ async function descriptorGenerator(did, opts = {}) {
 		try { price = Number(await araContractsManager.getAFSPrice({ did })) }
 		catch (err) {}
 		const descriptor = {
+			allocatedRewards: 0,
 			did,
 			downloadPercent: AFSExists ? 1 : 0,
 			datePublished: meta ? meta.timestamp : null,
@@ -27,7 +28,7 @@ async function descriptorGenerator(did, opts = {}) {
 			peers: 0,
 			price,
 			path,
-			rewardsAllocated: 0,
+			redeeming: false,
 			shouldBroadcast: false,
 			size: meta ? meta.size : 0,
 			status: AFSExists ? k.DOWNLOADED_PUBLISHED : k.AWAITING_DOWNLOAD
