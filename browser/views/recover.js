@@ -23,7 +23,7 @@ class Recover extends Nanocomponent {
         cssClass: {
           name: 'smallInvisible',
           opts: {
-            color: 'blue',
+            color: 'orange',
             weight: 'light'
           }
         },

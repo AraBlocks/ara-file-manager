@@ -11,7 +11,7 @@ module.exports = ({ mnemonic }) => {
   const copyMnemonicButton = new Button({
     children: "Copy Mnemonic",
     cssClass: {
-      opts: { color: 'blue', fontSize: '10px' }
+      opts: { color: 'green', fontSize: '10px' }
     },
     onclick: () => clipboard.writeText(mnemonic)
   })
