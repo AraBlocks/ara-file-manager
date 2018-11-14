@@ -10,13 +10,10 @@ const styles = require('./styles/container')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const { remote } = require('electron')
 const tooltip = require('../../lib/tools/electron-tooltip')
-const windowManager = remote.require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
 
 class Container extends Nanocomponent {
-	constructor({ did, password }) {
+	constructor({ account }) {
 		super()
 
 		this.state = {
@@ -24,11 +21,9 @@ class Container extends Nanocomponent {
 			fileName: '',
 			fileList: [],
 			price: null,
-			priceManagement: true,
-			supernode: true,
 		}
 
-		this.props = { did, password }
+		this.props = { account }
 
 		this.children = {
 			fileInfo: new FileInfo({
@@ -59,16 +54,16 @@ class Container extends Nanocomponent {
 			fileList,
 			price
 		} = this.state
-		const { did, password } = this.props
+		const { account } = this.props
 		const paths = fileList.map(file => file.fullPath)
 		const load = {
-			userAid: did,
-			password,
+			userAid: account.userAid,
+			password: account.password,
 			paths,
 			name: fileName || 'Unnamed',
 			price
 		}
-		if (fileList.length != 0 && !store.account.pendingTransaction) {
+		if (fileList.length != 0 && !account.pendingTransaction) {
 			emit({ event: PUBLISH, load })
 		}
 		this.render({})
@@ -76,7 +71,7 @@ class Container extends Nanocomponent {
 
 	createElement({ spinner = false }) {
 		tooltip({})
-		const { children, state } = this
+		const { children, state, props } = this
 		return html`
 			<div>
 				${overlay(spinner)}
@@ -94,7 +89,7 @@ class Container extends Nanocomponent {
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({})}
 					${children.publishButton.render({
-						cssClass: (state.fileList.length === 0) || store.account.pendingTransaction
+						cssClass: (state.fileList.length === 0) || props.account.pendingTransaction
 							? { name: 'thinBorder' } : { name: 'standard' },
 						children: `Publish ( ${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) } )`
 					})}

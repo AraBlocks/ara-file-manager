@@ -23,17 +23,19 @@ tt({
 })
 
 class Header extends Nanocomponent {
-  constructor({ selectTab, userAid }) {
+  constructor({ selectTab, account }) {
     super()
 
-    this.props = { userDID: userAid }
-
+    this.props = {
+      account,
+      userDID: account.userAid
+    }
     this.children = {
       publishFilebutton: new Button({
         children: 'Publish New File',
         cssClass: { opts: { fontSize: 14 } },
         onclick: () => {
-          if (store.account.pendingTransaction) { return }
+          if (account.pendingTransaction) { return }
           windowManagement.openWindow('publishFileView')
         }
       }),
@@ -97,7 +99,7 @@ class Header extends Nanocomponent {
         </div>
         <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
           ${children.publishFilebutton.render({
-            cssClass: store.account.pendingTransaction
+            cssClass: props.account.pendingTransaction
               ? { name: 'thinBorder', opts: { fontSize: 14 }}
               : { opts: { fontSize: 14 } }
           })}

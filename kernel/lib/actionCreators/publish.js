@@ -19,7 +19,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
   try {
-    store.account.pendingTransaction = true
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: true } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     let dispatchLoad = { name: load.name }
@@ -55,10 +55,10 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('publishConfirmModal')
-    store.account.pendingTransaction = false
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
   } catch (err) {
     debug('Error publishing file %o:', err)
-    store.account.pendingTransaction = false
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
     windowManager.closeModal('generalPleaseWaitModal')
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
     windowManager.openModal('generalMessageModal')
@@ -70,7 +70,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard', k.CONFIRM_PUBLISH)
   const { account, farmer } = store
   try {
-    store.account.pendingTransaction = true
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: true } })
     acmManager.savePublishedItem(load.did, account.userAid)
 
     const descriptorOpts = {
@@ -92,7 +92,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const balance = await araContractsManager.getAraBalance(account.userAid)
     debug('Dispatching %s', k.PUBLISHED)
     dispatch({ type: k.PUBLISHED, load: { balance, did: load.did } })
-    store.account.pendingTransaction = false
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const subscription = await araContractsManager.subscribePublished({ did: load.did })
@@ -114,7 +114,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     acmManager.removedPublishedItem(load.did, account.userAid)
     dispatch({ type: k.ERROR_PUBLISHING })
 
-    store.account.pendingTransaction = false
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     windowManager.closeModal('generalPleaseWaitModal')
     //Needs short delay. Race conditions cause modal state to dump after its loaded

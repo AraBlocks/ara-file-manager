@@ -43,6 +43,14 @@ module.exports = {
             }
           }
         }
+      case 'green':
+        opts = {
+          cssClass: {
+            opts: {
+              color: 'green'
+            }
+          }
+        }
       default:
     }
     return opts
