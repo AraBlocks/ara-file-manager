@@ -106,8 +106,7 @@ class AfsFileTable extends Nanocomponent {
 	}
 
 	makeFileRows() {
-		const { state } = this
-		const { props } = this
+		const { props, state } = this
 		return state.currentFileList.map(fileInfo => new AfsFileRow({
 			did: props.did,
 			fileInfo,

@@ -21,7 +21,7 @@ class Container extends Nanocomponent {
 
     this.children = {
       header: new Header({
-        ...account,
+        account,
         selectTab: this.selectTab.bind(this)
       }),
 
