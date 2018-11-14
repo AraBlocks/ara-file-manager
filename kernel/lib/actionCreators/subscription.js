@@ -6,8 +6,8 @@ const { REFRESH, UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/consta
 const { internalEmitter, pingView } = require('electron-window-manager')
 
 internalEmitter.on(UPDATE_EARNING, (load) => {
-  debug('Dispatching %s', UPDATE_EARNING)
   try {
+    debug('Dispatching %s', UPDATE_EARNING)
     debug(load)
     dispatch({ type: UPDATE_EARNING, load })
     pingView({ view: 'filemanager', event: REFRESH })
@@ -17,8 +17,8 @@ internalEmitter.on(UPDATE_EARNING, (load) => {
 })
 
 internalEmitter.on(UPDATE_BALANCE, (load) => {
-  debug('Dispatching %s', UPDATE_BALANCE)
   try {
+    debug('Dispatching %s', UPDATE_BALANCE)
     dispatch({ type: UPDATE_BALANCE, load })
     pingView({ view: 'filemanager', event: REFRESH })
   } catch(err) {

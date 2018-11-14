@@ -6,7 +6,6 @@ const dispatch = require('../reducers/dispatch')
 const araContracts = require('ara-contracts')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
-const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
 
 
@@ -26,13 +25,4 @@ ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
   }
 })
 
-internalEmitter.on(k.REWARDS_ALLOCATED, (load) => {
-  debug('%s HEARD', k.REWARDS_ALLOCATED)
-  try {
-    dispatch({ type: k.REWARDS_ALLOCATED, load })
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-  } catch (err) {
-    debug('Error: %o', o)
-  }
-})
 

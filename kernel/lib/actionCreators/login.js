@@ -111,9 +111,6 @@ async function login(_, load) {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const subscriptions = await Promise.all(files.published.map(araContractsManager.subscribePublished))
-    await Promise.all(files.published.map((contentDID) =>
-      araContractsManager.subscribeRewardsAllocated(contentDID, load.userAid)))
-
     dispatch({ type: k.GOT_PUBLISHED_SUBS, load: subscriptions })
 
     debug('Login complete')

@@ -88,15 +88,10 @@ module.exports = (state, { load = null, type }) => {
       if (file == null) { break }
       file.earnings = file.earnings += Number(load.earning)
       break
-    case k.UPDATE_REWARDS_ALLOCATED:
-      file = findFile(load.did, state.published.concat(state.purchased))
-      if (file == null) { break }
-      file.rewardsAllocated = load.rewardsBalance
-      break
     case k.REWARDS_REDEEMED:
       file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
-      file.rewardsAllocated = 0
+      file.unclaimed = 0
       break
     case k.SET_SIZE:
       file = findFile(load.did, state.purchased)
