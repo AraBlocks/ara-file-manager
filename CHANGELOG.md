@@ -1,4 +1,13 @@
-# 0.1.0 (2018-11-13)
+## [0.1.1](https://github.com/littlstar/ara-content-manager/compare/0.1.0...0.1.1) (2018-11-14)
+
+
+### Features
+
+* PE-578 Handle pending transactions ([#227](https://github.com/littlstar/ara-content-manager/issues/227)) ([caf1903](https://github.com/littlstar/ara-content-manager/commit/caf1903))
+
+
+
+# [0.1.0](https://github.com/littlstar/ara-content-manager/compare/cb5314e...0.1.0) (2018-11-13)
 
 
 ### Bug Fixes
