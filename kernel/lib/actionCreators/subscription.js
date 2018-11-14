@@ -2,25 +2,24 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:subscription')
 const dispatch = require('../reducers/dispatch')
-const { REFRESH, UPDATE_EARNING, UPDATE_BALANCE } = require('../../../lib/constants/stateManagement')
+const k = require('../../../lib/constants/stateManagement')
 const { internalEmitter, pingView } = require('electron-window-manager')
 
-internalEmitter.on(UPDATE_EARNING, (load) => {
+internalEmitter.on(k.UPDATE_EARNING, (load) => {
+  debug('%s HEARD', k.UPDATE_EARNING)
   try {
-    debug('Dispatching %s', UPDATE_EARNING)
-    debug(load)
-    dispatch({ type: UPDATE_EARNING, load })
-    pingView({ view: 'filemanager', event: REFRESH })
+    dispatch({ type: k.UPDATE_EARNING, load })
+    pingView({ view: 'filemanager', event: k.REFRESH })
   } catch(err) {
     debug('Error: %o', err)
   }
 })
 
-internalEmitter.on(UPDATE_BALANCE, (load) => {
+internalEmitter.on(k.UPDATE_BALANCE, (load) => {
+  debug('%s HEARD', k.UPDATE_BALANCE)
   try {
-    debug('Dispatching %s', UPDATE_BALANCE)
-    dispatch({ type: UPDATE_BALANCE, load })
-    pingView({ view: 'filemanager', event: REFRESH })
+    dispatch({ type: k.UPDATE_BALANCE, load })
+    pingView({ view: 'filemanager', event: k.REFRESH })
   } catch(err) {
     debug('Error: %o', err)
   }

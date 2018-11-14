@@ -101,17 +101,24 @@ async function login(_, load) {
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     updatedPublishedItems = await Promise.all(files.published.map((item) =>
       araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
-    const updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
-      araContractsManager.getAllocatedRewards(item, load.userAid, load.password)));
+    let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
+      araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
+    updatedPublishedItems = await Promise.all(files.published.map((item) =>
+      araContractsManager.getRewards(item, accountAddress)))
+    updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
+      araContractsManager.getRewards(item, accountAddress)))
 
-    ({ files } = dispatch({
+    ;({ files } = dispatch({
       type: k.GOT_EARNINGS_AND_REWARDS,
       load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
     }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const subscriptions = await Promise.all(files.published.map(araContractsManager.subscribePublished))
-    dispatch({ type: k.GOT_PUBLISHED_SUBS, load: subscriptions })
+    const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
+    const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
+      .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, load.userAid)))
+
+    dispatch({ type: k.GOT_SUBSCRIPTIONS, load: { publishedSubs, rewardsSubs } })
 
     debug('Login complete')
   } catch (err) {
