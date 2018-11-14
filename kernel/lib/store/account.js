@@ -6,6 +6,5 @@ module.exports = {
   accountAddress: null,
   araBalance: null,
   etherBalance: null,
-  username: null,
-  pendingTransaction: false
+  username: null
 }

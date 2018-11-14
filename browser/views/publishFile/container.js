@@ -13,7 +13,7 @@ const Nanocomponent = require('nanocomponent')
 const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
-	constructor({ account }) {
+	constructor({ did, password }) {
 		super()
 
 		this.state = {
@@ -21,9 +21,11 @@ class Container extends Nanocomponent {
 			fileName: '',
 			fileList: [],
 			price: null,
+			priceManagement: true,
+			supernode: true,
 		}
 
-		this.props = { account }
+		this.props = { did, password }
 
 		this.children = {
 			fileInfo: new FileInfo({
@@ -54,24 +56,23 @@ class Container extends Nanocomponent {
 			fileList,
 			price
 		} = this.state
-		const { account } = this.props
+		const { did, password } = this.props
 		const paths = fileList.map(file => file.fullPath)
 		const load = {
-			userAid: account.userAid,
-			password: account.password,
+			userAid: did,
+			password,
 			paths,
 			name: fileName || 'Unnamed',
 			price
 		}
-		if (fileList.length != 0 && !account.pendingTransaction) {
-			emit({ event: PUBLISH, load })
-		}
-		this.render({})
+		fileList.length != 0
+			? emit({ event: PUBLISH, load })
+			: this.render({})
 	}
 
 	createElement({ spinner = false }) {
 		tooltip({})
-		const { children, state, props } = this
+		const { children, state } = this
 		return html`
 			<div>
 				${overlay(spinner)}
@@ -89,8 +90,7 @@ class Container extends Nanocomponent {
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({})}
 					${children.publishButton.render({
-						cssClass: (state.fileList.length === 0) || props.account.pendingTransaction
-							? { name: 'thinBorder' } : { name: 'standard' },
+						cssClass: state.fileList.length === 0 ? { name: 'thinBorder' } : { name: 'standard' },
 						children: `Publish ( ${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) } )`
 					})}
 				</div>

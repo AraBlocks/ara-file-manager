@@ -13,7 +13,7 @@ module.exports = {
   fonts,
 
   smallInvisible({
-    color  = 'green',
+    color  = 'red',
     fontSize = '14',
     weight = 'bold',
     height = '30'
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   standard({
-    color  = 'teal',
+    color  = 'red',
     fontSize = '18',
     weight = 'bold',
     height = '2'
