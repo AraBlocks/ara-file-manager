@@ -34,7 +34,7 @@ class Registration extends Nanocomponent {
         cssClass: {
           name: 'smallInvisible',
           opts: {
-            color: 'orange',
+            color: 'blue',
             height: '15',
             weight: 'light'
           }

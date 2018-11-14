@@ -17,7 +17,7 @@ module.exports = ({
 	})
 	const copyLinkButton = new Button({
 		children: 'Copy Link',
-		...styles.buttonSelector('green')
+		...styles.buttonSelector('blue')
 	})
   return html`
     <div class="${styles.container} modals-container">
@@ -43,7 +43,7 @@ module.exports = ({
 				You can edit this file and retrieve the distribution link<br>
 				<div class="${styles.horizontalContainer}">
 					any time by clicking
-					<div class="${styles.smallMessage({ color: 'teal' })} ${styles.smallPadding} modal-smallMessage,smallPadding">
+					<div class="${styles.smallMessage({ color: 'blue' })} ${styles.smallPadding} modal-smallMessage,smallPadding">
 						<b>Manage File</b>
 					</div>
 					in the full file list.

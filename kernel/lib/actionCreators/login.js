@@ -53,7 +53,7 @@ async function login(_, load) {
   } catch (err) {
     debug('Login error: %o', err)
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'loginFail' } })
-    windowManager.openModal('generalMessageModal')
+    internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
     return
   }
 

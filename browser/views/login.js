@@ -23,7 +23,7 @@ class Login extends Nanocomponent {
         cssClass: {
           name: 'smallInvisible',
           opts: {
-            color: 'orange',
+            color: 'blue',
             weight: 'light'
           }
         },

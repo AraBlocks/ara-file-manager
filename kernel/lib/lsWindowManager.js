@@ -8,7 +8,7 @@ const windowManager = require('electron-window-manager')
 
 windowManager.internalEmitter = new EventEmitter
 
-windowManager.openModal = (modalName) => {
+windowManager.internalEmitter.on(k.OPEN_MODAL, (modalName) => {
   debug('%s heard', k.OPEN_MODAL)
   if (windowManager.get(modalName).object != null) { return }
   windowManager.sharedData.set('current', modalName)
@@ -23,13 +23,14 @@ windowManager.openModal = (modalName) => {
       ...windowManager.setSize(modalName),
     }
   ).open()
-}
+})
 
-windowManager.closeModal = (modalName) => {
+windowManager.internalEmitter.on(k.CLOSE_MODAL, (modalName) => {
+  debug('%s heard', k.CLOSE_MODAL)
   windowManager.get(modalName).object
     ? windowManager.get(modalName).object.close()
     : null
-}
+})
 
 windowManager.setSize = (view) => {
   let width
