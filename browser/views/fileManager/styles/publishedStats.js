@@ -71,5 +71,11 @@ module.exports = {
       font-size: 12px;
       justify-content: flex-end;
     }
+  `,
+
+  redeemSpinner: css`
+    :host {
+      display: inline-block;
+    }
   `
 }
