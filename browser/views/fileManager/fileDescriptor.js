@@ -9,25 +9,27 @@ const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
   constructor({
+    allocatedRewards,
     did,
     name,
     owner,
+    redeeming,
     size = 0,
     status,
     shouldBroadcast,
-    unclaimed
   }) {
     super()
     this.props = { name, size }
 
     this.children = {
       hamburger: hamburgerHelper({
+        allocatedRewards,
         did,
         name,
         owner,
+        redeeming,
         shouldBroadcast,
         status,
-        unclaimed
       })
     }
     this.createSummary = this.createSummary.bind(this)
@@ -65,18 +67,18 @@ class FileDescriptor extends Nanocomponent {
     let unitColor
     switch (status) {
       case k.DOWNLOADED_PUBLISHED:
-        spanColor = shouldBroadcast ? 'blue' : 'black'
+        spanColor = shouldBroadcast ? 'teal' : 'black'
         break
       case k.AWAITING_DOWNLOAD:
         spanColor = 'grey'
         unitColor = 'grey'
         break
       case k.OUT_OF_SYNC:
-        spanColor = 'red'
+        spanColor = 'orange'
         msg = '(Out of Sync)'
         break
       case k.DOWNLOADING:
-        downloadedSpanColor = 'red'
+        downloadedSpanColor = 'orange'
         break
       case k.PAUSED:
         spanColor = 'grey'
@@ -84,7 +86,7 @@ class FileDescriptor extends Nanocomponent {
         msg = '(Paused)'
         break
       case k.UPDATE_AVAILABLE:
-        spanColor = 'red'
+        spanColor = 'orange'
         msg = '(Update Available)'
     }
 

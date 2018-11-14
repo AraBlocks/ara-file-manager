@@ -13,16 +13,18 @@ const {
 const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
 const windowManager = require('electron-window-manager')
-const { internalEmitter } = require('../../lib/lsWindowManager')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
   try {
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: true } })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
     let dispatchLoad = { name: load.name }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-    windowManager.pingView({ view: 'publishFileView', event: k.ESTIMATING_COST })
+    windowManager.openModal('generalPleaseWaitModal')
 
     let { afs: newAFS, afs: { did } } = await afs.create({ owner: load.userAid, password })
     await newAFS.close();
@@ -51,13 +53,15 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
       size
     }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-
-    windowManager.pingView({ view: 'publishFileView', event: k.ESTIMATION })
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.openModal('publishConfirmModal')
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
   } catch (err) {
     debug('Error publishing file %o:', err)
-    internalEmitter.emit(k.CLOSE_MODAL, 'generalPleaseWaitModal')
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
+    windowManager.closeModal('generalPleaseWaitModal')
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
-    internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
+    windowManager.openModal('generalMessageModal')
     return
   }
 })
@@ -66,6 +70,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard', k.CONFIRM_PUBLISH)
   const { account, farmer } = store
   try {
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: true } })
     acmManager.savePublishedItem(load.did, account.userAid)
 
     const descriptorOpts = {
@@ -87,10 +92,12 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const balance = await araContractsManager.getAraBalance(account.userAid)
     debug('Dispatching %s', k.PUBLISHED)
     dispatch({ type: k.PUBLISHED, load: { balance, did: load.did } })
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const subscription = await araContractsManager.subscribePublished({ did: load.did })
-    dispatch({ type: k.ADD_PUBLISHED_SUB, load: [subscription]})
+    const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
+    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid, )
+    dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
     await farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
 
@@ -100,7 +107,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       name: load.name,
       }
     })
-    internalEmitter.emit(k.OPEN_MODAL, 'publishSuccessModal')
+    windowManager.openModal('publishSuccessModal')
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
@@ -108,12 +115,13 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     acmManager.removedPublishedItem(load.did, account.userAid)
     dispatch({ type: k.ERROR_PUBLISHING })
 
+    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-    internalEmitter.emit(k.CLOSE_MODAL, 'generalPleaseWaitModal')
+    windowManager.closeModal('generalPleaseWaitModal')
     //Needs short delay. Race conditions cause modal state to dump after its loaded
     setTimeout(() => {
       dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
-      internalEmitter.emit(k.OPEN_MODAL, 'generalMessageModal')
+      windowManager.openModal('generalMessageModal')
     }, 500)
   }
 })

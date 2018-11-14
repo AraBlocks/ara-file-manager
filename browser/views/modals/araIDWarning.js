@@ -9,7 +9,7 @@ module.exports = ({ userDID }) => {
   const copyIDButton = new Button({
     children: "Copy Identity",
     cssClass: {
-      opts: { color: 'blue', fontSize: '10px' }
+      opts: { color: 'green', fontSize: '10px' }
     },
     onclick: () => clipboard.writeText(userDID)
   })

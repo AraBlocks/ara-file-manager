@@ -12,7 +12,7 @@ module.exports = {
 
     :host > div {
       animation: sk-stretchdelay 1.2s infinite ease-in-out;
-      background-color: var(--ara-blue);
+      background-color: var(--ara-teal);
       display: inline-block;
       height: 100%;
       margin-right: 3px;
