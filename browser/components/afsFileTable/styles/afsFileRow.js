@@ -14,6 +14,15 @@ module.exports = {
 			display: none;
 			position: absolute;
 		}
+
+		:host:before {
+			content: "";
+			position: absolute;
+			left: -3px;
+			top: -3px;
+			height: 5px;
+			width: 5px;
+		}
 	`,
 
 	fileNameCell: css`

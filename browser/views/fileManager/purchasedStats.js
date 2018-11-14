@@ -1,6 +1,7 @@
 'use strict'
 
 const k = require('../../../lib/constants/stateManagement')
+const { renderEarnings } = require('./util')
 const styles = require('./styles/purchasedStats')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -11,10 +12,11 @@ class PurchasedStats extends Nanocomponent {
   }
 
   createElement({
+    allocatedRewards,
     earnings,
     peers,
-    status,
-    unclaimed
+    redeeming,
+    status
    }) {
     return html`
       <div class="${styles.container} purchasedStats-container">
@@ -29,8 +31,8 @@ class PurchasedStats extends Nanocomponent {
             ]
             : null}
           <div class="${styles.earnings(status)} purchasedStats-earnings">
-            <span class="${styles.bolden} puchasedStats-bolden">
-              Earnings:</span> ${earnings} ${unclaimed ? html`<span style="color:green;">(+${unclaimed})</span>` : null}
+            <span class="${styles.bolden} puchasedStats-bolden">Earnings:</span>
+            ${renderEarnings(redeeming, earnings, allocatedRewards)}
           </div>
         </div>
       </div>
