@@ -65,7 +65,7 @@ button {
   justify-content: center;
 }
 
-.spinner, .spinner:after, .spinner-small-blue, .spinner-small-red, .spinner-tiny-red, .spinner:after {
+.spinner, .spinner:after, .spinner-small-blue, .spinner-small-red, .spinner:after {
   border-radius: 50%;
   width: 6em;
   height: 6em;
@@ -96,16 +96,6 @@ button {
 
 .spinner-small-red {
   font-size: 2px;
-  position: relative;
-  text-indent: -9999em;
-  border: .5em solid var(--ara-red);
-  border-top: .5em solid rgba(255, 255, 255, 0.2);
-  transform: translateZ(0);
-  animation: spin 800ms infinite linear;
-}
-
-.spinner-tiny-red {
-  font-size: 1px;
   position: relative;
   text-indent: -9999em;
   border: .5em solid var(--ara-red);
