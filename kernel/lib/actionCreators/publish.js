@@ -28,11 +28,12 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
 
     let { afs: newAFS, afs: { did } } = await afs.create({ owner: load.userAid, password })
     await newAFS.close();
-    (await afs.add({ did, paths: load.paths, password })).close()
+    await (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
     await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
 
+    debug('Deploying proxy')
     await afs.deploy({ password, did })
 
     debug('Estimating gas')
