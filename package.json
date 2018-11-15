@@ -1,7 +1,7 @@
 {
   "name": "ara-content-manager",
   "productName": "Ara Content Manager",
-  "version": "1.0.1",
+  "version": "0.1.1",
   "description": "",
   "main": "boot/main.js",
   "scripts": {
@@ -10,7 +10,9 @@
     "postinstall": "install-app-deps",
     "pack": "build --dir",
     "dist": "build",
-    "debug": "DEBUG=acm* release-builds/Ara\\ Content\\ Manager-darwin-x64/Ara\\ Content\\ Manager.app/Contents/MacOS/Ara\\ Content\\ Manager"
+    "debug": "DEBUG=acm* release-builds/Ara\\ Content\\ Manager-darwin-x64/Ara\\ Content\\ Manager.app/Contents/MacOS/Ara\\ Content\\ Manager",
+    "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
+    "version": "npm run changelog && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,7 @@
   "dependencies": {
     "ara-context": "github:arablocks/ara-context#semver:0.4.x",
     "ara-contracts": "github:arablocks/ara-contracts#semver:0.4.x",
-    "ara-farming-dcdn": "github:littlstar/ara-farming-dcdn#semver:0.2.x",
+    "ara-farming-dcdn": "github:littlstar/ara-farming-dcdn#semver:0.3.x",
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.5.x",
     "ara-identity": "github:arablocks/ara-identity#semver:0.30.x",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
@@ -48,6 +50,7 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "chai": "^4.1.2",
+    "conventional-changelog-cli": "^2.0.11",
     "debug": "^3.1.0",
     "electron": "^2.0.5",
     "electron-builder": "^20.22.0",
