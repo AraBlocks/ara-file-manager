@@ -19,7 +19,7 @@ function mockFiles() {
       shouldBroadcast: false,
       size: 10000043 * 100,
       status: k.AWAITING_DOWNLOAD,
-      unclaimed: 20
+      allocatedRewards: 20
     },
     {
       downloadPercent: 1,
@@ -32,7 +32,7 @@ function mockFiles() {
       shouldBroadcast: true,
       size: 12030043 * 100,
       status: k.DOWNLOADED_PUBLISHED,
-      unclaimed: 20
+      allocatedRewards: 20
     },
     {
       downloadPercent: 1,
@@ -45,7 +45,7 @@ function mockFiles() {
       shouldBroadcast: false,
       size: 12030043 * 100,
       status: k.DOWNLOADED_PUBLISHED,
-      unclaimed: 0
+      allocatedRewards: 0
     },
     {
       downloadPercent: 0,
@@ -58,7 +58,7 @@ function mockFiles() {
       shouldBroadcast: false,
       size: 19033043 * 100,
       status: k.AWAITING_DOWNLOAD,
-      unclaimed: 499
+      allocatedRewards: 499
     },
     {
       downloadPercent: .50,
@@ -83,7 +83,7 @@ function mockFiles() {
       shouldBroadcast: false,
       size: 12030043 * 100,
       status: k.OUT_OF_SYNC,
-      unclaimed: 14
+      allocatedRewards: 14
     },
     {
       downloadPercent: .70,
@@ -96,7 +96,7 @@ function mockFiles() {
       shouldBroadcast: false,
       size: 10000043 * 100,
       status: k.PAUSED,
-      unclaimed: 0
+      allocatedRewards: 0
     },
     {
       downloadPercent: 1,
@@ -109,7 +109,7 @@ function mockFiles() {
       shouldBroadcast: false,
       size: 12030043 * 100,
       status: k.UPDATE_AVAILABLE,
-      unclaimed: 0
+      allocatedRewards: 0
     }
   ]
 }
