@@ -21,7 +21,7 @@ module.exports = {
 			display: flex;
 			color: var(--ara-grey);
 			flex-direction: column;
-			font-family: "NoeDisplay-Bold", "ProximaNova-Bold";
+			font-family: ${fonts.black};
 			font-size: 24px;
 			height: 50%;
 			justify-content: flex-end;
