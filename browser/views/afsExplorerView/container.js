@@ -37,7 +37,7 @@ class Container extends Nanocomponent {
 			}),
 			downloadUpdateButton: new Button({
 				children: 'Download Update',
-				cssClass: { opts: { color: 'orange' } },
+				cssClass: { name: 'thinBorder' },
 				onclick: this.exportAll.bind(this)
 			}),
 			utilityButton: new UtilityButton({})

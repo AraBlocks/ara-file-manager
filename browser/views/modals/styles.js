@@ -71,8 +71,10 @@ module.exports = {
 
   fileName: css`
     :host {
-      font-family: ${fonts.boldSpecial};
-      font-size: 20px;
+      font-family: ${fonts.black};
+      font-size: 22px;
+      padding-top: 2px;
+      padding-bottom: 2px;
     }
   `,
 
@@ -194,7 +196,7 @@ module.exports = {
 
   title: css`
     :host {
-      font-family: ${fonts.boldSpecial};
+      font-family: ${fonts.black};
       font-size: 20px;
     }
   `,

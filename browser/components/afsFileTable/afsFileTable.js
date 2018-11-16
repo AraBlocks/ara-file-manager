@@ -41,6 +41,9 @@ class AfsFileTable extends Nanocomponent {
 			fileList,
 		}
 		this.backToParentDirectory = this.backToParentDirectory.bind(this)
+		this.sortFileName = this.sortFileName.bind(this)
+		this.sortFileType = this.sortFileType.bind(this)
+		this.sortFileSize = this.sortFileSize.bind(this)
 	}
 
 	update({ fileList }) {
@@ -67,9 +70,9 @@ class AfsFileTable extends Nanocomponent {
 	}
 
 	sortFileName() {
-		const { props, state } = this
+		const { state } = this
 		fileListSorter.sortTextAttribute({
-			fileList: props.fileList,
+			fileList: state.currentFileList,
 			attribute: 'subPath',
 			reversed: state.sortNameReversed
 		})
@@ -78,9 +81,9 @@ class AfsFileTable extends Nanocomponent {
 	}
 
 	 sortFileSize() {
-		 const { props, state } = this
+		 const { state } = this
 		 fileListSorter.sortNumericAttribute({
-			 fileList: props.fileList,
+			 fileList: state.currentFileList,
 			 attribute: 'size',
 			 reversed: state.sortSizeReversed
 		 })
@@ -89,9 +92,9 @@ class AfsFileTable extends Nanocomponent {
 	}
 
 	sortFileType() {
-		const { props, state } = this
+		const { state } = this
 		fileListSorter.sortFileType({
-			fileList: props.fileList,
+			fileList: state.currentFileList,
 			reversed: state.sortTypeReversed
 		})
 		state.sortTypeReversed = !state.sortTypeReversed
