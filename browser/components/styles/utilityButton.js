@@ -15,4 +15,10 @@ module.exports = {
 			font-size: 12px;
 		}
 	`,
+
+	iconHolder: css`
+		:host {
+			width: 100%;
+		}
+	`
 }

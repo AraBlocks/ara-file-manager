@@ -29,12 +29,30 @@ class UtilityButton extends Nanocomponent {
     return !sameState
   }
 
+  renderButtonIcon() {
+    const { state } = this
+    let iconName = ''
+    switch (state.children) {
+      case '✕':
+        iconName ='close'
+        break
+      case '▲':
+        iconName = 'upArrow'
+        break
+      case '▼':
+        iconName = 'downArrow'
+        break
+      default:
+    }
+    return iconName == '' ? state.children : html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/utilityButtons/${iconName}.svg"/>`
+  }
+
   createElement() {
     const { props, state } = this
 
     return html`
       <div onclick=${props.onclick} class=${styles.standard}>
-        ${state.children}
+        ${this.renderButtonIcon()}
       </div>
     `
   }
