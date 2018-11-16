@@ -14,7 +14,7 @@ module.exports = {
       font-family: ${fonts.light};
       height: 150px;
       justify-content: space-between;
-      margin-bottom: 40px;
+      margin-bottom: 80px;
     }
   `,
 
@@ -26,17 +26,13 @@ module.exports = {
       padding: 0 6px;
       transition: all ease-in-out;
     }
-
-    :host:hover {
-      background-color: #d0d0d0;
-    }
   `,
 
   iconHolder: css`
     :host {
       margin-right: 3px;
       width: 15px;
-      vertical-align: bottom;
+      vertical-align: top;
     }
   `,
 
@@ -63,7 +59,7 @@ module.exports = {
   titleHolder: css`
     :host {
       font-size: 30px;
-      font-family: ${fonts.boldSpecial};
+      font-family: ${fonts.black};
     }
   `,
 
@@ -81,6 +77,13 @@ module.exports = {
   `,
 
   publishFilebuttonHolder: css`
+    :host {
+      width: 100%;
+      left: 0;
+      position: absolute;
+      top: 24%;
+    }
+
     :host button {
       width: 100%;
     }
