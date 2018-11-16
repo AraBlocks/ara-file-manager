@@ -13,14 +13,14 @@ const {
 const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
 const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
   try {
-    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: true } })
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: true })
 
     let dispatchLoad = { name: load.name }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
@@ -58,7 +58,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
   } catch (err) {
     debug('Error publishing file %o:', err)
-    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: false })
     windowManager.closeModal('generalPleaseWaitModal')
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
     windowManager.openModal('generalMessageModal')
@@ -92,8 +92,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const balance = await araContractsManager.getAraBalance(account.userAid)
     debug('Dispatching %s', k.PUBLISHED)
     dispatch({ type: k.PUBLISHED, load: { balance, did: load.did } })
-    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: false })
 
     const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
     const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid, )
@@ -115,8 +114,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     acmManager.removedPublishedItem(load.did, account.userAid)
     dispatch({ type: k.ERROR_PUBLISHING })
 
-    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: false })
     windowManager.closeModal('generalPleaseWaitModal')
     //Needs short delay. Race conditions cause modal state to dump after its loaded
     setTimeout(() => {

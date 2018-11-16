@@ -6,6 +6,8 @@ const k = require('../../../lib/constants/stateManagement')
 const { afsManager, farmerManager } = require('../actions')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('electron-window-manager')
+const { switchPendingTransactionState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.CLEAN_UI, () => {
@@ -28,4 +30,10 @@ ipcMain.on(k.OPEN_AFS, async (event, load) => {
   } catch(err) {
     debug("Error: %o", err)
   }
+})
+
+internalEmitter.on(k.CHANGE_PENDING_TRANSACTION_STATE, (load) => {
+  dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load })
+  windowManager.pingAll({ event: k.REFRESH })
+  switchPendingTransactionState(load.pendingTransaction)
 })

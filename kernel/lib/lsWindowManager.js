@@ -176,6 +176,13 @@ windowManager.pingView = ({ view, event, load = null }) => {
   window.object.webContents.send(event, load)
 }
 
+windowManager.pingAll = ({ event, load = null }) => {
+  const views = ['filemanager', 'publishFileView', 'manageFileView']
+  views.forEach( (view) => { 
+    windowManager.pingView({ view, event, load })
+  })
+}
+
 windowManager.closeWindow = (name) => {
   windowManager.get(name) && windowManager.get(name).object.close()
 }
