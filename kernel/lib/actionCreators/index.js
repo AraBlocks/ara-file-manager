@@ -7,6 +7,7 @@ module.exports = {
   purchase: require('./purchase'),
   register: require('./register'),
   rewards: require('./rewards'),
+  transaction: require('./transaction'),
   update: require('./update'),
   utils: require('./utils'),
   subscription: require('./subscription'),

@@ -31,9 +31,3 @@ ipcMain.on(k.OPEN_AFS, async (event, load) => {
     debug("Error: %o", err)
   }
 })
-
-internalEmitter.on(k.CHANGE_PENDING_TRANSACTION_STATE, (load) => {
-  dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load })
-  windowManager.pingAll({ event: k.REFRESH })
-  switchPendingTransactionState(load.pendingTransaction)
-})

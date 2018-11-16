@@ -55,7 +55,6 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('publishConfirmModal')
-    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: false } })
   } catch (err) {
     debug('Error publishing file %o:', err)
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: false })
