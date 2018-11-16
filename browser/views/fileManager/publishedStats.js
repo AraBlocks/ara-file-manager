@@ -21,7 +21,7 @@ class PublishedStats extends Nanocomponent {
     return html`
       <div class="${styles.container(status)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
-          <img class="${styles.iconHolder} header-iconHolder" src="../assets/images/ara_token.png"/>
+          <img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>
           ${price}
         </div>
         <div class="${styles.stats} publishedStats-stats">
@@ -33,7 +33,7 @@ class PublishedStats extends Nanocomponent {
           </div>
           <div>
             <span class="${styles.bolden} publishedStats-bolden">Earnings:</span>
-            ${renderEarnings(redeeming, earnings, allocatedRewards)}
+             ${renderEarnings(redeeming, earnings, allocatedRewards)}
           </div>
         </div>
       </div>

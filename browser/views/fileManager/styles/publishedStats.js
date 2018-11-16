@@ -61,6 +61,7 @@ module.exports = {
     :host {
       font-family: ${fonts.bold};
       font-size: 14px;
+      margin-bottom: 8px;
     }
   `,
 

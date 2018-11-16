@@ -18,6 +18,7 @@ module.exports = {
     araLightBlack: '#444444',
     araRed: '#fc2636',
     araPink: '#fbe6e6',
+    araOrange: 'var(--ara-orange)'
   },
 
   buttonSelector(type) {
