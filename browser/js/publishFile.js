@@ -1,12 +1,15 @@
 'use strict'
 
 const PublishFile = require('../views/publishFile/container')
-const { remote } = require('electron')
+const { REFRESH } = require('../../lib/constants/stateManagement')
+const { ipcRenderer ,remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
 const publishFile = new PublishFile({ account })
 document.getElementById('container').appendChild(publishFile.render({}))
+
+ipcRenderer.on(REFRESH, () => publishFile.render({}))
 
 ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   document.body.addEventListener(eventName, preventDefaults, false)
