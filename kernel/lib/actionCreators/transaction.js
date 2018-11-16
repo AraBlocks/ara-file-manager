@@ -10,7 +10,7 @@ internalEmitter.on(k.CHANGE_PENDING_TRANSACTION_STATE, (load) => {
 	debug('%s heard', k.CHANGE_PENDING_TRANSACTION_STATE)
   dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: load } })
   windowManager.pingAll({ event: k.REFRESH })
-  switchPendingTransactionState(load.pendingTransaction)
+  switchPendingTransactionState(load)
 })
 
 ipcMain.on(k.CANCEL_TRANSACTION, () => {
