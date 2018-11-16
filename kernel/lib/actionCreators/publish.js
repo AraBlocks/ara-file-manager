@@ -20,7 +20,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
   try {
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: true })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
 
     let dispatchLoad = { name: load.name }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
@@ -57,7 +57,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     windowManager.openModal('publishConfirmModal')
   } catch (err) {
     debug('Error publishing file %o:', err)
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: false })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     windowManager.closeModal('generalPleaseWaitModal')
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
     windowManager.openModal('generalMessageModal')
@@ -69,7 +69,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard', k.CONFIRM_PUBLISH)
   const { account, farmer } = store
   try {
-    dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: true } })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
     acmManager.savePublishedItem(load.did, account.userAid)
 
     const descriptorOpts = {
@@ -91,7 +91,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const balance = await araContractsManager.getAraBalance(account.userAid)
     debug('Dispatching %s', k.PUBLISHED)
     dispatch({ type: k.PUBLISHED, load: { balance, did: load.did } })
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: false })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
     const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
     const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid, )
@@ -113,7 +113,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     acmManager.removedPublishedItem(load.did, account.userAid)
     dispatch({ type: k.ERROR_PUBLISHING })
 
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: false })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     windowManager.closeModal('generalPleaseWaitModal')
     //Needs short delay. Race conditions cause modal state to dump after its loaded
     setTimeout(() => {

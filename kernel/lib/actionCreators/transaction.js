@@ -8,12 +8,12 @@ const { switchPendingTransactionState } = require('../../../boot/tray')
 
 internalEmitter.on(k.CHANGE_PENDING_TRANSACTION_STATE, (load) => {
 	debug('%s heard', k.CHANGE_PENDING_TRANSACTION_STATE)
-  dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load })
+  dispatch({ type: k.CHANGE_PENDING_TRANSACTION_STATE, load: { pendingTransaction: load } })
   windowManager.pingAll({ event: k.REFRESH })
   switchPendingTransactionState(load.pendingTransaction)
 })
 
 ipcMain.on(k.CANCEL_TRANSACTION, () => {
   debug('%s heard', k.CANCEL_TRANSACTION)
-	internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, { pendingTransaction: false })
+	internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 })
