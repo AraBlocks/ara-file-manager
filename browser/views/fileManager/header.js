@@ -14,9 +14,7 @@ const tt = require('electron-tooltip')
 
 tt({
   position: 'top',
-  customContent() {
-    return 'Copy To Clipboard'
-  }
+  style: { width: '130px'}
 })
 
 class Header extends Nanocomponent {
@@ -40,6 +38,11 @@ class Header extends Nanocomponent {
       minimizeButton: new UtilityButton({ children: '–', onclick: windowManagement.minimizeWindow }),
       tabs: this.makeTabs(selectTab)
     }
+
+    this.eventMouseLeave = document.createEvent('MouseEvents')
+    this.eventMouseEnter = document.createEvent('MouseEvents')
+    this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
+    this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
   }
 
   makeTabs(selectTab) {
@@ -58,9 +61,13 @@ class Header extends Nanocomponent {
   }
 
   createElement({ activeTab, araBalance }) {
-    const { children, props } = this
+    const {
+      children,
+      eventMouseEnter,
+      props
+    } = this
     const balanceElements = [
-      html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/ara_token.png"/>`,
+      html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>`,
       Math.round(araBalance * 100) / 100
     ]
     return html`
@@ -80,9 +87,16 @@ class Header extends Nanocomponent {
           </div>
           <div class="${styles.userHolder} header-userHolder">
             <div
-              data-tooltip
+              data-tooltip="Copy to Clipboard"
               class="${styles.didHolder} header-didHolder"
-              onclick=${() => clipboard.writeText(props.userDID)}
+              onclick=${({ target }) => {
+                target.parentElement.dataset.tooltip = 'Copied!'
+                target.parentElement.dispatchEvent(eventMouseEnter)
+                target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
+                clipboard.writeText(props.userDID)
+              }}
+              onmouseenter=${({ target }) => target.style.backgroundColor = '#d0d0d0'}
+              onmouseleave=${({ target }) => target.style.backgroundColor = ''}
             >
               <b>ID: ${props.userDID.slice(8,14)}...</b>
             </div>

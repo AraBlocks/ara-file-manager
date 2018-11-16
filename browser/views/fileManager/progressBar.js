@@ -6,6 +6,7 @@ const html = require('choo/html')
 
 module.exports = ({
   downloadPercent,
+  last = false,
   status,
   shouldBroadcast
 }) => {
@@ -32,7 +33,7 @@ module.exports = ({
   }
 
   return html`
-    <div class="${styles.holder} progressBar-holder">
+    <div style="${last ? 'margin-bottom: 40px;' : null}" "class="${styles.holder} progressBar-holder">
       <div style="background-color: ${styles.colorSelector(color)}; width:${(downloadPercent * 100) + '%'};"></div>
     </div>
   `
