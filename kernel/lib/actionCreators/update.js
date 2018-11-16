@@ -7,6 +7,7 @@ const { ipcMain } = require('electron')
 const { afsManager, farmerManager } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
@@ -98,7 +99,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
       }
     })
 
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
     windowManager.closeWindow('manageFileView')
 
     if (load.shouldUpdatePrice && !load.shouldCommit) {
@@ -116,7 +117,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
     debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load)
     dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
     farmerManager.joinBroadcast({ did: load.did, farmer: farmer.farm })
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', fileName: load.name } })
     windowManager.openModal('generalMessageModal')
