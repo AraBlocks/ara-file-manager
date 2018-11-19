@@ -12,6 +12,26 @@ module.exports = {
   colors,
   fonts,
 
+  inactive({
+    color  = 'white',
+    fontSize = '18',
+    height = '2',
+    weight = 'bold'
+  }) {
+    return css`
+      :host {
+        background-color: var(--ara-grey);
+        color: white;
+        font-family: ${fontSelector(weight)};
+        font-size: ${fontSize}px;
+        height: ${height}em;
+        transition: all 100ms;
+        width: 100%;
+        cursor: default;
+      }
+    `
+  } ,
+
   smallInvisible({
     color  = 'green',
     fontSize = '14',

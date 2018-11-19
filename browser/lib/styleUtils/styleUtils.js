@@ -83,7 +83,7 @@ module.exports = {
         selectedColor = !hoverState ? 'var(--ara-red)' : '#e50112'
         break
       case 'teal':
-        selectedColor = 'var(--ara-teal)'
+        selectedColor = !hoverState ? 'var(--ara-teal)' : '#3c999c'
         break
       default:
         selectedColor = !hoverState ? 'var(--ara-red)' : 'green'
@@ -120,7 +120,7 @@ module.exports = {
   fontCSS: {
     noeH1:  css`
       :host {
-        font-family: "NoeDisplay-Bold", "ProximaNova-Bold";
+        font-family: ProximaNova-Black;
         font-size: 24px;
       }
     `,

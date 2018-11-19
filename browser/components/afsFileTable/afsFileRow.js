@@ -146,7 +146,6 @@ class AfsFileRow extends Nanocomponent {
 
 		return html`
 			<tr
-				style="background-color: ${index % 2 ? 'white' : '#f1f1f1'};"
 				class="item afsFileRow-item"
 				onclick=${fileClicked}
 				oncontextmenu=${renderContextMenu}

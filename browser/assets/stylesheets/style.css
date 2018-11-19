@@ -135,6 +135,33 @@ button {
   height:1px;
 }
 
+.bounce {
+  font-size: 10px;
+  height: 40px;
+  margin: 100px auto;
+  text-align: center;
+  width: 50px;
+}
+
+.bounce > div {
+  animation: bounce 1.2s infinite ease-in-out;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  height: 4px;
+  margin-right: 1px;
+  width: 4px;
+}
+
+.bounce .dot2 {
+  animation-delay: -1.1s;
+}
+
+.bounce .dot3 {
+  animation-delay: -1.0s;
+}
+
+
 /* animations */
 @keyframes spin {
   0% {
@@ -160,6 +187,14 @@ button {
 @keyframes sk-stretchdelay {
   0%, 40%, 100% { transform: scaleY(0.4); }
   20% { transform: scaleY(1.0); }
+}
+
+@keyframes bounce {
+  0%, 40%, 100% {
+    transform: translate3d(0,0,0);
+  }  20% {
+    transform: translate3d(0,-5px,0);
+  }
 }
 
 @keyframes fadein {
