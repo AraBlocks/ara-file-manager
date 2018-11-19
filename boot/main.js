@@ -46,7 +46,7 @@ app.on('ready', () => {
 app.on('window-all-closed', () => {})
 
 // For Deep Linking
-app.setAsDefaultProtocolClient('lstr')
+app.setAsDefaultProtocolClient('ara')
 app.on('open-url', (event, url) => {
   event.preventDefault()
   deepLinkingUrl = url

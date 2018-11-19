@@ -28,7 +28,8 @@ class Container extends Nanocomponent {
 		this.children = {
 			afsFileTable: new AfsFileTable({
 				did,
-				fileList
+				fileList,
+				renderView: this.renderView.bind(this)
 			}),
 			exportAllButton: new Button({
 				children: 'Export All',
@@ -37,7 +38,7 @@ class Container extends Nanocomponent {
 			}),
 			downloadUpdateButton: new Button({
 				children: 'Download Update',
-				cssClass: { opts: { color: 'orange' } },
+				cssClass: { name: 'thinBorder' },
 				onclick: this.exportAll.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
@@ -49,6 +50,7 @@ class Container extends Nanocomponent {
 		const { children } = this
 		fileSystemManager.showSelectDirectoryDialog()
 		.then(folderName => {
+			this.render({ spinner: true })
 			emit({
 				event: EXPORT_FILE,
 				load: {
@@ -71,6 +73,10 @@ class Container extends Nanocomponent {
 			state.fileList = fileList
 		}
 		return true
+	}
+
+	renderView({ spinner = true }) {
+		this.render({ spinner })
 	}
 
 	createElement({ spinner = false }) {
