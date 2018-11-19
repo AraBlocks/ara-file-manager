@@ -7,8 +7,9 @@ const araFilesystem = require('ara-filesystem')
 const farmerManager = require('../actions/farmerManager')
 const mirror = require('mirror-folder')
 const path = require('path')
+const { shell } = require('electron')
 
-async function exportFile({ did, exportPath, filePath }) {
+async function exportFile({ did, exportPath, filePath, completeHandler }) {
 	debug('Exporting file %s to %s', filePath, exportPath)
 	try {
     const { afs } = await araFilesystem.create({ did })
@@ -16,12 +17,14 @@ async function exportFile({ did, exportPath, filePath }) {
     const fileData = await afs.readFile(fullPath)
     afs.close()
     fs.writeFileSync(exportPath, fileData)
+    shell.openItem(path.dirname(exportPath))
+    completeHandler()
   } catch (err) {
 		debug('Error exporting file %s to %s: %o', filePath, exportPath, err)
 	}
 }
 
-async function exportFolder({ did, exportPath, folderPath }) {
+async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
   try {
     const { afs } = await araFilesystem.create({ did })
     const fullPath = path.join(afs.HOME, folderPath)
@@ -37,6 +40,8 @@ async function exportFolder({ did, exportPath, folderPath }) {
     }, { name: exportPath }, { keepExisting: true })
     await new Promise((accept, reject) => progress.once('end', accept).once('error', reject))
     await afs.close()
+    shell.openItem(path.dirname(exportPath))
+    completeHandler()
     debug('Successfully exported folder')
   } catch (err) {
     debug('Error exporting folder: %o', err)

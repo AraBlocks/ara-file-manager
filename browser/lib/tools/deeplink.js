@@ -9,7 +9,7 @@ function copyDeeplink(aid, fileName) {
 
 function getDeeplink(aid, fileName) {
 	const encodedName = encodeURIComponent(fileName)
-	return `lstr://download/${aid}/${encodedName}`
+	return `ara://download/${aid}/${encodedName}`
 }
 
 module.exports = {
