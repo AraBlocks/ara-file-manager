@@ -10,7 +10,7 @@ module.exports = {
   header: css`
     :host {
       display: flex;
-      font-family: ${fonts.bold};
+      font-family: ${fonts.black};
       font-size: 20px;
       width: 90%;
     }

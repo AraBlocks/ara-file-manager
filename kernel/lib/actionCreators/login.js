@@ -24,6 +24,7 @@ internalEmitter.on(k.LOGOUT, () => {
   switchLoginState(false)
   windowManager.closeWindow('filemanager')
   windowManager.closeWindow('publishFileView')
+  windowManager.openWindow('login')
 })
 
 ipcMain.on(k.LOGIN, login)
