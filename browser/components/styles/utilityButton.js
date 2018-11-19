@@ -16,9 +16,12 @@ module.exports = {
 		}
 	`,
 
-	iconHolder: css`
-		:host {
-			width: 100%;
-		}
-	`
+	iconHolder(yTransform) {
+		return css`
+			:host {
+        transform: scaleY(${yTransform});
+				width: 100%;
+			}
+		`
+	}
 }
