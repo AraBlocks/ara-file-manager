@@ -24,7 +24,10 @@ class Section extends Nanocomponent {
           ${typeRow === 'purchased' ? 'Purchased Files' : 'Published Files'}
         </div>
         <div class="${styles.separator} section-separator"></div>
-        ${fileRows.map((file, i) => file.render({ ...files[typeRow][i]}))}
+        ${fileRows.map((file, i) => file.render({
+          ...files[typeRow][i],
+          last: i === fileRows.length - 1
+        }))}
       </div>
     `
   }

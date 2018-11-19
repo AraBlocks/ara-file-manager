@@ -92,7 +92,7 @@ class Login extends Nanocomponent {
           Log In
         </div>
         <p class="${styles.descriptionHolder} login-descriptionHolder">
-          Welcome to the <b>Littlstar Media Manager</b>. Use this
+          Welcome to the <b>Ara File Manager</b>. Use this
           app to buy, sell, share, and earn rewards for files on
           the Ara Network across the web.
           <br><br>

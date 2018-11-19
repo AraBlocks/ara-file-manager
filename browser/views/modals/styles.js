@@ -8,9 +8,18 @@ module.exports = {
 
   araIDHolder: css`
     :host {
-      background-color: #e6f9ff;
-      font-size: 12px;
+      align-items: center;
+      background-color: aliceBlue;
+      border: 1px solid #97c7f0;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      font-size: 9.5px;
+      font-weight: bold;
+      height: 3em;
+      justify-content: center;
       margin-top: 20px;
+      margin-bottom: 10px;
       padding: 10px 2px;
       word-wrap: break-word;
     }
@@ -47,6 +56,7 @@ module.exports = {
 
   containerLeft: css`
   :host {
+    align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -63,16 +73,18 @@ module.exports = {
     :host span {
       animation-duration: 1000ms;
       color: ${colorSelector('orange')};
-      left: 39%;
+      left: 43%;
       opacity: 0;
       position: absolute;
+      z-index: -1;
     }
   `,
 
   fileName: css`
     :host {
-      font-family: ${fonts.boldSpecial};
-      font-size: 20px;
+      font-family: ${fonts.black};
+      font-size: 22px;
+      padding: 2px 0px;
     }
   `,
 
@@ -139,6 +151,14 @@ module.exports = {
     :host > div {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    :host b {
+      background-color: aliceBlue;
+      border: 1px solid #97c7f0;
+      border-radius: 3px;
+      padding: 3px;
     }
   `
   ,
@@ -194,7 +214,7 @@ module.exports = {
 
   title: css`
     :host {
-      font-family: ${fonts.boldSpecial};
+      font-family: ${fonts.black};
       font-size: 20px;
     }
   `,

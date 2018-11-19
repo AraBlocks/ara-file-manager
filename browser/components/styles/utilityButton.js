@@ -15,4 +15,13 @@ module.exports = {
 			font-size: 12px;
 		}
 	`,
+
+	iconHolder(yTransform) {
+		return css`
+			:host {
+        transform: scaleY(${yTransform});
+				width: 100%;
+			}
+		`
+	}
 }

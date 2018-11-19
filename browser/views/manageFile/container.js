@@ -17,6 +17,7 @@ const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
 	constructor({
+		account,
 		currency,
 		did,
 		name,
@@ -27,6 +28,8 @@ class Container extends Nanocomponent {
 		tokenPrice,
 	}) {
 		super()
+
+		this.props = { account }
 		this.state = {
 			afsContents: fileList,
 			currency,
@@ -70,12 +73,12 @@ class Container extends Nanocomponent {
 	}
 
 	fileInfoChanged() {
-		const { state } = this
+		const { state, props } = this
 		const { addPaths, removePaths } = this.getPathDiff()
 		const priceChanged = state.oldPrice != state.price
 		const shouldCommit = !(addPaths.length == 0 && removePaths.length == 0)
 		const notEmpty = state.fileList.length != 0
-		return (priceChanged || shouldCommit) && notEmpty
+		return (priceChanged || shouldCommit) && notEmpty && !props.account.pendingTransaction
 	}
 
 	renderView() {
@@ -84,7 +87,7 @@ class Container extends Nanocomponent {
 
 	update({ fileList }){
 		const { state } = this
-		if (fileList != null) {
+		if (fileList != null && state.afsContents == null) {
 			state.fileList = fileList
 			state.afsContents = fileList
 		}
@@ -129,7 +132,7 @@ class Container extends Nanocomponent {
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} ManageFileContainer-horizontalContainer,title">
 					Manage File
-					${children.utilityButton.render({ children: '✕' })}
+					${children.utilityButton.render({ children: 'close' })}
 				</div>
 				<div class="${styles.content} ManageFileContainer-content">
 					This file has been published to the Ara Network. You can edit and update the file here. The changes will be pushed to all users on the network.<br><br>

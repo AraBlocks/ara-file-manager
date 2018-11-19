@@ -35,7 +35,7 @@ module.exports = {
 
   title: css`
     :host {
-      font-family: ${fonts.boldSpecial};
+      font-family: ${fonts.black};
       font-size: 20px;
     }
   `,

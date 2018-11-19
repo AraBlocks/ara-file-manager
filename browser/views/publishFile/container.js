@@ -31,7 +31,7 @@ class Container extends Nanocomponent {
 				renderView: this.renderView.bind(this)
 			}),
 			publishButton: new Button({
-				children: 'Publish',
+				children: ['Publish'],
 				cssClass: { name: 'thinBorder'},
 				onclick: this.publishFile.bind(this)
 			}),
@@ -49,11 +49,7 @@ class Container extends Nanocomponent {
 	}
 
 	publishFile() {
-		const {
-			fileName,
-			fileList,
-			price
-		} = this.state
+		const { fileName, fileList, price } = this.state
 		const { account } = this.props
 		const paths = fileList.map(file => file.fullPath)
 		const load = {
@@ -78,7 +74,7 @@ class Container extends Nanocomponent {
 				<div class="${styles.container} PublishFileContainer-container">
 					<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
 						Publish File
-						${children.utilityButton.render({ children: '✕' })}
+						${children.utilityButton.render({ children: 'close' })}
 					</div>
 					<div class="${styles.content} PublishFileContainer-content">
 						Publish your content for distribution on the Ara Network. You can publish a single file or an entire directory as a single
@@ -91,7 +87,13 @@ class Container extends Nanocomponent {
 					${children.publishButton.render({
 						cssClass: (state.fileList.length === 0) || props.account.pendingTransaction
 							? { name: 'thinBorder' } : { name: 'standard' },
-						children: `Publish ( ${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) } )`
+						children: [
+							'Publish',
+							html`
+								<span style="font-family: ProximaNova-light;">
+									(${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) })
+								</span>`
+						]
 					})}
 				</div>
 			</div>

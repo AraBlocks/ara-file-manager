@@ -5,6 +5,7 @@ const { afsManager } = require('../actions')
 const { ipcMain } = require('electron')
 const k = require('../../../lib/constants/stateManagement')
 const path = require('path')
+const windowManager = require('electron-window-manager')
 
 ipcMain.on(k.EXPORT_FILE, async (event, load) => {
 	debug('%s heard', k.EXPORT_FILE)
@@ -16,16 +17,22 @@ ipcMain.on(k.EXPORT_FILE, async (event, load) => {
 			afsManager.exportFile({
 				did: load.did,
 				exportPath,
-				filePath
+				filePath,
+				completeHandler
 			})
 		} else {
 			afsManager.exportFolder({
 				did: load.did,
 				exportPath,
-				folderPath: filePath
+				folderPath: filePath,
+				completeHandler
 			})
 		}
 	} catch (err) {
 		debug('Error: %O', err)
 	}
 })
+
+function completeHandler() {
+	windowManager.pingView({ view: 'afsExplorerView', event: k.REFRESH })
+}

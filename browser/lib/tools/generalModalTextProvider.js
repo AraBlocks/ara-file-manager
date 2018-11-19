@@ -36,7 +36,7 @@ function generalModalText(modalName, fileName) {
 			break
 		case 'loginFail':
 			title = 'Login Failed'
-			description = 'Please check your aid and password'
+			description = 'Please check your Idenitity and/or password'
 			break
 		case 'notEnoughAra':
 			title = 'Not enough Ara'

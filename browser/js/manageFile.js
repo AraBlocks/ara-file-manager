@@ -3,9 +3,10 @@ const k = require('../../lib/constants/stateManagement')
 const windowManagement = require('../lib/tools/windowManagement')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
-const { modal } = windowManager.sharedData.fetch('store')
+const { account, modal } = windowManager.sharedData.fetch('store')
 
 const manageFileContainer = new ManageFileContainer({
+	account,
 	currency: 'ARA',
 	did: modal.manageFileData.did,
 	fileList: modal.manageFileData.fileList,
