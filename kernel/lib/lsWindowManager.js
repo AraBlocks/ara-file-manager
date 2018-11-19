@@ -110,6 +110,9 @@ windowManager.loadURL = (view) => {
     case 'afsExplorerView':
       file = 'afs-explorer-view'
       break
+    case 'araIDWarning':
+      file = 'ara-id-warning'
+      break
     case 'filemanager':
       file = 'file-manager'
       break

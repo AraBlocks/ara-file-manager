@@ -32,18 +32,27 @@ app.on('ready', () => {
   debug('Loading Dependencies')
   require('../kernel/lib/actionCreators')
 
-  //Registers command/control + \ to open dev tools
-  globalShortcut.register('CommandOrControl+\\', () => windowManager.getCurrent().object.openDevTools())
-  globalShortcut.register('CommandOrControl+r', () => {
-    try { windowManager.getCurrent().object.reload() } catch (e) {}
-  })
   if (process.platform == 'win32') { deepLinkingUrl = process.argv.slice(1) }
   deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
-  //Hot reloads browser side changes
-  isDev && require('electron-reload')(path.resolve('browser'))
+
+  if (isDev) {
+    //Hot reloads browser side changes
+    require('electron-reload')(path.resolve('browser'))
+    //Registers command/control + \ to open dev tools
+    globalShortcut.register('CommandOrControl+\\', () => {
+      try { windowManager.getCurrent().object.openDevTools() } catch (e) { }
+    })
+    globalShortcut.register('CommandOrControl+r', () => {
+      try { windowManager.getCurrent().object.reload() } catch (e) { }
+    })
+  }
+
+  if (process.argv.includes('loggedin') === false) {
+    windowManager.openWindow('login')
+  }
 })
 //Prevents app from closing when all windows are shut
-app.on('window-all-closed', () => {})
+app.on('window-all-closed', () => { })
 
 // For Deep Linking
 app.setAsDefaultProtocolClient('ara')
@@ -55,6 +64,6 @@ app.on('open-url', (event, url) => {
 
 app.on('before-quit', () => {
   const { farmerManager } = require('../kernel/lib/actions')
-  const { farmer : { farm } } = require('../kernel/lib/store')
+  const { farmer: { farm } } = require('../kernel/lib/store')
   farmerManager.stopAllBroadcast(farm)
 })

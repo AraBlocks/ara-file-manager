@@ -8,9 +8,16 @@ module.exports = {
 
   araIDHolder: css`
     :host {
+      align-items: center;
       background-color: #e6f9ff;
-      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      font-size: 9.5px;
+      font-weight: bold;
+      height: 3em;
+      justify-content: center;
       margin-top: 20px;
+      margin-bottom: 10px;
       padding: 10px 2px;
       word-wrap: break-word;
     }
@@ -47,6 +54,7 @@ module.exports = {
 
   containerLeft: css`
   :host {
+    align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -63,9 +71,10 @@ module.exports = {
     :host span {
       animation-duration: 1000ms;
       color: ${colorSelector('orange')};
-      left: 39%;
+      left: 43%;
       opacity: 0;
       position: absolute;
+      z-index: -1;
     }
   `,
 

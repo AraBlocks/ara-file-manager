@@ -71,13 +71,13 @@ module.exports = {
         selectedColor = 'var(--ara-grey)'
         break
       case 'green':
-        selectedColor = 'var(--ara-green)'
+        selectedColor = !hoverState ? 'var(--ara-green)' : '#436027'
         break
       case 'light black':
         selectedColor = '#444444'
         break
       case 'orange':
-        selectedColor = 'var(--ara-orange)'
+        selectedColor = !hoverState ? 'var(--ara-orange)' : '#b36348'
         break
       case 'red':
         selectedColor = !hoverState ? 'var(--ara-red)' : '#e50112'

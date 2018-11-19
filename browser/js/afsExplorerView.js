@@ -1,4 +1,5 @@
 'use strict'
+
 const AFSExlorer = require('../views/afsExplorerView/container')
 const { ipcRenderer, remote } = require('electron')
 const { REFRESH } = require('../../lib/constants/stateManagement')
