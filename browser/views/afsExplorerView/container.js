@@ -80,7 +80,7 @@ class Container extends Nanocomponent {
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} AfsExplorerViewContainer-horizontalContainer,title">
 					${props.afsName}
-					${children.utilityButton.render({ children: '✕' })}
+					${children.utilityButton.render({ children: 'close' })}
 				</div>
 				<div class="${styles.content} AfsExplorerViewContainer-content">
 					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export files to your hard drive by dragging them out

@@ -34,7 +34,7 @@ class Header extends Nanocomponent {
           windowManagement.openWindow('publishFileView')
         }
       }),
-      closeButton: new UtilityButton({ children: '✕' }),
+      closeButton: new UtilityButton({ children: 'close' }),
       minimizeButton: new UtilityButton({ children: '–', onclick: windowManagement.minimizeWindow }),
       tabs: this.makeTabs(selectTab)
     }
@@ -78,7 +78,7 @@ class Header extends Nanocomponent {
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
             ${children.minimizeButton.render({ children: '–'})}
-            ${children.closeButton.render({ children: '✕'})}
+            ${children.closeButton.render({ children: 'close'})}
           </div>
         </div>
         <div class="${styles.subHeader} header-subheader">

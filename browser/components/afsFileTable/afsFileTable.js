@@ -17,15 +17,15 @@ class AfsFileTable extends Nanocomponent {
 		super()
 		this.children = {
 			sortFileButton: new UtilityButton({
-				children: '▲',
+				children: 'upArrow',
 				onclick: this.sortFileName.bind(this)
 			}),
 			sortTypeButton: new UtilityButton({
-				children: '▼',
+				children: 'downArrow',
 				onclick: this.sortFileType.bind(this)
 			}),
 			sortSizeButton: new UtilityButton({
-				children: '▼',
+				children: 'downArrow',
 				onclick: this.sortFileSize.bind(this)
 			}),
 		}
@@ -141,15 +141,15 @@ class AfsFileTable extends Nanocomponent {
 				<div class="${styles.headerHolder} afsFileTable-headerHolder">
 					<div class="${styles.nameHeader} afsFileTable-nameHeader">
 						Name
-						${children.sortFileButton.render({ children: state.sortNameReversed ? '▲' : '▼' })}
+						${children.sortFileButton.render({ children: state.sortNameReversed ? 'upArrow' : 'downArrow' })}
 					</div>
 					<div class="${styles.typeHeader} afsFileTable-typeHeader">
 						Type
-						${children.sortTypeButton.render({ children: state.sortTypeReversed ? '▲' : '▼' })}
+						${children.sortTypeButton.render({ children: state.sortTypeReversed ? 'upArrow' : 'downArrow' })}
 					</div>
 					<div class="${styles.sizeHeader} afsFileTable-sizeHeader">
 						Size
-						${children.sortSizeButton.render({ children: state.sortSizeReversed ? '▲' : '▼' })}
+						${children.sortSizeButton.render({ children: state.sortSizeReversed ? 'upArrow' : 'downArrow' })}
 					</div>
 				</div>
 				<table class="${styles.container} AfsFileTable-container">
