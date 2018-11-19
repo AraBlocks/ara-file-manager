@@ -17,7 +17,6 @@ document.getElementById('container').appendChild(manageFileContainer.render({ sp
 
 ipcRenderer.on(k.ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
 ipcRenderer.on(k.ESTIMATION, () => windowManagement.openModal('updateConfirmModal'))
-ipcRenderer.on(k.REFRESH, () => { console.log('refresh') 
-manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList })})
+ipcRenderer.on(k.REFRESH, () => manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList }))
 
 window.onunload = () => windowManagement.emit({ event: k.START_SEEDING, load: { did: modal.manageFileData.did } })

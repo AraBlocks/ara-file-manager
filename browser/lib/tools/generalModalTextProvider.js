@@ -89,9 +89,6 @@ function waitModalText(modalName, fileName) {
 			description = html `<div>Updating <b>${fileName}</b> on the Ara Network.</div>`
 			waitTime = html `<div>This may take a while.<br><b>Do not close File Manager.</b></div>`
 			break
-		case 'pleaseWaitExporting':
-			description = html`<div>Exporting <b>${fileName}</b></div>`
-			break
 		default:
 			description = fileName === 'Unnamed'
 				? html`<div>Getting publish estimate for your file</div>`
