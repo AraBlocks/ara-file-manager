@@ -16,7 +16,7 @@ class FileSection extends Nanocomponent {
 		this.state = { expanded: false, files: this.makeRows(files) }
 		this.children = {
 			expandWindowButton: new UtilityButton({
-				children: '▼',
+				children: 'downArrow',
 				onclick: this.changeWindowSize.bind(this)
 			}),
 			fileManagerButton: new Button({
@@ -79,8 +79,8 @@ class FileSection extends Nanocomponent {
 
 		function renderExpandButton() {
 			return (state.expanded)
-				? children.expandWindowButton.render({ children: '▲' })
-				: children.expandWindowButton.render({ children: '▼' })
+				? children.expandWindowButton.render({ children: 'upArrow' })
+				: children.expandWindowButton.render({ children: 'downArrow' })
 		}
 	}
 }

@@ -28,7 +28,8 @@ class Container extends Nanocomponent {
 		this.children = {
 			afsFileTable: new AfsFileTable({
 				did,
-				fileList
+				fileList,
+				renderView: this.renderView.bind(this)
 			}),
 			exportAllButton: new Button({
 				children: 'Export All',
@@ -37,7 +38,7 @@ class Container extends Nanocomponent {
 			}),
 			downloadUpdateButton: new Button({
 				children: 'Download Update',
-				cssClass: { opts: { color: 'orange' } },
+				cssClass: { name: 'thinBorder' },
 				onclick: this.exportAll.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
@@ -49,6 +50,7 @@ class Container extends Nanocomponent {
 		const { children } = this
 		fileSystemManager.showSelectDirectoryDialog()
 		.then(folderName => {
+			this.render({ spinner: true })
 			emit({
 				event: EXPORT_FILE,
 				load: {
@@ -73,6 +75,10 @@ class Container extends Nanocomponent {
 		return true
 	}
 
+	renderView({ spinner = true }) {
+		this.render({ spinner })
+	}
+
 	createElement({ spinner = false }) {
 		const { children, props, state } = this
 		return html`
@@ -80,7 +86,7 @@ class Container extends Nanocomponent {
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} AfsExplorerViewContainer-horizontalContainer,title">
 					${props.afsName}
-					${children.utilityButton.render({ children: '✕' })}
+					${children.utilityButton.render({ children: 'close' })}
 				</div>
 				<div class="${styles.content} AfsExplorerViewContainer-content">
 					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export files to your hard drive by dragging them out

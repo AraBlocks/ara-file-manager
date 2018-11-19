@@ -27,7 +27,7 @@ module.exports = {
     }
 
     :host div {
-      font-family: ${fonts.boldSpecial};
+      font-family: ${fonts.black};
       font-size: 30px;
     }
 
@@ -50,9 +50,9 @@ module.exports = {
 
   sectionContainer: css`
     :host {
-      height: 525px;
-      overflow-y: scroll;
       animation: fadein 1500ms;
+      height: 475px;
+      overflow-y: scroll;
     }
   `,
 

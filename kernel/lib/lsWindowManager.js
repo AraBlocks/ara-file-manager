@@ -110,6 +110,9 @@ windowManager.loadURL = (view) => {
     case 'afsExplorerView':
       file = 'afs-explorer-view'
       break
+    case 'araIDWarning':
+      file = 'ara-id-warning'
+      break
     case 'filemanager':
       file = 'file-manager'
       break
@@ -128,6 +131,9 @@ windowManager.loadURL = (view) => {
       break
     case 'mainManagerView':
       file = 'index'
+      break
+    case 'mnemonicWarning':
+      file = 'mnemonic-warning'
       break
     case 'publishFileView':
       file = 'publish-file'
@@ -174,6 +180,13 @@ windowManager.pingView = ({ view, event, load = null }) => {
   const window = windowManager.get(view)
   if (!window) { return }
   window.object.webContents.send(event, load)
+}
+
+windowManager.pingAll = ({ event, load = null }) => {
+  const views = ['filemanager', 'publishFileView', 'manageFileView']
+  views.forEach( (view) => { 
+    windowManager.pingView({ view, event, load })
+  })
 }
 
 windowManager.closeWindow = (name) => {

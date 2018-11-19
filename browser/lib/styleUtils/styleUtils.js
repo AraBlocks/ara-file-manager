@@ -18,6 +18,7 @@ module.exports = {
     araLightBlack: '#444444',
     araRed: '#fc2636',
     araPink: '#fbe6e6',
+    araOrange: 'var(--ara-orange)'
   },
 
   buttonSelector(type) {
@@ -70,19 +71,19 @@ module.exports = {
         selectedColor = 'var(--ara-grey)'
         break
       case 'green':
-        selectedColor = 'var(--ara-green)'
+        selectedColor = !hoverState ? 'var(--ara-green)' : '#436027'
         break
       case 'light black':
         selectedColor = '#444444'
         break
       case 'orange':
-        selectedColor = 'var(--ara-orange)'
+        selectedColor = !hoverState ? 'var(--ara-orange)' : '#b36348'
         break
       case 'red':
         selectedColor = !hoverState ? 'var(--ara-red)' : '#e50112'
         break
       case 'teal':
-        selectedColor = 'var(--ara-teal)'
+        selectedColor = !hoverState ? 'var(--ara-teal)' : '#3c999c'
         break
       default:
         selectedColor = !hoverState ? 'var(--ara-red)' : 'green'
@@ -119,7 +120,7 @@ module.exports = {
   fontCSS: {
     noeH1:  css`
       :host {
-        font-family: "NoeDisplay-Bold", "ProximaNova-Bold";
+        font-family: ProximaNova-Black;
         font-size: 24px;
       }
     `,

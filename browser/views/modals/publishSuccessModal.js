@@ -28,7 +28,7 @@ module.exports = ({
 				has been successfully published!<br><br>
 				Use this link to distribute this file to other users:<br>
 				<div class="${styles.link}">
-					<b>${`lstr://download/${did}/${encodedName}`}</b>
+					<b>${`ara://download/${did}/${encodedName}`}</b>
 				</div>
 			</div>
 			<div class="${styles.clipboard}" onclick=${function(){

@@ -58,7 +58,7 @@ module.exports = {
       display: flex;
       font-family: ${fonts.bold} !important;
       font-weight: bold;
-      font-size: 17px;
+      font-size: 16px;
       margin-bottom: 2px;
     }
   `,

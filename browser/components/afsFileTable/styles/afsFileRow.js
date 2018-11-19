@@ -18,10 +18,21 @@ module.exports = {
 		:host:before {
 			content: "";
 			position: absolute;
-			left: -3px;
-			top: -3px;
-			height: 5px;
-			width: 5px;
+			left: -12px;
+			top: -12px;
+			height: 12px;
+			width: 30px;
+			z-index: 999;
+		}
+
+		:host:after {
+			content: "";
+			position: absolute;
+			left: -12px;
+			top: -12px;
+			height: 30px;
+			width: 12px;
+			z-index: 999;
 		}
 	`,
 
@@ -90,10 +101,11 @@ module.exports = {
       text-overflow: ellipsis;
       vertical-align: middle;
 			width: 100px;
+			z-index: 1;
 		}
 
 		:host:hover {
-			background-color: #c9c9c9;
+			background-color: #eeeeee;
     }
 	`
 }

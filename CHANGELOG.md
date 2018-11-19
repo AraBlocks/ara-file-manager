@@ -1,9 +1,44 @@
-## [0.1.1](https://github.com/littlstar/ara-content-manager/compare/0.1.0...0.1.1) (2018-11-14)
+## [0.1.3](https://github.com/littlstar/ara-content-manager/compare/0.1.2...0.1.3) (2018-11-19)
+
+
+### Features
+
+* **utilityButton.js:** replace button icon with svg ([#237](https://github.com/littlstar/ara-content-manager/issues/237)) ([e1d6bb2](https://github.com/littlstar/ara-content-manager/commit/e1d6bb2))
+* update modals and afs explorer([#238](https://github.com/littlstar/ara-content-manager/issues/238)) ([82163a8](https://github.com/littlstar/ara-content-manager/commit/82163a8))
+
+
+
+## [0.1.2](https://github.com/littlstar/ara-content-manager/compare/0.1.1...0.1.2) (2018-11-16)
+
+
+### Features
+
+* Ping all views for pending transaction state([#236](https://github.com/littlstar/ara-content-manager/issues/236)) ([c0ef472](https://github.com/littlstar/ara-content-manager/commit/c0ef472))
+* Restyled fileManager ([2daa53e](https://github.com/littlstar/ara-content-manager/commit/2daa53e))
+
+
+
+## [0.1.1](https://github.com/littlstar/ara-content-manager/compare/v1.0.1...0.1.1) (2018-11-14)
+
+
+### Bug Fixes
+
+* package.json ([e9518d7](https://github.com/littlstar/ara-content-manager/commit/e9518d7))
+
+
+
+## [1.0.1](https://github.com/littlstar/ara-content-manager/compare/0.1.0...v1.0.1) (2018-11-14)
+
+
+### Bug Fixes
+
+* **afsFileRow.js:** added :before element for better ux ([9039b89](https://github.com/littlstar/ara-content-manager/commit/9039b89))
 
 
 ### Features
 
 * PE-578 Handle pending transactions ([#227](https://github.com/littlstar/ara-content-manager/issues/227)) ([caf1903](https://github.com/littlstar/ara-content-manager/commit/caf1903))
+* PE-578 Handle pending transactions ([#231](https://github.com/littlstar/ara-content-manager/issues/231)) ([972ad18](https://github.com/littlstar/ara-content-manager/commit/972ad18))
 
 
 

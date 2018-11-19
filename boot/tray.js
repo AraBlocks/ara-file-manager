@@ -69,8 +69,14 @@ function switchLoginState(loggedIn) {
   }
 }
 
+function switchPendingTransactionState(pending) {
+  isDev
+    ? contextMenu.commandsMap['47'].enabled = !pending //Publish File View Dev
+    : contextMenu.commandsMap['2'].enabled = !pending //Publish File View Build
+}
 
 module.exports = {
   buildTray,
-  switchLoginState
+  switchLoginState,
+  switchPendingTransactionState
 }
