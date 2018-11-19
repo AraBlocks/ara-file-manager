@@ -73,8 +73,7 @@ module.exports = {
     :host {
       font-family: ${fonts.black};
       font-size: 22px;
-      padding-top: 2px;
-      padding-bottom: 2px;
+      padding: 2px 0px;
     }
   `,
 

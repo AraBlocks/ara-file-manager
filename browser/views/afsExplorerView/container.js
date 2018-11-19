@@ -28,7 +28,7 @@ class Container extends Nanocomponent {
 		this.children = {
 			afsFileTable: new AfsFileTable({
 				did,
-				fileList, 
+				fileList,
 				renderView: this.renderView.bind(this)
 			}),
 			exportAllButton: new Button({
