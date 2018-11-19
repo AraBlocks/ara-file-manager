@@ -9,7 +9,9 @@ module.exports = {
   araIDHolder: css`
     :host {
       align-items: center;
-      background-color: #e6f9ff;
+      background-color: aliceBlue;
+      border: 1px solid #97c7f0;
+      border-radius: 3px;
       display: flex;
       flex-direction: column;
       font-size: 9.5px;
@@ -149,6 +151,14 @@ module.exports = {
     :host > div {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    :host b {
+      background-color: aliceBlue;
+      border: 1px solid #97c7f0;
+      border-radius: 3px;
+      padding: 3px;
     }
   `
   ,

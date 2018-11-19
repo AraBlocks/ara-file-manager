@@ -132,6 +132,9 @@ windowManager.loadURL = (view) => {
     case 'mainManagerView':
       file = 'index'
       break
+    case 'mnemonicWarning':
+      file = 'mnemonic-warning'
+      break
     case 'publishFileView':
       file = 'publish-file'
       break

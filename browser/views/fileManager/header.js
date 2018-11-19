@@ -101,7 +101,7 @@ class Header extends Nanocomponent {
               <b>ID: ${props.userDID.slice(8,14)}...</b>
             </div>
             <div>
-              ${araBalance ? balanceElements : 'Calculating Balance...'}
+              ${araBalance >= 0 ? balanceElements : 'Calculating Balance...'}
             </div>
           </div>
         </div>
