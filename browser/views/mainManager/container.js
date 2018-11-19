@@ -22,7 +22,7 @@ class Container extends Nanocomponent {
 		}
 
 		this.children = {
-			closeButton: new UtilityButton({ children: '✕' }),
+			closeButton: new UtilityButton({ children: 'close' }),
 			menuButton: new HamburgerMenu({ items: [
         { children: 'File Manager', onclick: () => openWindow('manager') },
         { children: 'Publish File', onclick: () => openWindow('publishFileView') },

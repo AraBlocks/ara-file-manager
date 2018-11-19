@@ -7,7 +7,7 @@ const Nanocomponent = require('nanocomponent')
 
 class UtilityButton extends Nanocomponent {
   constructor({
-    children = '✕',
+    children = 'close',
     onclick = () => windowManagement.closeWindow()
   }) {
     super()
@@ -34,21 +34,21 @@ class UtilityButton extends Nanocomponent {
     let iconName = ''
     let yTransform = 1
     switch (state.children) {
-      case '✕':
+      case 'close':
         iconName ='Close'
         break
-      case '▲':
+      case 'upArrow':
         iconName = 'Arrow'
         break
-      case '▼':
+      case 'downArrow':
         iconName = 'Arrow'
         yTransform = -1
         break
       default:
     }
     return iconName == ''
-      ? state.children :
-      html`<img
+      ? state.children
+      : html`<img
         class="${styles.iconHolder(yTransform)} header-iconHolder"
         src="../assets/images/utilityButtons/${iconName}.svg"
       />`
