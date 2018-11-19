@@ -132,7 +132,7 @@ class Container extends Nanocomponent {
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} ManageFileContainer-horizontalContainer,title">
 					Manage File
-					${children.utilityButton.render({ children: '✕' })}
+					${children.utilityButton.render({ children: 'close' })}
 				</div>
 				<div class="${styles.content} ManageFileContainer-content">
 					This file has been published to the Ara Network. You can edit and update the file here. The changes will be pushed to all users on the network.<br><br>

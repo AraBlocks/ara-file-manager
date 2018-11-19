@@ -31,15 +31,15 @@ class EditableFileTable extends Nanocomponent {
 		}
 		this.children = {
 			sortFileButton: new UtilityButton({
-				children: '▲',
+				children: 'upArrow',
 				onclick: this.sortFileName.bind(this)
 			}),
 			sortTypeButton: new UtilityButton({
-				children: '▼',
+				children: 'downArrow',
 				onclick: this.sortFileType.bind(this)
 			}),
 			sortSizeButton: new UtilityButton({
-				children: '▼',
+				children: 'downArrow',
 				onclick: this.sortFileSize.bind(this)
 			}),
 		}
@@ -148,19 +148,19 @@ class EditableFileTable extends Nanocomponent {
 							<th style="width: 350px;">
 								<div class="${styles.headerHolder} EditableFileTable-headerHolder">
 										Name
-										${children.sortFileButton.render({ children: state.sortNameReversed ? '▲' : '▼' })}
+										${children.sortFileButton.render({ children: state.sortNameReversed ? 'upArrow' : 'downArrow' })}
 								</div>
 							</th>
 							<th style="width: 99px;">
 								<div class="${styles.headerHolder} EditableFileTable-headerHolder">
 									Type
-									${children.sortTypeButton.render({ children: state.sortTypeReversed ? '▲' : '▼' })}
+									${children.sortTypeButton.render({ children: state.sortTypeReversed ? 'upArrow' : 'downArrow' })}
 								</div>
 							</th>
 							<th style="width: 99px;">
 								<div class="${styles.headerHolder} EditableFileTable-headerHolder">
 									Size
-									${children.sortSizeButton.render({ children: state.sortSizeReversed ? '▲' : '▼' })}
+									${children.sortSizeButton.render({ children: state.sortSizeReversed ? 'upArrow' : 'downArrow' })}
 								</div>
 							</th>
 						</tr>
