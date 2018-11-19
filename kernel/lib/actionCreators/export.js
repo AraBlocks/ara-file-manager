@@ -2,7 +2,6 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:export')
 const { afsManager } = require('../actions')
-const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const k = require('../../../lib/constants/stateManagement')
 const path = require('path')
@@ -11,12 +10,6 @@ const windowManager = require('electron-window-manager')
 ipcMain.on(k.EXPORT_FILE, async (event, load) => {
 	debug('%s heard', k.EXPORT_FILE)
 	try {
-		let dispatchLoad = {
-			name: load.subPath ? load.subPath : path.basename(load.folderName[0]),
-			modalName: 'pleaseWaitExporting'
-		}
-    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-    windowManager.openModal('generalPleaseWaitModal')
 		const fileDirectory = path.join(...load.parentDirectory)
 		const filePath = path.join(fileDirectory, load.subPath)
 		const exportPath = path.join(load.folderName[0], load.subPath)
@@ -41,5 +34,5 @@ ipcMain.on(k.EXPORT_FILE, async (event, load) => {
 })
 
 function completeHandler() {
-	windowManager.closeModal('generalPleaseWaitModal')
+	windowManager.pingView({ view: 'afsExplorerView', event: k.REFRESH })
 }

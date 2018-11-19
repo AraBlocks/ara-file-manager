@@ -18,7 +18,8 @@ class AfsFileRow extends Nanocomponent {
 		fileRowClicked = () => {},
 		deleteFile,
 		parentDirectory = [],
-		rowType
+		rowType,
+		renderView
 	}) {
 		super()
 		this.props = {
@@ -27,7 +28,8 @@ class AfsFileRow extends Nanocomponent {
 			fileInfo,
 			fileRowClicked,
 			parentDirectory,
-			rowType
+			rowType,
+			renderView
 		}
 
 		this.children = {
@@ -85,6 +87,8 @@ class AfsFileRow extends Nanocomponent {
 
 		fileSystemManager.showSelectDirectoryDialog()
 			.then(folderName => {
+				console.log(props.renderView)
+				props.renderView({ spinner: true })
 				emit({
 					event: EXPORT_FILE,
 					load: {

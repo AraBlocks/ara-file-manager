@@ -12,7 +12,8 @@ const Nanocomponent = require('nanocomponent')
 class AfsFileTable extends Nanocomponent {
 	constructor({
 		did,
-		fileList
+		fileList,
+		renderView,
 	}) {
 		super()
 		this.children = {
@@ -39,6 +40,7 @@ class AfsFileTable extends Nanocomponent {
 		this.props = {
 			did,
 			fileList,
+			renderView
 		}
 		this.backToParentDirectory = this.backToParentDirectory.bind(this)
 		this.sortFileName = this.sortFileName.bind(this)
@@ -115,7 +117,8 @@ class AfsFileTable extends Nanocomponent {
 			fileInfo,
 			fileRowClicked: this.fileRowClicked.bind(this),
 			parentDirectory: state.parentDirectory,
-			rowType: k.DOWNLOADED
+			rowType: k.DOWNLOADED,
+			renderView: props.renderView
 		}))
 	}
 
