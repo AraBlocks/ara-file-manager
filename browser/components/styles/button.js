@@ -13,7 +13,6 @@ module.exports = {
   fonts,
 
   inactive({
-    color  = 'white',
     fontSize = '18',
     height = '2',
     weight = 'bold'
