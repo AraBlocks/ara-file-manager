@@ -12,6 +12,7 @@ module.exports = {
       display: flex;
       font-family: ${fonts.black};
       font-size: 20px;
+      justify-content: space-between;
       width: 90%;
     }
   `,

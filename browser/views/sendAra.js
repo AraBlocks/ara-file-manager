@@ -5,6 +5,7 @@ const windowManagement = require('../lib/tools/windowManagement')
 const { emit } = require('../lib/tools/windowManagement')
 const Input = require('../components/input')
 const overlay = require('../components/overlay')
+const UtilityButton = require('../components/utilityButton')
 const styles = require('./styles/sendAra')
 const k = require('../../lib/constants/stateManagement')
 const html = require('choo/html')
@@ -14,9 +15,11 @@ class SendAra extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { walletAddress : '' }
+    this.state = { walletAddress : '', amount: 0 }
 
     this.children = {
+			closeButton: new UtilityButton({ children: 'close' }),
+
       walletAddressInput: new Input({
         placeholder: 'Wallet Address',
         parentState: this.state,
@@ -26,24 +29,30 @@ class SendAra extends Nanocomponent {
 			amountInput: new Input({
         placeholder: 0.0,
         parentState: this.state,
-				field: 'walletAddress',
-				type: 'number'
+				field: 'amount',
+				type: 'number',
+				embeddedButton: {
+					option: 'selection',
+					optionList: [
+						'ARA',
+					],
+					field: 'currency'
+				}
       }),
 
-      submitButton: new Button({
+      sendButton: new Button({
         children: 'Send Tokens',
         type: 'submit'
       })
     }
 
-    this.register = this.register.bind(this)
+    this.sendAra = this.sendAra.bind(this)
     this.render = this.render.bind(this)
   }
 
-  register(e) {
-    e.preventDefault()
-    const { password } = this.state
-    emit({ event: k.REGISTER, load: password })
+  sendAra(e) {
+		e.preventDefault()
+    emit({ event: k.SEND_ARA, load: this.state })
   }
 
   update() {
@@ -51,21 +60,22 @@ class SendAra extends Nanocomponent {
   }
 
   createElement() {
-    const { children, register } = this
+    const { children, sendAra } = this
     return html`
       <div class="modal">
-        ${overlay(false)}
+				${overlay(false)}
 				<div class=${styles.header}>
 					Send Tokens
+					${children.closeButton.render({children: 'close' })}
 				</div>
         <p class=${styles.description}>
 					Send tokens from your wallet to another user’s account. You will need that user’s <b>Wallet Address</b>.
 				</p>
 				<div class=${styles.divider}></div>
-        <form class=${styles.sendAraForm} onsubmit=${register}>
+        <form class=${styles.sendAraForm} onsubmit=${sendAra}>
 					${children.walletAddressInput.render({})}
 					${children.amountInput.render({})}
-          ${children.submitButton.render({})}
+          ${children.sendButton.render({})}
         </form>
       </div>
     `
