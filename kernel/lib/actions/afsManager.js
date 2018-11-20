@@ -40,7 +40,7 @@ async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
     }, { name: exportPath }, { keepExisting: true })
     await new Promise((accept, reject) => progress.once('end', accept).once('error', reject))
     await afs.close()
-    shell.openItem(path.dirname(exportPath))
+    shell.openItem(exportPath)
     completeHandler()
     debug('Successfully exported folder')
   } catch (err) {
