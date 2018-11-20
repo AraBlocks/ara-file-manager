@@ -34,6 +34,7 @@ class Button extends Nanocomponent {
 
   createElement() {
     const { props } = this
+    console.log(props.children)
     return html`
       <button
         class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"

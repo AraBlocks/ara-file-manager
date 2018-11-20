@@ -39,6 +39,14 @@ windowManager.setSize = (view) => {
       width = 600
       height = 700
       break
+    case 'accountInfo':
+      width = 325
+      height = 650
+      break
+    case 'developer':
+      width = 300
+      height = 500
+      break
     case 'reDownloadModal':
     case 'generalMessageModal':
       width = 340
@@ -108,6 +116,9 @@ windowManager.setSize = (view) => {
 windowManager.loadURL = (view) => {
   let file
   switch (view) {
+    case 'accountInfo':
+      file = 'account-info'
+      break
     case 'afsExplorerView':
       file = 'afs-explorer-view'
       break
