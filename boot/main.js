@@ -3,10 +3,14 @@
 const debug = require('debug')('acm:boot:main')
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
+const writeFiles = require('./writeFiles')
 const isDev = require('electron-is-dev')
 const path = require('path')
 //Creates dev view
 isDev && require('./ipc-dev')
+
+//Writes .ara and keyrings if doesn't exist
+if (writeFiles.writeAraRC() === false) { debug('.ararc exists, not writing file') }
 
 let deepLinkingUrl
 
