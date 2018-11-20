@@ -12,10 +12,11 @@ module.exports = async (state, { load = null, type }) => {
       break
     case k.LOGIN:
     case k.REGISTERED:
-      state.userAid = load.userAid
-      state.password = load.password
       state.accountAddress = load.accountAddress
       state.araBalance = load.araBalance
+      state.ethBalance = load.ethBalance
+      state.password = load.password
+      state.userAid = load.userAid
       break
     case k.LOGOUT:
       Object.keys(state).forEach(key => state[key] = null)

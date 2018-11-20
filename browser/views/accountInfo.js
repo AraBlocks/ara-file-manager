@@ -4,6 +4,7 @@ const Button = require('../components/button')
 const TestnetBanner = require('../components/TestnetBanner')
 const UtilityButton = require('../components/UtilityButton')
 const styles = require('./styles/accountInfo')
+const { round: { roundDecimal } } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -17,7 +18,7 @@ class AccountInfo extends Nanocomponent {
     this.state = { showBanner: network === 'test'  }
     this.props = {
       araBalance: props.araBalance,
-      ethBalance: props.ethBalance || 32.692,
+      ethBalance: props.ethBalance,
       ethAddress: props.accountAddress,
       network,
       userDID: props.userAid,
@@ -83,11 +84,11 @@ class AccountInfo extends Nanocomponent {
           <div class="${styles.balanceSection} accountInfo-balanceSection">
             <div><b>Your Wallet:</b></div>
             <div>
-              <span class="balance">${props.araBalance}</span>
+              <span class="balance">${roundDecimal(props.araBalance, 10000)}</span>
               <span class="${styles.araBalance} accountInfo-araBalance">ARA</span>
             </div>
             <div>
-              <span class="balance ethBalance">${props.ethBalance}</span>
+              <span class="balance ethBalance">${roundDecimal(props.ethBalance, 10000)}</span>
               <span class="${styles.ethBalance} ethBalance accountInfo-ara">ETH</span>
             </div>
           </div>

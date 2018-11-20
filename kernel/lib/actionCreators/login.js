@@ -64,19 +64,22 @@ async function login(_, load) {
 
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
-    const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
+    const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
+    const transferSubscription = await araContractsManager.subscribeTransfer(accountAddress)
+
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
     farmer.start()
 
     dispatch({
       type: k.LOGIN,
       load: {
-        userAid: load.userAid,
         accountAddress,
         araBalance,
+        ethBalance,
+        farmer,
         password: load.password,
         transferSubscription,
-        farmer
+        userAid: load.userAid
       }
     })
 

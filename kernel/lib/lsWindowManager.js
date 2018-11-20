@@ -195,10 +195,8 @@ windowManager.pingView = ({ view, event, load = null }) => {
 }
 
 windowManager.pingAll = ({ event, load = null }) => {
-  const views = ['filemanager', 'publishFileView', 'manageFileView']
-  views.forEach( (view) => { 
-    windowManager.pingView({ view, event, load })
-  })
+  const views = ['filemanager', 'publishFileView', 'manageFileView', 'accountInfo']
+  views.forEach((view) =>windowManager.pingView({ view, event, load }))
 }
 
 windowManager.closeWindow = (name) => {
