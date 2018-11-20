@@ -38,8 +38,8 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 		dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
 		windowManager.openModal('generalPleaseWaitModal')
 		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
-		araContractsManager.sendAra({ 
-			...load, 
+		araContractsManager.sendAra({
+			...load,
 			completeHandler: araSent,
 			errorHandler: failedToSend
 		})
@@ -49,7 +49,7 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 	}
 })
 
-function araSent(amount) {
+async function araSent(amount) {
 	windowManager.closeModal('generalPleaseWaitModal')
 	windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 	dispatch({ type: k.FEED_MODAL, load: {
@@ -58,6 +58,8 @@ function araSent(amount) {
 		}
 	})
 	windowManager.openModal('generalMessageModal')
+	const newBalance = await araContractsManager.getAraBalance(store.account.userAid)
+	windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
 }
 
 function failedToSend() {

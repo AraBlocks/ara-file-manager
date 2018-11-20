@@ -197,8 +197,6 @@ async function sendAra({
 			val: amount,
 			to: walletAddress
 		})
-		const newBalance = await getAraBalance(store.account.userAid)
-		windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
 		completeHandler(amount)
 	} catch(err) {
 		debug('Error sending ara: %o', err)
