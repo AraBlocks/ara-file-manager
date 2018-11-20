@@ -11,5 +11,6 @@ module.exports = {
   update: require('./update'),
   utils: require('./utils'),
   subscription: require('./subscription'),
-  seed: require('./seed')
+  seed: require('./seed'),
+  sendAra: require('./sendAra')
 }

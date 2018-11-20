@@ -52,7 +52,8 @@ class SendAra extends Nanocomponent {
 
   sendAra(e) {
 		e.preventDefault()
-    emit({ event: k.SEND_ARA, load: this.state })
+		emit({ event: k.SEND_ARA, load: this.state })
+		windowManagement.closeWindow('sendAra')
   }
 
   update() {

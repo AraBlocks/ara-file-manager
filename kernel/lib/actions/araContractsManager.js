@@ -184,6 +184,22 @@ async function subscribePublished({ did }) {
 	}
 }
 
+async function sendAra({ walletAddress, amount, completeHandler }) {
+	try {
+		await araContracts.token.transfer({
+			did: store.account.userAid,
+			password: store.account.password,
+			val: amount,
+			to: walletAddress
+		})
+		const newBalance = await getAraBalance(store.account.userAid)
+		windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
+		completeHandler(amount)
+	} catch(err) {
+		debug('Error sending ara: %o', err)
+	}
+}
+
 async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 	const { rewards } = araContracts
 	try {
@@ -230,6 +246,7 @@ module.exports = {
 	getPublishedEarnings,
 	getRewards,
 	purchaseItem,
+	sendAra,
 	subscribePublished,
 	subscribeRewardsAllocated,
 	subscribeTransfer

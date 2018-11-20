@@ -2,10 +2,14 @@
 
 const html = require('choo/html')
 
-function generalModalText(modalName, fileName) {
+function generalModalText(modalName, fileName, amount) {
 	let title
 	let description
 	switch (modalName) {
+		case 'araSent':
+			title = 'Success!'
+			description = html `<div><b>${amount} Ara</b> has been sent.</div>`
+			break
 		case 'alreadyOwn':
 			title = 'You already own this content'
 			description = 'You can not purchase this content again'
@@ -75,7 +79,7 @@ function generalModalText(modalName, fileName) {
 	return { description, title }
 }
 
-function waitModalText(modalName, fileName) {
+function waitModalText(modalName, fileName, amount) {
 	let description
 	switch (modalName) {
 		case 'pleaseWait':
@@ -83,11 +87,12 @@ function waitModalText(modalName, fileName) {
 			break
 		case 'pleaseWaitUploading':
 			description = html `<div>Publishing <b>${fileName}</b> to Ara Network and uploading to Littlstar Supernode.</div>`
-			waitTime = html `<div>This may take a while.<br><b>Do not close File Manager.</b></div>`
 			break
 		case 'pleaseWaitUploading2':
 			description = html `<div>Updating <b>${fileName}</b> on the Ara Network.</div>`
-			waitTime = html `<div>This may take a while.<br><b>Do not close File Manager.</b></div>`
+			break
+		case 'sendingAra':
+			description = html `<div>Sending ${amount} Ara.</div>`
 			break
 		default:
 			description = fileName === 'Unnamed'

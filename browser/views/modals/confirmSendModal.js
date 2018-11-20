@@ -16,9 +16,11 @@ module.exports = ({
       emit({
         event: CONFIRM_SEND_ARA,
         load: {
+					amount,
+					walletAddress
         }
       })
-      closeModal()
+      closeModal('confirmSendModal')
     }
   })
 
