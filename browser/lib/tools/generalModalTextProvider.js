@@ -2,13 +2,13 @@
 
 const html = require('choo/html')
 
-function generalModalText(modalName, fileName, amount) {
+function generalModalText(modalName, load) {
 	let title
 	let description
 	switch (modalName) {
 		case 'araSent':
 			title = 'Success!'
-			description = html `<div><b>${amount} Ara</b> has been sent.</div>`
+			description = html `<div><b>${load.amount} Ara</b> has been sent.</div>`
 			break
 		case 'alreadyOwn':
 			title = 'You already own this content'
@@ -22,7 +22,7 @@ function generalModalText(modalName, fileName, amount) {
 			break
 		case 'deleteSuccess':
 			title = 'File Deleted'
-			description = html `<div><b>${fileName}</b> has been successfully deleted from the network.</div>`
+			description = html `<div><b>${load.fileName}</b> has been successfully deleted from the network.</div>`
 			break
 		case 'failureModal':
 			title = 'Something went wrong'
@@ -35,7 +35,7 @@ function generalModalText(modalName, fileName, amount) {
 			break
 		case 'fileMissing':
 			title = 'File Missing'
-			description = html `<div><b>${fileName}</b> has been deleted or altered. You cannot share a file or earn rewards unless it matches the published file on the network.<br><br>
+			description = html `<div><b>${load.fileName}</b> has been deleted or altered. You cannot share a file or earn rewards unless it matches the published file on the network.<br><br>
 			Please restore the file or download it again from the network.</div>`
 			break
 		case 'generalFailure':
@@ -72,13 +72,13 @@ function generalModalText(modalName, fileName, amount) {
 			break
 		case 'successModal':
 			title = 'Success!'
-			description = html `<div><b>${fileName}</b> is downloading now.<br><br>
+			description = html `<div><b>${load.fileName}</b> is downloading now.<br><br>
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
 		case 'updateSuccessModal':
 			title = 'Success!'
-			description = html `<div><b>${fileName}</b> has been updated on the network.<br><br>
+			description = html `<div><b>${load.fileName}</b> has been updated on the network.<br><br>
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
@@ -91,25 +91,25 @@ function generalModalText(modalName, fileName, amount) {
 	return { description, title }
 }
 
-function waitModalText(modalName, fileName, amount) {
+function waitModalText(modalName, load) {
 	let description
 	switch (modalName) {
 		case 'pleaseWait':
 			description = html`<div>Completing transaction and connecting to<br>peers on the network.</div>`
 			break
 		case 'pleaseWaitUploading':
-			description = html `<div>Publishing <b>${fileName}</b> to Ara Network and uploading to Littlstar Supernode.</div>`
+			description = html `<div>Publishing <b>${load.fileName}</b> to Ara Network and uploading to Littlstar Supernode.</div>`
 			break
 		case 'pleaseWaitUploading2':
-			description = html `<div>Updating <b>${fileName}</b> on the Ara Network.</div>`
+			description = html `<div>Updating <b>${load.fileName}</b> on the Ara Network.</div>`
 			break
 		case 'sendingAra':
-			description = html `<div>Sending ${amount} Ara.</div>`
+			description = html `<div>Sending ${load.amount} Ara.</div>`
 			break
 		default:
-			description = fileName === 'Unnamed'
+			description = load.fileName === 'Unnamed'
 				? html`<div>Getting publish estimate for your file</div>`
-				: html`<div>Getting publish estimate for <b>${fileName}</b>.</div>`
+				: html`<div>Getting publish estimate for <b>${load.fileName}</b>.</div>`
 	}
 	const waitTime = html`
 		<div>

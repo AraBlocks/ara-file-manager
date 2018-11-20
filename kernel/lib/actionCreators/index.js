@@ -10,7 +10,7 @@ module.exports = {
   transaction: require('./transaction'),
   update: require('./update'),
   utils: require('./utils'),
-  subscription: require('./subscription'),
+  subscription: require('./wallet'),
   seed: require('./seed'),
   sendAra: require('./sendAra')
 }

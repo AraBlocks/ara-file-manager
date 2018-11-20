@@ -34,7 +34,7 @@ ipcMain.on(k.SEND_ARA, (event, load) => {
 ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 	try {
 		debug('%s heard', k.CONFIRM_SEND_ARA)
-		let dispatchLoad = { modalName: 'sendingAra', amount: load.amount }
+		let dispatchLoad = { modalName: 'sendingAra', load }
 		dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
 		windowManager.openModal('generalPleaseWaitModal')
 		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
@@ -54,7 +54,7 @@ async function araSent(amount) {
 	windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 	dispatch({ type: k.FEED_MODAL, load: {
 			modalName: 'araSent',
-			amount
+			load: { amount }
 		}
 	})
 	windowManager.openModal('generalMessageModal')
