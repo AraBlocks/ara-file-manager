@@ -38,6 +38,18 @@ function generalModalText(modalName, fileName, amount) {
 			description = html `<div><b>${fileName}</b> has been deleted or altered. You cannot share a file or earn rewards unless it matches the published file on the network.<br><br>
 			Please restore the file or download it again from the network.</div>`
 			break
+		case 'generalFailure':
+			title = 'Something went wrong'
+			description = 'This transaction could not be completed.'
+			break
+		case 'invalidAddress':
+			title = 'Invalid Address'
+			description = 'Please enter a valid address'
+			break
+		case 'invalidAmount':
+			title = 'Invalid Amount'
+			description = 'Please enter an amount that is greater than 0.'
+			break
 		case 'loginFail':
 			title = 'Login Failed'
 			description = 'Please check your Idenitity and/or password'

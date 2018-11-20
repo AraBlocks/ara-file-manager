@@ -1,14 +1,14 @@
 'use strict'
 
-const html = require('choo/html')
-const styles = require('./styles')
 const Button = require('../../components/button')
 const { CONFIRM_SEND_ARA } = require('../../../lib/constants/stateManagement')
 const { emit, closeModal } = require('../../lib/tools/windowManagement')
+const html = require('choo/html')
+const styles = require('./styles')
 
 module.exports = ({
 	walletAddress = "0x12345678...",
-	amount = 6
+	amount = 5
 }) => {
   const confirmButton = new Button({
     children: 'Confirm',
@@ -26,9 +26,7 @@ module.exports = ({
 
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => {
-      closeModal()
-    }
+    onclick: () => closeModal()
    })
   return html`
     <div class="${styles.container} modals-container">

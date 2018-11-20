@@ -184,7 +184,12 @@ async function subscribePublished({ did }) {
 	}
 }
 
-async function sendAra({ walletAddress, amount, completeHandler }) {
+async function sendAra({
+	amount,
+	completeHandler,
+	errorHandler,
+	walletAddress,
+}) {
 	try {
 		await araContracts.token.transfer({
 			did: store.account.userAid,
@@ -197,6 +202,7 @@ async function sendAra({ walletAddress, amount, completeHandler }) {
 		completeHandler(amount)
 	} catch(err) {
 		debug('Error sending ara: %o', err)
+		errorHandler()
 	}
 }
 

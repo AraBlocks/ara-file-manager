@@ -6,13 +6,26 @@ const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
+const { web3 } = require('ara-util')
+const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.SEND_ARA, (event, load) => {
 	try {
 		debug('%s heard', k.SEND_ARA)
-		debug('Dispatching %s', k.FEED_MODAL)
-		dispatch({ type: k.FEED_MODAL, load })
-		windowManager.openModal('confirmSendModal')
+		if (!web3.isAddress(load.walletAddress)) {
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'invalidAddress' } })
+			windowManager.openModal('generalMessageModal')
+		} else if (load.amount <= 0) {
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'invalidAmount' } })
+			windowManager.openModal('generalMessageModal')
+		} else if (load.amount > store.account.araBalance) {
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughAra' } })
+			windowManager.openModal('generalMessageModal')
+		} else {
+			debug('Dispatching %s', k.FEED_MODAL)
+			dispatch({ type: k.FEED_MODAL, load })
+			windowManager.openModal('confirmSendModal')
+		}
 	} catch(err) {
 		debug('Error: %o', err)
 	}
@@ -25,7 +38,11 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 		dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
 		windowManager.openModal('generalPleaseWaitModal')
 		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
-		araContractsManager.sendAra({ ...load, completeHandler: araSent })
+		araContractsManager.sendAra({ 
+			...load, 
+			completeHandler: araSent,
+			errorHandler: failedToSend
+		})
 	} catch(err) {
 		debug('Error sending ara: %o', err)
 		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
@@ -40,5 +57,11 @@ function araSent(amount) {
 			amount
 		}
 	})
+	windowManager.openModal('generalMessageModal')
+}
+
+function failedToSend() {
+	windowManager.closeModal('generalPleaseWaitModal')
+	dispatch({ type: k.FEED_MODAL, load: { modalName: 'generalFailure' }})
 	windowManager.openModal('generalMessageModal')
 }
