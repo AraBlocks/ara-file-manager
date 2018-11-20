@@ -7,8 +7,8 @@ const html = require('choo/html')
 const styles = require('./styles')
 
 module.exports = ({
-	walletAddress = "0x12345678...",
-	amount = 5
+	amount = 5,
+	walletAddress = "0x12345678..."
 }) => {
   const confirmButton = new Button({
     children: 'Confirm',

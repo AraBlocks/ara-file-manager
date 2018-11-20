@@ -60,8 +60,8 @@ module.exports = {
       display: flex;
       flex-direction: column;
       font-size: 12px;
-      justify-content: space-around;
       height: 95%;
+      justify-content: space-around;
       width: 100%;
     }
 
@@ -76,8 +76,8 @@ module.exports = {
       display: flex;
       flex-direction: column;
       font-size: 12px;
-      justify-content: space-around;
       height: 95%;
+      justify-content: space-around;
       width: 90%;
     }
 
