@@ -44,6 +44,7 @@
     "md5-hex": "^2.0.0",
     "mirror-folder": "^3.0.0",
     "nanocomponent": "^6.5.2",
+    "pify": "^4.0.1",
     "styleUtils": "file:browser/lib/styleUtils",
     "user-home": "^2.0.0",
     "web3-providers-ws": "^1.0.0-beta.35"

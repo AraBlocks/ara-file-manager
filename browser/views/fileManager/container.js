@@ -4,12 +4,14 @@ const Header = require('./header')
 const Section = require('./section')
 const spinnerBar = require('../../components/spinnerBar')
 const styles = require('./styles/container')
+const TestnetBanner = require('../../components/testnetBanner')
+const { utils } = require('../../lib/tools')
 const html = require('choo/html')
 const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-  constructor({ account, files }) {
+  constructor({ account, files, application }) {
     super()
 
     this.state = {
@@ -17,6 +19,7 @@ class Container extends Nanocomponent {
       araBalance: account.araBalance,
       files,
       loadingLibrary: files.loadingLibrary,
+      showBanner: utils.shouldShowBanner(application.network)
     }
 
     this.children = {
@@ -36,15 +39,15 @@ class Container extends Nanocomponent {
       })
     }
 
+    this.removeBanner = this.removeBanner.bind(this)
     this.rerender = this.rerender.bind(this)
     this.renderSections = this.renderSections.bind(this)
     if (isDev) { window.components = { fileManager: this } }
   }
 
-  selectTab(index) {
-    const { state, rerender } = this
-    state.activeTab = index
-    rerender()
+  removeBanner() {
+    this.state.showBanner = false
+    this.rerender()
   }
 
   renderSpinnerBars() {
@@ -105,6 +108,12 @@ class Container extends Nanocomponent {
     `
   }
 
+  selectTab(index) {
+    const { state, rerender } = this
+    state.activeTab = index
+    rerender()
+  }
+
   update({ account, files }) {
     this.state.araBalance = account.araBalance
     this.state.loadingLibrary = files.loadingLibrary
@@ -114,13 +123,22 @@ class Container extends Nanocomponent {
   createElement() {
     const {
       children,
+      removeBanner,
       renderSections,
       renderSpinnerBars,
-      state: { activeTab, araBalance, loadingLibrary }
+      state
     } = this
+
+    const {
+      activeTab,
+      araBalance,
+      loadingLibrary,
+      showBanner
+    } = state
 
     return html`
       <div>
+        ${showBanner ? TestnetBanner(removeBanner) : html`<div></div>`}
         <div class="${styles.container} container-container">
           <div>
             ${children.header.render({ activeTab, araBalance })}

@@ -7,9 +7,9 @@ const windowManager = remote.require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 const isDev = require('electron-is-dev')
 
-const accountInfo = new AccountInfo(store.account)
-document.getElementById('container').appendChild(accountInfo.render())
+const accountInfo = new AccountInfo(store)
+document.getElementById('container').appendChild(accountInfo.render(store))
 
-ipcRenderer.on(REFRESH, () => accountInfo.render(store.account))
+ipcRenderer.on(REFRESH, () => accountInfo.render(store))
 
 isDev && Object.assign(window, { store })

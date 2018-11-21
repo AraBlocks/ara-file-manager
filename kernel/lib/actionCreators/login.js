@@ -8,7 +8,8 @@ const {
   afsManager,
   araContractsManager,
   farmerManager,
-  identityManager
+  identityManager,
+  utils
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
@@ -116,6 +117,10 @@ async function login(_, load) {
       type: k.GOT_EARNINGS_AND_REWARDS,
       load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
     }))
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+    const network = await utils.getNetwork()
+    dispatch({ type: k.GOT_NETWORK, load: { network } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))

@@ -4,7 +4,7 @@
 const Button = require('../../components/button')
 const { clipboard } = require('electron')
 const { CLEAN_UI } = require('../../../lib/constants/stateManagement')
-const { round: { roundDecimal } } = require('../../lib/tools')
+const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
@@ -69,7 +69,7 @@ class Header extends Nanocomponent {
     } = this
     const balanceElements = [
       html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>`,
-      roundDecimal(araBalance, 100)
+      utils.roundDecimal(araBalance, 100)
     ]
     return html`
       <div class="${styles.container} header-container">

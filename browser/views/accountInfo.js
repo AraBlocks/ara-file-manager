@@ -4,7 +4,7 @@ const Button = require('../components/button')
 const TestnetBanner = require('../components/TestnetBanner')
 const UtilityButton = require('../components/UtilityButton')
 const styles = require('./styles/accountInfo')
-const { round: { roundDecimal } } = require('../lib/tools')
+const { utils } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -14,14 +14,14 @@ const network = 'test'
 class AccountInfo extends Nanocomponent {
   constructor(props) {
     super()
+    const { account, application } = props
 
-    this.state = { showBanner: network === 'test'  }
+    this.state = { showBanner: utils.shouldShowBanner(application.network) }
     this.props = {
-      araBalance: props.araBalance,
-      ethBalance: props.ethBalance,
-      ethAddress: props.accountAddress,
-      network,
-      userDID: props.userAid,
+      araBalance: account.araBalance,
+      ethBalance: account.ethBalance,
+      ethAddress: account.accountAddress,
+      userDID: account.userAid,
       version
     }
 
@@ -49,13 +49,14 @@ class AccountInfo extends Nanocomponent {
     }
 
     this.removeBanner = this.removeBanner.bind(this)
-    this.render = this.render.bind(this)
+    this.rerender = this.rerender.bind(this)
   }
 
   removeBanner() {
     this.state.showBanner = false
-    this.render()
+    this.rerender()
   }
+
   update(props = {}) {
     this.props = { ...this.props, ...props }
     return true
@@ -84,11 +85,11 @@ class AccountInfo extends Nanocomponent {
           <div class="${styles.balanceSection} accountInfo-balanceSection">
             <div><b>Your Wallet:</b></div>
             <div>
-              <span class="balance">${roundDecimal(props.araBalance, 10000)}</span>
+              <span class="balance">${utils.roundDecimal(props.araBalance, 10000)}</span>
               <span class="${styles.araBalance} accountInfo-araBalance">ARA</span>
             </div>
             <div>
-              <span class="balance ethBalance">${roundDecimal(props.ethBalance, 10000)}</span>
+              <span class="balance ethBalance">${utils.roundDecimal(props.ethBalance, 10000)}</span>
               <span class="${styles.ethBalance} ethBalance accountInfo-ara">ETH</span>
             </div>
           </div>

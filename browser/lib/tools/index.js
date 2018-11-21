@@ -2,6 +2,6 @@ module.exports = {
   deeplink: require('./deeplink'),
   fileSystemManager: require('./fileSystemManager'),
   optionsTitleProvider: require('./optionsTitleProvider'),
-  round: require('./round'),
+  utils: require('./utils'),
   windowManagement: require('./windowManagement')
 }
