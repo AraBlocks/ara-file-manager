@@ -31,7 +31,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
-    await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
+    //await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
 
     await afs.deploy({ password, did })
 

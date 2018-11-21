@@ -78,10 +78,7 @@ async function download({
 			did,
 			download: true,
 			upload: false,
-			price,
-			maxPeers,
 			metaOnly: true,
-			jobId: jobId ? jobId.slice(2) : null
 		})
 
 		farmer.once('start', (did, total) => {
@@ -96,7 +93,7 @@ async function download({
 					farmer,
 					did,
 					jobId,
-					maxPeer,
+					maxPeers,
 					price,
 					errorHandler,
 					startHandler,
