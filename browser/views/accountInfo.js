@@ -1,6 +1,7 @@
 'use strict'
 
 const Button = require('../components/button')
+const { clipboard } = require('electron')
 const TestnetBanner = require('../components/TestnetBanner')
 const UtilityButton = require('../components/UtilityButton')
 const styles = require('./styles/accountInfo')
@@ -8,7 +9,12 @@ const { utils, windowManagement } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { version } = require('../../package.json')
+const tt = require('electron-tooltip')
 
+tt({
+  position: 'top',
+  style: { width: '130px' }
+})
 class AccountInfo extends Nanocomponent {
   constructor(props) {
     super()
@@ -48,7 +54,12 @@ class AccountInfo extends Nanocomponent {
     }
 
     this.removeBanner = this.removeBanner.bind(this)
+    this.renderCopyableText = this.renderCopyableText.bind(this)
     this.rerender = this.rerender.bind(this)
+    this.eventMouseLeave = document.createEvent('MouseEvents')
+    this.eventMouseEnter = document.createEvent('MouseEvents')
+    this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
+    this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
   }
 
   removeBanner() {
@@ -61,11 +72,39 @@ class AccountInfo extends Nanocomponent {
     return true
   }
 
+  renderCopyableText(textType) {
+    const {
+      eventMouseEnter,
+      props
+    } = this
+    let text = ''
+    textType === 'did'
+      ? text = props.userDID.slice(-64)
+      : text = props.ethAddress
+    return html`
+      <div
+      data-tooltip="Copy to Clipboard"
+      class="${styles.copyableText} header-didHolder"
+      onclick=${({ target }) => {
+        target.parentElement.dataset.tooltip = 'Copied!'
+        target.parentElement.dispatchEvent(eventMouseEnter)
+        target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
+        clipboard.writeText(text)
+      }}
+      onmouseenter=${({ target }) => target.style.backgroundColor = '#d0d0d0'}
+      onmouseleave=${({ target }) => target.style.backgroundColor = ''}
+    >
+      <div class=${textType}>${text}</div>
+    </div>
+    `
+  }
+
   createElement() {
     const {
       children,
       props,
       removeBanner,
+      renderCopyableText,
       state
     } = this
     return html`
@@ -96,11 +135,11 @@ class AccountInfo extends Nanocomponent {
             <div class="container">
               <div>
                 <div>Your <b>Ara ID is:</b></div>
-                <div class="did">${props.userDID.slice(-64)}</div>
+                ${renderCopyableText('did')}
               </div>
               <div>
                 <div>Your <b>Wallet Address</b> is:</div>
-                <div class="eth">${props.ethAddress}</div>
+                ${renderCopyableText('eth')}
               </div>
             </div>
           </div>
