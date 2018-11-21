@@ -9,8 +9,10 @@ function createFarmer({ did: userID, password }) {
 	return new farmDCDN({ userID, password })
 }
 
-async function joinBroadcast({ farmer, did, price = 1 }) {
+async function joinBroadcast({ farmer, did }) {
 	try {
+		//Rewards set at 10% of AFS price
+		const price = (await araContractsManager.getAFSPrice({ did }))
 		await farmer.join({
 			did,
 			download: false,
@@ -24,29 +26,29 @@ async function joinBroadcast({ farmer, did, price = 1 }) {
 }
 
 function getBroadcastingState({ did, DCDNStore }) {
-  try {
-    return JSON.parse(DCDNStore[did]).upload
-  } catch (err) {
-    return false
-  }
+	try {
+		return JSON.parse(DCDNStore[did]).upload
+	} catch (err) {
+		return false
+	}
 }
 
 function loadDCDNStore(farmer) {
 	debug('loading dcdn farm store')
-  try {
+	try {
 		return JSON.parse(fs.readFileSync(farmer.config).toString())
-  } catch (err) {
+	} catch (err) {
 		debug(err)
-    debug('No DCDN farm store')
-    return {}
-  }
+		debug('No DCDN farm store')
+		return {}
+	}
 }
 
 async function unjoinBroadcast({ farmer, did }) {
 	debug('Unjoining broadcast for %s', did)
 	try {
 		await farmer.unjoin({ did })
-	} catch(err) {
+	} catch (err) {
 		debug('Error stopping broadcast for %s: %O', did, err)
 	}
 }
@@ -64,9 +66,8 @@ async function stopAllBroadcast(farmer) {
 async function download({
 	farmer,
 	did,
-	jobId,
-	maxPeers = 1,
-	price = 1,
+	jobId = null,
+	maxPeers = 10,
 	errorHandler,
 	startHandler,
 	progressHandler,
@@ -118,13 +119,15 @@ async function downloadContent({
 }) {
 	debug('Downloading through DCDN: %s', did)
 	try {
+		//Rewards set at 10% of AFS price (1 if AFS is free)
+		const price = (await araContractsManager.getAFSPrice({ did }))
 		await farmer.join({
 			did,
 			download: true,
-			upload: true,
-			price,
 			maxPeers,
-			jobId: jobId ? jobId.slice(2) : null
+			jobId,
+			price,
+			upload: true,
 		})
 
 		let totalBlocks = 0
