@@ -11,15 +11,15 @@ const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-  constructor({ account, files, application }) {
+  constructor({ account, files }) {
     super()
 
     this.state = {
       activeTab: 0,
       araBalance: account.araBalance,
+      bannerToggled: true,
       files,
-      loadingLibrary: files.loadingLibrary,
-      showBanner: utils.shouldShowBanner(application.network)
+      loadingLibrary: files.loadingLibrary
     }
 
     this.children = {
@@ -27,26 +27,19 @@ class Container extends Nanocomponent {
         account,
         selectTab: this.selectTab.bind(this)
       }),
-
-      publishedSection: new Section({
-        files,
-        type: 'published'
-      }),
-
-      purchasedSection: new Section({
-        files,
-        type: 'purchased'
-      })
+      publishedSection: new Section({ files, type: 'published' }),
+      purchasedSection: new Section({ files, type: 'purchased' })
     }
 
     this.removeBanner = this.removeBanner.bind(this)
     this.rerender = this.rerender.bind(this)
     this.renderSections = this.renderSections.bind(this)
+    this.shouldShowBanner = this.shouldShowBanner.bind(this)
     if (isDev) { window.components = { fileManager: this } }
   }
 
   removeBanner() {
-    this.state.showBanner = false
+    this.state.bannerToggled = false
     this.rerender()
   }
 
@@ -80,8 +73,8 @@ class Container extends Nanocomponent {
     return html`
       <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
         ${files.published.length || files.purchased.length
-          ? sections.map(section => section.render({ files }))
-          : renderNoFilesMsg()}
+        ? sections.map(section => section.render({ files }))
+        : renderNoFilesMsg()}
       </div>`
   }
 
@@ -114,18 +107,27 @@ class Container extends Nanocomponent {
     rerender()
   }
 
+  shouldShowBanner(network) {
+    return (
+      !this.state.loadingLibrary
+      && utils.shouldShowBanner(network)
+      && this.state.bannerToggled
+    )
+  }
+
   update({ account, files }) {
     this.state.araBalance = account.araBalance
     this.state.loadingLibrary = files.loadingLibrary
     return true
   }
 
-  createElement() {
+  createElement({ application: { network } }) {
     const {
       children,
       removeBanner,
       renderSections,
       renderSpinnerBars,
+      shouldShowBanner,
       state
     } = this
 
@@ -133,12 +135,11 @@ class Container extends Nanocomponent {
       activeTab,
       araBalance,
       loadingLibrary,
-      showBanner
     } = state
 
     return html`
       <div>
-        ${showBanner ? TestnetBanner(removeBanner) : html`<div></div>`}
+        ${shouldShowBanner(network) ? TestnetBanner(removeBanner) : html`<div></div>`}
         <div class="${styles.container} container-container">
           <div>
             ${children.header.render({ activeTab, araBalance })}

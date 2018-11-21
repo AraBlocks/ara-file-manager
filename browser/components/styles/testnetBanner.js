@@ -5,7 +5,7 @@ const { css } = require('css')
 module.exports = {
   container: css`
     :host {
-      animation: banner 1000ms;
+      animation: banner 1300ms;
       background-color: var(--ara-orange);
       left: 0;
       position: absolute;
