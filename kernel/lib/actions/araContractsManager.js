@@ -54,16 +54,21 @@ async function getEtherBalance(account) {
 	}
 }
 
-async function purchaseItem(contentDid) {
+async function purchaseItem(opts) {
+	const {
+		budget,
+		contentDID: contentDid,
+		userDID: requesterDid,
+		password
+	} = opts
 	debug('Purchasing item: %s', contentDid)
-	const { account } = store
 	try {
 		const { jobId } = await araContracts.purchase(
 			{
-				requesterDid: account.userAid,
+				budget,
 				contentDid,
-				password: account.password,
-				budget: 1
+				password,
+				requesterDid,
 			}
 		)
 		debug('Purchase Completed')
