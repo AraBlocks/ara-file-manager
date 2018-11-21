@@ -75,8 +75,8 @@ async function download({
 	completeHandler
 }) {
 	debug('Downloading Metadata through DCDN: %s', did)
-	const price = (await araContractsManager.getAFSPrice({ did })) / 10
 	try {
+		const price = (await araContractsManager.getAFSPrice({ did })) / 10
 		await farmer.join({
 			did,
 			download: true,
