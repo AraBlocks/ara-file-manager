@@ -108,17 +108,17 @@ async function login(_, load) {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
-    updatedPublishedItems = await Promise.all(files.published.map((item) =>
+    updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
       araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
     let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
       araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
-    updatedPublishedItems = await Promise.all(files.published.map((item) =>
+    updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
       araContractsManager.getRewards(item, accountAddress)))
-    updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
+    updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map((item) =>
       araContractsManager.getRewards(item, accountAddress)))
-    updatedPurchasedItems = await Promise.all(files.purchased.map(afsManager.getUpdateAvailableStatus))
+    updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map(afsManager.getUpdateAvailableStatus));
 
-    ;({ files } = dispatch({
+    ({ files } = dispatch({
       type: k.LOADED_BACKGROUND_AFS_DATA,
       load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
     }))

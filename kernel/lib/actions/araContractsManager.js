@@ -87,6 +87,7 @@ async function getPublishedEarnings(items) {
 	debug('Getting earnings for published items')
 	const updatedEarnings = items.map(async (item) => {
 		const earnings = await getEarnings(item)
+
 		return { ...item, earnings }
 	})
 
@@ -115,34 +116,13 @@ async function getEarnings({ did }) {
 	try {
 		const AFSContract = await getAFSContract(did)
 		if (!AFSContract) return 0
+		const earnings = (await AFSContract.getPastEvents('Purchased', opts))
+			.reduce((sum, { returnValues }) => sum + Number(araContracts.token.constrainTokenValue(returnValues._price)), 0)
 
-		const priceSets = (await AFSContract.getPastEvents('PriceSet', opts))
-			.map(event => ({
-				blockNumber: event.blockNumber,
-				price: Number(araContracts.token.constrainTokenValue(event.returnValues._price))
-			}))
-
-		const purchases = (await AFSContract.getPastEvents('Purchased', opts))
-			.map(({ blockNumber }) => blockNumber)
-
-		const itemEarnings = purchases.reduce((totalEarnings, current) => {
-			let earning
-			if (priceSets.length > 1) {
-				if (current.block < priceSets[1].blockNumber) {
-					earning = priceSets[0].price
-				} else {
-					priceSets.shift()
-					earning = priceSets[0].price
-				}
-			} else {
-				earning = priceSets[0].price
-			}
-			return totalEarnings += earning
-		}, 0)
-
-		return itemEarnings
+		return earnings
 	} catch (err) {
 		debug('Error getting earnings for %s : %o', did, err)
+		return 0
 	}
 }
 
@@ -198,7 +178,7 @@ async function sendAra({
 			to: walletAddress
 		})
 		completeHandler(amount)
-	} catch(err) {
+	} catch (err) {
 		debug('Error sending ara: %o', err)
 		errorHandler()
 	}
