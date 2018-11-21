@@ -87,20 +87,17 @@ async function download({
 
 		farmer.once('requestcomplete', async (did) => {
 			debug('Metadata download complete!')
-			setTimeout( async () => {
-				debug('about to start download content')
-				await downloadContent({
-					farmer,
-					did,
-					jobId,
-					maxPeers,
-					price,
-					errorHandler,
-					startHandler,
-					progressHandler,
-					completeHandler
-				})
-			}, 5000)
+			await downloadContent({
+				farmer,
+				did,
+				jobId,
+				maxPeers,
+				price,
+				errorHandler,
+				startHandler,
+				progressHandler,
+				completeHandler
+			})
 		})
 	} catch (err) {
 		debug('Error downloading metadata: %O', err)
