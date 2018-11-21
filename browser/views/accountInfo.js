@@ -4,7 +4,7 @@ const Button = require('../components/button')
 const TestnetBanner = require('../components/TestnetBanner')
 const UtilityButton = require('../components/UtilityButton')
 const styles = require('./styles/accountInfo')
-const { utils } = require('../lib/tools')
+const { utils, windowManagement } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { version } = require('../../package.json')
@@ -43,6 +43,7 @@ class AccountInfo extends Nanocomponent {
             height: '3'
           }
         },
+        onclick: () => windowManagement.openWindow('sendAra')
       })
     }
 
