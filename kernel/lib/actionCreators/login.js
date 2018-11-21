@@ -20,12 +20,16 @@ const { switchLoginState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
-  farmerManager.stopAllBroadcast(store.farmer.farm)
-  dispatch({ type: k.LOGOUT })
-  switchLoginState(false)
-  windowManager.closeWindow('filemanager')
-  windowManager.closeWindow('publishFileView')
-  windowManager.openWindow('login')
+  try {
+    farmerManager.stopAllBroadcast(store.farmer.farm)
+    dispatch({ type: k.LOGOUT })
+    switchLoginState(false)
+    windowManager.closeWindow('filemanager')
+    windowManager.closeWindow('publishFileView')
+    windowManager.openWindow('login')
+  } catch (err) {
+    debug('Error logging out: %o', o)
+  }
 })
 
 ipcMain.on(k.LOGIN, login)
