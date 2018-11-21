@@ -153,6 +153,9 @@ windowManager.loadURL = (view) => {
     case 'registration':
       file = 'registration'
       break
+    case 'sendAra':
+      file = 'send-ara'
+      break
     case 'testing':
       file = 'index-test'
       break

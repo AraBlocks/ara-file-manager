@@ -15,7 +15,7 @@ class SendAra extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { walletAddress : '', amount: 0 }
+    this.state = { walletAddress : '', amount: null }
 
     this.children = {
 			closeButton: new UtilityButton({ children: 'close' }),
@@ -27,7 +27,7 @@ class SendAra extends Nanocomponent {
 			}),
 
 			amountInput: new Input({
-        placeholder: 0.0,
+        placeholder: '0.0',
         parentState: this.state,
 				field: 'amount',
 				type: 'number',
