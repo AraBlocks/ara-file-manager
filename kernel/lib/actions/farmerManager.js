@@ -12,7 +12,7 @@ function createFarmer({ did: userID, password }) {
 async function joinBroadcast({ farmer, did }) {
 	try {
 		//Rewards set at 10% of AFS price
-		const price = (await araContractsManager.getAFSPrice({ did }))
+		const price = (await araContractsManager.getAFSPrice({ did })) / 10
 		await farmer.join({
 			did,
 			download: false,
@@ -74,6 +74,7 @@ async function download({
 	completeHandler
 }) {
 	debug('Downloading Metadata through DCDN: %s', did)
+	const price = (await araContractsManager.getAFSPrice({ did })) / 10
 	try {
 		await farmer.join({
 			did,
@@ -111,16 +112,14 @@ async function downloadContent({
 	did,
 	jobId,
 	maxPeers = 1,
-	price = 1,
 	errorHandler,
 	startHandler,
+	price,
 	progressHandler,
 	completeHandler
 }) {
 	debug('Downloading through DCDN: %s', did)
 	try {
-		//Rewards set at 10% of AFS price (1 if AFS is free)
-		const price = (await araContractsManager.getAFSPrice({ did }))
 		await farmer.join({
 			did,
 			download: true,

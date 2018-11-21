@@ -59,7 +59,12 @@ ipcMain.on(k.PURCHASE, async (event, load) => {
 		dispatch({ type: k.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-		const jobId  = await araContractsManager.purchaseItem(load.did)
+		const jobId  = await araContractsManager.purchaseItem({
+			budget: load.price / 10,
+			contentDID: load.did,
+			password: account.password,
+			userDID: account.userAid
+		})
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
 		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)

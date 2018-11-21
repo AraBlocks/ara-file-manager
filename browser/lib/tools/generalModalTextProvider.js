@@ -92,6 +92,7 @@ function generalModalText(modalName, load) {
 }
 
 function waitModalText(modalName, load) {
+	console.log(load)
 	let description
 	switch (modalName) {
 		case 'pleaseWait':
