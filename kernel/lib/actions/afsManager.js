@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
+const k = require('../../../lib/constants/stateManagement')
 const actionsUtil = require('./utils')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
@@ -97,6 +98,17 @@ async function _getContentsInFolder(afs, folderPath) {
   }
 }
 
+async function getUpdateAvailableStatus(item) {
+  let updateAvailable
+  try {
+    updateAvailable = await araFilesystem.isUpdateAvailable({ did: item.did })
+  } catch (err) {
+    debug('Error getting update available status')
+  }
+  return { ...item, status: updateAvailable ? k.UPDATE_AVAILABLE : item.status }
+}
+
+
 async function surfaceAFS({ dids, DCDNStore, published = false }) {
 	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
 		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
@@ -116,7 +128,8 @@ function unarchiveAFS({ did }) {
 module.exports = {
   exportFile,
   exportFolder,
-	getFileList,
+  getFileList,
+  getUpdateAvailableStatus,
 	surfaceAFS,
 	unarchiveAFS,
 }

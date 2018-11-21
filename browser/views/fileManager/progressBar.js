@@ -22,6 +22,7 @@ module.exports = ({
       color = 'grey'
       break
     case k.DOWNLOADING:
+    case k.UPDATE_AVAILABLE:
       color = 'orange'
       break
     default:

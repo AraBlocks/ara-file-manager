@@ -116,9 +116,10 @@ async function login(_, load) {
       araContractsManager.getRewards(item, accountAddress)))
     updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
       araContractsManager.getRewards(item, accountAddress)))
+    updatedPurchasedItems = await Promise.all(files.purchased.map(afsManager.getUpdateAvailableStatus))
 
     ;({ files } = dispatch({
-      type: k.GOT_EARNINGS_AND_REWARDS,
+      type: k.LOADED_BACKGROUND_AFS_DATA,
       load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
     }))
 
