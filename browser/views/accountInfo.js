@@ -15,6 +15,7 @@ tt({
   position: 'top',
   style: { width: '130px' }
 })
+
 class AccountInfo extends Nanocomponent {
   constructor(props) {
     super()
@@ -83,19 +84,19 @@ class AccountInfo extends Nanocomponent {
       : text = props.ethAddress
     return html`
       <div
-      data-tooltip="Copy to Clipboard"
-      class="${styles.copyableText} header-didHolder"
-      onclick=${({ target }) => {
-        target.parentElement.dataset.tooltip = 'Copied!'
-        target.parentElement.dispatchEvent(eventMouseEnter)
-        target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
-        clipboard.writeText(text)
-      }}
-      onmouseenter=${({ target }) => target.style.backgroundColor = '#d0d0d0'}
-      onmouseleave=${({ target }) => target.style.backgroundColor = ''}
-    >
-      <div class=${textType}>${text}</div>
-    </div>
+        data-tooltip="Copy to Clipboard"
+        class="${styles.copyableText} header-didHolder"
+        onclick=${({ target }) => {
+          target.parentElement.dataset.tooltip = 'Copied!'
+          target.parentElement.dispatchEvent(eventMouseEnter)
+          target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
+          clipboard.writeText(text)
+        }}
+        onmouseenter=${({ target }) => target.style.backgroundColor = '#d0d0d0'}
+        onmouseleave=${({ target }) => target.style.backgroundColor = ''}
+      >
+        <div class=${textType}>${text}</div>
+      </div>
     `
   }
 
