@@ -3,6 +3,7 @@
 const k = require('../../../lib/constants/stateManagement')
 const { closeModal, closeWindow, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
+const { utils } = require('../../lib/tools')
 const styles = require('./styles')
 const html = require('choo/html')
 
@@ -38,7 +39,7 @@ module.exports = (load) => {
             <br>Publishing this file will cost:
           </div>
           <span class="${styles.postheader} modals-postheader">
-            ${Math.round(load.gasEstimate * 1000)/1000} eth
+            ${utils.roundDecimal(load.gasEstimate, 1000)} eth
           </span>
         </div>
       </div>

@@ -1,5 +1,6 @@
 'use strict'
 
+const application = require('./application')
 const account = require('./account')
 const files = require('./files')
 const farmer = require('./farmer')
@@ -9,6 +10,7 @@ const state = require('../store')
 const windowManager = require('electron-window-manager')
 
 const reducers = [
+  { property: 'application', reducer: application},
   { property: 'account', reducer: account },
   { property: 'files', reducer: files },
   { property: 'modal', reducer: modal },

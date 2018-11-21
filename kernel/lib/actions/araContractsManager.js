@@ -54,16 +54,21 @@ async function getEtherBalance(account) {
 	}
 }
 
-async function purchaseItem(contentDid) {
+async function purchaseItem(opts) {
+	const {
+		budget,
+		contentDID: contentDid,
+		userDID: requesterDid,
+		password
+	} = opts
 	debug('Purchasing item: %s', contentDid)
-	const { account } = store
 	try {
 		const { jobId } = await araContracts.purchase(
 			{
-				requesterDid: account.userAid,
+				budget,
 				contentDid,
-				password: account.password,
-				budget: 1
+				password,
+				requesterDid,
 			}
 		)
 		debug('Purchase Completed')
@@ -87,6 +92,7 @@ async function getPublishedEarnings(items) {
 	debug('Getting earnings for published items')
 	const updatedEarnings = items.map(async (item) => {
 		const earnings = await getEarnings(item)
+
 		return { ...item, earnings }
 	})
 
@@ -115,34 +121,13 @@ async function getEarnings({ did }) {
 	try {
 		const AFSContract = await getAFSContract(did)
 		if (!AFSContract) return 0
+		const earnings = (await AFSContract.getPastEvents('Purchased', opts))
+			.reduce((sum, { returnValues }) => sum + Number(araContracts.token.constrainTokenValue(returnValues._price)), 0)
 
-		const priceSets = (await AFSContract.getPastEvents('PriceSet', opts))
-			.map(event => ({
-				blockNumber: event.blockNumber,
-				price: Number(araContracts.token.constrainTokenValue(event.returnValues._price))
-			}))
-
-		const purchases = (await AFSContract.getPastEvents('Purchased', opts))
-			.map(({ blockNumber }) => blockNumber)
-
-		const itemEarnings = purchases.reduce((totalEarnings, current) => {
-			let earning
-			if (priceSets.length > 1) {
-				if (current.block < priceSets[1].blockNumber) {
-					earning = priceSets[0].price
-				} else {
-					priceSets.shift()
-					earning = priceSets[0].price
-				}
-			} else {
-				earning = priceSets[0].price
-			}
-			return totalEarnings += earning
-		}, 0)
-
-		return itemEarnings
+		return earnings
 	} catch (err) {
 		debug('Error getting earnings for %s : %o', did, err)
+		return 0
 	}
 }
 
@@ -181,6 +166,26 @@ async function subscribePublished({ did }) {
 		return subscription
 	} catch (err) {
 		debug('Error: %o', err)
+	}
+}
+
+async function sendAra({
+	amount,
+	completeHandler,
+	errorHandler,
+	walletAddress,
+}) {
+	try {
+		await araContracts.token.transfer({
+			did: store.account.userAid,
+			password: store.account.password,
+			val: amount,
+			to: walletAddress
+		})
+		completeHandler(amount)
+	} catch (err) {
+		debug('Error sending ara: %o', err)
+		errorHandler()
 	}
 }
 
@@ -230,6 +235,7 @@ module.exports = {
 	getPublishedEarnings,
 	getRewards,
 	purchaseItem,
+	sendAra,
 	subscribePublished,
 	subscribeRewardsAllocated,
 	subscribeTransfer

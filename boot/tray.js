@@ -19,6 +19,7 @@ const buildTray = () => {
   const menuItems = [
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
     { label: 'Publish File', type: 'normal', visible: false, click: () => openWindow('publishFileView') },
+    { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
     { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'Login', type: 'normal', click: () => openWindow('login') },
     { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(LOGOUT, null) },
@@ -59,13 +60,17 @@ function switchLoginState(loggedIn) {
   if (isDev) {
     contextMenu.commandsMap['46'].visible = loggedIn //FileManager
     contextMenu.commandsMap['47'].visible = loggedIn //Publish File View
-    contextMenu.commandsMap['49'].visible = !loggedIn //Login
-    contextMenu.commandsMap['50'].visible = loggedIn  //Log out
+    contextMenu.commandsMap['48'].visible = loggedIn //Account Info
+    contextMenu.commandsMap['49'].visible = !loggedIn //Register
+    contextMenu.commandsMap['50'].visible = !loggedIn //Login
+    contextMenu.commandsMap['51'].visible = loggedIn  //Log out
   } else {
     contextMenu.commandsMap['1'].visible = loggedIn //FileManager
     contextMenu.commandsMap['2'].visible = loggedIn //Publish File View
-    contextMenu.commandsMap['4'].visible = !loggedIn //Login
-    contextMenu.commandsMap['5'].visible = loggedIn  //Log out
+    contextMenu.commandsMap['3'].visible = loggedIn //Account Info
+    contextMenu.commandsMap['4'].visible = !loggedIn //Register
+    contextMenu.commandsMap['5'].visible = !loggedIn //Login
+    contextMenu.commandsMap['6'].visible = loggedIn  //Log out
   }
 }
 
