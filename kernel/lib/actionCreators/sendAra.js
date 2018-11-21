@@ -15,10 +15,10 @@ ipcMain.on(k.SEND_ARA, (event, load) => {
 		if (!web3.isAddress(load.walletAddress)) {
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'invalidAddress' } })
 			windowManager.openModal('generalMessageModal')
-		} else if (load.amount <= 0) {
+		} else if (Number(load.amount) <= 0) {
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'invalidAmount' } })
 			windowManager.openModal('generalMessageModal')
-		} else if (load.amount > store.account.araBalance) {
+		} else if (Number(load.amount) > store.account.araBalance) {
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughAra' } })
 			windowManager.openModal('generalMessageModal')
 		} else {

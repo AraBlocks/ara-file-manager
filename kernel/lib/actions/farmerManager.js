@@ -1,10 +1,8 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
-const actionsUtils = require('./utils')
 const farmDCDN = require('ara-farming-dcdn/src/dcdn')
 const fs = require('fs')
-const path = require('path')
 
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
@@ -74,6 +72,50 @@ async function download({
 	progressHandler,
 	completeHandler
 }) {
+	debug('Downloading Metadata through DCDN: %s', did)
+	try {
+		await farmer.join({
+			did,
+			download: true,
+			upload: false,
+			metaOnly: true,
+		})
+
+		farmer.once('start', (did, total) => {
+			debug('Start downloading metadata')
+		})
+
+		farmer.once('requestcomplete', async (did) => {
+			debug('Metadata download complete!')
+			await downloadContent({
+				farmer,
+				did,
+				jobId,
+				maxPeers,
+				price,
+				errorHandler,
+				startHandler,
+				progressHandler,
+				completeHandler
+			})
+		})
+	} catch (err) {
+		debug('Error downloading metadata: %O', err)
+		errorHandler(did)
+	}
+}
+
+async function downloadContent({
+	farmer,
+	did,
+	jobId,
+	maxPeers = 1,
+	price = 1,
+	errorHandler,
+	startHandler,
+	progressHandler,
+	completeHandler
+}) {
 	debug('Downloading through DCDN: %s', did)
 	try {
 		await farmer.join({
@@ -113,17 +155,6 @@ async function download({
 		debug('Error downloading: %O', err)
 		errorHandler(did)
 	}
-}
-
-function renameAfsFiles(did, fileName) {
-	const afsFolderPath = actionsUtils.makeAfsPath(did)
-	const afsFilePath = path.join(afsFolderPath, 'data')
-	const newPath = path.join(afsFolderPath, fileName)
-	fs.rename(afsFilePath, newPath, function (err) {
-		if (err) {
-			debug('some error occurred when renaming afs files')
-		}
-	})
 }
 
 module.exports = {
