@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
+const araContractsManager = require('./araContractsManager')
 const farmDCDN = require('ara-farming-dcdn/src/dcdn')
 const fs = require('fs')
 
