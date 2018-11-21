@@ -94,6 +94,15 @@ module.exports = {
     }
   `,
 
+  copyableText: css`
+    :host {
+      border-radius: 7px;
+      cursor: pointer;
+      margin-bottom: 5px;
+      padding: 0 6px;
+      transition: all ease-in-out;
+    }
+  `,
 
   idHolder: css`
     :host {
