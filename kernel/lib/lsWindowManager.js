@@ -93,6 +93,7 @@ windowManager.setSize = (view) => {
       width = 550
       height = 900
       break
+    case 'confirmSendModal':
     case 'updateConfirmModal':
       width = 360
       height = 240

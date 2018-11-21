@@ -6,12 +6,12 @@ const { generalModalText } = require('../../lib/tools/generalModalTextProvider')
 const html = require('choo/html')
 const styles = require('./styles')
 
-module.exports = ({ modalName = 'fileMissing', fileName = 'Grump Cat' }) => {
+module.exports = ({ modalName = 'fileMissing', load = { fileName: 'Grump Cat', amount: 0 }}) => {
   const confirmButton = new Button({
 		children: 'Confirm',
 		onclick: () => closeModal()
 	})
-	const { description, title } = generalModalText(modalName, fileName)
+	const { description, title } = generalModalText(modalName, load)
   return html`
     <div class="${styles.container} modals-container">
       <div class="${styles.messageBold} modal-messageBold">

@@ -119,7 +119,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
     farmerManager.joinBroadcast({ did: load.did, farmer: farmer.farm })
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', fileName: load.name } })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name }}})
     windowManager.openModal('generalMessageModal')
   } catch (err) {
     debug('Error: %O', err)
