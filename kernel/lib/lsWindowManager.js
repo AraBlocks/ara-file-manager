@@ -39,6 +39,14 @@ windowManager.setSize = (view) => {
       width = 600
       height = 700
       break
+    case 'accountInfo':
+      width = 325
+      height = 650
+      break
+    case 'developer':
+      width = 300
+      height = 500
+      break
     case 'reDownloadModal':
     case 'generalMessageModal':
       width = 340
@@ -93,6 +101,7 @@ windowManager.setSize = (view) => {
       width = 550
       height = 900
       break
+    case 'confirmSendModal':
     case 'updateConfirmModal':
       width = 360
       height = 240
@@ -107,6 +116,9 @@ windowManager.setSize = (view) => {
 windowManager.loadURL = (view) => {
   let file
   switch (view) {
+    case 'accountInfo':
+      file = 'account-info'
+      break
     case 'afsExplorerView':
       file = 'afs-explorer-view'
       break
@@ -141,6 +153,9 @@ windowManager.loadURL = (view) => {
     case 'registration':
       file = 'registration'
       break
+    case 'sendAra':
+      file = 'send-ara'
+      break
     case 'testing':
       file = 'index-test'
       break
@@ -163,7 +178,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
   }
 
   function parseLink() {
-    const linkElements = deepLinkingUrl.slice(7).split("/")
+    const linkElements = deepLinkingUrl.slice(6).split("/")
     if (linkElements.length === 3 && linkElements[0] == 'download') {
       return {
         aid: linkElements[1],
@@ -183,10 +198,8 @@ windowManager.pingView = ({ view, event, load = null }) => {
 }
 
 windowManager.pingAll = ({ event, load = null }) => {
-  const views = ['filemanager', 'publishFileView', 'manageFileView']
-  views.forEach( (view) => { 
-    windowManager.pingView({ view, event, load })
-  })
+  const views = ['filemanager', 'publishFileView', 'manageFileView', 'accountInfo']
+  views.forEach((view) =>windowManager.pingView({ view, event, load }))
 }
 
 windowManager.closeWindow = (name) => {

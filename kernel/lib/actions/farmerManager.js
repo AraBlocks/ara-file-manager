@@ -1,23 +1,23 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
-const actionsUtils = require('./utils')
+const araContractsManager = require('./araContractsManager')
 const farmDCDN = require('ara-farming-dcdn/src/dcdn')
 const fs = require('fs')
-const path = require('path')
 
 function createFarmer({ did: userID, password }) {
 	debug('Creating Farmer')
 	return new farmDCDN({ userID, password })
 }
 
-async function joinBroadcast({ farmer, did, price = 1 }) {
+async function joinBroadcast({ farmer, did }) {
 	try {
+		//Rewards set at 10% of AFS price
 		await farmer.join({
 			did,
 			download: false,
 			upload: true,
-			price
+			price: await _calculateBudget(did)
 		})
 		debug('Joining broadcast for %s', did)
 	} catch (err) {
@@ -26,29 +26,29 @@ async function joinBroadcast({ farmer, did, price = 1 }) {
 }
 
 function getBroadcastingState({ did, DCDNStore }) {
-  try {
-    return JSON.parse(DCDNStore[did]).upload
-  } catch (err) {
-    return false
-  }
+	try {
+		return JSON.parse(DCDNStore[did]).upload
+	} catch (err) {
+		return false
+	}
 }
 
 function loadDCDNStore(farmer) {
 	debug('loading dcdn farm store')
-  try {
+	try {
 		return JSON.parse(fs.readFileSync(farmer.config).toString())
-  } catch (err) {
+	} catch (err) {
 		debug(err)
-    debug('No DCDN farm store')
-    return {}
-  }
+		debug('No DCDN farm store')
+		return {}
+	}
 }
 
 async function unjoinBroadcast({ farmer, did }) {
 	debug('Unjoining broadcast for %s', did)
 	try {
 		await farmer.unjoin({ did })
-	} catch(err) {
+	} catch (err) {
 		debug('Error stopping broadcast for %s: %O', did, err)
 	}
 }
@@ -66,11 +66,54 @@ async function stopAllBroadcast(farmer) {
 async function download({
 	farmer,
 	did,
-	jobId,
-	maxPeers = 1,
-	price = 1,
+	jobId = null,
+	maxPeers = 10,
 	errorHandler,
 	startHandler,
+	progressHandler,
+	completeHandler
+}) {
+	debug('Downloading Metadata through DCDN: %s', did)
+	try {
+		await farmer.join({
+			did,
+			download: true,
+			upload: false,
+			metaOnly: true,
+		})
+
+		farmer.once('start', (did, total) => {
+			debug('Start downloading metadata')
+		})
+
+		farmer.once('requestcomplete', async (did) => {
+			debug('Metadata download complete!')
+			await downloadContent({
+				farmer,
+				did,
+				jobId,
+				maxPeers,
+				price: await _calculateBudget(did),
+				errorHandler,
+				startHandler,
+				progressHandler,
+				completeHandler
+			})
+		})
+	} catch (err) {
+		debug('Error downloading metadata: %O', err)
+		errorHandler(did)
+	}
+}
+
+async function downloadContent({
+	farmer,
+	did,
+	jobId,
+	maxPeers = 1,
+	errorHandler,
+	startHandler,
+	price,
 	progressHandler,
 	completeHandler
 }) {
@@ -79,10 +122,10 @@ async function download({
 		await farmer.join({
 			did,
 			download: true,
-			upload: true,
-			price,
 			maxPeers,
-			jobId: jobId ? jobId.slice(2) : null
+			jobId,
+			price,
+			upload: true,
 		})
 
 		let totalBlocks = 0
@@ -115,15 +158,16 @@ async function download({
 	}
 }
 
-function renameAfsFiles(did, fileName) {
-	const afsFolderPath = actionsUtils.makeAfsPath(did)
-	const afsFilePath = path.join(afsFolderPath, 'data')
-	const newPath = path.join(afsFolderPath, fileName)
-	fs.rename(afsFilePath, newPath, function (err) {
-		if (err) {
-			debug('some error occurred when renaming afs files')
-		}
-	})
+async function _calculateBudget(did) {
+	let budget
+	try {
+		budget = (await araContractsManager.getAFSPrice({ did })) / 10
+	} catch (err) {
+		debug('Err getting AFS price: %o', err)
+		budget = 0
+	}
+
+	return budget
 }
 
 module.exports = {

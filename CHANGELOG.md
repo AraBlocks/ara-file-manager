@@ -1,3 +1,22 @@
+## [0.1.4](https://github.com/littlstar/ara-content-manager/compare/0.1.3...0.1.4) (2018-11-21)
+
+
+### Bug Fixes
+
+* dynamic link parsing ([d0d1569](https://github.com/littlstar/ara-content-manager/commit/d0d1569))
+* minor bugs ([b8754e9](https://github.com/littlstar/ara-content-manager/commit/b8754e9))
+
+
+### Features
+
+* Copy did and eth address in account overview([#247](https://github.com/littlstar/ara-content-manager/issues/247)) ([c6f4230](https://github.com/littlstar/ara-content-manager/commit/c6f4230))
+* PE-579 Sync metadata before downloading ([#245](https://github.com/littlstar/ara-content-manager/issues/245)) ([80973a2](https://github.com/littlstar/ara-content-manager/commit/80973a2))
+* PE-585 Send Ara to other account ([#242](https://github.com/littlstar/ara-content-manager/issues/242)) ([faa91a5](https://github.com/littlstar/ara-content-manager/commit/faa91a5))
+* Renders when update avail (boot only) ([#246](https://github.com/littlstar/ara-content-manager/issues/246)) ([53baf81](https://github.com/littlstar/ara-content-manager/commit/53baf81))
+* write to .ararc ([#243](https://github.com/littlstar/ara-content-manager/issues/243)) ([43a92b6](https://github.com/littlstar/ara-content-manager/commit/43a92b6))
+
+
+
 ## [0.1.3](https://github.com/littlstar/ara-content-manager/compare/0.1.2...0.1.3) (2018-11-19)
 
 

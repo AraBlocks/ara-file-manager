@@ -54,20 +54,37 @@ module.exports = {
     }
   `,
 
-  containerLeft: css`
-  :host {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 95%;
-    width: 90%;
-  }
+  containerCenter: css`
+    :host {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+      height: 95%;
+      justify-content: space-around;
+      width: 100%;
+    }
 
-  :host > * {
-    width: 95%;
-  }
-`,
+    :host > b {
+      font-family: ${fonts.semibold};
+    }
+  `,
+
+  containerLeft: css`
+    :host {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+      height: 95%;
+      justify-content: space-around;
+      width: 90%;
+    }
+
+    :host > * {
+      width: 95%;
+    }
+  `,
 
   clipboard: css`
     :host span {
@@ -174,6 +191,10 @@ module.exports = {
     :host {
       font-size: 12px;
       margin-bottom: 5px;
+    }
+
+    :host > b {
+      font-family: ${fonts.semibold}
     }
   `,
 

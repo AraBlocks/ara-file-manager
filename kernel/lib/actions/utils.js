@@ -7,6 +7,7 @@ const k = require('../../../lib/constants/stateManagement')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
+const { web3 } = require('ara-context')()
 
 async function descriptorGenerator(did, opts = {}) {
 	try {
@@ -37,6 +38,10 @@ async function descriptorGenerator(did, opts = {}) {
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
 	}
+}
+
+async function getNetwork() {
+	return await web3.eth.net.getNetworkType()
 }
 
 function makeAfsPath(did) {
@@ -77,6 +82,7 @@ async function writeFileMetaData({
 
 module.exports = {
 	descriptorGenerator,
+	getNetwork,
 	makeAfsPath,
 	readFileMetadata,
 	writeFileMetaData

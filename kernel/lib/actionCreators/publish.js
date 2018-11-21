@@ -22,7 +22,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   try {
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
 
-    let dispatchLoad = { name: load.name }
+    let dispatchLoad = { load: { fileName: load.name }}
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
 
@@ -95,16 +95,15 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
     const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
-    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid, )
+    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
     await farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
 
     debug('Dispatching %s', k.FEED_MODAL)
-    dispatch({ type: k.FEED_MODAL, load: {
-      did: load.did,
-      name: load.name,
-      }
+    dispatch({
+      type: k.FEED_MODAL,
+      load: { did: load.did, name: load.name }
     })
     windowManager.openModal('publishSuccessModal')
   } catch (err) {

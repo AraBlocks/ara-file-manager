@@ -8,7 +8,8 @@ const {
   afsManager,
   araContractsManager,
   farmerManager,
-  identityManager
+  identityManager,
+  utils
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
@@ -19,12 +20,16 @@ const { switchLoginState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
-  farmerManager.stopAllBroadcast(store.farmer.farm)
-  dispatch({ type: k.LOGOUT })
-  switchLoginState(false)
-  windowManager.closeWindow('filemanager')
-  windowManager.closeWindow('publishFileView')
-  windowManager.openWindow('login')
+  try {
+    farmerManager.stopAllBroadcast(store.farmer.farm)
+    dispatch({ type: k.LOGOUT })
+    switchLoginState(false)
+    windowManager.closeWindow('filemanager')
+    windowManager.closeWindow('publishFileView')
+    windowManager.openWindow('login')
+  } catch (err) {
+    debug('Error logging out: %o', o)
+  }
 })
 
 ipcMain.on(k.LOGIN, login)
@@ -64,19 +69,22 @@ async function login(_, load) {
 
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
-    const transferSubscription = araContractsManager.subscribeTransfer(accountAddress)
+    const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
+    const transferSubscription = await araContractsManager.subscribeTransfer(accountAddress)
+
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
     farmer.start()
 
     dispatch({
       type: k.LOGIN,
       load: {
-        userAid: load.userAid,
         accountAddress,
         araBalance,
+        ethBalance,
+        farmer,
         password: load.password,
         transferSubscription,
-        farmer
+        userAid: load.userAid
       }
     })
 
@@ -100,19 +108,24 @@ async function login(_, load) {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
-    updatedPublishedItems = await Promise.all(files.published.map((item) =>
+    updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
       araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
     let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
       araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
-    updatedPublishedItems = await Promise.all(files.published.map((item) =>
+    updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
       araContractsManager.getRewards(item, accountAddress)))
-    updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
+    updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map((item) =>
       araContractsManager.getRewards(item, accountAddress)))
+    updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map(afsManager.getUpdateAvailableStatus));
 
-    ;({ files } = dispatch({
-      type: k.GOT_EARNINGS_AND_REWARDS,
+    ({ files } = dispatch({
+      type: k.LOADED_BACKGROUND_AFS_DATA,
       load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
     }))
+
+    const network = await utils.getNetwork()
+    dispatch({ type: k.GOT_NETWORK, load: { network } })
+
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
