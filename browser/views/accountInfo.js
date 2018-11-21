@@ -7,9 +7,7 @@ const styles = require('./styles/accountInfo')
 const { utils } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-
-const version = '1.0.0'
-const network = 'test'
+const { version } = require('../../package.json')
 
 class AccountInfo extends Nanocomponent {
   constructor(props) {
@@ -106,15 +104,11 @@ class AccountInfo extends Nanocomponent {
             </div>
           </div>
           <div class="${styles.interactiveSection} accountInfo-interactiveSection">
-            ${network === 'test'
-              ? html`
-                <div class="request-container">
-                  <b>Request test tokens:</b>
-                  <div>Note: these tokens are for testing purposes only, and will only work on testnet</div>
-                  ${children.requestTokensButton.render({})}
-                </div>
-              `
-              : null}
+            <div class="request-container">
+              <b>Request test tokens:</b>
+              <div>Note: these tokens are for testing purposes only, and will only work on testnet</div>
+              ${children.requestTokensButton.render({})}
+            </div>
             <div class="send-container">
               <b>Send tokens to another account:</b>
               ${children.sendTokensButton.render({})}
