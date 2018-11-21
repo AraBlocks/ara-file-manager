@@ -22,7 +22,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   try {
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
 
-    let dispatchLoad = { name: load.name }
+    let dispatchLoad = { load: { name: load.name }}
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
 
@@ -31,7 +31,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     await (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
-    //await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
+    await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
 
     debug('Deploying proxy')
     await afs.deploy({ password, did })
