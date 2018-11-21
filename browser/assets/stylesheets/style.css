@@ -17,6 +17,11 @@ button {
   cursor: pointer;
 }
 
+a {
+  color: var(--ara-orange);
+  text-decoration: none;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -24,7 +29,6 @@ button {
 /* CSS variables */
 
 :root {
-
   --ara-grey: #cbcbcb;
   --ara-blue: #1e7dfa;
   --ara-red: #fc2636;
@@ -209,4 +213,10 @@ button {
   to {
     background-position: 100% bottom;
   }
+}
+
+@keyframes banner
+{
+  from { top:-10%; }
+  to { top:0; }
 }
