@@ -103,7 +103,7 @@ async function getUpdateAvailableStatus(item) {
   try {
     updateAvailable = await araFilesystem.isUpdateAvailable({ did: item.did })
   } catch (err) {
-    debug('Error getting update status: %o', err)
+    debug('Error getting update available status')
   }
   return { ...item, status: updateAvailable ? k.UPDATE_AVAILABLE : item.status }
 }
