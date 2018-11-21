@@ -74,7 +74,7 @@ class Login extends Nanocomponent {
     const { userDID, password } = this.state
     const load = { password, userAid: userDID }
     windowManagement.emit({ event: LOGIN, load })
-    closeWindow('login')
+    windowManagement.closeWindow('login')
   }
 
   update() {
