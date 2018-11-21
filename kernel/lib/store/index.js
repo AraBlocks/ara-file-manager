@@ -1,4 +1,5 @@
 module.exports = {
+  application: require('./application'),
   account: require('./account'),
   files: require('./files'),
   modal: require('./modal'),

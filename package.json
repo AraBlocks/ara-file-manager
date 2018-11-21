@@ -4,6 +4,7 @@
   "version": "0.1.3",
   "description": "",
   "main": "boot/main.js",
+  "network": "test",
   "scripts": {
     "start-dev": "electron boot/main.js",
     "test": "electron test/main.js",
@@ -29,7 +30,7 @@
     "ara-context": "github:arablocks/ara-context#semver:0.5.x",
     "ara-contracts": "github:arablocks/ara-contracts#semver:0.4.x",
     "ara-farming-dcdn": "github:littlstar/ara-farming-dcdn#semver:0.4.x",
-    "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.5.x",
+    "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.6.x",
     "ara-identity": "github:arablocks/ara-identity#semver:0.30.x",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
     "ara-util": "github:arablocks/ara-util#semver:0.6.x",
@@ -43,6 +44,7 @@
     "md5-hex": "^2.0.0",
     "mirror-folder": "^3.0.0",
     "nanocomponent": "^6.5.2",
+    "pify": "^4.0.1",
     "styleUtils": "file:browser/lib/styleUtils",
     "user-home": "^2.0.0",
     "web3-providers-ws": "^1.0.0-beta.35"
