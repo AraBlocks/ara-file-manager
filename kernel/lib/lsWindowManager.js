@@ -164,7 +164,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
   }
 
   function parseLink() {
-    const linkElements = deepLinkingUrl.slice(7).split("/")
+    const linkElements = deepLinkingUrl.slice(6).split("/")
     if (linkElements.length === 3 && linkElements[0] == 'download') {
       return {
         aid: linkElements[1],
