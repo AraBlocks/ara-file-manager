@@ -8,7 +8,7 @@ const styles = require('./styles')
 
 module.exports = ({
 	amount = 5,
-	walletAddress = "0x12345678..."
+	receiver = "did:ara:0c354f916a8c6059ab4d726eed4f9f2bf47db09f01c4f4111822483ccede7cf8"
 }) => {
   const confirmButton = new Button({
     children: 'Confirm',
@@ -17,7 +17,7 @@ module.exports = ({
         event: CONFIRM_SEND_ARA,
         load: {
 					amount,
-					walletAddress
+					receiver
         }
       })
       closeModal('confirmSendModal')
@@ -38,9 +38,11 @@ module.exports = ({
         	<span class="${styles.bigBold} modals-bigBold">${amount}</span> Ara
 				</div>
 				<div class="${styles.containerCenter} modals-verticalContainer">
-					to wallet address<br><br>
-					<b>${walletAddress}</b><br>
-					Are you sure you'd like to send these tokens?
+					to<br><br>
+          <div class="${styles.truncateText} modals-truncateText">
+            <b>${receiver}</b>
+          </div>
+					<br>Are you sure you'd like to send these tokens?
 				</div>
       </div>
       <div>

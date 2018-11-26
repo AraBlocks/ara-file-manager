@@ -50,6 +50,10 @@ function generalModalText(modalName, load) {
 			title = 'Invalid Amount'
 			description = 'Please enter an amount that is greater than 0.'
 			break
+		case 'invalidDid':
+			title = 'Invalid DID'
+			description = 'Please enter a valid DID'
+			break
 		case 'loginFail':
 			title = 'Login Failed'
 			description = 'Please check your Idenitity and/or password'
