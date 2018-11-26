@@ -33,6 +33,13 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
     await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
 
+    debug('Estimating deploy proxy cost')
+    const deployCost = await afs.deploy({ password, did, estimate: true })
+    const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
+    if (ethAmount < deployCost) {
+      throw new Error('Not enouth eth')
+    }
+
     debug('Deploying proxy')
     await afs.deploy({ password, did })
 
@@ -43,6 +50,10 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
       setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
+    if (ethAmount < (deployCost + gasEstimate)) {
+      throw new Error('Not enouth eth')
+    }
+
     debug('Gas estimate: %s', gasEstimate)
     debug('Dispatching %s', k.FEED_MODAL)
     dispatchLoad = {
@@ -60,7 +71,9 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     debug('Error publishing file %o:', err)
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     windowManager.closeModal('generalPleaseWaitModal')
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
+    err === 'Not enough eth'
+      ? dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
+      : dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
     windowManager.openModal('generalMessageModal')
     return
   }

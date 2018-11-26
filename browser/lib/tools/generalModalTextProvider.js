@@ -62,6 +62,10 @@ function generalModalText(modalName, load) {
 			title = 'Not enough Ara'
 			description = html `<div>You do not have enough Ara Tokens to publish<br> this file.</div>`
 			break
+		case 'notEnoughEth':
+			title = 'Not enough Ether'
+			description = html `<div>You do not have enough Ether to complete<br> this transaction.</div>`
+			break
 		case 'notLoggedIn':
 			title = 'Not Logged In'
 			description = 'Please login before purchasing this file.'
