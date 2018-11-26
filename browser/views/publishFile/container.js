@@ -1,7 +1,7 @@
 'use strict'
 
 const Button = require('../../components/button')
-const { emit } = require('../../lib/tools/windowManagement')
+const { windowManagement, fileSystemManager } = require('../../lib/tools')
 const FileInfo = require('./fileInfo')
 const { PUBLISH } = require('../../../lib/constants/stateManagement')
 const overlay = require('../../components/overlay')
@@ -27,8 +27,9 @@ class Container extends Nanocomponent {
 
 		this.children = {
 			fileInfo: new FileInfo({
+				addItems: this.addItems.bind(this),
 				parentState: this.state,
-				renderView: this.renderView.bind(this)
+				renderView: () => this.render.bind(this)({})
 			}),
 			publishButton: new Button({
 				children: ['Publish'],
@@ -38,14 +39,13 @@ class Container extends Nanocomponent {
 			utilityButton: new UtilityButton({})
 		}
 
+		this.rerender = this.rerender.bind(this)
 	}
 
-	update() {
-		return true
-	}
-
-	renderView() {
-		this.render({})
+	addItems(items) {
+		const itemsInfo = items.map(fileSystemManager.getFileInfo)
+		this.state.fileList.push(...itemsInfo)
+		this.rerender()
 	}
 
 	publishFile() {
@@ -60,9 +60,13 @@ class Container extends Nanocomponent {
 			price
 		}
 		if (fileList.length != 0 && !account.pendingTransaction) {
-			emit({ event: PUBLISH, load })
+			windowManagement.emit({ event: PUBLISH, load })
 		}
 		this.render({})
+	}
+
+	update() {
+		return true
 	}
 
 	createElement({ spinner = false }) {

@@ -7,10 +7,30 @@ module.exports = {
 	colors,
 	fonts,
 
+	addOptions: css`
+		:host {
+			background-color: white;
+			bottom: 0;
+
+			padding: 5px 0 0 20px;
+			position: absolute;
+			width: 100%;
+		}
+	`,
+
+	add: css`
+		:host {
+			color: var(--ara-teal);
+			cursor: pointer;
+			font-family: ${fonts.bold};
+			font-size: 14px;
+		}
+	`,
+
 	container: css`
 		:host {
-			height: 325px;
 			overflow: scroll;
+			position: relative;
 			width: 100%;
 		}
 	`,
@@ -25,6 +45,11 @@ module.exports = {
 			font-size: 24px;
 			height: 50%;
 			justify-content: flex-end;
+		}
+
+		:host > div {
+			font-family: ${fonts.bold};
+			font-size: 14px;
 		}
 	`,
 
