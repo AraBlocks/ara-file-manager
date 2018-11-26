@@ -10,7 +10,7 @@ const { internalEmitter } = require('electron-window-manager')
 const { switchPendingTransactionState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(k.CLEAN_UI, () => {
+internalEmitter.on(k.CLEAN_UI, () => {
   debug('%s heard', k.CLEAN_UI)
   dispatch({ type: k.CLEAN_UI })
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })

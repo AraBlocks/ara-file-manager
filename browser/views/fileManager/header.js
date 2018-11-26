@@ -3,7 +3,6 @@
 
 const Button = require('../../components/button')
 const { clipboard } = require('electron')
-const { CLEAN_UI } = require('../../../lib/constants/stateManagement')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
@@ -74,7 +73,7 @@ class Header extends Nanocomponent {
     return html`
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader">
-          <div onclick=${() => windowManagement.emit({ event: CLEAN_UI })}>
+          <div>
             <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png"/>
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
