@@ -2,8 +2,24 @@
 
 const remote = require('electron').remote
 const { dialog } = remote
+const fs = require('fs')
 
 module.exports = {
+	getFileInfo(file) {
+		const stats = fs.statSync(file)
+		const size = stats.size
+		const isFile = !stats.isDirectory()
+		const pathArray = file.split('/')
+		const subPath =  pathArray[pathArray.length - 1]
+
+		return {
+			isFile,
+			subPath,
+			fullPath: file,
+			size
+		}
+	},
+
 	showSelectFileDialog() {
 		const opts = {
 			properties: [
@@ -12,10 +28,10 @@ module.exports = {
 				'multiSelections'
 			]
 		}
-		return new Promise((resolve, reject) => {
-			dialog.showOpenDialog(opts, (fileNames, error) => {
-				fileNames ? resolve(fileNames) : reject(error)
-			})
+		return new Promise((resolve) => {
+			dialog.showOpenDialog(opts, (fileNames, error) =>
+				fileNames ? resolve(fileNames) : resolve([])
+			)
 		})
 	},
 
