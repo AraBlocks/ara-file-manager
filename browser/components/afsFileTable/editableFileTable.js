@@ -4,12 +4,14 @@ const k = require('../../../lib/constants/stateManagement')
 const AfsFileRow = require('./afsFileRow')
 const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')
+const { fileSystemManager } = require('../../lib/tools')
 const styles = require('./styles/editableFileTable')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class EditableFileTable extends Nanocomponent {
 	constructor({
+		addItems,
 		did,
 		field,
 		parentState,
@@ -18,6 +20,7 @@ class EditableFileTable extends Nanocomponent {
 	}) {
 		super()
 		this.props = {
+			addItems,
 			did,
 			field,
 			parentState,
@@ -43,9 +46,11 @@ class EditableFileTable extends Nanocomponent {
 				onclick: this.sortFileSize.bind(this)
 			}),
 		}
+		this.deleteFile = this.deleteFile.bind(this)
+		this.getFiles = this.getFiles.bind(this)
 		this.onFileDrop = this.onFileDrop.bind(this)
 		this.preventDefault = this.preventDefault.bind(this)
-		this.deleteFile = this.deleteFile.bind(this)
+		this.renderAddOpts = this.renderAddOpts.bind(this)
 	}
 
 	update() {
@@ -71,14 +76,14 @@ class EditableFileTable extends Nanocomponent {
 		this.preventDefault(e)
 		const { props } = this
 		const rawFileData = e.dataTransfer.files
-		const fileData = Array.from(rawFileData).map(file => {
-			return {
+		const fileData = Array.from(rawFileData).map(file =>
+			({
 				isFile: file.type !== "",
 				subPath: file.name,
 				fullPath: file.path,
 				size: file.size
-			}
-		})
+			})
+		)
 		props.parentState[props.field].push(...fileData)
 		props.renderView()
 	}
@@ -91,6 +96,35 @@ class EditableFileTable extends Nanocomponent {
 				: file.fullPath !== fileInfo.fullPath
 		)
 		props.renderView()
+	}
+
+	async getFiles() {
+		const files = await fileSystemManager.showSelectFileDialog()
+		this.props.addItems(files)
+	}
+
+	renderAddOpts(length) {
+		const { getFiles } = this
+		return length
+			? html`
+				<div class="${styles.addOptions} editableFileTable-addOptions">
+					<span class="${styles.add} editableFileTable-add" onclick="${getFiles}">
+						Add file +
+					</span>
+				</div>
+			`
+			: html`
+				<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">
+					Drop files here
+					<div>
+						Or 
+						<span class="${styles.add} editableFileTable-add" onclick="${getFiles}">
+							add files
+						</span>
+						from finder
+					</div>
+				</div>
+			`
 	}
 
 	sortFileName() {
@@ -131,24 +165,26 @@ class EditableFileTable extends Nanocomponent {
 			children,
 			preventDefault,
 			onFileDrop,
-			state
+			state,
+			renderAddOpts
 		} = this
 		const fileRows = this.makeFileRows()
 
 		return html`
-			<div class=${styles.container}
-				ondrop=${onFileDrop}
-				ondragover=${preventDefault}
-				ondragenter=${preventDefault}
-				ondragleave=${preventDefault}
+			<div
+				class="${styles.container} editableFileTable-container"
+				ondrop="${onFileDrop}"
+				ondragover="${preventDefault}"
+			 	ondragenter="${preventDefault}"
+				ondragleave="${preventDefault}"
 			>
 				<table class="${styles.fileTable} EditableFileTable-container">
 					<thead>
 						<tr>
 							<th style="width: 350px;">
 								<div class="${styles.headerHolder} EditableFileTable-headerHolder">
-										Name
-										${children.sortFileButton.render({ children: state.sortNameReversed ? 'upArrow' : 'downArrow' })}
+									Name
+									${children.sortFileButton.render({ children: state.sortNameReversed ? 'upArrow' : 'downArrow' })}
 								</div>
 							</th>
 							<th style="width: 99px;">
@@ -169,11 +205,7 @@ class EditableFileTable extends Nanocomponent {
 						${fileRows.map((fileRow, index) => fileRow.render(index))}
 					</tbody>
 				</table>
-				${fileRows.length === 0
-				? html`<div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">Drop files here</div>`
-				: null
-			}
-
+				${renderAddOpts(fileRows.length)}
 			</div>
 		`
 	}
