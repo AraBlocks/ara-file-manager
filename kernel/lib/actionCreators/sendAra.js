@@ -2,6 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:download')
 const { araContractsManager, identityManager } = require('../actions')
+const araUtil = require('ara-util')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
@@ -47,7 +48,7 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
 		let walletAddress = load.receiver
 		if (!web3.isAddress(load.receiver)) {
-			walletAddress = await identityManager.getAddressFromDID(load.receiver)
+			walletAddress = await araUtil.getAddressFromDID(load.receiver)
 		}
 		await araContractsManager.sendAra({
 			amount: load.amount,

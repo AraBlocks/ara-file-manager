@@ -4,7 +4,6 @@ const debug = require('debug')('acm:kernel:lib:actions:register')
 const aid = require('ara-identity')
 const { DID } = require('did-uri')
 const context = require('ara-context')()
-const { getAddressFromDID } = require('ara-util')
 
 module.exports = {
   async create(password) {
@@ -25,15 +24,6 @@ module.exports = {
     }
     return araId.did.reference
   },
-
-  async getAddressFromDID(did) {
-    try {
-      const address = getAddressFromDID(did)
-      return address
-    } catch(err) {
-      debug('Error getting address from did: %o', err)
-    }
-   },
 
   async recover({ mnemonic, password }) {
     try {
