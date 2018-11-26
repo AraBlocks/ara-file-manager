@@ -40,6 +40,7 @@ async function getAraBalance(userDID) {
 		return balance
 	} catch (err) {
 		debug('Error getting ara balance: %o', err)
+		return 0
 	}
 }
 
@@ -51,6 +52,7 @@ async function getEtherBalance(account) {
 		return balance
 	} catch (err) {
 		debug('Error getting eth balance: %o', err)
+		return 0
 	}
 }
 

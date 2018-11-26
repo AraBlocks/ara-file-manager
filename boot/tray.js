@@ -7,7 +7,7 @@ const path = require('path')
 const windowManager = require('electron-window-manager')
 const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
 const { internalEmitter } = require('electron-window-manager')
-const { LOGOUT } = require('../lib/constants/stateManagement')
+const { CLEAN_UI, LOGOUT } = require('../lib/constants/stateManagement')
 
 let tray
 let contextMenu
@@ -27,7 +27,9 @@ const buildTray = () => {
   ]
 
   //If dev mode, pushes developer option to tray
-  isDev && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer')})
+  isDev
+  && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer')})
+  && menuItems.push({ label: 'Clean UI', type: 'normal', click:() => internalEmitter.emit(CLEAN_UI)})
 
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)
