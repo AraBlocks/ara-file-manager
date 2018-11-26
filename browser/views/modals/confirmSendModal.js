@@ -8,7 +8,7 @@ const styles = require('./styles')
 
 module.exports = ({
 	amount = 5,
-	receiver = "did:ara:0c354f916a8c6059ab4d726eed4f9f2bf47db09f01c4f4111822483ccede7cf8"
+	receiver = "0x12345678..."
 }) => {
   const confirmButton = new Button({
     children: 'Confirm',
