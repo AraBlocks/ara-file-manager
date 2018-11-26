@@ -160,7 +160,6 @@ class EditableFileTable extends Nanocomponent {
 	}
 
 	createElement() {
-		const tableSize = this.props.tableType === k.UPDATE_FILE ? 225 : 285
 		const {
 			children,
 			preventDefault,
@@ -168,7 +167,10 @@ class EditableFileTable extends Nanocomponent {
 			state,
 			renderAddOpts
 		} = this
+
 		const fileRows = this.makeFileRows()
+		const tableHeight = this.props.tableType === k.UPDATE_FILE ? 225 : 285
+		const containerHeight = this.props.tableType === k.UPDATE_FILE ? 265 : 325
 
 		return html`
 			<div
@@ -177,6 +179,7 @@ class EditableFileTable extends Nanocomponent {
 				ondragover="${preventDefault}"
 			 	ondragenter="${preventDefault}"
 				ondragleave="${preventDefault}"
+				style="height:${containerHeight}px;"
 			>
 				<table class="${styles.fileTable} EditableFileTable-container">
 					<thead>
@@ -201,7 +204,7 @@ class EditableFileTable extends Nanocomponent {
 							</th>
 						</tr>
 					</thead>
-					<tbody style="height: ${fileRows.length ? tableSize : 0}px;">
+					<tbody style="height: ${fileRows.length ? tableHeight : 0}px;">
 						${fileRows.map((fileRow, index) => fileRow.render(index))}
 					</tbody>
 				</table>

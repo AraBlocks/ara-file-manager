@@ -29,7 +29,6 @@ module.exports = {
 
 	container: css`
 		:host {
-			height: 325px;
 			overflow: scroll;
 			position: relative;
 			width: 100%;
