@@ -32,8 +32,11 @@ class Container extends Nanocomponent {
 				renderView: () => this.render.bind(this)({})
 			}),
 			publishButton: new Button({
-				children: ['Publish'],
 				cssClass: { name: 'thinBorder'},
+				children: [
+					'Publish',
+					html`<span style="font-family: ProximaNova-light;"> (0 B)</span>`
+				],
 				onclick: this.publishFile.bind(this)
 			}),
 			utilityButton: new UtilityButton({})
