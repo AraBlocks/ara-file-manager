@@ -50,9 +50,9 @@ class Registration extends Nanocomponent {
   register(e) {
     e.preventDefault()
     const { password } = this.state
-    password === '' 
-    ? this.render({ requiredIndicator: true })
-    : emit({ event: k.REGISTER, load: password })
+    password === ''
+      ? this.render({ requiredIndicator: true })
+      : emit({ event: k.REGISTER, load: password })
   }
 
   update() {

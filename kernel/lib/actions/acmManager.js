@@ -49,7 +49,7 @@ function cacheUserDid(did) {
 function getCachedUserDid() {
 	const filePath = path.resolve(getAFMDirectory(), 'store.json')
 	const cachedData = parseJSON(filePath)
-	return cachedData.cachedUserDid
+	return cachedData.cachedUserDid ? cachedData.cachedUserDid : ''
 }
 
 function parseJSON(path) {
@@ -79,7 +79,6 @@ function savePublishedItem(contentDID, userDID) {
 
 module.exports = {
 	cacheUserDid,
-	parseJSON,
 	getAFMPath,
 	getCachedUserDid,
 	getPublishedItems,

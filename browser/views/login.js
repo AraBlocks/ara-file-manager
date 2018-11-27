@@ -15,7 +15,7 @@ class Login extends Nanocomponent {
 
     this.state = {
       password: '',
-      userDID: acmManager.getCachedUserDid()
+      userDID: acmManager.getCachedUserDid() 
     }
 
     this.children = {
