@@ -41,8 +41,8 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     }
 
     debug('Deploying proxy')
-    await afs.deploy({ password, did })
-
+    afs.deploy({ password, did })
+    await new Promise(_ => setTimeout(_,1000 * 20))
     debug('Estimating gas')
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0

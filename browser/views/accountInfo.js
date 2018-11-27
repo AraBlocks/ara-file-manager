@@ -96,7 +96,6 @@ class AccountInfo extends Nanocomponent {
 
   createElement() {
     const { children, props, renderCopyableText } = this
-    console.log(props)
     return html`
       <div class="${styles.container} accountInfo-container">
         ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html`<div></div>`}

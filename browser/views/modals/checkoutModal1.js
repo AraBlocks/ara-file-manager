@@ -11,7 +11,7 @@ module.exports = ({
   aid: did,
   fileName = 'The Ultimate Manggo Collection Vol I',
   price = 10,
-  publisherName = 'Boss'
+  publisherName = 'Unnamed Author'
 }) => {
   const buyButton = new Button({
     children: 'Buy Now',
