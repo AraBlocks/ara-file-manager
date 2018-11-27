@@ -9,6 +9,7 @@ const { utils } = require('../../lib/tools')
 const html = require('choo/html')
 const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
+const { shell } = require('electron')
 
 class Container extends Nanocomponent {
   constructor({ account, files }) {
@@ -70,7 +71,12 @@ class Container extends Nanocomponent {
       </div>`
   }
 
+  openAraOne() {
+    shell.openExternal('https://ara.one')
+  }
+
   renderNoFilesMsg() {
+    const { openAraOne } = this
     return html`
       <div class="${styles.noFilesContainer} fileManager-noFilesContainer">
         <div class="${styles.noFilesHeader} fileManager-noFilesHeader">
@@ -86,7 +92,7 @@ class Container extends Nanocomponent {
           <br>
           which can be spent to purchase more content on the network.
         </p>
-        <a href="">
+        <a onclick=${openAraOne}>
           Learn More
         </a>
       </div>
@@ -110,6 +116,7 @@ class Container extends Nanocomponent {
       children,
       renderSections,
       renderSpinnerBars,
+      openAraOne,
       state
     } = this
 

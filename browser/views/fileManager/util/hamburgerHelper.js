@@ -13,7 +13,15 @@ module.exports = ({
   shouldBroadcast,
   status
 }) => {
-  const menuItems = [{ children: 'Copy Link', onclick: () => deeplink.copyDeeplink(did, name) }]
+  const menuItems = [
+    { children: 'Copy Link',
+      onclick: (e) => {
+        deeplink.copyDeeplink(did, name)
+        e.stopPropagation()
+      },
+      onclickText: 'Copied!'
+    }
+  ]
   menuItems.addItem = function (children, event) {
     this.push({ children, onclick: () => windowManagement.emit({ event, load: { did, name } }) })
   }
