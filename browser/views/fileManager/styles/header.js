@@ -14,7 +14,7 @@ module.exports = {
       font-family: ${fonts.light};
       height: 150px;
       justify-content: space-between;
-      margin-bottom: 80px;
+      margin-bottom: 65px;
     }
   `,
 

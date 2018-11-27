@@ -217,8 +217,7 @@ windowManager.openWindow = (view) => {
 				{
 					backgroundColor: 'white',
 					frame: false,
-          ...windowManager.setSize(view),
-          resizable: true
+          ...windowManager.setSize(view)
 				}
 			)
 }
