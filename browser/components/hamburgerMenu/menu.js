@@ -9,6 +9,8 @@ class Menu extends Nanocomponent {
 	constructor(items = []) {
 		super()
 		this.props = { items: this.makeButtons(items) }
+		this.state = { displayItems: false }
+		this.menuClicked = this.menuClicked.bind(this)
 	}
 
 	makeButtons(items) {
@@ -19,17 +21,24 @@ class Menu extends Nanocomponent {
 		return true
 	}
 
+	menuClicked() {
+		const { state } = this
+		state.displayItems = !state.displayItems
+		this.render()
+	}
+
 	createElement() {
-		const { props } = this
+		const { props, state, menuClicked } = this
 
 		return html`
-			<div class="${styles.container} Menu-container">
-				<div class="${styles.hamburger} Menu-hamburger">
-					<div class="${styles.menuBar}" Menu-menuBar></div>
-					<div class="${styles.menuBar}" Menu-menuBar></div>
-					<div class="${styles.menuBar}" Menu-menuBar></div>
-				</div>
-				<div class="${styles.menu} Menu-menu" >
+			<div class="${styles.container} Menu-container"
+				onclick=${menuClicked}
+			>
+				<img
+					class="${styles.hamburger} Menu-hamburger"
+					src="../assets/images/utilityButtons/Hamburger.svg"
+				/>
+				<div class="${styles.menu(state.displayItems)} Menu-menu">
 					${props.items.map(item => [
 						item.render(),
 						html`<div class="${styles.divider} Menu-divider"></div>`
