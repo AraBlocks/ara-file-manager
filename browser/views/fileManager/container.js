@@ -34,6 +34,8 @@ class Container extends Nanocomponent {
 
     this.rerender = this.rerender.bind(this)
     this.renderSections = this.renderSections.bind(this)
+    this.renderNoFilesMsg = this.renderNoFilesMsg.bind(this)
+    this.openAraOne = this.openAraOne.bind(this)
   }
 
   renderSpinnerBars() {
