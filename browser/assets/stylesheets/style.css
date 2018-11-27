@@ -128,7 +128,6 @@ a {
 
 .expand {
   animation: expand;
-  animation-duration: .5s;
   transition: all ease;
 }
 

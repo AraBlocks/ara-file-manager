@@ -30,7 +30,7 @@ class Menu extends Nanocomponent {
 	}
 
 	createElement() {
-		const { props, state, toggleMenu, click2, mouseLeave } = this
+		const { props, state, toggleMenu } = this
 
 		return html`
 			<div class="${styles.container} Menu-container"

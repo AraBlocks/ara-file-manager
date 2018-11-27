@@ -24,7 +24,7 @@ module.exports = {
       vertical-align: middle;
     }
 
-    :host :hover {
+    :host:hover {
       background-color: #f2f2f2;
     }
 
