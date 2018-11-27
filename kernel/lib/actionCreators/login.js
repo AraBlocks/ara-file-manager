@@ -26,6 +26,7 @@ internalEmitter.on(k.LOGOUT, () => {
     switchLoginState(false)
     windowManager.closeWindow('filemanager')
     windowManager.closeWindow('publishFileView')
+    windowManager.closeWindow('accountInfo')
     windowManager.openWindow('login')
   } catch (err) {
     debug('Error logging out: %o', o)

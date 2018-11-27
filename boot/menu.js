@@ -57,9 +57,26 @@ function createMenu() {
     ]
   }
 
+  const window = {
+    label: 'Window',
+    submenu: [
+      {
+        label: 'Close Window',
+        accelerator: "CmdOrCtrl+Shift+W",
+        role: 'close'
+      },
+      {
+        label: 'Minimize',
+        accelerator: "CmdOrCtrl+M",
+        role: 'minimize'
+      }
+    ]
+  }
+
   const template = [
     application,
-    edit
+    edit,
+    window
   ]
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
