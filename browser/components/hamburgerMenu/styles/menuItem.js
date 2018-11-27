@@ -25,13 +25,13 @@ module.exports = {
     }
 
     :host:hover {
-      background-color: #f2f2f2;
+      background-color: #e2e2e2;
     }
 
     :host span {
       align-items: center;
       animation-duration: 900ms;
-      background-color: white;
+      background-color: #e2e2e2;
       color: ${colorSelector('orange')};
       display: flex;
       flex-direction: column;
