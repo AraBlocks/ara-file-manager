@@ -65,7 +65,8 @@ async function login(_, load) {
   }
 
   try {
-    dispatch({ type: k.GETTING_USER_DATA, load: { userAid: load.userAid } })
+    const network = await utils.getNetwork()
+    dispatch({ type: k.GETTING_USER_DATA, load: { userAid: load.userAid, network } })
     windowManager.openWindow('filemanager')
 
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
@@ -106,7 +107,6 @@ async function login(_, load) {
     })
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
@@ -123,9 +123,6 @@ async function login(_, load) {
       type: k.LOADED_BACKGROUND_AFS_DATA,
       load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
     }))
-
-    const network = await utils.getNetwork()
-    dispatch({ type: k.GOT_NETWORK, load: { network } })
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 

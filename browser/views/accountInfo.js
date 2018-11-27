@@ -21,11 +21,11 @@ class AccountInfo extends Nanocomponent {
     super()
     const { account, application } = props
 
-    this.state = { showBanner: utils.shouldShowBanner(application.network) }
     this.props = {
       araBalance: account.araBalance,
       ethBalance: account.ethBalance,
       ethAddress: account.accountAddress,
+      network: application.network,
       userDID: account.userAid,
       version
     }
@@ -54,23 +54,12 @@ class AccountInfo extends Nanocomponent {
       })
     }
 
-    this.removeBanner = this.removeBanner.bind(this)
     this.renderCopyableText = this.renderCopyableText.bind(this)
     this.rerender = this.rerender.bind(this)
     this.eventMouseLeave = document.createEvent('MouseEvents')
     this.eventMouseEnter = document.createEvent('MouseEvents')
     this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
     this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
-  }
-
-  removeBanner() {
-    this.state.showBanner = false
-    this.rerender()
-  }
-
-  update(props = {}) {
-    this.props = { ...this.props, ...props.account }
-    return true
   }
 
   renderCopyableText(textType) {
@@ -86,31 +75,30 @@ class AccountInfo extends Nanocomponent {
       <div
         data-tooltip="Copy to Clipboard"
         class="${styles.copyableText} header-didHolder"
-        onclick=${({ target }) => {
+        onclick="${({ target }) => {
           target.parentElement.dataset.tooltip = 'Copied!'
           target.parentElement.dispatchEvent(eventMouseEnter)
           target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
           clipboard.writeText(text)
-        }}
-        onmouseenter=${({ target }) => target.style.backgroundColor = '#d0d0d0'}
-        onmouseleave=${({ target }) => target.style.backgroundColor = ''}
+        }}"
+        onmouseenter="${({ target }) => target.style.backgroundColor = '#d0d0d0'}"
+        onmouseleave="${({ target }) => target.style.backgroundColor = ''}"
       >
-        <div class=${textType}>${text}</div>
+        <div class="${textType}">${text}</div>
       </div>
     `
   }
 
+  update(props = {}) {
+    this.props = { ...this.props, ...props }
+    return true
+  }
+
   createElement() {
-    const {
-      children,
-      props,
-      removeBanner,
-      renderCopyableText,
-      state
-    } = this
+    const { children, props, renderCopyableText } = this
     return html`
       <div class="${styles.container} accountInfo-container">
-        ${state.showBanner ? TestnetBanner(removeBanner) : html`<div></div>`}
+        ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html`<div></div>`}
         <div class="${styles.closeBtnHolder} accountInfo-closeBtnHolder">${children.closeButton.render({ children: 'close' })}</div>
         <div class="${styles.accountOverview} accountInfo-accountOverview">
           <div class="${styles.banner} accountInfo-banner">Account</div>
@@ -169,6 +157,7 @@ class AccountInfo extends Nanocomponent {
             All rights reserved.
           </div>
         </div>
+        <div style="height:${utils.shouldShowBanner(props.network) ? 50  : 0}px;"></div>
       </div>
     `
   }

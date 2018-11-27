@@ -36,7 +36,7 @@ module.exports = {
       height: 73px;
       flex-direction: column;
       justify-content: space-between;
-      padding-bottom: 15px;
+      padding: 3px 0 12px 0;
     }
 
     :host b {
