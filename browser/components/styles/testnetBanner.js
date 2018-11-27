@@ -5,24 +5,29 @@ const { css } = require('css')
 module.exports = {
   container: css`
     :host {
-      animation: banner 1300ms;
+      align-items: center;
+      bottom: 0;
       background-color: var(--ara-orange);
+      font-size: 11px;
+      height: 52px;
       left: 0;
+      justify-content: center;
+      opacity: .9;
       position: absolute;
-      margin: 5px 5px;
-      opacity: .93;
-      padding: 10px;
-      padding-bottom: 0;
-      text-align: left;
-      top: 0;
-      z-index: 99;
+      width: 100%;
+      display: flex;
+      z-index: 999;
     }
 
-    :host div {
-      color: white;
-      padding: 5px;
-      text-align: center;
-      cursor: pointer;
+    :host > p {
+      width: 90%;
     }
+
+    @media only screen and (max-width: 350px) {
+      :host {
+        font-size: 10px;
+        height: 55px;
+      }
+  }
   `,
 }
