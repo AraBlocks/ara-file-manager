@@ -26,7 +26,7 @@ function getPublishedItems(userDID) {
 function removedPublishedItem(contentDID, userDID) {
 	try {
 		const afmFilePath = getAFMPath(userDID)
-		let userData = parseJSON(afmFilePath)
+		const userData = parseJSON(afmFilePath)
 		userData.published = userData.published.filter(did => did !== contentDID)
 		fs.writeFileSync(afmFilePath, JSON.stringify(userData))
 	} catch(err) {
