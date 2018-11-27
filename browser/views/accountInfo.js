@@ -90,7 +90,7 @@ class AccountInfo extends Nanocomponent {
   }
 
   update(props = {}) {
-    this.props = { ...this.props, ...props }
+    this.props = { ...this.props, ...props.account }
     return true
   }
 
