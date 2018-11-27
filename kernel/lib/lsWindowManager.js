@@ -62,7 +62,7 @@ windowManager.setSize = (view) => {
       break
     case 'filemanager':
       width = 490
-      height = 730
+      height = 690
       break
     case 'generalPleaseWaitModal':
       width = 340
@@ -165,7 +165,7 @@ windowManager.loadURL = (view) => {
   return windowManager.makeFilePath({ file, parent: file.includes('-test') ? 'test' : 'browser' })
 }
 
-windowManager.makeFilePath = ({ file, parent }) => `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}.html`)}`
+windowManager.makeFilePath = ({ file, parent }) => `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}` + ".html")}`
 
 windowManager.openDeepLinking = async (deepLinkingUrl) => {
   debug('Opening deeplink: %s', deepLinkingUrl)
@@ -217,7 +217,8 @@ windowManager.openWindow = (view) => {
 				{
 					backgroundColor: 'white',
 					frame: false,
-					...windowManager.setSize(view)
+          ...windowManager.setSize(view),
+          resizable: true
 				}
 			)
 }

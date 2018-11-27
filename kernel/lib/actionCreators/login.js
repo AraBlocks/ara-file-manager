@@ -104,9 +104,9 @@ async function login(_, load) {
       DCDNStore
     })
     let files;
-    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
+    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published: store.files.published, purchased: store.files.purchased } }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-
+    return
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
       araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))

@@ -2,8 +2,8 @@ const k = require('../../../lib/constants/stateManagement')
 
 module.exports = {
   loadingLibrary: false,
-  published: [],
-  purchased: [],
+  published: [...mockFiles()],
+  purchased: [...mockFiles()],
 }
 
 function mockFiles() {
