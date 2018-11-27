@@ -226,20 +226,22 @@ async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 	return rewardsSubscription
 }
 
-function subscribeTransfer(userAddress) {
+async function subscribeTransfer(userAddress) {
+	const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
+
+	let transferSubscription
 	try {
-		const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
-		const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
+		transferSubscription = contract.events.Transfer({ filter: { to: userAddress } })
 			.on('data', async () => {
 				const newBalance = await getAraBalance(store.account.userAid)
 				windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
 			})
 			.on('error', debug)
-
-		return transferSubscription
 	} catch (err) {
 		debug('Error %o', err)
 	}
+
+	return transferSubscription
 }
 
 module.exports = {
