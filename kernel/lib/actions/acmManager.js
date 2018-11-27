@@ -34,6 +34,24 @@ function removedPublishedItem(contentDID, userDID) {
 	}
 }
 
+function cacheUserDid(did) {
+	try {
+		const afmDirectory = getAFMDirectory()
+		const filePath = path.resolve(afmDirectory, 'store.json')
+		const cachedData = parseJSON(filePath)
+		cachedData.cachedUserDid = did
+		fs.writeFileSync(filePath, JSON.stringify(cachedData))
+	} catch(err) {
+		debug(err)
+	}
+}
+
+function getCachedUserDid() {
+	const filePath = path.resolve(getAFMDirectory(), 'store.json')
+	const cachedData = parseJSON(filePath)
+	return cachedData.cachedUserDid
+}
+
 function parseJSON(path) {
 	try {
 		const data = fs.readFileSync(path)
@@ -60,8 +78,10 @@ function savePublishedItem(contentDID, userDID) {
 }
 
 module.exports = {
+	cacheUserDid,
 	parseJSON,
 	getAFMPath,
+	getCachedUserDid,
 	getPublishedItems,
 	savePublishedItem,
 	removedPublishedItem

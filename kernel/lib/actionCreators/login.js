@@ -64,6 +64,8 @@ async function login(_, load) {
     return
   }
 
+  acmManager.cacheUserDid(load.userAid)
+
   try {
     const network = await utils.getNetwork()
     dispatch({ type: k.GETTING_USER_DATA, load: { userAid: load.userAid, network } })
