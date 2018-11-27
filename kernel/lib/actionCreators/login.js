@@ -59,7 +59,7 @@ async function login(_, load) {
     if (incorrectPW) { throw 'IncorrectPW' }
   } catch (err) {
     debug('Login error: %o', err)
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'loginFail' } })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'loginFail', reOpenWindowName: 'login'} })
     windowManager.openModal('generalMessageModal')
     return
   }
