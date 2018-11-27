@@ -32,18 +32,8 @@ class Container extends Nanocomponent {
       purchasedSection: new Section({ files, type: 'purchased' })
     }
 
-    this.removeBanner = this.removeBanner.bind(this)
     this.rerender = this.rerender.bind(this)
     this.renderSections = this.renderSections.bind(this)
-    this.shouldShowBanner = this.shouldShowBanner.bind(this)
-    this.renderNoFilesMsg = this.renderNoFilesMsg.bind(this)
-    this.openAraOne = this.openAraOne.bind(this)
-    if (isDev) { window.components = { fileManager: this } }
-  }
-
-  removeBanner() {
-    this.state.bannerToggled = false
-    this.rerender()
   }
 
   renderSpinnerBars() {
@@ -115,14 +105,6 @@ class Container extends Nanocomponent {
     rerender()
   }
 
-  shouldShowBanner(network) {
-    return (
-      !this.state.loadingLibrary
-      && utils.shouldShowBanner(network)
-      && this.state.bannerToggled
-    )
-  }
-
   update({ account, files }) {
     this.state.araBalance = account.araBalance
     this.state.loadingLibrary = files.loadingLibrary
@@ -132,10 +114,8 @@ class Container extends Nanocomponent {
   createElement({ application: { network } }) {
     const {
       children,
-      removeBanner,
       renderSections,
       renderSpinnerBars,
-      shouldShowBanner,
       openAraOne,
       state
     } = this
@@ -148,7 +128,7 @@ class Container extends Nanocomponent {
 
     return html`
       <div>
-        ${shouldShowBanner(network) ? TestnetBanner(removeBanner) : html`<div></div>`}
+        ${utils.shouldShowBanner(network) ? TestnetBanner() : html`<div></div>`}
         <div class="${styles.container} container-container">
           <div>
             ${children.header.render({ activeTab, araBalance })}

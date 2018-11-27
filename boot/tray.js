@@ -50,7 +50,7 @@ const buildTray = () => {
       {
         backgroundColor: 'white',
         frame: false,
-        ...windowManager.setSize(view)
+        ...windowManager.setSize(view),
       }
     )
   }

@@ -20,6 +20,7 @@ internalEmitter.on(k.UPDATE_BALANCE, (load) => {
   try {
     dispatch({ type: k.UPDATE_BALANCE, load })
     pingView({ view: 'filemanager', event: k.REFRESH })
+    pingView({ view: 'accountInfo', event: k.REFRESH })
   } catch(err) {
     debug('Error: %o', err)
   }
