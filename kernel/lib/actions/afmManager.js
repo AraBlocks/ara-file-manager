@@ -4,10 +4,11 @@ const debug = require('debug')('acm:kernel:lib:actions:afmManager')
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
+const araUtil = require('ara-util')
 
 function getAFMPath(userDID) {
 	const afmDirectory = getAFMDirectory()
-	const fileDirectory = path.resolve(afmDirectory, `${userDID.slice(-64)}.json`)
+	const fileDirectory = path.resolve(afmDirectory, `${araUtil.getIdentifier(userDID)}.json`)
 	return fileDirectory
 }
 
