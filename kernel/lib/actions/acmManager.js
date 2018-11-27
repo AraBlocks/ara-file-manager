@@ -19,7 +19,7 @@ function getAFMDirectory() {
 
 function getPublishedItems(userDID) {
 	const fileDirectory = getAFMPath(userDID)
-	let userData = parseJSON(fileDirectory)
+	const userData = parseJSON(fileDirectory)
 	return userData.published ? userData.published : []
 }
 
