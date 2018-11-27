@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:login')
 const araUtil = require('ara-util')
 const aid = require('ara-identity')
 const {
-  acmManager,
+  afmManager,
   afsManager,
   araContractsManager,
   farmerManager,
@@ -64,7 +64,7 @@ async function login(_, load) {
     return
   }
 
-  acmManager.cacheUserDid(load.userAid)
+  afmManager.cacheUserDid(load.userAid)
 
   try {
     const network = await utils.getNetwork()
@@ -100,7 +100,7 @@ async function login(_, load) {
       userDID: load.userAid,
       DCDNStore
     })
-    const publishedDIDs = await acmManager.getPublishedItems(load.userAid)
+    const publishedDIDs = await afmManager.getPublishedItems(load.userAid)
     const published = await afsManager.surfaceAFS({
       dids: publishedDIDs,
       userDID: load.userAid,

@@ -5,7 +5,7 @@ const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
-  acmManager,
+  afmManager,
   araContractsManager,
   farmerManager,
   utils: actionsUtil
@@ -84,7 +84,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   const { account, farmer } = store
   try {
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
-    acmManager.savePublishedItem(load.did, account.userAid)
+    afmManager.savePublishedItem(load.did, account.userAid)
 
     const descriptorOpts = {
       datePublished: new Date,
@@ -123,7 +123,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
 
-    acmManager.removedPublishedItem(load.did, account.userAid)
+    afmManager.removedPublishedItem(load.did, account.userAid)
     dispatch({ type: k.ERROR_PUBLISHING })
 
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
