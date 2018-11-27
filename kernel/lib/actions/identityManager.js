@@ -2,6 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:register')
 const aid = require('ara-identity')
+const { DID } = require('did-uri')
 const context = require('ara-context')()
 
 module.exports = {
@@ -31,6 +32,19 @@ module.exports = {
       return araId
     } catch (err) {
       debug('Err recovering identity: %o', err)
+    }
+  },
+
+  isValidDid(did) {
+    try {
+      const normalizedDid = aid.did.normalize(did)
+      if (normalizedDid.length === 72) {
+        new DID(normalizedDid)
+        return true
+      }
+      return false
+    } catch(e) {
+      return false
     }
   }
 }

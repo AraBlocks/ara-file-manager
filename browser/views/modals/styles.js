@@ -246,5 +246,18 @@ module.exports = {
       flex-direction: column;
       justify-content: space-around;
     }
+  `,
+
+  truncateText: css`
+    :host {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    :host > b {
+      font-family: ${fonts.bold}
+    }
   `
 }
