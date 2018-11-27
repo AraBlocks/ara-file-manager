@@ -7,13 +7,31 @@ const Nanocomponent = require('nanocomponent')
 class MenuItem extends Nanocomponent {
   constructor({
     children = "",
-    onclick = () => {}
+    onclick = () => {},
+    onclickText = ""
   }) {
     super()
     this.props = {
       children,
-      onclick
+      onclick,
+      onclickText
     }
+    this.itemClicked = this.itemClicked.bind(this)
+  }
+
+  itemClicked(e) {
+    const { props } = this
+    props.onclick(e)
+    if (props.onclickText === "") { return }
+    const span = e.target.children[0]
+    this.render()
+    span.style.zIndex = 1
+    span.classList.add('expand')
+    span.addEventListener('animationend', () => {
+      span.classList.remove('expand'), false
+      span.style.zIndex = -1
+      this.render()
+    })
   }
 
   update() {
@@ -21,14 +39,15 @@ class MenuItem extends Nanocomponent {
   }
 
   createElement() {
-    const { props } = this
+    const { props, itemClicked } = this
 
     return html`
       <div
         class="${styles.container} MenuItem-container"
-        onclick=${props.onclick}
+        onclick=${itemClicked}
       >
         ${props.children}
+        <span>${props.onclickText}</span>
       </div>
     `
   }

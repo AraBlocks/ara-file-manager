@@ -14,10 +14,6 @@ module.exports = {
 			font-size: 12px;
 			position: relative;
 		}
-
-		:host:hover > div {
-			display: flex;
-		}
 	`,
 
 	divider: css`
@@ -30,28 +26,27 @@ module.exports = {
 
 	hamburger: css`
 		:host {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
 			height: 100%;
 		}
 	`,
 
-  menu: css`
-    :host {
-			align-items: space-between;
-			background-color: white;
-			border: 1px ${colors.araGrey} solid;
-			border-bottom: 0px;
-			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-			display: none;
-			flex-direction: column;
-			justify-content: space-between;
-			min-width: 130px;
-			position: absolute;
-			z-index: 999;
-    }
-	`,
+  menu(visible) {
+		return css`
+			:host {
+				align-items: space-between;
+				background-color: white;
+				border: 1px ${colors.araGrey} solid;
+				border-bottom: 0px;
+				box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+				display: ${visible ? 'flex' : 'none'};
+				flex-direction: column;
+				justify-content: space-between;
+				min-width: 130px;
+				position: absolute;
+				z-index: 999;
+			}
+		`
+	},
 
 	menuBar: css`
 		:host {

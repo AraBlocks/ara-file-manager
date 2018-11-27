@@ -126,6 +126,11 @@ a {
   transition: all ease-in-out;
 }
 
+.expand {
+  animation: expand;
+  transition: all ease;
+}
+
 .ants {
   animation: border-dance 24s linear infinite;
   background-image: linear-gradient(
@@ -185,6 +190,17 @@ a {
   100% {
     transform: translate(0, -35px);
     opacity: .7;
+  }
+}
+
+@keyframes expand {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
   }
 }
 
