@@ -36,8 +36,7 @@ function removedPublishedItem(contentDID, userDID) {
 
 function cacheUserDid(did) {
 	try {
-		const afmDirectory = getAFMDirectory()
-		const filePath = path.resolve(afmDirectory, 'store.json')
+		const filePath = path.resolve(getAFMDirectory(), 'store.json')
 		const cachedData = parseJSON(filePath)
 		cachedData.cachedUserDid = did
 		fs.writeFileSync(filePath, JSON.stringify(cachedData))
