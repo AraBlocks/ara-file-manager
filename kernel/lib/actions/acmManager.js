@@ -5,53 +5,63 @@ const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
 
-function getACMPath(userDID) {
-	const acmDirectory = path.resolve(userHome, '.acm')
-	fs.existsSync(acmDirectory) || fs.mkdirSync(acmDirectory)
-	const fileDirectory = path.resolve(userHome, '.acm', userDID.slice(-64))
+function getAFMPath(userDID) {
+	const afmDirectory = getAFMDirectory()
+	const fileDirectory = path.resolve(afmDirectory, `${userDID.slice(-64)}.json`)
 	return fileDirectory
 }
 
-function getPublishedItems(userDID) {
-	const fileDirectory = getACMPath(userDID)
-	let data
-	try {
-		data = fs.readFileSync(fileDirectory)
-	} catch (err) {
-		debug('No published items found for %s', userDID)
-		return []
-	}
-	const itemList = data.toString('utf8').slice(0, -1).split('\n')
-	debug('Retrieved %s published items', itemList.length)
-	return itemList
+function getAFMDirectory() {
+	const afmDirectory = path.resolve(userHome, '.afm')
+	fs.existsSync(afmDirectory) || fs.mkdirSync(afmDirectory)
+	return afmDirectory
 }
 
-async function removedPublishedItem(contentDID, userDID) {
-	const items = await getPublishedItems(contentDID, userDID)
-	const clean = items.filter(did => did !== contentDID)
+function getPublishedItems(userDID) {
+	const fileDirectory = getAFMPath(userDID)
+	let userData = parseJSON(fileDirectory)
+	return userData.published ? userData.published : []
+}
 
-	const fileDirectory = getACMPath()
-	fs.unlinkSync(fileDirectory)
-	if (clean.length) {
-		clean.forEach(did => fs.appendFileSync(fileDirectory, `${did}\n`))
+function removedPublishedItem(contentDID, userDID) {
+	try {
+		const afmFilePath = getAFMPath(userDID)
+		let userData = parseJSON(afmFilePath)
+		userData.published = userData.published.filter(did => did !== contentDID)
+		fs.writeFileSync(afmFilePath, JSON.stringify(userData))
+	} catch(err) {
+		debug('Error removing published item %o', err)
 	}
+}
 
-	return clean
+function parseJSON(path) {
+	try {
+		const data = fs.readFileSync(path)
+		const object = JSON.parse(data)
+		return object
+	} catch (err) {
+		return {}
+	}
 }
 
 function savePublishedItem(contentDID, userDID) {
 	try {
 		debug('Saving published item %s', contentDID)
-		const fileDirectory = getACMPath(userDID)
-		fs.appendFileSync(fileDirectory, `${contentDID}\n`)
+		const fileDirectory = getAFMPath(userDID)
+		const data = parseJSON(fileDirectory)
+		data.published == null
+			? data.published = [contentDID]
+			: data.published.push(contentDID)
+		fs.writeFileSync(fileDirectory, JSON.stringify(data))
 		return
 	} catch (err) {
-		debug('Err: %o', err)
+		debug('Error saving published item: %o', err)
 	}
 }
 
 module.exports = {
-	getACMPath,
+	parseJSON,
+	getAFMPath,
 	getPublishedItems,
 	savePublishedItem,
 	removedPublishedItem
