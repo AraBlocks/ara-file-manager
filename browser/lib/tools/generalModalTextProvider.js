@@ -102,9 +102,6 @@ function generalModalText(modalName, load) {
 function waitModalText(modalName, load) {
 	let description
 	switch (modalName) {
-		case 'generalPleaseWait':
-			description = html`<div>Connecting to the network.</div>`
-			break
 		case 'pleaseWait':
 			description = html`<div>Completing transaction and connecting to<br>peers on the network.</div>`
 			break
