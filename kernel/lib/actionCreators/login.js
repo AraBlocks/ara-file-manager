@@ -74,7 +74,7 @@ async function login(_, load) {
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
-    const transferSubscription = await araContractsManager.subscribeTransfer(accountAddress)
+    const transferSubscription = await araContractsManager.subscribeTransfer(accountAddress, load.userAid)
 
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
     farmer.start()
