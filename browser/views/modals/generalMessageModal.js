@@ -9,14 +9,12 @@ const styles = require('./styles')
 module.exports = ({
   modalName = 'fileMissing',
   load = { fileName: 'Grump Cat', amount: 0 },
-  reOpenWindowName = null
+  callback = () => {}
 }) => {
   const confirmButton = new Button({
 		children: 'Confirm',
 		onclick: () => {
-      if (reOpenWindowName) {
-        openWindow(reOpenWindowName)
-      }
+      callback()
       closeModal('generalMessageModal')
     }
 	})

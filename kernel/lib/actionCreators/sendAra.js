@@ -34,7 +34,7 @@ ipcMain.on(k.SEND_ARA, (event, load) => {
 		}
 	} catch(err) {
 		debug('Error: %o', err)
-		dispatch({ type: k.FEED_MODAL, load: { modalName, reOpenWindowName: 'sendAra' } })
+		dispatch({ type: k.FEED_MODAL, load: { modalName, callback: () => windowManager.openWindow('sendAra') } })
 		windowManager.openModal('generalMessageModal')
 	}
 })
@@ -77,6 +77,6 @@ async function araSent(amount) {
 
 function failedToSend() {
 	windowManager.closeModal('generalPleaseWaitModal')
-	dispatch({ type: k.FEED_MODAL, load: { modalName: 'generalFailure', reOpenWindowName: 'sendAra' }})
+	dispatch({ type: k.FEED_MODAL, load: { modalName: 'generalFailure', callback: () => windowManager.openWindow('sendAra') }})
 	windowManager.openModal('generalMessageModal')
 }
