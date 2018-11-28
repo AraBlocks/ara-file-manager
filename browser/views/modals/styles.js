@@ -80,19 +80,20 @@ module.exports = {
       justify-content: space-around;
       width: 90%;
     }
-
-    :host > * {
-      width: 95%;
-    }
   `,
 
   clipboard: css`
+    :host {
+      width: 100%;
+    }
+
     :host span {
       animation-duration: 1000ms;
       color: ${colorSelector('orange')};
-      left: 43%;
+      left: 0;
       opacity: 0;
       position: absolute;
+      width: 100%;
       z-index: -1;
     }
   `,
@@ -139,10 +140,6 @@ module.exports = {
       justify-content: center !important;
       display: flex !important;
       width: 100%;
-    }
-
-    :host > div {
-      width: 35%;
     }
   `,
 

@@ -9,17 +9,17 @@ const { clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 class MnemonicWarning extends Nanocomponent {
-  constructor({ mnemonic }) {
+  constructor({ mnemonic = null, isAFS = true }) {
     super()
-
-    this.props = { mnemonic }
+    mnemonic = mnemonic ? mnemonic : 'betray tool segment crisp state inherit rural picture initial matter giraffe patrol'
+    this.props = { mnemonic, isAFS }
     this.state = { copied: false }
 
     this.children = {
       copyMnemonicButton: new Button({
         children: "Copy Mnemonic",
         cssClass: {
-          opts: { color: 'green', fontSize: '10px' }
+          opts: { color: 'green' }
         },
         onclick: this.copyMnemonic.bind(this)
       }),
@@ -58,6 +58,8 @@ class MnemonicWarning extends Nanocomponent {
   createElement() {
     const { children, props, state } = this
     const { mnemonic } = props
+
+    const acctMsg = 'account and login to your account on another computer'
     return html`
       <div class="${styles.container} modals-container">
         <div class="${styles.logo} modals-logo">
@@ -71,7 +73,7 @@ class MnemonicWarning extends Nanocomponent {
             DO NOT LOSE THIS MNEMONIC
           </div>
           <div class="${styles.smallMessage({})} modal-smallMessage">
-            This 12 word phrase is the ONLY way to recover your account and login to your account on another computer
+            This 12 word phrase is the ONLY way to recover your ${props.isAFS ? 'AFS.' : acctMsg}
             Please write this phrase down and keep it in a secure place.
             You will never be shown this mnemonic again
           </div>
@@ -80,13 +82,13 @@ class MnemonicWarning extends Nanocomponent {
           <div>${mnemonic.split(' ').slice(0, 4).map(word => html`<b> ${word}</b>`)}</div>
           <div>${mnemonic.split(' ').slice(4, 8).map(word => html`<b> ${word}</b>`)}</div>
           <div>${mnemonic.split(' ').slice(8).map(word => html`<b> ${word}</b>`)}</div>
-          <div class="${styles.copyItemContainer} modal-copyItemContainer" >
-            <div class="${styles.clipboard} modal-clipBoard" style="width: 45%;">
+        </div>
+        <div class="${styles.copyItemContainer} modal-copyItemContainer" >
+            <div class="${styles.clipboard} modal-clipBoard">
               ${children.copyMnemonicButton.render({})}
               <span>Copied !</span>
             </div>
           </div>
-        </div>
         ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
       </div>
     `
