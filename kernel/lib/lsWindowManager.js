@@ -84,6 +84,8 @@ windowManager.setSize = (view) => {
       width = 650
       height = 730
       break
+    case 'deployConfirmModal':
+    case 'deployEstimateView':
     case 'publishConfirmModal':
       width = 360
       height = 225
@@ -130,6 +132,9 @@ windowManager.loadURL = (view) => {
       break
     case 'developer':
       file = 'index-dev'
+      break
+    case 'deployEstimateView':
+      file = 'deploy-estimate'
       break
     case 'recover':
       file = 'recover'
