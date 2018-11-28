@@ -1,15 +1,22 @@
 'use strict'
 
 const Button = require('../../components/button')
-const { closeModal } = require('../../lib/tools/windowManagement')
+const { closeModal, openWindow } = require('../../lib/tools/windowManagement')
 const { generalModalText } = require('../../lib/tools/generalModalTextProvider')
 const html = require('choo/html')
 const styles = require('./styles')
 
-module.exports = ({ modalName = 'fileMissing', load = { fileName: 'Grump Cat', amount: 0 }}) => {
+module.exports = ({
+  modalName = 'fileMissing',
+  load = { fileName: 'Grump Cat', amount: 0 },
+  callback = () => {}
+}) => {
   const confirmButton = new Button({
 		children: 'Confirm',
-		onclick: () => closeModal()
+		onclick: () => {
+      callback()
+      closeModal('generalMessageModal')
+    }
 	})
 	const { description, title } = generalModalText(modalName, load)
   return html`
