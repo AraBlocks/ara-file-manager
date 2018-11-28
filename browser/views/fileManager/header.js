@@ -3,6 +3,7 @@
 
 const Button = require('../../components/button')
 const { clipboard } = require('electron')
+const { emit } = require('../../lib/tools/windowManagement')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
@@ -12,6 +13,7 @@ const html = require('choo/html')
 const araUtil = require('ara-util')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
+const { DEPLOY_PROXY } = require('../../../lib/constants/stateManagement')
 
 tt({
   position: 'top',
@@ -32,7 +34,7 @@ class Header extends Nanocomponent {
         cssClass: { opts: { fontSize: 14 } },
         onclick: () => {
           if (account.pendingTransaction) { return }
-          windowManagement.openWindow('publishFileView')
+          emit({ event: DEPLOY_PROXY })
         }
       }),
       closeButton: new UtilityButton({ children: 'close' }),
