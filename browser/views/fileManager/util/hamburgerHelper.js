@@ -38,6 +38,7 @@ module.exports = ({
         menuItems.addItem('Download AFS', k.DOWNLOAD)
         break
       case k.UPDATE_AVAILABLE:
+        menuItems.addItem('Open AFS', k.OPEN_AFS)
         menuItems.addItem('Update AFS', k.DOWNLOAD)
         break
       case k.PAUSED:

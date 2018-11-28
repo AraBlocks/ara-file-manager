@@ -3,7 +3,7 @@
 const AfsFileTable = require('../../components/afsFileTable/afsFileTable')
 const Button = require('../../components/button')
 const { emit } = require('../../lib/tools/windowManagement')
-const { EXPORT_FILE, CLOSE_AFS_EXPLORER } = require('../../../lib/constants/stateManagement')
+const { EXPORT_FILE, CLOSE_AFS_EXPLORER, DOWNLOAD } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')
@@ -16,7 +16,8 @@ class Container extends Nanocomponent {
 	constructor({
 		afsName,
 		did,
-		fileList
+		fileList,
+		updateAvailable
 	}) {
 		super()
 		this.props = {
@@ -24,7 +25,8 @@ class Container extends Nanocomponent {
 			did
 		}
 		this.state = {
-			fileList
+			fileList,
+			updateAvailable
 		}
 		this.children = {
 			afsFileTable: new AfsFileTable({
@@ -39,8 +41,8 @@ class Container extends Nanocomponent {
 			}),
 			downloadUpdateButton: new Button({
 				children: 'Download Update',
-				cssClass: { name: 'thinBorder' },
-				onclick: this.exportAll.bind(this)
+				cssClass: this.state.updateAvailable ? { name: 'thinBorder'} : { opts: { color: 'orange' } },
+				onclick: this.downloadUpdate.bind(this)
 			}),
 			utilityButton: new UtilityButton({ onclick: () => {
 				emit({
@@ -71,7 +73,14 @@ class Container extends Nanocomponent {
 	}
 
 	downloadUpdate() {
-
+		const { props } = this
+		emit({
+			event: DOWNLOAD,
+			load: {
+				did: props.did,
+			}
+		})
+		windowManagement.closeWindow('afsExplorerView')
 	}
 
 	update({ fileList }){

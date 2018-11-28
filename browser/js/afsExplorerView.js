@@ -11,7 +11,8 @@ const { modal } = store
 const afsExplorer = new AFSExlorer({
   afsName: modal.contentViewerData.name,
   did: modal.contentViewerData.did,
-  fileList: modal.contentViewerData.fileList
+  fileList: modal.contentViewerData.fileList,
+  updateAvailable: modal.contentViewerData.updateAvailable
 })
 document.getElementById('container').appendChild(afsExplorer.render({ spinner: modal.contentViewerData.fileList.length === 0 }))
 
