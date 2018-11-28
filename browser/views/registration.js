@@ -50,14 +50,16 @@ class Registration extends Nanocomponent {
   register(e) {
     e.preventDefault()
     const { password } = this.state
-    emit({ event: k.REGISTER, load: password })
+    password === ''
+      ? this.render({ requiredIndicator: true })
+      : emit({ event: k.REGISTER, load: password })
   }
 
   update() {
     return true
   }
 
-  createElement({ pending = false }) {
+  createElement({ pending = false, requiredIndicator = false }) {
     const { children, register } = this
     return html`
       <div class="modal">
@@ -71,7 +73,7 @@ class Registration extends Nanocomponent {
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
         <form class=${styles.registerForm} onsubmit=${register}>
-          ${children.passwordInput.render({})}
+          ${children.passwordInput.render({ requiredIndicator })}
           ${children.submitButton.render({})}
         </form>
         ${children.cancelButton.render({})}
