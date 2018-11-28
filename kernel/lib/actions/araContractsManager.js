@@ -9,8 +9,13 @@ const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
-const { web3 } = require('ara-context')()
-const { web3: { account: araAccount } } = require('ara-util')
+const createContext = require('ara-context')
+const {
+	web3: {
+		account: araAccount,
+		contract: contractUtil
+	}
+} = require('ara-util')
 
 async function getAccountAddress(owner, password) {
 	try {
@@ -45,15 +50,21 @@ async function getAraBalance(userDID) {
 }
 
 async function getEtherBalance(account) {
+	const ctx = createContext()
+	await ctx.ready()
+	const { web3 } = ctx
+
+	let balance = 0
 	try {
 		const balanceInWei = await web3.eth.getBalance(account)
-		const balance = web3.utils.fromWei(balanceInWei, 'ether')
+		balance = web3.utils.fromWei(balanceInWei, 'ether')
 		debug('Ether balance is %s', balance)
-		return balance
 	} catch (err) {
 		debug('Error getting eth balance: %o', err)
-		return 0
 	}
+
+	ctx.close()
+	return balance
 }
 
 async function purchaseItem(opts) {
@@ -65,14 +76,12 @@ async function purchaseItem(opts) {
 	} = opts
 	debug('Purchasing item: %s', contentDid)
 	try {
-		const { jobId } = await araContracts.purchase(
-			{
-				budget,
-				contentDid,
-				password,
-				requesterDid,
-			}
-		)
+		const { jobId } = await araContracts.purchase({
+			budget,
+			contentDid,
+			password,
+			requesterDid,
+		})
 		debug('Purchase Completed')
 		return jobId
 	} catch (err) {
@@ -92,91 +101,96 @@ async function getLibraryItems(userDID) {
 
 async function getPublishedEarnings(items) {
 	debug('Getting earnings for published items')
-	const updatedEarnings = items.map(async (item) => {
-		const earnings = await getEarnings(item)
-
-		return { ...item, earnings }
-	})
+	const updatedEarnings = items.map(async (item) => ({ ...item, earnings: await getEarnings(item) }))
 
 	return Promise.all(updatedEarnings)
 }
 
 async function getAFSContract(contentDID) {
-	if (!araContracts.registry.proxyExists(contentDID)) return false
+	if (!araContracts.registry.proxyExists(contentDID)) { return {} }
 	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
-	return new web3.eth.Contract(AFSAbi, proxyAddress)
+	return await contractUtil.get(AFSAbi, proxyAddress)
 }
 
 async function getAllocatedRewards(item, userDID, password) {
-	return {
-		...item,
-		allocatedRewards: Number(await araContracts.rewards.getRewardsBalance({
-			farmerDid: userDID,
-			contentDid: 'did:ara:' + item.did,
-			password
-		}))
-	}
+	const allocatedRewards = Number(await araContracts.rewards.getRewardsBalance({
+		farmerDid: userDID,
+		contentDid: 'did:ara:' + item.did,
+		password
+	}))
+
+	return { ...item, allocatedRewards }
 }
 
 async function getEarnings({ did }) {
-	const opts = { fromBlock: 0, toBlock: 'latest' }
-	try {
-		const AFSContract = await getAFSContract(did)
-		if (!AFSContract) return 0
-		const earnings = (await AFSContract.getPastEvents('Purchased', opts))
-			.reduce((sum, { returnValues }) => sum + Number(araContracts.token.constrainTokenValue(returnValues._price)), 0)
+	const { contract, ctx } = await getAFSContract(did)
 
-		return earnings
-	} catch (err) {
-		debug('Error getting earnings for %s : %o', did, err)
-		return 0
+	let earnings = 0
+	if (contract) {
+		try {
+			const opts = { fromBlock: 0, toBlock: 'latest' }
+			earnings = (await contract.getPastEvents('Purchased', opts))
+				.reduce((sum, { returnValues }) => sum + Number(araContracts.token.constrainTokenValue(returnValues._price)), 0)
+		} catch (err) {
+			debug('Error getting earnings for %s : %o', did, err)
+		}
 	}
+
+	ctx.close()
+	return earnings
 }
 
 async function getRewards(item, userEthAddress) {
-	const opts = { fromBlock: 0, toBlock: 'latest' }
-	try {
-		const AFSContract = await getAFSContract(item.did)
-		if (!AFSContract) return 0
+	const { contract, ctx } = await getAFSContract(item.did)
 
-		const totalRewards = (await AFSContract.getPastEvents('Redeemed', opts))
-			.reduce((sum, { returnValues }) =>
-				returnValues._sender === userEthAddress
-					? sum += Number(araContracts.token.constrainTokenValue(returnValues._amount))
-					: sum
-				, 0)
-
-		return { ...item, earnings: item.earnings += totalRewards }
-	} catch (err) {
-		debug('Error getting rewards for %s : %o', item.did, err)
+	let totalRewards = 0
+	if (contract) {
+		try {
+			const opts = { fromBlock: 0, toBlock: 'latest' }
+			totalRewards = (await contract.getPastEvents('Redeemed', opts))
+				.reduce((sum, { returnValues }) =>
+					returnValues._sender === userEthAddress
+						? sum += Number(araContracts.token.constrainTokenValue(returnValues._amount))
+						: sum
+					, 0)
+		} catch (err) {
+			debug('Error getting rewards for %s : %o', item.did, err)
+		}
 	}
+
+	ctx.close()
+	return { ...item, earnings: item.earnings += totalRewards }
 }
 
 async function subscribePublished({ did }) {
-	try {
-		const AFSContract = await getAFSContract(did)
-		if (!AFSContract) throw 'Not a valid proxy'
+	const { contract, ctx } = await getAFSContract(did)
 
-		const subscription = AFSContract.events.Purchased()
-			.on('data', async ({ returnValues }) => {
-				const did = returnValues._did.slice(-64)
-				const earning = await getAFSPrice({ did })
-				windowManager.internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
-			})
-			.on('error', debug)
-
-		return subscription
-	} catch (err) {
-		debug('Error: %o', err)
+	let subscription
+	if (contract) {
+		try {
+			subscription = contract.events.Purchased()
+				.on('data', async ({ returnValues }) => {
+					const did = returnValues._did.slice(-64)
+					const earning = await getAFSPrice({ did })
+					windowManager.internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
+				})
+				.on('error', debug)
+		} catch (err) {
+			debug('Error: %o', err)
+		}
 	}
+
+	return { ctx, subscription }
 }
 
-async function sendAra({
-	amount,
-	completeHandler,
-	errorHandler,
-	walletAddress,
-}) {
+async function sendAra(opts) {
+	const {
+		amount,
+		completeHandler,
+		errorHandler,
+		walletAddress,
+	} = opts
+
 	try {
 		await araContracts.token.transfer({
 			did: store.account.userAid,
@@ -193,37 +207,42 @@ async function sendAra({
 
 async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 	const { rewards } = araContracts
-	try {
-		const AFSContract = await getAFSContract(contentDID)
-		const rewardsSubscription = AFSContract.events.RewardsAllocated({ filter: { _farmer: userDID } })
-			.on('data', async ({ returnValues }) => {
-				if (returnValues._farmer !== ethereumAddress) { return }
+	const { contract, ctx } = await getAFSContract(contentDID)
 
-				const rewardsBalance = await rewards.getRewardsBalance({ contentDid: contentDID, farmerDid: userDID })
-				windowManager.internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
-			})
-			.on('error', debug)
-
-		return rewardsSubscription
-	} catch (err) {
-		debug('Error subscribing to rewards: %o', err)
+	let rewardsSubscription
+	if (contract) {
+		try {
+			rewardsSubscription = contract.events.RewardsAllocated()
+				.on('data', async ({ returnValues }) => {
+					if (returnValues._farmer !== ethereumAddress) { return }
+					const rewardsBalance = await rewards.getRewardsBalance({ contentDid: contentDID, farmerDid: userDID })
+					windowManager.internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
+				})
+				.on('error', debug)
+		} catch (err) {
+			debug('Error subscribing to rewards: %o', err)
+		}
 	}
+
+	return { ctx, rewardsSubscription }
 }
 
-function subscribeTransfer(userAddress) {
+async function subscribeTransfer(userAddress) {
+	const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
+
+	let transferSubscription
 	try {
-		const tokenContract = new web3.eth.Contract(tokenAbi, ARA_TOKEN_ADDRESS)
-		const transferSubscription = tokenContract.events.Transfer({ filter: { to: userAddress } })
+		transferSubscription = contract.events.Transfer({ filter: { to: userAddress } })
 			.on('data', async () => {
 				const newBalance = await getAraBalance(store.account.userAid)
 				windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
 			})
 			.on('error', debug)
-
-		return transferSubscription
 	} catch (err) {
 		debug('Error %o', err)
 	}
+
+	return { ctx, transferSubscription }
 }
 
 module.exports = {
