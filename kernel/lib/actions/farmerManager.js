@@ -170,21 +170,12 @@ async function _calculateBudget(did) {
 	return budget
 }
 
-async function resumeBroadcastingState({ farmer, did, files }) {
-	const file = files.find(file => file.did === did)
-	debug('Resuming broadcasting state to %s', file.shouldBroadcast)
-	if (file.shouldBroadcast) {
-		joinBroadcast({ farmer, did })
-	}
-}
-
 module.exports = {
 	createFarmer,
 	download,
 	getBroadcastingState,
 	loadDCDNStore,
 	joinBroadcast,
-	resumeBroadcastingState,
 	stopAllBroadcast,
 	unjoinBroadcast
 }
