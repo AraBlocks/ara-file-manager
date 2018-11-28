@@ -16,7 +16,7 @@ You can follow the `start-dev` with an optional string: "`loggedin`". If you add
 ## Packaging App
 ```
 $ npm i electron-packager -g
-$ electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icons/mac/ara.icns --prune=true --out=release-builds --app-bundle-id=“com.littlstar.araContentManager”
+$ electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icons/mac/ara.icns --prune=true --out=release-builds --app-bundle-id=“com.littlstar.araFileManager”
 ```
 
 This will write a mac compatible compiled application to a folder in your project root called `release-builds`

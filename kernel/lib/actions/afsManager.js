@@ -108,10 +108,9 @@ async function getUpdateAvailableStatus(item) {
   return { ...item, status: updateAvailable && item.downloadPercent === 1 ? k.UPDATE_AVAILABLE : item.status }
 }
 
-
 async function surfaceAFS({ dids, DCDNStore, published = false }) {
 	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
-		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
+		shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
 		owner: published
 	})))
 }
