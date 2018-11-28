@@ -2,7 +2,7 @@
 
 const Button = require('../../components/button')
 const deeplink = require('../../lib/tools/deeplink')
-const { emit } = require('../../lib/tools/windowManagement')
+const { fileSystemManager, windowManagement } = require('../../lib/tools')
 const FileInfo = require('./fileInfo')
 const overlay = require('../../components/overlay')
 const { UPDATE_FILE } = require('../../../lib/constants/stateManagement')
@@ -57,6 +57,7 @@ class Container extends Nanocomponent {
 			// 	}
 			// }),
 			fileInfo: new FileInfo({
+				addItems: this.addItems.bind(this),
 				did,
 				parentState: this.state,
 				renderView: this.renderView.bind(this)
@@ -70,6 +71,12 @@ class Container extends Nanocomponent {
 		}
 		this.getPathDiff = this.getPathDiff.bind(this)
 		this.fileInfoChanged = this.fileInfoChanged.bind(this)
+	}
+
+	addItems(items) {
+		const itemsInfo = items.map(fileSystemManager.getFileInfo)
+		this.state.fileList.push(...itemsInfo)
+		this.rerender()
 	}
 
 	fileInfoChanged() {
@@ -121,7 +128,7 @@ class Container extends Nanocomponent {
 			userAid: account.userAid
 		}
 		if (this.fileInfoChanged()) {
-			emit({ event: UPDATE_FILE, load })
+			windowManagement.emit({ event: UPDATE_FILE, load })
 		}
 	}
 
