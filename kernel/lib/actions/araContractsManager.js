@@ -8,7 +8,6 @@ const k = require('../../../lib/constants/stateManagement')
 const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
 const windowManager = require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
 const createContext = require('ara-context')
 const {
 	web3: {
@@ -188,13 +187,15 @@ async function sendAra(opts) {
 		amount,
 		completeHandler,
 		errorHandler,
+		password,
+		userDID,
 		walletAddress,
 	} = opts
 
 	try {
 		await araContracts.token.transfer({
-			did: store.account.userAid,
-			password: store.account.password,
+			did: userDID,
+			password,
 			val: amount,
 			to: walletAddress
 		})
@@ -227,14 +228,14 @@ async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 	return { ctx, rewardsSubscription }
 }
 
-async function subscribeTransfer(userAddress) {
+async function subscribeTransfer(userAddress, userDID) {
 	const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
 
 	let transferSubscription
 	try {
 		transferSubscription = contract.events.Transfer({ filter: { to: userAddress } })
 			.on('data', async () => {
-				const newBalance = await getAraBalance(store.account.userAid)
+				const newBalance = await getAraBalance(userDID)
 				windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
 			})
 			.on('error', debug)
