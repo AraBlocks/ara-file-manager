@@ -105,7 +105,10 @@ async function getUpdateAvailableStatus(item) {
   } catch (err) {
     debug('Error getting update available status')
   }
-  return { ...item, status: updateAvailable && item.downloadPercent === 1 ? k.UPDATE_AVAILABLE : item.status }
+  return {
+    ...item,
+    status: updateAvailable && item.downloadPercent === 1 ? k.UPDATE_AVAILABLE : item.status
+  }
 }
 
 async function surfaceAFS({ dids, DCDNStore, published = false }) {
