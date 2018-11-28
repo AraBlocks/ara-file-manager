@@ -19,7 +19,8 @@ ipcMain.on(k.OPEN_AFS, async (event, load) => {
   try {
     debug('%s heard', k.OPEN_AFS)
     const { farmer, files } = store
-    const file = files.purchased.find(file => file.did === load.did)
+    const allFiles = files.published.concat(files.purchased)
+    const file = allFiles.find(file => file.did === load.did)
     const updateAvailable = file.status === k.UPDATE_AVAILABLE ? true : false
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] }})
