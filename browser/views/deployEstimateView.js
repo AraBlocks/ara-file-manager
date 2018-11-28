@@ -13,13 +13,14 @@ class DeployEstimate extends Nanocomponent {
 	constructor() {
 		super()
 		this.props = {
-			gasEstimate: null
+			gasEstimate: null,
+			did: null
 		}
 		this.children = {
 			publishButton: new Button({
 				children: 'Confirm',
 				onclick: () => {
-					emit({ event: k.CONFIRM_DEPLOY_PROXY, load: { ...load } }),
+					emit({ event: k.CONFIRM_DEPLOY_PROXY, load: { did: this.props.did } }),
 					closeModal()
 				}
 			}),
@@ -33,7 +34,10 @@ class DeployEstimate extends Nanocomponent {
 		this.renderEstimate = this.renderEstimate.bind(this)
 	}
 
-	update({ estimate }){
+	update({ did }){
+		const { props } = this
+		props.did = did
+		console.log(did)
 		return true
 	}
 

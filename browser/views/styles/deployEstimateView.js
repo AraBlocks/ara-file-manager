@@ -17,8 +17,8 @@ module.exports = {
     :host {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       height: 75px;
+      justify-content: space-between;
       width: 90%;
     }
   `,
@@ -30,18 +30,18 @@ module.exports = {
       flex-direction: column;
       justify-content: space-around;
       height: 216px;
+      padding-top: 2.5%;
       text-align: center;
       width: 100%;
-      padding-top: 2.5%;
     }
   `,
 
   estimateHolder: css`
     :host {
-      padding: 10px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding: 10px;
     }
   `,
 
@@ -54,9 +54,9 @@ module.exports = {
 
   postheader: css`
     :host {
-      height: 14px;
       font-family: ${fonts.bold};
       font-size: 14px;
+      height: 14px;
     }
   `,
 
