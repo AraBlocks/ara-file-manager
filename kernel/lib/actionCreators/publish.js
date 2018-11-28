@@ -24,10 +24,11 @@ ipcMain.on(k.DEPLOY_PROXY, async (event, load) => {
     // dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     // windowManager.openModal('generalPleaseWaitModal')
 
-    let { afs: newAFS, afs: { did } } = await afs.create({ owner: store.account.userAid, password })
-    await newAFS.close();
+    // let { afs: newAFS, afs: { did } } = await afs.create({ owner: store.account.userAid, password })
+    // await newAFS.close();
+    windowManager.openWindow('deployEstimateView')
 
-    //let { afs: newAFS, afs: { did } } = await afs.create({ did: 'b92133bbcb3cb813f177c7e718dd627d29bd658e03f5e64865b90918ea254d9f', password })
+    let { afs: newAFS, afs: { did } } = await afs.create({ did: 'b92133bbcb3cb813f177c7e718dd627d29bd658e03f5e64865b90918ea254d9f', password })
 
     debug('Estimating deploy proxy cost')
     const deployCost = await afs.deploy({ password, did, estimate: true })
@@ -37,14 +38,7 @@ ipcMain.on(k.DEPLOY_PROXY, async (event, load) => {
     }
 
     debug('Deploy Gas estimate: %s', deployCost)
-    debug('Dispatching %s', k.FEED_MODAL)
-    dispatch({ type: k.FEED_MODAL, load: {
-        did,
-        gasEstimate: deployCost
-      }
-    })
-    //windowManager.closeModal('generalPleaseWaitModal')
-    windowManager.openModal('deployConfirmModal')
+    windowManager.pingView({ view: 'deployEstimateView', event: k.REFRESH, load: deployCost })
   } catch (err) {
     debug('Error publishing file %o:', err)
     windowManager.closeModal('generalPleaseWaitModal')
