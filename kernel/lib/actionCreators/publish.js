@@ -20,15 +20,10 @@ ipcMain.on(k.DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.DEPLOY_PROXY)
   const { password } = store.account
   try {
-    // let dispatchLoad = { load: { fileName: load.name } }
-    // dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-    // windowManager.openModal('generalPleaseWaitModal')
-
-    // let { afs: newAFS, afs: { did } } = await afs.create({ owner: store.account.userAid, password })
-    // await newAFS.close();
     windowManager.openWindow('deployEstimateView')
 
-    let { afs: newAFS, afs: { did } } = await afs.create({ did: 'b92133bbcb3cb813f177c7e718dd627d29bd658e03f5e64865b90918ea254d9f', password })
+    let { afs: newAFS, afs: { did } } = await afs.create({ owner: store.account.userAid, password })
+    await newAFS.close();
 
     debug('Estimating deploy proxy cost')
     const deployCost = await afs.deploy({ password, did, estimate: true })
@@ -36,17 +31,24 @@ ipcMain.on(k.DEPLOY_PROXY, async (event, load) => {
     if (ethAmount < deployCost) {
       throw new Error('Not enouth eth')
     }
-
     debug('Deploy Gas estimate: %s', deployCost)
-    windowManager.pingView({ view: 'deployEstimateView', event: k.REFRESH, load: deployCost })
+    windowManager.pingView({ view: 'deployEstimateView', event: k.REFRESH, load: { estimate: deployCost, did }})
   } catch (err) {
-    debug('Error publishing file %o:', err)
-    windowManager.closeModal('generalPleaseWaitModal')
-    err === 'Not enough eth'
-      ? dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
-      : dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
-    windowManager.openModal('generalMessageModal')
+    debug('Error getting estimate for deploying proxy %o:', err)
+    errorHandling(err)
     return
+  }
+})
+
+ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
+  debug('%s heard', k.CONFIRM_DEPLOY_PROXY, load)
+  const { password } = store.account
+  try {
+    await afs.deploy({ password, did: load.did })
+    debug('Proxy Deployed')
+  } catch(err) {
+    debug('Error deploying proxy %o:', err)
+    errorHandling(err)
   }
 })
 
@@ -169,3 +171,10 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     }, 500)
   }
 })
+
+function errorHandling(err) {
+  err === 'Not enough eth'
+    ? dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
+    : dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
+  windowManager.openModal('generalMessageModal')
+}
