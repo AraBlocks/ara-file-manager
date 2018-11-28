@@ -3,13 +3,14 @@
 const AfsFileTable = require('../../components/afsFileTable/afsFileTable')
 const Button = require('../../components/button')
 const { emit } = require('../../lib/tools/windowManagement')
-const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
+const { EXPORT_FILE, CLOSE_AFS_EXPLORER } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
+const windowManagement = require('../../lib/tools/windowManagement')
 
 class Container extends Nanocomponent {
 	constructor({
@@ -41,7 +42,13 @@ class Container extends Nanocomponent {
 				cssClass: { name: 'thinBorder' },
 				onclick: this.exportAll.bind(this)
 			}),
-			utilityButton: new UtilityButton({})
+			utilityButton: new UtilityButton({ onclick: () => {
+				emit({
+					event: CLOSE_AFS_EXPLORER,
+					load: { did }
+				})
+				windowManagement.closeWindow('afsExplorerView')
+			}})
 		}
 	}
 
