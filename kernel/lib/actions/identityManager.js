@@ -3,10 +3,12 @@
 const debug = require('debug')('acm:kernel:lib:actions:register')
 const aid = require('ara-identity')
 const { DID } = require('did-uri')
-const context = require('ara-context')()
+const createContext = require('ara-context')
 
 module.exports = {
   async create(password) {
+    const context = createContext()
+    await context.ready()
     try {
       const araId = await aid.create({ context, password })
       await aid.util.writeIdentity(araId)
@@ -26,6 +28,8 @@ module.exports = {
   },
 
   async recover({ mnemonic, password }) {
+    const context = createContext()
+    await context.ready()
     try {
       const araId = await aid.recover({ context, mnemonic, password})
       await aid.util.writeIdentity(araId)

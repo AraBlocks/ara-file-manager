@@ -9,7 +9,7 @@ const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
-const { web3 } = require('ara-context')()
+const createContext = require('ara-context')
 const {
 	web3: {
 		account: araAccount,
@@ -50,15 +50,21 @@ async function getAraBalance(userDID) {
 }
 
 async function getEtherBalance(account) {
+	const ctx = createContext()
+	await ctx.ready()
+	const { web3 } = ctx
+
+	let balance = 0
 	try {
 		const balanceInWei = await web3.eth.getBalance(account)
-		const balance = web3.utils.fromWei(balanceInWei, 'ether')
+		balance = web3.utils.fromWei(balanceInWei, 'ether')
 		debug('Ether balance is %s', balance)
-		return balance
 	} catch (err) {
 		debug('Error getting eth balance: %o', err)
-		return 0
 	}
+
+	ctx.close()
+	return balance
 }
 
 async function purchaseItem(opts) {
@@ -70,14 +76,12 @@ async function purchaseItem(opts) {
 	} = opts
 	debug('Purchasing item: %s', contentDid)
 	try {
-		const { jobId } = await araContracts.purchase(
-			{
-				budget,
-				contentDid,
-				password,
-				requesterDid,
-			}
-		)
+		const { jobId } = await araContracts.purchase({
+			budget,
+			contentDid,
+			password,
+			requesterDid,
+		})
 		debug('Purchase Completed')
 		return jobId
 	} catch (err) {
@@ -97,36 +101,31 @@ async function getLibraryItems(userDID) {
 
 async function getPublishedEarnings(items) {
 	debug('Getting earnings for published items')
-	const updatedEarnings = items.map(async (item) => {
-		const earnings = await getEarnings(item)
-
-		return { ...item, earnings }
-	})
+	const updatedEarnings = items.map(async (item) => ({ ...item, earnings: await getEarnings(item) }))
 
 	return Promise.all(updatedEarnings)
 }
 
 async function getAFSContract(contentDID) {
-	if (!araContracts.registry.proxyExists(contentDID)) { return false }
+	if (!araContracts.registry.proxyExists(contentDID)) { return {} }
 	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
 	return await contractUtil.get(AFSAbi, proxyAddress)
 }
 
 async function getAllocatedRewards(item, userDID, password) {
-	return {
-		...item,
-		allocatedRewards: Number(await araContracts.rewards.getRewardsBalance({
-			farmerDid: userDID,
-			contentDid: 'did:ara:' + item.did,
-			password
-		}))
-	}
+	const allocatedRewards = Number(await araContracts.rewards.getRewardsBalance({
+		farmerDid: userDID,
+		contentDid: 'did:ara:' + item.did,
+		password
+	}))
+
+	return { ...item, allocatedRewards }
 }
 
 async function getEarnings({ did }) {
-	let earnings = 0
 	const { contract, ctx } = await getAFSContract(did)
 
+	let earnings = 0
 	if (contract) {
 		try {
 			const opts = { fromBlock: 0, toBlock: 'latest' }
@@ -142,10 +141,11 @@ async function getEarnings({ did }) {
 }
 
 async function getRewards(item, userEthAddress) {
-	let totalRewards = 0
 	const { contract, ctx } = await getAFSContract(item.did)
-	try {
-		if (contract) {
+
+	let totalRewards = 0
+	if (contract) {
+		try {
 			const opts = { fromBlock: 0, toBlock: 'latest' }
 			totalRewards = (await contract.getPastEvents('Redeemed', opts))
 				.reduce((sum, { returnValues }) =>
@@ -153,9 +153,9 @@ async function getRewards(item, userEthAddress) {
 						? sum += Number(araContracts.token.constrainTokenValue(returnValues._amount))
 						: sum
 					, 0)
+		} catch (err) {
+			debug('Error getting rewards for %s : %o', item.did, err)
 		}
-	} catch (err) {
-		debug('Error getting rewards for %s : %o', item.did, err)
 	}
 
 	ctx.close()
@@ -163,8 +163,9 @@ async function getRewards(item, userEthAddress) {
 }
 
 async function subscribePublished({ did }) {
-	let subscription
 	const { contract, ctx } = await getAFSContract(did)
+
+	let subscription
 	if (contract) {
 		try {
 			subscription = contract.events.Purchased()
@@ -179,16 +180,17 @@ async function subscribePublished({ did }) {
 		}
 	}
 
-	ctx.close()
-	return subscription
+	return { ctx, subscription }
 }
 
-async function sendAra({
-	amount,
-	completeHandler,
-	errorHandler,
-	walletAddress,
-}) {
+async function sendAra(opts) {
+	const {
+		amount,
+		completeHandler,
+		errorHandler,
+		walletAddress,
+	} = opts
+
 	try {
 		await araContracts.token.transfer({
 			did: store.account.userAid,
@@ -222,8 +224,7 @@ async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 		}
 	}
 
-	ctx.close()
-	return rewardsSubscription
+	return { ctx, rewardsSubscription }
 }
 
 async function subscribeTransfer(userAddress) {
@@ -241,7 +242,7 @@ async function subscribeTransfer(userAddress) {
 		debug('Error %o', err)
 	}
 
-	return transferSubscription
+	return { ctx, transferSubscription }
 }
 
 module.exports = {
