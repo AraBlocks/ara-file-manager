@@ -33,7 +33,7 @@
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.7.x",
     "ara-identity": "github:arablocks/ara-identity#semver:0.30.x",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
-    "ara-util": "github:arablocks/ara-util#ej_context",
+    "ara-util": "github:arablocks/ara-util#semver:0.8.x",
     "choo": "^6.13.0",
     "css": "file:browser/lib/cssTool",
     "did-uri": "^0.2.6",
