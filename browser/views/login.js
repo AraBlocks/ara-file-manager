@@ -1,5 +1,6 @@
 'use strict'
 
+const afmManager = require('../../kernel/lib/actions/afmManager')
 const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
@@ -14,7 +15,7 @@ class Login extends Nanocomponent {
 
     this.state = {
       password: '',
-      userDID: ''
+      userDID: afmManager.getCachedUserDid() 
     }
 
     this.children = {

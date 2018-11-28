@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  acmManager: require('./acmManager'),
+  afmManager: require('./afmManager'),
   araContractsManager: require('./araContractsManager'),
   utils: require('./utils'),
   afsManager: require('./afsManager'),
