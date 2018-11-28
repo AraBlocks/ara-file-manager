@@ -40,6 +40,7 @@ ipcMain.on(k.SEND_ARA, (event, load) => {
 })
 
 ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
+	const { account } = store
 	try {
 		debug('%s heard', k.CONFIRM_SEND_ARA)
 		let dispatchLoad = { modalName: 'sendingAra', load }
@@ -54,7 +55,9 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 			amount: load.amount,
 			completeHandler: araSent,
 			errorHandler: failedToSend,
-			walletAddress
+			password: account.password,
+			userDID: account.userAid,
+			walletAddress,
 		})
 	} catch(err) {
 		debug('Error sending ara: %o', err)
