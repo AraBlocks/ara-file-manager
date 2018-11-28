@@ -9,9 +9,8 @@ const { clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 class MnemonicWarning extends Nanocomponent {
-  constructor({ mnemonic = null, isAFS = true }) {
+  constructor({ mnemonic = null, isAFS = false }) {
     super()
-    mnemonic = mnemonic ? mnemonic : 'betray tool segment crisp state inherit rural picture initial matter giraffe patrol'
     this.props = { mnemonic, isAFS }
     this.state = { copied: false }
 
