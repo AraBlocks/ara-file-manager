@@ -10,7 +10,6 @@ const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-
 class AfsFileRow extends Nanocomponent {
 	constructor({
 		did,

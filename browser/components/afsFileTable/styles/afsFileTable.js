@@ -25,11 +25,10 @@ module.exports = {
 			display: block;
 			height: 2em;
 			cursor: default;
-			position: relative;
 		}
 
 		:host .item:hover {
-			background-color: var(--ara-grey);
+			background-color: #f0f8ff;
 		}
 
 		:host tbody {

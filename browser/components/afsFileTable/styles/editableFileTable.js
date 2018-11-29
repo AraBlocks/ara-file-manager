@@ -76,7 +76,7 @@ module.exports = {
 		}
 
 		:host .item:hover {
-			background-color: aliceblue;
+			background-color: #f0f8ff;
 		}
 
 		:host tbody {
