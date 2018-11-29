@@ -18,6 +18,15 @@ const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.DEPLOY_PROXY)
+  _deployProxy()
+})
+
+internalEmitter.on(k.DEPLOY_PROXY, async() => {
+  debug('%s heard', k.DEPLOY_PROXY)
+  _deployProxy()
+})
+
+async function _deployProxy() {
   const { password } = store.account
   try {
     windowManager.openWindow('deployEstimateView')
@@ -29,16 +38,17 @@ ipcMain.on(k.DEPLOY_PROXY, async (event, load) => {
     const deployCost = await afs.deploy({ password, did, estimate: true })
     const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
     if (ethAmount < deployCost) {
-      throw new Error('Not enouth eth')
+      throw new Error('Not enough eth')
     }
     debug('Deploy Gas estimate: %s', deployCost)
     windowManager.pingView({ view: 'deployEstimateView', event: k.REFRESH, load: { estimate: deployCost, did }})
   } catch (err) {
     debug('Error getting estimate for deploying proxy %o:', err)
+    windowManager.closeWindow('deployEstimateView')
     errorHandling(err)
     return
   }
-})
+}
 
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY, load)
@@ -87,7 +97,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
     if (ethAmount < (deployCost + gasEstimate)) {
-      throw new Error('Not enouth eth')
+      throw new Error('Not enough eth')
     }
 
     debug('Gas estimate: %s', gasEstimate)

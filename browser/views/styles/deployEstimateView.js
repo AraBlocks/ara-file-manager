@@ -77,8 +77,8 @@ module.exports = {
   spinnerHolder: css`
     :host {
       display: flex;
-      justify-content: center;
       font-size: 3px;
+      justify-content: center;
     }
   `,
 
