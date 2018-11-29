@@ -170,7 +170,7 @@ class EditableFileTable extends Nanocomponent {
 
 		const fileRows = this.makeFileRows()
 		const tableHeight = this.props.tableType === k.UPDATE_FILE ? 210 : 285
-		const containerHeight = this.props.tableType === k.UPDATE_FILE ? 265 : 325
+		const containerHeight = this.props.tableType === k.UPDATE_FILE ? 265 : 340
 
 		return html`
 			<div
