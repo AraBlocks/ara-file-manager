@@ -18,18 +18,21 @@ function getAFMDirectory() {
 	return afmDirectory
 }
 
+function getUserData(userDID) {
+	const filePath = getAFMPath(userDID)
+	return parseJSON(filePath)
+}
+
 function getPublishedItems(userDID) {
-	const fileDirectory = getAFMPath(userDID)
-	const userData = parseJSON(fileDirectory)
+	const userData = getUserData(userDID)
 	return userData.published ? userData.published : []
 }
 
 function removedPublishedItem(contentDID, userDID) {
 	try {
-		const afmFilePath = getAFMPath(userDID)
-		const userData = parseJSON(afmFilePath)
+		const userData = getUserData(userDID)
 		userData.published = userData.published.filter(did => did !== contentDID)
-		fs.writeFileSync(afmFilePath, JSON.stringify(userData))
+		saveUserData({ userDID, userData })
 	} catch(err) {
 		debug('Error removing published item %o', err)
 	}
@@ -65,15 +68,24 @@ function parseJSON(path) {
 function savePublishedItem(contentDID, userDID) {
 	try {
 		debug('Saving published item %s', contentDID)
-		const fileDirectory = getAFMPath(userDID)
-		const data = parseJSON(fileDirectory)
-		data.published == null
-			? data.published = [contentDID]
-			: data.published.push(contentDID)
-		fs.writeFileSync(fileDirectory, JSON.stringify(data))
+		const userData = getUserData(userDID)
+		userData.published == null
+			? userData.published = [contentDID]
+			: userData.published.push(contentDID)
+		saveUserData({ userDID, userData })
 		return
 	} catch (err) {
 		debug('Error saving published item: %o', err)
+	}
+}
+
+function saveUserData( { userDID, userData }) {
+	try {
+		debug('Saving User Data in .afm')
+		const fileDirectory = getAFMPath(userDID)
+		fs.writeFileSync(fileDirectory, JSON.stringify(userData))
+	} catch(err) {
+		debug('Error saving user data: %o', err)
 	}
 }
 
@@ -82,6 +94,8 @@ module.exports = {
 	getAFMPath,
 	getCachedUserDid,
 	getPublishedItems,
+	getUserData,
 	savePublishedItem,
+	saveUserData,
 	removedPublishedItem
 }
