@@ -84,7 +84,6 @@ windowManager.setSize = (view) => {
       width = 650
       height = 730
       break
-    case 'deployConfirmModal':
     case 'deployEstimateView':
     case 'publishConfirmModal':
       width = 360

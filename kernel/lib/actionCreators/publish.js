@@ -16,17 +16,12 @@ const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(k.DEPLOY_PROXY, async (event, load) => {
-  debug('%s heard', k.DEPLOY_PROXY)
-  _deployProxy()
-})
+ipcMain.on(k.DEPLOY_PROXY, _deployProxy)
 
-internalEmitter.on(k.DEPLOY_PROXY, async() => {
-  debug('%s heard', k.DEPLOY_PROXY)
-  _deployProxy()
-})
+internalEmitter.on(k.DEPLOY_PROXY, _deployProxy)
 
 async function _deployProxy() {
+  debug('%s heard', k.DEPLOY_PROXY)
   const { password } = store.account
   try {
     windowManager.openWindow('deployEstimateView')
