@@ -94,7 +94,7 @@ async function login(_, load) {
 
     switchLoginState(true)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
-    const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
+    const purchasedDIDs = (await araContractsManager.getLibraryItems(load.userAid)).map(did => did.slice(-64))
     const purchased = await afsManager.surfaceAFS({
       dids: purchasedDIDs,
       userDID: load.userAid,
