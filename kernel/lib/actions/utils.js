@@ -1,13 +1,14 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:util')
+const k = require('../../../lib/constants/stateManagement')
 const afs = require('ara-filesystem')
 const araContractsManager = require('./araContractsManager')
-const k = require('../../../lib/constants/stateManagement')
+const araUtil = require('ara-util')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
-const { web3 } = require('ara-context')()
+const createContext = require('ara-context')
 
 async function descriptorGenerator(did, opts = {}) {
 	try {
@@ -17,14 +18,14 @@ async function descriptorGenerator(did, opts = {}) {
 		const meta = AFSExists ? await readFileMetadata(did) : null
 		let price
 		try { price = Number(await araContractsManager.getAFSPrice({ did })) }
-		catch (err) {}
+		catch (err) { }
 		const descriptor = {
 			allocatedRewards: 0,
 			did,
 			downloadPercent: AFSExists ? 1 : 0,
 			datePublished: meta ? meta.timestamp : null,
 			earnings: 0,
-			name: meta ? meta.title : 'Unnamed File',
+			name: meta ? meta.title : araUtil.getIdentifier(did).slice(0, 20),
 			owner: false,
 			peers: 0,
 			price,
@@ -41,7 +42,14 @@ async function descriptorGenerator(did, opts = {}) {
 }
 
 async function getNetwork() {
-	return await web3.eth.net.getNetworkType()
+	const ctx = createContext()
+	await ctx.ready()
+	const { web3 } = ctx
+
+	const networkType =  await web3.eth.net.getNetworkType()
+
+	ctx.close()
+	return networkType
 }
 
 function makeAfsPath(did) {
