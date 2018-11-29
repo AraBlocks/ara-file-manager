@@ -21,9 +21,10 @@ module.exports = (state, { load = null, type }) => {
       state.data.freezeData = true
       break
     case k.PROXY_DEPLOYED:
-      console.log(load)
+      state.publishFileData.contentDID = load.contentDID
       state.data.mnemonic = load.mnemonic
       state.data.userDID = load.userAid
+      state.data.isAFS = load.isAFS
       state.data.freezeData = true
       break
     default:
