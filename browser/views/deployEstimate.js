@@ -4,7 +4,7 @@ const Button = require('../components/button')
 const { closeModal, closeWindow, emit } = require('../lib/tools/windowManagement')
 const k = require('../../lib/constants/stateManagement')
 const { utils } = require('../lib/tools')
-const styles = require('./styles/deployEstimateView')
+const styles = require('./styles/deployEstimate')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -28,7 +28,7 @@ class DeployEstimate extends Nanocomponent {
 			cancelbutton: new Button({
 				...styles.buttonSelector('cancel'),
 				onclick: () => {
-					closeWindow('deployEstimateView')
+					closeWindow('deployEstimate')
 				}
 			})
 		}
@@ -42,30 +42,28 @@ class DeployEstimate extends Nanocomponent {
 	}
 
 	renderEstimate(estimate) {
-		let estimateText = html``
-		estimate
-			? estimateText = html `
-				<span class="${styles.postheader} deployEstimateView-postheader">
+		return estimate
+			? html `
+				<span class="${styles.postheader} deployEstimate-postheader">
 					${utils.roundDecimal(estimate, 1000)} eth
 				</span>`
-			: estimateText = html `
-				<div class="${styles.spinnerHolder} deployEstimateView-spinnerHolder">
+			: html `
+				<div class="${styles.spinnerHolder} deployEstimate-spinnerHolder">
 					<div class="spinner-small-red ${styles.spinnerHolder}"></div>
 				</div>
 			`
-		return estimateText
 	}
 
 	createElement({ estimate = null }) {
 		const { children, renderEstimate } = this
 		return html`
-		<div class="${styles.container} deployEstimateView-container">
+		<div class="${styles.container} deployEstimate-container">
       <div>
-        <div class="${styles.messageBold} ${styles.bottomMargin} deployEstimateView-messageBold/bottomMargin">
+        <div class="${styles.messageBold} ${styles.bottomMargin} deployEstimate-messageBold/bottomMargin">
           Start Publishing?
         </div>
-        <div class="${styles.verticalContainer} deployEstimateView-verticalContainer">
-          <div class="${styles.smallMessage({})} deployEstimateView-smallMessage">
+        <div class="${styles.verticalContainer} deployEstimate-verticalContainer">
+          <div class="${styles.smallMessage({})} deployEstimate-smallMessage">
 						In order to start the publishing process,<br>
 						the File Manager needs to prepare the network.<br><br>
             This will cost:
@@ -75,7 +73,7 @@ class DeployEstimate extends Nanocomponent {
 					</div>
 				</div>
 			</div>
-			<div class="${styles.buttonHolder} deployEstimateView-buttonHolder">
+			<div class="${styles.buttonHolder} deployEstimate-buttonHolder">
       	${children.publishButton.render({ cssClass:
 					estimate
 						? { opts: { color: 'teal' } }

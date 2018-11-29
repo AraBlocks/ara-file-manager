@@ -24,7 +24,7 @@ async function _deployProxy() {
   debug('%s heard', k.DEPLOY_PROXY)
   const { password } = store.account
   try {
-    windowManager.openWindow('deployEstimateView')
+    windowManager.openWindow('deployEstimate')
 
     let { afs: newAFS, afs: { did } } = await afs.create({ owner: store.account.userAid, password })
     await newAFS.close();
@@ -36,10 +36,10 @@ async function _deployProxy() {
       throw new Error('Not enough eth')
     }
     debug('Deploy Gas estimate: %s', deployCost)
-    windowManager.pingView({ view: 'deployEstimateView', event: k.REFRESH, load: { estimate: deployCost, did }})
+    windowManager.pingView({ view: 'deployEstimate', event: k.REFRESH, load: { estimate: deployCost, did }})
   } catch (err) {
     debug('Error getting estimate for deploying proxy %o:', err)
-    windowManager.closeWindow('deployEstimateView')
+    windowManager.closeWindow('deployEstimate')
     errorHandling(err)
     return
   }
@@ -178,7 +178,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
 })
 
 function errorHandling(err) {
-  err === 'Not enough eth'
+  err.message === 'Not enough eth'
     ? dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
     : dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
   windowManager.openModal('generalMessageModal')
