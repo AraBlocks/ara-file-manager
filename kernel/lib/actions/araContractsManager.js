@@ -28,12 +28,15 @@ async function getAccountAddress(owner, password) {
 }
 
 async function getAFSPrice({ did }) {
+	let result = 0
 	try {
-		const result = await araFilesystem.getPrice({ did })
-		return result
+		result = await araFilesystem.getPrice({ did })
 	} catch (err) {
 		debug('Error getting price: %o', err)
+		result
 	}
+
+	return result
 }
 
 async function getAraBalance(userDID) {
