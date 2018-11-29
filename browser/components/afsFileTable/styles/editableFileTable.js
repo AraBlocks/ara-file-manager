@@ -11,9 +11,7 @@ module.exports = {
 		:host {
 			background-color: white;
 			bottom: 0;
-
 			padding: 5px 0 0 20px;
-			position: absolute;
 			width: 100%;
 		}
 	`,
@@ -30,7 +28,6 @@ module.exports = {
 	container: css`
 		:host {
 			overflow: scroll;
-			position: relative;
 			width: 100%;
 		}
 	`,
@@ -79,7 +76,7 @@ module.exports = {
 		}
 
 		:host .item:hover {
-			background-color: var(--ara-grey);
+			background-color: aliceblue;
 		}
 
 		:host tbody {

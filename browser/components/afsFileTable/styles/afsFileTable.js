@@ -25,6 +25,7 @@ module.exports = {
 			display: block;
 			height: 2em;
 			cursor: default;
+			position: relative;
 		}
 
 		:host .item:hover {

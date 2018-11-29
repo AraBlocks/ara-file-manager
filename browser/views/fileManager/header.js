@@ -92,14 +92,14 @@ class Header extends Nanocomponent {
             <div
               data-tooltip="Copy to Clipboard"
               class="${styles.didHolder} header-didHolder"
-              onclick=${({ target }) => {
-        target.parentElement.dataset.tooltip = 'Copied!'
-        target.parentElement.dispatchEvent(eventMouseEnter)
-        target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
-        clipboard.writeText(props.userDID)
-      }}
-              onmouseenter=${({ target }) => target.style.backgroundColor = '#d0d0d0'}
-              onmouseleave=${({ target }) => target.style.backgroundColor = ''}
+              onclick="${({ target }) => {
+                target.parentElement.dataset.tooltip = 'Copied!'
+                target.parentElement.dispatchEvent(eventMouseEnter)
+                target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
+                clipboard.writeText(props.userDID)
+              }}"
+              onmouseenter="${({ target }) => target.style.backgroundColor = '#d0d0d0'}"
+              onmouseleave="${({ target }) => target.style.backgroundColor = ''}"
             >
               <b>ID: ${araUtil.getIdentifier(props.userDID).slice(0,6)}...</b>
             </div>
