@@ -18,11 +18,11 @@ const buildTray = () => {
 
   const menuItems = [
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
-    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(DEPLOY_PROXY, null) },
+    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(DEPLOY_PROXY) },
     { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
     { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'Login', type: 'normal', click: () => openWindow('login') },
-    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(LOGOUT, null) },
+    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(LOGOUT) },
     { label: 'Quit', type: 'normal', role: 'quit' }
   ]
 

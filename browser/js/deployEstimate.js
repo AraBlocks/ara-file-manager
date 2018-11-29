@@ -1,6 +1,6 @@
 'use strict'
 
-const DeployEstimate = require('../views/deployEstimateView')
+const DeployEstimate = require('../views/deployEstimate')
 const { ipcRenderer } = require('electron')
 const { REFRESH } = require('../../lib/constants/stateManagement')
 
