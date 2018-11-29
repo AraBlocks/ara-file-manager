@@ -7,7 +7,7 @@ const path = require('path')
 const windowManager = require('electron-window-manager')
 const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
 const { internalEmitter } = require('electron-window-manager')
-const { CLEAN_UI, LOGOUT } = require('../lib/constants/stateManagement')
+const { CLEAN_UI, DEPLOY_PROXY, LOGOUT } = require('../lib/constants/stateManagement')
 
 let tray
 let contextMenu
@@ -18,7 +18,7 @@ const buildTray = () => {
 
   const menuItems = [
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
-    { label: 'Publish File', type: 'normal', visible: false, click: () => openWindow('publishFileView') },
+    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(DEPLOY_PROXY, null) },
     { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
     { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'Login', type: 'normal', click: () => openWindow('login') },

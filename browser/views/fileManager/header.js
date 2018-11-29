@@ -3,6 +3,7 @@
 
 const Button = require('../../components/button')
 const { clipboard } = require('electron')
+const { DEPLOY_PROXY } = require('../../../lib/constants/stateManagement')
 const { emit } = require('../../lib/tools/windowManagement')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
@@ -13,7 +14,6 @@ const html = require('choo/html')
 const araUtil = require('ara-util')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
-const { DEPLOY_PROXY } = require('../../../lib/constants/stateManagement')
 
 tt({
   position: 'top',
