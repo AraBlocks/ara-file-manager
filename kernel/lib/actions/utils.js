@@ -12,29 +12,28 @@ const createContext = require('ara-context')
 
 async function descriptorGenerator(did, opts = {}) {
 	try {
-		did = did.slice(-64)
-		const path = await makeAfsPath(did)
-		const AFSExists = fs.existsSync(path)
+		did = araUtil.getIdentifier(did)
+		const AFSPath = await makeAfsPath(did)
+		const AFSExists = fs.existsSync(AFSPath)
 		const meta = AFSExists ? await readFileMetadata(did) : null
-		let price
-		try { price = Number(await araContractsManager.getAFSPrice({ did })) }
-		catch (err) { }
+
 		const descriptor = {
 			allocatedRewards: 0,
 			did,
 			downloadPercent: AFSExists ? 1 : 0,
 			datePublished: meta ? meta.timestamp : null,
 			earnings: 0,
-			name: meta ? meta.title : araUtil.getIdentifier(did).slice(0, 20),
+			name: meta ? meta.title : did.slice(0, 15) + '...',
 			owner: false,
+			path: AFSPath,
 			peers: 0,
-			price,
-			path,
+			price: Number(await araContractsManager.getAFSPrice({ did })),
 			redeeming: false,
 			shouldBroadcast: false,
 			size: meta ? meta.size : 0,
 			status: AFSExists ? k.DOWNLOADED_PUBLISHED : k.AWAITING_DOWNLOAD
 		}
+
 		return { ...descriptor, ...opts }
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
@@ -58,6 +57,7 @@ function makeAfsPath(did) {
 
 async function readFileMetadata(did) {
 	try {
+		console.log('ara:did:' + did)
 		const data = await afs.metadata.readFile({ did })
 		return JSON.parse(data.fileInfo)
 	} catch (err) {
