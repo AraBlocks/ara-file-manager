@@ -20,6 +20,12 @@ module.exports = (state, { load = null, type }) => {
       state.data.userDID = load.userAid
       state.data.freezeData = true
       break
+    case k.PROXY_DEPLOYED:
+      console.log(load)
+      state.data.mnemonic = load.mnemonic
+      state.data.userDID = load.userAid
+      state.data.freezeData = true
+      break
     default:
       return state
   }

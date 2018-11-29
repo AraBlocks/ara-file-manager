@@ -26,17 +26,15 @@ async function _deployProxy() {
   try {
     windowManager.openWindow('deployEstimate')
 
-    let { afs: newAFS, afs: { did } } = await afs.create({ owner: store.account.userAid, password })
-    await newAFS.close();
-
+    const deployEstimateDid = store.account.deployEstimateDid
     debug('Estimating deploy proxy cost')
-    const deployCost = await afs.deploy({ password, did, estimate: true })
+    const deployCost = await afs.deploy({ password, did: deployEstimateDid, estimate: true })
     const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
     if (ethAmount < deployCost) {
       throw new Error('Not enough eth')
     }
     debug('Deploy Gas estimate: %s', deployCost)
-    windowManager.pingView({ view: 'deployEstimate', event: k.REFRESH, load: { estimate: deployCost, did }})
+    windowManager.pingView({ view: 'deployEstimate', event: k.REFRESH, load: { estimate: deployCost }})
   } catch (err) {
     debug('Error getting estimate for deploying proxy %o:', err)
     windowManager.closeWindow('deployEstimate')
@@ -47,10 +45,24 @@ async function _deployProxy() {
 
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY, load)
-  const { password } = store.account
+  const { userAid, password } = store.account
   try {
-    await afs.deploy({ password, did: load.did })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'pleaseWait' } })
+    windowManager.openModal('generalPleaseWaitModal')
+    let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userAid, password })
+    await newAfs.close();
+    await afs.deploy({ password, did })
     debug('Proxy Deployed')
+    windowManager.closeWindow('generalPleaseWaitModal')
+    dispatch({
+      type: k.PROXY_DEPLOYED,
+      load: {
+        mnemonic,
+        userAid,
+        isAFS: true
+      }
+    })
+    windowManager.openModal('mnemonicWarning')
   } catch(err) {
     debug('Error deploying proxy %o:', err)
     errorHandling(err)
