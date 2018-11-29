@@ -1,8 +1,8 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:utils')
-const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
+const dispatch = require('../reducers/dispatch')
 const { afsManager, farmerManager } = require('../actions')
 const { ipcMain, app } = require('electron')
 const windowManager = require('electron-window-manager')
@@ -23,12 +23,12 @@ ipcMain.on(k.OPEN_AFS, async (event, load) => {
     const file = allFiles.find(file => file.did === load.did)
     const updateAvailable = file.status === k.UPDATE_AVAILABLE ? true : false
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
-    dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] }})
+    dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] } })
     windowManager.openWindow('afsExplorerView')
     const fileList = await afsManager.getFileList(load.did)
-    dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable }})
+    dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable } })
     windowManager.pingView({ view: 'afsExplorerView', event: k.REFRESH })
-  } catch(err) {
+  } catch (err) {
     debug("Error: %o", err)
   }
 })
@@ -41,7 +41,7 @@ ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
     if (file.shouldBroadcast) {
       farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
     }
-  } catch(err) {
+  } catch (err) {
     debug("Error: %o", err)
   }
 })

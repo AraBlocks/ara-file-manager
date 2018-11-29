@@ -1,5 +1,6 @@
 'use strict'
 
+const k = require('../../lib/constants/stateManagement')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
 const TestnetBanner = require('../components/TestnetBanner')
@@ -39,8 +40,9 @@ class AccountInfo extends Nanocomponent {
             color: 'green',
             fontSize: '14',
             height: '3'
-          }
+          },
         },
+        onclick: () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
       }),
       sendTokensButton: new Button({
         children: 'Send Tokens',
