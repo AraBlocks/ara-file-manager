@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:register')
 const k = require('../../../lib/constants/stateManagement')
 const araContractsManager = require('../actions/araContractsManager')
 const dispatch = require('../reducers/dispatch')
-const { identityManager } = require('../actions')
+const { identityManager, afmManager } = require('../actions')
 const { switchLoginState } = require('../../../boot/tray')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
@@ -19,7 +19,9 @@ ipcMain.on(k.REGISTER, async (event, password) => {
 
     const { did: { did }, mnemonic } = identity
     const accountAddress = await araContractsManager.getAccountAddress(did, password)
-    debug('Dispatching %s', k.LOGIN)
+
+    afmManager.cacheUserDid(did)
+    debug('Dispatching %s', k.REGISTERED)
     dispatch({
       type: k.REGISTERED,
       load: {
