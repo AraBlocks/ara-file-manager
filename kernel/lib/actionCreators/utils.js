@@ -7,7 +7,6 @@ const { afsManager, farmerManager } = require('../actions')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
-const { switchPendingTransactionState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.CLEAN_UI, () => {
@@ -19,14 +18,29 @@ internalEmitter.on(k.CLEAN_UI, () => {
 ipcMain.on(k.OPEN_AFS, async (event, load) => {
   try {
     debug('%s heard', k.OPEN_AFS)
-    const { farmer } = store
-    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
+    const { farmer, files } = store
+    const allFiles = files.published.concat(files.purchased)
+    const file = allFiles.find(file => file.did === load.did)
+    const updateAvailable = file.status === k.UPDATE_AVAILABLE ? true : false
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] }})
     windowManager.openWindow('afsExplorerView')
     const fileList = await afsManager.getFileList(load.did)
-    dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList }})
+    dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable }})
     windowManager.pingView({ view: 'afsExplorerView', event: k.REFRESH })
+  } catch(err) {
+    debug("Error: %o", err)
+  }
+})
+
+ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
+  try {
+    const { farmer, files } = store
+    const fileList = files.published.concat(files.purchased)
+    const file = fileList.find(file => file.did === load.did)
+    if (file.shouldBroadcast) {
+      farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
+    }
   } catch(err) {
     debug("Error: %o", err)
   }
