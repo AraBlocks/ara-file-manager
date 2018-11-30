@@ -61,8 +61,8 @@ module.exports = {
 		:host th {
 			border: 1px solid var(--ara-grey);
 			height: 30px;
-			padding-left: 20px;
-			padding-right: 5px;
+			padding-left: 12px;
+			padding-right: 12px;
 		}
 
 		:host td {

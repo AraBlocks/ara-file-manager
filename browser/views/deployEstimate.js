@@ -49,7 +49,7 @@ class DeployEstimate extends Nanocomponent {
 				</span>`
 			: html `
 				<div class="${styles.spinnerHolder} deployEstimate-spinnerHolder">
-					<div class="spinner-small-red ${styles.spinnerHolder}"></div>
+					<div class="spinner-small-teal ${styles.spinnerHolder}"></div>
 				</div>
 			`
 	}
@@ -65,7 +65,7 @@ class DeployEstimate extends Nanocomponent {
         <div class="${styles.verticalContainer} deployEstimate-verticalContainer">
           <div class="${styles.smallMessage({})} deployEstimate-smallMessage">
 						In order to start the publishing process,<br>
-						the File Manager needs to prepare the network.<br><br>
+						the File Manager needs to prepare a contract on the network.<br><br>
             This will cost:
 					</div>
 					<div class=${styles.estimateHolder}>
