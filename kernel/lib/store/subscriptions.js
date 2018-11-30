@@ -1,4 +1,5 @@
 module.exports = {
   published: [],
-  rewards: []
+  rewards: [],
+  transfer: null
 }

@@ -14,6 +14,7 @@ module.exports = async (state, { load = null, type }) => {
     case k.REGISTERED:
       state.accountAddress = load.accountAddress
       state.araBalance = load.araBalance
+      state.deployEstimateDid = load.deployEstimateDid
       state.ethBalance = load.ethBalance
       state.password = load.password
       state.userAid = load.userAid

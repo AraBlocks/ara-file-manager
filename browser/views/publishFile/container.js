@@ -13,7 +13,7 @@ const Nanocomponent = require('nanocomponent')
 const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
-	constructor({ account }) {
+	constructor({ account, contentDID }) {
 		super()
 
 		this.state = {
@@ -23,7 +23,7 @@ class Container extends Nanocomponent {
 			price: null,
 		}
 
-		this.props = { account }
+		this.props = { account, contentDID }
 
 		this.children = {
 			fileInfo: new FileInfo({
@@ -53,9 +53,10 @@ class Container extends Nanocomponent {
 
 	publishFile() {
 		const { fileName, fileList, price } = this.state
-		const { account } = this.props
+		const { account, contentDID } = this.props
 		const paths = fileList.map(file => file.fullPath)
 		const load = {
+			contentDID,
 			userAid: account.userAid,
 			password: account.password,
 			paths,

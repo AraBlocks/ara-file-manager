@@ -74,20 +74,20 @@ async function login(_, load) {
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
-    const transferSubscription = await araContractsManager.subscribeTransfer(accountAddress, load.userAid)
 
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
     farmer.start()
 
+    const deployEstimateDid = await afsManager.createDeployEstimateAfs(load.userAid, load.password)
     dispatch({
       type: k.LOGIN,
       load: {
         accountAddress,
         araBalance,
+        deployEstimateDid,
         ethBalance,
         farmer,
         password: load.password,
-        transferSubscription,
         userAid: load.userAid
       }
     })
@@ -128,11 +128,12 @@ async function login(_, load) {
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
+    const transferSub = await araContractsManager.subscribeTransfer(accountAddress, load.userAid)
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
     const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
       .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, load.userAid)))
 
-    dispatch({ type: k.GOT_SUBSCRIPTIONS, load: { publishedSubs, rewardsSubs } })
+    dispatch({ type: k.GOT_SUBSCRIPTIONS, load: { publishedSubs, rewardsSubs, transferSub } })
 
     debug('Login complete')
   } catch (err) {
