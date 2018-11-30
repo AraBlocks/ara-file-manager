@@ -25,8 +25,8 @@ class AccountInfo extends Nanocomponent {
     this.props = {
       awaitingFaucet: account.awaitingFaucet,
       araBalance: account.araBalance,
-      ethBalance: account.ethBalance,
       ethAddress: account.accountAddress,
+      ethBalance: account.ethBalance,
       network: application.network,
       userDID: account.userAid,
       version
@@ -47,12 +47,7 @@ class AccountInfo extends Nanocomponent {
       }),
       sendTokensButton: new Button({
         children: 'Send Tokens',
-        cssClass: {
-          opts: {
-            fontSize: '14',
-            height: '3'
-          }
-        },
+        cssClass: { opts: { fontSize: '14', height: '3' } },
         onclick: () => windowManagement.openWindow('sendAra')
       })
     }
@@ -70,10 +65,9 @@ class AccountInfo extends Nanocomponent {
       eventMouseEnter,
       props
     } = this
-    let text = ''
-    textType === 'did'
-      ? text = props.userDID.slice(-64)
-      : text = props.ethAddress
+    const text = textType === 'did'
+      ? props.userDID.slice(-64)
+      : props.ethAddress
     return html`
       <div
         data-tooltip="Copy to Clipboard"
@@ -93,13 +87,13 @@ class AccountInfo extends Nanocomponent {
   }
 
   update(props = {}) {
-    this.props = { ...this.props, ...props.account }
+    this.props = { ...this.props, ...props.account, awaitingFaucet: true }
     return true
   }
 
   createElement() {
     const { children, props, renderCopyableText } = this
-    console.log(props)
+
     return html`
       <div class="${styles.container} accountInfo-container">
         ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html`<div></div>`}
@@ -141,8 +135,11 @@ class AccountInfo extends Nanocomponent {
               <b>Request test tokens:</b>
               <div>Note: these tokens are for testing purposes only, and will only work on testnet</div>
               ${children.requestTokensButton.render({
-                  cssClass: !props.awaitingFaucet
-                    ? { name: 'thinBorder' }
+                  cssClass: props.awaitingFaucet
+                    ? {
+                      name: 'thinBorder',
+                      opts: { fontSize: '14', height: '3' }
+                     }
                     : {}
                 })}
             </div>

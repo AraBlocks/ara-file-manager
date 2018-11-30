@@ -47,6 +47,7 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
     windowManager.pingView({ view: 'accountInfo', event: k.LISTENING_FOR_FAUCET })
   } catch (err) {
     debug('Err requesting from faucet: %o', err)
+    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
     windowManager.pingView({ view: 'accountInfo', event: k.FAUCET_ERROR })
   }
 })
