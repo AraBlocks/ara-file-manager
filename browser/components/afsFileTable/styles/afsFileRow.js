@@ -9,10 +9,11 @@ module.exports = {
 
 	contextMenu: css`
 		:host {
-			width: 0;
-			height: 0;
+			height: 5px;
 			display: none;
+			background-color: red;
 			position: absolute;
+			width: 5px;
 		}
 
 		:host:before {
@@ -90,7 +91,7 @@ module.exports = {
 	menuItem: css`
 		:host {
 			background-color: white;
-			border: 1px solid var(--ara-grey);
+			border: 1px solid #e9e9e9;
 			cursor: pointer;
 			font-family: ${fonts.light};
 			font-size: 13px;
