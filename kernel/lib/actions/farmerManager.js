@@ -73,50 +73,6 @@ async function download({
 	progressHandler,
 	completeHandler
 }) {
-	debug('Downloading Metadata through DCDN: %s', did)
-	try {
-		await farmer.join({
-			did,
-			download: true,
-			upload: false,
-			metaOnly: true,
-		})
-
-		farmer.once('start', (did, total) => {
-			debug('Start downloading metadata')
-		})
-
-		farmer.once('requestcomplete', async (did) => {
-			debug('Metadata download complete!')
-			await downloadContent({
-				farmer,
-				did,
-				jobId,
-				maxPeers,
-				price: await _calculateBudget(did),
-				errorHandler,
-				startHandler,
-				progressHandler,
-				completeHandler
-			})
-		})
-	} catch (err) {
-		debug('Error downloading metadata: %O', err)
-		errorHandler(did)
-	}
-}
-
-async function downloadContent({
-	farmer,
-	did,
-	jobId,
-	maxPeers = 1,
-	errorHandler,
-	startHandler,
-	price,
-	progressHandler,
-	completeHandler
-}) {
 	debug('Downloading through DCDN: %s', did)
 	try {
 		await farmer.join({
@@ -124,7 +80,6 @@ async function downloadContent({
 			download: true,
 			maxPeers,
 			jobId,
-			price,
 			upload: true,
 		})
 
