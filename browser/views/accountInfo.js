@@ -23,6 +23,7 @@ class AccountInfo extends Nanocomponent {
     const { account, application } = props
 
     this.props = {
+      awaitingFaucet: account.awaitingFaucet,
       araBalance: account.araBalance,
       ethBalance: account.ethBalance,
       ethAddress: account.accountAddress,
@@ -98,6 +99,7 @@ class AccountInfo extends Nanocomponent {
 
   createElement() {
     const { children, props, renderCopyableText } = this
+    console.log(props)
     return html`
       <div class="${styles.container} accountInfo-container">
         ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html`<div></div>`}
@@ -138,7 +140,11 @@ class AccountInfo extends Nanocomponent {
             <div class="request-container">
               <b>Request test tokens:</b>
               <div>Note: these tokens are for testing purposes only, and will only work on testnet</div>
-              ${children.requestTokensButton.render({})}
+              ${children.requestTokensButton.render({
+                  cssClass: !props.awaitingFaucet
+                    ? { name: 'thinBorder' }
+                    : {}
+                })}
             </div>
             <div class="send-container">
               <b>Send tokens to another account:</b>

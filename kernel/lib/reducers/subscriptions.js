@@ -4,6 +4,9 @@ const k = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load = null, type }) => {
   switch (type) {
+    case k.FAUCET_ARA_RECEIVED:
+      state.faucet = null
+      break
     case k.GOT_FAUCET_SUB:
       state.faucet = load.faucetSub
       break

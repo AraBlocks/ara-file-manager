@@ -10,6 +10,9 @@ module.exports = async (state, { load = null, type }) => {
     case k.GETTING_USER_DATA:
       state.userAid = load.userAid
       break
+    case k.GOT_FAUCET_SUB:
+      state.awaitingFaucet = true
+      break
     case k.LOGIN:
     case k.REGISTERED:
       state.accountAddress = load.accountAddress

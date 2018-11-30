@@ -1,6 +1,4 @@
 module.exports = {
-  userAid: null,
-  password: null,
   accountAddress: null,
   araBalance: null,
   deployEstimateDid: null ,

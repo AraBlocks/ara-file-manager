@@ -40,7 +40,6 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
       json: true
     }
     const txHash = await request.post(options)
-    debug({ txHash })
 
     const faucetSub = await subscribeFaucet(store.account.accountAddress)
     dispatch({ type: k.GOT_FAUCET_SUB, load: { txHash, faucetSub } })
@@ -50,6 +49,18 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
     debug('Err requesting from faucet: %o', err)
     windowManager.pingView({ view: 'accountInfo', event: k.FAUCET_ERROR })
   }
+})
+
+internalEmitter.on(k.FAUCET_ARA_RECEIVED, () => {
+  try {
+
+    debug('%s HEARD', k.FAUCET_ARA_RECEIVED)
+    store.subscriptions.faucet.ctx.close()
+    dispatch({ type: k.FAUCET_ARA_RECEIVED })
+
+    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH})
+  } catch (e) { console.log(e) }
+
 })
 
 const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
@@ -62,8 +73,7 @@ async function subscribeFaucet(userAddress) {
   let subscription
   try {
     subscription = contract.events.Transfer({ filter: { to: userAddress, from: '0x95E1f3e4B308507bbD16f9c3ffA05eA9EadD09C5' } })
-      // .on('data', async () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
-      .on('data', () => debug('got schmoney'))
+      .on('data', async () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
       .on('error', debug)
   } catch (err) {
     debug('Error %o', err)
