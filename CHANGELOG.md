@@ -1,19 +1,25 @@
-## [0.1.4](https://github.com/littlstar/ara-content-manager/compare/0.1.3...0.1.4) (2018-11-21)
+## [0.1.5](https://github.com/littlstar/ara-content-manager/compare/0.1.3...0.1.5) (2018-11-30)
 
 
 ### Bug Fixes
 
-* dynamic link parsing ([d0d1569](https://github.com/littlstar/ara-content-manager/commit/d0d1569))
-* minor bugs ([b8754e9](https://github.com/littlstar/ara-content-manager/commit/b8754e9))
+* Small merge issue ([e248d28](https://github.com/littlstar/ara-content-manager/commit/e248d28))
+* **manageFile:** additems through finder working ([a30e4e7](https://github.com/littlstar/ara-content-manager/commit/a30e4e7))
 
 
 ### Features
 
-* Copy did and eth address in account overview([#247](https://github.com/littlstar/ara-content-manager/issues/247)) ([c6f4230](https://github.com/littlstar/ara-content-manager/commit/c6f4230))
-* PE-579 Sync metadata before downloading ([#245](https://github.com/littlstar/ara-content-manager/issues/245)) ([80973a2](https://github.com/littlstar/ara-content-manager/commit/80973a2))
-* PE-585 Send Ara to other account ([#242](https://github.com/littlstar/ara-content-manager/issues/242)) ([faa91a5](https://github.com/littlstar/ara-content-manager/commit/faa91a5))
-* Renders when update avail (boot only) ([#246](https://github.com/littlstar/ara-content-manager/issues/246)) ([53baf81](https://github.com/littlstar/ara-content-manager/commit/53baf81))
-* write to .ararc ([#243](https://github.com/littlstar/ara-content-manager/issues/243)) ([43a92b6](https://github.com/littlstar/ara-content-manager/commit/43a92b6))
+* Add tray support ([994ed25](https://github.com/littlstar/ara-content-manager/commit/994ed25))
+* Deploy Estimate View ([fd171b9](https://github.com/littlstar/ara-content-manager/commit/fd171b9))
+* **mnemonicWarning.js:** Flexible component now ([16524da](https://github.com/littlstar/ara-content-manager/commit/16524da))
+* Display modal for not enough Eth ([#262](https://github.com/littlstar/ara-content-manager/issues/262)) ([9acab83](https://github.com/littlstar/ara-content-manager/commit/9acab83))
+* PE-596 Cache user did for login ([#268](https://github.com/littlstar/ara-content-manager/issues/268)) ([a09f9c4](https://github.com/littlstar/ara-content-manager/commit/a09f9c4))
+* PE-656 Create dummy Afs for deploy proxy ([#279](https://github.com/littlstar/ara-content-manager/issues/279)) ([bb7ea99](https://github.com/littlstar/ara-content-manager/commit/bb7ea99))
+* Reseed Afs after opening ([#272](https://github.com/littlstar/ara-content-manager/issues/272)) ([d4c2b91](https://github.com/littlstar/ara-content-manager/commit/d4c2b91))
+* Send ara to wallet address or did ([#263](https://github.com/littlstar/ara-content-manager/issues/263)) ([df6b2b4](https://github.com/littlstar/ara-content-manager/commit/df6b2b4))
+* Small UI Changes ([#265](https://github.com/littlstar/ara-content-manager/issues/265)) ([c9323ee](https://github.com/littlstar/ara-content-manager/commit/c9323ee))
+* Update ara amount when balance is updated ([faaee12](https://github.com/littlstar/ara-content-manager/commit/faaee12))
+* Update farmer to 0.5.x ([#280](https://github.com/littlstar/ara-content-manager/issues/280)) ([b60f3b5](https://github.com/littlstar/ara-content-manager/commit/b60f3b5))
 
 
 
@@ -37,21 +43,13 @@
 
 
 
-## [0.1.1](https://github.com/littlstar/ara-content-manager/compare/v1.0.1...0.1.1) (2018-11-14)
-
-
-### Bug Fixes
-
-* package.json ([e9518d7](https://github.com/littlstar/ara-content-manager/commit/e9518d7))
-
-
-
-## [1.0.1](https://github.com/littlstar/ara-content-manager/compare/0.1.0...v1.0.1) (2018-11-14)
+## [0.1.1](https://github.com/littlstar/ara-content-manager/compare/0.1.0...0.1.1) (2018-11-14)
 
 
 ### Bug Fixes
 
 * **afsFileRow.js:** added :before element for better ux ([9039b89](https://github.com/littlstar/ara-content-manager/commit/9039b89))
+* package.json ([e9518d7](https://github.com/littlstar/ara-content-manager/commit/e9518d7))
 
 
 ### Features
