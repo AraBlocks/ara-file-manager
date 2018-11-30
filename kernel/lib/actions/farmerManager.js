@@ -113,56 +113,6 @@ async function download({
 	}
 }
 
-async function downloadContent({
-	farmer,
-	did,
-	jobId,
-	maxPeers = 1,
-	errorHandler,
-	startHandler,
-	progressHandler,
-	completeHandler
-}) {
-	debug('Downloading through DCDN: %s', did)
-	try {
-		await farmer.join({
-			did,
-			download: true,
-			maxPeers,
-			jobId,
-			upload: true,
-		})
-
-		let totalBlocks = 0
-		let prevPercent = 0
-		farmer.on('start', (did, total) => {
-			debug('Starting download', total)
-			const size = total * 6111 * 10
-			startHandler({ did, size })
-			totalBlocks = total
-		})
-		farmer.on('progress', (did, value) => {
-			const perc = value / totalBlocks
-			if (perc >= prevPercent + 0.1) {
-				prevPercent = perc
-				if (value / totalBlocks != 1) {
-					progressHandler({ downloadPercent: value / totalBlocks, did })
-				}
-			}
-		})
-		farmer.on('complete', (did) => {
-			debug('Download complete!')
-			completeHandler(did)
-		})
-		farmer.on('requestcomplete', (did) => {
-			debug('Rewards allocated')
-		})
-	} catch (err) {
-		debug('Error downloading: %O', err)
-		errorHandler(did)
-	}
-}
-
 async function _calculateBudget(did) {
 	let budget
 	try {
