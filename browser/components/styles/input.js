@@ -2,6 +2,7 @@
 
 const { css } = require('css')
 const {
+  colorSelector,
   colors,
   fonts,
 } = require('styleUtils')
@@ -22,7 +23,7 @@ module.exports = {
 
   button: css`
     :host {
-      background-color: ${colors.araBlue};
+      background-color: ${colorSelector('teal')};
       color: white;
       font-size: 12px;
       font-family: ${fonts.light};
@@ -30,11 +31,15 @@ module.exports = {
       margin: 10px;
       width: 70px;
     }
+
+    :host:hover {
+      background-color: ${colorSelector('teal', true)};
+    }
   `,
 
   requiredIndicator: css`
     :host {
-      background-color: ${colors.araPink};
+      background-color: ${colorSelector('pink')};
     }
   `,
 
