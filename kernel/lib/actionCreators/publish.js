@@ -26,17 +26,15 @@ async function _deployProxy() {
   try {
     windowManager.openWindow('deployEstimate')
 
-    let { afs: newAFS, afs: { did } } = await afs.create({ owner: store.account.userAid, password })
-    await newAFS.close();
-
+    const deployEstimateDid = store.account.deployEstimateDid
     debug('Estimating deploy proxy cost')
-    const deployCost = await afs.deploy({ password, did, estimate: true })
+    const deployCost = await afs.deploy({ password, did: deployEstimateDid, estimate: true })
     const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
     if (ethAmount < deployCost) {
       throw new Error('Not enough eth')
     }
     debug('Deploy Gas estimate: %s', deployCost)
-    windowManager.pingView({ view: 'deployEstimate', event: k.REFRESH, load: { estimate: deployCost, did }})
+    windowManager.pingView({ view: 'deployEstimate', event: k.REFRESH, load: { estimate: deployCost }})
   } catch (err) {
     debug('Error getting estimate for deploying proxy %o:', err)
     windowManager.closeWindow('deployEstimate')
@@ -47,10 +45,26 @@ async function _deployProxy() {
 
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY, load)
-  const { password } = store.account
+  const { userAid, password } = store.account
   try {
-    await afs.deploy({ password, did: load.did })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'pleaseWait' } })
+    windowManager.openModal('generalPleaseWaitModal')
+    let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userAid, password })
+    await newAfs.close();
+    await afs.deploy({ password, did })
     debug('Proxy Deployed')
+    afmManager.saveDeployedAfs(did, userAid)
+    windowManager.closeWindow('generalPleaseWaitModal')
+    dispatch({
+      type: k.PROXY_DEPLOYED,
+      load: {
+        contentDID: did,
+        mnemonic,
+        userAid,
+        isAFS: true
+      }
+    })
+    windowManager.openModal('mnemonicWarning')
   } catch(err) {
     debug('Error deploying proxy %o:', err)
     errorHandling(err)
@@ -67,31 +81,21 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
 
-    let { afs: newAFS, afs: { did } } = await afs.create({ owner: load.userAid, password })
-    await newAFS.close();
+    const did = load.contentDID
     await (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
     await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
 
-    debug('Estimating deploy proxy cost')
-    const deployCost = await afs.deploy({ password, did, estimate: true })
-    const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
-    if (ethAmount < deployCost) {
-      throw new Error('Not enouth eth')
-    }
-
-    debug('Deploying proxy')
-    await afs.deploy({ password, did })
-
     debug('Estimating gas')
+    const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0
     if (load.price != null) {
       setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
-    if (ethAmount < (deployCost + gasEstimate)) {
+    if (ethAmount < gasEstimate) {
       throw new Error('Not enough eth')
     }
 
@@ -112,10 +116,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     debug('Error publishing file %o:', err)
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     windowManager.closeModal('generalPleaseWaitModal')
-    err === 'Not enough eth'
-      ? dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
-      : dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
-    windowManager.openModal('generalMessageModal')
+    errorHandling(err)
     return
   }
 })

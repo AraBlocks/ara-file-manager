@@ -27,7 +27,9 @@ class MnemonicWarning extends Nanocomponent {
         children: "I've saved my mnemonic",
         cssClass: { name: 'thinBorder' },
         onclick: () => {
-          windowManager.openWindow('filemanager')
+          this.props.isAFS
+            ? windowManager.openWindow('publishFileView')
+            : windowManager.openWindow('filemanager')
           windowManagement.closeModal('mnemonicWarning')
         }
       })

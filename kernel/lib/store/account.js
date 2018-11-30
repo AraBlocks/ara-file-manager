@@ -3,7 +3,8 @@ module.exports = {
   password: null,
   accountAddress: null,
   araBalance: null,
-  etherBalance: null,
+  deployEstimateDid: null ,
+  ethBalance: null,
   username: null,
   pendingTransaction: false
 }

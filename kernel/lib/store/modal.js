@@ -1,1 +1,1 @@
-module.exports = { data: {}, manageFileData: {}, contentViewerData: {} }
+module.exports = { data: {}, manageFileData: {}, contentViewerData: {}, publishFileData: {} }
