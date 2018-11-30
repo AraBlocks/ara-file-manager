@@ -73,20 +73,42 @@ async function download({
 	progressHandler,
 	completeHandler
 }) {
-	debug('Downloading Metadata through DCDN: %s', did)
+	debug('Downloading through DCDN: %s', did)
 	try {
-		await downloadContent({
-			farmer,
+		await farmer.join({
 			did,
-			jobId,
+			download: true,
 			maxPeers,
-			errorHandler,
-			startHandler,
-			progressHandler,
-			completeHandler
+			jobId,
+			upload: true,
+		})
+
+		let totalBlocks = 0
+		let prevPercent = 0
+		farmer.on('start', (did, total) => {
+			debug('Starting download', total)
+			const size = total * 6111 * 10
+			startHandler({ did, size })
+			totalBlocks = total
+		})
+		farmer.on('progress', (did, value) => {
+			const perc = value / totalBlocks
+			if (perc >= prevPercent + 0.1) {
+				prevPercent = perc
+				if (value / totalBlocks != 1) {
+					progressHandler({ downloadPercent: value / totalBlocks, did })
+				}
+			}
+		})
+		farmer.on('complete', (did) => {
+			debug('Download complete!')
+			completeHandler(did)
+		})
+		farmer.on('requestcomplete', (did) => {
+			debug('Rewards allocated')
 		})
 	} catch (err) {
-		debug('Error downloading metadata: %O', err)
+		debug('Error downloading: %O', err)
 		errorHandler(did)
 	}
 }
