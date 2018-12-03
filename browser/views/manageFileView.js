@@ -15,7 +15,6 @@ class ManageFileView extends Nanocomponent {
 			fileName: 'My Awesome File',
 			filePath: '/Documents/FilePath',
 			price: 9.99,
-			priceManagement: true,
 			tokenPrice: 9.99,
 			userData
 		})
