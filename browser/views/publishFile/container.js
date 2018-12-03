@@ -87,7 +87,7 @@ class Container extends Nanocomponent {
 					<div class="${styles.content} PublishFileContainer-content">
 						Publish your package for distribution on the Ara Network. You can publish a single file or an entire directory as a single
 						asset. Once published, use the provided distribution link to allow users to purchase your package.<br><br>
-						<b>Note:</b> Ara is a decentralized network. at least one computer or supernode must be connected and hosting this file for users
+						<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
 						to be able to download it.
 					</div>
 					<div class="${styles.divider} PublishFileContainer-divider"></div>

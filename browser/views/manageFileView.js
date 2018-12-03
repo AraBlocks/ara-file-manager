@@ -16,7 +16,6 @@ class ManageFileView extends Nanocomponent {
 			filePath: '/Documents/FilePath',
 			price: 9.99,
 			priceManagement: true,
-			supernode: false,
 			tokenPrice: 9.99,
 			userData
 		})
