@@ -11,8 +11,8 @@ function generalModalText(modalName, load) {
 			description = html `<div><b>${load.amount} Ara</b> has been sent.</div>`
 			break
 		case 'alreadyOwn':
-			title = 'You already own this content'
-			description = 'You can not purchase this content again'
+			title = 'You already own this package'
+			description = 'You can not purchase this package again'
 			break
 		case 'diskSpaceModal':
 			title = 'Not enough disk space'

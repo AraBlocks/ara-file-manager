@@ -92,9 +92,9 @@ class Container extends Nanocomponent {
         <p>
           Downloading and hosting files will earn you Ara token rewards,
           <br>
-          which can be spent to purchase more content on the network.
+          which can be spent to purchase other packages on the network.
         </p>
-        <a onclick=${openAraOne}>
+        <a onclick="${openAraOne}">
           Learn More
         </a>
       </div>
