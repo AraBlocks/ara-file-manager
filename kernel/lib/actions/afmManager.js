@@ -13,7 +13,7 @@ function getAFMPath(userDID) {
 }
 
 function getAFMDirectory() {
-	const afmDirectory = path.resolve(userHome, '.afm')
+	const afmDirectory = path.resolve(userHome, '.ara', 'afm')
 	fs.existsSync(afmDirectory) || fs.mkdirSync(afmDirectory)
 	return afmDirectory
 }
