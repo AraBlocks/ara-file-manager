@@ -69,7 +69,7 @@ class Registration extends Nanocomponent {
         </div>
         <div class=${styles.header}>Register</div>
         <p class=${styles.description}>
-          To use the <b>Ara File Manager</b>, you'll need to create an Ara identity. We will generate the ID
+          To use the <b>Ara File Manager</b>, you'll need to create an Ara ID. We will generate the ID
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
         <form class=${styles.registerForm} onsubmit=${register}>
