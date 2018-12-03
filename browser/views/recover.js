@@ -73,10 +73,10 @@ class Recover extends Nanocomponent {
         <div class="${styles.title} login-title">
           Recover
         </div>
-        <form class="${styles.recoverForm} recover-recoverForm" onsubmit=${this.recover}>
+        <form class="${styles.recoverForm} recover-recoverForm" onsubmit="${this.recover}">
           <div>To recover your Ara ID, please input your unique <b>mnemonic</b> code.</div>
           ${children.mnemonicInput.render({})}
-          <div>Please create a new <b>password</b> for you Ara ID</div>
+          <div>Please create a new <b>password</b> for your Ara ID</div>
           ${children.passwordInput.render({})}
           ${children.submitButton.render({})}
           ${children.cancelButton.render({})}
