@@ -56,7 +56,7 @@ class FileInfo extends Nanocomponent {
 						<div class="${styles.infoTip}">
 							<div>
 								<b>Recommended:</b> If this field is left blank, users will only
-								see the file’s generic Ara identity.
+								see the file’s generic Ara ID.
 							</div>
 						</div>
 					</div>
