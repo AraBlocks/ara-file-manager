@@ -2,25 +2,31 @@
 
 const Button = require('../../components/button')
 const { closeModal, openWindow } = require('../../lib/tools/windowManagement')
-const { generalModalText } = require('../../lib/tools/generalModalTextProvider')
+const { actionModalText } = require('../../lib/tools/generalModalTextProvider')
 const html = require('choo/html')
 const styles = require('./styles')
 
 module.exports = ({
-  modalName = 'fileMissing',
-  load = { fileName: 'Grump Cat', amount: 0 },
+  modalName = 'quitConfirm',
   callback = () => {}
 }) => {
   const confirmButton = new Button({
 		children: 'Confirm',
 		onclick: () => {
       callback()
-      closeModal('generalMessageModal')
+      closeModal('generalActionModal')
     }
 	})
-	const { description, title } = generalModalText(modalName, load)
-  return html`
-    <div class="${styles.container({ justifyContent: 'space-around', height: 95 })} modals-container/spaceAround">
+	const cancelButton = new Button({
+		children: 'Cancel',
+		...styles.buttonSelector('cancel'),
+		onclick: () => {
+      closeModal('generalActionModal')
+    }
+	})
+	const { title, description } = actionModalText(modalName)
+	return html`
+    <div class="${styles.container({})} modals-container/spaceBetween">
       <div class="${styles.messageBold} modal-messageBold">
 				${title}
       </div>
@@ -28,7 +34,8 @@ module.exports = ({
 				${description}
 			</div>
       <div>
-        ${confirmButton.render({})}
+				${confirmButton.render({})}
+				${cancelButton.render({})}
       </div>
     </div>
   `

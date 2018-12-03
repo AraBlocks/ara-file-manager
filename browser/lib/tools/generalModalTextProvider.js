@@ -129,7 +129,24 @@ function waitModalText(modalName, load) {
 	return { description, waitTime }
 }
 
+function actionModalText(modalName) {
+	let description
+	let title
+	switch (modalName) {
+		case 'logoutConfirm':
+			title = 'Log Out?'
+			description = 'This will not alter any files on this computer. Only files linked to the current Ara ID can be shared on the network.'
+			break
+		case 'quitConfirm':
+			title = 'Quit File Manager?'
+			description = 'You will not be able to earn ARA Token rewards while File Manager is offline.'
+			break
+	}
+	return { title, description }
+}
+
 module.exports = {
+	actionModalText,
 	generalModalText,
 	waitModalText
 }

@@ -25,7 +25,7 @@ module.exports = (load) => {
   })
 
   return html`
-    <div class="${styles.container} modals-container">
+    <div class="${styles.container({})} modals-container">
       <div>
         <div class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin">
           Publish Now?
@@ -43,8 +43,10 @@ module.exports = (load) => {
           </span>
         </div>
       </div>
-      ${publishButton.render({})}
-      ${cancelbutton.render({})}
+      <div>
+        ${publishButton.render({})}
+        ${cancelbutton.render({})}
+      </div>
     </div>
   `
 }

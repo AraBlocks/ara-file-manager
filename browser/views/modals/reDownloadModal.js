@@ -20,7 +20,7 @@ module.exports = ({ aid, fileName, price }) => {
     onclick: () => windowManagement.closeModal('reDownloadModal')
   })
   return html`
-    <div class="${styles.container} modals-container">
+    <div class="${styles.container({})} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
         Download this file?
       </div>
