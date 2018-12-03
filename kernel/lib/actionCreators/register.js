@@ -29,6 +29,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
         accountAddress,
         araBalance: 0,
         deployEstimateDid,
+        ethBalance: 0,
         mnemonic,
         password,
         userAid: did
