@@ -13,8 +13,26 @@ ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
   debug('%s HEARD', k.REDEEM_REWARDS)
   try {
     const { account } = store
+    const estimate = await rewards.redeem({
+      farmerDid: account.userAid,
+      password: account.password,
+      contentDid: load.did,
+      estimate: true
+    })
 
-    debug('DISPATCHING %s', k.REDEEM_REWARDS)
+    dispatch({ type: k.FEED_MODAL, load: { estimate, did: load.did } })
+    windowManager.openModal('redeemConfirmModal')
+  } catch (err) {
+    debug('Error redeeming rewards: %o', err)
+  }
+})
+
+ipcMain.on(k.CONFIRM_REDEEM, async (event, load) => {
+  debug('%s HEARD', k.CONFIRM_REDEEM)
+  try {
+    const { account } = store
+
+    debug('DISPATCHING %s', k.REDEEMING_REWARDS)
     dispatch({ type: k.REDEEMING_REWARDS, load: { did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     const value = await rewards.redeem({

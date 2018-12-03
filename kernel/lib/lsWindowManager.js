@@ -47,6 +47,7 @@ windowManager.setSize = (view) => {
       width = 300
       height = 500
       break
+    case 'redeemConfirmModal':
     case 'reDownloadModal':
     case 'generalMessageModal':
       width = 340
