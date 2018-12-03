@@ -35,7 +35,7 @@ module.exports = {
     color  = 'green',
     fontSize = '14',
     weight = 'bold',
-    height = '30'
+    height = '36'
   }) {
     return css`
       :host {

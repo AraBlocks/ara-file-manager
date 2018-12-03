@@ -54,7 +54,7 @@ windowManager.setSize = (view) => {
       break
     case 'checkoutModal1':
       width = 340
-      height = 270
+      height = 300
       break
     case 'deleteConfirmModal':
       width = 340
@@ -65,6 +65,7 @@ windowManager.setSize = (view) => {
       height = 690
       break
     case 'generalPleaseWaitModal':
+    case 'generalActionModal':
       width = 340
       height = 220
       break
@@ -91,7 +92,7 @@ windowManager.setSize = (view) => {
       break
     case 'publishSuccessModal':
       width = 340
-      height = 360
+      height = 300
       break
     case 'registration':
     case 'recover':
@@ -103,9 +104,12 @@ windowManager.setSize = (view) => {
       height = 900
       break
     case 'confirmSendModal':
-    case 'updateConfirmModal':
       width = 360
       height = 240
+      break
+    case 'updateConfirmModal':
+      width = 340
+      height = 210
       break
     default:
       width = 300
