@@ -7,11 +7,14 @@ module.exports = async (state, { load = null, type }) => {
     case k.CHANGE_PENDING_TRANSACTION_STATE:
       state.pendingTransaction = load.pendingTransaction
       break
+    case k.IN_FAUCET_QUEUE:
+      state.faucet = k.IN_FAUCET_QUEUE
+      break
     case k.GETTING_USER_DATA:
       state.userAid = load.userAid
       break
     case k.GOT_FAUCET_SUB:
-      state.awaitingFaucet = true
+      state.faucet = load.link
       break
     case k.LOGIN:
     case k.REGISTERED:

@@ -23,7 +23,7 @@ class AccountInfo extends Nanocomponent {
     const { account, application } = props
 
     this.props = {
-      awaitingFaucet: account.awaitingFaucet,
+      faucet: account.faucet,
       araBalance: account.araBalance,
       ethAddress: account.accountAddress,
       ethBalance: account.ethBalance,
@@ -34,37 +34,24 @@ class AccountInfo extends Nanocomponent {
 
     this.children = {
       closeButton: new UtilityButton({ children: 'close' }),
-      requestTokensButton: new Button({
-        children: 'Request Tokens',
-        cssClass: {
-          opts: {
-            color: 'green',
-            fontSize: '14',
-            height: '3'
-          },
-        },
-        onclick: () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
-      }),
+      requestTokensButton: new Button(this.faucetButtonOpts),
       sendTokensButton: new Button({
         children: 'Send Tokens',
         cssClass: { opts: { fontSize: '14', height: '3' } },
         onclick: () => windowManagement.openWindow('sendAra')
       })
     }
-
-    this.renderCopyableText = this.renderCopyableText.bind(this)
-    this.rerender = this.rerender.bind(this)
     this.eventMouseLeave = document.createEvent('MouseEvents')
     this.eventMouseEnter = document.createEvent('MouseEvents')
     this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
     this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
+    this.renderCopyableText = this.renderCopyableText.bind(this)
+    this.rerender = this.rerender.bind(this)
   }
 
   renderCopyableText(textType) {
-    const {
-      eventMouseEnter,
-      props
-    } = this
+    const { eventMouseEnter, props } = this
+
     const text = textType === 'did'
       ? props.userDID.slice(-64)
       : props.ethAddress
@@ -86,13 +73,39 @@ class AccountInfo extends Nanocomponent {
     `
   }
 
+  get faucetButtonOpts() {
+    const { props } = this
+
+    const buttonOpts = { cssClass: {} }
+    if (props.faucet === null) {
+      buttonOpts.children = 'Request Tokens'
+      buttonOpts.cssClass.opts = { color: 'green', fontSize: '14', height: '3' }
+      buttonOpts.onclick = () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
+    } else if (props.faucet === k.IN_FAUCET_QUEUE) {
+      buttonOpts.children = 'Awaiting faucet...'
+      buttonOpts.cssClass.name = 'thinBorder'
+      buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
+    } else {
+      buttonOpts.children = html`<a href="${props.faucet.link}">Sending tokens...</a>`
+      buttonOpts.cssClass.name = 'thinBorder'
+      buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
+    }
+
+    return buttonOpts
+  }
+
   update(props = {}) {
-    this.props = { ...this.props, ...props.account, awaitingFaucet: true }
+    this.props = { ...this.props, ...props.account }
     return true
   }
 
   createElement() {
-    const { children, props, renderCopyableText } = this
+    const {
+      children,
+      faucetButtonOpts,
+      props,
+      renderCopyableText
+    } = this
 
     return html`
       <div class="${styles.container} accountInfo-container">
@@ -134,14 +147,7 @@ class AccountInfo extends Nanocomponent {
             <div class="request-container">
               <b>Request test tokens:</b>
               <div>Note: these tokens are for testing purposes only, and will only work on testnet</div>
-              ${children.requestTokensButton.render({
-                  cssClass: props.awaitingFaucet
-                    ? {
-                      name: 'thinBorder',
-                      opts: { fontSize: '14', height: '3' }
-                     }
-                    : {}
-                })}
+              ${children.requestTokensButton.render(faucetButtonOpts)}
             </div>
             <div class="send-container">
               <b>Send tokens to another account:</b>

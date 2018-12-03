@@ -1,8 +1,10 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:subscription')
+const { araContractsManager } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
+const { FAUCET_URI } = require('../../../lib/constants/networkKeys')
 const { ipcMain } = require('electron')
 const request = require('request-promise')
 const windowManager = require('electron-window-manager')
@@ -33,18 +35,22 @@ internalEmitter.on(k.UPDATE_BALANCE, (load) => {
 ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
   debug('%s HEARD', k.LISTEN_FOR_FAUCET)
   try {
-    const options = {
+    const response = await request.post({
       method: 'POST',
-      uri: 'http://api.faucet.ara.one:3000/transfer',
-      body: { to: 'b2249c0fa82253e22fa1c0e9a8b2dbdb7d25c51a27a1930f3d219d953381f2cc' },
+      uri: FAUCET_URI,
+      body: { to: store.account.userAid },
       json: true
+    })
+
+    if (reponse.status) {
+      dispatch({ type: k.IN_FAUCET_QUEUE })
+    } else {
+      const { txHash, link } = response
+      const faucetSub = await araContractsManager.subscribeFaucet(store.account.accountAddress)
+      dispatch({ type: k.GOT_FAUCET_SUB, load: { txHash, link, faucetSub } })
     }
-    const txHash = await request.post(options)
 
-    const faucetSub = await subscribeFaucet(store.account.accountAddress)
-    dispatch({ type: k.GOT_FAUCET_SUB, load: { txHash, faucetSub } })
-
-    windowManager.pingView({ view: 'accountInfo', event: k.LISTENING_FOR_FAUCET })
+    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
   } catch (err) {
     debug('Err requesting from faucet: %o', err)
     windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
@@ -63,22 +69,3 @@ internalEmitter.on(k.FAUCET_ARA_RECEIVED, () => {
   } catch (e) { console.log(e) }
 
 })
-
-const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
-const { web3: { contract: contractUtil } } = require('ara-util')
-const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
-
-async function subscribeFaucet(userAddress) {
-  const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
-
-  let subscription
-  try {
-    subscription = contract.events.Transfer({ filter: { to: userAddress, from: '0x95E1f3e4B308507bbD16f9c3ffA05eA9EadD09C5' } })
-      .on('data', async () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
-      .on('error', debug)
-  } catch (err) {
-    debug('Error %o', err)
-  }
-
-  return { ctx, subscription }
-}
