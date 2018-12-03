@@ -29,7 +29,7 @@ module.exports = ({
   price = Number(price)
   const fee = utils.roundDecimal(price / 10, 10)
   return html`
-    <div class="${styles.container} modals-container">
+    <div class="${styles.container({})} modals-container">
       <div>
         <div class="${styles.preheader} modals-preheader">
           You're about to purchase

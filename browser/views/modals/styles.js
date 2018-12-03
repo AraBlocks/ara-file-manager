@@ -38,21 +38,26 @@ module.exports = {
     }
   `,
 
-  container: css`
-    :host {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 95%;
-      text-align: center;
-      width: 90%;
-    }
+  container({
+    justifyContent = 'space-between',
+    height = 90
+  }) {
+    return css`
+      :host {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: ${height}%;
+        justify-content: ${justifyContent};
+        text-align: center;
+        width: 90%;
+      }
 
-    :host > * {
-      width: 95%;
-    }
-  `,
+      :host > * {
+        width: 95%;
+      }
+    `
+  },
 
   containerCenter: css`
     :host {

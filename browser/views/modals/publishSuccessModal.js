@@ -20,7 +20,7 @@ module.exports = ({
 		...styles.buttonSelector('green')
 	})
   return html`
-    <div class="${styles.container} modals-container">
+    <div class="${styles.container({ justifyContent: 'space-around', height: 95 })} modals-container">
       <div class="${styles.fileName} modal-messageBold">
 				${name}
       </div>

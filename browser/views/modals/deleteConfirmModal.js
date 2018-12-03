@@ -18,7 +18,7 @@ module.exports = ({ price = 0.09 }) => {
   })
 
   return html`
-		<div class="${styles.container} modals-container">
+		<div class="${styles.container({ height: 95 })} modals-container">
 			<div class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin">
 				Are you sure you want<br>
 				to delete this file from<br>
@@ -42,8 +42,10 @@ module.exports = ({ price = 0.09 }) => {
 			<span class="${styles.postheader} modals-postheader">
 				${price} Ara
 			</span>
-      ${deleteButton.render({})}
-      ${cancelbutton.render({})}
+			<div>
+				${deleteButton.render({})}
+				${cancelbutton.render({})}
+			</div>
     </div>
   `
 }

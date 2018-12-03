@@ -28,9 +28,9 @@ module.exports = {
       align-items: center;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-      height: 216px;
-      padding-top: 2.5%;
+      justify-content: space-between;
+      height: 208px;
+      padding-top: 5%;
       text-align: center;
       width: 100%;
     }

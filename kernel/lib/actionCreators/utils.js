@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:utils')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
 const { afsManager, farmerManager } = require('../actions')
-const { ipcMain } = require('electron')
+const { ipcMain, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
@@ -44,4 +44,9 @@ ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
   } catch(err) {
     debug("Error: %o", err)
   }
+})
+
+internalEmitter.on(k.CONFIRM_QUIT, async () => {
+  dispatch({ type: k.FEED_MODAL, load: { modalName: 'quitConfirm', callback: () => app.quit() } })
+  windowManager.openModal('generalActionModal')
 })
