@@ -139,7 +139,7 @@ function actionModalText(modalName) {
 			break
 		case 'quitConfirm':
 			title = 'Quit File Manager?'
-			description = 'You will not be able to earn ARA Token rewards while File Manager is offline.'
+			description = 'You will not be able to earn Ara Token rewards while File Manager is offline.'
 			break
 	}
 	return { title, description }
