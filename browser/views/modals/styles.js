@@ -91,9 +91,11 @@ module.exports = {
       animation-duration: 1000ms;
       color: ${colorSelector('orange')};
       left: 0;
+      font-size: 18px;
       opacity: 0;
       position: absolute;
       width: 100%;
+      text-align: center;
       z-index: -1;
     }
   `,
