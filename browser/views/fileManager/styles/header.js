@@ -41,7 +41,6 @@ module.exports = {
       display: flex;
       font-size: 14px;
       justify-content: space-between;
-      padding-top: 10px;
     }
   `,
 
@@ -58,8 +57,9 @@ module.exports = {
 
   titleHolder: css`
     :host {
-      font-size: 30px;
+      font-size: 40px;
       font-family: ${fonts.black};
+      margin-top: 3px;
     }
   `,
 
