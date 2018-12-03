@@ -8,7 +8,7 @@ const styles = require('./styles')
 
 module.exports = ({
 	did,
-	name = "hi"
+	name
 }) => {
 	const encodedName = encodeURIComponent(name)
 	const confirmButton = new Button({

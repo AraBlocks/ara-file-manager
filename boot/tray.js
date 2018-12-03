@@ -7,29 +7,29 @@ const path = require('path')
 const windowManager = require('electron-window-manager')
 const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
 const { internalEmitter } = require('electron-window-manager')
-const { CLEAN_UI, DEPLOY_PROXY, LOGOUT } = require('../lib/constants/stateManagement')
+const k = require('../lib/constants/stateManagement')
 
 let tray
 let contextMenu
 const buildTray = () => {
   debug('Building tray')
   tray = new Tray(iconPath)
-  tray.setToolTip('Ara Content Manager')
+  tray.setToolTip('Ara File Manager')
 
   const menuItems = [
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
-    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(DEPLOY_PROXY) },
+    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(k.DEPLOY_PROXY) },
     { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
     { label: 'Register', type: 'normal', click: () => openWindow('registration') },
     { label: 'Login', type: 'normal', click: () => openWindow('login') },
-    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(LOGOUT) },
-    { label: 'Quit', type: 'normal', role: 'quit' }
+    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(k.LOGOUT) },
+    { label: 'Quit', type: 'normal', click: () => internalEmitter.emit(k.CONFIRM_QUIT)}
   ]
 
   //If dev mode, pushes developer option to tray
   isDev
   && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer')})
-  && menuItems.push({ label: 'Clean UI', type: 'normal', click:() => internalEmitter.emit(CLEAN_UI)})
+  && menuItems.push({ label: 'Clean UI', type: 'normal', click:() => internalEmitter.emit(k.CLEAN_UI)})
 
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)

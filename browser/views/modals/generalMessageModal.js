@@ -20,7 +20,7 @@ module.exports = ({
 	})
 	const { description, title } = generalModalText(modalName, load)
   return html`
-    <div class="${styles.container({ justifyContent: 'space-around', height: 95 })} modals-container/spaceAround">
+    <div class="${styles.container({ justifyContent: 'space-around', height: 95 })} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
 				${title}
       </div>

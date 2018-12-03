@@ -1,8 +1,8 @@
 'use strict'
 
 const Button = require('../../components/button')
-const { closeModal, openWindow } = require('../../lib/tools/windowManagement')
 const { actionModalText } = require('../../lib/tools/generalModalTextProvider')
+const { closeModal } = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const styles = require('./styles')
 
@@ -26,7 +26,7 @@ module.exports = ({
 	})
 	const { title, description } = actionModalText(modalName)
 	return html`
-    <div class="${styles.container({})} modals-container/spaceBetween">
+    <div class="${styles.container({})} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
 				${title}
       </div>

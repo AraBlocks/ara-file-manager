@@ -200,20 +200,6 @@ module.exports = {
     }
   `,
 
-  spaceAround: css`
-    :host {
-      justify-content: space-around;
-      height: 95%;
-    }
-  `,
-
-  spaceBetween: css`
-    :host {
-      justify-content: space-between;
-      height: 90%;
-    }
-  `,
-
   smallBold: css`
     :host {
       font-family: ${fonts.bold};

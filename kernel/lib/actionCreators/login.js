@@ -20,17 +20,8 @@ const { switchLoginState } = require('../../../boot/tray')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
-  try {
-    farmerManager.stopAllBroadcast(store.farmer.farm)
-    dispatch({ type: k.LOGOUT })
-    switchLoginState(false)
-    windowManager.closeWindow('filemanager')
-    windowManager.closeWindow('publishFileView')
-    windowManager.closeWindow('accountInfo')
-    windowManager.openWindow('login')
-  } catch (err) {
-    debug('Error logging out: %o', o)
-  }
+  dispatch({ type: k.FEED_MODAL, load: { modalName: 'logoutConfirm', callback: logout } })
+  windowManager.openModal('generalActionModal')
 })
 
 ipcMain.on(k.LOGIN, login)
@@ -50,6 +41,20 @@ ipcMain.on(k.RECOVER, async (event, load) => {
     debug('Error recovering acct: %o', err)
   }
 })
+
+async function logout() {
+  try {
+    await farmerManager.stopAllBroadcast(store.farmer.farm)
+    dispatch({ type: k.LOGOUT })
+    switchLoginState(false)
+    windowManager.closeWindow('filemanager')
+    windowManager.closeWindow('publishFileView')
+    windowManager.closeWindow('accountInfo')
+    windowManager.openWindow('login')
+  } catch (err) {
+    debug('Error logging out: %o', o)
+  }
+}
 
 async function login(_, load) {
   debug('%s heard', k.LOGIN)
