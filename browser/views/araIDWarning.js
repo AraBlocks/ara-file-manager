@@ -23,7 +23,7 @@ class AraIDWarning extends Nanocomponent {
         onclick: this.copyID.bind(this)
       }),
       confirmButton: new Button({
-        children: "I've saved my Ara Identity",
+        children: "I've saved my Ara ID",
         cssClass: { name: 'thinBorder' },
         onclick: () => windowManagement.transitionModal('mnemonicWarning')
       })
@@ -64,7 +64,7 @@ class AraIDWarning extends Nanocomponent {
         </div>
         <div class="">
           <div class="${styles.smallMessage({})} modal-smallMessage">
-            The following string of characters is your <b>Ara Identity</b>. Please <b>copy it and keep it in a safe place</b>.
+            The following string of characters is your <b>Ara ID</b>. Please <b>copy it and keep it in a safe place</b>.
           </div>
           <div class="${styles.araIDHolder} modal-araIDHolder">${props.userDID.slice(-64)}</div>
           <div class="${styles.copyItemContainer} modal-copyItemContainer" >
