@@ -32,7 +32,7 @@ module.exports = {
           cssClass: {
             name: 'smallInvisible',
             opts: {
-              color: 'blue',
+              color: 'orange',
               weight: 'light'
             }
           }

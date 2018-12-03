@@ -12,7 +12,6 @@ module.exports = {
       height: 52px;
       left: 0;
       justify-content: center;
-      opacity: .9;
       position: absolute;
       width: 100%;
       display: flex;

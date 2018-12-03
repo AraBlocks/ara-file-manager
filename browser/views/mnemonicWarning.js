@@ -16,7 +16,7 @@ class MnemonicWarning extends Nanocomponent {
 
     this.children = {
       copyMnemonicButton: new Button({
-        children: "Copy Mnemonic",
+        children: "Copy mnemonic",
         cssClass: {
           opts: { color: 'green' }
         },
@@ -60,7 +60,8 @@ class MnemonicWarning extends Nanocomponent {
     const { children, props, state } = this
     const { mnemonic } = props
 
-    const acctMsg = 'account and login to your account on another computer'
+    const acctMsg = 'recover your account and login to your account on another computer.'
+    const afsMsg = 'validate your ownership of this package.'
     return html`
       <div class="${styles.container} modals-container">
         <div class="${styles.logo} modals-logo">
@@ -74,7 +75,7 @@ class MnemonicWarning extends Nanocomponent {
             DO NOT LOSE THIS MNEMONIC
           </div>
           <div class="${styles.smallMessage({})} modal-smallMessage">
-            This 12 word phrase is the ONLY way to recover your ${props.isAFS ? 'AFS.' : acctMsg}
+            This 12 word phrase is the ONLY way to ${props.isAFS ? afsMsg : acctMsg}
             Please write this phrase down and keep it in a secure place.
             You will never be shown this mnemonic again
           </div>

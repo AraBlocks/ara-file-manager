@@ -15,7 +15,7 @@ module.exports = ({ modalName = null, load }) => {
 				${description}
 			</div>
 			<div class="${styles.spinnerHolder} modal-spinnerHolder">
-      	<div class="spinner-small-red ${styles.spinnerHolder}"></div>
+      	<div class="spinner-small-teal ${styles.spinnerHolder}"></div>
 			</div>
 			<div class="${styles.smallMessage({})} modal-smallMessage">
 				${waitTime}
