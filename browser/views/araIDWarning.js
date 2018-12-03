@@ -18,7 +18,7 @@ class AraIDWarning extends Nanocomponent {
       copyIDButton: new Button({
         children: "Copy Identity",
         cssClass: {
-          opts: { color: 'green', fontSize: '10px' }
+          opts: { color: 'green', fontSize: '18' }
         },
         onclick: this.copyID.bind(this)
       }),
