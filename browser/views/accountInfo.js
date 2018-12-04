@@ -112,11 +112,11 @@ class AccountInfo extends Nanocomponent {
           <div class="${styles.balanceSection} accountInfo-balanceSection">
             <div><b>Your Wallet:</b></div>
             <div>
-              <span class="balance">${utils.roundDecimal(props.araBalance, 10000)}</span>
+              <span class="balance">${utils.roundDecimal(props.araBalance, 10000).toLocaleString()}</span>
               <span class="${styles.araBalance} accountInfo-araBalance">ARA</span>
             </div>
             <div>
-              <span class="balance ethBalance">${utils.roundDecimal(props.ethBalance, 10000)}</span>
+              <span class="balance ethBalance">${utils.roundDecimal(props.ethBalance, 10000).toLocaleString()}</span>
               <span class="${styles.ethBalance} ethBalance accountInfo-ara">ETH</span>
             </div>
           </div>

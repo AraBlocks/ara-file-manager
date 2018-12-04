@@ -45,7 +45,7 @@ class DeployEstimate extends Nanocomponent {
 		return estimate
 			? html `
 				<span class="${styles.postheader} deployEstimate-postheader">
-					${utils.roundDecimal(estimate, 1000)} eth
+					${utils.roundDecimal(estimate, 1000).toLocaleString()} eth
 				</span>`
 			: html `
 				<div class="${styles.spinnerHolder} deployEstimate-spinnerHolder">
