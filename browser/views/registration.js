@@ -14,7 +14,14 @@ class Registration extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { password : '' }
+    this.state = {
+      password: '',
+      passwordConfirm: '',
+      errorText: {
+        password: '',
+        passwordConfirm: ''
+      }
+     }
 
     this.children = {
       passwordInput: new Input({
@@ -54,6 +61,19 @@ class Registration extends Nanocomponent {
     this.render = this.render.bind(this)
   }
 
+  checkForm() {
+    const { 
+      password, 
+      passwordConfirm,
+      errorText
+    } = this.state
+
+    let errM
+    if(password === '') {
+
+    }
+  }
+
   register(e) {
     e.preventDefault()
     const { password } = this.state
@@ -66,7 +86,12 @@ class Registration extends Nanocomponent {
     return true
   }
 
-  createElement({ pending = false, requiredIndicator = false }) {
+  createElement({
+    pending = false,
+    flagPWField = true,
+    flagPWConfirmField = true
+  }) {
+    console.log(flagPWField)
     const { children, register } = this
     return html`
       <div class="modal">
@@ -80,9 +105,9 @@ class Registration extends Nanocomponent {
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
         <form class="${styles.registerForm}" onsubmit="${register}">
-          ${children.passwordInput.render({ requiredIndicator })}
+          ${children.passwordInput.render({ requiredIndicator: flagPWField })}
           <div style="font-size: 10px; height: 13px; width: 100%;">Must enter a password</div>
-          ${children.passwordConfirmInput.render({ requiredIndicator })}
+          ${children.passwordConfirmInput.render({ requiredIndicator: flagPWConfirmField })}
           <div style="font-size: 10px; height: 13px; width: 100%;">Passwords do not match</div>
           ${children.submitButton.render({})}
         </form>
