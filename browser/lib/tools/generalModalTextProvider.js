@@ -92,7 +92,7 @@ function generalModalText(modalName, load) {
 			break
 		case 'recoveryFailure':
 			title = 'Failed to Recover Account'
-			description = html `<div>It appears the mnemonic you've entered in invalid<br><br>
+			description = html `<div>It appears the mnemonic you've entered is invalid<br><br>
 			Please double check the mnemonic and ensure it's correct.</div>`
 			break
 	}
