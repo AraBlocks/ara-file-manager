@@ -8,58 +8,18 @@ function createMenu() {
   application = {
     label: "Application",
     submenu: [
-      {
-        label: "About",
-        selector: "orderFrontStandardAboutPanel:"
-      },
-      {
-        type: "separator"
-      },
-      {
-        label: 'File Manager',
-        click: () => {
-          windowManager.openWindow('filemanager')
-        }
-      },
-      {
-        label: 'Publish File',
-        click: () => {
-          internalEmitter.emit(k.DEPLOY_PROXY)
-        }
-      },
-      {
-        label: 'Account',
-        click: () => {
-          windowManager.openWindow('accountInfo')
-        }
-      },
-      {
-        label: 'Register',
-        click: () => {
-          windowManager.openWindow('registration')
-        }
-      },
-      {
-        label: 'Login',
-        click: () => {
-          windowManager.openWindow('login')
-        }
-      },
-      {
-        label: 'Log Out',
-        click: () => {
-          internalEmitter.emit(k.LOGOUT)
-        }
-      },
-      {
-        type: "separator"
-      },
-      {
-        label: "Quit",
+      { label: "About", selector: "orderFrontStandardAboutPanel:" },
+      { type: 'separator' },
+      { label: 'File Manager', click: () => windowManager.openWindow('filemanager') },
+      { label: 'Publish File', click: () => internalEmitter.emit(k.DEPLOY_PROXY) },
+      { label: 'Account', click: () => windowManager.openWindow('accountInfo') },
+      { label: 'Register', click: () => windowManager.openWindow('registration') },
+      { label: 'Login', click: () => windowManager.openWindow('login') },
+      { label: 'Log Out', click: () => internalEmitter.emit(k.LOGOUT) },
+      { type: "separator" },
+      { label: "Quit",
         accelerator: "Command+Q",
-        click: () => {
-          app.quit()
-        }
+        click: () => app.quit()
       }
     ]
   }
