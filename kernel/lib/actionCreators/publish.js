@@ -94,9 +94,10 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
 
     debug('Estimating gas')
     const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
+    debug('load price:', load.price)
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0
-    if (load.price != null) {
+    if (load.price) {
       setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
