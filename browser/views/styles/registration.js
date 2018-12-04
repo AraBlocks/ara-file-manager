@@ -54,7 +54,7 @@ module.exports = {
       align-items: center;
       display: flex;
       flex-direction: column;
-      height: 120px;
+      height: 160px;
       justify-content: space-between;
       width: 90%;
     }

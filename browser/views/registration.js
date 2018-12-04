@@ -24,6 +24,13 @@ class Registration extends Nanocomponent {
         type: 'password'
       }),
 
+      passwordConfirmInput: new Input({
+        placeholder: 'Confirm password',
+        parentState: this.state,
+        field: 'password',
+        type: 'password'
+      }),
+
       submitButton: new Button({
         children: 'Register',
         type: 'submit'
@@ -67,13 +74,16 @@ class Registration extends Nanocomponent {
         <div class="${styles.logo} login-logo">
           <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
-        <div class=${styles.header}>Register</div>
-        <p class=${styles.description}>
+        <div class="${styles.header}">Register</div>
+        <p class="${styles.description}">
           To use the <b>Ara File Manager</b>, you'll need to create an Ara ID. We will generate the ID
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
-        <form class=${styles.registerForm} onsubmit=${register}>
+        <form class="${styles.registerForm}" onsubmit="${register}">
           ${children.passwordInput.render({ requiredIndicator })}
+          <div style="font-size: 10px; height: 13px; width: 100%;">Must enter a password</div>
+          ${children.passwordConfirmInput.render({ requiredIndicator })}
+          <div style="font-size: 10px; height: 13px; width: 100%;">Passwords do not match</div>
           ${children.submitButton.render({})}
         </form>
         ${children.cancelButton.render({})}
