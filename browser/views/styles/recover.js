@@ -29,7 +29,7 @@ module.exports = {
     }
 
     :host > img {
-      height: 12px;
+      height: 9px;
     }
   `,
 
@@ -56,6 +56,10 @@ module.exports = {
       color: ${colorSelector('red')};
       font-size: 10px;
       height: 10px;
+    }
+
+    :host div > b {
+      font-family: ${fonts.bold};
     }
   `,
 

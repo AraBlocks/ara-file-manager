@@ -13,8 +13,16 @@ function createMenu() {
       { label: 'File Manager', click: () => windowManager.openWindow('filemanager') },
       { label: 'Publish File', click: () => internalEmitter.emit(k.DEPLOY_PROXY) },
       { label: 'Account', click: () => windowManager.openWindow('accountInfo') },
-      { label: 'Register', click: () => windowManager.openWindow('registration') },
-      { label: 'Login', click: () => windowManager.openWindow('login') },
+      { label: 'Register', click: () => {
+          windowManager.openWindow('registration') 
+          windowManager.closeWindow('login')
+        }
+      },
+      { label: 'Login', click: () => {
+          windowManager.openWindow('login') 
+          windowManager.closeWindow('registration')
+        } 
+      },
       { label: 'Log Out', click: () => internalEmitter.emit(k.LOGOUT) },
       { type: "separator" },
       { label: "Quit",

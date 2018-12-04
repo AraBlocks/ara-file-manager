@@ -34,6 +34,10 @@ module.exports = {
       font-size: 12px;
       font-family: ${fonts.light};
     }
+
+    :host > b {
+      font-family: ${fonts.bold};
+    }
   `,
 
   form: css`
@@ -59,7 +63,7 @@ module.exports = {
     }
 
     :host > img {
-      height: 12px;
+      height: 9px;
     }
 
     :host > input {
