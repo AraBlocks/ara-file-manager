@@ -67,7 +67,7 @@ class Input extends Nanocomponent {
       select,
       state
     } = this
-    console.log(props.araIcon)
+
     return html`
       <div class="
         ${styles.container} input-container
