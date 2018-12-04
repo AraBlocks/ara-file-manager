@@ -38,12 +38,13 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
     dispatch({ type: k.IN_FAUCET_QUEUE })
     windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 
-    await request.post({
+    const res = await request.post({
       method: 'POST',
       uri: FAUCET_URI,
       body: { to: store.account.userAid },
       json: true
     })
+    console.log(res)
 
     debug('IN FAUCET QUEUE')
     const faucetSub = await araContractsManager.subscribeFaucet(store.account.accountAddress)
