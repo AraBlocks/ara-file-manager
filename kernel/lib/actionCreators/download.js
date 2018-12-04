@@ -30,6 +30,22 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 	}
 })
 
+ipcMain.on(k.PAUSE_DOWNLOAD, async (event, load) => {
+	debug('%s heard', k.PAUSE_DOWNLOAD)
+	try {
+		debug('Dispatching %s', k.PAUSED)
+		dispatch({ type: k.PAUSED, load })
+		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+		farmerManager.unjoinBroadcast({
+			did: load.did,
+			farmer: store.farmer.farm,
+		})
+	} catch (err) {
+		debug('Error: %O', err)
+	}
+})
+
 function startHandler(load) {
 	dispatch({ type: k.SET_SIZE, load })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
