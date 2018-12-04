@@ -39,12 +39,11 @@ ipcMain.on(k.RECOVER, async (event, load) => {
 
     windowManager.pingView({ view: 'recover', event: k.RECOVERED })
   } catch (err) {
-    dispatch({
-      type: k.FEED_MODAL, load: {
-        modalName: 'recoveryFailure',
-        callback: () => windowManager.pingView({ view: 'recover', event: k.RECOVER_FAILED})
-      }
-    })
+    const dispatchLoad = {
+      modalName: 'recoveryFailure',
+      callback: () => windowManager.pingView({ view: 'recover', event: k.RECOVER_FAILED})
+    }
+    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalMessageModal')
   }
 })
