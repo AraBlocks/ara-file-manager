@@ -93,7 +93,7 @@ class Container extends Nanocomponent {
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({})}
 					${children.publishButton.render({
-						cssClass: (state.fileList.length === 0) || props.account.pendingTransaction
+						cssClass: (state.fileList.length === 0)
 							? { name: 'thinBorder' } : { name: 'standard' },
 						children: [
 							'Publish',
