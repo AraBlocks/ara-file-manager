@@ -5,7 +5,7 @@ const k = require('../lib/constants/stateManagement')
 
 let contextMenu
 function createMenu() {
-  application = {
+  const application = {
     label: "Application",
     submenu: [
       { label: "About", selector: "orderFrontStandardAboutPanel:" },
