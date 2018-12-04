@@ -1,5 +1,6 @@
-const { Menu } = require('electron')
+const { Menu, app } = require('electron')
 
+let contextMenu
 function createMenu() {
   const application = {
     label: "Application",
@@ -7,6 +8,48 @@ function createMenu() {
       {
         label: "About",
         selector: "orderFrontStandardAboutPanel:"
+      },
+      {
+        type: "separator"
+      },
+      {
+        label: 'File Manager',
+        click: () => {
+
+        }
+      }, 
+      {
+        label: 'Publish File',
+        click: () => {
+
+        }
+      },
+      {
+        label: 'Account',
+        click: () => {
+
+        }
+      },
+      {
+        label: 'Register',
+        click: () => {
+
+        }
+      },
+      {
+        label: 'Login',
+        click: () => {
+
+        }
+      },
+      {
+        label: 'Log Out',
+        click: () => {
+
+        }
+      },
+      {
+        type: "separator"
       },
       {
         label: "Quit",
@@ -78,8 +121,8 @@ function createMenu() {
     edit,
     window
   ]
-
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  contextMenu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(contextMenu)
 }
 
 module.exports = createMenu
