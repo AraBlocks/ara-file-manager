@@ -9,9 +9,9 @@ const { account, modal: { publishFileData: { contentDID } } } = windowManager.sh
 const publishFile = new PublishFile({ account, contentDID })
 document.getElementById('container').appendChild(publishFile.render({}))
 
-ipcRenderer.on(REFRESH, () => publishFile.render({}))
+ipcRenderer.on(REFRESH, () => publishFile.render({}));
 
-;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   document.body.addEventListener(eventName, preventDefaults, false)
 })
 
