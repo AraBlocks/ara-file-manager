@@ -20,12 +20,18 @@ const buildTray = () => {
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
     { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(k.DEPLOY_PROXY) },
     { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
-    { label: 'Register', type: 'normal', click: () => {
+    {
+      label: 'Register',
+      type: 'normal',
+      click: () => {
         openWindow('registration')
         closeWindow('login')
       }
     },
-    { label: 'Login', type: 'normal', click: () => {
+    {
+      label: 'Login',
+      type: 'normal',
+      click: () => {
         openWindow('login')
         closeWindow('registration')
       }
