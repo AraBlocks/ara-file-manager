@@ -27,6 +27,7 @@ class MnemonicWarning extends Nanocomponent {
         children: "I've saved my mnemonic",
         cssClass: { name: 'thinBorder' },
         onclick: () => {
+          if (!this.state.copied) { return }
           this.props.isAFS
             ? windowManager.openWindow('publishFileView')
             : windowManager.openWindow('filemanager')
