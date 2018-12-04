@@ -71,7 +71,7 @@ class Header extends Nanocomponent {
     } = this
     const balanceElements = [
       html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>`,
-      utils.roundDecimal(araBalance, 100)
+      utils.roundDecimal(araBalance, 100).toLocaleString()
     ]
     return html`
       <div class="${styles.container} header-container">
