@@ -158,7 +158,7 @@ module.exports = {
     }
 
     :host > img {
-      height: 12px;
+      height: 9px;
     }
   `,
 

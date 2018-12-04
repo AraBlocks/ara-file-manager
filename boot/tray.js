@@ -4,7 +4,7 @@ const debug = require('debug')('acm:boot:tray')
 const isDev = require('electron-is-dev')
 const { Menu, Tray } = require('electron')
 const path = require('path')
-const { openWindow } = require('electron-window-manager')
+const { openWindow, closeWindow } = require('electron-window-manager')
 const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
 const { internalEmitter } = require('electron-window-manager')
 const k = require('../lib/constants/stateManagement')
@@ -20,8 +20,22 @@ const buildTray = () => {
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
     { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(k.DEPLOY_PROXY) },
     { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
-    { label: 'Register', type: 'normal', click: () => openWindow('registration') },
-    { label: 'Login', type: 'normal', click: () => openWindow('login') },
+    {
+      label: 'Register',
+      type: 'normal',
+      click: () => {
+        openWindow('registration')
+        closeWindow('login')
+      }
+    },
+    {
+      label: 'Login',
+      type: 'normal',
+      click: () => {
+        openWindow('login')
+        closeWindow('registration')
+      }
+    },
     { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(k.LOGOUT) },
     { label: 'Quit', type: 'normal', click: () => internalEmitter.emit(k.CONFIRM_QUIT)}
   ]
