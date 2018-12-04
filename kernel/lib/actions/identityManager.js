@@ -42,6 +42,8 @@ module.exports = {
     } catch (err) {
       debug('Err recovering identity: %o', err)
       context.close()
+
+      throw new Error('Error recovering identity')
     }
   },
 

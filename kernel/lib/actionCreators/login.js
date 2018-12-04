@@ -36,9 +36,15 @@ ipcMain.on(k.RECOVER, async (event, load) => {
 
     const { did: { did } } = identity
     login(null, { userAid: did, password: load.password })
+
     windowManager.pingView({ view: 'recover', event: k.RECOVERED })
   } catch (err) {
-    debug('Error recovering acct: %o', err)
+    const dispatchLoad = {
+      modalName: 'recoveryFailure',
+      callback: () => windowManager.pingView({ view: 'recover', event: k.RECOVER_FAILED})
+    }
+    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
+    windowManager.openModal('generalMessageModal')
   }
 })
 
@@ -64,7 +70,7 @@ async function login(_, load) {
     if (incorrectPW) { throw 'IncorrectPW' }
   } catch (err) {
     debug('Login error: %o', err)
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'loginFail', callback: () => windowManager.openWindow('login')} })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'loginFail', callback: () => windowManager.openWindow('login') } })
     windowManager.openModal('generalMessageModal')
     return
   }

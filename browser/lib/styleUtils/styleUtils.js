@@ -90,6 +90,7 @@ module.exports = {
         break
       case 'pink':
         selectedColor = '#fbe6e6'
+        break
       default:
         selectedColor = !hoverState ? 'var(--ara-red)' : 'green'
     }
