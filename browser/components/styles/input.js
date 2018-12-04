@@ -37,6 +37,16 @@ module.exports = {
     }
   `,
 
+  icon: css`
+    :host {
+      background-image:url(../assets/images/ara_token.png);
+      background-repeat: no-repeat;
+      background-size: 8%;
+      background-position-x: 98%;
+      background-position-y: 50%;
+    }
+  `,
+
   requiredIndicator: css`
     :host {
       background-color: ${colorSelector('pink')};

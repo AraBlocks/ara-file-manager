@@ -19,6 +19,7 @@ class FileInfo extends Nanocomponent {
 				parentState
 			}),
 			priceInput: new Input({
+				araIcon: true,
 				field: 'price',
 				parentState,
 				placeholder: 'Price',
