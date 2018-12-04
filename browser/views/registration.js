@@ -62,15 +62,19 @@ class Registration extends Nanocomponent {
   }
 
   checkForm() {
-    const { 
-      password, 
+    const {
+      password,
       passwordConfirm,
       errorText
     } = this.state
 
     let errM
-    if(password === '') {
-
+    if (password === '') {
+      errorText.password = 'Must enter a password'
+      errorText.passwordConfirm = ''
+    } else if (passwordConfirm === '') {
+      errorText.passwordConfirm = 'Must confirm password'
+      errorText.password = ''
     }
   }
 
