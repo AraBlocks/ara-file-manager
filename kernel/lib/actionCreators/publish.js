@@ -47,14 +47,20 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY, load)
   const { userAid, password } = store.account
   try {
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
+
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'pleaseWait' } })
     windowManager.openModal('generalPleaseWaitModal')
+
     let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userAid, password })
     await newAfs.close();
     await afs.deploy({ password, did })
     debug('Proxy Deployed')
+
     afmManager.saveDeployedAfs(did, userAid)
+
     windowManager.closeWindow('generalPleaseWaitModal')
+
     dispatch({
       type: k.PROXY_DEPLOYED,
       load: {
@@ -64,6 +70,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
         isAFS: true
       }
     })
+
     windowManager.openModal('mnemonicWarning')
   } catch(err) {
     debug('Error deploying proxy %o:', err)
@@ -75,8 +82,6 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
   try {
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
-
     let dispatchLoad = { load: { fileName: load.name } }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
