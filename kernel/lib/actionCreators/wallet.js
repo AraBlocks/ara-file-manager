@@ -42,7 +42,7 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
       json: true
     })
 
-    if (reponse.status) {
+    if (response.status) {
       dispatch({ type: k.IN_FAUCET_QUEUE })
     } else {
       const { txHash, link } = response
