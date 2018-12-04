@@ -102,7 +102,7 @@ class Input extends Nanocomponent {
         props.parentState[embeddedButton.field] = embeddedButton.optionList[0]
         button = html`
           <select class="${styles.selection} input-selection" onchange="${select}">
-            ${embeddedButton.optionList.map(option => html`<option value=${option}>${option}</option>`)}
+            ${embeddedButton.optionList.map(option => html`<option value="${option}">${option}</option>`)}
           </select>
         `
       }
