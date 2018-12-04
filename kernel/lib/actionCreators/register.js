@@ -6,6 +6,7 @@ const araContractsManager = require('../actions/araContractsManager')
 const dispatch = require('../reducers/dispatch')
 const { identityManager, afsManager, afmManager } = require('../actions')
 const { switchLoginState } = require('../../../boot/tray')
+const { switchApplicationMenuLoginState } = require('../../../boot/menu')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 
@@ -36,6 +37,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
       }
     })
     switchLoginState(true)
+    switchApplicationMenuLoginState(true)
 
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
   } catch (err) {
