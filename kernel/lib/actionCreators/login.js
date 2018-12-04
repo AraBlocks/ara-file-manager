@@ -39,8 +39,6 @@ ipcMain.on(k.RECOVER, async (event, load) => {
 
     windowManager.pingView({ view: 'recover', event: k.RECOVERED })
   } catch (err) {
-    debug('Error recovering acct: %o', err)
-
     dispatch({
       type: k.FEED_MODAL, load: {
         modalName: 'recoveryFailure',
