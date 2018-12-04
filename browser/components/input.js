@@ -6,6 +6,7 @@ const Nanocomponent = require('nanocomponent')
 
 class Input extends Nanocomponent {
   constructor({
+    araIcon = false,
     cssClass = {},
     embeddedButton = {},
     field = '',
@@ -18,6 +19,7 @@ class Input extends Nanocomponent {
     super()
 
     this.props = {
+      araIcon,
       cssClass,
       embeddedButton,
       field,
@@ -69,19 +71,17 @@ class Input extends Nanocomponent {
     return html`
       <div class="
         ${styles.container} input-container
-        ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
-        "
+        ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator"
       >
-        <input
-          class="
-            ${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass
-            ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
-          "
-          oninput=${oninput}
+        <input class="
+          ${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass
+          ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
+          ${props.araIcon ? styles.icon + ' input-icon' : null}"
+          oninput="${oninput}"
           placeholder="${props.placeholder}"
           value="${state.value}"
-          type=${props.type}
-          ${props.readOnly ? 'readonly' : ''}
+          type="${props.type}"
+          "${props.readOnly ? 'readonly' : ''}"
         >
         ${generateButton()}
       </div>

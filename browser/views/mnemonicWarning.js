@@ -63,7 +63,7 @@ class MnemonicWarning extends Nanocomponent {
     const acctMsg = 'recover your account and login to your account on another computer.'
     const afsMsg = 'validate your ownership of this package.'
     return html`
-      <div class="${styles.container} modals-container">
+      <div class="${styles.container({ justifyContent: 'space-around', height: 95})} modals-container">
         <div class="${styles.logo} modals-logo">
           <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
@@ -91,7 +91,9 @@ class MnemonicWarning extends Nanocomponent {
               <span>Copied !</span>
             </div>
           </div>
-        ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
+          <div>
+            ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
+          </div>
       </div>
     `
   }

@@ -23,8 +23,6 @@ class Container extends Nanocomponent {
 		name,
 		fileList,
 		price,
-		priceManagement,
-		supernode,
 		tokenPrice,
 	}) {
 		super()
@@ -39,8 +37,6 @@ class Container extends Nanocomponent {
 			fileList,
 			oldPrice: price,
 			price,
-			priceManagement,
-			supernode,
 			tokenPrice,
 		}
 
@@ -143,7 +139,7 @@ class Container extends Nanocomponent {
 				</div>
 				<div class="${styles.content} ManageFileContainer-content">
 					This file has been published to the Ara Network. You can edit and update the file here. The changes will be pushed to all users on the network.<br><br>
-					This is also where you can find this file’s <b>distribution</b> link, which you will need for users to purchase this file with their Littlstar File Manager.
+					This is also where you can find this file’s <b>distribution</b> link, which you will need for users to purchase this file with their Ara File Manager.
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}

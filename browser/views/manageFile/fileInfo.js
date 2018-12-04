@@ -51,17 +51,11 @@ class FileInfo extends Nanocomponent {
 				parentState
 			}),
 			priceInput: new Input({
+				araIcon: true,
 				field: 'price',
 				parentState,
 				placeholder: 'Price',
 				type: 'number',
-				embeddedButton: {
-					option: 'selection',
-					optionList: [
-						'ARA',
-					],
-					field: 'currency'
-				},
 				renderView
 			})
 		}
