@@ -49,7 +49,6 @@ class Recover extends Nanocomponent {
         onclick: this.recover.bind(this)
       })
     }
-    window.state = this.state
   }
 
   recover(e) {
