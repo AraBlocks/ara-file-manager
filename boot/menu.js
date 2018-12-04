@@ -1,8 +1,11 @@
 const { Menu, app } = require('electron')
+const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('electron-window-manager')
+const k = require('../lib/constants/stateManagement')
 
 let contextMenu
 function createMenu() {
-  const application = {
+  application = {
     label: "Application",
     submenu: [
       {
@@ -15,37 +18,37 @@ function createMenu() {
       {
         label: 'File Manager',
         click: () => {
-
+          windowManager.openWindow('filemanager')
         }
-      }, 
+      },
       {
         label: 'Publish File',
         click: () => {
-
+          internalEmitter.emit(k.DEPLOY_PROXY)
         }
       },
       {
         label: 'Account',
         click: () => {
-
+          windowManager.openWindow('accountInfo')
         }
       },
       {
         label: 'Register',
         click: () => {
-
+          windowManager.openWindow('registration')
         }
       },
       {
         label: 'Login',
         click: () => {
-
+          windowManager.openWindow('login')
         }
       },
       {
         label: 'Log Out',
         click: () => {
-
+          internalEmitter.emit(k.LOGOUT)
         }
       },
       {
@@ -123,6 +126,17 @@ function createMenu() {
   ]
   contextMenu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(contextMenu)
+  switchApplicationMenuLoginState(false)
 }
 
-module.exports = createMenu
+function switchApplicationMenuLoginState(loggedIn) {
+  const applicationMenu = contextMenu.items[0].submenu.items
+  applicationMenu[2].visible = loggedIn //FileManager
+  applicationMenu[3].visible = loggedIn //PublishFile
+  applicationMenu[4].visible = loggedIn //Account Info
+  applicationMenu[5].visible = !loggedIn //Register
+  applicationMenu[6].visible = !loggedIn //Login
+  applicationMenu[7].visible = loggedIn //Log out
+}
+
+module.exports = { createMenu, switchApplicationMenuLoginState }

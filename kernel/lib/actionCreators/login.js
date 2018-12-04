@@ -17,6 +17,7 @@ const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
 const { switchLoginState } = require('../../../boot/tray')
+const { switchApplicationMenuLoginState } = require('../../../boot/menu')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
@@ -47,6 +48,7 @@ async function logout() {
     await farmerManager.stopAllBroadcast(store.farmer.farm)
     dispatch({ type: k.LOGOUT })
     switchLoginState(false)
+    switchApplicationMenuLoginState(false)
     windowManager.closeWindow('filemanager')
     windowManager.closeWindow('publishFileView')
     windowManager.closeWindow('accountInfo')
@@ -98,6 +100,7 @@ async function login(_, load) {
     })
 
     switchLoginState(true)
+    switchApplicationMenuLoginState(true)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
     const purchasedDIDs = (await araContractsManager.getLibraryItems(load.userAid)).map(did => did.slice(-64))
     const purchased = await afsManager.surfaceAFS({
