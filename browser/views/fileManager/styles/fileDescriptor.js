@@ -25,7 +25,7 @@ module.exports = {
 
   exclamation: css`
     :host {
-      color: red;
+      color: ${colorSelector('orange')};
       font-size: 17px;
     }
   `,

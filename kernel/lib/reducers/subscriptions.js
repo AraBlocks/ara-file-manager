@@ -7,6 +7,7 @@ module.exports = (state, { load = null, type }) => {
     case k.GOT_SUBSCRIPTIONS:
       state.published.push(...load.publishedSubs)
       state.rewards.push(...load.rewardsSubs)
+      state.transfer = load.transferSub
       break
     case k.GOT_PUBLISHED_SUB:
       state.published.push(load.publishedSub)

@@ -10,7 +10,6 @@ const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
-
 class AfsFileRow extends Nanocomponent {
 	constructor({
 		did,
@@ -126,12 +125,14 @@ class AfsFileRow extends Nanocomponent {
 
 	renderContextMenu(e) {
 		const contextMenu = e.target.closest('tr').children[0]
+
 		contextMenu.style.left = e.clientX + 1 + 'px'
 		contextMenu.style.top = e.clientY + 1 + 'px'
 		contextMenu.style.display = 'block'
+
 		contextMenu.addEventListener('mouseout', function (event) {
 			try {
-				const e = event.toElement || event.relatedTarget;
+				const e = event.toElement || event.relatedTarget
 				e.parentNode == this || e == this
 					? null
 					: contextMenu.style.display = 'none'
@@ -150,8 +151,8 @@ class AfsFileRow extends Nanocomponent {
 		return html`
 			<tr
 				class="item afsFileRow-item"
-				onclick=${fileClicked}
-				oncontextmenu=${renderContextMenu}
+				onclick="${fileClicked}"
+				oncontextmenu="${renderContextMenu}"
 			>
 				${children.menuItem}
 				<td class="${styles.fileNameCell} afsFileRow-fileNameCell" >

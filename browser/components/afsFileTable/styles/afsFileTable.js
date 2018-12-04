@@ -28,7 +28,7 @@ module.exports = {
 		}
 
 		:host .item:hover {
-			background-color: var(--ara-grey);
+			background-color: #f0f8ff;
 		}
 
 		:host tbody {

@@ -1,39 +1,39 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:util')
+const k = require('../../../lib/constants/stateManagement')
 const afs = require('ara-filesystem')
 const araContractsManager = require('./araContractsManager')
-const k = require('../../../lib/constants/stateManagement')
+const araUtil = require('ara-util')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
-const { web3 } = require('ara-context')()
+const createContext = require('ara-context')
 
 async function descriptorGenerator(did, opts = {}) {
 	try {
-		did = did.slice(-64)
-		const path = await makeAfsPath(did)
-		const AFSExists = fs.existsSync(path)
+		did = araUtil.getIdentifier(did)
+		const AFSPath = await makeAfsPath(did)
+		const AFSExists = fs.existsSync(AFSPath)
 		const meta = AFSExists ? await readFileMetadata(did) : null
-		let price
-		try { price = Number(await araContractsManager.getAFSPrice({ did })) }
-		catch (err) {}
+
 		const descriptor = {
 			allocatedRewards: 0,
 			did,
 			downloadPercent: AFSExists ? 1 : 0,
 			datePublished: meta ? meta.timestamp : null,
 			earnings: 0,
-			name: meta ? meta.title : 'Unnamed File',
+			name: meta ? meta.title : did.slice(0, 15) + '...',
 			owner: false,
+			path: AFSPath,
 			peers: 0,
-			price,
-			path,
+			price: Number(await araContractsManager.getAFSPrice({ did })),
 			redeeming: false,
 			shouldBroadcast: false,
 			size: meta ? meta.size : 0,
 			status: AFSExists ? k.DOWNLOADED_PUBLISHED : k.AWAITING_DOWNLOAD
 		}
+
 		return { ...descriptor, ...opts }
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
@@ -41,7 +41,14 @@ async function descriptorGenerator(did, opts = {}) {
 }
 
 async function getNetwork() {
-	return await web3.eth.net.getNetworkType()
+	const ctx = createContext()
+	await ctx.ready()
+	const { web3 } = ctx
+
+	const networkType =  await web3.eth.net.getNetworkType()
+
+	ctx.close()
+	return networkType
 }
 
 function makeAfsPath(did) {
@@ -49,13 +56,14 @@ function makeAfsPath(did) {
 }
 
 async function readFileMetadata(did) {
+	let fileInfo
 	try {
 		const data = await afs.metadata.readFile({ did })
-		return JSON.parse(data.fileInfo)
+		fileInfo = JSON.parse(data.fileInfo)
 	} catch (err) {
 		debug('No metadata for %s', did)
-		return null
 	}
+	return fileInfo
 }
 
 async function writeFileMetaData({

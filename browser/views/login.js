@@ -1,5 +1,6 @@
 'use strict'
 
+const afmManager = require('../../kernel/lib/actions/afmManager')
 const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
@@ -14,7 +15,7 @@ class Login extends Nanocomponent {
 
     this.state = {
       password: '',
-      userDID: ''
+      userDID: afmManager.getCachedUserDid() 
     }
 
     this.children = {
@@ -62,7 +63,7 @@ class Login extends Nanocomponent {
       userDIDInput: new Input({
         parentState: this.state,
         field: 'userDID',
-        placeholder: 'Ara Identity'
+        placeholder: 'Ara ID'
       }),
     }
 
@@ -96,7 +97,7 @@ class Login extends Nanocomponent {
           app to buy, sell, share, and earn rewards for files on
           the Ara Network across the web.
           <br><br>
-          To get started, log in with your <b>Ara id</b>
+          To get started, log in with your <b>Ara ID</b>
         </p>
         <form class="${styles.form} login-form" onsubmit=${login}>
           ${children.userDIDInput.render()}
@@ -104,7 +105,7 @@ class Login extends Nanocomponent {
           ${children.loginButton.render({})}
         </form>
         <div class="${styles.buttonHolder} login-buttonHolder">
-          <b>Need to recover your id?</b>
+          <b>Need to recover your Ara ID?</b>
           ${children.recoverButton.render({})}
           <div style="height: 10px;"></div>
           <b>Don't have an account?</b>

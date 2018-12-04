@@ -25,7 +25,7 @@ if (shouldQuit) {
   return
 }
 
-app.setName('Ara Content Manager')
+app.setName('Ara File Manager')
 app.on('ready', () => {
   debug('App initialzed')
   windowManager.init()

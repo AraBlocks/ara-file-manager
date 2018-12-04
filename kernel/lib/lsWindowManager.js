@@ -47,6 +47,7 @@ windowManager.setSize = (view) => {
       width = 300
       height = 500
       break
+    case 'redeemConfirmModal':
     case 'reDownloadModal':
     case 'generalMessageModal':
       width = 340
@@ -54,7 +55,7 @@ windowManager.setSize = (view) => {
       break
     case 'checkoutModal1':
       width = 340
-      height = 270
+      height = 300
       break
     case 'deleteConfirmModal':
       width = 340
@@ -62,9 +63,10 @@ windowManager.setSize = (view) => {
       break
     case 'filemanager':
       width = 490
-      height = 730
+      height = 690
       break
     case 'generalPleaseWaitModal':
+    case 'generalActionModal':
       width = 340
       height = 220
       break
@@ -84,13 +86,14 @@ windowManager.setSize = (view) => {
       width = 650
       height = 730
       break
+    case 'deployEstimate':
     case 'publishConfirmModal':
       width = 360
       height = 225
       break
     case 'publishSuccessModal':
       width = 340
-      height = 360
+      height = 300
       break
     case 'registration':
     case 'recover':
@@ -102,9 +105,12 @@ windowManager.setSize = (view) => {
       height = 900
       break
     case 'confirmSendModal':
-    case 'updateConfirmModal':
       width = 360
       height = 240
+      break
+    case 'updateConfirmModal':
+      width = 340
+      height = 210
       break
     default:
       width = 300
@@ -130,6 +136,9 @@ windowManager.loadURL = (view) => {
       break
     case 'developer':
       file = 'index-dev'
+      break
+    case 'deployEstimate':
+      file = 'deploy-estimate'
       break
     case 'recover':
       file = 'recover'
@@ -165,7 +174,7 @@ windowManager.loadURL = (view) => {
   return windowManager.makeFilePath({ file, parent: file.includes('-test') ? 'test' : 'browser' })
 }
 
-windowManager.makeFilePath = ({ file, parent }) => `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}.html`)}`
+windowManager.makeFilePath = ({ file, parent }) => `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}` + ".html")}`
 
 windowManager.openDeepLinking = async (deepLinkingUrl) => {
   debug('Opening deeplink: %s', deepLinkingUrl)
@@ -217,7 +226,7 @@ windowManager.openWindow = (view) => {
 				{
 					backgroundColor: 'white',
 					frame: false,
-					...windowManager.setSize(view)
+          ...windowManager.setSize(view)
 				}
 			)
 }

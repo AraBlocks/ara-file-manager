@@ -3,12 +3,29 @@
 const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const k = require('../../../lib/constants/stateManagement')
 const actionsUtil = require('./utils')
+const afmManager = require('./afmManager')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
 const farmerManager = require('../actions/farmerManager')
 const mirror = require('mirror-folder')
 const path = require('path')
 const { shell } = require('electron')
+
+async function createDeployEstimateAfs(userDID, password) {
+	try {
+    const userData = afmManager.getUserData(userDID)
+		if (userData.deployEstimateDid == null) {
+			let { afs, afs: { did } } = await araFilesystem.create({ owner: userDID, password })
+			await afs.close();
+      userData.deployEstimateDid = did
+			afmManager.saveUserData({ userDID, userData })
+			return did
+		}
+		return userData.deployEstimateDid
+	} catch(err) {
+		debug('Error creating afs for deploy proxy estimate %o', err)
+	}
+}
 
 async function exportFile({ did, exportPath, filePath, completeHandler }) {
 	debug('Exporting file %s to %s', filePath, exportPath)
@@ -105,13 +122,15 @@ async function getUpdateAvailableStatus(item) {
   } catch (err) {
     debug('Error getting update available status')
   }
-  return { ...item, status: updateAvailable && item.downloadPercent === 1 ? k.UPDATE_AVAILABLE : item.status }
+  return {
+    ...item,
+    status: updateAvailable && item.downloadPercent === 1 ? k.UPDATE_AVAILABLE : item.status
+  }
 }
-
 
 async function surfaceAFS({ dids, DCDNStore, published = false }) {
 	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
-		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
+		shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
 		owner: published
 	})))
 }
@@ -126,6 +145,7 @@ function unarchiveAFS({ did }) {
 }
 
 module.exports = {
+  createDeployEstimateAfs,
   exportFile,
   exportFolder,
   getFileList,

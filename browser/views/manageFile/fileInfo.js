@@ -10,11 +10,14 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileInfo extends Nanocomponent {
-	constructor({
-		did,
-		parentState,
-		renderView
-	}) {
+	constructor(props) {
+		const {
+			addItems,
+			did,
+			parentState,
+			renderView
+		} = props
+
 		super()
 
 		this.props = { did, parentState, renderView }
@@ -27,12 +30,11 @@ class FileInfo extends Nanocomponent {
 				embeddedButton: {
 					option: 'button',
 					children: 'Copy',
-					onclick: () => {
-						deeplink.copyDeeplink(parentState.did, parentState.name)
-					}
+					onclick: () => deeplink.copyDeeplink(parentState.did, parentState.name)
 				}
 			}),
 			fileTable: new FileTable({
+				addItems,
 				did,
 				parentState,
 				field: 'fileList',
@@ -49,17 +51,11 @@ class FileInfo extends Nanocomponent {
 				parentState
 			}),
 			priceInput: new Input({
+				araIcon: true,
 				field: 'price',
 				parentState,
 				placeholder: 'Price',
 				type: 'number',
-				embeddedButton: {
-					option: 'selection',
-					optionList: [
-						'ARA',
-					],
-					field: 'currency'
-				},
 				renderView
 			})
 		}

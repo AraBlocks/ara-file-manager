@@ -11,8 +11,8 @@ function generalModalText(modalName, load) {
 			description = html `<div><b>${load.amount} Ara</b> has been sent.</div>`
 			break
 		case 'alreadyOwn':
-			title = 'You already own this content'
-			description = 'You can not purchase this content again'
+			title = 'You already own this package'
+			description = 'You can not purchase this package again'
 			break
 		case 'diskSpaceModal':
 			title = 'Not enough disk space'
@@ -50,6 +50,10 @@ function generalModalText(modalName, load) {
 			title = 'Invalid Amount'
 			description = 'Please enter an amount that is greater than 0.'
 			break
+		case 'invalidDid':
+			title = 'Invalid DID'
+			description = 'Please enter a valid DID'
+			break
 		case 'loginFail':
 			title = 'Login Failed'
 			description = 'Please check your Idenitity and/or password'
@@ -61,6 +65,10 @@ function generalModalText(modalName, load) {
 		case 'notEnoughAra2':
 			title = 'Not enough Ara'
 			description = html `<div>You do not have enough Ara Tokens to publish<br> this file.</div>`
+			break
+		case 'notEnoughEth':
+			title = 'Not enough Ether'
+			description = html `<div>You do not have enough Ether to complete<br> this transaction.</div>`
 			break
 		case 'notLoggedIn':
 			title = 'Not Logged In'
@@ -82,11 +90,6 @@ function generalModalText(modalName, load) {
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
-		case 'walletEmpty':
-			title = 'Not enough ARA'
-			description = html `<div>You do not have enough Ara Tokens to continue using your current File Manager services.<br><br>
-			<b>Price Maintenance</b> and <b>Littlstar Supernode</b> support has been deactivated accross your account.</div>`
-			break
 	}
 	return { description, title }
 }
@@ -96,9 +99,6 @@ function waitModalText(modalName, load) {
 	switch (modalName) {
 		case 'pleaseWait':
 			description = html`<div>Completing transaction and connecting to<br>peers on the network.</div>`
-			break
-		case 'pleaseWaitUploading':
-			description = html `<div>Publishing <b>${load.fileName}</b> to Ara Network and uploading to Littlstar Supernode.</div>`
 			break
 		case 'pleaseWaitUploading2':
 			description = html `<div>Updating <b>${load.fileName}</b> on the Ara Network.</div>`
@@ -121,7 +121,24 @@ function waitModalText(modalName, load) {
 	return { description, waitTime }
 }
 
+function actionModalText(modalName) {
+	let description
+	let title
+	switch (modalName) {
+		case 'logoutConfirm':
+			title = 'Log Out?'
+			description = 'This will not alter any files on this computer. Only files linked to the current Ara ID can be shared on the network.'
+			break
+		case 'quitConfirm':
+			title = 'Quit File Manager?'
+			description = 'You will not be able to earn Ara Token rewards while File Manager is offline.'
+			break
+	}
+	return { title, description }
+}
+
 module.exports = {
+	actionModalText,
 	generalModalText,
 	waitModalText
 }

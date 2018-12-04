@@ -38,21 +38,26 @@ module.exports = {
     }
   `,
 
-  container: css`
-    :host {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 95%;
-      text-align: center;
-      width: 90%;
-    }
+  container({
+    justifyContent = 'space-between',
+    height = 90
+  }) {
+    return css`
+      :host {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: ${height}%;
+        justify-content: ${justifyContent};
+        text-align: center;
+        width: 90%;
+      }
 
-    :host > * {
-      width: 95%;
-    }
-  `,
+      :host > * {
+        width: 95%;
+      }
+    `
+  },
 
   containerCenter: css`
     :host {
@@ -80,19 +85,22 @@ module.exports = {
       justify-content: space-around;
       width: 90%;
     }
-
-    :host > * {
-      width: 95%;
-    }
   `,
 
   clipboard: css`
+    :host {
+      width: 100%;
+    }
+
     :host span {
       animation-duration: 1000ms;
       color: ${colorSelector('orange')};
-      left: 43%;
+      left: 0;
+      font-size: 18px;
       opacity: 0;
       position: absolute;
+      width: 100%;
+      text-align: center;
       z-index: -1;
     }
   `,
@@ -139,10 +147,6 @@ module.exports = {
       justify-content: center !important;
       display: flex !important;
       width: 100%;
-    }
-
-    :host > div {
-      width: 35%;
     }
   `,
 
@@ -245,6 +249,19 @@ module.exports = {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+    }
+  `,
+
+  truncateText: css`
+    :host {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    :host > b {
+      font-family: ${fonts.bold}
     }
   `
 }

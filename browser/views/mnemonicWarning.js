@@ -9,17 +9,16 @@ const { clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 
 class MnemonicWarning extends Nanocomponent {
-  constructor({ mnemonic }) {
+  constructor({ mnemonic = null, isAFS = false }) {
     super()
-
-    this.props = { mnemonic }
+    this.props = { mnemonic, isAFS }
     this.state = { copied: false }
 
     this.children = {
       copyMnemonicButton: new Button({
-        children: "Copy Mnemonic",
+        children: "Copy mnemonic",
         cssClass: {
-          opts: { color: 'green', fontSize: '10px' }
+          opts: { color: 'green' }
         },
         onclick: this.copyMnemonic.bind(this)
       }),
@@ -28,7 +27,9 @@ class MnemonicWarning extends Nanocomponent {
         children: "I've saved my mnemonic",
         cssClass: { name: 'thinBorder' },
         onclick: () => {
-          windowManager.openWindow('filemanager')
+          this.props.isAFS
+            ? windowManager.openWindow('publishFileView')
+            : windowManager.openWindow('filemanager')
           windowManagement.closeModal('mnemonicWarning')
         }
       })
@@ -58,8 +59,11 @@ class MnemonicWarning extends Nanocomponent {
   createElement() {
     const { children, props, state } = this
     const { mnemonic } = props
+
+    const acctMsg = 'recover your account and login to your account on another computer.'
+    const afsMsg = 'validate your ownership of this package.'
     return html`
-      <div class="${styles.container} modals-container">
+      <div class="${styles.container({ justifyContent: 'space-around', height: 95})} modals-container">
         <div class="${styles.logo} modals-logo">
           <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
@@ -71,7 +75,7 @@ class MnemonicWarning extends Nanocomponent {
             DO NOT LOSE THIS MNEMONIC
           </div>
           <div class="${styles.smallMessage({})} modal-smallMessage">
-            This 12 word phrase is the ONLY way to recover your account and login to your account on another computer
+            This 12 word phrase is the ONLY way to ${props.isAFS ? afsMsg : acctMsg}
             Please write this phrase down and keep it in a secure place.
             You will never be shown this mnemonic again
           </div>
@@ -80,14 +84,16 @@ class MnemonicWarning extends Nanocomponent {
           <div>${mnemonic.split(' ').slice(0, 4).map(word => html`<b> ${word}</b>`)}</div>
           <div>${mnemonic.split(' ').slice(4, 8).map(word => html`<b> ${word}</b>`)}</div>
           <div>${mnemonic.split(' ').slice(8).map(word => html`<b> ${word}</b>`)}</div>
-          <div class="${styles.copyItemContainer} modal-copyItemContainer" >
-            <div class="${styles.clipboard} modal-clipBoard" style="width: 45%;">
+        </div>
+        <div class="${styles.copyItemContainer} modal-copyItemContainer" >
+            <div class="${styles.clipboard} modal-clipBoard">
               ${children.copyMnemonicButton.render({})}
               <span>Copied !</span>
             </div>
           </div>
-        </div>
-        ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
+          <div>
+            ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
+          </div>
       </div>
     `
   }

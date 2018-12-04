@@ -1,34 +1,33 @@
 'use strict'
 
 const Button = require('../../components/button')
-const { DOWNLOAD } = require('../../../lib/constants/stateManagement')
+const { CONFIRM_REDEEM } = require('../../../lib/constants/stateManagement')
 const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
 
-module.exports = ({ aid, fileName, price }) => {
+module.exports = ({ estimate, did }) => {
   const downloadButton = new Button({
-    children: 'Download',
+    children: 'Confirm',
     onclick: () => {
-      windowManagement.openWindow('filemanager')
-      windowManagement.emit({ event: DOWNLOAD, load: { aid, fileName, price } })
-      windowManagement.closeModal('reDownloadModal')
+      windowManagement.emit({ event: CONFIRM_REDEEM, load: { did } })
+      windowManagement.closeModal('redeemConfirmModal')
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => windowManagement.closeModal('reDownloadModal')
+    onclick: () => windowManagement.closeModal('redeemConfirmModal')
   })
   return html`
     <div class="${styles.container({})} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
-        Download this file?
+        Redeem your rewards?
       </div>
       <div class="${styles.verticalContainer} modal-verticalContainer">
         <div class="${styles.smallMessage({})} modal-smallMessage">
-          The download will cost:
+          This will cost:
         </div>
-        <span class="${styles.postheader} modals-postheader">${price} Ara</span>
+        <span class="${styles.postheader} modals-postheader">${estimate} eth</span>
       </div>
       <div>
         ${downloadButton.render()}
