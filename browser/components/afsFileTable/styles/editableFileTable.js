@@ -7,9 +7,26 @@ module.exports = {
 	colors,
 	fonts,
 
+	addOptions: css`
+		:host {
+			background-color: white;
+			bottom: 0;
+			padding: 5px 0 0 20px;
+			width: 100%;
+		}
+	`,
+
+	add: css`
+		:host {
+			color: var(--ara-teal);
+			cursor: pointer;
+			font-family: ${fonts.bold};
+			font-size: 14px;
+		}
+	`,
+
 	container: css`
 		:host {
-			height: 325px;
 			overflow: scroll;
 			width: 100%;
 		}
@@ -26,6 +43,11 @@ module.exports = {
 			height: 50%;
 			justify-content: flex-end;
 		}
+
+		:host > div {
+			font-family: ${fonts.bold};
+			font-size: 14px;
+		}
 	`,
 
 	fileTable: css`
@@ -39,8 +61,8 @@ module.exports = {
 		:host th {
 			border: 1px solid var(--ara-grey);
 			height: 30px;
-			padding-left: 20px;
-			padding-right: 5px;
+			padding-left: 12px;
+			padding-right: 12px;
 		}
 
 		:host td {
@@ -54,7 +76,7 @@ module.exports = {
 		}
 
 		:host .item:hover {
-			background-color: var(--ara-grey);
+			background-color: #f0f8ff;
 		}
 
 		:host tbody {

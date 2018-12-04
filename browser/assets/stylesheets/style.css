@@ -22,8 +22,11 @@ a {
   text-decoration: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
 ::-webkit-scrollbar {
   display: none;
+  margin: 0;
 }
 
 /* CSS variables */
@@ -72,7 +75,7 @@ a {
   justify-content: center;
 }
 
-.spinner, .spinner:after, .spinner-small-blue, .spinner-small-red, .spinner-tiny-red, .spinner:after {
+.spinner, .spinner:after, .spinner-small-blue, .spinner-small-teal, .spinner-tiny-teal, .spinner:after {
   border-radius: 50%;
   width: 6em;
   height: 6em;
@@ -101,21 +104,21 @@ a {
   animation: spin 800ms infinite linear;
 }
 
-.spinner-small-red {
+.spinner-small-teal {
   font-size: 2px;
   position: relative;
   text-indent: -9999em;
-  border: .5em solid var(--ara-red);
+  border: .5em solid var(--ara-teal);
   border-top: .5em solid rgba(255, 255, 255, 0.2);
   transform: translateZ(0);
   animation: spin 800ms infinite linear;
 }
 
-.spinner-tiny-red {
+.spinner-tiny-teal {
   font-size: 1px;
   position: relative;
   text-indent: -9999em;
-  border: .5em solid var(--ara-red);
+  border: .5em solid var(--ara-teal);
   border-top: .5em solid rgba(255, 255, 255, 0.2);
   transform: translateZ(0);
   animation: spin 800ms infinite linear;
@@ -124,6 +127,11 @@ a {
 .fadeInUp {
   animation: fadeInUp;
   transition: all ease-in-out;
+}
+
+.expand {
+  animation: expand;
+  transition: all ease;
 }
 
 .ants {
@@ -185,6 +193,17 @@ a {
   100% {
     transform: translate(0, -35px);
     opacity: .7;
+  }
+}
+
+@keyframes expand {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
   }
 }
 

@@ -25,7 +25,7 @@ module.exports = (load) => {
   })
 
   return html`
-    <div class="${styles.container} modals-container">
+    <div class="${styles.container({})} modals-container">
       <div>
         <div class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin">
           Publish Now?
@@ -33,7 +33,7 @@ module.exports = (load) => {
         <div class="${styles.verticalContainer} modal-verticalContainer">
           <div class="${styles.smallMessage({})} modal-smallMessage">
             By publishing this file, you certify that you have the
-            <div class="${styles.smallMessage({ color: 'blue' })} modal-smallMessage">
+            <div class="${styles.smallMessage({ color: 'orange' })} modal-smallMessage">
               legal right to publish and distribute this content.
             </div>
             <br>Publishing this file will cost:
@@ -43,8 +43,10 @@ module.exports = (load) => {
           </span>
         </div>
       </div>
-      ${publishButton.render({})}
-      ${cancelbutton.render({})}
+      <div>
+        ${publishButton.render({})}
+        ${cancelbutton.render({})}
+      </div>
     </div>
   `
 }

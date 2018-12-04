@@ -51,7 +51,7 @@ module.exports = {
   sectionContainer: css`
     :host {
       animation: fadein 1500ms;
-      height: 475px;
+      height: 450px;
       overflow-y: scroll;
     }
   `,

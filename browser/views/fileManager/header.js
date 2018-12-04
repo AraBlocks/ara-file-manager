@@ -3,13 +3,15 @@
 
 const Button = require('../../components/button')
 const { clipboard } = require('electron')
-const { CLEAN_UI } = require('../../../lib/constants/stateManagement')
+const { DEPLOY_PROXY } = require('../../../lib/constants/stateManagement')
+const { emit } = require('../../lib/tools/windowManagement')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
 const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
+const araUtil = require('ara-util')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
 
@@ -32,7 +34,7 @@ class Header extends Nanocomponent {
         cssClass: { opts: { fontSize: 14 } },
         onclick: () => {
           if (account.pendingTransaction) { return }
-          windowManagement.openWindow('publishFileView')
+          emit({ event: DEPLOY_PROXY })
         }
       }),
       closeButton: new UtilityButton({ children: 'close' }),
@@ -74,7 +76,7 @@ class Header extends Nanocomponent {
     return html`
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader">
-          <div onclick=${() => windowManagement.emit({ event: CLEAN_UI })}>
+          <div>
             <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png"/>
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
@@ -90,16 +92,16 @@ class Header extends Nanocomponent {
             <div
               data-tooltip="Copy to Clipboard"
               class="${styles.didHolder} header-didHolder"
-              onclick=${({ target }) => {
-        target.parentElement.dataset.tooltip = 'Copied!'
-        target.parentElement.dispatchEvent(eventMouseEnter)
-        target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
-        clipboard.writeText(props.userDID)
-      }}
-              onmouseenter=${({ target }) => target.style.backgroundColor = '#d0d0d0'}
-              onmouseleave=${({ target }) => target.style.backgroundColor = ''}
+              onclick="${({ target }) => {
+                target.parentElement.dataset.tooltip = 'Copied!'
+                target.parentElement.dispatchEvent(eventMouseEnter)
+                target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
+                clipboard.writeText(props.userDID)
+              }}"
+              onmouseenter="${({ target }) => target.style.backgroundColor = '#d0d0d0'}"
+              onmouseleave="${({ target }) => target.style.backgroundColor = ''}"
             >
-              <b>ID: ${props.userDID.slice(8, 14)}...</b>
+              <b>ID: ${araUtil.getIdentifier(props.userDID).slice(0,6)}...</b>
             </div>
             <div>
               ${araBalance >= 0 ? balanceElements : 'Calculating Balance...'}

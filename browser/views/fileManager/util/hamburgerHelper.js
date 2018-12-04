@@ -13,7 +13,15 @@ module.exports = ({
   shouldBroadcast,
   status
 }) => {
-  const menuItems = [{ children: 'Copy Link', onclick: () => deeplink.copyDeeplink(did, name) }]
+  const menuItems = [
+    { children: 'Copy Link',
+      onclick: (e) => {
+        deeplink.copyDeeplink(did, name)
+        e.stopPropagation()
+      },
+      onclickText: 'Copied!'
+    }
+  ]
   menuItems.addItem = function (children, event) {
     this.push({ children, onclick: () => windowManagement.emit({ event, load: { did, name } }) })
   }
@@ -30,6 +38,7 @@ module.exports = ({
         menuItems.addItem('Download AFS', k.DOWNLOAD)
         break
       case k.UPDATE_AVAILABLE:
+        menuItems.addItem('Open AFS', k.OPEN_AFS)
         menuItems.addItem('Update AFS', k.DOWNLOAD)
         break
       case k.PAUSED:

@@ -19,7 +19,8 @@ module.exports = {
     araLightBlack: '#444444',
     araRed: '#fc2636',
     araPink: '#fbe6e6',
-    araOrange: 'var(--ara-orange)'
+    araOrange: 'var(--ara-orange)',
+    araTeal: 'var(--ara-teal)'
   },
 
   buttonSelector(type) {
@@ -31,7 +32,7 @@ module.exports = {
           cssClass: {
             name: 'smallInvisible',
             opts: {
-              color: 'blue',
+              color: 'orange',
               weight: 'light'
             }
           }
@@ -59,6 +60,7 @@ module.exports = {
   },
 
   colorSelector(color, hoverState = false) {
+
     let selectedColor
     switch (color) {
       case 'black':
@@ -86,6 +88,8 @@ module.exports = {
       case 'teal':
         selectedColor = !hoverState ? 'var(--ara-teal)' : '#3c999c'
         break
+      case 'pink':
+        selectedColor = '#fbe6e6'
       default:
         selectedColor = !hoverState ? 'var(--ara-red)' : 'green'
     }

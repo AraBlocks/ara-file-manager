@@ -6,10 +6,7 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class FileSelector extends Nanocomponent {
-	constructor({
-		field,
-		parentState
-	}) {
+	constructor({ field, parentState }) {
 		super()
 
 		this.props = { field, parentState }

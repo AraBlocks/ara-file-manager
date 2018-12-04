@@ -1,7 +1,7 @@
 'use strict'
 
 const Button = require('../../components/button')
-const { emit } = require('../../lib/tools/windowManagement')
+const { windowManagement, fileSystemManager } = require('../../lib/tools')
 const FileInfo = require('./fileInfo')
 const { PUBLISH } = require('../../../lib/constants/stateManagement')
 const overlay = require('../../components/overlay')
@@ -13,56 +13,67 @@ const Nanocomponent = require('nanocomponent')
 const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
-	constructor({ account }) {
+	constructor({ account, contentDID }) {
 		super()
 
 		this.state = {
 			currency: '',
 			fileName: '',
 			fileList: [],
-			price: null,
+			price: ''
 		}
 
-		this.props = { account }
+		this.props = { account, contentDID }
 
 		this.children = {
 			fileInfo: new FileInfo({
+				addItems: this.addItems.bind(this),
 				parentState: this.state,
-				renderView: this.renderView.bind(this)
+				renderView: () => this.render.bind(this)({})
 			}),
 			publishButton: new Button({
-				children: ['Publish'],
 				cssClass: { name: 'thinBorder'},
+				children: [
+					'Publish',
+					html`<span style="font-family: ProximaNova-light;"> (0 B)</span>`
+				],
 				onclick: this.publishFile.bind(this)
 			}),
-			utilityButton: new UtilityButton({})
+			utilityButton: new UtilityButton({
+				onclick: () => {
+					windowManagement.emit({ event: k.CHANGE_PENDING_TRANSACTION_STATE, load: false })
+					windowManagement.closeWindow()
+				}
+			})
 		}
 
+		this.rerender = this.rerender.bind(this)
 	}
 
-	update() {
-		return true
-	}
-
-	renderView() {
-		this.render({})
+	addItems(items) {
+		const itemsInfo = items.map(fileSystemManager.getFileInfo)
+		this.state.fileList.push(...itemsInfo)
+		this.rerender()
 	}
 
 	publishFile() {
 		const { fileName, fileList, price } = this.state
-		const { account } = this.props
+		const { account, contentDID } = this.props
 		const paths = fileList.map(file => file.fullPath)
 		const load = {
+			contentDID,
 			userAid: account.userAid,
 			password: account.password,
 			paths,
 			name: fileName || 'Unnamed',
 			price
 		}
-		if (fileList.length != 0 && !account.pendingTransaction) {
-			emit({ event: PUBLISH, load })
-		}
+		if (fileList.length !== 0) { windowManagement.emit({ event: PUBLISH, load }) }
 		this.render({})
+	}
+
+	update() {
+		return true
 	}
 
 	createElement({ spinner = false }) {
@@ -77,16 +88,17 @@ class Container extends Nanocomponent {
 						${children.utilityButton.render({ children: 'close' })}
 					</div>
 					<div class="${styles.content} PublishFileContainer-content">
-						Publish your content for distribution on the Ara Network. You can publish a single file or an entire directory as a single
-						asset. Once published, use the provided distribution link to allow users to purchase your content.<br><br>
-						<b>Note:</b> Ara is a decentralized network. at least one computer or supernode must be connected and hosting this file for users
+						Publish your package for distribution on the Ara Network. You can publish a single file or an entire directory as a single
+						asset. Once published, use the provided distribution link to allow users to purchase your package.<br><br>
+						<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
 						to be able to download it.
 					</div>
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({})}
 					${children.publishButton.render({
-						cssClass: (state.fileList.length === 0) || props.account.pendingTransaction
-							? { name: 'thinBorder' } : { name: 'standard' },
+						cssClass: (state.fileList.length === 0)
+							? { name: 'thinBorder' }
+							: { name: 'standard' },
 						children: [
 							'Publish',
 							html`

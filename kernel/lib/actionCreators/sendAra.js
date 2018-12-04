@@ -1,7 +1,8 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:download')
-const { araContractsManager } = require('../actions')
+const { araContractsManager, identityManager } = require('../actions')
+const araUtil = require('ara-util')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
@@ -10,17 +11,22 @@ const { web3 } = require('ara-util')
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.SEND_ARA, (event, load) => {
+	let modalName = 'generalFailure'
 	try {
 		debug('%s heard', k.SEND_ARA)
-		if (!web3.isAddress(load.walletAddress)) {
-			dispatch({ type: k.FEED_MODAL, load: { modalName: 'invalidAddress' } })
-			windowManager.openModal('generalMessageModal')
+		const isValidEthAddress = web3.isAddress(load.receiver)
+		const isValidDid = identityManager.isValidDid(load.receiver)
+		if (!isValidDid && !isValidEthAddress) {
+			load.receiver.length >= 64
+				? modalName = 'invalidDid'
+				: modalName = 'invalidAddress'
+			throw new Error('invalid receiver or amount')
 		} else if (Number(load.amount) <= 0) {
-			dispatch({ type: k.FEED_MODAL, load: { modalName: 'invalidAmount' } })
-			windowManager.openModal('generalMessageModal')
+			modalName = 'invalidAmount'
+			throw new Error('invalid receiver or amount')
 		} else if (Number(load.amount) > store.account.araBalance) {
-			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughAra' } })
-			windowManager.openModal('generalMessageModal')
+			modalName = 'notEnoughAra'
+			throw new Error('invalid receiver or amount')
 		} else {
 			debug('Dispatching %s', k.FEED_MODAL)
 			dispatch({ type: k.FEED_MODAL, load })
@@ -28,20 +34,30 @@ ipcMain.on(k.SEND_ARA, (event, load) => {
 		}
 	} catch(err) {
 		debug('Error: %o', err)
+		dispatch({ type: k.FEED_MODAL, load: { modalName, callback: () => windowManager.openWindow('sendAra') } })
+		windowManager.openModal('generalMessageModal')
 	}
 })
 
 ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
+	const { account } = store
 	try {
 		debug('%s heard', k.CONFIRM_SEND_ARA)
 		let dispatchLoad = { modalName: 'sendingAra', load }
 		dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
 		windowManager.openModal('generalPleaseWaitModal')
 		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
-		araContractsManager.sendAra({
-			...load,
+		let walletAddress = load.receiver
+		if (!web3.isAddress(load.receiver)) {
+			walletAddress = await araUtil.getAddressFromDID(load.receiver)
+		}
+		await araContractsManager.sendAra({
+			amount: load.amount,
 			completeHandler: araSent,
-			errorHandler: failedToSend
+			errorHandler: failedToSend,
+			password: account.password,
+			userDID: account.userAid,
+			walletAddress,
 		})
 	} catch(err) {
 		debug('Error sending ara: %o', err)
@@ -64,6 +80,6 @@ async function araSent(amount) {
 
 function failedToSend() {
 	windowManager.closeModal('generalPleaseWaitModal')
-	dispatch({ type: k.FEED_MODAL, load: { modalName: 'generalFailure' }})
+	dispatch({ type: k.FEED_MODAL, load: { modalName: 'generalFailure', callback: () => windowManager.openWindow('sendAra') }})
 	windowManager.openModal('generalMessageModal')
 }

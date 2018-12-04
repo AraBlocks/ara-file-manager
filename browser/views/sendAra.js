@@ -15,15 +15,15 @@ class SendAra extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { walletAddress : '', amount: null }
+    this.state = { receiver : '', amount: null }
 
     this.children = {
 			closeButton: new UtilityButton({ children: 'close' }),
 
-      walletAddressInput: new Input({
-        placeholder: 'Wallet Address',
+      receiverInput: new Input({
+        placeholder: 'Wallet Address or DID',
         parentState: this.state,
-        field: 'walletAddress'
+        field: 'receiver'
 			}),
 
 			amountInput: new Input({
@@ -74,7 +74,7 @@ class SendAra extends Nanocomponent {
 				</p>
 				<div class=${styles.divider}></div>
         <form class=${styles.sendAraForm} onsubmit=${sendAra}>
-					${children.walletAddressInput.render({})}
+					${children.receiverInput.render({})}
 					${children.amountInput.render({})}
           ${children.sendButton.render({})}
         </form>

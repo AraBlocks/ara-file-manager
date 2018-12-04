@@ -7,8 +7,8 @@ const styles = require('./styles/container')
 const TestnetBanner = require('../../components/testnetBanner')
 const { utils } = require('../../lib/tools')
 const html = require('choo/html')
-const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
+const { shell } = require('electron')
 
 class Container extends Nanocomponent {
   constructor({ account, files }) {
@@ -19,7 +19,7 @@ class Container extends Nanocomponent {
       araBalance: account.araBalance,
       bannerToggled: true,
       files,
-      loadingLibrary: files.loadingLibrary
+      loadingLibrary: files.loadingLibrary,
     }
 
     this.children = {
@@ -31,16 +31,10 @@ class Container extends Nanocomponent {
       purchasedSection: new Section({ files, type: 'purchased' })
     }
 
-    this.removeBanner = this.removeBanner.bind(this)
     this.rerender = this.rerender.bind(this)
     this.renderSections = this.renderSections.bind(this)
-    this.shouldShowBanner = this.shouldShowBanner.bind(this)
-    if (isDev) { window.components = { fileManager: this } }
-  }
-
-  removeBanner() {
-    this.state.bannerToggled = false
-    this.rerender()
+    this.renderNoFilesMsg = this.renderNoFilesMsg.bind(this)
+    this.openAraOne = this.openAraOne.bind(this)
   }
 
   renderSpinnerBars() {
@@ -73,12 +67,17 @@ class Container extends Nanocomponent {
     return html`
       <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
         ${files.published.length || files.purchased.length
-        ? sections.map(section => section.render({ files }))
-        : renderNoFilesMsg()}
+          ? sections.map(section => section.render({ files }))
+          : renderNoFilesMsg()}
       </div>`
   }
 
+  openAraOne() {
+    shell.openExternal('https://ara.one')
+  }
+
   renderNoFilesMsg() {
+    const { openAraOne } = this
     return html`
       <div class="${styles.noFilesContainer} fileManager-noFilesContainer">
         <div class="${styles.noFilesHeader} fileManager-noFilesHeader">
@@ -92,9 +91,9 @@ class Container extends Nanocomponent {
         <p>
           Downloading and hosting files will earn you Ara token rewards,
           <br>
-          which can be spent to purchase more content on the network.
+          which can be spent to purchase other packages on the network.
         </p>
-        <a href="">
+        <a onclick="${openAraOne}">
           Learn More
         </a>
       </div>
@@ -107,14 +106,6 @@ class Container extends Nanocomponent {
     rerender()
   }
 
-  shouldShowBanner(network) {
-    return (
-      !this.state.loadingLibrary
-      && utils.shouldShowBanner(network)
-      && this.state.bannerToggled
-    )
-  }
-
   update({ account, files }) {
     this.state.araBalance = account.araBalance
     this.state.loadingLibrary = files.loadingLibrary
@@ -124,10 +115,9 @@ class Container extends Nanocomponent {
   createElement({ application: { network } }) {
     const {
       children,
-      removeBanner,
       renderSections,
       renderSpinnerBars,
-      shouldShowBanner,
+      openAraOne,
       state
     } = this
 
@@ -139,7 +129,7 @@ class Container extends Nanocomponent {
 
     return html`
       <div>
-        ${shouldShowBanner(network) ? TestnetBanner(removeBanner) : html`<div></div>`}
+        ${utils.shouldShowBanner(network) ? TestnetBanner() : html`<div></div>`}
         <div class="${styles.container} container-container">
           <div>
             ${children.header.render({ activeTab, araBalance })}
