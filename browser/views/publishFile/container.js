@@ -65,7 +65,7 @@ class Container extends Nanocomponent {
 			userAid: account.userAid,
 			password: account.password,
 			paths,
-			name: fileName || 'Unnamed',
+			name: fileName,
 			price: Number(price) === 0 ? '' : price
 		}
 
