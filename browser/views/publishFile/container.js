@@ -66,8 +66,9 @@ class Container extends Nanocomponent {
 			password: account.password,
 			paths,
 			name: fileName || 'Unnamed',
-			price
+			price: Number(price) === 0 ? '' : price
 		}
+
 		if (fileList.length !== 0) { windowManagement.emit({ event: PUBLISH, load }) }
 		this.render({})
 	}
