@@ -23,7 +23,6 @@ class Container extends Nanocomponent {
 		name,
 		fileList,
 		price,
-		priceManagement,
 		tokenPrice,
 	}) {
 		super()
@@ -38,7 +37,6 @@ class Container extends Nanocomponent {
 			fileList,
 			oldPrice: price,
 			price,
-			priceManagement,
 			tokenPrice,
 		}
 

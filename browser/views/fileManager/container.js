@@ -7,7 +7,6 @@ const styles = require('./styles/container')
 const TestnetBanner = require('../../components/testnetBanner')
 const { utils } = require('../../lib/tools')
 const html = require('choo/html')
-const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
 const { shell } = require('electron')
 
@@ -20,7 +19,7 @@ class Container extends Nanocomponent {
       araBalance: account.araBalance,
       bannerToggled: true,
       files,
-      loadingLibrary: files.loadingLibrary
+      loadingLibrary: files.loadingLibrary,
     }
 
     this.children = {

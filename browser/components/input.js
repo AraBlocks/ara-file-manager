@@ -77,10 +77,14 @@ class Input extends Nanocomponent {
             ${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass
             ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
           "
-          oninput=${oninput}
+          style="
+            background-image:url(../assets/images/ara_token.png);
+            background-repeat: no-repeat;
+            background-size: 8%;"
+          oninput="${oninput}"
           placeholder="${props.placeholder}"
           value="${state.value}"
-          type=${props.type}
+          type="${props.type}"
           ${props.readOnly ? 'readonly' : ''}
         >
         ${generateButton()}

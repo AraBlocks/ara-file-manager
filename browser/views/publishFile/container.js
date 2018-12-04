@@ -20,7 +20,7 @@ class Container extends Nanocomponent {
 			currency: '',
 			fileName: '',
 			fileList: [],
-			price: null,
+			price: ''
 		}
 
 		this.props = { account, contentDID }
