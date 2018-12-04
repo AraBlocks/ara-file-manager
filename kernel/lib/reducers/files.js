@@ -50,6 +50,10 @@ module.exports = (state, { load = null, type }) => {
       state.purchased = []
       state.loadingLibrary = false
       break
+    case k.PAUSED:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.status = k.PAUSED
+      break
     case k.PUBLISHING:
       state.published.push(load)
       break
