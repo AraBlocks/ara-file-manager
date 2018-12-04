@@ -38,30 +38,30 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
     dispatch({ type: k.IN_FAUCET_QUEUE })
     windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 
-    const res = await request.post({
+    const response = await request.post({
       method: 'POST',
       uri: FAUCET_URI,
       body: { to: store.account.userAid },
       json: true
     })
-    console.log(res)
 
-    debug('IN FAUCET QUEUE')
-    const faucetSub = await araContractsManager.subscribeFaucet(store.account.accountAddress)
-    dispatch({ type: k.GOT_FAUCET_SUB, load: { faucetSub }})
+    let dispatchLoad
+    if (response.status === 'Queued') {
+      debug('IN FAUCET QUEUE')
+      const faucetSub = await araContractsManager.subscribeFaucet(store.account.accountAddress)
+      dispatchLoad = { type: k.GOT_FAUCET_SUB, load: { faucetSub }}
+    } else if (response.error.includes('greylisted')) {
+      debug('GREY LISTED FROM FAUCET 🙀')
+      dispatchLoad = { type: k.GREYLISTED_FROM_FAUCET }
+    } else {
+      debug('REACHED FAUCET LIMIT')
+      dispatchLoad = { type: k.FAUCET_LIMIT_HIT }
+    }
 
+    dispatch(dispatchLoad)
     windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
   } catch (err) {
-    debug('Err requesting from faucet')
-    if (err.message.includes('greylisted')) {
-      debug('GREY LISTED FROM FAUCET 🙀')
-      dispatch({ type: k.GREYLISTED_FROM_FAUCET })
-      windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
-    } else if(err.message.includes('Balance must be')) {
-      debug('REACHED FAUCET LIMIT')
-      dispatch({ type: k.REACHED_FAUCET_LIMIT })
-      windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
-    }
+    debug('Err requesting from faucet %o', err)
   }
 })
 

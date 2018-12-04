@@ -82,7 +82,7 @@ class AccountInfo extends Nanocomponent {
       buttonOpts.cssClass.opts = { color: 'green', fontSize: '14', height: '3' }
       buttonOpts.onclick = () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
     } else if (props.faucetStatus === k.IN_FAUCET_QUEUE) {
-      buttonOpts.children = 'Sending tokens...'
+      buttonOpts.children = 'Faucet is sending tokens...'
       buttonOpts.cssClass.name = 'thinBorder'
       buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
       buttonOpts.onclick = () => {}
