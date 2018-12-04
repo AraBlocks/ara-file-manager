@@ -39,7 +39,12 @@ class Container extends Nanocomponent {
 				],
 				onclick: this.publishFile.bind(this)
 			}),
-			utilityButton: new UtilityButton({})
+			utilityButton: new UtilityButton({
+				onclick: () => {
+					windowManagement.emit({ event: k.CHANGE_PENDING_TRANSACTION_STATE, load: false })
+					windowManagement.closeWindow()
+				}
+			})
 		}
 
 		this.rerender = this.rerender.bind(this)
@@ -63,9 +68,7 @@ class Container extends Nanocomponent {
 			name: fileName || 'Unnamed',
 			price
 		}
-		if (fileList.length != 0 && !account.pendingTransaction) {
-			windowManagement.emit({ event: PUBLISH, load })
-		}
+		if (fileList.length !== 0) { windowManagement.emit({ event: PUBLISH, load }) }
 		this.render({})
 	}
 
@@ -94,7 +97,8 @@ class Container extends Nanocomponent {
 					${children.fileInfo.render({})}
 					${children.publishButton.render({
 						cssClass: (state.fileList.length === 0)
-							? { name: 'thinBorder' } : { name: 'standard' },
+							? { name: 'thinBorder' }
+							: { name: 'standard' },
 						children: [
 							'Publish',
 							html`

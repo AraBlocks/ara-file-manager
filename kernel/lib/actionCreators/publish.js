@@ -82,8 +82,6 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
   try {
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
-
     let dispatchLoad = { load: { fileName: load.name } }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
