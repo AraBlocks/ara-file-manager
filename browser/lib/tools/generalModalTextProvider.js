@@ -90,6 +90,11 @@ function generalModalText(modalName, load) {
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
+		case 'recoveryFailure':
+			title = 'Failed to Recover Account'
+			description = html `<div>It appears the mnemonic you've entered is invalid<br><br>
+			Please double check the mnemonic and ensure it's correct.</div>`
+			break
 	}
 	return { description, title }
 }
