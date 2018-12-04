@@ -32,7 +32,7 @@ app.on('ready', () => {
   //Creates tray menu
   require('./tray').buildTray()
   debug('Creating menu')
-  require('./menu')()
+  require('./menu').createMenu()
   debug('Loading Dependencies')
   require('../kernel/lib/actionCreators')
 
