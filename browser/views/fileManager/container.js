@@ -19,7 +19,7 @@ class Container extends Nanocomponent {
       araBalance: account.araBalance,
       bannerToggled: true,
       files,
-      loadingLibrary: files.loadingLibrary,
+      loadingLibrary: files.loadingLibrary
     }
 
     this.children = {

@@ -23,7 +23,7 @@ async function descriptorGenerator(did, opts = {}) {
 			downloadPercent: AFSExists ? 1 : 0,
 			datePublished: meta ? meta.timestamp : null,
 			earnings: 0,
-			name: meta ? meta.title : did.slice(0, 15) + '...',
+			name: meta ? meta.title : null,
 			owner: false,
 			path: AFSPath,
 			peers: 0,
