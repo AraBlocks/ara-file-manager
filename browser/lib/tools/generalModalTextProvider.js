@@ -11,8 +11,8 @@ function generalModalText(modalName, load) {
 			description = html `<div><b>${load.amount} Ara</b> has been sent.</div>`
 			break
 		case 'alreadyOwn':
-			title = 'You already own this content'
-			description = 'You can not purchase this content again'
+			title = 'You already own this package'
+			description = 'You can not purchase this package again'
 			break
 		case 'diskSpaceModal':
 			title = 'Not enough disk space'
@@ -90,11 +90,6 @@ function generalModalText(modalName, load) {
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
-		case 'walletEmpty':
-			title = 'Not enough ARA'
-			description = html `<div>You do not have enough Ara Tokens to continue using your current File Manager services.<br><br>
-			<b>Price Maintenance</b> and <b>Littlstar Supernode</b> support has been deactivated accross your account.</div>`
-			break
 	}
 	return { description, title }
 }
@@ -104,9 +99,6 @@ function waitModalText(modalName, load) {
 	switch (modalName) {
 		case 'pleaseWait':
 			description = html`<div>Completing transaction and connecting to<br>peers on the network.</div>`
-			break
-		case 'pleaseWaitUploading':
-			description = html `<div>Publishing <b>${load.fileName}</b> to Ara Network and uploading to Littlstar Supernode.</div>`
 			break
 		case 'pleaseWaitUploading2':
 			description = html `<div>Updating <b>${load.fileName}</b> on the Ara Network.</div>`

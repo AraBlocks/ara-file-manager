@@ -7,7 +7,6 @@ const styles = require('./styles/container')
 const TestnetBanner = require('../../components/testnetBanner')
 const { utils } = require('../../lib/tools')
 const html = require('choo/html')
-const isDev = require('electron-is-dev')
 const Nanocomponent = require('nanocomponent')
 const { shell } = require('electron')
 
@@ -20,7 +19,7 @@ class Container extends Nanocomponent {
       araBalance: account.araBalance,
       bannerToggled: true,
       files,
-      loadingLibrary: files.loadingLibrary
+      loadingLibrary: files.loadingLibrary,
     }
 
     this.children = {
@@ -92,9 +91,9 @@ class Container extends Nanocomponent {
         <p>
           Downloading and hosting files will earn you Ara token rewards,
           <br>
-          which can be spent to purchase more content on the network.
+          which can be spent to purchase other packages on the network.
         </p>
-        <a onclick=${openAraOne}>
+        <a onclick="${openAraOne}">
           Learn More
         </a>
       </div>
