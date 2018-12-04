@@ -7,14 +7,17 @@ module.exports = async (state, { load = null, type }) => {
     case k.CHANGE_PENDING_TRANSACTION_STATE:
       state.pendingTransaction = load.pendingTransaction
       break
+    case k.FAUCET_ARA_RECEIVED:
+      state.faucetStatus = null
+      break
     case k.IN_FAUCET_QUEUE:
-      state.faucet = k.IN_FAUCET_QUEUE
+      state.faucetStatus = k.IN_FAUCET_QUEUE
       break
     case k.GETTING_USER_DATA:
       state.userAid = load.userAid
       break
-    case k.GOT_FAUCET_SUB:
-      state.faucet = load.link
+    case k.GREYLISTED_FROM_FAUCET:
+      state.faucetStatus = k.GREYLISTED_FROM_FAUCET
       break
     case k.LOGIN:
     case k.REGISTERED:
@@ -34,6 +37,9 @@ module.exports = async (state, { load = null, type }) => {
     case k.UPDATE_BALANCE:
     case k.PURCHASED:
       state.araBalance = load.araBalance
+      break
+    case k.REACHED_FAUCET_LIMIT:
+      state.faucetStatus = k.REACHED_FAUCET_LIMIT
       break
     default:
       return state

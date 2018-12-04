@@ -23,7 +23,7 @@ class AccountInfo extends Nanocomponent {
     const { account, application } = props
 
     this.props = {
-      faucet: account.faucet,
+      faucetStatus: account.faucetStatus,
       araBalance: account.araBalance,
       ethAddress: account.accountAddress,
       ethBalance: account.ethBalance,
@@ -77,18 +77,25 @@ class AccountInfo extends Nanocomponent {
     const { props } = this
 
     const buttonOpts = { cssClass: {} }
-    if (props.faucet === null) {
+    if (props.faucetStatus === null) {
       buttonOpts.children = 'Request Tokens'
       buttonOpts.cssClass.opts = { color: 'green', fontSize: '14', height: '3' }
       buttonOpts.onclick = () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
-    } else if (props.faucet === k.IN_FAUCET_QUEUE) {
-      buttonOpts.children = 'Awaiting faucet...'
+    } else if (props.faucetStatus === k.IN_FAUCET_QUEUE) {
+      buttonOpts.children = 'Sending tokens...'
       buttonOpts.cssClass.name = 'thinBorder'
       buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
+      buttonOpts.onclick = () => {}
+    } else if (props.faucetStatus === k.GREYLISTED_FROM_FAUCET){
+      buttonOpts.children = 'Greylisted for 24 hours!'
+      buttonOpts.cssClass.name = 'thinBorder'
+      buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
+      buttonOpts.onclick = () => {}
     } else {
-      buttonOpts.children = html`<a href="${props.faucet.link}">Sending tokens...</a>`
+      buttonOpts.children = '1000 Tokens is Faucet limit!'
       buttonOpts.cssClass.name = 'thinBorder'
       buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
+      buttonOpts.onclick = () => {}
     }
 
     return buttonOpts

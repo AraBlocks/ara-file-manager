@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:subscription')
+const debug = require('debug')('acm:kernel:lib:actionCreators:wallet')
 const { araContractsManager } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
@@ -35,37 +35,42 @@ internalEmitter.on(k.UPDATE_BALANCE, (load) => {
 ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
   debug('%s HEARD', k.LISTEN_FOR_FAUCET)
   try {
-    const response = await request.post({
+    dispatch({ type: k.IN_FAUCET_QUEUE })
+    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
+
+    await request.post({
       method: 'POST',
       uri: FAUCET_URI,
       body: { to: store.account.userAid },
       json: true
     })
 
-    if (response.status) {
-      dispatch({ type: k.IN_FAUCET_QUEUE })
-    } else {
-      const { txHash, link } = response
-      const faucetSub = await araContractsManager.subscribeFaucet(store.account.accountAddress)
-      dispatch({ type: k.GOT_FAUCET_SUB, load: { txHash, link, faucetSub } })
-    }
+    debug('IN FAUCET QUEUE')
+    const faucetSub = await araContractsManager.subscribeFaucet(store.account.accountAddress)
+    dispatch({ type: k.GOT_FAUCET_SUB, load: { faucetSub }})
 
     windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
   } catch (err) {
-    debug('Err requesting from faucet: %o', err)
-    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
-    windowManager.pingView({ view: 'accountInfo', event: k.FAUCET_ERROR })
+    debug('Err requesting from faucet')
+    if (err.message.includes('greylisted')) {
+      debug('GREY LISTED FROM FAUCET 🙀')
+      dispatch({ type: k.GREYLISTED_FROM_FAUCET })
+      windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
+    } else if(err.message.includes('Balance must be')) {
+      debug('REACHED FAUCET LIMIT')
+      dispatch({ type: k.REACHED_FAUCET_LIMIT })
+      windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
+    }
   }
 })
 
 internalEmitter.on(k.FAUCET_ARA_RECEIVED, () => {
   try {
-
     debug('%s HEARD', k.FAUCET_ARA_RECEIVED)
     store.subscriptions.faucet.ctx.close()
     dispatch({ type: k.FAUCET_ARA_RECEIVED })
 
-    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH})
+    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
   } catch (e) { console.log(e) }
 
 })
