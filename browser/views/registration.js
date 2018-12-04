@@ -68,13 +68,22 @@ class Registration extends Nanocomponent {
       errorText
     } = this.state
 
-    let errM
+    let err = false
     if (password === '') {
       errorText.password = 'Must enter a password'
       errorText.passwordConfirm = ''
+
+      err = true
     } else if (passwordConfirm === '') {
-      errorText.passwordConfirm = 'Must confirm password'
       errorText.password = ''
+      errorText.passwordConfirm = 'Must confirm password'
+
+      err = true
+    } else if (password !== passwordConfirm) {
+      errorText.password = ''
+      errorText.passwordConfirm = "Passwords don't match"
+
+      err = true
     }
   }
 
@@ -95,8 +104,8 @@ class Registration extends Nanocomponent {
     flagPWField = true,
     flagPWConfirmField = true
   }) {
-    console.log(flagPWField)
-    const { children, register } = this
+    const { children, register, state } = this
+
     return html`
       <div class="modal">
         ${overlay(pending)}
@@ -110,9 +119,13 @@ class Registration extends Nanocomponent {
         </p>
         <form class="${styles.registerForm}" onsubmit="${register}">
           ${children.passwordInput.render({ requiredIndicator: flagPWField })}
-          <div style="font-size: 10px; height: 13px; width: 100%;">Must enter a password</div>
+          <div style="font-size: 10px; height: 13px; width: 100%;">
+            ${state.errorText.password}
+          </div>
           ${children.passwordConfirmInput.render({ requiredIndicator: flagPWConfirmField })}
-          <div style="font-size: 10px; height: 13px; width: 100%;">Passwords do not match</div>
+          <div style="font-size: 10px; height: 13px; width: 100%;">
+          ${state.errorText.passwordConfirm}
+          </div>
           ${children.submitButton.render({})}
         </form>
         ${children.cancelButton.render({})}
