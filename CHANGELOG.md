@@ -1,3 +1,21 @@
+## [0.1.6](https://github.com/littlstar/ara-content-manager/compare/0.1.5...0.1.6) (2018-12-04)
+
+
+### Bug Fixes
+
+* **araIDWarning.js:** fixed button ([#283](https://github.com/littlstar/ara-content-manager/issues/283)) ([7ef86ce](https://github.com/littlstar/ara-content-manager/commit/7ef86ce))
+* **register.js:** assigned value of 0 to eth balance ([#285](https://github.com/littlstar/ara-content-manager/issues/285)) ([9816f14](https://github.com/littlstar/ara-content-manager/commit/9816f14))
+* changed to Ara ID" ([#286](https://github.com/littlstar/ara-content-manager/issues/286)) ([484a966](https://github.com/littlstar/ara-content-manager/commit/484a966))
+
+
+### Features
+
+* **afmManager:** moved afm to .ara ([#282](https://github.com/littlstar/ara-content-manager/issues/282)) ([10f1267](https://github.com/littlstar/ara-content-manager/commit/10f1267))
+* PE-679 PE-680 General Action Modal ([#284](https://github.com/littlstar/ara-content-manager/issues/284)) ([edf9921](https://github.com/littlstar/ara-content-manager/commit/edf9921))
+* PE-682 Redeem Rewards Confirm Modal ([#288](https://github.com/littlstar/ara-content-manager/issues/288)) ([2a564ff](https://github.com/littlstar/ara-content-manager/commit/2a564ff))
+
+
+
 ## [0.1.5](https://github.com/littlstar/ara-content-manager/compare/0.1.3...0.1.5) (2018-11-30)
 
 
