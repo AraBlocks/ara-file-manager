@@ -6,7 +6,7 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('choo/html')
 
-module.exports = ({ estimate = 0.5, did }) => {
+module.exports = ({ estimate, did }) => {
   const downloadButton = new Button({
     children: 'Confirm',
     onclick: () => {
