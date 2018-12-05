@@ -118,6 +118,7 @@ class Container extends Nanocomponent {
 			name: state.name,
 			password: account.password,
 			removePaths,
+			size: state.fileList.reduce((sum, file) => sum += file.size, 0),
 			shouldCommit: !(addPaths.length == 0 && removePaths.length == 0),
 			shouldUpdatePrice: state.oldPrice != state.price,
 			price: state.price == "" ? null : state.price,
