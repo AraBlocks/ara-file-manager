@@ -25,8 +25,7 @@ internalEmitter.on(k.UPDATE_BALANCE, (load) => {
   debug('%s HEARD', k.UPDATE_BALANCE)
   try {
     dispatch({ type: k.UPDATE_BALANCE, load })
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
+    windowManager.pingAll({ event: k.REFRESH })
   } catch (err) {
     debug('Error: %o', err)
   }
