@@ -108,6 +108,7 @@ async function login(_, load) {
     switchLoginState(true)
     switchApplicationMenuLoginState(true)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
+    //TODO omit map
     const purchasedDIDs = (await araContractsManager.getLibraryItems(load.userAid)).map(did => did.slice(-64))
     const purchased = await afsManager.surfaceAFS({
       dids: purchasedDIDs,
