@@ -51,6 +51,7 @@ module.exports = {
 
 	fileDirectoryHolder: css`
 		:host {
+			width: 100%;
 			padding-top: 10px;
 			height: 360px;
 		}

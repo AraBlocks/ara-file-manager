@@ -52,6 +52,7 @@ module.exports = {
 		:host {
 			height: 270px;
 			padding-top: 10px;
+			width: 100%;
 		}
 	`,
 
