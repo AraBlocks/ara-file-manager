@@ -50,6 +50,9 @@ module.exports = ({
       case k.OUT_OF_SYNC:
         //TODO: this event is not correct
         menuItems.addItem('Sync AFS', k.UPDATE_FILE)
+        break
+      case k.UNCOMMITTED:
+        menuItems.addItem('Manage File', k.FEED_MANAGE_FILE)
     }
 
   if (allocatedRewards && redeeming === false) {

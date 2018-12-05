@@ -74,6 +74,9 @@ module.exports = (state, { load = null, type }) => {
       file.jobId = load.jobId
       file.status = k.AWAITING_DOWNLOAD
       break
+    case k.PROXY_DEPLOYED:
+      state.published.push(load.descriptor)
+      break
     case k.UPDATING_FILE:
       file = findFile(load.did, state.published)
       if (file == null) { break }

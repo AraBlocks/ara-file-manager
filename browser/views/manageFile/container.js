@@ -89,6 +89,7 @@ class Container extends Nanocomponent {
 	}
 
 	update({ fileList }){
+		console.log('tryin a pup')
 		const { state } = this
 		if (fileList != null && state.afsContents == null) {
 			state.fileList = fileList
@@ -129,6 +130,7 @@ class Container extends Nanocomponent {
 	}
 
 	createElement({ spinner = false }) {
+		console.log(spinner)
 		const { children, state, fileInfoChanged } = this
 		return html`
 			<div class="${styles.container} ManageFileContainer-container">

@@ -27,14 +27,14 @@ async function _deployProxy() {
     windowManager.openWindow('deployEstimate')
 
     const deployEstimateDid = store.account.deployEstimateDid
-    debug('Estimating deploy proxy cost')
+
     const deployCost = await afs.deploy({ password, did: deployEstimateDid, estimate: true })
     const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
     if (ethAmount < deployCost) {
       throw new Error('Not enough eth')
     }
     debug('Deploy Gas estimate: %s', deployCost)
-    windowManager.pingView({ view: 'deployEstimate', event: k.REFRESH, load: { estimate: deployCost }})
+    windowManager.pingView({ view: 'deployEstimate', event: k.REFRESH, load: { estimate: deployCost } })
   } catch (err) {
     debug('Error getting estimate for deploying proxy %o:', err)
     windowManager.closeWindow('deployEstimate')
@@ -44,7 +44,8 @@ async function _deployProxy() {
 }
 
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
-  debug('%s heard', k.CONFIRM_DEPLOY_PROXY, load)
+  debug('%s heard', k.CONFIRM_DEPLOY_PROXY)
+
   const { userAid, password } = store.account
   try {
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
@@ -53,9 +54,10 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
     windowManager.openModal('generalPleaseWaitModal')
 
     let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userAid, password })
-    await newAfs.close();
+    await newAfs.close()
     await afs.deploy({ password, did })
-    debug('Proxy Deployed')
+
+    const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED })
 
     afmManager.saveDeployedAfs(did, userAid)
 
@@ -67,12 +69,14 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
         contentDID: did,
         mnemonic,
         userAid,
-        isAFS: true
+        isAFS: true,
+        descriptor
       }
     })
 
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     windowManager.openModal('mnemonicWarning')
-  } catch(err) {
+  } catch (err) {
     debug('Error deploying proxy %o:', err)
     errorHandling(err)
   }
@@ -92,21 +96,19 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
     await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
 
-    debug('Estimating gas')
     const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
-    debug('load price:', load.price)
+
+    debug('Estimating gas')
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0
     if (load.price) {
       setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
-    if (ethAmount < gasEstimate) {
-      throw new Error('Not enough eth')
-    }
+    if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
 
-    debug('Gas estimate: %s', gasEstimate)
     debug('Dispatching %s', k.FEED_MODAL)
+
     dispatchLoad = {
       did,
       gasEstimate,
@@ -116,13 +118,16 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
       size
     }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
+
     windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('publishConfirmModal')
   } catch (err) {
     debug('Error publishing file %o:', err)
+
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     windowManager.closeModal('generalPleaseWaitModal')
     errorHandling(err)
+
     return
   }
 })

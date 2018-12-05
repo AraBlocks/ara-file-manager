@@ -27,7 +27,9 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
     windowManager.openWindow('manageFileView')
     dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
-    const fileList = await afsManager.getFileList(load.did)
+
+    //The OR conditional is to avoid race conditions. If filelength is 0, pingView happens before manageFileView is created 
+    const fileList = await afsManager.getFileList(load.did).length || await new Promise(_ => setTimeout(_, 1000, []))
     dispatch({
       type: k.FEED_MANAGE_FILE,
       load: {
@@ -37,6 +39,7 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
         fileList
       }
     })
+
     windowManager.pingView({ view: 'manageFileView', event: k.REFRESH })
   } catch(err) {
     debug('Error: %o', err)
