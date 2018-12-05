@@ -7,6 +7,7 @@ const {
 	araContractsManager,
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
+const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
@@ -35,15 +36,9 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			windowManager.openModal('generalMessageModal')
 			return
 		}
-
-		await araContractsManager.getAFSPrice({
-			did: load.aid,
-			errorHandler,
-			completeHandler: (price) => {
-				dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
-				windowManager.openModal('checkoutModal1')
-			}
-		})
+		const price = await araFilesystem.getPrice({ did: load.aid })
+		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
+		windowManager.openModal('checkoutModal1')
 	} catch (err) {
 		errorHandler(err)
 	}
