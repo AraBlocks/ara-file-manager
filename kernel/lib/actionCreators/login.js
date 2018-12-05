@@ -122,6 +122,8 @@ async function login(_, load) {
       published: true,
       DCDNStore
     })
+    publishedDIDs.forEach(afsManager.getVersion)
+
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
 

@@ -128,6 +128,15 @@ async function getUpdateAvailableStatus(item) {
   }
 }
 
+async function getVersion(did) {
+  try {
+    const { afs: { version} } = await araFilesystem.create({ did })
+    debug({version})
+  } catch (err) {
+    debug('Err getting version: %o', err)
+  }
+}
+
 async function surfaceAFS({ dids, DCDNStore, published = false }) {
 	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
 		shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
@@ -150,6 +159,7 @@ module.exports = {
   exportFolder,
   getFileList,
   getUpdateAvailableStatus,
+  getVersion,
 	surfaceAFS,
 	unarchiveAFS,
 }
