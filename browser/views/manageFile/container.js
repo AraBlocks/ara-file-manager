@@ -129,7 +129,6 @@ class Container extends Nanocomponent {
 	}
 
 	createElement({ spinner = false }) {
-		console.log(spinner)
 		const { children, state, fileInfoChanged } = this
 		return html`
 			<div class="${styles.container} ManageFileContainer-container">
