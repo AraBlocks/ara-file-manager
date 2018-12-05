@@ -54,7 +54,7 @@ class AccountInfo extends Nanocomponent {
     const { eventMouseEnter, props } = this
 
     const text = textType === 'did'
-      ? props.userDID.slice(-64)
+      ? props.userDID
       : props.ethAddress
     return html`
       <div
