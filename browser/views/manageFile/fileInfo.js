@@ -75,12 +75,15 @@ class FileInfo extends Nanocomponent {
 						${children.fileNameInput.render({ value: parentState.name })}
 					</div>
 					<div class=${styles.infoTipHolder}>
-						${children.priceInput.render({ value: parentState.price })}
+						${children.priceInput.render({ value: parentState.price, requiredIndicator: parentState.price < 0 })}
 						<div class=${styles.araPriceHolder}>
 							<b>Ara Token Price:</b>
 							<div class=${styles.araPrice}>
 								<b>${parentState.tokenPrice} Ara</b>
 							</div>
+						</div>
+						<div class="${styles.errorMsg} FileInfo-errorMsg">
+							${parentState.price < 0 ? "Price Cannot be negative" : ""}
 						</div>
 					</div>
 				</div>

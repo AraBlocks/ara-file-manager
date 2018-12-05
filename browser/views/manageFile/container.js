@@ -81,7 +81,7 @@ class Container extends Nanocomponent {
 		const priceChanged = state.oldPrice != state.price
 		const shouldCommit = !(addPaths.length == 0 && removePaths.length == 0)
 		const notEmpty = state.fileList.length != 0
-		return (priceChanged || shouldCommit) && notEmpty && !props.account.pendingTransaction
+		return (priceChanged || shouldCommit) && notEmpty && !props.account.pendingTransaction && state.price >= 0
 	}
 
 	renderView() {
