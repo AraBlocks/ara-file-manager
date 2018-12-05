@@ -4,7 +4,21 @@ const debug = require('debug')('acm:kernel:lib:actions:afmManager')
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
+const { app } = require('electron')
 const araUtil = require('ara-util')
+const toilet = require('toiletdb')
+const pify = require('pify')
+const { application } = require('../../../lib/constants/index')
+
+async function getAppData() {
+	if (global.appData) return global.appData
+
+	const appData = toilet(path.resolve(app.getPath('userData'), application.APP_DATA))
+	await pify(appData.open)()
+	global.appData = appData
+
+	return appData
+}
 
 function getAFMPath(userDID) {
 	const afmDirectory = getAFMDirectory()
@@ -100,6 +114,7 @@ module.exports = {
 	getAFMPath,
 	getCachedUserDid,
 	getPublishedItems,
+	getAppData,
 	getUserData,
 	saveDeployedAfs,
 	savePublishedItem,
