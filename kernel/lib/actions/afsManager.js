@@ -71,7 +71,7 @@ async function getFileList(did) {
 	try {
 		const { afs } = await araFilesystem.create({ did })
 		const result = await _getContentsInFolder(afs, afs.HOME)
-		await afs.close()
+    await afs.close()
 		return result.fileList
 	} catch (err) {
 		debug('Error getting file list in afs: %o', err)

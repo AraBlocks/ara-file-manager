@@ -16,6 +16,7 @@ module.exports = ({
       color = shouldBroadcast ? 'teal' : 'black'
       break
     case k.PAUSED:
+    case k.UNCOMMITTED:
       color = 'black'
       break
     case k.AWAITING_DOWNLOAD:

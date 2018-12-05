@@ -10,12 +10,12 @@ const path = require('path')
 const fs = require('fs')
 const createContext = require('ara-context')
 
-async function descriptorGenerator(did, opts = {}) {
+async function descriptorGenerator(did, opts = {}, readMeta = true) {
 	try {
 		did = araUtil.getIdentifier(did)
 		const AFSPath = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(AFSPath)
-		const meta = AFSExists ? await readFileMetadata(did) : null
+		const meta = readMeta && AFSExists ? await readFileMetadata(did) : null
 
 		const descriptor = {
 			allocatedRewards: 0,

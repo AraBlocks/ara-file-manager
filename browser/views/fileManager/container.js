@@ -117,7 +117,6 @@ class Container extends Nanocomponent {
       children,
       renderSections,
       renderSpinnerBars,
-      openAraOne,
       state
     } = this
 
