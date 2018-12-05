@@ -5,6 +5,7 @@ const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
 const araFilesystem = require('ara-filesystem')
 const k = require('../../../lib/constants/stateManagement')
+const { FAUCET_OWNER } = require('../../../lib/constants/networkKeys')
 const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
 const windowManager = require('electron-window-manager')
@@ -209,6 +210,21 @@ async function sendAra(opts) {
 	}
 }
 
+async function subscribeFaucet(userAddress) {
+  const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
+
+  let subscription
+  try {
+    subscription = contract.events.Transfer({ filter: { to: userAddress, from: FAUCET_OWNER } })
+      .on('data', () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
+      .on('error', debug)
+  } catch (err) {
+    debug('Error %o', err)
+  }
+
+  return { ctx, subscription }
+}
+
 async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 	const { rewards } = araContracts
 	const { contract, ctx } = await getAFSContract(contentDID)
@@ -261,6 +277,7 @@ module.exports = {
 	getRewards,
 	purchaseItem,
 	sendAra,
+	subscribeFaucet,
 	subscribePublished,
 	subscribeRewardsAllocated,
 	subscribeTransfer

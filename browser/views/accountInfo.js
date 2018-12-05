@@ -1,5 +1,7 @@
 'use strict'
 
+const k = require('../../lib/constants/stateManagement')
+const araUtil = require('ara-util')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
 const TestnetBanner = require('../components/TestnetBanner')
@@ -22,55 +24,38 @@ class AccountInfo extends Nanocomponent {
     const { account, application } = props
 
     this.props = {
+      faucetStatus: account.faucetStatus,
       araBalance: account.araBalance,
-      ethBalance: account.ethBalance,
       ethAddress: account.accountAddress,
+      ethBalance: account.ethBalance,
       network: application.network,
-      userDID: account.userAid,
+      userDID: araUtil.getIdentifier(account.userAid),
       version
     }
 
     this.children = {
       closeButton: new UtilityButton({ children: 'close' }),
-      requestTokensButton: new Button({
-        children: 'Request Tokens',
-        cssClass: {
-          opts: {
-            color: 'green',
-            fontSize: '14',
-            height: '3'
-          }
-        },
-      }),
+      requestTokensButton: new Button(this.faucetButtonOpts),
       sendTokensButton: new Button({
         children: 'Send Tokens',
-        cssClass: {
-          opts: {
-            fontSize: '14',
-            height: '3'
-          }
-        },
+        cssClass: { opts: { fontSize: '14', height: '3' } },
         onclick: () => windowManagement.openWindow('sendAra')
       })
     }
-
-    this.renderCopyableText = this.renderCopyableText.bind(this)
-    this.rerender = this.rerender.bind(this)
     this.eventMouseLeave = document.createEvent('MouseEvents')
     this.eventMouseEnter = document.createEvent('MouseEvents')
     this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
     this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
+    this.renderCopyableText = this.renderCopyableText.bind(this)
+    this.rerender = this.rerender.bind(this)
   }
 
   renderCopyableText(textType) {
-    const {
-      eventMouseEnter,
-      props
-    } = this
-    let text = ''
-    textType === 'did'
-      ? text = props.userDID.slice(-64)
-      : text = props.ethAddress
+    const { eventMouseEnter, props } = this
+
+    const text = textType === 'did'
+      ? props.userDID
+      : props.ethAddress
     return html`
       <div
         data-tooltip="Copy to Clipboard"
@@ -89,13 +74,50 @@ class AccountInfo extends Nanocomponent {
     `
   }
 
+  get faucetButtonOpts() {
+    const { props } = this
+
+    const buttonOpts = { cssClass: {} }
+    buttonOpts.cssClass.name = 'thinBorder'
+    buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
+    buttonOpts.onclick = () => {}
+
+    switch (props.faucetStatus) {
+      case null:
+        buttonOpts.children = 'Request Tokens'
+        buttonOpts.cssClass.opts.color = 'green'
+        buttonOpts.cssClass.name = ''
+        buttonOpts.onclick = () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
+        break
+      case k.IN_FAUCET_QUEUE:
+        buttonOpts.children = 'Faucet is sending tokens...'
+        break
+      case k.GREYLISTED_FROM_FAUCET:
+        buttonOpts.children = 'Greylisted for 24 hours!'
+        break
+      case k.FAUCET_LIMIT_HIT:
+        buttonOpts.children = '1000 Tokens is Faucet limit!'
+        break
+      default:
+        buttonOpts.children = 'Faucet is down...Try again later'
+    }
+
+    return buttonOpts
+  }
+
   update(props = {}) {
     this.props = { ...this.props, ...props.account }
     return true
   }
 
   createElement() {
-    const { children, props, renderCopyableText } = this
+    const {
+      children,
+      faucetButtonOpts,
+      props,
+      renderCopyableText
+    } = this
+
     return html`
       <div class="${styles.container} accountInfo-container">
         ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html`<div></div>`}
@@ -136,7 +158,7 @@ class AccountInfo extends Nanocomponent {
             <div class="request-container">
               <b>Request test tokens:</b>
               <div>Note: these tokens are for testing purposes only, and will only work on testnet</div>
-              ${children.requestTokensButton.render({})}
+              ${children.requestTokensButton.render(faucetButtonOpts)}
             </div>
             <div class="send-container">
               <b>Send tokens to another account:</b>
