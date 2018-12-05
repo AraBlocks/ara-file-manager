@@ -4,7 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:update')
 const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
-const { afsManager, farmerManager } = require('../actions')
+const { afsManager, farmerManager, utils: actionsUtil } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
@@ -60,6 +60,7 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
       if (load.removePaths.length != 0) {
         await (await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })).close();
       }
+      await actionsUtil.writeFileMetaData({ did: load.did, size: load.size, title: load.name, password: account.password })
       if (load.shouldUpdatePrice) {
         debug('Estimate gas for commit and set price')
         estimate = await afs.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
@@ -74,6 +75,7 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
       gasEstimate: Number(estimate),
       name: load.name,
       price: load.price,
+      size: load.size,
       shouldUpdatePrice: load.shouldUpdatePrice,
       shouldCommit: load.shouldCommit
     }
@@ -95,7 +97,8 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
       load: {
         did: load.did,
         name: load.name,
-        price: load.price
+        price: load.price,
+        size: load.size
       }
     })
 
