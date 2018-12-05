@@ -10,6 +10,9 @@ module.exports = async (state, { load = null, type }) => {
     case k.FAUCET_ARA_RECEIVED:
       state.faucetStatus = null
       break
+    case k.FAUCET_ERROR:
+      state.faucetStatus = k.FAUCET_ERROR
+      break
     case k.FAUCET_LIMIT_HIT:
       state.faucetStatus = k.FAUCET_LIMIT_HIT
       break

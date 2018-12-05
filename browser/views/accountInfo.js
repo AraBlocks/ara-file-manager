@@ -97,6 +97,8 @@ class AccountInfo extends Nanocomponent {
       case k.FAUCET_LIMIT_HIT:
         buttonOpts.children = '1000 Tokens is Faucet limit!'
         break
+      default:
+        buttonOpts.children = 'Faucet is down...Try again later'
     }
 
     return buttonOpts

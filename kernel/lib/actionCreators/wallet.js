@@ -59,10 +59,12 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
     }
 
     dispatch(dispatchLoad)
-    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
   } catch (err) {
     debug('Err requesting from faucet %o', err)
+    dispatch({ type: k.FAUCET_ERROR })
   }
+
+  windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 })
 
 internalEmitter.on(k.FAUCET_ARA_RECEIVED, () => {
