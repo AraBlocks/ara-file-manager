@@ -27,15 +27,19 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
-async function getAFSPrice({ did }) {
+async function getAFSPrice({
+	did,
+	errorHandler = () => {},
+	completeHandler = () => {}
+}) {
 	let result = 0
 	try {
 		result = await araFilesystem.getPrice({ did })
+		completeHandler(result)
 	} catch (err) {
 		debug('Error getting price: %o', err)
-		result
+		errorHandler()
 	}
-
 	return result
 }
 
@@ -87,7 +91,7 @@ async function purchaseItem(opts) {
 		debug('Purchase Completed')
 		return jobId
 	} catch (err) {
-		debug('Error purchasing item: %o', err)
+		throw new Error(`Error purchasing item: ${err.message}`)
 	}
 }
 

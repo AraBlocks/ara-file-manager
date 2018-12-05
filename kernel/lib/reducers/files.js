@@ -32,6 +32,9 @@ module.exports = (state, { load = null, type }) => {
     case k.ERROR_PUBLISHING:
       state.published = state.published.slice(0, state.published.length - 1)
       break
+    case k.ERROR_PURCHASING:
+      state.purchased = state.purchased.slice(0, state.purchased.length - 1)
+      break
     case k.LOADED_BACKGROUND_AFS_DATA:
       state.published = load.published
       state.purchased = load.purchased
