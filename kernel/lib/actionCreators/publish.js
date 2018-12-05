@@ -57,7 +57,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
     await newAfs.close()
     await afs.deploy({ password, did })
 
-    const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED })
+    const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED }, false)
 
     afmManager.saveDeployedAfs(did, userAid)
 

@@ -4,7 +4,7 @@ const k = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load = null, type }) => {
   let file
-  switch (type){
+  switch (type) {
     case k.CHANGE_BROADCASTING_STATE:
       file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
@@ -55,13 +55,16 @@ module.exports = (state, { load = null, type }) => {
       file.status = k.PAUSED
       break
     case k.PUBLISHING:
-      state.published.push(load)
+      file = findFile(load.did, state.published)
+      if (file == null) { break }
+      console.log(load)
+      Object.assign(file, load)
       break
     case k.PUBLISHED:
       file = findFile(load.did, state.published)
       if (file == null) { break }
       file.status = k.DOWNLOADED_PUBLISHED,
-      file.datePublished = new Date
+        file.datePublished = new Date
       file.shouldBroadcast = true
       file.owner = true
       break
@@ -130,5 +133,5 @@ module.exports = (state, { load = null, type }) => {
 }
 
 function findFile(did, files) {
-	return files.find(file => file.did === did)
+  return files.find(file => file.did === did)
 }
