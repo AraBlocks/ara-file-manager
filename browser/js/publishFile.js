@@ -5,7 +5,6 @@ const k = require('../../lib/constants/stateManagement')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { account, modal: { publishFileData: { contentDID } } } = windowManager.sharedData.fetch('store')
-const { windowManagement } = require('../lib/tools')
 
 const publishFile = new PublishFile({ account, contentDID })
 document.getElementById('container').appendChild(publishFile.render({}))
