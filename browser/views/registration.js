@@ -14,13 +14,27 @@ class Registration extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { password : '' }
+    this.state = {
+      password: '',
+      passwordConfirm: '',
+      errorText: {
+        password: '',
+        passwordConfirm: ''
+      }
+     }
 
     this.children = {
       passwordInput: new Input({
         placeholder: 'Password',
         parentState: this.state,
         field: 'password',
+        type: 'password'
+      }),
+
+      passwordConfirmInput: new Input({
+        placeholder: 'Confirm password',
+        parentState: this.state,
+        field: 'passwordConfirm',
         type: 'password'
       }),
 
@@ -47,33 +61,67 @@ class Registration extends Nanocomponent {
     this.render = this.render.bind(this)
   }
 
+  get properInput() {
+    const {
+      password,
+      passwordConfirm,
+      errorText
+    } = this.state
+
+    let properInput = true
+    if (password === '') {
+      errorText.password = 'Must enter a password'
+      errorText.passwordConfirm = ''
+      properInput = false
+    } else if (passwordConfirm === '') {
+      errorText.password = ''
+      errorText.passwordConfirm = 'Must confirm password'
+      properInput = false
+    } else if (password !== passwordConfirm) {
+      errorText.password = ''
+      errorText.passwordConfirm = "Passwords don't match"
+      properInput = false
+    }
+
+    return properInput
+  }
+
   register(e) {
     e.preventDefault()
     const { password } = this.state
-    password === ''
-      ? this.render({ requiredIndicator: true })
-      : emit({ event: k.REGISTER, load: password })
+
+    this.properInput
+      ? emit({ event: k.REGISTER, load: password })
+      : this.rerender({})
   }
 
   update() {
     return true
   }
 
-  createElement({ pending = false, requiredIndicator = false }) {
-    const { children, register } = this
+  createElement({ pending = false }) {
+    const { children, register, state } = this
+
     return html`
       <div class="modal">
         ${overlay(pending)}
         <div class="${styles.logo} login-logo">
           <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
-        <div class=${styles.header}>Register</div>
-        <p class=${styles.description}>
+        <div class="${styles.header}">Register</div>
+        <p class="${styles.description}">
           To use the <b>Ara File Manager</b>, you'll need to create an Ara ID. We will generate the ID
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
-        <form class=${styles.registerForm} onsubmit=${register}>
-          ${children.passwordInput.render({ requiredIndicator })}
+        <form class="${styles.registerForm}" onsubmit="${register}">
+          ${children.passwordInput.render({ requiredIndicator: Boolean(state.errorText.password) })}
+          <div class="${styles.errorMsg} registration-errorMsg">
+            ${state.errorText.password}
+          </div>
+          ${children.passwordConfirmInput.render({ requiredIndicator: Boolean(state.errorText.passwordConfirm) })}
+          <div class="${styles.errorMsg} registration-errorMsg">
+            ${state.errorText.passwordConfirm}
+          </div>
           ${children.submitButton.render({})}
         </form>
         ${children.cancelButton.render({})}
