@@ -1,6 +1,6 @@
 'use strict'
 
-const { fonts } = require('styleUtils')
+const { fonts, colorSelector } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
@@ -15,14 +15,23 @@ module.exports = {
 		}
 	`,
 
+		errorMsg: css`
+		:host {
+			color: ${colorSelector('red')};
+			font-size: 10px;
+			height: 13px;
+			width: 100%;
+		}
+	`,
+
 	infoTipHolder: css`
 		:host {
 			display: flex;
 			flex-direction: column;
 			font-family: ${fonts.light};
 			font-size: 12px;
-			height: 100px;
-			justify-content: space-between;
+			height: 130px;
+			justify-content: flex-end;
 			width: 49%;
 		}
 
@@ -43,7 +52,7 @@ module.exports = {
 	fileDirectoryHolder: css`
 		:host {
 			padding-top: 10px;
-			height: 320px;
+			height: 360px;
 		}
 	`,
 
