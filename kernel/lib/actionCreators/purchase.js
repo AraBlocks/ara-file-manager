@@ -36,9 +36,14 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
-		const price = await araContractsManager.getAFSPrice({ did: load.aid })
-		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
-		windowManager.openModal('checkoutModal1')
+		await araContractsManager.getAFSPrice({
+			did: load.aid,
+			errorHandler,
+			completeHandler: (price) => {
+				dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
+				windowManager.openModal('checkoutModal1')
+			}
+		})
 	} catch (err) {
 		errorHandler(err)
 	}
