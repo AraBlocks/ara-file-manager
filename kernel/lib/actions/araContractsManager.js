@@ -216,7 +216,7 @@ async function subscribeFaucet(userAddress) {
   let subscription
   try {
     subscription = contract.events.Transfer({ filter: { to: userAddress, from: FAUCET_OWNER } })
-      .on('data', async () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
+      .on('data', () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
       .on('error', debug)
   } catch (err) {
     debug('Error %o', err)
