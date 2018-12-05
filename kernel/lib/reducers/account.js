@@ -44,9 +44,6 @@ module.exports = async (state, { load = null, type }) => {
     case k.PURCHASED:
       state.araBalance = load.araBalance
       break
-    case k.REACHED_FAUCET_LIMIT:
-      state.faucetStatus = k.REACHED_FAUCET_LIMIT
-      break
     default:
       return state
   }
