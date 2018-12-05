@@ -77,25 +77,26 @@ class AccountInfo extends Nanocomponent {
     const { props } = this
 
     const buttonOpts = { cssClass: {} }
-    if (props.faucetStatus === null) {
-      buttonOpts.children = 'Request Tokens'
-      buttonOpts.cssClass.opts = { color: 'green', fontSize: '14', height: '3' }
-      buttonOpts.onclick = () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
-    } else if (props.faucetStatus === k.IN_FAUCET_QUEUE) {
-      buttonOpts.children = 'Faucet is sending tokens...'
-      buttonOpts.cssClass.name = 'thinBorder'
-      buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
-      buttonOpts.onclick = () => {}
-    } else if (props.faucetStatus === k.GREYLISTED_FROM_FAUCET){
-      buttonOpts.children = 'Greylisted for 24 hours!'
-      buttonOpts.cssClass.name = 'thinBorder'
-      buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
-      buttonOpts.onclick = () => {}
-    } else {
-      buttonOpts.children = '1000 Tokens is Faucet limit!'
-      buttonOpts.cssClass.name = 'thinBorder'
-      buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
-      buttonOpts.onclick = () => {}
+    buttonOpts.cssClass.name = 'thinBorder'
+    buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
+    buttonOpts.onclick = () => {}
+
+    switch (props.faucetStatus) {
+      case null:
+        buttonOpts.children = 'Request Tokens'
+        buttonOpts.cssClass.opts.color = 'green'
+        buttonOpts.cssClass.name = ''
+        buttonOpts.onclick = () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
+        break
+      case k.IN_FAUCET_QUEUE:
+        buttonOpts.children = 'Faucet is sending tokens...'
+        break
+      case k.GREYLISTED_FROM_FAUCET:
+        buttonOpts.children = 'Greylisted for 24 hours!'
+        break
+      case k.FAUCET_LIMIT_HIT:
+        buttonOpts.children = '1000 Tokens is Faucet limit!'
+        break
     }
 
     return buttonOpts
