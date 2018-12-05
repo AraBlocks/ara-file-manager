@@ -83,7 +83,7 @@ class FileInfo extends Nanocomponent {
 							</div>
 						</div>
 						<div class="${styles.errorMsg} FileInfo-errorMsg">
-							${parentState.price < 0 ? "Price Cannot be negative" : ""}
+							${parentState.price < 0 ? "Price cannot be negative" : ""}
 						</div>
 					</div>
 				</div>
