@@ -22,6 +22,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 		const library = await araContractsManager.getLibraryItems(account.userAid)
+		//TODO remove slice
 		if (library.includes('0x' + load.aid.slice(-64))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
