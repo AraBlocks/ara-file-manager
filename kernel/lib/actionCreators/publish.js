@@ -59,7 +59,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 
     const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED }, false)
 
-    afmManager.saveDeployedAfs(did, userAid)
+    afmManager.savePublishedItem(did, userAid)
 
     windowManager.closeWindow('generalPleaseWaitModal')
 
@@ -137,7 +137,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   const { account, farmer } = store
   try {
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
-    afmManager.savePublishedItem(load.did, account.userAid)
 
     const descriptorOpts = {
       datePublished: new Date,
