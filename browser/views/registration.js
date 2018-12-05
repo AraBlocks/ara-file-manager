@@ -34,7 +34,7 @@ class Registration extends Nanocomponent {
       passwordConfirmInput: new Input({
         placeholder: 'Confirm password',
         parentState: this.state,
-        field: 'password',
+        field: 'passwordConfirm',
         type: 'password'
       }),
 
@@ -61,49 +61,45 @@ class Registration extends Nanocomponent {
     this.render = this.render.bind(this)
   }
 
-  checkForm() {
+  get properInput() {
     const {
       password,
       passwordConfirm,
       errorText
     } = this.state
 
-    let err = false
+    let properInput = true
     if (password === '') {
       errorText.password = 'Must enter a password'
       errorText.passwordConfirm = ''
-
-      err = true
+      properInput = false
     } else if (passwordConfirm === '') {
       errorText.password = ''
       errorText.passwordConfirm = 'Must confirm password'
-
-      err = true
+      properInput = false
     } else if (password !== passwordConfirm) {
       errorText.password = ''
       errorText.passwordConfirm = "Passwords don't match"
-
-      err = true
+      properInput = false
     }
+
+    return properInput
   }
 
   register(e) {
     e.preventDefault()
     const { password } = this.state
-    password === ''
-      ? this.render({ requiredIndicator: true })
-      : emit({ event: k.REGISTER, load: password })
+
+    this.properInput
+      ? emit({ event: k.REGISTER, load: password })
+      : this.rerender({})
   }
 
   update() {
     return true
   }
 
-  createElement({
-    pending = false,
-    flagPWField = true,
-    flagPWConfirmField = true
-  }) {
+  createElement({ pending = false }) {
     const { children, register, state } = this
 
     return html`
@@ -118,13 +114,13 @@ class Registration extends Nanocomponent {
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
         <form class="${styles.registerForm}" onsubmit="${register}">
-          ${children.passwordInput.render({ requiredIndicator: flagPWField })}
-          <div style="font-size: 10px; height: 13px; width: 100%;">
+          ${children.passwordInput.render({ requiredIndicator: Boolean(state.errorText.password) })}
+          <div class="${styles.errorMsg} registration-errorMsg">
             ${state.errorText.password}
           </div>
-          ${children.passwordConfirmInput.render({ requiredIndicator: flagPWConfirmField })}
-          <div style="font-size: 10px; height: 13px; width: 100%;">
-          ${state.errorText.passwordConfirm}
+          ${children.passwordConfirmInput.render({ requiredIndicator: Boolean(state.errorText.passwordConfirm) })}
+          <div class="${styles.errorMsg} registration-errorMsg">
+            ${state.errorText.passwordConfirm}
           </div>
           ${children.submitButton.render({})}
         </form>
