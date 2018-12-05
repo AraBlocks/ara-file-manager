@@ -3,6 +3,8 @@
 const debug = require('debug')('acm:boot:main')
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
+const { application } = require('../lib/constants/index')
+const analytics = require('../kernel/lib/actions/analytics')
 const writeFiles = require('./writeFiles')
 const isDev = require('electron-is-dev')
 const path = require('path')
@@ -25,10 +27,12 @@ if (shouldQuit) {
   return
 }
 
-app.setName('Ara File Manager')
+app.setName(application.APP_NAME)
 app.on('ready', () => {
   debug('App initialzed')
   windowManager.init()
+  analytics.trackAppOpen()
+
   //Creates tray menu
   require('./tray').buildTray()
   debug('Creating menu')
