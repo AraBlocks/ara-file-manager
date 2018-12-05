@@ -37,10 +37,10 @@ class Button extends Nanocomponent {
     return html`
       <button
         class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
-        onclick=${props.onclick}
-        onmouseover=${props.onmouseover}
-        onmouseout=${props.onmouseout}
-        type=${props.type}
+        onclick="${props.onclick}"
+        onmouseover="${props.onmouseover}"
+        onmouseout="${props.onmouseout}"
+        type="${props.type}"
       >
         ${props.children}
       </button>
