@@ -48,7 +48,10 @@
     "pify": "^4.0.1",
     "request-promise": "^4.2.2",
     "styleUtils": "file:browser/lib/styleUtils",
+    "toiletdb": "^1.4.1",
+    "universal-analytics": "^0.4.20",
     "user-home": "^2.0.0",
+    "uuid": "^3.3.2",
     "web3-providers-ws": "^1.0.0-beta.35"
   },
   "devDependencies": {
