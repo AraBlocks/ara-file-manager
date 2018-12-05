@@ -23,7 +23,8 @@ class FileInfo extends Nanocomponent {
 				field: 'price',
 				parentState,
 				placeholder: 'Price',
-				type: 'number'
+				type: 'number',
+				renderView
 			}),
 			fileSelector: new FileTable({
 				addItems,
@@ -40,7 +41,7 @@ class FileInfo extends Nanocomponent {
 	}
 
 	createElement() {
-		const { children } = this
+		const { children, props } = this
 		return html`
 			<div class="${styles.container}">
 				<div class="${styles.verticalContainer} publishFile-verticalContainer">
@@ -54,7 +55,10 @@ class FileInfo extends Nanocomponent {
 						</div>
 					</div>
 					<div class="${styles.infoTipHolder}">
-						${children.priceInput.render({})}
+						<div class="${styles.errorMsg}">
+							${props.parentState.price < 0 ? "Price cannot be negative" : ""}
+						</div>
+						${children.priceInput.render({ requiredIndicator: props.parentState.price < 0 })}
 						<div class="${styles.infoTip}">
 							Price is converted to the equivalent value in Ara Tokens.
 							Leave blank if you do not want to charge for this file.
