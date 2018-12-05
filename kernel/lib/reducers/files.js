@@ -57,14 +57,13 @@ module.exports = (state, { load = null, type }) => {
     case k.PUBLISHING:
       file = findFile(load.did, state.published)
       if (file == null) { break }
-      console.log(load)
       Object.assign(file, load)
       break
     case k.PUBLISHED:
       file = findFile(load.did, state.published)
       if (file == null) { break }
       file.status = k.DOWNLOADED_PUBLISHED,
-        file.datePublished = new Date
+      file.datePublished = new Date
       file.shouldBroadcast = true
       file.owner = true
       break
