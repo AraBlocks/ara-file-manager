@@ -7,11 +7,13 @@ const Nanocomponent = require('nanocomponent')
 
 class ErrorInput extends Nanocomponent {
 	constructor({
+		araIcon,
 		field,
 		errorMessage,
 		parentState,
 		placeholder,
-		type
+		type,
+		renderView
 	}) {
 		super()
 		this.state = {
@@ -24,10 +26,12 @@ class ErrorInput extends Nanocomponent {
 		}
 		this.children = {
 			input: new Input({
+				araIcon,
 				field,
 				parentState,
 				placeholder,
-				type
+				type,
+				renderView
 			})
 		}
 	}
