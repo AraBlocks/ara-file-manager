@@ -17,14 +17,7 @@ class ErrorInput extends Nanocomponent {
 			parentState: opts.parentState,
 		}
 		this.children = {
-			input: new Input({
-				araIcon: opts.araIcon,
-				field: opts.field,
-				parentState: opts.parentState,
-				placeholder: opts.placeholder,
-				type: opts.type,
-				renderView: opts.renderView
-			})
+			input: new Input(opts)
 		}
 	}
 
