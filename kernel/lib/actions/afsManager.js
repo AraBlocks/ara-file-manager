@@ -12,24 +12,24 @@ const path = require('path')
 const { shell } = require('electron')
 
 async function createDeployEstimateAfs(userDID, password) {
-	try {
+  try {
     const userData = afmManager.getUserData(userDID)
-		if (userData.deployEstimateDid == null) {
-			let { afs, afs: { did } } = await araFilesystem.create({ owner: userDID, password })
-			await afs.close();
+    if (userData.deployEstimateDid == null) {
+      let { afs, afs: { did } } = await araFilesystem.create({ owner: userDID, password })
+      await afs.close();
       userData.deployEstimateDid = did
-			afmManager.saveUserData({ userDID, userData })
-			return did
-		}
-		return userData.deployEstimateDid
-	} catch(err) {
-		debug('Error creating afs for deploy proxy estimate %o', err)
-	}
+      afmManager.saveUserData({ userDID, userData })
+      return did
+    }
+    return userData.deployEstimateDid
+  } catch (err) {
+    debug('Error creating afs for deploy proxy estimate %o', err)
+  }
 }
 
 async function exportFile({ did, exportPath, filePath, completeHandler }) {
-	debug('Exporting file %s to %s', filePath, exportPath)
-	try {
+  debug('Exporting file %s to %s', filePath, exportPath)
+  try {
     const { afs } = await araFilesystem.create({ did })
     const fullPath = path.join(afs.HOME, filePath)
     const fileData = await afs.readFile(fullPath)
@@ -38,15 +38,14 @@ async function exportFile({ did, exportPath, filePath, completeHandler }) {
     shell.openItem(path.dirname(exportPath))
     completeHandler()
   } catch (err) {
-		debug('Error exporting file %s to %s: %o', filePath, exportPath, err)
-	}
+    debug('Error exporting file %s to %s: %o', filePath, exportPath, err)
+  }
 }
 
 async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
   try {
     const { afs } = await araFilesystem.create({ did })
     const fullPath = path.join(afs.HOME, folderPath)
-    debug({fullPath})
     const result = await afs.readdir(fullPath)
     if (result.length === 0) {
       throw new Error('Can only export a non-empty AFS Folders.')
@@ -67,15 +66,18 @@ async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
 }
 
 async function getFileList(did) {
-	debug('Getting file list in AFS')
-	try {
-		const { afs } = await araFilesystem.create({ did })
-		const result = await _getContentsInFolder(afs, afs.HOME)
-    await afs.close()
-		return result.fileList
-	} catch (err) {
-		debug('Error getting file list in afs: %o', err)
-	}
+  debug('Getting file list in AFS')
+  let afs
+  let fileList = []
+  try {
+    ({ afs } = await araFilesystem.create({ did }));
+    ({ fileList } = await _getContentsInFolder(afs, afs.HOME))
+  } catch (err) {
+    debug('Error getting file list in afs: %o', err)
+  }
+
+  await afs.close()
+  return fileList
 }
 
 // This function does not open/close afs.
@@ -84,7 +86,7 @@ async function _getContentsInFolder(afs, folderPath) {
     let totalSize = 0
     const result = []
     const contents = await afs.readdir(folderPath)
-    for (let i = 0; i < contents.length; i ++) {
+    for (let i = 0; i < contents.length; i++) {
       const subPath = contents[i]
       const fullPath = path.join(folderPath, subPath)
       const fileStats = await afs.stat(fullPath)
@@ -110,7 +112,7 @@ async function _getContentsInFolder(afs, folderPath) {
       }
     }
     return { fileList: result, totalSize }
-  } catch(err) {
+  } catch (err) {
     debug('Error getting contents: %o', err)
   }
 }
@@ -128,20 +130,38 @@ async function getUpdateAvailableStatus(item) {
   }
 }
 
+async function isPublished(did) {
+  let published = true
+  let afs
+  let version
+  try {
+    ({ afs, afs: { version } } = await araFilesystem.create({ did }))
+    published = version > 1
+  } catch (err) {
+    debug('Err getting version: %o', err)
+  }
+
+  await afs.close()
+  return published
+}
+
 async function surfaceAFS({ dids, DCDNStore, published = false }) {
-	return Promise.all(dids.map(did => actionsUtil.descriptorGenerator(did, {
-		shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
-		owner: published
-	})))
+  return Promise.all(dids.map(async (did) => {
+    const descriptor = await actionsUtil.descriptorGenerator(did, {
+      shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
+      owner: published,
+    })
+    return Object.assign(descriptor, { status: await isPublished(did) ? descriptor.status : k.UNCOMMITTED })
+  }))
 }
 
 function unarchiveAFS({ did }) {
-	debug('Unarchiving %s', did)
-	try {
-		araFilesystem.unarchive({ did, path: actionsUtil.makeAfsPath(did) })
-	} catch (err) {
-		debug('Error unarchiving: %o', err)
-	}
+  debug('Unarchiving %s', did)
+  try {
+    araFilesystem.unarchive({ did, path: actionsUtil.makeAfsPath(did) })
+  } catch (err) {
+    debug('Error unarchiving: %o', err)
+  }
 }
 
 module.exports = {
@@ -150,6 +170,7 @@ module.exports = {
   exportFolder,
   getFileList,
   getUpdateAvailableStatus,
-	surfaceAFS,
-	unarchiveAFS,
+  isPublished,
+  surfaceAFS,
+  unarchiveAFS,
 }

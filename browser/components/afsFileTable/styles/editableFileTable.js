@@ -1,10 +1,9 @@
 'use strict'
 
-const { colors, fonts } = require('styleUtils')
+const { colorSelector, fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-	colors,
 	fonts,
 
 	addOptions: css`
@@ -18,10 +17,14 @@ module.exports = {
 
 	add: css`
 		:host {
-			color: var(--ara-teal);
+			color: ${colorSelector('teal')};
 			cursor: pointer;
 			font-family: ${fonts.bold};
 			font-size: 14px;
+		}
+
+		:host:hover {
+			color: ${colorSelector('teal', true)};
 		}
 	`,
 
@@ -100,7 +103,7 @@ module.exports = {
 
 	divider: css`
 		:host {
-			background-color: ${colors.araGrey};
+			background-color: ${colorSelector('grey')};
 			height: 1px;
 			width: 100%;
 		}
