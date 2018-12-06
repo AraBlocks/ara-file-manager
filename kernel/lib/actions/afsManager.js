@@ -46,7 +46,6 @@ async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
   try {
     const { afs } = await araFilesystem.create({ did })
     const fullPath = path.join(afs.HOME, folderPath)
-    debug({ fullPath })
     const result = await afs.readdir(fullPath)
     if (result.length === 0) {
       throw new Error('Can only export a non-empty AFS Folders.')

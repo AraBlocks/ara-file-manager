@@ -10,6 +10,7 @@ const path = require('path')
 const fs = require('fs')
 const createContext = require('ara-context')
 
+//TODO: figure out why reading metadata causes error for uncommitted afs
 async function descriptorGenerator(did, opts = {}, readMeta = true) {
 	try {
 		did = araUtil.getIdentifier(did)
