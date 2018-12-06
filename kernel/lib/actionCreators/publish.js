@@ -22,10 +22,18 @@ internalEmitter.on(k.DEPLOY_PROXY, _deployProxy)
 
 async function _deployProxy() {
   debug('%s heard', k.DEPLOY_PROXY)
-  const { password } = store.account
-  try {
-    windowManager.openWindow('deployEstimate')
+  const { account: { password }, files } = store
 
+  //Checks published files to see if any haven't been committed. If true, skips deploying proxy and uses that afs to publish
+  try {
+    const unpublishedAFS = files.published.find(({ status }) => status === k.UNCOMMITTED)
+    if (unpublishedAFS) {
+      dispatch({ type: k.USE_UNCOMMITTED, load: { contentDID: unpublishedAFS.did } })
+      windowManager.openWindow('publishFileView')
+      return
+    }
+
+    windowManager.openWindow('deployEstimate')
     const deployEstimateDid = store.account.deployEstimateDid
 
     const deployCost = await afs.deploy({ password, did: deployEstimateDid, estimate: true })
@@ -57,9 +65,9 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
     await newAfs.close()
     await afs.deploy({ password, did })
 
-    const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED }, false)
+    const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED })
 
-    afmManager.saveDeployedAfs(did, userAid)
+    afmManager.savePublishedItem(did, userAid)
 
     windowManager.closeWindow('generalPleaseWaitModal')
 
@@ -85,20 +93,19 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
+  const did = load.contentDID
   try {
     let dispatchLoad = { load: { fileName: load.name } }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
 
-    const did = load.contentDID
     await (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
-    await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
 
+    await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
     const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
 
-    debug('Estimating gas')
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0
     if (load.price) {
@@ -137,7 +144,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   const { account, farmer } = store
   try {
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
-    afmManager.savePublishedItem(load.did, account.userAid)
 
     const descriptorOpts = {
       datePublished: new Date,
