@@ -66,28 +66,26 @@ class Recover extends Nanocomponent {
     e.preventDefault()
     const { password, mnemonic, confirmPassword } = this.state
 
-    const improperLength = mnemonic.split(' ').length !== 12
-    const flagMnemonicField = improperLength
+    const flagMnemonicField = mnemonic.split(' ').length !== 12
     const flagPWField = password === ''
     const flagConfirmPWField = confirmPassword === '' || password !==  confirmPassword
-    if (flagMnemonicField || flagPWField || flagConfirmPWField) {
-      this.render({ flagMnemonicField, flagPWField, flagConfirmPWField })
-    } else {
-      windowManagement.emit({ event: k.RECOVER, load: { password, mnemonic } })
-    }
+    flagMnemonicField || flagPWField || flagConfirmPWField
+      ? this.render({ flagMnemonicField, flagPWField, flagConfirmPWField })
+      : windowManagement.emit({ event: k.RECOVER, load: { password, mnemonic } })
   }
 
   update() {
     return true
   }
 
-  createElement({
-    flagMnemonicField = false,
-    flagPWField = false,
-    flagConfirmPWField = false,
-    pending = false
-  }) {
+  createElement(opts) {
     const { children, state } = this
+    const {
+      flagMnemonicField = false,
+      flagPWField = false,
+      flagConfirmPWField = false,
+      pending = false
+    } = opts
 
     return html`
       <div class="${styles.container} recover-container">

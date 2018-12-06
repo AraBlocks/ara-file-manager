@@ -6,32 +6,24 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class ErrorInput extends Nanocomponent {
-	constructor({
-		araIcon,
-		field,
-		errorMessage,
-		parentState,
-		placeholder,
-		type,
-		renderView
-	}) {
+	constructor(opts) {
 		super()
 		this.state = {
 			displayError: false,
-			errorMessage
+			errorMessage: opts.errorMessage
 		}
 		this.props = {
-			field,
-			parentState,
+			field: opts.field,
+			parentState: opts.parentState,
 		}
 		this.children = {
 			input: new Input({
-				araIcon,
-				field,
-				parentState,
-				placeholder,
-				type,
-				renderView
+				araIcon: opts.araIcon,
+				field: opts.field,
+				parentState: opts.parentState,
+				placeholder: opts.placeholder,
+				type: opts.type,
+				renderView: opts.renderView
 			})
 		}
 	}
