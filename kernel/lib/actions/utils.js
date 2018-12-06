@@ -12,7 +12,6 @@ const createContext = require('ara-context')
 
 //TODO: figure out why reading metadata causes error for uncommitted afs
 async function descriptorGenerator(did, opts = {}) {
-	debug('descripty', did)
 	try {
 		did = araUtil.getIdentifier(did)
 		const AFSPath = await makeAfsPath(did)
@@ -35,7 +34,7 @@ async function descriptorGenerator(did, opts = {}) {
 			size: meta ? meta.size : 0,
 			status: AFSExists ? k.DOWNLOADED_PUBLISHED : k.AWAITING_DOWNLOAD
 		}
-		debug('descripty done', did)
+
 		return Object.assign(descriptor, opts)
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
