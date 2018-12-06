@@ -26,7 +26,9 @@ async function _deployProxy() {
   try {
     const unpublishedAFS = files.published.find(({ status }) => status === k.UNCOMMITTED)
     if (unpublishedAFS) {
-      internalEmitter.emit(k.FEED_MANAGE_FILE, { did: unpublishedAFS.did, name: unpublishedAFS.name })
+      // internalEmitter.emit(k.FEED_MANAGE_FILE, { did: unpublishedAFS.did, name: unpublishedAFS.name })
+      dispatch({ type: k.USE_UNCOMMITTED, load: { contentDID: unpublishedAFS.did } })
+      windowManager.openWindow('publishFileView')
       return
     }
 
@@ -90,20 +92,19 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
+  const did = load.contentDID
   try {
     let dispatchLoad = { load: { fileName: load.name } }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
 
-    const did = load.contentDID
     await (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
-    await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
 
+    await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
     const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
 
-    debug('Estimating gas')
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0
     if (load.price) {

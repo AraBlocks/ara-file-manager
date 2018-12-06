@@ -26,10 +26,10 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
       estimate = await afs.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
     } else {
       if (load.addPaths.length != 0) {
-        await (await afs.add({ did: load.did, paths: load.addPaths, password: account.password })).close();
+        await (await afs.add({ did: load.did, paths: load.addPaths, password: account.password })).close()
       }
       if (load.removePaths.length != 0) {
-        await (await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })).close();
+        await (await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })).close()
       }
       await actionsUtil.writeFileMetaData({ did: load.did, size: load.size, title: load.name, password: account.password })
       if (load.shouldUpdatePrice) {

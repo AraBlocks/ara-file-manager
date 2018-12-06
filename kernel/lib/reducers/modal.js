@@ -21,11 +21,12 @@ module.exports = (state, { load = null, type }) => {
       state.data.freezeData = true
       break
     case k.PROXY_DEPLOYED:
-      state.publishFileData.contentDID = load.contentDID
       state.data.mnemonic = load.mnemonic
       state.data.userDID = load.userAid
       state.data.isAFS = load.isAFS
       state.data.freezeData = true
+    case k.USE_UNCOMMITTED:
+      state.publishFileData.contentDID = load.contentDID
       break
     default:
       return state

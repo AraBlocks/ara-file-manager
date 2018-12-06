@@ -129,12 +129,16 @@ async function getUpdateAvailableStatus(item) {
 
 async function isPublished(did) {
   let published = true
+  let afs
+  let version
   try {
-    const { afs: { version } } = await araFilesystem.create({ did })
+    ({ afs, afs: { version } } = await araFilesystem.create({ did }))
     published = version > 1
   } catch (err) {
     debug('Err getting version: %o', err)
   }
+
+  await afs.close()
   return published
 }
 
