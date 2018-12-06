@@ -2,7 +2,7 @@
 
 const k = require('../../../lib/constants/stateManagement')
 const FileTable = require('../../components/afsFileTable/editableFileTable')
-const Input = require('../../components/input')
+const ErrorInput = require('../../components/errorInput')
 const styles = require('./styles/fileInfo')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
@@ -13,12 +13,13 @@ class FileInfo extends Nanocomponent {
 
 		this.props = { parentState, renderView }
 		this.children = {
-			fileNameInput: new Input({
+			fileNameInput: new ErrorInput({
 				field: 'fileName',
 				placeholder: 'File Name',
 				parentState
 			}),
-			priceInput: new Input({
+			priceInput: new ErrorInput({
+				errorMessage: 'Price cannot be negative',
 				araIcon: true,
 				field: 'price',
 				parentState,
@@ -55,10 +56,7 @@ class FileInfo extends Nanocomponent {
 						</div>
 					</div>
 					<div class="${styles.infoTipHolder}">
-						<div class="${styles.errorMsg}">
-							${props.parentState.price < 0 ? "Price cannot be negative" : ""}
-						</div>
-						${children.priceInput.render({ requiredIndicator: props.parentState.price < 0 })}
+						${children.priceInput.render({ displayError: props.parentState.price < 0 })}
 						<div class="${styles.infoTip}">
 							Price is converted to the equivalent value in Ara Tokens.
 							Leave blank if you do not want to charge for this file.

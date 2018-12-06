@@ -33,15 +33,6 @@ module.exports = {
 		}
 	`,
 
-	errorMsg: css`
-		:host {
-			color: ${colorSelector('red')};
-			font-size: 10px;
-			height: 13px;
-			width: 100%;
-		}
-	`,
-
 	distributionLink: css`
 		:host {
 			padding-top: 10px;
@@ -50,7 +41,7 @@ module.exports = {
 
 	fileTable: css`
 		:host {
-			height: 270px;
+			height: 290px;
 			padding-top: 10px;
 			width: 100%;
 		}

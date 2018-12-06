@@ -2,6 +2,7 @@
 
 const FileSelector = require('../../components/fileSelector')
 const FileTable = require('../../components/afsFileTable/editableFileTable')
+const ErrorInput = require('../../components/errorInput')
 const Input = require('../../components/input')
 const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/fileInfo')
@@ -41,7 +42,7 @@ class FileInfo extends Nanocomponent {
 				tableType: k.UPDATE_FILE,
 				renderView
 			}),
-			fileNameInput: new Input({
+			fileNameInput: new ErrorInput({
 				field: 'name',
 				placeholder: 'File Name',
 				parentState
@@ -50,8 +51,9 @@ class FileInfo extends Nanocomponent {
 				field: 'filePath',
 				parentState
 			}),
-			priceInput: new Input({
+			priceInput: new ErrorInput({
 				araIcon: true,
+				errorMessage: 'Price cannot be negative',
 				field: 'price',
 				parentState,
 				placeholder: 'Price',
@@ -75,15 +77,12 @@ class FileInfo extends Nanocomponent {
 						${children.fileNameInput.render({ value: parentState.name })}
 					</div>
 					<div class=${styles.infoTipHolder}>
-						${children.priceInput.render({ value: parentState.price, requiredIndicator: parentState.price < 0 })}
+						${children.priceInput.render({ value: parentState.price, displayError: parentState.price < 0 })}
 						<div class=${styles.araPriceHolder}>
 							<b>Ara Token Price:</b>
 							<div class=${styles.araPrice}>
 								<b>${parentState.tokenPrice} Ara</b>
 							</div>
-						</div>
-						<div class="${styles.errorMsg} FileInfo-errorMsg">
-							${parentState.price < 0 ? "Price cannot be negative" : ""}
 						</div>
 					</div>
 				</div>
