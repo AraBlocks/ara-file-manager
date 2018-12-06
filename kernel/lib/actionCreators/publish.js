@@ -23,10 +23,11 @@ internalEmitter.on(k.DEPLOY_PROXY, _deployProxy)
 async function _deployProxy() {
   debug('%s heard', k.DEPLOY_PROXY)
   const { account: { password }, files } = store
+
+  //Checks published files to see if any haven't been committed. If true, skips deploying proxy and uses that afs to publish
   try {
     const unpublishedAFS = files.published.find(({ status }) => status === k.UNCOMMITTED)
     if (unpublishedAFS) {
-      // internalEmitter.emit(k.FEED_MANAGE_FILE, { did: unpublishedAFS.did, name: unpublishedAFS.name })
       dispatch({ type: k.USE_UNCOMMITTED, load: { contentDID: unpublishedAFS.did } })
       windowManager.openWindow('publishFileView')
       return

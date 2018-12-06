@@ -73,6 +73,6 @@ internalEmitter.on(k.FAUCET_ARA_RECEIVED, () => {
     dispatch({ type: k.FAUCET_ARA_RECEIVED })
 
     windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
-  } catch (e) { console.log(e) }
+  } catch (e) { debug(e) }
 
 })
