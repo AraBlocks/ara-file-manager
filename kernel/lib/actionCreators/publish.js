@@ -22,10 +22,15 @@ internalEmitter.on(k.DEPLOY_PROXY, _deployProxy)
 
 async function _deployProxy() {
   debug('%s heard', k.DEPLOY_PROXY)
-  const { password } = store.account
+  const { account: { password }, files } = store
   try {
-    windowManager.openWindow('deployEstimate')
+    const unpublishedAFS = files.published.find(({ status }) => status === k.UNCOMMITTED)
+    if (unpublishedAFS) {
+      internalEmitter.emit(k.FEED_MANAGE_FILE, { did: unpublishedAFS.did, name: unpublishedAFS.name })
+      return
+    }
 
+    windowManager.openWindow('deployEstimate')
     const deployEstimateDid = store.account.deployEstimateDid
 
     const deployCost = await afs.deploy({ password, did: deployEstimateDid, estimate: true })

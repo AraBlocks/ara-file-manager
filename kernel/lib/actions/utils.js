@@ -34,7 +34,7 @@ async function descriptorGenerator(did, opts = {}, readMeta = true) {
 			status: AFSExists ? k.DOWNLOADED_PUBLISHED : k.AWAITING_DOWNLOAD
 		}
 
-		return { ...descriptor, ...opts }
+		return Object.assign(descriptor, opts)
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
 	}
