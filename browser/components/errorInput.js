@@ -11,34 +11,41 @@ class ErrorInput extends Nanocomponent {
 		errorMessage,
 		parentState,
 		placeholder,
+		type
 	}) {
 		super()
-		this.state = { displayError: false }
+		this.state = {
+			displayError: false,
+			errorMessage
+		}
 		this.props = {
 			field,
 			parentState,
-			errorMessage
 		}
 		this.children = {
 			input: new Input({
 				field,
 				parentState,
-				placeholder
+				placeholder,
+				type
 			})
 		}
 	}
 
-	update(){
+	update({ displayError, errorMessage }){
+		const { state } = this
+		state.displayError = displayError
+		state.errorMessage = errorMessage || state.errorMessage
 		return true
 	}
 
 	createElement() {
-		const { children, props, state } = this
+		const { children, state } = this
 		return html`
 			<div class="${styles.container} ErrorInput-container">
 				${children.input.render({ requiredIndicator: state.displayError })}
 				<div class="${styles.errorMsg} ErrorInput-errorMsg">
-					${state.displayError ? props.errorMessage : ""}
+					${state.displayError ? state.errorMessage : ""}
 				</div>
 			</div>
 		`

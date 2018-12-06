@@ -24,15 +24,6 @@ module.exports = {
     }
   `,
 
-  errorMsg: css`
-    :host {
-      color: ${colorSelector('red')};
-      font-size: 10px;
-      height: 13px;
-      width: 100%;
-    }
-  `,
-
   importContainer: css`
     :host {
       align-self: start;
