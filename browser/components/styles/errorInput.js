@@ -10,7 +10,6 @@ module.exports = {
 	container: css`
 		:host {
 			display: flex;
-			background-color: green;
 			flex-direction: column;
 			width: 100%;
 			height: 62px;
@@ -20,7 +19,7 @@ module.exports = {
 	errorMsg: css`
 		:host {
 			color: ${colorSelector('red')};
-			font-size: 10px;
+			font-size: 10px !important;
 			padding-top: 3px;
 			width: 100%;
 		}
