@@ -96,9 +96,12 @@ windowManager.setSize = (view) => {
       height = 300
       break
     case 'registration':
-    case 'recover':
       width = 400
       height = 350
+      break
+    case 'recover':
+      width = 400
+      height = 390
       break
     case 'testing':
       width = 550
