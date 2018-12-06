@@ -67,14 +67,17 @@ async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
 
 async function getFileList(did) {
   debug('Getting file list in AFS')
+  let afs
+  let fileList = []
   try {
-    const { afs } = await araFilesystem.create({ did })
-    const result = await _getContentsInFolder(afs, afs.HOME)
-    await afs.close()
-    return result.fileList
+    ({ afs } = await araFilesystem.create({ did }));
+    ({ fileList } = await _getContentsInFolder(afs, afs.HOME))
   } catch (err) {
     debug('Error getting file list in afs: %o', err)
   }
+
+  await afs.close()
+  return fileList
 }
 
 // This function does not open/close afs.
