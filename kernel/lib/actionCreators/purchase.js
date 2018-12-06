@@ -7,6 +7,7 @@ const {
 	araContractsManager,
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
+const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
@@ -22,6 +23,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 		const library = await araContractsManager.getLibraryItems(account.userAid)
+		//TODO remove slice
 		if (library.includes('0x' + load.aid.slice(-64))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
@@ -35,14 +37,11 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			windowManager.openModal('generalMessageModal')
 			return
 		}
-
-		const price = await araContractsManager.getAFSPrice({ did: load.aid })
+		const price = await araFilesystem.getPrice({ did: load.aid })
 		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
 		windowManager.openModal('checkoutModal1')
 	} catch (err) {
-		debug('Error: %O', err)
-		dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
-		windowManager.openModal('generalMessageModal')
+		errorHandler(err)
 	}
 })
 
@@ -68,13 +67,18 @@ ipcMain.on(k.PURCHASE, async (event, load) => {
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
 		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
-
 		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
 		dispatch({ type: k.GOT_REWARDS_SUB, load: { rewardsSub } })
 	} catch (err) {
-		debug(err)
-		dispatch({ type: k.FEED_MODAL, load: { modalName: 'failureModal2' } })
-		windowManager.openModal('generalMessageModal')
-		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+		errorHandler(err)
+		dispatch({ type: k.ERROR_PURCHASING, load: { did: load.did } })
+		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 	}
 })
+
+function errorHandler(err) {
+	debug(err)
+	dispatch({ type: k.FEED_MODAL, load: { modalName: 'purchaseFailed' } })
+	windowManager.openModal('generalMessageModal')
+	internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+}

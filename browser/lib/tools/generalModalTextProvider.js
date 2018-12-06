@@ -33,6 +33,10 @@ function generalModalText(modalName, load) {
 			title = 'Something went wrong'
 			description = 'There could be a problem with with your file or your ability to access the network. Please check your connection and try again.'
 			break
+		case 'purchaseFailed':
+			title = 'Something went wrong'
+			description = 'There could be a problem with with the link or your ability to access the network. Please check your connection and try again.'
+			break
 		case 'fileMissing':
 			title = 'File Missing'
 			description = html `<div><b>${load.fileName}</b> has been deleted or altered. You cannot share a file or earn rewards unless it matches the published file on the network.<br><br>
