@@ -29,7 +29,7 @@
   "dependencies": {
     "ara-context": "github:arablocks/ara-context#semver:0.5.x",
     "ara-contracts": "github:arablocks/ara-contracts#semver:0.8.x",
-    "ara-farming-dcdn": "github:littlstar/ara-farming-dcdn#semver:0.6.x",
+    "ara-farming-dcdn": "github:littlstar/ara-farming-dcdn#semver:0.7.x",
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.9.x",
     "ara-identity": "github:arablocks/ara-identity#semver:0.30.x",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
