@@ -10,12 +10,13 @@ const path = require('path')
 const fs = require('fs')
 const createContext = require('ara-context')
 
-async function descriptorGenerator(did, opts = {}, readMeta = true) {
+//TODO: figure out why reading metadata causes error for uncommitted afs
+async function descriptorGenerator(did, opts = {}) {
 	try {
 		did = araUtil.getIdentifier(did)
 		const AFSPath = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(AFSPath)
-		const meta = readMeta && AFSExists ? await readFileMetadata(did) : null
+		const meta = AFSExists ? await readFileMetadata(did) : null
 
 		const descriptor = {
 			allocatedRewards: 0,
@@ -34,7 +35,7 @@ async function descriptorGenerator(did, opts = {}, readMeta = true) {
 			status: AFSExists ? k.DOWNLOADED_PUBLISHED : k.AWAITING_DOWNLOAD
 		}
 
-		return { ...descriptor, ...opts }
+		return Object.assign(descriptor, opts)
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
 	}
@@ -56,7 +57,7 @@ function makeAfsPath(did) {
 }
 
 async function readFileMetadata(did) {
-	let fileInfo
+	let fileInfo = {}
 	try {
 		const data = await afs.metadata.readFile({ did })
 		fileInfo = JSON.parse(data.fileInfo)
@@ -68,8 +69,8 @@ async function readFileMetadata(did) {
 
 async function writeFileMetaData({
 	did,
-	size,
-	title,
+	size = 0,
+	title = '',
 	userDID = '',
 	password
 }) {

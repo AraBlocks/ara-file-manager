@@ -1,6 +1,6 @@
 'use strict'
 
-const { colors, fonts } = require('styleUtils')
+const { colors, colorSelector, fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
@@ -41,8 +41,9 @@ module.exports = {
 
 	fileTable: css`
 		:host {
-			height: 270px;
+			height: 290px;
 			padding-top: 10px;
+			width: 100%;
 		}
 	`,
 

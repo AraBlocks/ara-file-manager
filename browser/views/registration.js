@@ -3,7 +3,7 @@
 const Button = require('../components/button')
 const windowManagement = require('../lib/tools/windowManagement')
 const { emit } = require('../lib/tools/windowManagement')
-const Input = require('../components/input')
+const ErrorInput = require('../components/errorInput')
 const overlay = require('../components/overlay')
 const styles = require('./styles/registration')
 const k = require('../../lib/constants/stateManagement')
@@ -17,21 +17,23 @@ class Registration extends Nanocomponent {
     this.state = {
       password: '',
       passwordConfirm: '',
-      errorText: {
-        password: '',
-        passwordConfirm: ''
+      displayError: {
+        password: false,
+        passwordConfirm: false
       }
      }
 
     this.children = {
-      passwordInput: new Input({
+      passwordInput: new ErrorInput({
+        errorMessage: 'Must enter password',
         placeholder: 'Password',
         parentState: this.state,
         field: 'password',
         type: 'password'
       }),
 
-      passwordConfirmInput: new Input({
+      passwordConfirmInput: new ErrorInput({
+        errorMessage: 'Must confirm password',
         placeholder: 'Confirm password',
         parentState: this.state,
         field: 'passwordConfirm',
@@ -65,21 +67,21 @@ class Registration extends Nanocomponent {
     const {
       password,
       passwordConfirm,
-      errorText
+      displayError
     } = this.state
 
     let properInput = true
     if (password === '') {
-      errorText.password = 'Must enter a password'
-      errorText.passwordConfirm = ''
+      displayError.password = true
+      displayError.passwordConfirm = false
       properInput = false
     } else if (passwordConfirm === '') {
-      errorText.password = ''
-      errorText.passwordConfirm = 'Must confirm password'
+      displayError.password = false
+      displayError.passwordConfirm = true
       properInput = false
     } else if (password !== passwordConfirm) {
-      errorText.password = ''
-      errorText.passwordConfirm = "Passwords don't match"
+      displayError.password = false
+      displayError.passwordConfirm = true
       properInput = false
     }
 
@@ -114,14 +116,13 @@ class Registration extends Nanocomponent {
           for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
         </p>
         <form class="${styles.registerForm}" onsubmit="${register}">
-          ${children.passwordInput.render({ requiredIndicator: Boolean(state.errorText.password) })}
-          <div class="${styles.errorMsg} registration-errorMsg">
-            ${state.errorText.password}
-          </div>
-          ${children.passwordConfirmInput.render({ requiredIndicator: Boolean(state.errorText.passwordConfirm) })}
-          <div class="${styles.errorMsg} registration-errorMsg">
-            ${state.errorText.passwordConfirm}
-          </div>
+          ${children.passwordInput.render({ displayError: state.displayError.password })}
+          ${children.passwordConfirmInput.render({
+            displayError: state.displayError.passwordConfirm,
+            errorMessage: state.passwordConfirm === ''
+              ? 'Must confirm password'
+              : "Passwords don't match"
+          })}
           ${children.submitButton.render({})}
         </form>
         ${children.cancelButton.render({})}

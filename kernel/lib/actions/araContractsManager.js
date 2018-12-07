@@ -173,9 +173,10 @@ async function subscribePublished({ did }) {
 		try {
 			subscription = contract.events.Purchased()
 				.on('data', async ({ returnValues }) => {
-					const did = returnValues._did.slice(-64)
-					const earning = await getAFSPrice({ did })
-					windowManager.internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
+					windowManager.internalEmitter.emit(k.UPDATE_EARNING, {
+						did,
+						earning: Number(araContracts.token.constrainTokenValue(returnValues._price))
+					})
 				})
 				.on('error', debug)
 		} catch (err) {
@@ -211,18 +212,18 @@ async function sendAra(opts) {
 }
 
 async function subscribeFaucet(userAddress) {
-  const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
+	const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
 
-  let subscription
-  try {
-    subscription = contract.events.Transfer({ filter: { to: userAddress, from: FAUCET_OWNER } })
-      .on('data', () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
-      .on('error', debug)
-  } catch (err) {
-    debug('Error %o', err)
-  }
+	let subscription
+	try {
+		subscription = contract.events.Transfer({ filter: { to: userAddress, from: FAUCET_OWNER } })
+			.on('data', () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
+			.on('error', debug)
+	} catch (err) {
+		debug('Error %o', err)
+	}
 
-  return { ctx, subscription }
+	return { ctx, subscription }
 }
 
 async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {

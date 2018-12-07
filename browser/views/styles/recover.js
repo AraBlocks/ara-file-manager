@@ -8,7 +8,7 @@ module.exports = {
     :host {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-between;
       width: 90%;
     }
   `,
@@ -44,18 +44,12 @@ module.exports = {
     :host {
       display: flex;
       flex-direction: column;
-      height: 70%;
+      height: 80%;
       justify-content: space-between;
     }
 
     :host div {
       font-size: 13px;
-    }
-
-    :host .error-msg {
-      color: ${colorSelector('red')};
-      font-size: 10px;
-      height: 10px;
     }
 
     :host div > b {

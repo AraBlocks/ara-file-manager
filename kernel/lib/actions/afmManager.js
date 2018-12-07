@@ -93,12 +93,6 @@ function savePublishedItem(contentDID, userDID) {
 	}
 }
 
-function saveDeployedAfs(contentDID, userDID) {
-	const userData = getUserData(userDID)
-	userData.deployedAfs = contentDID
-	saveUserData({ userDID, userData })
-}
-
 function saveUserData( { userDID, userData }) {
 	try {
 		debug('Saving User Data in .afm')
@@ -116,7 +110,6 @@ module.exports = {
 	getPublishedItems,
 	getAppData,
 	getUserData,
-	saveDeployedAfs,
 	savePublishedItem,
 	saveUserData,
 	removedPublishedItem
