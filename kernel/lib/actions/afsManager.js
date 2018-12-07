@@ -151,7 +151,10 @@ async function surfaceAFS({ dids, DCDNStore, published = false }) {
       shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
       owner: published,
     })
-    return Object.assign(descriptor, { status: await isPublished(did) ? descriptor.status : k.UNCOMMITTED })
+
+    return published
+      ? Object.assign(descriptor, { status: await isPublished(did) ? descriptor.status : k.UNCOMMITTED })
+      : descriptor
   }))
 }
 
