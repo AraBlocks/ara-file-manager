@@ -44,6 +44,9 @@ class UtilityButton extends Nanocomponent {
         iconName = 'Arrow'
         yTransform = -1
         break
+      case 'minimize':
+        iconName = 'Minimize'
+        break
       default:
     }
     return iconName == ''

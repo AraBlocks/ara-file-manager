@@ -21,23 +21,17 @@ class SendAra extends Nanocomponent {
 			closeButton: new UtilityButton({ children: 'close' }),
 
       receiverInput: new Input({
-        placeholder: 'Wallet Address or DID',
+        placeholder: 'Wallet Address or Ara ID',
         parentState: this.state,
         field: 'receiver'
 			}),
 
 			amountInput: new Input({
+        araIcon: true,
         placeholder: '0.0',
         parentState: this.state,
 				field: 'amount',
-				type: 'number',
-				embeddedButton: {
-					option: 'selection',
-					optionList: [
-						'ARA',
-					],
-					field: 'currency'
-				}
+				type: 'number'
       }),
 
       sendButton: new Button({
