@@ -69,7 +69,7 @@ class Container extends Nanocomponent {
 			price: Number(price) === 0 ? '' : price
 		}
 
-		if (fileList.length !== 0) { windowManagement.emit({ event: PUBLISH, load }) }
+		if (fileList.length !== 0 && price >= 0) { windowManagement.emit({ event: PUBLISH, load }) }
 		this.render({})
 	}
 
@@ -97,9 +97,9 @@ class Container extends Nanocomponent {
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({})}
 					${children.publishButton.render({
-						cssClass: (state.fileList.length === 0)
-							? { name: 'thinBorder' }
-							: { name: 'standard' },
+						cssClass: (state.fileList.length != 0 && state.price >= 0)
+							? { name: 'standard' }
+							: { name: 'thinBorder' },
 						children: [
 							'Publish',
 							html`
