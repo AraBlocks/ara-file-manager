@@ -35,6 +35,7 @@
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
     "ara-util": "github:arablocks/ara-util#semver:0.10.x",
     "choo": "^6.13.0",
+    "constants": "file:lib/constants",
     "css": "file:browser/lib/cssTool",
     "did-uri": "^0.2.6",
     "domready": "^1.0.8",
