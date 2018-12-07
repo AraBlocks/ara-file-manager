@@ -75,3 +75,6 @@ app.on('before-quit', () => {
   const { farmer: { farm } } = require('../kernel/lib/store')
   farmerManager.stopAllBroadcast(farm)
 })
+
+process.on('uncaughtException', err => debug('uncaught exception: %o', err))
+process.on('unhandledRejection', err => debug('unhandled rejection: %o', err))
