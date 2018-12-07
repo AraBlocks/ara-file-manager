@@ -16,10 +16,11 @@ class PublishedStats extends Nanocomponent {
     peers,
     price,
     redeeming,
-    status
+    status,
+    shouldBroadcast
   }) {
     return html`
-      <div class="${styles.container(status)} publishedStats-container">
+      <div class="${styles.container(status, shouldBroadcast)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
           <img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>
           ${price}

@@ -45,7 +45,7 @@ class Container extends Nanocomponent {
     `
   }
 
-  renderSections() {
+  renderSections(network) {
     const {
       children,
       renderNoFilesMsg,
@@ -65,7 +65,7 @@ class Container extends Nanocomponent {
     }
 
     return html`
-      <div class="${styles.sectionContainer} fileManagerContainer-sectionContainer">
+      <div class="${styles.sectionContainer(utils.shouldShowBanner(network))} fileManagerContainer-sectionContainer">
         ${files.published.length || files.purchased.length
           ? sections.map(section => section.render({ files }))
           : renderNoFilesMsg()}
@@ -132,7 +132,7 @@ class Container extends Nanocomponent {
         <div class="${styles.container} container-container">
           <div>
             ${children.header.render({ activeTab, araBalance })}
-            ${loadingLibrary ? renderSpinnerBars() : renderSections()}
+            ${loadingLibrary ? renderSpinnerBars() : renderSections(network)}
           </div>
         </div>
       </div>

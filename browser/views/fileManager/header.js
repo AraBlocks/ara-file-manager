@@ -38,7 +38,7 @@ class Header extends Nanocomponent {
         }
       }),
       closeButton: new UtilityButton({ children: 'close' }),
-      minimizeButton: new UtilityButton({ children: '–', onclick: windowManagement.minimizeWindow }),
+      minimizeButton: new UtilityButton({ children: 'minimize', onclick: windowManagement.minimizeWindow }),
       tabs: this.makeTabs(selectTab)
     }
 
@@ -80,7 +80,7 @@ class Header extends Nanocomponent {
             <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png"/>
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
-            ${children.minimizeButton.render({ children: '–' })}
+            ${children.minimizeButton.render({ children: 'minimize' })}
             ${children.closeButton.render({ children: 'close' })}
           </div>
         </div>

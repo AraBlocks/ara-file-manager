@@ -31,8 +31,8 @@ module.exports = {
     }
   `,
 
-  container(status) {
-    const color = status === k.DOWNLOADED_PUBLISHED ? 'black' : 'grey'
+  container(status, shouldBroadcast) {
+    const color = status === k.DOWNLOADED_PUBLISHED && shouldBroadcast ? 'black' : 'grey'
     return css`
       :host {
         align-items: flex-end;
