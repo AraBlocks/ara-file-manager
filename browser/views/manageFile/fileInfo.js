@@ -3,10 +3,8 @@
 const FileSelector = require('../../components/fileSelector')
 const FileTable = require('../../components/afsFileTable/editableFileTable')
 const ErrorInput = require('../../components/errorInput')
-const Input = require('../../components/input')
 const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/fileInfo')
-const deeplink = require('../../lib/tools/deeplink')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
@@ -23,17 +21,6 @@ class FileInfo extends Nanocomponent {
 
 		this.props = { did, parentState, renderView }
 		this.children = {
-			distributionLink: new Input({
-				placeholder: 'Distribution Link',
-				field: 'distributionLink',
-				parentState,
-				readOnly: true,
-				embeddedButton: {
-					option: 'button',
-					children: 'Copy',
-					onclick: () => deeplink.copyDeeplink(parentState.did, parentState.name)
-				}
-			}),
 			fileTable: new FileTable({
 				addItems,
 				did,
@@ -71,25 +58,31 @@ class FileInfo extends Nanocomponent {
 	createElement() {
 		const { children, props: { parentState } } = this
 		return html`
-			<div class=${styles.container}>
-				<div class=${styles.verticalContainer}>
-					<div class=${styles.infoTipHolder}>
+			<div class="${styles.container} manageFile-fileInfo-container">
+				<div class="${styles.verticalContainer}">
+					<div class="${styles.infoTipHolder}">
 						${children.fileNameInput.render({ value: parentState.name })}
+						<div class="${styles.infoTip}">
+							<div>
+								<b>Recommended:</b> If this field is left blank, users will only
+								see the package's generic Ara ID.
+							</div>
+						</div>
 					</div>
-					<div class=${styles.infoTipHolder}>
+					<div class="${styles.infoTipHolder}">
 						${children.priceInput.render({ value: parentState.price, displayError: parentState.price < 0 })}
-						<div class=${styles.araPriceHolder}>
+						<div class="${styles.infoTip}">
+							Price is converted to the equivalent value in Ara Tokens.
+							Leave blank if you do not want to charge for this file.
+						</div>
+						<div class="${styles.araPriceHolder}">
 							<b>Ara Token Price:</b>
-							<div class=${styles.araPrice}>
+							<div class="${styles.araPrice}">
 								<b>${parentState.tokenPrice} Ara</b>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class=${styles.distributionLink}>
-					<b>Distribution Link</b>
-				</div>
-				${children.distributionLink.render({ value: deeplink.getDeeplink(parentState.did, parentState.name) })}
 				<div class="${styles.fileTable} manageFile-fileTable">
 					${children.fileTable.render()}
 				</div>

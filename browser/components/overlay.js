@@ -10,4 +10,4 @@ module.exports = (pending, text = null) => pending
         <div class="spinner"></div>
       </div>
     </div>`
-  : html`<div></div>`
+  : html`<div style="display: none;"></div>`
