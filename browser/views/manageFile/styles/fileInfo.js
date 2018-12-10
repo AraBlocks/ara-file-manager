@@ -31,12 +31,6 @@ module.exports = {
 		}
 	`,
 
-	distributionLink: css`
-		:host {
-			padding-top: 10px;
-		}
-	`,
-
 	fileTable: css`
 		:host {
 			height: 380px;
