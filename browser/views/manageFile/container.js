@@ -7,37 +7,28 @@ const overlay = require('../../components/overlay')
 const { UPDATE_FILE } = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
-const { remote } = require('electron')
-const windowManager = remote.require('electron-window-manager')
-const { account } = windowManager.sharedData.fetch('store')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-	constructor({
-		account,
-		did,
-		name,
-		fileList,
-		price,
-	}) {
+	constructor(opts) {
 		super()
 
-		this.props = { account }
+		this.props = { account: opts.account }
 		this.state = {
-			afsContents: fileList,
-			did,
-			name,
-			fileList,
-			oldPrice: price,
-			price,
+			afsContents: opts.fileList,
+			did: opts.did,
+			name: opts.name,
+			fileList: opts.fileList,
+			oldPrice: opts.price,
+			price: opts.price,
 		}
 
 		this.children = {
 			fileInfo: new FileInfo({
 				addItems: this.addItems.bind(this),
-				did,
+				did: opts.did,
 				parentState: this.state,
 				renderView: this.renderView.bind(this)
 			}),
@@ -125,7 +116,13 @@ class Container extends Nanocomponent {
 				${children.fileInfo.render({ parentState: state })}
 				${children.publishButton.render({
 					cssClass: fileInfoChanged() ? { name: 'standard' } : { name: 'thinBorder' },
-					children: `Publish Update ( ${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) } )`
+					children: [
+							'Publish',
+							html`
+								<span style="font-family: ProximaNova-light;">
+									(${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) })
+								</span>`
+						]
 				})}
 			</div>
 		`

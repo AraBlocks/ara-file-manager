@@ -10,23 +10,9 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class EditableFileTable extends Nanocomponent {
-	constructor({
-		addItems,
-		did,
-		field,
-		parentState,
-		renderView,
-		tableType
-	}) {
+	constructor(opts) {
 		super()
-		this.props = {
-			addItems,
-			did,
-			field,
-			parentState,
-			renderView,
-			tableType
-		}
+		this.props = opts
 		this.state = {
 			sortNameReversed: true,
 			sortSizeReversed: false,
@@ -169,9 +155,6 @@ class EditableFileTable extends Nanocomponent {
 		} = this
 
 		const fileRows = this.makeFileRows()
-		const tableHeight = 285//this.props.tableType === k.UPDATE_FILE ? 210 : 285
-		const containerHeight = 340//this.props.tableType === k.UPDATE_FILE ? 265 : 340
-
 		return html`
 			<div
 				class="${styles.container} editableFileTable-container"
@@ -179,7 +162,6 @@ class EditableFileTable extends Nanocomponent {
 				ondragover="${preventDefault}"
 			 	ondragenter="${preventDefault}"
 				ondragleave="${preventDefault}"
-				style="height:${containerHeight}px;"
 			>
 				<table class="${styles.fileTable} EditableFileTable-container">
 					<thead>
@@ -204,7 +186,7 @@ class EditableFileTable extends Nanocomponent {
 							</th>
 						</tr>
 					</thead>
-					<tbody style="height: ${fileRows.length ? tableHeight : 0}px;">
+					<tbody style="height: ${fileRows.length ? 285 : 0}px;">
 						${fileRows.map((fileRow, index) => fileRow.render(index))}
 					</tbody>
 				</table>
