@@ -165,6 +165,26 @@ async function getRewards(item, userEthAddress) {
 	return { ...item, earnings: item.earnings += totalRewards }
 }
 
+async function subscibeEthBalance(userAddress) {
+	let subscription
+	const ctx = createContext()
+	await ctx.ready()
+	const { web3 } = ctx
+	try {
+		subscription = web3.eth.subscribe('newBlockHeaders', async (err, ret) => {
+			if (err){
+				debug("Error: %o", err)
+			} else {
+				const ethBalance = await getEtherBalance(userAddress)
+				windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { ethBalance })
+			}
+		})
+	} catch(err) {
+		debug('Error getting Eth balance %o', err)
+	}
+	return { ctx, subscription }
+}
+
 async function subscribePublished({ did }) {
 	const { contract, ctx } = await getAFSContract(did)
 
@@ -278,6 +298,7 @@ module.exports = {
 	getRewards,
 	purchaseItem,
 	sendAra,
+	subscibeEthBalance,
 	subscribeFaucet,
 	subscribePublished,
 	subscribeRewardsAllocated,
