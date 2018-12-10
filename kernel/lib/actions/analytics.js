@@ -1,6 +1,7 @@
 const ua = require('universal-analytics');
 const pify = require('pify')
 const uuid = require('uuid/v4');
+const { version } = require('../../../package.json')
 const { getAppData } = require('./afmManager')
 const { analytics, application } = require('../../../lib/constants/index')
 
@@ -18,6 +19,7 @@ async function getSession() {
 
     // TODO: state management for staging vs production
     const session = ua(analytics.UA_ACCOUNT_STAGING, deviceId)
+    session.set(analytics.VERSION, version)
     session.firstSession = firstSession
     global.session = session
     return session
