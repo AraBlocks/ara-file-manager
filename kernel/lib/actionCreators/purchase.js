@@ -11,20 +11,27 @@ const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
-const { account } = windowManager.sharedData.fetch('store')
+const { account, files } = windowManager.sharedData.fetch('store')
+
+internalEmitter.on(k.OPEN_DEEPLINK, async(load) => {
+	debug('%s heard. Load: %o', k.OPEN_DEEPLINK, load)
+	dispatch({ type: k.OPEN_DEEPLINK, load })
+	if (account.userAid == null) {
+		debug('not logged in')
+		dispatch({ type: k.FEED_MODAL, load: { modalName: 'notLoggedIn' } })
+		windowManager.openModal('generalMessageModal')
+		return
+	}
+	internalEmitter.emit(k.PROMPT_PURCHASE, load)
+})
 
 internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 	try {
-		debug('%s heard. Load: %o', k.PROMPT_PURCHASE, load)
-		if (account.userAid == null) {
-			debug('not logged in')
-			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notLoggedIn' } })
-			windowManager.openModal('generalMessageModal')
-			return
-		}
+
+		dispatch({ type: k.DUMP_DEEPLINK_DATA })
 		const library = await araContractsManager.getLibraryItems(account.userAid)
 		//TODO remove slice
-		if (library.includes('0x' + load.aid.slice(-64))) {
+		if (library.includes('0x' + load.did.slice(-64))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
 			windowManager.openModal('generalMessageModal')
@@ -37,7 +44,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			windowManager.openModal('generalMessageModal')
 			return
 		}
-		const price = await araFilesystem.getPrice({ did: load.aid })
+		const price = await araFilesystem.getPrice({ did: load.did })
 		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
 		windowManager.openModal('checkoutModal1')
 	} catch (err) {

@@ -183,7 +183,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
   debug('Opening deeplink: %s', deepLinkingUrl)
   try {
     const fileInfo = parseLink()
-    windowManager.internalEmitter.emit(k.PROMPT_PURCHASE, fileInfo)
+    windowManager.internalEmitter.emit(k.OPEN_DEEPLINK, fileInfo)
     return
   } catch(err) {
     debug('Deeplink error: %O', err)
@@ -193,7 +193,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
     const linkElements = deepLinkingUrl.slice(6).split("/")
     if (linkElements.length === 3 && linkElements[0] == 'download') {
       return {
-        aid: linkElements[1],
+        did: linkElements[1],
         fileName: decodeURIComponent(linkElements[2]),
       }
     }

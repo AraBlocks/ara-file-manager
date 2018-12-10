@@ -53,6 +53,7 @@ async function logout() {
   try {
     await farmerManager.stopAllBroadcast(store.farmer.farm)
     dispatch({ type: k.LOGOUT })
+    internalEmitter.emit(k.DUMP_DEEPLINK_DATA)
     switchLoginState(false)
     switchApplicationMenuLoginState(false)
     windowManager.closeWindow('filemanager')
@@ -150,6 +151,10 @@ async function login(_, load) {
       .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, load.userAid)))
 
     dispatch({ type: k.GOT_SUBSCRIPTIONS, load: { publishedSubs, rewardsSubs, transferSub } })
+
+    if (store.files.deepLinkData !== null) {
+      internalEmitter.emit(k.PROMPT_PURCHASE, store.files.deepLinkData)
+    }
 
     debug('Login complete')
   } catch (err) {
