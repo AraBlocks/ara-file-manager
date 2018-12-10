@@ -17,7 +17,6 @@ class Container extends Nanocomponent {
 		super()
 
 		this.state = {
-			currency: '',
 			fileName: '',
 			fileList: [],
 			price: ''
