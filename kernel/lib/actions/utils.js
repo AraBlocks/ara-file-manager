@@ -32,7 +32,11 @@ async function descriptorGenerator(did, opts = {}) {
 			redeeming: false,
 			shouldBroadcast: false,
 			size: meta ? meta.size : 0,
-			status: AFSExists ? k.DOWNLOADED_PUBLISHED : k.AWAITING_DOWNLOAD
+			status: AFSExists
+				? k.DOWNLOADED_PUBLISHED
+				: opts.shouldBroadcast
+					? k.CONNECTING
+					: k.AWAITING_DOWNLOAD
 		}
 
 		return Object.assign(descriptor, opts)
