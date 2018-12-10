@@ -8,6 +8,8 @@ const analytics = require('../kernel/lib/actions/analytics')
 const writeFiles = require('./writeFiles')
 const isDev = require('electron-is-dev')
 const path = require('path')
+const { internalEmitter } = require('electron-window-manager')
+const { CANCEL_SUBSCRIPTION } = require('../lib/constants/stateManagement')
 //Creates dev view
 isDev && require('./ipc-dev')
 
@@ -73,6 +75,7 @@ app.on('open-url', (event, url) => {
 app.on('before-quit', () => {
   const { farmerManager } = require('../kernel/lib/actions')
   const { farmer: { farm } } = require('../kernel/lib/store')
+  internalEmitter.emit(CANCEL_SUBSCRIPTION)
   farmerManager.stopAllBroadcast(farm)
 })
 
