@@ -171,7 +171,7 @@ class AccountInfo extends Nanocomponent {
           <div class="link-holder">
             <a href="">Terms of Service</a>
             <b>|</b>
-            <a href="">Contact Support</a>
+            <a href="mailto:support@ara.one">Contact Support</a>
           </div>
           <div>
             Copyright 2018, Ara Blocks LLC.
