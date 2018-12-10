@@ -53,6 +53,8 @@ module.exports = ({
         break
       case k.UNCOMMITTED:
         menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE)
+      case k.CONNECTING:
+      menuItems.addItem('Stop Connecting', k.STOP_SEEDING)
     }
 
   if (allocatedRewards && redeeming === false) {

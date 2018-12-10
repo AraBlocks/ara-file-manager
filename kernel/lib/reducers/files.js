@@ -9,6 +9,7 @@ module.exports = (state, { load = null, type }) => {
       file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
       file.shouldBroadcast = load.shouldBroadcast
+      file.status = file.status === k.CONNECTING ? k.AWAITING_DOWNLOAD : file.status
       break
     case k.DOWNLOADING:
       file = findFile(load.did, state.purchased)
@@ -128,11 +129,11 @@ module.exports = (state, { load = null, type }) => {
       if (file == null) { break }
       file.size = file.size || load.size
       break
-    case k.SUBMITTING_JOB:
+    case k.CONNECTING:
       file = findFile(load.did, state.purchased)
       if (file == null) { break }
       file.downloadPercent = 0
-      file.status = k.SUBMITTING_JOB
+      file.status = k.CONNECTING
       break
     default:
       return state
