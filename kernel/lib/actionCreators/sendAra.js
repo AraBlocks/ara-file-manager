@@ -32,7 +32,7 @@ ipcMain.on(k.SEND_ARA, (event, load) => {
 			dispatch({ type: k.FEED_MODAL, load })
 			windowManager.openModal('confirmSendModal')
 		}
-	} catch(err) {
+	} catch (err) {
 		debug('Error: %o', err)
 		dispatch({ type: k.FEED_MODAL, load: { modalName, callback: () => windowManager.openWindow('sendAra') } })
 		windowManager.openModal('generalMessageModal')
@@ -59,7 +59,7 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 			userDID: account.userAid,
 			walletAddress,
 		})
-	} catch(err) {
+	} catch (err) {
 		debug('Error sending ara: %o', err)
 		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 	}
@@ -68,7 +68,8 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 async function araSent(amount) {
 	windowManager.closeModal('generalPleaseWaitModal')
 	windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
-	dispatch({ type: k.FEED_MODAL, load: {
+	dispatch({
+		type: k.FEED_MODAL, load: {
 			modalName: 'araSent',
 			load: { amount }
 		}
@@ -80,6 +81,11 @@ async function araSent(amount) {
 
 function failedToSend() {
 	windowManager.closeModal('generalPleaseWaitModal')
-	dispatch({ type: k.FEED_MODAL, load: { modalName: 'generalFailure', callback: () => windowManager.openWindow('sendAra') }})
+	dispatch({
+		type: k.FEED_MODAL, load: {
+			modalName: 'generalFailure',
+			callback: () => windowManager.openWindow('sendAra')
+		}
+	})
 	windowManager.openModal('generalMessageModal')
 }

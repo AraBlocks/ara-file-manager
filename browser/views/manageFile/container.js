@@ -1,7 +1,6 @@
 'use strict'
 
 const Button = require('../../components/button')
-const deeplink = require('../../lib/tools/deeplink')
 const { fileSystemManager, windowManagement } = require('../../lib/tools')
 const FileInfo = require('./fileInfo')
 const overlay = require('../../components/overlay')
@@ -18,40 +17,24 @@ const Nanocomponent = require('nanocomponent')
 class Container extends Nanocomponent {
 	constructor({
 		account,
-		currency,
 		did,
 		name,
 		fileList,
 		price,
-		tokenPrice,
 	}) {
 		super()
 
 		this.props = { account }
 		this.state = {
 			afsContents: fileList,
-			currency,
 			did,
-			distributionLink: deeplink.getDeeplink(did, name),
 			name,
 			fileList,
 			oldPrice: price,
 			price,
-			tokenPrice,
 		}
 
 		this.children = {
-			// deleteButton: new Button({
-			// 	children: 'Delete From Network',
-			// 	cssClass: {
-			// 		name: 'smallInvisible',
-			// 		opts: {
-			// 			color: 'blue',
-			// 			weight: 'bold',
-			// 			height: '36px'
-			// 		}
-			// 	}
-			// }),
 			fileInfo: new FileInfo({
 				addItems: this.addItems.bind(this),
 				did,
@@ -88,12 +71,7 @@ class Container extends Nanocomponent {
 		this.render({})
 	}
 
-	update({ fileList }){
-		const { state } = this
-		if (fileList != null && state.afsContents == null) {
-			state.fileList = fileList
-			state.afsContents = fileList
-		}
+	update(){
 		return true
 	}
 
@@ -140,7 +118,8 @@ class Container extends Nanocomponent {
 				</div>
 				<div class="${styles.content} ManageFileContainer-content">
 					This file has been published to the Ara Network. You can edit and update the file here. The changes will be pushed to all users on the network.<br><br>
-					This is also where you can find this file’s <b>distribution</b> link, which you will need for users to purchase this file with their Ara File Manager.
+					<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
+						to be able to download it.
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}

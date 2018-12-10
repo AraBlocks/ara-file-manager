@@ -13,17 +13,19 @@ const Nanocomponent = require('nanocomponent')
 const tooltip = require('../../lib/tools/electron-tooltip')
 
 class Container extends Nanocomponent {
-	constructor({ account, contentDID }) {
+	constructor(opts) {
 		super()
 
 		this.state = {
-			currency: '',
-			fileName: '',
-			fileList: [],
-			price: ''
+			fileName: opts.fileName || '',
+			fileList: opts.fileList || [],
+			price: opts.price || ''
 		}
 
-		this.props = { account, contentDID }
+		this.props = {
+			account: opts.account,
+			contentDID: opts.contentDID
+		}
 
 		this.children = {
 			fileInfo: new FileInfo({
