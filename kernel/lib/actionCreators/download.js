@@ -12,8 +12,8 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 	debug('%s heard', k.DOWNLOAD)
 	try {
 		const { jobId } = store.files.purchased.find(({ did }) => did === load.did)
-		debug('Dispatching %s', k.SUBMITTING_JOB)
-		dispatch({ type: k.SUBMITTING_JOB, load })
+
+		dispatch({ type: k.CONNECTING, load })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
 		farmerManager.download({
