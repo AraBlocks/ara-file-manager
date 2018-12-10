@@ -42,7 +42,8 @@ module.exports = async (state, { load = null, type }) => {
       break
     case k.UPDATE_BALANCE:
     case k.PURCHASED:
-      state.araBalance = load.araBalance
+      state.araBalance = load.araBalance || state.araBalance
+      state.ethBalance = load.ethBalance || state.ethBalance
       break
     default:
       return state

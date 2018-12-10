@@ -54,6 +54,7 @@ async function logout() {
     await farmerManager.stopAllBroadcast(store.farmer.farm)
     dispatch({ type: k.LOGOUT })
     internalEmitter.emit(k.DUMP_DEEPLINK_DATA)
+    internalEmitter.emit(k.CANCEL_SUBSCRIPTION)
     switchLoginState(false)
     switchApplicationMenuLoginState(false)
     windowManager.closeWindow('filemanager')
@@ -146,11 +147,20 @@ async function login(_, load) {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const transferSub = await araContractsManager.subscribeTransfer(accountAddress, load.userAid)
+    const transferEthSub = await araContractsManager.subscibeEthBalance(accountAddress)
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
     const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
       .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, load.userAid)))
 
-    dispatch({ type: k.GOT_SUBSCRIPTIONS, load: { publishedSubs, rewardsSubs, transferSub } })
+    dispatch({
+      type: k.GOT_SUBSCRIPTIONS,
+      load: {
+        publishedSubs,
+        rewardsSubs,
+        transferSub,
+        transferEthSub
+      }
+    })
 
     if (store.files.deepLinkData !== null) {
       internalEmitter.emit(k.PROMPT_PURCHASE, store.files.deepLinkData)

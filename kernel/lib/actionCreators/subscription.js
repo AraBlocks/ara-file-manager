@@ -76,3 +76,16 @@ internalEmitter.on(k.FAUCET_ARA_RECEIVED, () => {
   } catch (e) { debug(e) }
 
 })
+
+internalEmitter.on(k.CANCEL_SUBSCRIPTION, () => {
+  try {
+    debug('%s HEARD', k.CANCEL_SUBSCRIPTION)
+    store.subscriptions.transfer.ctx.close()
+    store.subscriptions.transferEth.ctx.close()
+    store.subscriptions.published.forEach(subscription => subscription.ctx.close())
+    store.subscriptions.rewards.forEach(subscription => subscription.ctx.close())
+    dispatch({ type: k.CANCEL_SUBSCRIPTION })
+  } catch(err) {
+    debug('Error closing subscription ctx %o', err)
+  }
+})

@@ -4,6 +4,12 @@ const k = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load = null, type }) => {
   switch (type) {
+    case k.CANCEL_SUBSCRIPTION:
+      state.transfer = null
+      state.transferEth = null
+      state.published = []
+      state.rewards = []
+      break
     case k.FAUCET_ARA_RECEIVED:
       state.faucet = null
       break
@@ -14,6 +20,7 @@ module.exports = (state, { load = null, type }) => {
       state.published.push(...load.publishedSubs)
       state.rewards.push(...load.rewardsSubs)
       state.transfer = load.transferSub
+      state.transferEth = load.transferEthSub
       break
     case k.GOT_PUBLISHED_SUB:
       state.published.push(load.publishedSub)
