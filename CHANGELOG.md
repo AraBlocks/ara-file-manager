@@ -1,3 +1,21 @@
+## [0.1.8](https://github.com/littlstar/ara-content-manager/compare/0.1.7...0.1.8) (2018-12-10)
+
+
+### Bug Fixes
+
+* **afsManager:** Fixed surfaceAFS - uncommitted issue ([6e26566](https://github.com/littlstar/ara-content-manager/commit/6e26566))
+
+
+### Features
+
+* **analytics:** add version ([ae6275e](https://github.com/littlstar/ara-content-manager/commit/ae6275e))
+* **main.js:** listeners for uncaught stuff ([b9c0f80](https://github.com/littlstar/ara-content-manager/commit/b9c0f80))
+* Add Support Email ([cc4f1e8](https://github.com/littlstar/ara-content-manager/commit/cc4f1e8))
+* PE-702 Handle Deeplink after prompting user to log in ([#314](https://github.com/littlstar/ara-content-manager/issues/314)) ([6fd5505](https://github.com/littlstar/ara-content-manager/commit/6fd5505))
+* PE-715-Eth transfer subscriptions ([#317](https://github.com/littlstar/ara-content-manager/issues/317)) ([3e1316d](https://github.com/littlstar/ara-content-manager/commit/3e1316d))
+
+
+
 ## [0.1.7](https://github.com/littlstar/ara-content-manager/compare/0.1.6...0.1.7) (2018-12-07)
 
 
