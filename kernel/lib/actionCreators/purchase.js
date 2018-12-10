@@ -31,7 +31,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
 		const library = await araContractsManager.getLibraryItems(account.userAid)
 		//TODO remove slice
-		if (library.includes('0x' + load.did.slice(-64))) {
+		if (library.includes('0x' + araUtil.getIdentifier(load.did))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
 			windowManager.openModal('generalMessageModal')

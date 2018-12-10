@@ -17,7 +17,7 @@ class Recover extends Nanocomponent {
       password: '',
       confirmPassword: ''
     }
-    //TODO: grey out button if incomplete
+
     this.children = {
       cancelButton: new Button({
         children: 'Cancel',
