@@ -8,7 +8,7 @@ const { emit, closeModal } = require('../../lib/tools/windowManagement')
 const { utils } = require('../../lib/tools')
 
 module.exports = ({
-  aid: did,
+  did,
   fileName = 'The Ultimate Manggo Collection Vol I',
   price = 10,
   publisherName = 'Unnamed Author'
