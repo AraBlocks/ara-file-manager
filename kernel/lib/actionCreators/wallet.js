@@ -30,8 +30,8 @@ internalEmitter.on(k.UPDATE_ETH_BALANCE, (load) => {
   const { account } = store
   try {
     if (account.ethBalance !== load.ethBalance) {
-      dispatch({ type: k.UPDATE_ARA_BALANCE, load })
-      windowManager.pingAll({ event: k.REFRESH })
+      dispatch({ type: k.UPDATE_ETH_BALANCE, load })
+      windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
     }
   } catch (err) {
     debug('Error: %o', err)
