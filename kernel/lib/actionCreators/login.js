@@ -107,6 +107,8 @@ async function login(_, load) {
       }
     })
 
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
     switchLoginState(true)
     switchApplicationMenuLoginState(true)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
