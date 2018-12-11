@@ -76,7 +76,7 @@ async function araSent(amount) {
 	})
 	windowManager.openModal('generalMessageModal')
 	const newBalance = await araContractsManager.getAraBalance(store.account.userAid)
-	windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
+	windowManager.internalEmitter.emit(k.UPDATE_ARA_BALANCE, { araBalance: newBalance })
 }
 
 function failedToSend() {

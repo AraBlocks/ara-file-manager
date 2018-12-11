@@ -8,7 +8,7 @@ if (writeFiles.writeAraRC() === false) { debug('.ararc exists, not writing file'
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { application } = require('../lib/constants/index')
-const analytics = require('../kernel/lib/actions/analytics')
+const analytics = require('../kernel/redux/actions/analytics')
 const isDev = require('electron-is-dev')
 const path = require('path')
 const { internalEmitter } = require('electron-window-manager')
