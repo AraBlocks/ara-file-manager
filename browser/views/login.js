@@ -1,6 +1,6 @@
 'use strict'
 
-const afmManager = require('../../kernel/lib/actions/afmManager')
+const { afmManager } = require('../../kernel/redux/actions')
 const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
@@ -35,7 +35,7 @@ class Login extends Nanocomponent {
         children: 'Log In'
       }),
 
-      recoverButton: new Button ({
+      recoverButton: new Button({
         children: 'Recover',
         cssClass: { name: 'smallInvisible' },
         onclick: () => {
@@ -87,7 +87,7 @@ class Login extends Nanocomponent {
     return html`
       <div class="${styles.container} login-container">
         <div class="${styles.logo} login-logo">
-          <img src="../assets/images/ARA_logo_horizontal.png"/>
+          <img src="../assets/images/ARA_logo_horizontal.png" />
         </div>
         <div class="${styles.title} login-title">
           Log In
