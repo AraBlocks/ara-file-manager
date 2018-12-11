@@ -1,20 +1,20 @@
 'use strict'
 
 const debug = require('debug')('acm:boot:main')
+const writeFiles = require('./writeFiles')
+//Writes .ara and keyrings if doesn't exist
+if (writeFiles.writeAraRC() === false) { debug('.ararc exists, not writing file') }
+
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { application } = require('../lib/constants/index')
 const analytics = require('../kernel/lib/actions/analytics')
-const writeFiles = require('./writeFiles')
 const isDev = require('electron-is-dev')
 const path = require('path')
 const { internalEmitter } = require('electron-window-manager')
 const { CANCEL_SUBSCRIPTION } = require('../lib/constants/stateManagement')
 //Creates dev view
 isDev && require('./ipc-dev')
-
-//Writes .ara and keyrings if doesn't exist
-if (writeFiles.writeAraRC() === false) { debug('.ararc exists, not writing file') }
 
 let deepLinkingUrl
 
