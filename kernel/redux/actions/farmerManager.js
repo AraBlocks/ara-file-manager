@@ -2,15 +2,15 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const araContractsManager = require('./araContractsManager')
-const farmDCDN = require('ara-farming-dcdn/src/dcdn')
+const farmDCDN = require('ara-reward-dcdn/src/dcdn')
 const fs = require('fs')
 
-function createFarmer({ did: userID, password }) {
+function createFarmer({ did: userId, password }) {
 	debug('Creating Farmer')
-	return new farmDCDN({ userID, password })
+	return new farmDCDN({ userId, password })
 }
 
-async function joinBroadcast({ farmer, did }) {
+async function joinBroadcast({ farmer, did, updatePeerCount }) {
 	try {
 		//Rewards set at 10% of AFS price
 		await farmer.join({
@@ -18,6 +18,11 @@ async function joinBroadcast({ farmer, did }) {
 			download: false,
 			upload: true,
 			price: await _calculateBudget(did)
+		})
+		farmer.on('peer-update', (did, count) => {
+			console.log('peer count updated !')
+			console.log(count)
+
 		})
 		debug('Joining broadcast for %s', did)
 	} catch (err) {
@@ -83,24 +88,18 @@ async function download({
 			upload: true,
 		})
 
-		let totalBlocks = 0
 		let prevPercent = 0
-		farmer.on('start', (did, total) => {
-			debug('Starting download', total)
+		farmer.on('download-progress', (did, value, total) => {
+			const perc = value / total
 			const size = total * 6111 * 10
-			startHandler({ did, size })
-			totalBlocks = total
-		})
-		farmer.on('progress', (did, value) => {
-			const perc = value / totalBlocks
 			if (perc >= prevPercent + 0.1) {
 				prevPercent = perc
-				if (value / totalBlocks != 1) {
-					progressHandler({ downloadPercent: value / totalBlocks, did })
+				if (value / total != 1) {
+					progressHandler({ downloadPercent: value / total, did, size })
 				}
 			}
 		})
-		farmer.on('complete', (did) => {
+		farmer.on('download-complete', (did) => {
 			debug('Download complete!')
 			completeHandler(did)
 		})

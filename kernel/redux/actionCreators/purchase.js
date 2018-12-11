@@ -8,6 +8,7 @@ const {
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const araFilesystem = require('ara-filesystem')
+const araUtil = require('ara-util')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
@@ -27,7 +28,7 @@ internalEmitter.on(k.OPEN_DEEPLINK, async(load) => {
 
 internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 	try {
-
+		debug('%s heard. Load: %o', k.PROMPT_PURCHASE, load)
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
 		const library = await araContractsManager.getLibraryItems(account.userAid)
 		//TODO remove slice

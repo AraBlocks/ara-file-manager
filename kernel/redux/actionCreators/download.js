@@ -20,7 +20,6 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 			did: load.did,
 			jobId,
 			farmer: store.farmer.farm,
-			startHandler,
 			progressHandler,
 			completeHandler,
 			errorHandler
@@ -45,11 +44,6 @@ ipcMain.on(k.PAUSE_DOWNLOAD, async (event, load) => {
 		debug('Error: %O', err)
 	}
 })
-
-function startHandler(load) {
-	dispatch({ type: k.SET_SIZE, load })
-	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-}
 
 function progressHandler(load) {
 	debug('Dispatching %s', k.DOWNLOADING)

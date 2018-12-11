@@ -16,6 +16,7 @@ module.exports = (state, { load = null, type }) => {
       if (file == null) { break }
       file.downloadPercent = load.downloadPercent || 0
       file.status = k.DOWNLOADING
+      file.size = file.size || load.size
       break
     case k.DOWNLOADED:
       file = findFile(load.did, state.purchased)
@@ -107,6 +108,11 @@ module.exports = (state, { load = null, type }) => {
       if (file == null) { break }
       file.earnings += Number(load.earning)
       break
+    case k.UPDATE_PEER_COUNT: 
+      file = findFile(load.did, state.published.concat(state.purchased))
+      if (file == null) { break }
+      file.peers = load.peers
+      break
     case k.REDEEMING_REWARDS:
       file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
@@ -123,11 +129,6 @@ module.exports = (state, { load = null, type }) => {
       file.allocatedRewards = 0
       file.earnings += Number(load.value)
       file.redeeming = false
-      break
-    case k.SET_SIZE:
-      file = findFile(load.did, state.purchased)
-      if (file == null) { break }
-      file.size = file.size || load.size
       break
     case k.CONNECTING:
       file = findFile(load.did, state.purchased)

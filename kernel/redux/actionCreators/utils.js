@@ -39,7 +39,7 @@ ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
     const fileList = files.published.concat(files.purchased)
     const file = fileList.find(file => file.did === load.did)
     if (file.shouldBroadcast) {
-      farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
+      internalEmitter.emit(k.START_SEEDING, load )
     }
   } catch (err) {
     debug("Error: %o", err)
