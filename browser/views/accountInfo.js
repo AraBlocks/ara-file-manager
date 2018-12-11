@@ -11,6 +11,7 @@ const { utils, windowManagement } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { version } = require('../../package.json')
+const { shell } = require('electron')
 const tt = require('electron-tooltip')
 
 tt({
@@ -105,6 +106,10 @@ class AccountInfo extends Nanocomponent {
     return buttonOpts
   }
 
+  openTerms() {
+    shell.openExternal("https://ara.one/terms")
+  }
+
   update(props = {}) {
     this.props = { ...this.props, ...props.account }
     return true
@@ -114,6 +119,7 @@ class AccountInfo extends Nanocomponent {
     const {
       children,
       faucetButtonOpts,
+      openTerms,
       props,
       renderCopyableText
     } = this
@@ -169,7 +175,7 @@ class AccountInfo extends Nanocomponent {
         <div class="${styles.appInfo} accountInfo-appInfo">
           <b>App Version ${version}</b>
           <div class="link-holder">
-            <a href="">Terms of Service</a>
+            <a onclick="${openTerms}">Terms of Service</a>
             <b>|</b>
             <a href="mailto:support@ara.one">Contact Support</a>
           </div>
