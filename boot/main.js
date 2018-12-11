@@ -4,7 +4,7 @@ const debug = require('debug')('acm:boot:main')
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { application } = require('../lib/constants/index')
-const analytics = require('../kernel/lib/actions/analytics')
+const analytics = require('../kernel/redux/actions/analytics')
 const writeFiles = require('./writeFiles')
 const isDev = require('electron-is-dev')
 const path = require('path')
@@ -40,7 +40,7 @@ app.on('ready', () => {
   debug('Creating menu')
   require('./menu').createMenu()
   debug('Loading Dependencies')
-  require('../kernel/lib/actionCreators')
+  require('../kernel/redux/actionCreators')
 
   if (process.platform == 'win32') { deepLinkingUrl = process.argv.slice(1) }
   deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
@@ -73,8 +73,8 @@ app.on('open-url', (event, url) => {
 })
 
 app.on('before-quit', () => {
-  const { farmerManager } = require('../kernel/lib/actions')
-  const { farmer: { farm } } = require('../kernel/lib/store')
+  const { farmerManager } = require('../kernel/redux/actions')
+  const { farmer: { farm } } = require('../kernel/redux/store')
   internalEmitter.emit(CANCEL_SUBSCRIPTION)
   farmerManager.stopAllBroadcast(farm)
 })
