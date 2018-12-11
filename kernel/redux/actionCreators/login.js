@@ -12,7 +12,7 @@ const {
   utils
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
-const k = require('constants')
+const { stateManagement: k } = require('k')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')

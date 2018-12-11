@@ -42,6 +42,7 @@
     "electron-tooltip": "^1.1.5",
     "electron-window-manager": "^1.0.6",
     "filesize": "^3.6.1",
+    "k": "file:lib/constants",
     "md5-hex": "^2.0.0",
     "mirror-folder": "^3.0.0",
     "nanocomponent": "^6.5.2",
