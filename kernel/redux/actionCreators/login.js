@@ -148,7 +148,7 @@ async function login(_, load) {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const transferSub = await araContractsManager.subscribeTransfer(accountAddress, load.userAid)
-    const transferEthSub = await araContractsManager.subscibeEthBalance(accountAddress)
+    const transferEthSub = await araContractsManager.subscribeEthBalance(accountAddress)
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
     const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
       .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, load.userAid)))

@@ -40,7 +40,8 @@ module.exports = async (state, { load = null, type }) => {
     case k.PUBLISHED:
       state.userBalance = load.balance
       break
-    case k.UPDATE_BALANCE:
+    case k.UPDATE_ARA_BALANCE:
+    case k.UPDATE_ETH_BALANCE:
     case k.PURCHASED:
       state.araBalance = load.araBalance || state.araBalance
       state.ethBalance = load.ethBalance || state.ethBalance
