@@ -11,7 +11,7 @@ const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
-const { account, files } = windowManager.sharedData.fetch('store')
+const { account } = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.OPEN_DEEPLINK, async(load) => {
 	debug('%s heard. Load: %o', k.OPEN_DEEPLINK, load)
@@ -44,8 +44,17 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			windowManager.openModal('generalMessageModal')
 			return
 		}
+
 		const price = await araFilesystem.getPrice({ did: load.did })
-		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
+		const gasEstimate  = await araContractsManager.purchaseItem({
+			budget: price / 10,
+			contentDID: load.did,
+			password: account.password,
+			userDID: account.userAid,
+			estimate: true
+		})
+
+		dispatch({ type: k.FEED_MODAL, load: { price, gasEstimate, ...load } })
 		windowManager.openModal('checkoutModal1')
 	} catch (err) {
 		errorHandler(err)
