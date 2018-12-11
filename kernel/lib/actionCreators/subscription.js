@@ -22,7 +22,6 @@ internalEmitter.on(k.UPDATE_EARNING, (load) => {
 })
 
 internalEmitter.on(k.UPDATE_BALANCE, (load) => {
-  debug('%s HEARD', k.UPDATE_BALANCE)
   try {
     dispatch({ type: k.UPDATE_BALANCE, load })
     windowManager.pingAll({ event: k.REFRESH })
