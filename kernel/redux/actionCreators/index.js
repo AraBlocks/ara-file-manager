@@ -12,5 +12,6 @@ module.exports = {
   utils: require('./utils'),
   subscription: require('./subscription'),
   seed: require('./seed'),
-  sendAra: require('./sendAra')
+  sendAra: require('./sendAra'),
+  wallet: require('./wallet')
 }

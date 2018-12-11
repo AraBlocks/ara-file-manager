@@ -61,7 +61,6 @@ async function getEtherBalance(account) {
 	try {
 		const balanceInWei = await web3.eth.getBalance(account)
 		balance = web3.utils.fromWei(balanceInWei, 'ether')
-		debug('Ether balance is %s', balance)
 	} catch (err) {
 		debug('Error getting eth balance: %o', err)
 	}
@@ -165,7 +164,7 @@ async function getRewards(item, userEthAddress) {
 	return { ...item, earnings: item.earnings += totalRewards }
 }
 
-async function subscibeEthBalance(userAddress) {
+async function subscribeEthBalance(userAddress) {
 	let subscription
 	const ctx = createContext()
 	await ctx.ready()
@@ -176,7 +175,7 @@ async function subscibeEthBalance(userAddress) {
 				debug("Error: %o", err)
 			} else {
 				const ethBalance = await getEtherBalance(userAddress)
-				windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { ethBalance })
+				windowManager.internalEmitter.emit(k.UPDATE_ETH_BALANCE, { ethBalance })
 			}
 		})
 	} catch(err) {
@@ -276,7 +275,7 @@ async function subscribeTransfer(userAddress, userDID) {
 		transferSubscription = contract.events.Transfer({ filter: { to: userAddress } })
 			.on('data', async () => {
 				const newBalance = await getAraBalance(userDID)
-				windowManager.internalEmitter.emit(k.UPDATE_BALANCE, { araBalance: newBalance })
+				windowManager.internalEmitter.emit(k.UPDATE_ARA_BALANCE, { araBalance: newBalance })
 			})
 			.on('error', debug)
 	} catch (err) {
@@ -298,7 +297,7 @@ module.exports = {
 	getRewards,
 	purchaseItem,
 	sendAra,
-	subscibeEthBalance,
+	subscribeEthBalance,
 	subscribeFaucet,
 	subscribePublished,
 	subscribeRewardsAllocated,
