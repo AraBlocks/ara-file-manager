@@ -3,7 +3,7 @@
 const Button = require('../components/button')
 const { closeWindow, emit } = require('../lib/tools/windowManagement')
 const k = require('../../lib/constants/stateManagement')
-const styles = require('./styles/estimate')
+const styles = require('./styles/purchaseEstimate')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { utils } = require('../lib/tools')
@@ -24,6 +24,7 @@ class Estimate extends Nanocomponent {
 			})
 		}
     this.renderEstimate = this.renderEstimate.bind(this)
+    this.purchase = this.purchase.bind(this)
   }
 
   purchase() {
@@ -77,7 +78,12 @@ class Estimate extends Nanocomponent {
 	}
 
 	createElement() {
-    const { children, props, renderEstimate } = this
+    const {
+      children,
+      purchase,
+      props,
+      renderEstimate
+    } = this
     return html`
       <div class="${styles.container} modals-container">
         <div>
@@ -97,7 +103,10 @@ class Estimate extends Nanocomponent {
           </div>
           ${renderEstimate()}
         <div class="${styles.buttonHolder} purchaseEstimate-buttonholder">
-          ${children.buyButton.render({ cssClass: { name: props.gasEstimate ? 'standard' : 'thinBorder' }})}
+          ${children.buyButton.render({
+            cssClass: { name: props.gasEstimate ? 'standard' : 'thinBorder' },
+            onclick: props.gasEstimate ? purchase : () => {}
+          })}
           ${children.cancelbutton.render({})}
         </div>
       </div>
@@ -105,4 +114,4 @@ class Estimate extends Nanocomponent {
 	}
 }
 
-module.exports = Estimate
+module.exports = purchaseEstimate
