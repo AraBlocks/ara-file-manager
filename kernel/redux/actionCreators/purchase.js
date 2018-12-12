@@ -7,15 +7,14 @@ const {
 	araContractsManager,
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
-const araFilesystem = require('ara-filesystem')
 const araUtil = require('ara-util')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
-internalEmitter.on(k.OPEN_DEEPLINK, async(load) => {
-	debug('%s heard. Load: %o', k.OPEN_DEEPLINK, load)
+internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
+	debug('%s heard. Load: %o', k.OPEN_DEEPLINK)
 	dispatch({ type: k.OPEN_DEEPLINK, load })
 	if (account.userAid == null) {
 		debug('not logged in')
@@ -30,8 +29,8 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 	try {
 		debug('%s heard. Load: %o', k.PROMPT_PURCHASE, load)
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
+
 		const library = await araContractsManager.getLibraryItems(account.userAid)
-		//TODO remove slice
 		if (library.includes('0x' + araUtil.getIdentifier(load.did))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
@@ -46,26 +45,24 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
-		const price = await araFilesystem.getPrice({ did: load.did })
-		const gasEstimate  = await araContractsManager.purchaseItem({
-			budget: price / 10,
+		const price = Number(await araContractsManager.getAFSPrice({ did: load.did }))
+		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
+		windowManager.openWindow('estimate')
+
+		const gasEstimate = Number(await araContractsManager.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
 			userDID: account.userAid,
-			estimate: true
-		})
+		}))
 
-		debug({gasEstimate})
-
-		dispatch({ type: k.FEED_MODAL, load: { price, gasEstimate, ...load } })
-		windowManager.openModal('checkoutModal1')
+		windowManager.pingView({ view: 'estimate', event: k.REFRESH, load: { gasEstimate} })
 	} catch (err) {
 		errorHandler(err)
 	}
 })
 
-ipcMain.on(k.PURCHASE, async (event, load) => {
-	debug('%s heard: %s', k.PURCHASE, load.did)
+ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
+	debug('%s heard: %s', k.CONFIRM_PURCHASE, load.did)
 	try {
 		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
 		const descriptorOpts = {
@@ -77,15 +74,17 @@ ipcMain.on(k.PURCHASE, async (event, load) => {
 		dispatch({ type: k.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-		const jobId  = await araContractsManager.purchaseItem({
-			budget: load.price / 10,
+		const jobId = await araContractsManager.purchaseItem({
 			contentDID: load.did,
 			password: account.password,
 			userDID: account.userAid
 		})
+
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
+
 		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+
 		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
 		dispatch({ type: k.GOT_REWARDS_SUB, load: { rewardsSub } })
 	} catch (err) {

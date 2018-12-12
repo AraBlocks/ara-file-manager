@@ -28,9 +28,7 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
-async function getAFSPrice({
-	did
-}) {
+async function getAFSPrice({ did }) {
 	let result = 0
 	try {
 		result = await araFilesystem.getPrice({ did })
@@ -71,31 +69,46 @@ async function getEtherBalance(account) {
 
 async function purchaseItem(opts) {
 	const {
-		budget,
 		contentDID: contentDid,
 		userDID: requesterDid,
 		password,
-		estimate = false
 	} = opts
 	debug('Purchasing item: %s', contentDid)
 	try {
-		debug({
-			budget,
+		const { jobId } = await araContracts.purchase({
+			//budget is fixed to 10% of price for now
+			budget: await getAFSPrice({ did: contentDid }) / 10,
 			contentDid,
 			password,
 			requesterDid,
-			estimate
+			estimate: false
 		})
-		const load = await araContracts.purchase({
-			budget,
-			contentDid,
-			password,
-			requesterDid,
-			estimate
-		})
-		return load.jobId || load
+
+		return jobId
 	} catch (err) {
-		throw new Error(`Error purchasing item: ${err.message}`)
+		throw new Error('Error purchasing item: %o', err)
+	}
+}
+
+async function purchaseEstimate(opts) {
+	const {
+		contentDID: contentDid,
+		userDID: requesterDid,
+		password,
+	} = opts
+	try {
+		const gasEstimate = await araContracts.purchase({
+			//budget is fixed to 10% of price for now
+			budget: await getAFSPrice({ did: contentDid }) / 10,
+			contentDid,
+			password,
+			requesterDid,
+			estimate: true
+		})
+
+		return gasEstimate
+	} catch (err) {
+		throw new Error('Error getting purchase estimate: %o', err)
 	}
 }
 
@@ -179,14 +192,14 @@ async function subscribeEthBalance(userAddress) {
 	const { web3 } = ctx
 	try {
 		subscription = web3.eth.subscribe('newBlockHeaders', async (err, ret) => {
-			if (err){
+			if (err) {
 				debug("Error: %o", err)
 			} else {
 				const ethBalance = await getEtherBalance(userAddress)
 				windowManager.internalEmitter.emit(k.UPDATE_ETH_BALANCE, { ethBalance })
 			}
 		})
-	} catch(err) {
+	} catch (err) {
 		debug('Error getting Eth balance %o', err)
 	}
 	return { ctx, subscription }
@@ -304,6 +317,7 @@ module.exports = {
 	getPublishedEarnings,
 	getRewards,
 	purchaseItem,
+	purchaseEstimate,
 	sendAra,
 	subscribeEthBalance,
 	subscribeFaucet,
