@@ -116,7 +116,7 @@ function waitModalText(modalName, load) {
 			description = html `<div>Sending ${load.amount} Ara.</div>`
 			break
 		default:
-			description = load.fileName === 'Unnamed'
+			description = 'Manggo' || load.fileName === 'Unnamed'
 				? html`<div>Getting publish estimate for your file</div>`
 				: html`<div>Getting publish estimate for <b>${load.fileName}</b>.</div>`
 	}

@@ -7,7 +7,6 @@ const { ipcMain } = require('electron')
 const {
   afmManager,
   araContractsManager,
-  farmerManager,
   utils: actionsUtil
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')

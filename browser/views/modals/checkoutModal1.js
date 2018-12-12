@@ -44,14 +44,15 @@ module.exports = ({
           for
         </div>
       <div>
-        <span class="${styles.bigBold} modals-bigBold">
-        ${price ? price + fee : 0}
-        </span>
-        Ara
-      </div>
-      <div style="font-size: 9px;">
-        ${price ? price + ' + ' + fee + ' Network Fee' : null}
-      </div>
+        <div>
+          <span class="${styles.bigBold} modals-bigBold">
+          ${price ? price + fee : 0}
+          </span>
+          Ara
+        </div>
+        <div style="font-size: 9px;">
+          ${price ? price + ' + ' + fee + ' Network Fee' : null}
+        </div>
       </div>
       <div>
         ${buyButton.render({})}
