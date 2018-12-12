@@ -28,8 +28,19 @@ $ DEBUG=acm* ~/<path to .app>/Contents/MacOS/Ara\ File \Manager //packaged
 ```
 All `debug` names in the project begin with `acm` followed by their path, separated by a colon. You can narrow the logs by specifying the paths.
 
-## TODO metadata
+## Metadata format
+The metadata format the file manager is compatible with is the following:
+```
+{
+  fileInfo: {
+    author, //String
+    size, //Number or String
+    title, //String
+    timestamp //Object
+  }
+}
 
+```
 
 ## Contributing
 - [Commit message format](https://github.com/littlstar/ara-file-manager/blob/master/COMMIT_FORMAT.md)

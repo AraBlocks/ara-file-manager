@@ -231,6 +231,9 @@ module.exports = {
 
   spinnerHolder: css`
     :host {
+      display: flex;
+      font-size: 4px;
+      justify-content: center;
     }
   `,
 
