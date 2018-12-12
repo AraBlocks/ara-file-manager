@@ -55,6 +55,8 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			estimate: true
 		})
 
+		debug({gasEstimate})
+
 		dispatch({ type: k.FEED_MODAL, load: { price, gasEstimate, ...load } })
 		windowManager.openModal('checkoutModal1')
 	} catch (err) {

@@ -74,18 +74,26 @@ async function purchaseItem(opts) {
 		budget,
 		contentDID: contentDid,
 		userDID: requesterDid,
-		password
+		password,
+		estimate = false
 	} = opts
 	debug('Purchasing item: %s', contentDid)
 	try {
-		const { jobId } = await araContracts.purchase({
+		debug({
 			budget,
 			contentDid,
 			password,
 			requesterDid,
+			estimate
 		})
-		debug('Purchase Completed')
-		return jobId
+		const load = await araContracts.purchase({
+			budget,
+			contentDid,
+			password,
+			requesterDid,
+			estimate
+		})
+		return load.jobId || load
 	} catch (err) {
 		throw new Error(`Error purchasing item: ${err.message}`)
 	}
