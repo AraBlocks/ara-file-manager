@@ -28,7 +28,6 @@ class Button extends Nanocomponent {
   update(newProps) {
     const { props } = this
     Object.assign(props, newProps)
-    console.log(props)
     return true
   }
 
