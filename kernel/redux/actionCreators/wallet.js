@@ -44,7 +44,7 @@ internalEmitter.on(k.FAUCET_ARA_RECEIVED, () => {
     store.subscriptions.faucet.ctx.close()
     dispatch({ type: k.FAUCET_ARA_RECEIVED })
 
-    windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
+    windowManager.pingAll({ event: k.REFRESH })
   } catch (err) {
     debug('Err on faucet received listener: %o', err)
   }

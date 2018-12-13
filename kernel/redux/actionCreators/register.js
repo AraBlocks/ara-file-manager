@@ -24,10 +24,6 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     await identityManager.archive(identity)
 
     const { did: { did }, mnemonic } = identity
-    araUtils.requestFromFaucet(did)
-      .then(debug)
-      .catch(debug)
-
     const accountAddress = await araContractsManager.getAccountAddress(did, password)
 
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
@@ -49,6 +45,20 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     switchApplicationMenuLoginState(true)
 
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
+
+    const transfer = await araContractsManager.subscribeTransfer(accountAddress, did)
+    const transferEth = await araContractsManager.subscribeEthBalance(accountAddress)
+    const subscriptionLoad = { transferEth, transfer }
+
+    try {
+      await araUtils.requestFromFaucet(did)
+      subscriptionLoad.faucet = await araContractsManager.subscribeFaucet(accountAddress)
+    } catch (err) {
+      debug('Error requesting faucet: %o', err)
+      subscriptionLoad.faucet = null
+    }
+
+    dispatch({ type: k.GOT_REGISTRATION_SUBS , load: subscriptionLoad })
   } catch (err) {
     debug('Error registering: %o', err)
   }

@@ -4,7 +4,6 @@ const debug = require('debug')('acm:kernel:lib:actionCreators:wallet')
 const { araContractsManager, utils: afmUtils } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
-const { FAUCET_URI } = require('../../../lib/constants/networkKeys')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = windowManager
