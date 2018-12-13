@@ -16,6 +16,9 @@ module.exports = (state, { load = null, type }) => {
     case k.GOT_FAUCET_SUB:
       state.faucet = load.faucetSub
       break
+    case k.GOT_REGISTRATION_SUBS:
+      Object.assign(state, load)
+      break
     case k.GOT_SUBSCRIPTIONS:
       state.published.push(...load.publishedSubs)
       state.rewards.push(...load.rewardsSubs)
