@@ -7,7 +7,6 @@ const { ipcMain } = require('electron')
 const {
   afmManager,
   araContractsManager,
-  farmerManager,
   utils: actionsUtil
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
@@ -169,8 +168,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
     const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
-
-    await farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
 
     debug('Dispatching %s', k.FEED_MODAL)
     dispatch({
