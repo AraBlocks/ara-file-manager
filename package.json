@@ -1,7 +1,7 @@
 {
   "name": "ara-file-manager",
   "productName": "Ara File Manager",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "main": "boot/main.js",
   "network": "test",
