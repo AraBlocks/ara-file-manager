@@ -7,6 +7,7 @@ const {
 	araContractsManager,
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
+const araFilesystem = require('ara-filesystem')
 const araUtil = require('ara-util')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')

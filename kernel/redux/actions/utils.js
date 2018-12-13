@@ -17,11 +17,12 @@ async function descriptorGenerator(did, opts = {}) {
 		const AFSPath = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(AFSPath)
 		const meta = AFSExists ? await readFileMetadata(did) : null
+		const { downloadPercent, status } = await getAfsDownloadStatus(did, opts.shouldBroadcast)
 
 		const descriptor = {
 			allocatedRewards: 0,
 			did,
-			downloadPercent: AFSExists ? 1 : 0,
+			downloadPercent,
 			datePublished: meta ? meta.timestamp : null,
 			earnings: 0,
 			name: meta ? meta.title : null,
@@ -32,17 +33,36 @@ async function descriptorGenerator(did, opts = {}) {
 			redeeming: false,
 			shouldBroadcast: false,
 			size: meta ? meta.size : 0,
-			status: AFSExists
-				? k.DOWNLOADED_PUBLISHED
-				: opts.shouldBroadcast
-					? k.CONNECTING
-					: k.AWAITING_DOWNLOAD
+			status
 		}
-
 		return Object.assign(descriptor, opts)
 	} catch (err) {
 		debug('descriptorGenerator Error:, %o', err)
 	}
+}
+
+async function getAfsDownloadStatus(did, shouldBroadcast) {
+	let downloadPercent = 0
+	let status = k.AWAITING_DOWNLOAD
+  let newAfs
+  try {
+    ({ afs: newAfs } = await afs.create({ did }))
+		const feed = newAfs.partitions.home.content
+    if (feed && feed.length) {
+			downloadPercent = feed.downloaded() / feed.length
+		}
+		await newAfs.close()
+		if (downloadPercent === 1) {
+			status = k.DOWNLOADED_PUBLISHED
+		} else if (downloadPercent > 0) {
+			status = k.DOWNLOADING
+		} else if (downloadPercent === 0 && shouldBroadcast) {
+			status = k.CONNECTING
+		}
+  } catch(err) {
+    debug('Error getting download status %o', err)
+  }
+  return { downloadPercent, status }
 }
 
 async function getNetwork() {

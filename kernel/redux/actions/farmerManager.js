@@ -3,10 +3,34 @@
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const araContractsManager = require('./araContractsManager')
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
+const { internalEmitter } = require('electron-window-manager')
+const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
 
 function createFarmer({ did: userId, password }) {
-	return new farmDCDN({ userId, password })
+	debug('Creating Farmer')
+	const farmer = new farmDCDN({ userId, password })
+	farmer.on('peer-update', (did, count) => {
+		internalEmitter.emit(k.UPDATE_PEER_COUNT, {
+			did,
+			peers: count
+		})
+	})
+	farmer.on('download-progress', (did, value, total) => {
+		internalEmitter.emit(k.DOWNLOADING, {
+			did,
+			currentBlock: value,
+			totalBlocks: total
+		})
+	})
+	farmer.on('download-complete', (did) => {
+		debug('Download complete!')
+		internalEmitter.emit(k.DOWNLOADED, { did })
+	})
+	farmer.on('requestcomplete', (did) => {
+		debug('Rewards allocated')
+	})
+	return farmer
 }
 
 async function joinBroadcast({ farmer, did }) {
@@ -66,45 +90,15 @@ async function download({
 	farmer,
 	did,
 	jobId = null,
-	maxPeers = 10,
-	errorHandler,
-	startHandler,
-	progressHandler,
-	completeHandler
+	errorHandler
 }) {
 	debug('Downloading through DCDN: %s', did)
 	try {
 		await farmer.join({
 			did,
 			download: true,
-			maxPeers,
 			jobId,
 			upload: true,
-		})
-
-		let totalBlocks = 0
-		let prevPercent = 0
-		farmer.on('start', (did, total) => {
-			debug('Starting download', total)
-			const size = total * 6111 * 10
-			startHandler({ did, size })
-			totalBlocks = total
-		})
-		farmer.on('progress', (did, value) => {
-			const perc = value / totalBlocks
-			if (perc >= prevPercent + 0.1) {
-				prevPercent = perc
-				if (value / totalBlocks != 1) {
-					progressHandler({ downloadPercent: value / totalBlocks, did })
-				}
-			}
-		})
-		farmer.on('complete', (did) => {
-			debug('Download complete!')
-			completeHandler(did)
-		})
-		farmer.on('requestcomplete', (did) => {
-			debug('Rewards allocated')
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)

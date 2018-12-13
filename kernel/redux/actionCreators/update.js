@@ -120,8 +120,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
 
     dispatch({ type: k.UPDATED_FILE, load })
     debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load)
-    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
-    farmerManager.joinBroadcast({ did: load.did, farmer: farmer.farm })
+    internalEmitter.emit(k.START_SEEDING, load )
     internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
