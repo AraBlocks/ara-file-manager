@@ -1,10 +1,15 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:register')
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 const araContractsManager = require('../actions/araContractsManager')
 const dispatch = require('../reducers/dispatch')
-const { identityManager, afsManager, afmManager } = require('../actions')
+const {
+  identityManager,
+  afsManager,
+  afmManager,
+  utils: araUtils
+ } = require('../actions')
 const { switchLoginState } = require('../../../boot/tray')
 const { switchApplicationMenuLoginState } = require('../../../boot/menu')
 const windowManager = require('electron-window-manager')
@@ -40,7 +45,21 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     switchApplicationMenuLoginState(true)
 
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
+
+    const transfer = await araContractsManager.subscribeTransfer(accountAddress, did)
+    const transferEth = await araContractsManager.subscribeEthBalance(accountAddress)
+    const subscriptionLoad = { transferEth, transfer }
+
+    try {
+      await araUtils.requestFromFaucet(did)
+      subscriptionLoad.faucet = await araContractsManager.subscribeFaucet(accountAddress)
+    } catch (err) {
+      debug('Error requesting faucet: %o', err)
+      subscriptionLoad.faucet = null
+    }
+
+    dispatch({ type: k.GOT_REGISTRATION_SUBS , load: subscriptionLoad })
   } catch (err) {
-    debug('Error registering: %O', err)
+    debug('Error registering: %o', err)
   }
 })

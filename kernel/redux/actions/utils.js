@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:util')
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k, networkKeys } = require('k')
 const afs = require('ara-filesystem')
 const araContractsManager = require('./araContractsManager')
 const araUtil = require('ara-util')
@@ -9,6 +9,8 @@ const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
 const createContext = require('ara-context')
+const request = require('request-promise')
+
 
 //TODO: figure out why reading metadata causes error for uncommitted afs
 async function descriptorGenerator(did, opts = {}) {
@@ -70,7 +72,7 @@ async function getNetwork() {
 	await ctx.ready()
 	const { web3 } = ctx
 
-	const networkType =  await web3.eth.net.getNetworkType()
+	const networkType = await web3.eth.net.getNetworkType()
 
 	ctx.close()
 	return networkType
@@ -89,6 +91,15 @@ async function readFileMetadata(did) {
 		debug('No metadata for %s', did)
 	}
 	return fileInfo
+}
+
+async function requestFromFaucet(userDID) {
+	return await request.post({
+		method: 'POST',
+		uri: networkKeys.FAUCET_URI,
+		body: { to: userDID },
+		json: true
+	})
 }
 
 async function writeFileMetaData({
@@ -118,5 +129,6 @@ module.exports = {
 	getNetwork,
 	makeAfsPath,
 	readFileMetadata,
+	requestFromFaucet,
 	writeFileMetaData
 }

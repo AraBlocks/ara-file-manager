@@ -2,5 +2,6 @@ module.exports = {
   published: [],
   rewards: [],
   transfer: null,
-  transferEth: null
+  transferEth: null,
+  faucet: null
 }
