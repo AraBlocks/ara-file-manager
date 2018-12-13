@@ -31,7 +31,7 @@
     "ara-contracts": "github:arablocks/ara-contracts#semver:0.11.x",
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.13.x",
     "ara-identity": "github:arablocks/ara-identity#semver:0.37.x",
-    "ara-reward-dcdn": "github:littlstar/ara-reward-dcdn#semver:0.10.x",
+    "ara-reward-dcdn": "github:littlstar/ara-reward-dcdn#semver:0.11.x",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
     "ara-util": "github:arablocks/ara-util#semver:1.1.x",
     "choo": "^6.13.0",
