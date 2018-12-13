@@ -32,14 +32,13 @@ All `debug` names in the project begin with `acm` followed by their path, separa
 The metadata format the file manager is compatible with is the following:
 ```
 {
-  fileInfo: {
-    author, //String
-    size, //Number or String
-    title, //String
-    timestamp //Object
+  "fileInfo": {
+    "author": "Manggo",
+    "size": "500mb"
+    "title": "Some content"
+    "timestamp": "2018-12-12T23:59:46.314Z"
   }
 }
-
 ```
 
 ## Contributing
