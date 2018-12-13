@@ -13,7 +13,7 @@ function createFarmer({ did: userId, password }) {
 	farmer.on('peer-update', (did, count) => {
 		internalEmitter.emit(k.UPDATE_PEER_COUNT, {
 			did,
-			count
+			peers: count
 		})
 	})
 	farmer.on('download-progress', (did, value, total) => {
@@ -90,7 +90,6 @@ async function download({
 	farmer,
 	did,
 	jobId = null,
-	maxPeers = 10,
 	errorHandler
 }) {
 	debug('Downloading through DCDN: %s', did)
@@ -98,7 +97,6 @@ async function download({
 		await farmer.join({
 			did,
 			download: true,
-			maxPeers,
 			jobId,
 			upload: true,
 		})

@@ -18,7 +18,7 @@ function _startSeeding(load) {
   debug
   const { farmer } = store
   try {
-    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did, updatePeerCount })
+    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
     dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
@@ -37,8 +37,3 @@ ipcMain.on(k.STOP_SEEDING, (event, load) => {
     debug('Error stopping seed: %o', err)
   }
 })
-
-function updatePeerCount(did, peers) {
-  dispatch({ type: k.UPDATE_PEER_COUNT, load: { did, peers }})
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-}
