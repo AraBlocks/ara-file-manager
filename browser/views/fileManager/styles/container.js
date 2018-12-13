@@ -14,6 +14,10 @@ module.exports = {
     :host > div {
       width: 95%;
     }
+
+    :host a {
+      cursor: pointer;
+    }
   `,
 
   noFilesContainer: css`
