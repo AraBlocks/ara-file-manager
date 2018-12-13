@@ -89,7 +89,6 @@ async function login(_, load) {
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
-
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
     farmer.start()
 

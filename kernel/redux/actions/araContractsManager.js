@@ -28,9 +28,7 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
-async function getAFSPrice({
-	did
-}) {
+async function getAFSPrice({ did }) {
 	let result = 0
 	try {
 		result = await araFilesystem.getPrice({ did })
@@ -71,23 +69,44 @@ async function getEtherBalance(account) {
 
 async function purchaseItem(opts) {
 	const {
-		budget,
 		contentDID: contentDid,
 		userDID: requesterDid,
-		password
+		password,
 	} = opts
 	debug('Purchasing item: %s', contentDid)
 	try {
 		const { jobId } = await araContracts.purchase({
-			budget,
+			budget: await _calculateBudget(contentDid),
 			contentDid,
 			password,
 			requesterDid,
+			estimate: false
 		})
-		debug('Purchase Completed')
+
 		return jobId
 	} catch (err) {
-		throw new Error(`Error purchasing item: ${err.message}`)
+		throw new Error('Error purchasing item: %o', err)
+	}
+}
+
+async function purchaseEstimate(opts) {
+	const {
+		contentDID: contentDid,
+		userDID: requesterDid,
+		password,
+	} = opts
+	try {
+		const gasEstimate = await araContracts.purchase({
+			budget: await _calculateBudget(contentDid),
+			contentDid,
+			password,
+			requesterDid,
+			estimate: true
+		})
+
+		return gasEstimate
+	} catch (err) {
+		throw new Error('Error getting purchase estimate: %o', err)
 	}
 }
 
@@ -171,14 +190,14 @@ async function subscribeEthBalance(userAddress) {
 	const { web3 } = ctx
 	try {
 		subscription = web3.eth.subscribe('newBlockHeaders', async (err, ret) => {
-			if (err){
+			if (err) {
 				debug("Error: %o", err)
 			} else {
 				const ethBalance = await getEtherBalance(userAddress)
 				windowManager.internalEmitter.emit(k.UPDATE_ETH_BALANCE, { ethBalance })
 			}
 		})
-	} catch(err) {
+	} catch (err) {
 		debug('Error getting Eth balance %o', err)
 	}
 	return { ctx, subscription }
@@ -285,6 +304,19 @@ async function subscribeTransfer(userAddress, userDID) {
 	return { ctx, transferSubscription }
 }
 
+//budget is fixed to 10% of price for now
+async function _calculateBudget(did) {
+	let budget
+	try {
+		budget = (await getAFSPrice({ did })) / 10
+	} catch (err) {
+		debug('Err getting AFS price: %o', err)
+		budget = 0
+	}
+
+	return budget
+}
+
 module.exports = {
 	getAccountAddress,
 	getAFSPrice,
@@ -296,6 +328,7 @@ module.exports = {
 	getPublishedEarnings,
 	getRewards,
 	purchaseItem,
+	purchaseEstimate,
 	sendAra,
 	subscribeEthBalance,
 	subscribeFaucet,

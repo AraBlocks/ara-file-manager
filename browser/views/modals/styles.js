@@ -232,10 +232,11 @@ module.exports = {
   spinnerHolder: css`
     :host {
       display: flex;
-      justify-content: center;
       font-size: 4px;
+      justify-content: center;
     }
   `,
+
 
   title: css`
     :host {

@@ -2,12 +2,11 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const araContractsManager = require('./araContractsManager')
-const farmDCDN = require('ara-farming-dcdn/src/dcdn')
+const farmDCDN = require('ara-reward-dcdn/src/dcdn')
 const fs = require('fs')
 
-function createFarmer({ did: userID, password }) {
-	debug('Creating Farmer')
-	return new farmDCDN({ userID, password })
+function createFarmer({ did: userId, password }) {
+	return new farmDCDN({ userId, password })
 }
 
 async function joinBroadcast({ farmer, did }) {

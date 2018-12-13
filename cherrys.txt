@@ -1,0 +1,4958 @@
+commit 97ae0b8c9e4f546351543dbee6c5b12ec802bcf4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Dec 13 10:46:47 2018 -0500
+
+    minor refactor
+
+commit e3862d38d3f5039f36f157fd574a428ddb748331
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Dec 13 09:56:04 2018 -0500
+
+    minor fixes
+
+commit 52f537e7dcd1d537a3ef9d8a430f2de482777b0d
+Merge: a1f8603 48de019
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Dec 12 19:01:39 2018 -0500
+
+    feat(): Renders gas price for purchase
+
+commit a1f860302c0aed841ea151f286e157f3479ad503
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Dec 12 18:46:11 2018 -0500
+
+    feat(): Renders gas price for purchase
+
+commit 9b7484421e9412be55d34295e2db2ddcbb77e7eb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Dec 12 18:45:45 2018 -0500
+
+    feat(): Renders gas price for purchase
+
+commit 9a2f7713f176de962dd0fc597dce8bd10dfceec6
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Dec 12 17:15:53 2018 -0500
+
+    cache
+
+commit ab3d45bfcb736d69fd9de759ccff1432ccc5f17e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Dec 12 17:13:27 2018 -0500
+
+    cache
+
+commit 48de019a4143e316e41e254fc97055afac6dd4bf
+Author: vipyne <vipyne@gmail.com>
+Date:   Wed Dec 12 15:11:16 2018 -0500
+
+    docs(README.md): Reminder to document AFS Metadata structure
+
+commit 61b00e8aba7ca628010c151f658ac686d0a83096
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Dec 12 11:23:53 2018 -0500
+
+    cache
+
+commit 1810013564d52dbde274c2a40f4982b2b8d1a3eb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Dec 11 18:23:50 2018 -0500
+
+    about-to-rb
+
+commit fad8728b7121afe175eea7462331f216894637ea
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Dec 11 18:19:19 2018 -0500
+
+    cache
+
+commit 686b03f0f2d5317299aab3c1dc273f3aa7950a46
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Dec 11 16:36:19 2018 -0500
+
+    feat(): Live update peer
+
+commit 9da53e7fdf5b39c9f73a3cf6372ce0f96b29685d
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Dec 11 11:51:08 2018 -0500
+
+    refactor(subscribeEthBalance): Only refreshes ui on diff (#318)
+
+commit 6406ea608e88d0fec8e7dae7c20b95b4a7dedb3f
+Merge: e4a7142 5649ffa
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Dec 11 11:25:17 2018 -0500
+
+    merged
+
+commit e4a7142075cb160d8b567c220663a7e061eec993
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Dec 11 11:24:21 2018 -0500
+
+    refactor(): reorganized kernel/lib
+
+commit 5649ffa56198c1be96b8a7d97c8d77ffd0deba5b
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Dec 11 11:16:19 2018 -0500
+
+    feat(): Write Ara rc before all require statement happens
+
+commit 9096d1f68b75c4d68764c29f7c7f9b103a6d63f8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Dec 10 19:38:58 2018 -0500
+
+    fix(Button.js): assigns all new props to old
+
+commit 0534d226fdf14bdceed5425e02531f5c65142a30
+Merge: 1549675 465042c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Dec 10 18:52:15 2018 -0500
+
+    Merge branch 'dev' of github.com:littlstar/ara-file-manager into dev
+
+commit 154967541f9928e1526b82d4143f256bce38afa2
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Dec 10 18:50:03 2018 -0500
+
+    refactor():removed hex mutations
+
+commit 465042c84c8b1c46fdee7748817da6d3bd1d38c7
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Dec 10 18:33:17 2018 -0500
+
+    chore(release): 0.1.8 :tada:
+
+commit 22397e0290775d2a60a4c9de7a587968da1ec1d8
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Dec 10 18:22:18 2018 -0500
+
+    refactor(manageView): Restyled
+
+commit 59da58038e14d5abcc877b521db8a908a2917df7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Dec 10 16:44:34 2018 -0500
+
+    refactor(): connecting status saved upon app close
+
+commit 3e1316db61e91d2e3a8eb63ca3bb916b65815bc4
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Dec 10 18:20:25 2018 -0500
+
+    feat(): PE-715-Eth transfer subscriptions (#317)
+
+commit 3c56543713c5352717f3e22649d9665b2ad91085
+Merge: 6fd5505 ae6275e
+Author: bplaster <brandon@odestooats.com>
+Date:   Mon Dec 10 17:28:55 2018 -0500
+
+    Merge pull request #313 from littlstar/bap-analytics-version
+    
+    feat(analytics): add version
+
+commit 6fd5505b79fe71687e56a8a3859f0813d9985a52
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Dec 10 14:50:13 2018 -0500
+
+    feat(): PE-702 Handle Deeplink after prompting user to log in (#314)
+
+commit cc4f1e8a2b4dd63f258335b6b85ed8f6716c5393
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Dec 10 14:00:52 2018 -0500
+
+    feat(): Add Support Email
+
+commit ae6275e7aa626749329db50b097b7781eb969e80
+Author: Brandon Plaster <brandon@littlstar.com>
+Date:   Fri Dec 7 18:38:10 2018 -0500
+
+    feat(analytics): add version
+
+commit b9c0f809eaeb371bcaad0a67b3ca432174368bb1
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Dec 7 16:10:35 2018 -0500
+
+    feat(main.js): listeners for uncaught stuff
+
+commit 6e26566a2c586a60c11b0ac909188d51e875e350
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Dec 7 15:08:29 2018 -0500
+
+    fix(afsManager): Fixed surfaceAFS - uncommitted issue
+
+commit a94c2f819619eeabf45db205ab3e488e3db9a664
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Fri Dec 7 12:59:17 2018 -0500
+
+    chore(release): 0.1.7 :tada:
+
+commit 54a0f1dc103eff72367697527f24e8521d375872
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Dec 7 12:32:21 2018 -0500
+
+    minor changes
+
+commit 9992a1ab621d0044c0833e3b7e6fafeb93277108
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Dec 7 12:23:52 2018 -0500
+
+    feat(): File Manager UI Fix (#311)
+
+commit b58b4e13831dfb5947333a522c19fd1708ebaa36
+Merge: 83c9eab 6a89117
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Dec 7 11:40:59 2018 -0500
+
+    Merge branch 'dev' of github.com:littlstar/ara-file-manager into dev
+
+commit 83c9eabe983ce4dc6d2c15a45ddfc70afb28533b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Dec 7 11:39:33 2018 -0500
+
+    chore(package.json): Made reference for constants
+
+commit 6a8911706330295480e43dc19ca2f794d982eaba
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Dec 7 11:10:20 2018 -0500
+
+    feat(): PE-642 Reject negative price for manage and publish file (#303)
+
+commit 368f0ce559ccc9d4a67e41c0ead027ead066aa7a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Dec 6 18:42:02 2018 -0500
+
+    fix(araContractManager): Fixed listener
+
+commit 24798fe82bd6af8d3bae0502b6e157452ae8e856
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Dec 6 17:09:38 2018 -0500
+
+    rm logs
+
+commit ad63ced8de1b81ebf110592097d350ffdcef6d56
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Thu Dec 6 17:08:14 2018 -0500
+
+    feat(): use uncommitted afs before deploys
+
+commit 9846a9b77c76087c47c076e58385984c4b3dd14a
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Dec 6 16:45:38 2018 -0500
+
+    feat(): PE-698 Error input component(#310)
+
+commit b3d08aa55553232e6885c84acdc70faf1bc322f9
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Dec 6 10:38:03 2018 -0500
+
+    feat(): PE-695 Error Handling for Purchasing (#301)
+
+commit 358721d7dd60c9a5daed8c7fabfbf665c9164710
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Dec 5 17:43:08 2018 -0500
+
+    * feat(): show uncommitted afs
+
+commit c7861eb995b6a8f2f8858a6f01fa07486015ce76
+Merge: 0203822 ad00084
+Author: bplaster <brandon@odestooats.com>
+Date:   Wed Dec 5 16:56:09 2018 -0500
+
+    Merge pull request #302 from littlstar/bap-analytics
+    
+    feat(analytics): added analytics for app-open
+
+commit 020382253b397c8ee8d2939f83f437cc3f1a5279
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Dec 5 16:44:43 2018 -0500
+
+    feat(): PE-647 Save Afs size after updating file (#305)
+
+commit ad00084d317acfb84b8b64dbbb8a918777b5f814
+Author: Brandon Plaster <brandon@littlstar.com>
+Date:   Wed Dec 5 15:16:26 2018 -0500
+
+    feat(analytics): added analytics for app-open
+
+commit a1afdb4ac046f04b81c0f361c75702c8dce00648
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Dec 5 12:27:55 2018 -0500
+
+    minor cleanup
+
+commit 3bebe7b1ddca716c8fdf2bf865d4d301cb9d584f
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Dec 5 12:27:25 2018 -0500
+
+    feat(): integrated faucet
+
+commit 652d8309cbf8c57cc7b3eff830c0e45f6499a844
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Dec 5 11:19:08 2018 -0500
+
+    feat(registration.js): enter pw twice + input err
+
+commit 80ceebfe9b072390dc1c93f40ca96a3750043569
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Dec 4 16:49:41 2018 -0500
+
+    fix(): proper deeplink for unnamed afs
+
+commit 33f4b9f442a3456c22999cfb9875a75bc614365b
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Dec 4 17:47:57 2018 -0500
+
+    feat(): PE-691 Registration Flow Refactor (#298)
+
+commit 27579e82103c10ff1eeadbf3c011efa63eaf57fd
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Dec 4 16:01:32 2018 -0500
+
+    feat(): PE-684 Application context menu and tray refactor(#293)
+
+commit 9a9e6f995cad4fe5d8abf0714f85ad427f3c2846
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Dec 4 15:50:54 2018 -0500
+
+    feat(): PE-694 Pause Download (#296)
+
+commit 8ffa2da977f218350df9a4469e1b850ac20a8aca
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Dec 4 15:25:28 2018 -0500
+
+    feat(recovery): error catching for recovery (#295)
+
+commit 8b30b0dbc1c16aeb8be9ee7e788e7b78f2daa357
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Dec 4 14:02:42 2018 -0500
+
+    feat(): Comma delimited numbers
+
+commit 20b915e0dc28f706e76b55d6699b5e29bbdee9e7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Dec 4 13:14:00 2018 -0500
+
+    fix(publishFile/container.js): can pass in 0 as price now
+
+commit 9cf7b0785b4b6af896067d60a46865e8c8af08fd
+Merge: 473fc16 840062a
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Dec 4 13:00:17 2018 -0500
+
+    fix(afsExplorer/container.js): greyed out update btn
+    
+    fix(afsExplorer/container.js): greyed out update btn
+
+commit 840062abc151b9087b25777b9cf596528b3f1c2f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Dec 4 12:59:26 2018 -0500
+
+    fix(afsExplorer/container.js): greyed out update btn
+
+commit 473fc16405a8e427b666597c094751f76675098c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Dec 4 11:33:20 2018 -0500
+
+    chore(release): 0.1.6 :tada:
+
+commit 3bbe78f857286576e424dd1cf3add9600db612ce
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Dec 4 11:32:46 2018 -0500
+
+    Pe 673 mr limit one publish (#290)
+    
+    * refactor(): Single publish only
+
+commit aba163a23452433c76d36d5d22f37b6e5abceb48
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Dec 4 10:44:50 2018 -0500
+
+    Pe 672 mr remove dropdown currency (#289)
+    
+    * restyle(): content -> package
+    
+    * style(input.js): Ara icon in price inputs
+
+commit 2a564ff24fefa8824f94491a3ff45fc8cafae7ae
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Dec 4 10:36:29 2018 -0500
+
+    feat(): PE-682 Redeem Rewards Confirm Modal (#288)
+
+commit 484a96636fa648ba6dcc47e830a1e1e71882791f
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Dec 3 17:51:43 2018 -0500
+
+    fix(): changed to Ara ID" (#286)
+    
+    fix(): changed to Ara ID" (#286)
+
+commit 9816f142e1b5ffc3653bc6ac9ab3ee449d04bdc8
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Dec 3 17:05:46 2018 -0500
+
+    fix(register.js): assigned value of 0 to eth balance (#285)
+    
+    fix(register.js): assigned value of 0 to eth balance (#285)
+
+commit edf9921378102543ea188cb73b26025e4325a127
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Dec 3 17:05:22 2018 -0500
+
+    feat(): PE-679 PE-680 General Action Modal (#284)
+
+commit 7ef86cef739459ffeb5165e28d2e8443ccf674f8
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Dec 3 17:02:42 2018 -0500
+
+    fix(araIDWarning.js): fixed button (#283)
+    
+    fix(araIDWarning.js): fixed button (#283)
+
+commit 408c32eba3d69f07d0920e5e522fe481412c3a82
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Dec 3 15:59:46 2018 -0500
+
+    minor fix
+
+commit 10f12670c4c7e6a1113aff4ffdc3e916d871c424
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Dec 3 15:56:34 2018 -0500
+
+    feat(afmManager): moved afm to .ara (#282)
+    
+    feat(afmManager): moved afm to .ara (#282)
+
+commit 73035a558534b92193b9a67afd526d35ccaef9ef
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Dec 3 10:44:31 2018 -0500
+
+    style(): small UI fixes (#281)
+
+commit 4434cbeda6ed50def63642efcff6f4c6874645b7
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Fri Nov 30 12:02:52 2018 -0500
+
+    chore(release): 0.1.5 :tada:
+
+commit bb7ea9978b74a67ad5a77fed2f9d5f8e98e8f398
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Nov 30 10:39:54 2018 -0500
+
+    feat(): PE-656 Create dummy Afs for deploy proxy (#279)
+    
+    * feat(): Cache aid after register
+    
+    * feat(): Create dummy Afs for deploy proxy
+    
+    * feat(): Open Mnemonic after proxy deploy
+    
+    * feat(): New publish flow
+
+commit b60f3b5ab74847686973a8e6642aca0871e093f0
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Nov 29 19:29:45 2018 -0500
+
+    feat(): Update farmer to 0.5.x (#280)
+
+commit d6605b8970cf534021c329c12179736f16f5f4a3
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Thu Nov 29 19:23:29 2018 -0500
+
+    Pe 657 context menu fix (#278)
+    
+    * fix(afsFileRow.js): removed relative positioning
+    
+    * fix(afsFileTable.js): fixed context menu
+
+commit 3bd3156a6c5ccc7f530f623958d7a8a195b1c66c
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Thu Nov 29 14:20:33 2018 -0500
+
+    Pe 655 replace unnamed with did (#277)
+    
+    * refactor(): Truncated DID shown instead of "unnamed file" in filemanager
+    
+    * refactor(actions/utils.js): Cleaned readFileMetaData
+
+commit d4c2b91cccd560172c89ccf8e844a35b78c449f4
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Nov 29 12:17:36 2018 -0500
+
+    feat(): Reseed Afs after opening (#272)
+
+commit 9a5804489a0a0b8b0dafee6855ef5bd29665f0c3
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Thu Nov 29 12:11:04 2018 -0500
+
+    minor fixes
+
+commit 7055c6db3cce00b90ffda5df761d2c40de2b0fe6
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Thu Nov 29 11:26:12 2018 -0500
+
+    minor fixes
+
+commit 994ed253275522b4b4f8e994faa48020cd9cedc0
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Thu Nov 29 11:04:56 2018 -0500
+
+    feat(): Add tray support
+
+commit 337591de476fef7cb43f56809e6730315f052d91
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Nov 28 18:10:34 2018 -0500
+
+    cache
+
+commit fd171b9fb8ec993fcf82d1473a6b4499b9e7c9dc
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Nov 28 17:53:16 2018 -0500
+
+    feat(): Deploy Estimate View
+
+commit 1c04aa40cedc459cd4ec9280214cb9e4128d58a9
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Nov 28 17:34:36 2018 -0500
+
+    cache
+
+commit a30e4e779e18032756fec5e47a19d7db2b32bdb8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 28 17:18:10 2018 -0500
+
+    fix(manageFile): additems through finder working
+
+commit af73a119a6c870f2d722324730ab7e9f44cffb5b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 28 17:00:27 2018 -0500
+
+    refactor(mnemonicWarning.js): Removed stub
+
+commit 16524da02e3dd55577f022d3a5cf5104c9fdc855
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 28 16:03:21 2018 -0500
+
+    feat(mnemonicWarning.js): Flexible component now
+
+commit 9ad23cfed7b7a2c3039c29a32cedafb63409a7ba
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 28 12:23:37 2018 -0500
+
+    refactor(araContractsManager.js): removed store
+
+commit 8bc45c6b832350f7af859362c19b505c36dfcb2a
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Nov 28 11:27:07 2018 -0500
+
+    Pe 628 mr update context use (#270)
+    
+    * refactor(): Updated ara-util web3 use
+
+commit 9158dd903fcece38fe46b7f29ac3e97572984676
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Nov 28 10:51:20 2018 -0500
+
+    refactor(generalMessageModal): PE-641 Add Callback (#269)
+
+commit 6cd711772a8bef98fb7abe5720f4f61826e58cfa
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Nov 28 10:45:39 2018 -0500
+
+    Pe 597 mr fix purchased seeding state (#267)
+    
+    * fix(afsManager.js): remove prepended 0x
+    
+    * chore(README.md): Updated output build name
+
+commit a09f9c4ed20158c342da72d989814a452fb39cea
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Nov 28 10:34:01 2018 -0500
+
+    feat(): PE-596 Cache user did for login (#268)
+    
+    * feat(): Add required indicator in registration
+    
+    * feat(): Cache user did for login
+
+commit faaee12acb244a3cfcbeac4e32a50cf251bff3e9
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Nov 27 18:24:53 2018 -0500
+
+    feat(): Update ara amount when balance is updated
+
+commit e248d28ce7e5e4ae0ba10c5021972d229785c686
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Nov 27 15:30:16 2018 -0500
+
+    fix(): Small merge issue
+
+commit c9323ee2f7013b7504c5240010aad56970fa2eec
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Nov 27 14:58:29 2018 -0500
+
+    feat(): Small UI Changes (#265)
+    
+    * feat(): PE-599 Link to ara.one
+    
+    * feat(): PE-600 Display 0B for publish button
+    
+    * feat(): PE-598 Clickable Hamby
+    
+    * feat(): hide menu on mouseleave
+    
+    * feat(): copied animation for hamby menu
+    
+    * feat(): PE-595 Use Ara-Util to get identifier
+
+commit 3c909625a267b25a3dfa2a9341ef5a57c34dbc30
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Nov 27 14:48:23 2018 -0500
+
+    Pe 594 mr permanent banner (#266)
+    
+    * feat(testNetBanner.js): static banner
+
+commit df6b2b46f82ba0964a49b50f4616297d087058d7
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Nov 27 13:45:17 2018 -0500
+
+    feat(): Send ara to wallet address or did (#263)
+
+commit d3769ea862c762a904ee1450ff938336ce08ed8d
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Nov 26 17:58:21 2018 -0500
+
+    Pe 598 mr add finder publish (#264)
+    
+    * feat(): add files through finder
+
+commit 9acab832f198d9820052ee0e5af03d0b1a1547ee
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Nov 26 14:12:59 2018 -0500
+
+    feat(): Display modal for not enough Eth (#262)
+
+commit a4e8ca22e7bd5a055bd7163519b122b3f25482cc
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Nov 21 18:07:19 2018 -0500
+
+    Dev (#249)
+    
+    * fix(): Dynamic link parsing
+    
+    * chore(package.json): Downloaded latest contracts
+    
+    * feat(): Write to .ararc (#243)
+    
+    * feat(): PE-585 Send Ara to other account (#242)
+    
+    * feat(): Send Ara view
+    
+    * feat(): Confirm send Ara modal
+    
+    * feat(): Send Ara and please wait modal
+    
+    * feat(): Error handling for send Ara
+    
+    * Mr account overview (#244)
+    
+    * feat(accountInfo.js): AccountInfo view
+    
+    * feat(util.js): added shouldShowBanner helper
+    
+    * feat(accountInfo.js): Added version
+    
+    * feat(accountInfo.js): linked send ara view
+    
+    * fix(sendAra): Added html & js for sendAra
+    
+    * feat(): PE-579 Sync metadata before downloading (#245)
+    
+    * feat(): Renders when update avail (boot only) (#246)
+    
+    * feat(): Renders when update avail (boot only)
+    
+    * refactor(afsManager.js): Removed log of error
+    
+    * feat(): Copy did and eth address in account overview(#247)
+    
+    * fix(): minor bugs
+    
+    * small fix
+    
+    * Mr update reward amount (#248)
+    
+    * feat(): Dynamic rewards
+    
+    * fix(): Show update available only after the user downloaded afs
+    
+    * refactor(farmerManager.js): Wrapped getprice
+    
+    * chore(release): 0.1.4 :tada:
+
+commit 4164ff0a37ae35228aabffdc50bc487fdc19ebd3
+Merge: 0533940 61f3441
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Nov 19 14:36:14 2018 -0500
+
+    Merge pull request #241 from littlstar/dev
+    
+    Dev
+
+commit 61f344155cce41d406c9ec5fefb4a5b36ade1b8d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 19 14:31:18 2018 -0500
+
+    chore(release): 0.1.3 :tada:
+
+commit b7f320b363c4dd771b14868621f0d489b9e83c9a
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Nov 19 14:28:14 2018 -0500
+
+    Mr create account restyle (#240)
+    
+    * restyle(): Updated create account related views
+    
+    - Mnemonic warning & identity warning views
+      -new colors
+      -clicked! animation
+      -requires you to copy before you can move on
+    - Logout
+      -When logout, login view pops up
+
+commit 82163a8bef707cd0a3d1ce6d63875aec98925f1a
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Nov 19 14:14:49 2018 -0500
+
+    feat(): update modals and afs explorer(#238)
+
+commit e1d6bb227eb52976d4ed2434a97ceab2b5aae5fb
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Nov 19 12:18:16 2018 -0500
+
+    feat(utilityButton.js): replace button icon with svg (#237)
+
+commit 89cf0d3acea72d7483ebac9591acb5b72e4c44c4
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Nov 19 11:34:54 2018 -0500
+
+    Mr publish file restyle (#239)
+    
+    * cache
+    
+    * cache
+    
+    * style(): Publish file restyled
+
+commit c8e47a186fa40864c31ac7c96de4e7ed1f08f1fb
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Fri Nov 16 14:14:45 2018 -0500
+
+    chore(release): 0.1.2 :tada:
+
+commit c0ef4722141bc881b060a19fb70a5e4f6e88e480
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Nov 16 14:14:00 2018 -0500
+
+    feat(): Ping all views for pending transaction state(#236)
+
+commit 2daa53eb9a76df8579366bd0d2407d6175e6d10d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 16 11:48:59 2018 -0500
+
+    feat(): Restyled fileManager
+    
+    * Updated font
+    * Updated colors
+    * Updated tooltip
+
+commit 2e82ad54093cc0d63f62d0b79f0c847f00e2dcb6
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 15 16:42:46 2018 -0500
+
+    chore(package):updated package
+
+commit 5496d4bcc90182d19ac1729d7fb9a69231de3247
+Merge: a1212bc 0533940
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 15 12:41:51 2018 -0500
+
+    chore(package.json):updated farming
+
+commit 053394001c7ec2835206d0d9834ced0d2dbfd766
+Merge: 69c4a0d e9518d7
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Nov 14 14:13:11 2018 -0500
+
+    Merge branch 'master' of https://github.com/littlstar/ara-content-manager
+
+commit 69c4a0d5929b85ac729d77825c1c2ed9acd51093
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Nov 14 14:07:58 2018 -0500
+
+    chore(release): 0.1.1 :tada:
+
+commit e9518d78029c641b80db18717d5ff4bbae324c6f
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Nov 14 14:00:19 2018 -0500
+
+    fix: package.json
+
+commit d560fc96e901e47cbffd76badf373080d3f9ac94
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Nov 14 13:58:42 2018 -0500
+
+    Dev (#233)
+    
+    feat(): Redeem Rewards
+    feat(): PE-578 Handle pending transactions (#231)
+
+commit a1212bcba004dd97bf127aeda714e6c4e2de9e5c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 14 13:53:43 2018 -0500
+
+    1.0.1
+
+commit 2bd9d0e1e345dd61f98cfd3792d5c8e0fb814796
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Nov 14 13:47:57 2018 -0500
+
+    Mr subscribe rewards allocated (#232)
+    
+    * cache
+    
+    * cache
+    
+    * feature(): Redeem Rewards
+    
+    * feature(): Redeem Rewards
+    
+    * feature(): Redeem Rewards
+
+commit 972ad187973492402da3d5e2adfba213a6201504
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Nov 14 13:31:47 2018 -0500
+
+    feat(): PE-578 Handle pending transactions (#231)
+
+commit f74c6a61a0994d5bf7da8928de090d09527f65ee
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Nov 14 13:29:57 2018 -0500
+
+    Revert "feat(): PE-578 Handle pending transactions (#227)" (#230)
+    
+    This reverts commit caf1903fe1c667a57ae28f293e46d599fea78a34.
+
+commit 71aabfc89216f257c634a4fb22e5024879c9d04b
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Nov 14 13:27:55 2018 -0500
+
+    Revert "Mr subscribe rewards allocated" (#229)
+    
+    * Revert "feature(): Redeem Rewards"
+    
+    This reverts commit 59024955956e7ff0f687e1502fa7096d5cfa8211.
+    
+    * Revert "feature(): Redeem Rewards"
+    
+    This reverts commit 38401a35d247dbb9024346ae3cc4c112e33cc824.
+    
+    * Revert "feature(): Redeem Rewards"
+    
+    This reverts commit 0090703e62f7f2d27f66a377f08014ca0e3a897c.
+    
+    * Revert "cache"
+    
+    This reverts commit 86044a7621c1d8b0f399dfd093012c379fba7e7b.
+    
+    * Revert "cache"
+    
+    This reverts commit 29345fa783782ce0f15bfd259d18682f4761a7c7.
+
+commit caf1903fe1c667a57ae28f293e46d599fea78a34
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Nov 14 13:26:49 2018 -0500
+
+    feat(): PE-578 Handle pending transactions (#227)
+
+commit 59024955956e7ff0f687e1502fa7096d5cfa8211
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 14 10:45:52 2018 -0500
+
+    feature(): Redeem Rewards
+
+commit 38401a35d247dbb9024346ae3cc4c112e33cc824
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 14 10:22:21 2018 -0500
+
+    feature(): Redeem Rewards
+
+commit 0090703e62f7f2d27f66a377f08014ca0e3a897c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 14 09:58:47 2018 -0500
+
+    feature(): Redeem Rewards
+
+commit 86044a7621c1d8b0f399dfd093012c379fba7e7b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 13 10:54:13 2018 -0500
+
+    cache
+
+commit 29345fa783782ce0f15bfd259d18682f4761a7c7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 12 15:13:32 2018 -0500
+
+    cache
+
+commit 9039b8959d4083efac7e2099dbb6c3cfbceb7580
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 14 12:24:03 2018 -0500
+
+    fix(afsFileRow.js): added :before element for better ux
+
+commit f9554e0755821055d5e9fdb6cf7aa6c44832519f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 13 12:02:44 2018 -0500
+
+    chore(release): 0.1.0 :tada:
+
+commit 1f40638c7e2d0bf5e2fc9fd4b74f1f2f67ff6287
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 13 12:02:09 2018 -0500
+
+    chore(.npmrc): Updated npmrc
+
+commit b44c50cf3a70a1330dd84a69dcab024ad02d820d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 13 11:51:51 2018 -0500
+
+    chore:added changelog & version scripts
+
+commit c5e22772710c87b5711fbf6a45c1babd9f95e30e
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Nov 13 11:02:39 2018 -0500
+
+    feature: PE-575 afs explorer file sorting (#224)
+
+commit cc1892331e569ba2ca3a980569626ccda8ba2fe8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 12 19:18:32 2018 -0500
+
+    updated readme
+
+commit a39755a2dcca36c627d30507fcb51893fecdd174
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 12 18:56:21 2018 -0500
+
+    chore:updated readme
+
+commit f48fb7c02f2d1de291f6cd670c90effacde84669
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Nov 12 18:13:39 2018 -0500
+
+    feature: broadcast after download
+
+commit 8ecbf0e9b792057df45a8bb742ab958331f40d91
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 12 16:44:35 2018 -0500
+
+    fix: awaiting joinbroadcast
+
+commit 5146742351bc492ba627ad107cbeb604613eed5c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 12 12:43:47 2018 -0500
+
+    cleanup: removed rc from farmermanager
+
+commit b69d7a4ff1e3488aec25a4f3e9174a12db89bc41
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 12 12:42:04 2018 -0500
+
+    refactor: simplied loading dcdnstore
+
+commit 1771e502820cc31a5ce5d8d8f4091057744a7a34
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 12 11:38:51 2018 -0500
+
+    style: use icons as currency
+
+commit f8c923fada6094cc20330889a24b5fe8dd71ab48
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 12 10:54:49 2018 -0500
+
+    resized contenxtmenu item
+
+commit d2f2a37b9901ad4d26b58e7cc5dcb80ec9aab908
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 17:14:41 2018 -0500
+
+    fix: changed e to err
+
+commit bf4574980745f496671a52bc359400ba4b485fd9
+Merge: 3e3656b f67b963
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 14:35:56 2018 -0500
+
+    merged
+
+commit 3e3656b3bdc6c347ec89197cd7fe44950227d787
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 14:35:18 2018 -0500
+
+    package changes
+
+commit f67b963552d420402d10477f836847d1d0ac2fed
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Fri Nov 9 14:34:37 2018 -0500
+
+    feature: update afs to 0.5.x and farming dcdn to 0.2.x
+
+commit d72608b0bb3d8454365ceca53677fca9a1a7f0d9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 14:24:48 2018 -0500
+
+    style: cleaned up contextmenu
+
+commit b747f6631815713d7865b27db9ade2b4b9fb7670
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 14:23:08 2018 -0500
+
+    style: cleaned up contextmenu
+
+commit 094430d21081b9ef3ff73a0d2fbd3e04bec8bd2b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 13:53:30 2018 -0500
+
+    fix: no moar bad
+
+commit fe667c1ccd289192457f672cfc185a27f1743170
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 13:20:43 2018 -0500
+
+    indented lol
+
+commit 63335f5c9ea8173cba1ad1ea3e9c4d23d6ab2a9e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 13:19:39 2018 -0500
+
+    style: tooltip to copy userdid
+
+commit 96fc4bf82cda7545ed1aed469412bffecf33e110
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 11:32:46 2018 -0500
+
+    cache
+
+commit 2200105c4463c2dee266591e8a6daf6faaf8734a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 12:25:02 2018 -0500
+
+    style: removed glow from back
+
+commit e18ec6800ef623390989917407fda49976ef2822
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 12:20:11 2018 -0500
+
+    style: removed glow from thead
+
+commit 54c6b836cc75c8f6081009846cc46b0fa9f36c47
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 12:14:17 2018 -0500
+
+    style:fixed height
+
+commit 34ed6a228892156b633ecd2970e4e7f69158762c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 10:21:26 2018 -0500
+
+    style: changed hover color
+
+commit 7d4530f1f8b04d5894562c3d877cc4106078c688
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 9 10:01:12 2018 -0500
+
+    style: shadow on hover
+
+commit 60f985bad9a03d999c48a1eecb7f8fa0cac389cf
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 8 19:07:13 2018 -0500
+
+    indented lol
+
+commit 1e2e0426d536ff92334768c7b1b7ed4eda4a2f3d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 8 19:02:11 2018 -0500
+
+    feature:context menu
+
+commit a210ea8c69705ae42cd4ff877acd2e31c685e413
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 8 18:34:15 2018 -0500
+
+    cache
+
+commit 92cef8376b8992f10f01b0adbbc17f1f2d9be657
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 8 16:42:27 2018 -0500
+
+    rebase
+
+commit 550c3dadb75a29298331bebe9e6caad397c517b7
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Nov 9 13:43:42 2018 -0500
+
+    feature: file reducer refactor (#221)
+
+commit 1234e996178dc36948aa0178e5c00c3b402a883d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 8 13:51:30 2018 -0500
+
+    indented lol
+
+commit ae37c7a0be0e7720c114199731a27e2c4744c40e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 8 13:33:49 2018 -0500
+
+    cache
+
+commit 5ed2d70fecfbba0369a8d7ba9ae71bbfab284f2b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Nov 8 14:00:47 2018 -0500
+
+    fix: joins after managefile view closed
+
+commit 5d77a9d8f7374ceb3725a09a90e9fe6e1c08d122
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Nov 8 13:39:58 2018 -0500
+
+    feature:PE-573 afs folder size (#219)
+    
+    * feature: recursively calculate file size
+    
+    * feature: display 0 for free afs
+    
+    * feature: hide ara price
+
+commit 5e45e48707a23c8d1ff57d7d63ffa191f2ec901a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 17:32:42 2018 -0500
+
+    add shouldBroadcast after download complete
+
+commit 84bef930eea509a0d67c6baf6ce18857754a19e7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 16:36:33 2018 -0500
+
+    style: removed pointer when button off
+
+commit 5aa1b32aaadd494bae8ed5a2c9972f20d61a65b8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 14:43:08 2018 -0500
+
+    style: adjusted width;added overflow
+
+commit e18d031decdcae3167fd6f524e81a211e30e9ee1
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 14:02:25 2018 -0500
+
+    uncommented styling
+
+commit b15b558aa0d073af7b6b735f2060f1c9720e1e4c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 13:59:34 2018 -0500
+
+    style: publishfile table
+
+commit 38f2e2c8613c7915f762b59a92a4560b889dc1cb
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Nov 7 14:53:17 2018 -0500
+
+    feature: PE-570 check file list before publish (#217)
+
+commit 3877e9f7d47e5fb39290d9c7fb6f6451edf3911d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 11:32:35 2018 -0500
+
+    style: colored afsFileRow
+
+commit 1a9b2b6453f3f2c19da0e8bb17e5f8abbeea9f7d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 10:56:57 2018 -0500
+
+    fix: add manage to hamb when pubbed
+
+commit 857e3eb70df6fbf690b63de4ed7ab31a4aff3d30
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 10:41:23 2018 -0500
+
+    fix: sets shouldBroadcast to true on publish
+
+commit ddc22d71a06b4f84e5f54a64ee7620905cb3e683
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 10:09:55 2018 -0500
+
+    feature: drop msg
+
+commit cb827e14b4b1fc1c5f39d51a6194ed79cc49d320
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 10:11:51 2018 -0500
+
+    removed mock data
+
+commit 48a8857726f9cad46cca2e4c16537244df7dedad
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 09:43:42 2018 -0500
+
+    style: reworded header
+
+commit 216845f3c6b8bb571f2fc297b52be57115399613
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Nov 7 09:42:46 2018 -0500
+
+    style: sticky headers
+
+commit 327e71de35b23ffdc316083c4db4c1dce50b89d2
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Nov 6 18:55:21 2018 -0500
+
+    bug: fix farmer crashing on unjoin issue
+
+commit 64cf02db63672f1f40516599e3807fb959a34e34
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 6 15:45:21 2018 -0500
+
+    wrapped span in html func
+
+commit 0aafb425aaa37f7f37ea1dace6ce4815a4f7ef9a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 6 15:34:58 2018 -0500
+
+    removed redeemRewards from araContractsManager
+
+commit 74fbc7cb7877fe32d47387c546d6c7e38c54b23c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 6 15:27:57 2018 -0500
+
+    fix: passed in unclaimed to hamhelper
+
+commit cbea4049e81e528f220215f7460247b54b149eab
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 6 15:23:58 2018 -0500
+
+    feature: redeem rewards
+
+commit 19a63c827cc45d778e4d8c19efc62b16992f7d03
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 6 13:05:49 2018 -0500
+
+    cache
+
+commit e961e46ddde604fd47af4265984dc677852a5a79
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 6 12:28:47 2018 -0500
+
+    cache
+
+commit 38e51d202d1c416983ce59929b100ce15976e16d
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Nov 6 13:19:10 2018 -0500
+
+    feature: PE-570 afs explorer in manage file (#211)
+
+commit ea5d6e4b769d57daaea22ff46f60913a7b1af794
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 6 11:50:28 2018 -0500
+
+    switched frmo destructure to k
+
+commit 2097e4655dba07a1a2e3ed035105307a47458766
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Nov 6 11:42:36 2018 -0500
+
+    feature: switched to generalPleaseWait modal for publish
+
+commit 7800bdfec378984444e3d88d9d1d57ea69babea6
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Nov 6 11:52:13 2018 -0500
+
+    Il ara to ara (#212)
+    
+    * feature: change ARA to Ara
+    
+    * feature: remove ARA
+    
+    * minor fixes
+
+commit d11e7fe23f6a09ad01b57830c2fa2edcfb1a39e0
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Nov 5 18:35:05 2018 -0500
+
+    Mr reveal ara id view (#213)
+    
+    * cache
+    
+    * cache
+    
+    * feature: gives id
+    
+    * fix: removed hardcoded mnem
+    
+    * switched from username to ara id
+    
+    * cache
+    
+    * chore(package.json): Add npm script to run exe with debug logs
+    
+    * style: added logo to fmanager
+    
+    * feature: windows now non-resizable
+    
+    * cache
+    
+    * cache
+    
+    * feature: gives id
+    
+    * fix: removed hardcoded mnem
+    
+    * switched from username to ara id
+    
+    * cache
+
+commit 077bb51f79b162eb0f252cbebf73adbbd3fcc196
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 5 18:31:25 2018 -0500
+
+    feature: windows now non-resizable
+
+commit 7d8be726e4ce2e2a90bba67ccb24b281168d1dee
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 5 18:24:46 2018 -0500
+
+    style: added logo to fmanager
+
+commit 5b84589f131284f313a6013af82cdc768dfb584f
+Author: vipyne <vipyne@gmail.com>
+Date:   Sun Nov 4 13:49:06 2018 -0500
+
+    chore(package.json): Add npm script to run exe with debug logs
+
+commit 179ff9d1e7beb6d68f899be1c30b7af29db60083
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Nov 5 12:15:21 2018 -0500
+
+    feature: moved recover to login
+
+commit 82436279aa8633aeb02ebcd6fa501888f29996ee
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Nov 2 14:17:20 2018 -0400
+
+    feature: update AFS to 0.2.9 (#207)
+
+commit d02451783184c1250e1b01b024eea8743963c80e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Oct 31 15:33:18 2018 -0400
+
+    cache
+
+commit b42b12507d9c02fadfbff63fb8ad4d10011b1288
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Nov 2 14:01:22 2018 -0400
+
+    feature: PE-565 afs explorer in publish view (#206)
+
+commit 54c54c94d27b970e263239562fda161fced55191
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Nov 2 10:44:35 2018 -0400
+
+    fix: await metadata write
+
+commit 879d225f5c20eb0d63921e3b9c506285798ba0d0
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Oct 31 18:10:15 2018 -0400
+
+    feature: PE-563 partially export files from AFS (#203)
+
+commit d80d04671bdd1199c7c0299ae21eaae8cddf66ea
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Oct 31 13:06:07 2018 -0400
+
+    rebased
+
+commit 5b466d9272595ceed2517f064cf9e5e53ffcaabb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 30 16:14:40 2018 -0400
+
+    feature: DRYed resgister code
+
+commit df44a9894bb9961a061e3ac9bb34a818578b1817
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 30 16:04:12 2018 -0400
+
+    feature: import acct
+
+commit 9cbfc7fb45d9a9bb542c2f25cb0e4abb942f9dbd
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 30 15:32:37 2018 -0400
+
+    cache
+
+commit 6c85e878ff83230f6b9b234c40496689c5553480
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 30 11:33:47 2018 -0400
+
+    cache
+
+commit fdd59bf8b52532a8e420fd294b6fd8eabcb00c6f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Oct 31 09:49:50 2018 -0400
+
+    added switchloginstate to registe
+
+commit 02ccf34c558044aededda34c17c3fc2068fbeefa
+Merge: 17e6fb4 ec0b066
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 30 17:05:32 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit 17e6fb44f271f73af0cc6dbdc134db781e466c1b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 30 17:05:10 2018 -0400
+
+    added temp logo
+
+commit ec0b066526266049e9633f4e10672647e27e5c5a
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Oct 30 16:44:39 2018 -0400
+
+    feature: PE-563 afs explorer view UI rendering(#201)
+    
+    * feature: Traversing nested files
+    
+    * feature: render file type
+    
+    * feature: open afs content viewer from file manager
+
+commit 82f0d38e3d489ab37f3920c20d73a228ee94faca
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Oct 29 16:59:09 2018 -0400
+
+    cleanup: removed cost prop from publish load
+
+commit 547b62092645c2d886b2f50baf9ee2a1aa91d019
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Oct 29 16:53:57 2018 -0400
+
+    feature: register & return nuemonick
+
+commit e0c19f91c65baa8c32316ba72bbc520e63d0ff4a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Oct 29 12:58:13 2018 -0400
+
+    feature:render tx cost
+
+commit 327b897372a0e894d3a79f2068343bd614367143
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Oct 29 12:07:15 2018 -0400
+
+    feature: PE-559 add afs content viewer (#198)
+
+commit d0ba3d530886dc04dcd60d4bddf5c1aec06a47d0
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Oct 26 17:25:29 2018 -0400
+
+    feature: PE-550 afs file table (#197)
+
+commit c5dfde0933b8aa9c6acec9e9d0af18fb742fb379
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Fri Oct 26 15:51:09 2018 -0400
+
+    feature: Start using farmer dcdn 0.1.0
+
+commit 79d878be4d0a6f3ece31893109ef4ec8b6db14fa
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Oct 26 12:08:58 2018 -0400
+
+    removed path from afsManager
+
+commit 2764072e8e99c8c43cd9e584826cd6feb2c971a0
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Oct 26 12:01:00 2018 -0400
+
+    Mr download animation (#196)
+    
+    * features: download animation + loader
+    
+    * renamed animation to ants
+    
+    * cache
+    
+    * fix
+    
+    * bug: job id fix
+    
+    * fixed balance issue
+    
+    * changed progressbar to func
+    
+    * removed || from size
+    
+    * removed logs
+    
+    * removed reducer log
+    
+    * features: download animation + loader
+    
+    * renamed animation to ants
+    
+    * cache
+    
+    * fix
+    
+    * bug: job id fix
+    
+    * fixed balance issue
+    
+    * changed progressbar to func
+    
+    * removed || from size
+    
+    * removed logs
+    
+    * removed reducer log
+
+commit f234a7d92bd806d95d23ffeece257b9a718417ba
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 23 18:02:49 2018 -0400
+
+    removed dead func from fs manager
+
+commit e5c16bd86611f8dc079f4b60911ac2bd7a4c297b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 23 18:00:26 2018 -0400
+
+    added open folder burger topping
+
+commit a6f18e9099248a840ff6f6663c1b2a3ef1ee87c8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 23 15:48:48 2018 -0400
+
+    removed try catch from hammy
+
+commit 6c9294c8a9bf7fd993f837abbed29610eddb22d1
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 23 15:36:28 2018 -0400
+
+    removed dead filetooltip code
+
+commit 5933dd648582d46ec12da31e59cb918518510f0e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 23 15:33:23 2018 -0400
+
+    fixed deeplink
+
+commit fd66947dcbff59bb0155cacb5e003ff55a0a65a2
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 23 13:05:50 2018 -0400
+
+    functioning publish
+
+commit f0896ac700f870fb5185b599e9fd9f3271b66620
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Oct 22 10:15:15 2018 -0400
+
+    cache
+
+commit e72a8a71a81dfd30f52f23d7a4e60702ec53d474
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Oct 19 10:19:42 2018 -0400
+
+    feature: PE-539 drag n drop area (#193)
+
+commit b965547dc58b5650ed208725a1eea062d8953427
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Oct 18 16:39:10 2018 -0400
+
+    feature: dynamic burger toppings
+
+commit 37a5442e04d344821c702a7e1ba40a6a9cdddaa4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Oct 18 14:32:19 2018 -0400
+
+    feature: dynamic burger toppings
+
+commit 9152347aee2ae9e898c9073364792cede398f931
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Oct 18 13:55:21 2018 -0400
+
+    cache
+
+commit 0b71e511c80aedeaab78a531d0f7c660ae1680c2
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Oct 18 13:34:45 2018 -0400
+
+    cache
+
+commit b924fe73136fa6370f9522b65c9f10256a8c1f52
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Oct 18 13:47:26 2018 -0400
+
+    fix:made parent relative
+
+commit a0eadec8b385f566a4af81c71531dea01319a3cf
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Oct 18 12:46:45 2018 -0400
+
+    removed mockfiles
+
+commit 517dc11304dcd2e33fee4766b17db6d9872a44e5
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Thu Oct 18 12:44:12 2018 -0400
+
+    Pe 516 mr filedescriptor pupdate (#191)
+    
+    * cache
+    
+    * refactor():filedescriptor
+    
+    -restyled filedescriptor
+    -circle is no more. will be a line and added in another commit
+    
+    * refactor:changed color for seed state
+    
+    * refactor: removed params
+    
+    * chore:removed dummy component
+    
+    * cache
+    
+    * refactor: stats
+    
+    * clean
+    
+    * bug: fixed input
+    
+    * cache
+    
+    * cache
+    
+    * feature: progress bar
+    
+    * refactor: implemented progressbar
+    
+    * cleaned dead code
+    
+    * refactor: styled
+    
+    * refactor:🍔
+    
+    * refactor:🍔
+    
+    * refactor:🍔
+    
+    * cache
+    
+    * refactor():filedescriptor
+    
+    -restyled filedescriptor
+    -circle is no more. will be a line and added in another commit
+    
+    * refactor:changed color for seed state
+    
+    * refactor: removed params
+    
+    * chore:removed dummy component
+    
+    * cache
+    
+    * refactor: stats
+    
+    * clean
+    
+    * bug: fixed input
+    
+    * cache
+    
+    * cache
+    
+    * feature: progress bar
+    
+    * refactor: implemented progressbar
+    
+    * cleaned dead code
+    
+    * refactor: styled
+    
+    * fixed rebase
+
+commit b8ca08df664a99ac4292125fafcc6acbf21718de
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Oct 18 11:59:31 2018 -0400
+
+    il PE 531 fileStat and export (#189)
+
+commit 5ed83bc3093d5f59a9bc1f58d7adad2da1f12f64
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Oct 17 15:27:50 2018 -0400
+
+    feature: PE-517 read from dcdn store and broadcast multiple files (#186)
+
+commit 4d88c45c4a29215c3d303d16dbc0a56960c1fc1f
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "cache"
+    
+    This reverts commit 46a75a7a791b890f289d9b4e867a1f444dc80016.
+
+commit 10333718581e54658d9bc79f47c9bc0ef8e15313
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "refactor():filedescriptor"
+    
+    This reverts commit cf448a1bedcab2549fa99f02a5c8ae3aceb79dbc.
+
+commit e1c2003b3f207ce81162804819c20f1b5f3b3f63
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "refactor:changed color for seed state"
+    
+    This reverts commit be32685f346e9dfd7fc379121d2db80b6fc046ac.
+
+commit 9ac011762b9741f6fa296cd796202d96f3fc13e2
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "refactor: removed params"
+    
+    This reverts commit 421a4c2c690459166de6e5a6484aec4dab0efbc9.
+
+commit 380e53befd522a8bd4cdcbc6aa35e05a5bd16cf1
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "chore:removed dummy component"
+    
+    This reverts commit 12698ac5ba50ad820b51b92f5925d3933c5e8fac.
+
+commit 681365567feee5cc41ca8cb1cc8cca116d089434
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "cache"
+    
+    This reverts commit fc24a2ac73843cd7eb44c3eb66de3b5c98355b6c.
+
+commit 7a6ffa63c75c47ec8511c23950b9cc0befdcdfb3
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "refactor: stats"
+    
+    This reverts commit 3d7c2fe366fd67f2c19279426847482317400068.
+
+commit bebd0cc291e09d65882fc6874dc1deb07d13e845
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "clean"
+    
+    This reverts commit e9e4f3ad1a8d102eb3a800341375f8b84bae6af8.
+
+commit 2d57c48d40b408fc8f448054a0f904505253196a
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Oct 17 15:10:42 2018 -0400
+
+    Revert "bug: fixed input"
+    
+    This reverts commit 77ef18491d6668749e509ac809048bff5487eb44.
+
+commit 77ef18491d6668749e509ac809048bff5487eb44
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 16 18:09:31 2018 -0400
+
+    bug: fixed input
+
+commit e9e4f3ad1a8d102eb3a800341375f8b84bae6af8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 16 18:04:40 2018 -0400
+
+    clean
+
+commit 3d7c2fe366fd67f2c19279426847482317400068
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 16 17:48:42 2018 -0400
+
+    refactor: stats
+
+commit fc24a2ac73843cd7eb44c3eb66de3b5c98355b6c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 16 16:35:31 2018 -0400
+
+    cache
+
+commit 12698ac5ba50ad820b51b92f5925d3933c5e8fac
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 16 15:43:35 2018 -0400
+
+    chore:removed dummy component
+
+commit 421a4c2c690459166de6e5a6484aec4dab0efbc9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 16 15:41:19 2018 -0400
+
+    refactor: removed params
+
+commit be32685f346e9dfd7fc379121d2db80b6fc046ac
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 16 13:54:02 2018 -0400
+
+    refactor:changed color for seed state
+
+commit cf448a1bedcab2549fa99f02a5c8ae3aceb79dbc
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Oct 16 13:32:47 2018 -0400
+
+    refactor():filedescriptor
+    
+    -restyled filedescriptor
+    -circle is no more. will be a line and added in another commit
+
+commit 46a75a7a791b890f289d9b4e867a1f444dc80016
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Oct 15 18:11:13 2018 -0400
+
+    cache
+
+commit 3d6b808319076920c90c5f109d35938e01cb4466
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Oct 16 11:19:13 2018 -0400
+
+    feature: PE-517 broadcast multiple files (#183)
+
+commit b7e2e1098feed3b0804f3e4e466a817bd44cb212
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Oct 15 11:56:15 2018 -0400
+
+    chore: npm
+    
+    -modified package to use semver
+    -disabled package lock with .npmrc file
+
+commit 21a8239e53903b3535503aa783481f7cd04aa65d
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Fri Oct 12 16:12:07 2018 -0400
+
+    Refactor: unarchive
+    
+    -Commented out unarchive
+            -Was preventing upload
+    -Commented out getItems functions
+            -will clear ui by default
+
+commit 62a0f6f443b2218f10745609e9788cb9cf3137a6
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Thu Oct 11 17:17:05 2018 -0400
+
+    changed pckg
+
+commit 2606d0141572482f978f1c13838e6d421261ba5d
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Thu Oct 11 10:24:22 2018 -0400
+
+    refactor: fixed reference to farmer
+
+commit cd8ae92f2150061d7f645de7389c9b78f1fb2b18
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Oct 9 17:42:01 2018 -0400
+
+    chore: removed hash from contracts
+
+commit 1457098da140a87c3aa97bd5e6a6556f1f81414e
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Oct 9 17:41:23 2018 -0400
+
+    refactor: removed config from farm
+
+commit ece5ad2b408d6f2c68118cd33c770ae12c10b19b
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Oct 9 14:26:19 2018 -0400
+
+    Action refactor (#182)
+    
+    * added acmManager
+    
+    Pulled some functions out of araContractsManager
+    
+    * refactoring publish
+    
+    * refactored publish
+    
+    * refactor:much
+
+commit 9ee56fa5361218b4d8e4a2a9e27a0d53831a79d9
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Thu Oct 4 15:26:22 2018 -0400
+
+    added temp network keys
+
+commit 587a2545cccb8924804d6cdfb9b4c81bb3e2d33d
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Oct 3 16:44:04 2018 -0400
+
+    fixed desctrucutre in main.js
+
+commit d8fea44dfce61809926b008456f2d73d0d64d7c4
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Oct 3 13:44:48 2018 -0400
+
+    cleanup
+
+commit 280a846ce78a74faa0b17dd1e7024b0525d8564e
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Oct 2 13:57:34 2018 -0400
+
+    kinda fixed animation;
+
+commit 48070cdd5464315c1aa9049fd71a120a253bb566
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Oct 2 10:46:40 2018 -0400
+
+    refactored publish, removed promises
+
+commit 698bf1d71cfe33c5b2b36b46245c6676b676a750
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Oct 1 18:19:23 2018 -0400
+
+    cleaned credential check
+
+commit 513c7f248ee2c23984158ea0642dcada7974abab
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Oct 1 16:51:05 2018 -0400
+
+    Refactored farmer
+
+commit 6a76df581c6e31d8d78b2e3487f5d243e776133f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Oct 1 11:30:25 2018 -0400
+
+    working demo on testnet
+
+commit 3b5ccecb60091023f2752f1ccfdf21edd2ffb6c6
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 28 17:38:20 2018 -0400
+
+    cache
+
+commit a0a92c40551b9e4c9a786561f14c68377bed59d2
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 28 15:57:17 2018 -0400
+
+    cache
+
+commit 1efcb852e3aeb35faa37c584111fe96b0c90d1f2
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 28 13:23:28 2018 -0400
+
+    added to .gitignore
+
+commit a33c6499483b11a1ee7feb57569d5622a1b4dddb
+Merge: 73b3880 929d2d6
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Thu Sep 27 11:23:29 2018 -0400
+
+    Merge branch 'dev' of https://github.com/littlstar/ara-content-manager into dev
+
+commit 929d2d632532279552ca0b13b9dfcb7c437689a7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 27 11:06:48 2018 -0400
+
+    refactor:fixt breaking changes
+
+commit 7afaea24a2645454f550d1221816ca5e6f38de8a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 27 10:33:49 2018 -0400
+
+    refactor:breaking changes
+
+commit 73b3880b1d43d859aafb9469ec25070335d47ef6
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Sep 26 15:53:52 2018 -0400
+
+    feature: login check
+
+commit fe6423c4de07549048e2d4f56d53741651c4bb9f
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Sep 26 13:40:30 2018 -0400
+
+    feature: prompt login before purchasing (#180)
+
+commit 8edf0ddf252c390d7acd3748d28a0b0539ebe349
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Sep 25 17:50:21 2018 -0400
+
+    feature: PE-482 purchase error handling and download animation fix (#179)
+    
+    * feature: handle purchase errors
+    
+    * feature: fix download animation
+
+commit 3aa0e2b74582cc1b4ab3d0ae9485ce565dce4f35
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 25 16:15:43 2018 -0400
+
+    fix: rerenders x in pubfile
+
+commit 485afdfec6d8676d880a7dc17bac7f00ae4ca1cb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 25 16:00:27 2018 -0400
+
+    refactor:clean
+
+commit 4ee88db22a5ea69b43352e279577b476d7a4f02e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 25 15:38:29 2018 -0400
+
+    feature: clean ui
+    
+    -clicking LTLSTAR logo top left corner will clear files for session
+    -can now log in without did:ara prefix
+    -loading library animation was only happening upon initial login
+      -now animates when logging in afte a logout
+
+commit 5c4a53d54e953233b54e895c2958ce72a51045ff
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 25 13:34:31 2018 -0400
+
+    added refresh hotkey
+
+commit 5df382aff77fcc68ebc2e12aa2ecdcc73a1f9f0b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 25 13:21:21 2018 -0400
+
+    refactor
+    
+    -added helper function that accounts for windows not existing
+
+commit 456d395e8b4ed17b30aaee91a1c16c6753d740e4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 25 13:11:02 2018 -0400
+
+    refactor:close windows upon logout
+
+commit 77173962334998b229bd29803d4f39337194bfc2
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Sep 25 12:11:21 2018 -0400
+
+    feature: PE-479 show failure modal for archiver timeout crash (#176)
+
+commit 0d6e9076dd54b761b5b1759ee6f903d373603819
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Sep 24 18:11:25 2018 -0400
+
+    feature: add rename AFSFiles back
+
+commit d504e96f42d80d0e2cae3dc79af7f89086d731bd
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 24 17:27:57 2018 -0400
+
+    changed to did
+
+commit 2c9733386ca89aa9b223e7d79eb036a5227189e0
+Merge: 66f632b a27fb43
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 24 17:16:39 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit a27fb439e3a30fb4e79e2120441dcb475a07e456
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Sep 24 17:15:41 2018 -0400
+
+    bug: fix tray crashing issue
+
+commit 66f632b333ea70e2050c1af9797055e4999a1e43
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 24 16:40:39 2018 -0400
+
+    added icn
+
+commit 4156543479c93ad935824ca970bebc486f871637
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Sep 24 15:57:12 2018 -0400
+
+    feature: PE-476 refactor menu items and modify tray item dynamically (#175)
+
+commit 2fb0c3fa38c4201ab5fc030faa3e4a19757b81da
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Sep 24 14:49:52 2018 -0400
+
+    Pe 474 me loading state filemanager (#174)
+    
+    * cache
+    
+    * feature: adding loading animation for lib
+    
+    * refactor:cleaned code
+    
+    * refactor:cleaned code
+    
+    * feature: PE-473 login gui and log out from tray (#173)
+    
+    * refactor: removed return
+    
+    * feature: adding loading animation for lib
+    
+    * refactor:cleaned code
+    
+    * refactor:cleaned code
+    
+    * refactor: fixed username
+
+commit 15f9ff87b880c79be0d8b0468da0956ea18473c9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 24 14:23:46 2018 -0400
+
+    refactor: removed return
+
+commit 0307c9745c867d296e85ca7a12cab989866ab8fd
+Merge: dcd7e91 92fcee4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 24 14:19:09 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit 92fcee490fa36f93d894b1b2070d353bee5b5950
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Sep 24 14:18:27 2018 -0400
+
+    feature: PE-473 login gui and log out from tray (#173)
+
+commit dcd7e916b31d1afcb57ec4f090aeb15c6845f78d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 17:30:08 2018 -0400
+
+    cache
+
+commit b781695d8365d280a929dc9c8650c4bdbb392277
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 17:08:19 2018 -0400
+
+    refactor: removed transitions
+
+commit 77226f2ea91897f318921171995d826d9d8e7c5c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 17:03:22 2018 -0400
+
+    feature: disabled publish w/o file selected
+
+commit 6a7b1952b435ac11b2557d553ba227b3a093ad4f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 14:28:22 2018 -0400
+
+    cache
+
+commit 9d219930f47bd8dc84cef368c2ee42d36fa82b02
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 13:40:50 2018 -0400
+
+    cache
+
+commit fc39a595a195be895597eef3de2d929adee5360b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 11:57:28 2018 -0400
+
+    feature: warn user content purchased
+
+commit 9e8098fe9dabb5f7df4011b483bc201932d42b03
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 10:13:35 2018 -0400
+
+    chore: removed foo
+
+commit 17bb52867e14fc802c0ccc967c657e71ebdf4484
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 20 16:41:00 2018 -0400
+
+    feature: ui handles failed commit
+
+commit 45743b57f67ba139a79af61d86c12ebae68c5132
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Sep 21 17:05:11 2018 -0400
+
+    feature: PE-463 update AFS using manage file view (#167)
+
+commit 7f3cda6daba1ac79f7d685d08addd95297ac5494
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 10:13:35 2018 -0400
+
+    chore: removed foo
+
+commit b3a3087c13f361b0b9c5227bcd12b46f820e68c2
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 10:13:05 2018 -0400
+
+    chore: ignoring foo
+
+commit 98542af0b2a4668530d7d01998d5c632e427d4eb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 10:12:02 2018 -0400
+
+    chore:note about settimeout
+
+commit 0108e3e19d62256262011960a44a24004dbcc780
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 10:10:46 2018 -0400
+
+    refactor: removed intentional throw
+
+commit 2b8b46b2b77d2bd6775d9749f772bb9fe1d2a82d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 10:09:18 2018 -0400
+
+    refactor: cleaned constants
+
+commit 39bc4487944140c17573ecb48aa97615a973ba45
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Sep 21 10:06:27 2018 -0400
+
+    feature: clean acm if failed pub
+
+commit 1b581922fde6d9b8c9072fb788fd6b57d0e2acf9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 20 16:41:00 2018 -0400
+
+    feature: ui handles failed commit
+
+commit 8c3bb4b49fb8ba3395f280d67dd855c418e1e7c4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 20 13:46:40 2018 -0400
+
+    chore: rebase
+
+commit 4fcc5734656fd72aa8e24918ec2c0b033035b543
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 20 13:12:08 2018 -0400
+
+    refactor: new descriptor shape
+
+commit e996b549ef51d706742c2e9afe61a6e20f58aa71
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 20 12:15:58 2018 -0400
+
+    cache
+
+commit 7fb6c2a28041c28d7a523254c2ef1d176f412a43
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 20 10:43:16 2018 -0400
+
+    cache
+
+commit 887d1f6e416303e2b44d57f173a4645d4942738e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 19 18:58:05 2018 -0400
+
+    feature():updates balance upon xfer
+
+commit 70f019b950a1856226de1f7643a31f3d1b2f13fb
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Sep 19 16:54:21 2018 -0400
+
+    Pe 438 mr update balance (#166)
+    
+    * cache
+    
+    * cache
+    
+    * cache
+    
+    * feature(update balance)
+    
+    * refactore():cleaned
+
+commit ca420330b821216dabc317bc73d1ea1d8ffe7eba
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 19 11:28:01 2018 -0400
+
+    removed ara filler from publishfile
+
+commit 10349adf0a1a1e71008eeb1189dfc0b8062cbc8a
+Merge: a9e55c2 98c9bf7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 19 11:27:14 2018 -0400
+
+    merged
+
+commit 98c9bf7e750905a94eea34e7051a5ccdc85f0b1c
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Sep 18 13:59:21 2018 -0400
+
+    feature: update confirm modal (#165)
+
+commit 7b25f55b397d7f1b0fef9a0a10f7549ee02b5887
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Sep 18 10:56:17 2018 -0400
+
+    Pe 457 mr get earnings (#164)
+    
+    * feature(araContractsMananger.getEarnings
+    
+    * feature(getEarnings): function to return published item earnings
+    
+    * refactor(getEarnings): no longer designed for array
+
+commit a9e55c2ea5e333efcc80cd5c8abeed26e0334631
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 18 10:41:59 2018 -0400
+
+    refactor() cleaned if statement
+
+commit 30813072a9c5d24b8c799a0520eac5ab96fce2c2
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Sep 17 18:16:41 2018 -0400
+
+    feature: PE-219 manage file container (#129)
+
+commit c3db0b91ae3cffb95b918ee5df19cdbeabbf65b6
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Sep 17 18:01:29 2018 -0400
+
+    feature: PE-453 dcdn farming download (#162)
+
+commit 235b071cb4a8a5f39abf12fcc9bdb8e4944d4436
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 17 16:45:37 2018 -0400
+
+    feature(getEarnings): function to return published item earnings
+
+commit 0cf90da986f0ffc3662564269337d4859b219809
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 17 16:39:24 2018 -0400
+
+    feature(araContractsMananger.getEarnings
+
+commit e47e6aded472cba95dc8347f518fcd2988af9a0d
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Sep 17 13:45:38 2018 -0400
+
+    refactor: remove aid surface and nested account data (#161)
+
+commit dd6c848108ff3b2dc6d90db0acf8e959426d1243
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 17 12:22:32 2018 -0400
+
+    feature(afsManager): switched to dcdn farm broadcast
+
+commit 99f5ee1fe26c51581a453d25830a4fb1561cece9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 12 12:06:43 2018 -0400
+
+    refactor(makeAfsPath): fixed
+
+commit 477f0c5b8959549cfd2ee3c4a437d343dd853168
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 12 11:38:09 2018 -0400
+
+    Several fixes and refactor
+    
+    -Didnt need to remove createAFSKeyPath, needed to modifiy read meta data
+      -if called, itll write cfs
+    -no longer awaiting surfacing, promise based
+    -fixed issue around null size and meta values breaking front end
+    -consolidated dispatch for library items
+
+commit 31ee34a6be92126d4afc8a7b3eb8d4da9d93fb1d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 12 10:11:06 2018 -0400
+
+    refactor(): removed debugs
+
+commit 697578377d1275939b6a6afb033b18c3ab83b8d2
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Sep 11 17:51:47 2018 -0400
+
+    bug: minor fixes
+
+commit 374fee6cb081dc30fa7e8a9a542b0088509703fd
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Sep 11 15:23:51 2018 -0400
+
+    feature: add file size in metadata (#158)
+
+commit aaa31c2093cff33f985c8229f2aed50f399ffeb3
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 11 15:03:46 2018 -0400
+
+    feature():broadcast working
+
+commit ccbca9fa808f4dff912637dabbadfa62fbede624
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 11 12:23:44 2018 -0400
+
+    cache
+
+commit e37dc544df756fedb36ae86173fc787aa10a353d
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Sep 11 11:11:57 2018 -0400
+
+    bug: minor fixes
+
+commit 9bfd9effb7bf2026e6791f35f5c2c4c644b1f0c0
+Merge: bb6f765 5ede4f0
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 10 18:33:50 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit bb6f7653e16d90cce019a1271481fa78057f3625
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Sep 10 18:33:45 2018 -0400
+
+    refactor(): fixed error throw when nothing written to .acm/<did>
+
+commit 5ede4f017da328b9deb5ee7d6232a5370e5d81e5
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Sep 10 17:54:21 2018 -0400
+
+    bug: minor fixes
+
+commit a854b074d60395aa777a7cf60da39d93dbd26831
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Sep 7 15:33:56 2018 -0400
+
+    feature: PE-222 Populate UI using fetched purchased and published files (#156)
+    
+    * feature: populate UI using fetched purchased and published files
+    
+    * feature(afsManager/descriptorGenerator)
+
+commit c265931ae4d3d191131cc13693952a680f0bd877
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Sep 7 12:01:24 2018 -0400
+
+    feature: PE-422 read and save published items (#155)
+
+commit 3f5cd3b5c654427ab7b9c98fac8df03b4ace4759
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 6 15:41:00 2018 -0400
+
+    feature(afsManager/surfaceAFS)
+
+commit 6200c69b23e366443e5432285ce47857a42761b0
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Sep 6 12:49:29 2018 -0400
+
+    rebase
+
+commit 947ad321a418aabf30a526b6f3ef90757e6500e8
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Sep 6 12:25:27 2018 -0400
+
+    feature: PE-419 read/write metadata (#153)
+
+commit bfd9a19a85322c0f0d56c959c90a0b9fc020618c
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Sep 5 14:34:05 2018 -0400
+
+    feature: PE-405 purchase functionality complete (#152)
+
+commit b87dfa825c53abaefa0965ed8d05c076fe88bd0a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 5 12:20:54 2018 -0400
+
+    cleaned up
+
+commit 450e68b82d1b5a7d33bea73dc7d22ce9a970c90b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 5 12:10:29 2018 -0400
+
+    refactor():updated purchase flow modal
+
+commit 229c7fe4f566e6276b34a794d0a3fd623eccd58e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Sep 5 10:07:16 2018 -0400
+
+    refactor():purchase flow
+
+commit 648843e5da99419407e97a005f4198648459284c
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Sep 4 16:36:41 2018 -0400
+
+    feature: PE-182 publish success modal (#146)
+
+commit 69c84c6bdceb01ffe144830496c28aecca72e83a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 4 16:13:49 2018 -0400
+
+    refactor():fixed bugs
+
+commit b62b10252e582e74b8115a8a0808a1ecea2b3d6b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 4 13:15:42 2018 -0400
+
+    refactor(files.js): removed mockfiles
+
+commit 20831090472f24c8644688af2862c29af86aa196
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Sep 4 13:12:30 2018 -0400
+
+    refactor():file statuses
+
+commit 20db15a785cda8bc5085c7bdac7e7f7b30667dfa
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Aug 31 14:16:15 2018 -0400
+
+    cache
+
+commit 53a7312e0329eb2a755dcac0be45e970829d11e8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Aug 30 17:21:21 2018 -0400
+
+    cache
+
+commit 1791e7153649d99c5551b300b64a5a8f748e3271
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Sep 4 15:48:38 2018 -0400
+
+    refactor: remove dead code
+
+commit 8e529d81803b849cfd34e8cdb754562043785081
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Sep 4 14:56:25 2018 -0400
+
+    feature: PE-400, PE-405 User Balance, Purchase Function (#149)
+
+commit 008aa2c01dce7b0dd01316827186a8d90cc5aa30
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Aug 30 15:47:41 2018 -0400
+
+    refactor(): general refactoring
+
+commit 5b4f3493554291debf64b7fd026aa92a26c19671
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Aug 30 14:34:29 2018 -0400
+
+    refactor(): bye fManagerView
+
+commit 7631cb8e6c838620f658f0c659cb5a1e1bef3d73
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Aug 30 13:58:48 2018 -0400
+
+    pushing for isabel to test
+
+commit fdf78bedbf14ceed431a8358d3cf1567e7457afa
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Aug 30 09:56:01 2018 -0400
+
+    cache
+
+commit 34746984a0e69dda8883060ff0a0d53c14ba4444
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Aug 29 16:32:58 2018 -0400
+
+    feature: fix command line loggin
+
+commit b120f39cc1887d6cb953d11c847b7b8f2f123b35
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Aug 28 14:46:07 2018 -0400
+
+    Mr cleanup (#145)
+    
+    * cache
+    
+    * refactor(registration)
+    
+    * refactor():publish related files
+
+commit 30bdcca7e2dee05a36e86cc3c3d2a57246d0c3ec
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Aug 27 13:17:49 2018 -0400
+
+    refactor(registration)
+
+commit fe91c8e35a976c56b44e06f6468092b8a3cd4d42
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Aug 24 14:17:06 2018 -0400
+
+    cache
+
+commit 8e9a523e6170bd0930a7b0918778b00d9ec930fd
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Aug 24 11:45:35 2018 -0400
+
+    feature: PE-388 DCDN (#142)
+
+commit fe2291cc94034fd491cc172d884ebbdf3a6e7218
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 17:05:07 2018 -0400
+
+    refactor(filedesc): removed state referecnes
+
+commit bc080ca7a28b096dadeef42717c23bf93e8becd4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 16:10:41 2018 -0400
+
+    cache
+
+commit 9df9c5a101d5227234be750d3d17e43b0a6bb4b0
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 15:39:04 2018 -0400
+
+    cache
+
+commit 792dba41884281a33409a61a992fd630519e1154
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Aug 22 18:15:21 2018 -0400
+
+    feature: PE-161 delete confirm modal (#141)
+
+commit 3908072b5044d9e2926c969fb3bcd3b67166c48b
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Aug 22 15:45:03 2018 -0400
+
+    feature: update aid to use keyring (#139)
+
+commit 07952206350cabedb4dab4a4c12926789544609e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 12:18:09 2018 -0400
+
+    chore(filemanger/header): rm dead code
+
+commit 193341f311647d744907a1cb1f545c0e9de55a1d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 12:14:31 2018 -0400
+
+    chore(filemanger/container): rm dead code
+
+commit 5322806ae5f2ec234ea96c597d57f1731ef15b36
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 12:11:44 2018 -0400
+
+    refactor(filemanager):moved selecttab out of tabitem into container
+
+commit 640c46e4ac0317694d08d72fb7fdedfa5d74e4c7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 12:08:51 2018 -0400
+
+    Revert "refactor(fileManager): defined selectTab in container"
+    
+    This reverts commit 1c5781c3c1cbb949c1ae091df4eadf7ec0ec9843.
+
+commit 1c5781c3c1cbb949c1ae091df4eadf7ec0ec9843
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 12:05:39 2018 -0400
+
+    refactor(fileManager): defined selectTab in container
+
+commit 60ae3e7085b3b66af0db1d1b6eb14c7628fc4944
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 11:43:03 2018 -0400
+
+    chore(filemanager/header): tidied
+
+commit d4b27390167ae8e40c2e97d4c29b72abc0f662bb
+Merge: 060f1f2 6872a55
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 11:33:18 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit 060f1f2d781a6d8f40e90fe958d1fd25c81063e7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 11:33:08 2018 -0400
+
+    chore(fileManager/container): tidied format
+
+commit 6872a55f35071ec0b8e2b4fdd20fe84b10b7f761
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Aug 22 11:31:08 2018 -0400
+
+    feature: update distribution link
+
+commit ec9cb8e6aa271be86cd538150f51e0927c382819
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Aug 22 10:40:25 2018 -0400
+
+    Mr cleanup (#136)
+    
+    * refactor(reDownloadModal): reducer based now
+    
+    * refactor(reDownloadModal): reducer based now
+    
+    * reverted getAFSPrice
+    
+    * refactor(download.js): removed refs to windowManagement
+    
+    * removed final references to windowmanager.fileinfo
+
+commit a1d413e09d267a6908a0d684600420a99b7b062e
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Aug 22 10:37:58 2018 -0400
+
+    feature: add general please wait modal (#137)
+    
+    PE-167 Please Wait Modal
+    PE-180 Please Wait Uploading Modal
+    PE-181 Please Wait Uploading Modal 2
+
+commit 733f3a853f55cf688c4950f92088bddd37d361c7
+Merge: ecc9c33 bfa2058
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 21 15:59:05 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit ecc9c339d420b9df390cd77152797f07bc0f5884
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 21 15:58:55 2018 -0400
+
+    refactor(lsWindowManager): added helper func
+
+commit bfa2058c9b5d5fba1ae5abf9d1bfe4496cef986b
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Aug 21 15:47:57 2018 -0400
+
+    feature: add general message modal (#135)
+    
+    PE-168 Success Modal
+    PE-170 Not Enough Ara Modal
+    PE-172 Disk Space Modal
+    PE-174 File Missing Modal
+    PE-175 Wallet Empty Modal
+    PE-183 Delete Success Modal
+    PE-184 Failure Modal 2
+    PE-185 Not Enough Ara Modal 2
+
+commit 25985cc5300a4a505e702d1e15450f72830a8e9f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 21 15:26:18 2018 -0400
+
+    tiny changes
+
+commit dd19ec5291973b2c3eb70f0995d18e272fe54dbb
+Merge: b99c891 796f384
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 21 15:15:08 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit 796f384c3ee3cd5d1a8d79ddc8cedaecea1b5df5
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Aug 21 13:11:05 2018 -0400
+
+    feature: PE-169 add failure modal (#134)
+
+commit b99c891f24dfc59172739bb650c84c6ffbbc40ff
+Merge: 6a42f37 b5d7970
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 21 12:56:41 2018 -0400
+
+    merged
+
+commit b5d79704a32ded086f5539b3a15aeb76aac19087
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Aug 21 10:57:49 2018 -0400
+
+    Mr tooltip 2.0 (#133)
+    
+    * cache
+    
+    * rebase
+    
+    * feature(tools/electron-tooltip)
+
+commit 6a42f37a5c98ac014a6791be9b758097d08f173f
+Merge: f444f61 b7df2aa
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Aug 20 14:41:09 2018 -0400
+
+    merged
+
+commit b7df2aa1d1587b53c31b6e7bdcb8bd0d6949b5ee
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Aug 20 12:02:28 2018 -0400
+
+    feature: PE-355 URL scheme mac (#132)
+
+commit f444f61816393bf8cfb0f9b1a552e3fe52eb0e36
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Aug 20 11:26:45 2018 -0400
+
+    cache
+
+commit 87c6d43b1276728646807bbcd4b01a3b82f2454a
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Aug 16 17:06:29 2018 -0400
+
+    feature: PE-348 update download percent (#131)
+
+commit 17e76e00b5c74636c75fa89127cac4660a8f701e
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Aug 14 17:54:26 2018 -0400
+
+    refactor: modify package.json
+
+commit 59741a2406611a7e8567d9545db3ccd054ecf858
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 14 10:14:05 2018 -0400
+
+    added keyboard shortcut for devtools
+
+commit 240aed5ce17331a0e172ad79f7f81b4f47f4e98e
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Aug 13 18:38:48 2018 -0400
+
+    Mr general refactor (#130)
+    
+    * cache
+    
+    * refactor(many): part 1
+    
+    * cache
+    
+    * refactor(many): part 1
+    
+    * chore(rebase)
+
+commit 618198e80694642e298f2b83e96b131ef3a5b389
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Aug 13 15:50:46 2018 -0400
+
+    feature: PE-332 adding/ unarchiving multiple files (#128)
+
+commit 883422c57c837e61d2be66674ef3ea37109c4688
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Aug 13 14:00:06 2018 -0400
+
+    feature: PE-327 get set price (#127)
+
+commit cc42f79da0e8282a330b0e3f695ecd622cac458c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Aug 13 12:17:56 2018 -0400
+
+    cut down on hella dependencies
+
+commit 89a6e005ad6111c7a0636878e90e69662e4e7639
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Aug 10 15:27:25 2018 -0400
+
+    feature: fix re-download modal issue (#125)
+
+commit d8b6a2b2b0066d5df545570a78d96b4d38837290
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Aug 10 14:47:41 2018 -0400
+
+    feature: change download balance (#124)
+
+commit 61da5acb5c01296001c07363b96b56f42f876ce2
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Thu Aug 9 12:46:03 2018 -0400
+
+    feature(tooltip): changed opacity (#122)
+
+commit 57824c2b520c046c4e28882fe24d55d0159e549d
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Aug 9 11:45:48 2018 -0400
+
+    feature: PE-319 encode URI for distribution link (#123)
+
+commit 676f84ff3ca69b2cb0f84c7459c864d94e1b153c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 8 16:38:54 2018 -0400
+
+    chore(tray): moved register item to top
+
+commit 309b255037d4cc42a94b43ccaed1389b4de0d5b0
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 8 12:04:03 2018 -0400
+
+    refactor(): removed dev tools
+
+commit 55ceee5420bae34c40afeaaf4fec004c0bc02be1
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Aug 8 10:47:20 2018 -0400
+
+    Pe 279 mr balance visual (#120)
+    
+    * cache
+    
+    * feature(): updates balance when purchase
+    
+    * cache
+    
+    * feature(): updates balance when purchase
+    
+    * cache
+    
+    * refactor(): rm dead code
+
+commit 2cc4b492797395e1fc22253d4e89a74ff77ee23b
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Aug 7 14:04:13 2018 -0400
+
+    feature: PE-308 PE-309 Logs and Error Handling (#119)
+    
+    * feature: Logs and Error Handling
+    
+    * feature: modify demoDownload animation to match downloading state
+
+commit 297b5df20161f68426f31e95555d5179809d7aa5
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Aug 7 10:29:47 2018 -0400
+
+    feature(publishConfirmModal): working cancel button (#117)
+
+commit 37fe76c521892c50e578a60132036e32fe17dcf5
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Aug 7 10:21:37 2018 -0400
+
+    Pe 274 mr onend unarchive (#116)
+    
+    * about to rebase
+    
+    * cache
+    
+    * feature(afsManager): onend fires
+
+commit 0d865a62105878aa857d699dd0da49c82732aa37
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 7 10:19:47 2018 -0400
+
+    cache
+
+commit bdca9c31ab89192aa721d2047cfa618446f4befc
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 7 10:08:42 2018 -0400
+
+    removed mockfiles
+
+commit 015809a7215602f275975d87a1d3c72cc8c86d37
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Aug 7 10:06:08 2018 -0400
+
+    feature(filedescriptor): changed link to btn
+
+commit adc607d8a77e991283b34e4b757d4686f8cd590b
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Aug 7 10:02:06 2018 -0400
+
+    feature: PE-234 adding archiver resolver (#115)
+
+commit c99b96551752afeac9c73251c15edef39cb09a85
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Aug 6 14:40:39 2018 -0400
+
+    Pe 278 mr copy pasta func (#114)
+    
+    * cache
+    
+    * cache
+    
+    * cache
+    
+    * feature(write.js): a write to home function
+    
+    * refactor(publish): removed ||
+    
+    * refactor(): removed test.txt
+
+commit 96bda6d6d396c557b1754005eb4b9ced370730bc
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Aug 6 11:36:50 2018 -0400
+
+    feature: PE-275 change copy to clipboard button (#113)
+
+commit 7cc5ee9ab225c4fd4ae74e9e888c0a4eedb86130
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Aug 6 11:34:16 2018 -0400
+
+    cache
+
+commit adf3a371fdec3d29eda8bd8af312b8326cb211b4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Aug 3 17:55:25 2018 -0400
+
+    cache
+
+commit 3a2e9e85eebf301a22193514789552c00c534871
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Aug 2 14:33:50 2018 -0400
+
+    feature: PE-269 clear modal state after closed (#112)
+
+commit 639a2e14772cd032519d0e8e74efe93664f0b06c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Aug 2 13:35:05 2018 -0400
+
+    feature():offloaded makeAfsPath
+
+commit f69fcb4f8943e2b7b37fd13bd3f6a5e19e87b26a
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Aug 1 18:04:03 2018 -0400
+
+    Pe 267 mr auto broadcast (#110)
+    
+    * feature(): auto broadcast upon commit
+    
+    * feature(): auto broadcast upon commit
+    
+    * refactor(publish): commented out rename func
+
+commit bd0356fd7eed0c4386349b85f42ef7358558ffde
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Aug 1 17:22:55 2018 -0400
+
+    feature: PE-268 refactor publish flow (#109)
+
+commit f80663a68e0d8049160eca9b70e86236984c85ee
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Aug 1 15:24:52 2018 -0400
+
+    Pe 266 mr clipboard (#108)
+    
+    * feature(fileDescriptor) added clipboard
+    
+    * refactor(files): removed mockFiles
+    
+    * feature(fileDescriptor): fade in animaiton
+    
+    * feature(fileDescriptor) added clipboard
+    
+    * refactor(files): removed mockFiles
+    
+    * feature(fileDescriptor): fade in animaiton
+
+commit 72a1ac90498b98811e80a8fbfb0967ecf1ad0fb5
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Aug 1 15:12:27 2018 -0400
+
+    feature: PE-265 distribution link (#107)
+    
+    * feature: add request params in demoServer
+    
+    * feature: update store when file is published
+
+commit b877a03057d8b9983eb1ce99ff3ca5cecffa60b5
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 1 13:59:13 2018 -0400
+
+    refactor(files): removed mockFiles
+
+commit 99718f479afcf65c6fda5a6e97dc301d8bff01a9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 1 13:56:54 2018 -0400
+
+    feature(fileDescriptor) added clipboard
+
+commit 4361d403a6d3521f56c3062de7fe58221d6a2e4c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 1 12:26:57 2018 -0400
+
+    refactor(itemRow): added additional line of logic to prevent redownloading
+
+commit 207f701f6081185260f74cd70806772c5fcb4d20
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Aug 1 11:58:48 2018 -0400
+
+    feature(): download animation
+
+commit db70f7e37dab28c11a4e242c7504913fc3f798fd
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 31 17:50:09 2018 -0400
+
+    bug: PE-260 fix aid format issue (#104)
+
+commit e6f3b49f6241da269c00dc48e55aa2d686696234
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 31 17:12:44 2018 -0400
+
+    feature: PE-258 resolve afs path for downloading (#102)
+
+commit 82f59bc64039d0cc7761162e4dc015fc0b921298
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 31 17:04:21 2018 -0400
+
+    refactor(): animate published item (#103)
+
+commit 9d3df515aa9a98e3f3c6c02c64fd109cbf7f71cc
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 31 15:02:18 2018 -0400
+
+    refactor(afsManager): switched to "once"
+
+commit 7baedddc510a4c9125fd635d1b9bca7c567d5ccf
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 31 14:03:56 2018 -0400
+
+    Pe 252 mr render file filemanger (#101)
+    
+    * cache
+    
+    * cache
+    
+    * cache
+    
+    * rebased
+    
+    * refactor(): removed dead code
+
+commit 3b2a853b7018df691f2c868dfa29f9ab70750b09
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 31 13:41:09 2018 -0400
+
+    refactor(registration): removed commented lines
+
+commit c67c7b863a37e850f530c0e3dc15e55bb3c9652e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 31 13:40:33 2018 -0400
+
+    refactor(spinner): made it less intense
+
+commit d07c9e0e992cc8301a7ef4b235019bb31c89cb7a
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 31 13:00:01 2018 -0400
+
+    feature: replace Websocket with REST server (#100)
+
+commit eba0d489ba44c799953988f975bece6f32f220b2
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 31 11:49:22 2018 -0400
+
+    refactor: clean up link download files (#96)
+
+commit f7f67bf983fb7edccc7bb045add19dd2f0fc1189
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 31 11:26:55 2018 -0400
+
+    feature(spinner function) (#98)
+    
+    * feature(spinner function)
+    
+    * refactor(fixed input component)
+    
+    * refactor(input): added working update logic
+    
+    * feature(spinner function)
+
+commit 7c06305ac2accdb423e6b77aa484cab5af334900
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 31 11:20:50 2018 -0400
+
+    refactor(input): added working update logic
+
+commit f6cac79595382a7c60458943a3f62731bbd266ad
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 31 10:38:21 2018 -0400
+
+    refactor(fixed input component)
+
+commit e1448f8fc188e9372f5681eb4174190e027dc766
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 30 15:15:59 2018 -0400
+
+    refactor():removed dead code
+
+commit caf63fb926d4f4e3680e163e0b77581a702c6248
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 30 15:07:03 2018 -0400
+
+    refactor(): moved from bridge to ipcRenderer
+
+commit ad364073d6ff4b37e0e121297141aa3202d19a39
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 30 14:11:03 2018 -0400
+
+    refactor(publishFile.js)
+
+commit 056dcd63b32a2f9643b90b2c13e8ca144d6c13de
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jul 30 12:31:55 2018 -0400
+
+    refactor: remove write secrets when starting app
+
+commit 5f305b9327baf96193f5cb9fa550c9c15693e21c
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Jul 30 12:19:08 2018 -0400
+
+    Pe 230 mr link publish confirm modal (#92)
+    
+    * cache
+    
+    * working build
+    
+    * cache
+    
+    * feature(publish confirm modal linked)
+    
+    * refactor(): removed devtools from build
+
+commit 48b9b0e2d9ea6ef35850ed824a94af56f475d9e8
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Jul 27 12:47:14 2018 -0400
+
+    feature: PE-235 link download actions (#93)
+
+commit 6acfc5ac2d5fd45d7b8f4c25ce9ac134b0e96c3d
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Jul 26 17:36:18 2018 -0400
+
+    feature: write secrets to .ara/secrets/ write .ararc(#91)
+
+commit 1bf72a151057526346ed32cff7482f982861a6b7
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 26 15:49:36 2018 -0400
+
+    working build
+
+commit c92a3cf95f9af1752c3541159dd5a1f6da92ea55
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 26 15:12:29 2018 -0400
+
+    cache
+
+commit cc0d6e5a4f5c3c559c8a0df47ec8a55dc42b1da3
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 26 13:35:50 2018 -0400
+
+    test
+
+commit b2f013418e11e8d089b6a956f32a5c1341eed1b9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 26 13:35:34 2018 -0400
+
+    test
+
+commit 7d23036b1b51f15e320037a9a0be17735b993bec
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Jul 25 17:55:14 2018 -0400
+
+    feature: add afs Manager (#89)
+
+commit 9d551a54dca31a69d52f67523b22cf25bdcd2d73
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Jul 25 12:57:25 2018 -0400
+
+    Revert "feature: add afs Manager"
+    
+    This reverts commit a463ba9dd3868218459f3af848167fede0c02224.
+
+commit 55f7f70e3c650546b4b42a43eafa311df083306b
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Jul 25 12:56:43 2018 -0400
+
+    feature: add afs Manager
+
+commit e873d7bf3037b3bea32b15f89ac190646759c775
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 24 16:53:02 2018 -0400
+
+    feature: link menu item (#87)
+
+commit c6203cd2b4091fc439064673f558d68f9249d4c8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 24 14:22:11 2018 -0400
+
+    feature(publish confirm modal)
+
+commit 2ca0c9bfe15075d8160c678d88850e9dd12b328c
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 24 15:54:22 2018 -0400
+
+    feature: PE-227 link download button (#86)
+
+commit 5a992b6546ca36e7b5e276013c58f38f17bb397a
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 24 12:27:38 2018 -0400
+
+    Pe 222 link publish button (#84)
+    
+    * about to rebase
+    
+    * feature(linked button and added spinner)
+    
+    * about to rebase
+    
+    * feature(linked button and added spinner)
+
+commit cf418fe0d1f15e417ef5e42da49760b6a2661890
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 24 11:56:37 2018 -0400
+
+    feature: re-download modal (#83)
+
+commit 86b326b1592467f54f183cb6cab9b6fb82683827
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 24 09:57:53 2018 -0400
+
+    feature(registration container): added no files msg
+
+commit 78fe8e923018613a3df593f0078fe004e39f02ab
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 23 18:47:46 2018 -0400
+
+    feature(instant aid creation)
+
+commit 6474e83ed661c17190d437b4f25669ca91869598
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Jul 23 18:20:01 2018 -0400
+
+    feature: PE-223 local server and ara button generator (#81)
+
+commit cffbab599582143eff2a7feb252a49987253bb68
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 23 15:51:34 2018 -0400
+
+    chore(rebase)
+
+commit 3c8150bf0bd4f3c9bff38a50c3e526015148c7bd
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 23 15:01:46 2018 -0400
+
+    feature(made redux store)
+
+commit da447102a3ec057305ac68fe0136c3b3c825a763
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Jul 23 12:44:26 2018 -0400
+
+    Pe 208 mr publish button linking (#77)
+    
+    * cache
+    
+    * cache
+    
+    * cache
+    
+    * feature(publish button)
+    
+    * cache
+    
+    * cache
+    
+    * cache
+    
+    * feature(publish button)
+    
+    * refactor(boot/actionCreator/publish): moved return statement
+    
+    * refactor(rm dead code)
+
+commit 00a9ab10ed02f818c901b9149118fda827772f59
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Jul 23 11:41:21 2018 -0400
+
+    Restyle😎 (#78)
+    
+    * cache
+    
+    * refactor(random stylizations)
+    
+    * more styling
+    
+    * cache
+    
+    * bug: fix background color issue
+    
+    * refactor(filemanager/header): removed onclick
+
+commit b0acb53019e23c07412e3dae32c2c7f189073cb1
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Jul 20 15:44:54 2018 -0400
+
+    bug: unit test fix (#76)
+
+commit d469c34f6bbb75db304eafb63facf3d471465eaa
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Fri Jul 20 14:01:36 2018 -0400
+
+    Pe 206 mr basic publish function (#74)
+    
+    * cache
+    
+    * cache
+    
+    * cache
+    
+    * cache
+    
+    * cache
+    
+    * feature(very basic publish function)
+
+commit acb5776ea180713059bddd84935114755c7d359e
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Fri Jul 20 11:11:21 2018 -0400
+
+    feature(tabitem tests) (#73)
+    
+    * feature(tabitem tests)
+    
+    * chore(rebased)
+    
+    * chore(rebased)
+
+commit 8801d342e19eea3a55e97bc3fe97a3d16220328b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 20 10:28:49 2018 -0400
+
+    chore(rephrased describe)
+
+commit cb09c1c4126d79f994a4a56ff59c384f575fc545
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 20 10:19:31 2018 -0400
+
+    feature(progressRing tests)
+
+commit 95ebd9affc9e9a6a370105f29f8b8cf4e391ae30
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Jul 19 16:12:28 2018 -0400
+
+    feature: PE-191 Checkbox Unit Test (#70)
+
+commit dd945ee89345016f6e72b254bde2e13faca691d9
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Jul 19 16:10:03 2018 -0400
+
+    feature: PE-190-Utility Button Unit Test (#71)
+
+commit dbb320c6d43e6d54addb822864ce29b3e4280fa5
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Jul 19 13:55:19 2018 -0400
+
+    feature: PE-204 Publish File Container (#69)
+
+commit ee0a2d7117b4dbbac2a36d1fa9f3b4ade386a802
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 19 10:23:57 2018 -0400
+
+    feature(input component tests)
+
+commit 68b9bbab72aae7032a2dba0609ff1503865b8d77
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Jul 19 10:51:37 2018 -0400
+
+    feature: PE-203 File Info (#66)
+
+commit cd4d823b1f0121130f7c6b0fd8908547e97c817d
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Jul 18 18:27:50 2018 -0400
+
+    Pe 192 mr dynamic button testing (#67)
+    
+    * cache
+    
+    * testing implemented
+    
+    * feature(dynamic button test)
+    
+    * feature(dynamic button test)
+    
+    * chore(removed dead code)
+
+commit a6a53a8ef69543fae1e43067163abea4567b764a
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Jul 18 18:08:51 2018 -0400
+
+    Testing setup (#65)
+    
+    * cache
+    
+    * testing implemented
+
+commit 84b337667e23c90f03275a5a10936d8756354439
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Jul 18 15:55:50 2018 -0400
+
+    feature: add currency converter (#64)
+
+commit b701650877853482761b7f5229d1004a135256a4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jul 18 12:49:32 2018 -0400
+
+    chore(removed log)
+
+commit f3c430f5629faf6fb0d330f5e2cec0123f7e6f7c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jul 18 12:38:56 2018 -0400
+
+    feature(added ava)
+
+commit d44ac6805d509d74fc2828bfcb70cad232ea71b3
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Jul 18 12:25:42 2018 -0400
+
+    feature(modal container system): automate modals (#63)
+    
+    -added system that will make modal development quicker (kinda)
+
+commit 645ed8e393cc23698a6290328518516d09fd7734
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Jul 18 11:59:38 2018 -0400
+
+    feature: file selector component (#60)
+
+commit 1a823ac045c8121e5e1630262a8ac2e5b88311ff
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 17 18:20:19 2018 -0400
+
+    Pe 160 mr transition modals (#62)
+    
+    * chore(cleaned login styles)
+    
+    * chore(cleaned login styles)
+    
+    * about to rebase
+    
+    * refactor(transitionModal): added line to set modalIsOpen to true
+    
+    * refactor(windowManagement): changed from methods to funcs
+
+commit 3d15f59cc8f9894da01f165d82029ca2d1257596
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 17 17:29:06 2018 -0400
+
+    Pe 159 mr login mock function (#61)
+    
+    * chore(cleaned login styles)
+    
+    * chore(cleaned login styles)
+    
+    * cache
+    
+    * feature(mock login function)
+    
+    -"logging in" returns the aid files, and puts them in global store
+    
+    * chore(removed dead code)
+
+commit bf15ddecf3d2e95936d20c31d30ead60f7080f62
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 17 14:56:37 2018 -0400
+
+    chore(cleaned login styles)
+
+commit ad42c7372040d32a208dfa29234155ce7c79ca74
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 17 14:55:33 2018 -0400
+
+    chore(cleaned login styles)
+
+commit 25a0e2b100338c0112046d965dff3a30e53dcdb2
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 17 14:50:19 2018 -0400
+
+    feature(login view)
+
+commit b56b2d5cdc44e8e1a853b82aefc9fdbcfaa533e2
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 17 11:25:53 2018 -0400
+
+    feature: PE-121 Main Manager Wrapper (#58)
+
+commit 1cdc4aa61c34169c247de9f8ae1c0e09633f1454
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 17 11:20:48 2018 -0400
+
+    feature: PE-147 options checkbox (#56)
+
+commit 315a74861caea620c0dbc38bcdb8e307a91b0cfe
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 16:09:24 2018 -0400
+
+    chore(removed dead code, alphad)
+
+commit 8f4afae89c4f147e08fd86b2368bbdd3416d8574
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 16:02:36 2018 -0400
+
+    feature(lsWindowManager): only one modal at a time
+    
+    -crude logic to ensure only one modal appears at a time
+    -if trying to open another, brings current modal into focus
+
+commit e957c95761bf7d59d8dfd7ccbc11b3097eae054c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 15:20:40 2018 -0400
+
+    cache
+
+commit 720db205cc191327da5075ec97222d898f91af26
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 14:33:27 2018 -0400
+
+    Pe 148 mr global store (#55)
+    
+    * cache
+    
+    * feature(store): added a basic global store
+
+commit ca144272f57346770a72579f58d0d055de64d315
+Merge: 3c0f21e 451d1fa
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jul 16 12:58:20 2018 -0400
+
+    Merge branch 'dev' of https://github.com/littlstar/ara-content-manager into dev
+
+commit 3c0f21ef45831f9c93f97851038cbab58f359403
+Merge: 7ff0261 fa57d73
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jul 16 12:58:18 2018 -0400
+
+    Merge branch 'dev' of https://github.com/littlstar/ara-content-manager into dev
+
+commit 451d1fa0bfe1d3d9ccb41898c58a157780e77b40
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 10:49:09 2018 -0400
+
+    chore(removed dead code)
+
+commit 467d7a38d670b4eab003dc63884d2b90d32aa450
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 10:44:56 2018 -0400
+
+    feature(mainmanger & filemanager): linked properly
+    
+    -button on mainmanger opens filemanager
+    -positions mainmanger directly under tray icon
+    -mainmanger option now opens proper view
+
+commit 40b2a1aca90781acb2869f88fa7ec09e02a54a39
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Sat Jul 14 23:08:00 2018 -0400
+
+    refactor(lsWindowManager): added another case to setSize
+
+commit 746f6f6c109ffa683200c74af689fa00d87a7b9b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Sat Jul 14 21:08:13 2018 -0400
+
+    feature(linked mm to fm)
+
+commit fa57d7383660fb3b6e4900bb39da14aebbc38c61
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 12:50:57 2018 -0400
+
+    put back kernel - whoops
+
+commit 90d75f9dab5f6c4895ab3163c51b8d97b99e368f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 12:49:05 2018 -0400
+
+    removed kernel
+
+commit 4d741b6745e447c3abeb96788cafe10811cf3794
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 12:46:26 2018 -0400
+
+    feature(electron builder): can package app!
+
+commit 7ff0261a8b49d22e731a70b9c41eb4dea5b11f96
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 16 11:48:53 2018 -0400
+
+    feature(electron builder): added packager!
+
+commit d2c1df2ed6a2f6d6e909053bdd8812360bacab25
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Sat Jul 14 19:33:12 2018 -0400
+
+    refactor(mainManager & children): removed windowName prop
+
+commit 4558f5f2245de824cd0700dfaece085de3882bba
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Sat Jul 14 19:28:15 2018 -0400
+
+    refactor(tray): fileManager tab now render proper view, positioned underneath
+
+commit c55d4c1bc0b54c2282c3b073eca1ed01de534b64
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Jul 13 16:56:27 2018 -0400
+
+    feature: PE-142 checkbox (#48)
+
+commit 5e54fd5913b220f9951f387bb1f5dd84bce6b9bb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 16:29:37 2018 -0400
+
+    refactor(ipc dev boot): changed name to param
+
+commit 7b28bdd8c9ff60f5da462df35596ba9695813138
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 14:56:11 2018 -0400
+
+    chore(removed dead code; syntax fixes)
+
+commit 646f4d3230f37e4ccbfb74fb9f6ff8ffcc30ebbe
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 14:52:15 2018 -0400
+
+    feature(lsWindowManager): added method to window-manager module that sets window size based on view
+
+commit d1c8e6238b7bf1440a82a868c648df37b1f6aa4c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 14:32:33 2018 -0400
+
+    cache
+
+commit cf098304236ee51f6ecb58ac304c18c04a9db645
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 13:02:53 2018 -0400
+
+    refactor(filemanager itemrow): changed isSame in update
+
+commit ca426e947c0443b9316f0c4c7ec72f7f3035cf7d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 12:32:07 2018 -0400
+
+    refactor(filemanager section): fixed update
+
+commit 263ecd1f0fd05cd1028e5779ec90faf60644c7fe
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Fri Jul 13 12:59:50 2018 -0400
+
+    feature: PE-115 Main Manager File Component (#46)
+
+commit 1b0288f866bceef3e45d69f18b5fce5e2e738a39
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 12:15:21 2018 -0400
+
+    refactor(tray): dev view opens when booting app
+
+commit f8c5fbc324e644996dd3a1e9a61b40c49c2d6094
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 10:17:43 2018 -0400
+
+    refactor(main-dev browser): removed console.log
+
+commit a6807cd01ee6e1f5216a02950cc5d15783f485a9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jul 13 10:12:04 2018 -0400
+
+    refactor(tray): removed console.logs
+
+commit 5d4ca77112e68f017fa1153c02707e9a9d53b2d0
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 12 12:56:33 2018 -0400
+
+    feature(osxSurfaceAids function): function that returns array of araids on machine for osx
+
+commit 3aa414316ebadc8d4da9b1aed77b384debf4e954
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 12 10:44:22 2018 -0400
+
+    cache
+
+commit 186849704ea9aee059d2f87fa781408c215fa43c
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Jul 12 12:24:34 2018 -0400
+
+    feature: PE-115 main manager (#44)
+
+commit 9b05628667a10b3b1345f15c6c6074f9ac41f198
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Wed Jul 11 14:39:13 2018 -0400
+
+    Pe 125 mr file manager container component (#43)
+    
+    * rebase
+    
+    * feature(tabItem component) reusable component for making tab menus
+    
+    * feature(container component) container that holds all filemanager components
+    
+    * rebase
+    
+    * feature(tabItem component) reusable component for making tab menus
+    
+    * feature(container component) container that holds all filemanager components
+
+commit fd294e5438d97a3971e8613ded55a91b8f53dba3
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jul 11 11:32:45 2018 -0400
+
+    feature(tabItem component) reusable component for making tab menus
+
+commit dade9c0be151494059c9c716291cc5a9133d8991
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jul 11 11:05:13 2018 -0400
+
+    rebase
+
+commit 04fc475233f72788392f48aa8d3add6b78f794b8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jul 11 10:31:43 2018 -0400
+
+    feature(header component): adds a header section to filemanager view
+
+commit 6560c22257ceb650fc1d750a37c71db87566cf0c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 10 17:50:52 2018 -0400
+
+    cache
+
+commit 93efe3fc671071b8b89df1e7e0d7a22eac1e2fe2
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Jul 11 10:47:51 2018 -0400
+
+    feature: PE-118 wallet overview (#40) / Tray disappearing bug fix
+
+commit df343eabbee1bc475feff60de390fdb20c024f47
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 10 16:47:50 2018 -0400
+
+    refactor(moved files around)
+
+commit 8914a5d7376f4e47cba70ace83d30ff69af72bff
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 10 16:36:21 2018 -0400
+
+    Pe 125 mr published section component (#38)
+    
+    * chore(rebase)
+    
+    * caching
+    
+    * feature(itemRow component): make reusable itemRow component
+    
+    -removed publishedRow component
+    -reused publishedRow code and added some new logic to render either purchasedStats or publishedStats
+    
+    * refactor(itemRow css):adjusted width for itemRow container
+    
+    * feature(section component): section container to hold published/purchased info
+    
+    -removed publishedSection
+    -reused code and added logic for flexiblity
+    
+    * chore(rebased)
+
+commit dfceeabbae1a5e15d15ec9c62877dd4c107e4359
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 10 15:19:42 2018 -0400
+
+    Pe 135 mr purchase row component (#37)
+    
+    * chore(rebase)
+    
+    * caching
+    
+    * feature(purchasedStats component): component that shows stats for purchased items
+    
+    * chore(purchasedStats css) alpha'd properties
+    
+    * feature(itemRow component): make reusable itemRow component
+    
+    -removed publishedRow component
+    -reused publishedRow code and added some new logic to render either purchasedStats or publishedStats
+
+commit d5d98dc17b765591ed031af14ad81da724cb5ddf
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 10 13:54:15 2018 -0400
+
+    feature(purchasedStats component): component that shows stats for purchased items
+
+commit 8f2138d58ea281af1ddc14a2abfd33657bd33a88
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 10 13:33:05 2018 -0400
+
+    caching
+
+commit 342a4f90cda9d2bd026354880c9284469f4093bf
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 10 11:45:13 2018 -0400
+
+    chore(rebase)
+
+commit f5891839671b9fa8847a7bca32443f5af2459533
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Tue Jul 10 14:55:56 2018 -0400
+
+    feature: PE-117 utility button (#35)
+
+commit aad3ff2665eefee117fed579c00cc7506c2f4786
+Author: mark g romano <markgromano31@gmail.com>
+Date:   Tue Jul 10 11:44:37 2018 -0400
+
+    Pe 125 mr published section component (#34)
+    
+    * caching - reviewing isabel pr
+    
+    * feature(publishedSection component): component that houses published related components
+    
+    * caching - reviewing isabel pr
+    
+    * feature(publishedSection component): component that houses published related components
+
+commit 26b2fb96c14b017888bacf3928320776022b3230
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Jul 10 10:36:50 2018 -0400
+
+    chore: add user snippet
+
+commit 84ed167007a6d8776ab74c37e9cd9cd8854e473a
+Merge: 37c0695 e693f7c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 9 17:33:21 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit 37c06952717fe5c42cbd8b1aa7d2ad9a466ca768
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 9 17:33:12 2018 -0400
+
+    refactor(pulling updated dev)
+
+commit e693f7c72c8bd04332c988cff496245419b80e44
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Jul 9 17:28:15 2018 -0400
+
+    feature: PE-116 hamburger menu (#33)
+
+commit d35f829d005507eb2693af6bde1173c18b38d10b
+Merge: 9943175 5636e5a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 9 14:25:32 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit 994317538ef01ea8b7e7b449687b911de00ed57b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 9 14:25:20 2018 -0400
+
+    feature(cssTool): made cssTool a global module
+
+commit 5636e5a1b8a81f7cf4edab4b237296a6950b4b57
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Mon Jul 9 14:22:39 2018 -0400
+
+    PE-116 feature: hamburger menu item (#32)
+    
+    * feature: hamburger menu item
+    
+    * refactor
+
+commit 47909962493c131d41854616c4d3592402f44520
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Sun Jul 8 16:51:37 2018 -0400
+
+    refactor(publishedRow component): rerender on demoDownload immediately for more responsive feel;
+
+commit 65ceb58831c6e9eb80c30c490d9b9be4c3b6da3c
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Fri Jul 6 16:41:45 2018 -0400
+
+    Mr state refactor published row (#31)
+    
+    * feature(publishedRow component): moved state management into row component
+    
+    -descriptor buttons now wired to demoDownload function and will animate
+    
+    * refactor(fileDescriptor component): renamed from FileDescription to FileDescriptor
+
+commit 3b8bbaccbfd169ce0e48354cf1f169fae68ef691
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Fri Jul 6 14:50:57 2018 -0400
+
+    Mr published row component (#30)
+    
+    * feature(publishedRow component): component that holds fileDescriptor & publishedStats
+    
+    -also styled these components
+    
+    * refactor(fManagerView component): removed dead code
+
+commit 64923e7d2d3fdca6e10f92882eaa934e6c8f9e34
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Fri Jul 6 13:15:31 2018 -0400
+
+    Mr published stats component (#29)
+    
+    * feature(publishedStats component): created a component that renders stats of published files
+    
+    * refactor(fileDescriptor): added class names
+    
+    * refactor(publishedStats): ordered alphabetically
+
+commit b296d768b73183fc04c5bed342f6b56e982a2d6b
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 5 17:30:04 2018 -0400
+
+    refactor(tooltip): removed dead code
+
+commit 0bc2e25cd7cc96ffd9673e034b557f58f2bff1eb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 5 17:19:30 2018 -0400
+
+    feature(tooltip component): created a reusable tooltip component
+    
+    -incorporated into FileManagerView
+
+commit fd0a9bcbb9b607e0642cda69fdc313645543be2c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jul 5 13:44:06 2018 -0400
+
+    feature(dynamic button component): added a button with dynamic attributes
+    
+    -attributes passed in as state
+    -attributes intended to be changed, unlike other button component
+    -refactored fileDescriptor to use this
+
+commit 7cf800f0db05743e958cd4a67f5253d263d1a239
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Thu Jul 5 13:03:34 2018 -0400
+
+    Mr descriptor refactor (#26)
+    
+    * about to rebase
+    
+    * feature(): FileDescriptor component
+    
+    -a component that will make up part of the File Manager view
+    -will include other components: using mock components for now
+      -status icon
+      -tooltip
+      -button
+    
+    * feature(progressRing): animated svg to indicate file status
+    
+    * refactor(): removed dead code
+    
+    * chore(removed more dead code)
+    
+    * chore:(rebase)
+    
+    * refactor(removed dead code)
+
+commit 2b9add90f2ab31cccbd6f70d9148dfa0dd4a0739
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Thu Jul 5 12:57:22 2018 -0400
+
+    Mr filemanager status icon (#25)
+    
+    * about to rebase
+    
+    * feature(): FileDescriptor component
+    
+    -a component that will make up part of the File Manager view
+    -will include other components: using mock components for now
+      -status icon
+      -tooltip
+      -button
+    
+    * feature(progressRing): animated svg to indicate file status
+    
+    * refactor(progressRing): moved rerendering into parent
+    
+    * refactor(): removed dead code
+    
+    * chore(removed more dead code)
+
+commit ca86ada5a6342378ecc3a89c607ac85c35a3c623
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 3 14:17:00 2018 -0400
+
+    feature(): FileDescriptor component
+    
+    -a component that will make up part of the File Manager view
+    -will include other components: using mock components for now
+      -status icon
+      -tooltip
+      -button
+
+commit 5262e713c1328d1dbb8f7d2e87e4b5b177bedeea
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jul 3 10:50:35 2018 -0400
+
+    about to rebase
+
+commit 27b008c3d2157c2a29de136bf76dcfc39173536d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 2 18:43:26 2018 -0400
+
+    feature():added resolution function
+
+commit 7a952225a12c5e44d483e3674ca9a87dec964049
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 2 16:22:37 2018 -0400
+
+    refactor(): need to open the filemanger window for the others to work,,, need to figure out why
+
+commit 1dcf43137b20335ccf41feb16397e77b60a88824
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jul 2 13:10:03 2018 -0400
+
+    feature(): added archive function to registration process
+    
+    -added a method to registration store that attempts to archive newly generated id
+    -archiver key hardcoded for now as `archiver`
+
+commit 895a0e9a38e3d5e92f2cd85b89d83bc8c5fbc532
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Mon Jul 2 12:16:18 2018 -0400
+
+    refactor(): moved icon images from root to assets directory (#20)
+    
+    * refactor(): moved icon images from root to assets directory
+    
+    -removed lots of seemingly unused code from menuBarManager
+    -move fileManager.js to views
+    -renamed some html files
+    
+    * refactor(): put call to `adjustPosition` back
+    
+    * refactor(): added tray.on listener back - wasnt rendering menu icon
+    
+    * refactor(): checking for falsey values
+
+commit 76969056a39bcde2d22a3af8d5636df72363b88f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jun 28 17:37:47 2018 -0400
+
+    chore(): added pckg lock to gitignore
+
+commit bbb75eafe1c4885770d514b1a686aa48385d7960
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Thu Jun 28 16:54:06 2018 -0400
+
+    Mr register function (#19)
+    
+    * feature(): building register function for registration view
+    
+    * feature(): completed register functionality
+
+commit 67bca62fa3d4a93533953e5623acc3a8f350e42f
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Thu Jun 28 16:16:32 2018 -0400
+
+    feature: menu bar manager (#18)
+    
+    * feature: add menu bar item
+    
+    * refactor: move menu bar manager into its own file
+    
+    * feature: pin window under tray with positioner
+    
+    * refactor: menuBarManager
+    
+    * refactor: main-dev
+    
+    * feature: add File Manager
+    
+    * refactor: menuBarManager
+    
+    * refactor: move fileManager
+
+commit e4284ae98a2dbb34d7b1c635c3afb4ba8dee2efa
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jun 28 10:43:04 2018 -0400
+
+    feature(): added registration view
+    
+    -also restyled input component
+
+commit 5f404fe832b223f9a996f79d945c5d78bb8eeef9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 15:53:51 2018 -0400
+
+    feature(): added input component
+
+commit 909c457176c934dc49148724ff64521f1462b027
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 14:54:21 2018 -0400
+
+    refactor(fixed ipc flow)
+
+commit 4abc4a551a61ddbe710856a4826f2410e229de96
+Merge: 0e672f9 9d995ae
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 14:51:45 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit 9d995ae498a5376aeed119f0d4da9e534227fd02
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 14:50:34 2018 -0400
+
+    Mr button component (#15)
+    
+    * feature(beginning to add button component)
+    
+    * feature(added modal button component)
+    
+    -added fonts
+    -added a main style sheet
+    
+    * feature(added helper functions for color & font selection)
+    
+    * chore(added electron) basic electron scaffolding with devtools for hot reload
+    
+    * chore(removed extra server file)
+    
+    * feature(implemented choo framework)
+    
+    * refactor(changed from rest to socket)
+    
+    * feature(lib/ethereum) added a series of utils for communication with eth blockchain
+    
+    -added account.js, a file that holds private key and public address
+    -added infura.js, a file that holds address of infura node (rinkeby)
+    -added araContract.js, a file that holds address of ara contract and abi
+    -added ara3.js, a class that extends web3 and simplifies interactions with contract
+    
+    * feature(browser/views/home) added a simple home view
+    
+    -added a css tool, taken from littlstar.js
+    
+    * feature(browser/views/confirm) added html for a confirm view
+    
+    -made server.js return a function to pass in window object
+    -on data, socket uses ipc to send load to renderer
+    -upon receiving message, renderer sets state property to an obj and pushes confirmation view
+    
+    * refactor(browser/views/confirm) now takes in load from socket
+    
+    * feature(browser/views/confirm/purchasebutton) create a button component that linked to purchase method on ara3
+    
+    -refactored purchase method on ara3 to return a promise
+    
+    * feat(lib/navigator) added navigator class
+    
+    * chore(modified pckg and readme)
+    
+    * chore(removed unused functions.js)
+    
+    * feature(electron app brought into focus when pinged)
+    
+    * feat(test/public/araButtonGenerator.js): add araButtonGenerator and test server
+    
+    * feat(test/public/araButtonGenerator.js): allow changing button style
+    
+    * refactor: rename folder
+    
+    * test(added test for ara3)
+    
+    * test(added test for routing)
+    
+    * feature(added scrolling animation to home view)
+    
+    * refactor(araButtonGenerator.js): simplify implementation
+    
+    * test(refactored routing tests to check url for route)
+    
+    * refactor
+    
+    * refactor(removed some unused variables from route test)
+    
+    * refactor(araButtonGenerator.js): replace function() with arrow function
+    
+    * feature(window manager working)
+    
+    * feature(added develop view feature)
+    
+    * merged
+    
+    * feature(added css tool)
+    
+    *also corrected onclick for dev view to set current properly
+
+commit 0e672f913d7b8b538199dacbfa9bc760f8824a53
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 10:36:54 2018 -0400
+
+    feature(added css tool)
+    
+    *also corrected onclick for dev view to set current properly
+
+commit 53d0fa7383692ecef3d899fb00719e2fcad24fae
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 16:53:27 2018 -0400
+
+    merged
+
+commit d2f1546598ee19427648a562714243b806bfc8d5
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 16:44:44 2018 -0400
+
+    feature(added develop view feature)
+
+commit 66f6d1c72816fef1650716ccb5c6d9c4f17711f5
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 14:32:08 2018 -0400
+
+    feature(window manager working)
+
+commit ca71e70730ab16d5d9bd5ebda03ae86c616841ab
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Jun 20 14:30:42 2018 -0400
+
+    refactor(araButtonGenerator.js): replace function() with arrow function
+
+commit 2fd194e625b8c1dae801dc812c417baeece883dc
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 14:06:57 2018 -0400
+
+    refactor(removed some unused variables from route test)
+
+commit e2719425461eab9cfc398df6b69ca9c8f239ecd8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 14:05:01 2018 -0400
+
+    refactor
+
+commit 56775aae5b00b470102b32bfb764376337567da1
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 13:55:43 2018 -0400
+
+    test(refactored routing tests to check url for route)
+
+commit 3e9a3e4c9e8ed630b9842b56357a732c9f94dac6
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Jun 20 13:29:58 2018 -0400
+
+    refactor(araButtonGenerator.js): simplify implementation
+
+commit 6a572be417938f1f8416b7de58f4c16f8812de86
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 22:40:04 2018 -0400
+
+    feature(added scrolling animation to home view)
+
+commit 7aba25a204c661b3c17c226948148b53b2db86f1
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 20:31:45 2018 -0400
+
+    test(added test for routing)
+
+commit 751a7523ba4f1afce43eba77be418fdcb02d66eb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 11:51:09 2018 -0400
+
+    test(added test for ara3)
+
+commit 1eaa12debcecfea8b7b25a4b447a126750eadcda
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Jun 19 11:31:37 2018 -0400
+
+    refactor: rename folder
+
+commit 53ec9f8ac2278a66fa5167317e9193cfeb9bae63
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jun 18 18:02:45 2018 -0400
+
+    feat(test/public/araButtonGenerator.js): allow changing button style
+
+commit df5270f58a4081e8d0e245a595be7127db48557f
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jun 18 15:19:20 2018 -0400
+
+    feat(test/public/araButtonGenerator.js): add araButtonGenerator and test server
+
+commit d0ed66e2ea7c956b2da5fdde8735047b7c7f6c4d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jun 18 10:55:07 2018 -0400
+
+    feature(electron app brought into focus when pinged)
+
+commit 01adcde71ccefa8109841797405372c946610b5f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 21:12:49 2018 -0400
+
+    chore(removed unused functions.js)
+
+commit 137d969174286db42f91cc01cdc01b1fbde1d7cc
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 20:33:22 2018 -0400
+
+    chore(modified pckg and readme)
+
+commit a90d96dfd851e44f8feb4abeba5825847b84f2c4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 14:22:37 2018 -0400
+
+    feat(lib/navigator) added navigator class
+
+commit b859769a220eab7a100fbd652637826c36998cf8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 12:51:40 2018 -0400
+
+    feature(browser/views/confirm/purchasebutton) create a button component that linked to purchase method on ara3
+    
+    -refactored purchase method on ara3 to return a promise
+
+commit 32ad65f7111e9f6f38cee4c37a363393ab556019
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 10:41:31 2018 -0400
+
+    refactor(browser/views/confirm) now takes in load from socket
+
+commit 8ae55419f6e57ad5c69d1d910da266f0573030ed
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jun 14 16:31:54 2018 -0400
+
+    feature(browser/views/confirm) added html for a confirm view
+    
+    -made server.js return a function to pass in window object
+    -on data, socket uses ipc to send load to renderer
+    -upon receiving message, renderer sets state property to an obj and pushes confirmation view
+
+commit a3904fbb9eb5a7f558dff93baa9444951571f065
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jun 14 09:56:56 2018 -0400
+
+    feature(browser/views/home) added a simple home view
+    
+    -added a css tool, taken from littlstar.js
+
+commit 9f9d0e10ea1840fc6a5f2752a93e439ea3f52d9d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 17:10:05 2018 -0400
+
+    feature(lib/ethereum) added a series of utils for communication with eth blockchain
+    
+    -added account.js, a file that holds private key and public address
+    -added infura.js, a file that holds address of infura node (rinkeby)
+    -added araContract.js, a file that holds address of ara contract and abi
+    -added ara3.js, a class that extends web3 and simplifies interactions with contract
+
+commit 7a08c0f2d14dd8486efbcc09a885b7b499a60edf
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 14:25:57 2018 -0400
+
+    refactor(changed from rest to socket)
+
+commit 4d49d6747644abe1ff396c9a87c31f0f46b04597
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 11:10:00 2018 -0400
+
+    feature(implemented choo framework)
+
+commit 334faf92c6a6b656bc337af6191bf20134394fa9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 12 17:36:46 2018 -0400
+
+    chore(removed extra server file)
+
+commit c46f01d37521a51eeb74f24e28292f88ecff9b16
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 12 17:31:18 2018 -0400
+
+    chore(added electron) basic electron scaffolding with devtools for hot reload
+
+commit 8c4ea078edadb13d7114b5dd4f5067f8660d8bc9
+Merge: 44dfaa6 5bd0652
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 14:44:42 2018 -0400
+
+    Merge pull request #13 from littlstar/mr-dev-restructure
+    
+    refactor(restructured dev env)
+
+commit 5bd0652e20f0a5591f53ac8eec8784812d8d6f7d
+Merge: 9aba946 6fe90eb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 14:42:39 2018 -0400
+
+    Merge branch 'mr-dev-restructure' of github.com:littlstar/ara-content-manager into mr-dev-restructure
+
+commit 9aba94640e54617ce6ce5941bdf6b37590378dd9
+Merge: 9e7a5e9 44dfaa6
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 14:42:24 2018 -0400
+
+    trying to merge
+
+commit 6fe90eb5bc4dd6856ea3355d9398fc17051d8b65
+Merge: 9e7a5e9 44dfaa6
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 14:40:19 2018 -0400
+
+    Merge branch 'dev' into mr-dev-restructure
+
+commit 9e7a5e9107e440fb4b56c1ff7ceb39a83eeeda15
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 10:39:21 2018 -0400
+
+    chore(renamed browser/main.js to main-dev.js)
+
+commit 0a39b515d8fc588a4dc2915d09e32efa2e68bf61
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 10:16:25 2018 -0400
+
+    refactor(restructured dev env)
+    
+    -renamed boot/main.js to boot/main-dev.js
+    -renamed boot/ipc.js to boot/ipc-dev.js
+    -script to start is now `npm run start-dev
+    *this environment is simply for viewing views, not interaction
+
+commit 4c30e40268c31ad9cf6596408c4a80d60b0b161a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 16:53:27 2018 -0400
+
+    merged
+
+commit a229f492892e90bf094a5d630d0d82b466962b9f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 16:44:44 2018 -0400
+
+    feature(added develop view feature)
+
+commit 80dfb855038346d8640782aad78f0970689ce684
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 14:32:08 2018 -0400
+
+    feature(window manager working)
+
+commit 200ebd6d86085c6dc90cea063f760055fbe0114a
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Jun 20 14:30:42 2018 -0400
+
+    refactor(araButtonGenerator.js): replace function() with arrow function
+
+commit ba2f68254ed2ed156aeeda0205d6753da32941d8
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 14:06:57 2018 -0400
+
+    refactor(removed some unused variables from route test)
+
+commit b5714c9ef75f78edd0901835412e6e4bd867130d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 14:05:01 2018 -0400
+
+    refactor
+
+commit 2bcc41561652a90c13c02a0d98c80d026050344d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 13:55:43 2018 -0400
+
+    test(refactored routing tests to check url for route)
+
+commit 828a57bf03bdaaa6d5eae922a4244be71bf57800
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Jun 20 13:29:58 2018 -0400
+
+    refactor(araButtonGenerator.js): simplify implementation
+
+commit 95456eac35fd45d6f868e96a890ead6e54f1ac74
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 22:40:04 2018 -0400
+
+    feature(added scrolling animation to home view)
+
+commit 62ccd1f79fee4f6e4811c0b2fbeb4979602fb335
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 20:31:45 2018 -0400
+
+    test(added test for routing)
+
+commit fca1f75f253ca35e76e67877b7e09d648ab15325
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 11:51:09 2018 -0400
+
+    test(added test for ara3)
+
+commit 190eb48a2c53f998f55a02370f9773e475717e9e
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Jun 19 11:31:37 2018 -0400
+
+    refactor: rename folder
+
+commit d4cca2ae14c49bf291bd565de49a6f54b0487ef5
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jun 18 18:02:45 2018 -0400
+
+    feat(test/public/araButtonGenerator.js): allow changing button style
+
+commit 8f0576b228661b668eae2aeb39bfadee54663a6f
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jun 18 15:19:20 2018 -0400
+
+    feat(test/public/araButtonGenerator.js): add araButtonGenerator and test server
+
+commit 0c4630b32d712d505a46fe61e6207cf503f6d3a1
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jun 18 10:55:07 2018 -0400
+
+    feature(electron app brought into focus when pinged)
+
+commit 5554d0d999485c955d31f116faf568d66283caaa
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 21:12:49 2018 -0400
+
+    chore(removed unused functions.js)
+
+commit cad7ca42441463a7ad435ae1867152ab5e605610
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 20:33:22 2018 -0400
+
+    chore(modified pckg and readme)
+
+commit c29e689919065b5e5739bed6408f2c7a63d01022
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 14:22:37 2018 -0400
+
+    feat(lib/navigator) added navigator class
+
+commit a92bf9136a1fe6ff4e395b9fe9e86a95aad8887c
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 12:51:40 2018 -0400
+
+    feature(browser/views/confirm/purchasebutton) create a button component that linked to purchase method on ara3
+    
+    -refactored purchase method on ara3 to return a promise
+
+commit ec0ee09c9945895cd294425ac2398384c1a71c0a
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 10:41:31 2018 -0400
+
+    refactor(browser/views/confirm) now takes in load from socket
+
+commit ee8531401a17262b370e1d32f57fc167e085d03f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jun 14 16:31:54 2018 -0400
+
+    feature(browser/views/confirm) added html for a confirm view
+    
+    -made server.js return a function to pass in window object
+    -on data, socket uses ipc to send load to renderer
+    -upon receiving message, renderer sets state property to an obj and pushes confirmation view
+
+commit 93b4068e45b44849af38f1c3ae0fd5ae08782b9f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jun 14 09:56:56 2018 -0400
+
+    feature(browser/views/home) added a simple home view
+    
+    -added a css tool, taken from littlstar.js
+
+commit d29c9f9f55f2c629bf439ff51c1badd07f693630
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 17:10:05 2018 -0400
+
+    feature(lib/ethereum) added a series of utils for communication with eth blockchain
+    
+    -added account.js, a file that holds private key and public address
+    -added infura.js, a file that holds address of infura node (rinkeby)
+    -added araContract.js, a file that holds address of ara contract and abi
+    -added ara3.js, a class that extends web3 and simplifies interactions with contract
+
+commit 9998164b668dcef54a06570466f01a619e8e4232
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 14:25:57 2018 -0400
+
+    refactor(changed from rest to socket)
+
+commit 0b9f3fa5f4246210264209c8cd64fd980511f028
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 11:10:00 2018 -0400
+
+    feature(implemented choo framework)
+
+commit ddf96191f3abc30c3930b3de8a3cd1cf18884ebb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 12 17:36:46 2018 -0400
+
+    chore(removed extra server file)
+
+commit dbbaba11c6dce5f2cfd4a1058f811266bb22e9a0
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 12 17:31:18 2018 -0400
+
+    chore(added electron) basic electron scaffolding with devtools for hot reload
+
+commit 44dfaa6589a612097a5d65c302de442d6c2d4b5f
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 27 10:36:54 2018 -0400
+
+    feature(added css tool)
+    
+    *also corrected onclick for dev view to set current properly
+
+commit f50661285744fd5c3caf21a3b64d74de75dc3e31
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 16:53:27 2018 -0400
+
+    merged
+
+commit 19fc1e57d0dffad0b6eb0cf9e0e6ca70226ca484
+Merge: 259b91a 832e4d9
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 16:47:38 2018 -0400
+
+    Merge branch 'dev' of github.com:littlstar/ara-content-manager into dev
+
+commit 259b91a38a890624299b2960aa9d957feb7f2c0d
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 16:44:44 2018 -0400
+
+    feature(added develop view feature)
+
+commit fd50901f067a447e4066ef2fd2d9143b932f31eb
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 26 14:32:08 2018 -0400
+
+    feature(window manager working)
+
+commit 832e4d9d51b1a6ca76514583bfde16272e4cd802
+Merge: 25d398c faf09ad
+Author: Isabel Lee <ijl0322@users.noreply.github.com>
+Date:   Wed Jun 20 16:11:10 2018 -0400
+
+    Merge pull request #11 from littlstar/mr-testing
+    
+    Mr testing
+
+commit 25d398ce2df97e1343134c4fa270e8628e998f24
+Merge: 725772e 6bc04bd
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 14:50:29 2018 -0400
+
+    Merge pull request #10 from littlstar/il-araButton
+    
+    araButtonGenerator
+
+commit 6bc04bd80b4fa10b0bff3f42e2c82fb3b435a518
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Jun 20 14:30:42 2018 -0400
+
+    refactor(araButtonGenerator.js): replace function() with arrow function
+
+commit faf09ade91a4fdb4275c685ee78c779bb347badd
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 14:06:57 2018 -0400
+
+    refactor(removed some unused variables from route test)
+
+commit 9fd7da89a756191cfa98f5b236cc88f75d3c84b0
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 14:05:01 2018 -0400
+
+    refactor
+
+commit 2843f92a9974bbffab9f06b231d96f5374eaa008
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 20 13:55:43 2018 -0400
+
+    test(refactored routing tests to check url for route)
+
+commit bf8c6c8bd200705f6d544053adac74d558dd2bd7
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Wed Jun 20 13:29:58 2018 -0400
+
+    refactor(araButtonGenerator.js): simplify implementation
+
+commit 725772e180b03a287062d25cbf4207ee5324c544
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 22:40:04 2018 -0400
+
+    feature(added scrolling animation to home view)
+
+commit fc9d1ff101723c2e068279aabe8e91113dc66db4
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 20:31:45 2018 -0400
+
+    test(added test for routing)
+
+commit d04a5334f105bf955dfe2bebc055687358552767
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 19 11:51:09 2018 -0400
+
+    test(added test for ara3)
+
+commit 7a7d5b43f7a965d0128f1d69e801a478267bf4ba
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Tue Jun 19 11:31:37 2018 -0400
+
+    refactor: rename folder
+
+commit 5d262487a980dd670a51328ad54cdbe076022951
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jun 18 18:02:45 2018 -0400
+
+    feat(test/public/araButtonGenerator.js): allow changing button style
+
+commit cb5314e4e9087ef5b9164531287dfe9a4029485b
+Author: ijl0322 <ijl0322@gmail.com>
+Date:   Mon Jun 18 15:19:20 2018 -0400
+
+    feat(test/public/araButtonGenerator.js): add araButtonGenerator and test server
+
+commit 8108b72d46c6eab10b0235e3fb3b8d75b712436e
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Mon Jun 18 10:55:07 2018 -0400
+
+    feature(electron app brought into focus when pinged)
+
+commit 7b40dd4143dfafe34a6219d470649c6e12153f77
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 21:12:49 2018 -0400
+
+    chore(removed unused functions.js)
+
+commit 30f318b0a03e44c33c72299a991859693c1200bd
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 20:33:22 2018 -0400
+
+    chore(modified pckg and readme)
+
+commit ce39fb273c2dd4558d41c9562d269038a890fa12
+Merge: 12cf078 34f975c
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 14:28:04 2018 -0400
+
+    Merge pull request #9 from littlstar/navigator-implementation
+    
+    feat(lib/navigator) added navigator class
+
+commit 34f975c708bcd3aefeb44ee8eb39a22decf75147
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 14:22:37 2018 -0400
+
+    feat(lib/navigator) added navigator class
+
+commit 12cf0783f3688071dfde74f81e84558c6757d61a
+Merge: f8c59e7 df14440
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 12:58:52 2018 -0400
+
+    Merge pull request #8 from littlstar/purchase-button
+    
+    feature(browser/views/confirm/purchasebutton) create a button compone…
+
+commit df14440f9fac104a6850a4853c9c76c013a13c22
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 12:51:40 2018 -0400
+
+    feature(browser/views/confirm/purchasebutton) create a button component that linked to purchase method on ara3
+    
+    -refactored purchase method on ara3 to return a promise
+
+commit f8c59e72716b158d5eb2c68e6420b25101c60a16
+Merge: 9c402f7 8c60e5d
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 10:42:31 2018 -0400
+
+    Merge pull request #7 from littlstar/confirmation-feed
+    
+    refactor(browser/views/confirm) now takes in load from socket
+
+commit 8c60e5dfd274ccd6827044bf59ee844701a21531
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Fri Jun 15 10:41:31 2018 -0400
+
+    refactor(browser/views/confirm) now takes in load from socket
+
+commit 9c402f7d8f23e2207f1b61b88ebae5f67a76805f
+Merge: 76ea6a3 6f71bd2
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Thu Jun 14 17:04:56 2018 -0400
+
+    Merge pull request #6 from littlstar/view-confirm
+    
+    feature(browser/views/confirm) added html for a confirm view
+
+commit 6f71bd2ee239c0ba51affc4e008abd42582d6124
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jun 14 16:31:54 2018 -0400
+
+    feature(browser/views/confirm) added html for a confirm view
+    
+    -made server.js return a function to pass in window object
+    -on data, socket uses ipc to send load to renderer
+    -upon receiving message, renderer sets state property to an obj and pushes confirmation view
+
+commit 76ea6a37a1073275551ffeb7b4ad75bbe4584baa
+Merge: aec8dc9 79af130
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Thu Jun 14 10:03:41 2018 -0400
+
+    Merge pull request #5 from littlstar/view-home
+    
+    feature(browser/views/home) added a simple home view
+
+commit 79af130531229fd5bf9f66bb231230cf5bd309bc
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Thu Jun 14 09:56:56 2018 -0400
+
+    feature(browser/views/home) added a simple home view
+    
+    -added a css tool, taken from littlstar.js
+
+commit aec8dc9c3bbc7dd8fc96fc62f860bd84e3235bf8
+Merge: 71aaa47 c43583b
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 17:16:25 2018 -0400
+
+    Merge pull request #4 from littlstar/web3-integration
+    
+    feature(lib/ethereum) added a series of utils for communication with …
+
+commit c43583b682c1d5873b1236ac045ffc6e46394217
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 17:10:05 2018 -0400
+
+    feature(lib/ethereum) added a series of utils for communication with eth blockchain
+    
+    -added account.js, a file that holds private key and public address
+    -added infura.js, a file that holds address of infura node (rinkeby)
+    -added araContract.js, a file that holds address of ara contract and abi
+    -added ara3.js, a class that extends web3 and simplifies interactions with contract
+
+commit 71aaa47fe00c8ab2ed28b337131146d19063a2da
+Merge: 5f33ac2 35eda1d
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 14:28:56 2018 -0400
+
+    Merge pull request #3 from littlstar/websocket-refactor
+    
+    refactor(changed from rest to socket)
+
+commit 35eda1dfc947fbfa1e1006f563526e96f72136ac
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 14:25:57 2018 -0400
+
+    refactor(changed from rest to socket)
+
+commit 5f33ac2b73e6f470b0bd40dbca42a84d179dbde3
+Merge: 3e0925a c3867ca
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 11:13:55 2018 -0400
+
+    Merge pull request #2 from littlstar/add-choo
+    
+    feature(implemented choo framework)
+
+commit c3867ca3bbde1ec0cb3d4ec5c48e0a9617981129
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Wed Jun 13 11:10:00 2018 -0400
+
+    feature(implemented choo framework)
+
+commit 3e0925ab14e4f5e7e9929ac689fa5ac131dca2bd
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 12 17:36:46 2018 -0400
+
+    chore(removed extra server file)
+
+commit 38c2f6523e2f145585d8419c928967fe2cca2a06
+Merge: 8489034 b47656b
+Author: Mark romano <markgromano31@gmail.com>
+Date:   Tue Jun 12 17:33:57 2018 -0400
+
+    Merge pull request #1 from littlstar/electron-setup
+    
+    chore(added electron) basic electron scaffolding with devtools for ho…
+
+commit b47656b3292a19ce22767cf7471e614ab0184fea
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 12 17:31:18 2018 -0400
+
+    chore(added electron) basic electron scaffolding with devtools for hot reload
+
+commit 84890343eaf3acf1b34ee6cff1e768805cd016ed
+Author: Mark Romano <markgromano31@gmail.com>
+Date:   Tue Jun 12 16:49:06 2018 -0400
+
+    first commit
