@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:wallet')
-const { araContractsManager, utils: afmUtils } = require('../actions')
+const { araContractsManager, utils: actionUtils } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
@@ -15,7 +15,7 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
     dispatch({ type: k.IN_FAUCET_QUEUE })
     windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 
-    const response = await afmUtils.requestFromFaucet(store.account.userAid)
+    const response = await actionUtils.requestFromFaucet(store.account.userAid)
 
     let dispatchLoad
     if (response.status === 'Queued') {
