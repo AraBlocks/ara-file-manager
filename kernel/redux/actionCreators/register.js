@@ -1,10 +1,15 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:register')
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 const araContractsManager = require('../actions/araContractsManager')
 const dispatch = require('../reducers/dispatch')
-const { identityManager, afsManager, afmManager } = require('../actions')
+const {
+  identityManager,
+  afsManager,
+  afmManager,
+  utils: araUtils
+ } = require('../actions')
 const { switchLoginState } = require('../../../boot/tray')
 const { switchApplicationMenuLoginState } = require('../../../boot/menu')
 const windowManager = require('electron-window-manager')
@@ -19,6 +24,10 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     await identityManager.archive(identity)
 
     const { did: { did }, mnemonic } = identity
+    araUtils.requestFromFaucet(did)
+      .then(debug)
+      .catch(debug)
+
     const accountAddress = await araContractsManager.getAccountAddress(did, password)
 
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
@@ -41,6 +50,6 @@ ipcMain.on(k.REGISTER, async (event, password) => {
 
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
   } catch (err) {
-    debug('Error registering: %O', err)
+    debug('Error registering: %o', err)
   }
 })
