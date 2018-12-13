@@ -4,6 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const k = require('../../../lib/constants/stateManagement')
 const actionsUtil = require('./utils')
 const afmManager = require('./afmManager')
+const araContracts = require('ara-contracts')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
 const farmerManager = require('../actions/farmerManager')
@@ -130,18 +131,27 @@ async function getUpdateAvailableStatus(item) {
   }
 }
 
-async function isPublished(did) {
+async function isCommitted(did) {
+  const { registry, storage } = araContracts
+
   let published = true
   let afs
   let version
   try {
     ({ afs, afs: { version } } = await araFilesystem.create({ did }))
-    published = version > 1
+    await afs.close()
+    //if null, don't have AFS locally - Will need to check proxy instead
+    if (version === null) {
+      const address = await registry.getProxyAddress(did)
+      const buffer = await storage.read({ address, fileIndex: 0, offset: 0 })
+      published = Boolean(buffer)
+    } else {
+      published = version > 1
+    }
   } catch (err) {
-    debug('Err getting version: %o', err)
+    debug('Err checking proxy: o%', err)
   }
 
-  await afs.close()
   return published
 }
 
@@ -153,7 +163,7 @@ async function surfaceAFS({ dids, DCDNStore, published = false }) {
     })
 
     return published
-      ? Object.assign(descriptor, { status: await isPublished(did) ? descriptor.status : k.UNCOMMITTED })
+      ? Object.assign(descriptor, { status: await isCommitted(did) ? descriptor.status : k.UNCOMMITTED })
       : descriptor
   }))
 }
@@ -173,7 +183,7 @@ module.exports = {
   exportFolder,
   getFileList,
   getUpdateAvailableStatus,
-  isPublished,
+  isCommitted,
   surfaceAFS,
   unarchiveAFS,
 }

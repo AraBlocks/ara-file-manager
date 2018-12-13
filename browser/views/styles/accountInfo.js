@@ -20,6 +20,10 @@ module.exports = {
       justify-content: space-between;
       width: 63%;
     }
+
+    :host a:hover {
+      cursor: pointer;
+    }
   `,
 
   accountOverview: css`
