@@ -76,8 +76,7 @@ async function purchaseItem(opts) {
 	debug('Purchasing item: %s', contentDid)
 	try {
 		const { jobId } = await araContracts.purchase({
-			//budget is fixed to 10% of price for now
-			budget: await getAFSPrice({ did: contentDid }) / 10,
+			budget: await _calculateBudget(contentDid),
 			contentDid,
 			password,
 			requesterDid,
@@ -98,8 +97,7 @@ async function purchaseEstimate(opts) {
 	} = opts
 	try {
 		const gasEstimate = await araContracts.purchase({
-			//budget is fixed to 10% of price for now
-			budget: await getAFSPrice({ did: contentDid }) / 10,
+			budget: await _calculateBudget(contentDid),
 			contentDid,
 			password,
 			requesterDid,
@@ -304,6 +302,19 @@ async function subscribeTransfer(userAddress, userDID) {
 	}
 
 	return { ctx, transferSubscription }
+}
+
+//budget is fixed to 10% of price for now
+async function _calculateBudget(did) {
+	let budget
+	try {
+		budget = (await getAFSPrice({ did })) / 10
+	} catch (err) {
+		debug('Err getting AFS price: %o', err)
+		budget = 0
+	}
+
+	return budget
 }
 
 module.exports = {
