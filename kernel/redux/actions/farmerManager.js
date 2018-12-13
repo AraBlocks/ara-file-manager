@@ -26,9 +26,11 @@ function createFarmer({ did: userId, password }) {
 	farmer.on('download-complete', (did) => {
 		debug('Download complete!')
 		internalEmitter.emit(k.DOWNLOADED, { did })
+		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
 	})
-	farmer.on('requestcomplete', (did) => {
+	farmer.on('request-complete', (did) => {
 		debug('Rewards allocated')
+		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 	})
 	return farmer
 }
