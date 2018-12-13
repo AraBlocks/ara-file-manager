@@ -1,3 +1,23 @@
+## [0.1.9](https://github.com/littlstar/ara-content-manager/compare/0.1.8...0.1.9) (2018-12-13)
+
+
+### Bug Fixes
+
+* **afmManager.js:** Imported file directly ([408e210](https://github.com/littlstar/ara-content-manager/commit/408e210))
+* **afsManager:** fixed unpublished status ([26da4e5](https://github.com/littlstar/ara-content-manager/commit/26da4e5))
+* **Button.js:** assigns all new props to old ([9096d1f](https://github.com/littlstar/ara-content-manager/commit/9096d1f))
+
+
+### Features
+
+* **networkKeys.js:** Update network keys ([b9bd7c6](https://github.com/littlstar/ara-content-manager/commit/b9bd7c6))
+* PE-726 Peer count live update([#323](https://github.com/littlstar/ara-content-manager/issues/323)) ([4bc87af](https://github.com/littlstar/ara-content-manager/commit/4bc87af))
+* Renders gas price for purchase ([22f0142](https://github.com/littlstar/ara-content-manager/commit/22f0142))
+* Write Ara rc before all require statement happens ([5649ffa](https://github.com/littlstar/ara-content-manager/commit/5649ffa))
+* **register.js:** seeds upon creation ([ef7819f](https://github.com/littlstar/ara-content-manager/commit/ef7819f))
+
+
+
 ## [0.1.8](https://github.com/littlstar/ara-content-manager/compare/0.1.7...0.1.8) (2018-12-10)
 
 
