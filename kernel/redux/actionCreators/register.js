@@ -14,6 +14,7 @@ const { switchLoginState } = require('../../../boot/tray')
 const { switchApplicationMenuLoginState } = require('../../../boot/menu')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
+const { internalEmitter } = require('electron-window-manager')
 
 ipcMain.on(k.REGISTER, async (event, password) => {
   debug('%s heard. load: %s', k.REGISTER, password)
@@ -46,6 +47,11 @@ ipcMain.on(k.REGISTER, async (event, password) => {
 
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
 
+    internalEmitter.emit(k.LOGIN, {
+      userAid: did,
+      password
+    })
+
     const transfer = await araContractsManager.subscribeTransfer(accountAddress, did)
     const transferEth = await araContractsManager.subscribeEthBalance(accountAddress)
     const subscriptionLoad = { transferEth, transfer }
@@ -55,10 +61,9 @@ ipcMain.on(k.REGISTER, async (event, password) => {
       subscriptionLoad.faucet = await araContractsManager.subscribeFaucet(accountAddress)
     } catch (err) {
       debug('Error requesting faucet: %o', err)
-      subscriptionLoad.faucet = null
     }
 
-    dispatch({ type: k.GOT_REGISTRATION_SUBS , load: subscriptionLoad })
+    dispatch({ type: k.GOT_REGISTRATION_SUBS, load: subscriptionLoad })
   } catch (err) {
     debug('Error registering: %o', err)
   }

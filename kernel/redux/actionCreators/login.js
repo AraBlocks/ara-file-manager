@@ -25,6 +25,7 @@ internalEmitter.on(k.LOGOUT, () => {
   windowManager.openModal('generalActionModal')
 })
 
+internalEmitter.on(k.LOGIN, (load) => login(null, load))
 ipcMain.on(k.LOGIN, login)
 
 ipcMain.on(k.RECOVER, async (event, load) => {
