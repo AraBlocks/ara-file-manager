@@ -3,14 +3,37 @@
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const araContractsManager = require('./araContractsManager')
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
+const { internalEmitter } = require('electron-window-manager')
+const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
 
 function createFarmer({ did: userId, password }) {
 	debug('Creating Farmer')
-	return new farmDCDN({ userId, password })
+	const farmer = new farmDCDN({ userId, password })
+	farmer.on('peer-update', (did, count) => {
+		internalEmitter.emit(k.UPDATE_PEER_COUNT, {
+			did,
+			count
+		})
+	})
+	farmer.on('download-progress', (did, value, total) => {
+		internalEmitter.emit(k.DOWNLOADING, {
+			did,
+			currentBlock: value,
+			totalBlocks: total
+		})
+	})
+	farmer.on('download-complete', (did) => {
+		debug('Download complete!')
+		internalEmitter.emit(k.DOWNLOADED, { did })
+	})
+	farmer.on('requestcomplete', (did) => {
+		debug('Rewards allocated')
+	})
+	return farmer
 }
 
-async function joinBroadcast({ farmer, did, updatePeerCount }) {
+async function joinBroadcast({ farmer, did }) {
 	try {
 		//Rewards set at 10% of AFS price
 		await farmer.join({
@@ -18,11 +41,6 @@ async function joinBroadcast({ farmer, did, updatePeerCount }) {
 			download: false,
 			upload: true,
 			price: await _calculateBudget(did)
-		})
-		farmer.on('peer-update', (did, count) => {
-			console.log('peer count updated !')
-			console.log(count)
-
 		})
 		debug('Joining broadcast for %s', did)
 	} catch (err) {
@@ -73,10 +91,7 @@ async function download({
 	did,
 	jobId = null,
 	maxPeers = 10,
-	errorHandler,
-	startHandler,
-	progressHandler,
-	completeHandler
+	errorHandler
 }) {
 	debug('Downloading through DCDN: %s', did)
 	try {
@@ -86,25 +101,6 @@ async function download({
 			maxPeers,
 			jobId,
 			upload: true,
-		})
-
-		let prevPercent = 0
-		farmer.on('download-progress', (did, value, total) => {
-			const perc = value / total
-			const size = total * 6111 * 10
-			if (perc >= prevPercent + 0.1) {
-				prevPercent = perc
-				if (value / total != 1) {
-					progressHandler({ downloadPercent: value / total, did, size })
-				}
-			}
-		})
-		farmer.on('download-complete', (did) => {
-			debug('Download complete!')
-			completeHandler(did)
-		})
-		farmer.on('requestcomplete', (did) => {
-			debug('Rewards allocated')
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)

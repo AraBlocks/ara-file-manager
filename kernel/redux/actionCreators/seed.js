@@ -40,4 +40,5 @@ ipcMain.on(k.STOP_SEEDING, (event, load) => {
 
 function updatePeerCount(did, peers) {
   dispatch({ type: k.UPDATE_PEER_COUNT, load: { did, peers }})
+  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }

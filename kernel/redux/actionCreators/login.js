@@ -91,7 +91,6 @@ async function login(_, load) {
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
 
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
-    farmer.start()
 
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(load.userAid, load.password)
     dispatch({
@@ -166,6 +165,8 @@ async function login(_, load) {
     if (store.files.deepLinkData !== null) {
       internalEmitter.emit(k.PROMPT_PURCHASE, store.files.deepLinkData)
     }
+
+    farmer.start()
 
     debug('Login complete')
   } catch (err) {
