@@ -14,7 +14,7 @@ const { internalEmitter } = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
-	debug('%s heard. Load: %o', k.OPEN_DEEPLINK)
+	debug('%s heard', k.OPEN_DEEPLINK)
 	dispatch({ type: k.OPEN_DEEPLINK, load })
 	if (account.userAid == null) {
 		debug('not logged in')
@@ -27,14 +27,17 @@ internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
 
 internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 	try {
-		debug('%s heard. Load: %o', k.PROMPT_PURCHASE, load)
+		debug('%s heard', k.PROMPT_PURCHASE)
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
+		dispatch({ type: k.FEED_MODAL, load })
 
+		windowManager.openWindow('purchaseEstimate')
 		const library = await araContractsManager.getLibraryItems(account.userAid)
 		if (library.includes('0x' + araUtil.getIdentifier(load.did))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
 			windowManager.openModal('generalMessageModal')
+			windowManager.close('purchaseEstimate')
 			return
 		}
 
@@ -46,16 +49,13 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		}
 
 		const price = Number(await araContractsManager.getAFSPrice({ did: load.did }))
-		dispatch({ type: k.FEED_MODAL, load: { price, ...load } })
-		windowManager.openWindow('estimate')
-
 		const gasEstimate = Number(await araContractsManager.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
 			userDID: account.userAid,
 		}))
 
-		windowManager.pingView({ view: 'estimate', event: k.REFRESH, load: { gasEstimate} })
+		windowManager.pingView({ view: 'purchaseEstimate', event: k.REFRESH, load: { gasEstimate, price } })
 	} catch (err) {
 		errorHandler(err)
 	}

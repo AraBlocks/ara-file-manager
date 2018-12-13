@@ -8,7 +8,7 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { utils } = require('../lib/tools')
 
-class Estimate extends Nanocomponent {
+class purchaseEstimate extends Nanocomponent {
 	constructor(opts) {
     super()
     this.props = { gasEstimate: null, ...opts }
@@ -20,7 +20,7 @@ class Estimate extends Nanocomponent {
       }),
 			cancelbutton: new Button({
 				...styles.buttonSelector('cancel', { height: '1em' }),
-				onclick: () => closeWindow('estimate')
+				onclick: () => closeWindow('purchaseEstimate')
 			})
 		}
     this.renderEstimate = this.renderEstimate.bind(this)
@@ -35,7 +35,7 @@ class Estimate extends Nanocomponent {
       price: props.price
     }
     emit({ event: k.CONFIRM_PURCHASE, load })
-    closeWindow('estimate')
+    closeWindow('purchaseEstimate')
   }
 
 	renderEstimate() {
@@ -84,6 +84,7 @@ class Estimate extends Nanocomponent {
       props,
       renderEstimate
     } = this
+    console.log(props)
     return html`
       <div class="${styles.container} modals-container">
         <div>
@@ -92,7 +93,7 @@ class Estimate extends Nanocomponent {
               You're about to purchase
             </div>
             <div class="${styles.fileName} modal-fileName">
-              ${props.fileName || 'Unnamed Packaged'}
+              ${props.fileName || props.did.slice(0, 15) + '...'}
             </div>
             <div class="${styles.postheader} modal-postheader">
               from ${props.publisherName || 'Unnamed author'}
