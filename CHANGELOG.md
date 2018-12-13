@@ -1,3 +1,12 @@
+## [0.1.10](https://github.com/littlstar/ara-content-manager/compare/0.1.9...0.1.10) (2018-12-13)
+
+
+### Bug Fixes
+
+* Register subscriptions ([416dcda](https://github.com/littlstar/ara-content-manager/commit/416dcda))
+
+
+
 ## [0.1.9](https://github.com/littlstar/ara-content-manager/compare/0.1.8...0.1.9) (2018-12-13)
 
 
