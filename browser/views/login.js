@@ -1,6 +1,6 @@
 'use strict'
 
-const { afmManager } = require('../../kernel/redux/actions')
+const afmManager = require('../../kernel/redux/actions/afmManager')
 const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')

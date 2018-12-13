@@ -23,23 +23,23 @@ module.exports = {
     araTeal: 'var(--ara-teal)'
   },
 
-  buttonSelector(type) {
-    let opts
+  buttonSelector(type, opts = {}) {
+    let styleOpts
     switch (type) {
       case 'cancel':
-        opts = {
+        styleOpts = {
           children: 'Cancel',
           cssClass: {
             name: 'smallInvisible',
             opts: {
               color: 'orange',
-              weight: 'light'
+              weight: 'light',
             }
           }
         }
         break
       case 'blue':
-        opts = {
+      styleOpts = {
           cssClass: {
             opts: {
               color: 'blue'
@@ -47,7 +47,7 @@ module.exports = {
           }
         }
       case 'green':
-        opts = {
+      styleOpts = {
           cssClass: {
             opts: {
               color: 'green'
@@ -56,7 +56,9 @@ module.exports = {
         }
       default:
     }
-    return opts
+
+    Object.assign(styleOpts.cssClass.opts, opts)
+    return styleOpts
   },
 
   colorSelector(color, hoverState = false) {

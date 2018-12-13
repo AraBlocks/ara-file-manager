@@ -118,7 +118,7 @@ function waitModalText(modalName, load) {
 		default:
 			description = load.fileName === 'Unnamed'
 				? html`<div>Getting publish estimate for your file</div>`
-				: html`<div>Getting publish estimate for <b>${load.fileName}</b>.</div>`
+				: html`<div>Getting publish estimate for <b>${load.fileName}</b></div>`
 	}
 	const waitTime = html`
 		<div>

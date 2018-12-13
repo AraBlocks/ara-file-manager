@@ -30,7 +30,7 @@ class FileDescriptor extends Nanocomponent {
       hamburger: hamburgerHelper({
         allocatedRewards,
         did,
-        name: name || 'Unnamed',
+        name: name,
         owner,
         redeeming,
         shouldBroadcast,

@@ -6,10 +6,7 @@ const { deeplink } = require('../../lib/tools/')
 const html = require('choo/html')
 const styles = require('./styles')
 
-module.exports = ({
-	did,
-	name
-}) => {
+module.exports = ({ did, name }) => {
 	const encodedName = encodeURIComponent(name)
 	const confirmButton = new Button({
 		children: 'Confirm',
@@ -22,10 +19,10 @@ module.exports = ({
   return html`
     <div class="${styles.container({ justifyContent: 'space-around', height: 95 })} modals-container">
       <div class="${styles.fileName} modal-messageBold">
-				${name}
+				${name || did.slice(0, 15) + '...'}
       </div>
 			<div class="${styles.smallMessage({})} modal-smallMessage">
-				has been successfully published!<br><br>
+				${name} has been successfully published!<br><br>
 				Use this link to distribute this file to other users:<br>
 				<div class="${styles.link}">
 					<b>${`ara://download/${did}/${encodedName}`}</b>

@@ -53,7 +53,7 @@ windowManager.setSize = (view) => {
       width = 340
       height = 200
       break
-    case 'checkoutModal1':
+    case 'purchaseEstimate':
       width = 340
       height = 300
       break
@@ -133,6 +133,9 @@ windowManager.loadURL = (view) => {
       break
     case 'araIDWarning':
       file = 'ara-id-warning'
+      break
+    case 'purchaseEstimate':
+      file = 'purchase-estimate'
       break
     case 'filemanager':
       file = 'file-manager'
