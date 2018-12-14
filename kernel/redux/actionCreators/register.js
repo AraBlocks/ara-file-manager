@@ -8,6 +8,7 @@ const {
   identityManager,
   afsManager,
   afmManager,
+  farmerManager,
   utils: araUtils
  } = require('../actions')
 const { switchLoginState } = require('../../../boot/tray')
@@ -28,6 +29,9 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     const accountAddress = await araContractsManager.getAccountAddress(did, password)
 
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
+
+    const network = await araUtils.getNetwork()
+    const farmer = farmerManager.createFarmer({ did, password })
     afmManager.cacheUserDid(did)
     debug('Dispatching %s', k.REGISTERED)
     dispatch({
@@ -37,7 +41,9 @@ ipcMain.on(k.REGISTER, async (event, password) => {
         araBalance: 0,
         deployEstimateDid,
         ethBalance: 0,
+        farmer,
         mnemonic,
+        network,
         password,
         userAid: did
       }
@@ -64,6 +70,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     }
 
     dispatch({ type: k.GOT_REGISTRATION_SUBS, load: subscriptionLoad })
+    farmer.start()
   } catch (err) {
     debug('Error registering: %o', err)
   }
