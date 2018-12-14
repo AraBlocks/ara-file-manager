@@ -11,7 +11,6 @@ const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
 const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
-const araUtil = require('ara-util')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
 
@@ -101,7 +100,7 @@ class Header extends Nanocomponent {
               onmouseenter="${({ target }) => target.style.backgroundColor = '#d0d0d0'}"
               onmouseleave="${({ target }) => target.style.backgroundColor = ''}"
             >
-              <b>ID: ${araUtil.getIdentifier(props.userDID).slice(0,6)}...</b>
+              <b>ID: ${props.userDID.slice(8, 16)}...</b>
             </div>
             <div>
               ${araBalance >= 0 ? balanceElements : 'Calculating Balance...'}
