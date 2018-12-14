@@ -84,7 +84,7 @@ class Container extends Nanocomponent {
 				${overlay(spinner)}
 				<div class="${styles.container} PublishFileContainer-container">
 					<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
-						Publish File
+						Publish Package
 						${children.utilityButton.render({ children: 'close' })}
 					</div>
 					<div class="${styles.content} PublishFileContainer-content">
