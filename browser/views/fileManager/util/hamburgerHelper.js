@@ -58,7 +58,7 @@ module.exports = ({
     }
 
   if (allocatedRewards && redeeming === false) {
-    menuItems.addItem('Reedeem Rewards', k.REDEEM_REWARDS)
+    menuItems.addItem('Redeem Rewards', k.REDEEM_REWARDS)
   }
   return new Hamburger(menuItems)
 }
