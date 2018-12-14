@@ -45,5 +45,16 @@ bootstrap = ${k.NETWORK_DHT}`
       return true
     }
     return false
-  }
+  },
+
+  writeDotAra() {
+    const dotAraPath = path.resolve(userHome, '.ara')
+    if (fs.existsSync(dotAraPath) === false) {
+      debug('Writing .ara')
+      fs.mkdirSync(dotAraPath)
+      return true
+    } else {
+      return false
+    }
+   }
 }
