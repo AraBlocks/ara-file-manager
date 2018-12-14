@@ -53,7 +53,7 @@ module.exports = {
         width: 90%;
       }
 
-      :host > * {
+      :host > div {
         width: 95%;
       }
     `

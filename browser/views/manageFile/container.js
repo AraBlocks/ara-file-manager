@@ -109,7 +109,7 @@ class Container extends Nanocomponent {
 			<div class="${styles.container} ManageFileContainer-container">
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} ManageFileContainer-horizontalContainer,title">
-					Manage File
+					Manage Package
 					${children.utilityButton.render({ children: 'close' })}
 				</div>
 				<div class="${styles.content} ManageFileContainer-content">

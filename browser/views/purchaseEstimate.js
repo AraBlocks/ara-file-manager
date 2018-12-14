@@ -84,7 +84,7 @@ class purchaseEstimate extends Nanocomponent {
       props,
       renderEstimate
     } = this
-    console.log(props)
+
     return html`
       <div class="${styles.container} modals-container">
         <div>
