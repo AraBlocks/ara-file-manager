@@ -30,7 +30,7 @@ class MnemonicWarning extends Nanocomponent {
         onclick: () => {
           if (!this.state.copied) { return }
           this.props.isAFS
-            ? windowManagement.emit({ event: k.FEED_MANAGE_FILE, load: { did: contentDID, name: '', price: 0 }})
+            ? windowManagement.emit({ event: k.FEED_MANAGE_FILE, load: { did: contentDID }})
             : windowManager.openWindow('filemanager')
           windowManagement.closeModal('mnemonicWarning')
         }

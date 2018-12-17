@@ -82,12 +82,21 @@ class Container extends Nanocomponent {
 			file.fullPath != null
 		).map(file => file.fullPath)
 		const allPaths = state.fileList.map(file => file.fullPath)
-		return { addPaths, removePaths, allPaths }
+		return {
+			addPaths,
+			allPaths,
+			removePaths
+		}
 	}
 
 	updateFile() {
 		const { state } = this
-		const { addPaths, allPaths, removePaths } = this.getPathDiff()
+		const {
+			addPaths,
+			allPaths,
+			removePaths
+		} = this.getPathDiff()
+
 		const load = {
 			addPaths,
 			did: state.did,
@@ -108,7 +117,7 @@ class Container extends Nanocomponent {
 
 	renderDescription() {
 		const { state } = this
-		const manageFileText = html`<div>This file has been published to the Ara Network. You can edit and update the file here. The changes will be pushed to all users on the network.<br><br>
+		const manageFileText = html`<div>This package has been published to the Ara Network. You can edit and update the package here. The changes will be pushed to all users on the network.<br><br>
 		<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
 			to be able to download it.</div>`
 		const publishFileText = html`<div>Publish your package for distribution on the Ara Network. You can publish a single file or an entire directory as a single
