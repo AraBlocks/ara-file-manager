@@ -1,14 +1,14 @@
 'use strict'
 
 const { css } = require('css')
-const { fonts } = require('styleUtils')
+const { fonts, colorSelector } = require('styleUtils')
 
 module.exports = {
   container: css`
     :host {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-between;
       width: 90%;
     }
   `,
@@ -29,7 +29,7 @@ module.exports = {
     }
 
     :host > img {
-      height: 12px;
+      height: 9px;
     }
   `,
 
@@ -44,12 +44,16 @@ module.exports = {
     :host {
       display: flex;
       flex-direction: column;
-      height: 70%;
+      height: 80%;
       justify-content: space-between;
     }
 
     :host div {
       font-size: 13px;
+    }
+
+    :host div > b {
+      font-family: ${fonts.bold};
     }
   `,
 

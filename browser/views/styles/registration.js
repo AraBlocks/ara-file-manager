@@ -1,10 +1,10 @@
 'use strict'
 
-const { colors, fonts } = require('styleUtils')
+const { colorSelector, fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-  colors,
+  colorSelector,
   fonts,
 
   header: css`
@@ -45,7 +45,7 @@ module.exports = {
     }
 
     :host > img {
-      height: 12px;
+      height: 9px;
     }
   `,
 
@@ -54,7 +54,7 @@ module.exports = {
       align-items: center;
       display: flex;
       flex-direction: column;
-      height: 120px;
+      height: 160px;
       justify-content: space-between;
       width: 90%;
     }

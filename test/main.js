@@ -2,7 +2,6 @@
 
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { app } = require('electron')
-const isDev = require('electron-is-dev')
 const path = require('path')
 
 app.on('ready', () => {

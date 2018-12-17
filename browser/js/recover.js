@@ -15,3 +15,4 @@ ipcRenderer.on(k.RECOVERED, () => {
   windowManager.openWindow('filemanager')
   windowManagement.closeWindow('recover')
 })
+ipcRenderer.on(k.RECOVER_FAILED, () => recoverMnemonic.render({}))

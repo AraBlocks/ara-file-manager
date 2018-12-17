@@ -1,16 +1,21 @@
 'use strict'
 
 const debug = require('debug')('acm:boot:main')
-const { app, globalShortcut } = require('electron')
-const windowManager = require('../kernel/lib/lsWindowManager')
 const writeFiles = require('./writeFiles')
-const isDev = require('electron-is-dev')
-const path = require('path')
-//Creates dev view
-isDev && require('./ipc-dev')
-
 //Writes .ara and keyrings if doesn't exist
 if (writeFiles.writeAraRC() === false) { debug('.ararc exists, not writing file') }
+if (writeFiles.writeDotAra() === false) { debug('.ara exists, not writing directory') }
+
+const { app, globalShortcut } = require('electron')
+const windowManager = require('../kernel/lib/lsWindowManager')
+const { application } = require('../lib/constants/index')
+const analytics = require('../kernel/redux/actions/analytics')
+const isDev = require('electron-is-dev')
+const path = require('path')
+const { internalEmitter } = require('electron-window-manager')
+const { CANCEL_SUBSCRIPTION } = require('../lib/constants/stateManagement')
+//Creates dev view
+isDev && require('./ipc-dev')
 
 let deepLinkingUrl
 
@@ -25,16 +30,18 @@ if (shouldQuit) {
   return
 }
 
-app.setName('Ara File Manager')
+app.setName(application.APP_NAME)
 app.on('ready', () => {
   debug('App initialzed')
   windowManager.init()
+  analytics.trackAppOpen()
+
   //Creates tray menu
   require('./tray').buildTray()
   debug('Creating menu')
-  require('./menu')()
+  require('./menu').createMenu()
   debug('Loading Dependencies')
-  require('../kernel/lib/actionCreators')
+  require('../kernel/redux/actionCreators')
 
   if (process.platform == 'win32') { deepLinkingUrl = process.argv.slice(1) }
   deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
@@ -67,7 +74,11 @@ app.on('open-url', (event, url) => {
 })
 
 app.on('before-quit', () => {
-  const { farmerManager } = require('../kernel/lib/actions')
-  const { farmer: { farm } } = require('../kernel/lib/store')
+  const { farmerManager } = require('../kernel/redux/actions')
+  const { farmer: { farm } } = require('../kernel/redux/store')
+  internalEmitter.emit(CANCEL_SUBSCRIPTION)
   farmerManager.stopAllBroadcast(farm)
 })
+
+process.on('uncaughtException', err => debug('uncaught exception: %o', err))
+process.on('unhandledRejection', err => debug('unhandled rejection: %o', err))

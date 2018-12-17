@@ -53,7 +53,7 @@ module.exports = {
         width: 90%;
       }
 
-      :host > * {
+      :host > div {
         width: 95%;
       }
     `
@@ -158,7 +158,7 @@ module.exports = {
     }
 
     :host > img {
-      height: 12px;
+      height: 9px;
     }
   `,
 
@@ -232,10 +232,11 @@ module.exports = {
   spinnerHolder: css`
     :host {
       display: flex;
-      justify-content: center;
       font-size: 4px;
+      justify-content: center;
     }
   `,
+
 
   title: css`
     :host {

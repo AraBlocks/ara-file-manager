@@ -20,6 +20,10 @@ module.exports = {
       justify-content: space-between;
       width: 63%;
     }
+
+    :host a:hover {
+      cursor: pointer;
+    }
   `,
 
   accountOverview: css`
@@ -98,8 +102,6 @@ module.exports = {
     :host {
       border-radius: 7px;
       cursor: pointer;
-      margin-bottom: 5px;
-      padding: 0 6px;
       transition: all ease-in-out;
     }
   `,

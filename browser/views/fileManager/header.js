@@ -11,7 +11,6 @@ const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
 const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
-const araUtil = require('ara-util')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
 
@@ -38,7 +37,7 @@ class Header extends Nanocomponent {
         }
       }),
       closeButton: new UtilityButton({ children: 'close' }),
-      minimizeButton: new UtilityButton({ children: '–', onclick: windowManagement.minimizeWindow }),
+      minimizeButton: new UtilityButton({ children: 'minimize', onclick: windowManagement.minimizeWindow }),
       tabs: this.makeTabs(selectTab)
     }
 
@@ -71,7 +70,7 @@ class Header extends Nanocomponent {
     } = this
     const balanceElements = [
       html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>`,
-      utils.roundDecimal(araBalance, 100)
+      utils.roundDecimal(araBalance, 100).toLocaleString()
     ]
     return html`
       <div class="${styles.container} header-container">
@@ -80,7 +79,7 @@ class Header extends Nanocomponent {
             <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png"/>
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
-            ${children.minimizeButton.render({ children: '–' })}
+            ${children.minimizeButton.render({ children: 'minimize' })}
             ${children.closeButton.render({ children: 'close' })}
           </div>
         </div>
@@ -101,7 +100,7 @@ class Header extends Nanocomponent {
               onmouseenter="${({ target }) => target.style.backgroundColor = '#d0d0d0'}"
               onmouseleave="${({ target }) => target.style.backgroundColor = ''}"
             >
-              <b>ID: ${araUtil.getIdentifier(props.userDID).slice(0,6)}...</b>
+              <b>ID: ${props.userDID.slice(8, 16)}...</b>
             </div>
             <div>
               ${araBalance >= 0 ? balanceElements : 'Calculating Balance...'}

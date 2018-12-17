@@ -1,6 +1,6 @@
 'use strict'
 
-const { colors, fonts } = require('styleUtils')
+const { colorSelector, fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
@@ -10,9 +10,7 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
-			height: 460px;
 			justify-content: space-between;
-			padding-top: 25px;
 		}
 
 		:host b {
@@ -28,33 +26,16 @@ module.exports = {
 
 	araPrice: css`
 		:host {
-			color: ${colors.araBlue};
+			color: ${colorSelector('blue')};
 			padding-left: 4px;
-		}
-	`,
-
-	distributionLink: css`
-		:host {
-			padding-top: 10px;
 		}
 	`,
 
 	fileTable: css`
 		:host {
-			height: 270px;
+			height: 380px;
 			padding-top: 10px;
-		}
-	`,
-
-	infoTipHolder: css`
-		:host {
-			display: flex;
-			flex-direction: column;
-			font-family: ${fonts.light};
-			font-size: 12px;
-			height: 70px;
-			justify-content: space-between;
-			width: 49%;
+			width: 100%;
 		}
 	`,
 
@@ -64,6 +45,22 @@ module.exports = {
 			flex-direction: column;
 			height: 49%;
 			justify-content: center;
+		}
+	`,
+
+	infoTipHolder: css`
+		:host {
+			display: flex;
+			flex-direction: column;
+			font-family: ${fonts.light};
+			font-size: 12px;
+			height: 110px;
+			justify-content: flex-end;
+			width: 49%;
+		}
+
+		:host b {
+			font-family: ${fonts.bold};
 		}
 	`,
 

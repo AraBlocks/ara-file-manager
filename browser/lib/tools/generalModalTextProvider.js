@@ -33,6 +33,10 @@ function generalModalText(modalName, load) {
 			title = 'Something went wrong'
 			description = 'There could be a problem with with your file or your ability to access the network. Please check your connection and try again.'
 			break
+		case 'purchaseFailed':
+			title = 'Something went wrong'
+			description = 'There could be a problem with with the link or your ability to access the network. Please check your connection and try again.'
+			break
 		case 'fileMissing':
 			title = 'File Missing'
 			description = html `<div><b>${load.fileName}</b> has been deleted or altered. You cannot share a file or earn rewards unless it matches the published file on the network.<br><br>
@@ -90,6 +94,11 @@ function generalModalText(modalName, load) {
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
+		case 'recoveryFailure':
+			title = 'Failed to Recover Account'
+			description = html `<div>It appears the mnemonic you've entered is invalid<br><br>
+			Please double check the mnemonic and ensure it's correct.</div>`
+			break
 	}
 	return { description, title }
 }
@@ -109,7 +118,7 @@ function waitModalText(modalName, load) {
 		default:
 			description = load.fileName === 'Unnamed'
 				? html`<div>Getting publish estimate for your file</div>`
-				: html`<div>Getting publish estimate for <b>${load.fileName}</b>.</div>`
+				: html`<div>Getting publish estimate for <b>${load.fileName}</b></div>`
 	}
 	const waitTime = html`
 		<div>
