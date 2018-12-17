@@ -27,8 +27,17 @@ async function _deployProxy() {
   try {
     const unpublishedAFS = files.published.find(({ status }) => status === k.UNCOMMITTED)
     if (unpublishedAFS) {
-      dispatch({ type: k.USE_UNCOMMITTED, load: { contentDID: unpublishedAFS.did } })
-      windowManager.openWindow('publishFileView')
+      dispatch({
+        type: k.FEED_MANAGE_FILE,
+        load: {
+          did: unpublishedAFS.did,
+          price: 0,
+          name: '',
+          fileList: [],
+          uncommitted: true
+        }
+      })
+      windowManager.openWindow('manageFileView')
       return
     }
 
@@ -83,6 +92,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     windowManager.openModal('mnemonicWarning')
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
   } catch (err) {
     debug('Error deploying proxy %o:', err)
     errorHandling(err)
@@ -92,7 +102,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
-  const did = load.contentDID
+  const did = load.did
   try {
     let dispatchLoad = { load: { fileName: load.name } }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
@@ -156,7 +166,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.PUBLISHING, load: descriptor })
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-    windowManager.closeWindow('publishFileView')
+    windowManager.closeWindow('manageFileView')
 
     await afs.commit({ did: load.did, price: Number(load.price), password: account.password })
 

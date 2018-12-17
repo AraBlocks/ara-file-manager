@@ -52,13 +52,16 @@ module.exports = ({
         menuItems.addItem('Sync Package', k.UPDATE_FILE)
         break
       case k.UNCOMMITTED:
-        menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE)
+        menuItems.pop()
+        menuItems.addItem('Publish Package', k.DEPLOY_PROXY)
+        break
       case k.CONNECTING:
-      menuItems.addItem('Stop Connecting', k.STOP_SEEDING)
+        menuItems.addItem('Stop Connecting', k.STOP_SEEDING)
+        break
     }
 
   if (allocatedRewards && redeeming === false) {
-    menuItems.addItem('Reedeem Rewards', k.REDEEM_REWARDS)
+    menuItems.addItem('Redeem Rewards', k.REDEEM_REWARDS)
   }
   return new Hamburger(menuItems)
 }
