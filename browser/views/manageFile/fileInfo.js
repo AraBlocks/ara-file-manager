@@ -72,8 +72,7 @@ class FileInfo extends Nanocomponent {
 					<div class="${styles.infoTipHolder}">
 						${children.priceInput.render({ value: parentState.price, displayError: parentState.price < 0 })}
 						<div class="${styles.infoTip}">
-							Price is converted to the equivalent value in Ara Tokens.
-							Leave blank if you do not want to charge for this file.
+							Leave blank if you do not want to charge for this file.<br><br>
 						</div>
 						<div class="${styles.araPriceHolder}">
 							<b>Ara Token Price:</b>
