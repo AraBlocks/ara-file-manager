@@ -37,6 +37,7 @@ function getUserData(userDID) {
 	return parseJSON(filePath)
 }
 
+//TODO: use Registry contract to return ProxyDeployed events instead of writing to disk
 function getPublishedItems(userDID) {
 	const userData = getUserData(userDID)
 	return userData.published ? userData.published : []
