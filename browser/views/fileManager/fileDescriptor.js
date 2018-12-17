@@ -1,7 +1,6 @@
 'use strict'
 
 const k = require('../../../lib/constants/stateManagement')
-const araUtil = require('ara-util')
 const { hamburgerHelper } = require('./util')
 const styles = require('./styles/fileDescriptor')
 const filesize = require('filesize')
@@ -22,7 +21,7 @@ class FileDescriptor extends Nanocomponent {
     super()
 
     this.props = {
-      name: name || araUtil.getIdentifier(did).slice(0,15) + '...',
+      name: name || did.slice(8,23) + '...',
       size
     }
 
