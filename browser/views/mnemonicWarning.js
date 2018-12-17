@@ -27,6 +27,7 @@ class MnemonicWarning extends Nanocomponent {
         children: "I've saved my mnemonic",
         cssClass: { name: 'thinBorder' },
         onclick: () => {
+          if (!this.state.copied) { return }
           this.props.isAFS
             ? windowManager.openWindow('publishFileView')
             : windowManager.openWindow('filemanager')
@@ -80,7 +81,7 @@ class MnemonicWarning extends Nanocomponent {
             You will never be shown this mnemonic again
           </div>
         </div>
-        <div class="${styles.mnemonicContainer} modal-mnemonicContainer">
+        <div class="${styles.mnemonicContainer} modal-mnemonicContainer" style="width: 70%;">
           <div>${mnemonic.split(' ').slice(0, 4).map(word => html`<b> ${word}</b>`)}</div>
           <div>${mnemonic.split(' ').slice(4, 8).map(word => html`<b> ${word}</b>`)}</div>
           <div>${mnemonic.split(' ').slice(8).map(word => html`<b> ${word}</b>`)}</div>

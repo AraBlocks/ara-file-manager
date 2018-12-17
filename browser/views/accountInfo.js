@@ -1,5 +1,6 @@
 'use strict'
 
+const k = require('../../lib/constants/stateManagement')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
 const TestnetBanner = require('../components/TestnetBanner')
@@ -9,6 +10,7 @@ const { utils, windowManagement } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { version } = require('../../package.json')
+const { shell } = require('electron')
 const tt = require('electron-tooltip')
 
 tt({
@@ -22,9 +24,10 @@ class AccountInfo extends Nanocomponent {
     const { account, application } = props
 
     this.props = {
+      faucetStatus: account.faucetStatus,
       araBalance: account.araBalance,
-      ethBalance: account.ethBalance,
       ethAddress: account.accountAddress,
+      ethBalance: account.ethBalance,
       network: application.network,
       userDID: account.userAid,
       version
@@ -32,45 +35,27 @@ class AccountInfo extends Nanocomponent {
 
     this.children = {
       closeButton: new UtilityButton({ children: 'close' }),
-      requestTokensButton: new Button({
-        children: 'Request Tokens',
-        cssClass: {
-          opts: {
-            color: 'green',
-            fontSize: '14',
-            height: '3'
-          }
-        },
-      }),
+      requestTokensButton: new Button(this.faucetButtonOpts),
       sendTokensButton: new Button({
         children: 'Send Tokens',
-        cssClass: {
-          opts: {
-            fontSize: '14',
-            height: '3'
-          }
-        },
+        cssClass: { opts: { fontSize: '14', height: '3' } },
         onclick: () => windowManagement.openWindow('sendAra')
       })
     }
-
-    this.renderCopyableText = this.renderCopyableText.bind(this)
-    this.rerender = this.rerender.bind(this)
     this.eventMouseLeave = document.createEvent('MouseEvents')
     this.eventMouseEnter = document.createEvent('MouseEvents')
     this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
     this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
+    this.renderCopyableText = this.renderCopyableText.bind(this)
+    this.rerender = this.rerender.bind(this)
   }
 
   renderCopyableText(textType) {
-    const {
-      eventMouseEnter,
-      props
-    } = this
-    let text = ''
-    textType === 'did'
-      ? text = props.userDID.slice(-64)
-      : text = props.ethAddress
+    const { eventMouseEnter, props } = this
+
+    const text = textType === 'did'
+      ? props.userDID
+      : props.ethAddress
     return html`
       <div
         data-tooltip="Copy to Clipboard"
@@ -89,13 +74,55 @@ class AccountInfo extends Nanocomponent {
     `
   }
 
+  get faucetButtonOpts() {
+    const { props } = this
+
+    const buttonOpts = { cssClass: {} }
+    buttonOpts.cssClass.name = 'thinBorder'
+    buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
+    buttonOpts.onclick = () => {}
+
+    switch (props.faucetStatus) {
+      case null:
+        buttonOpts.children = 'Request Tokens'
+        buttonOpts.cssClass.opts.color = 'green'
+        buttonOpts.cssClass.name = ''
+        buttonOpts.onclick = () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
+        break
+      case k.IN_FAUCET_QUEUE:
+        buttonOpts.children = 'Faucet is sending tokens...'
+        break
+      case k.GREYLISTED_FROM_FAUCET:
+        buttonOpts.children = 'Greylisted for 24 hours!'
+        break
+      case k.FAUCET_LIMIT_HIT:
+        buttonOpts.children = '1000 Tokens is Faucet limit!'
+        break
+      default:
+        buttonOpts.children = 'Faucet is down...Try again later'
+    }
+
+    return buttonOpts
+  }
+
+  openTerms() {
+    shell.openExternal("https://ara.one/terms")
+  }
+
   update(props = {}) {
     this.props = { ...this.props, ...props.account }
     return true
   }
 
   createElement() {
-    const { children, props, renderCopyableText } = this
+    const {
+      children,
+      faucetButtonOpts,
+      openTerms,
+      props,
+      renderCopyableText
+    } = this
+
     return html`
       <div class="${styles.container} accountInfo-container">
         ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html`<div></div>`}
@@ -112,11 +139,11 @@ class AccountInfo extends Nanocomponent {
           <div class="${styles.balanceSection} accountInfo-balanceSection">
             <div><b>Your Wallet:</b></div>
             <div>
-              <span class="balance">${utils.roundDecimal(props.araBalance, 10000)}</span>
+              <span class="balance">${utils.roundDecimal(props.araBalance, 10000).toLocaleString()}</span>
               <span class="${styles.araBalance} accountInfo-araBalance">ARA</span>
             </div>
             <div>
-              <span class="balance ethBalance">${utils.roundDecimal(props.ethBalance, 10000)}</span>
+              <span class="balance ethBalance">${utils.roundDecimal(props.ethBalance, 10000).toLocaleString()}</span>
               <span class="${styles.ethBalance} ethBalance accountInfo-ara">ETH</span>
             </div>
           </div>
@@ -136,7 +163,7 @@ class AccountInfo extends Nanocomponent {
             <div class="request-container">
               <b>Request test tokens:</b>
               <div>Note: these tokens are for testing purposes only, and will only work on testnet</div>
-              ${children.requestTokensButton.render({})}
+              ${children.requestTokensButton.render(faucetButtonOpts)}
             </div>
             <div class="send-container">
               <b>Send tokens to another account:</b>
@@ -147,9 +174,9 @@ class AccountInfo extends Nanocomponent {
         <div class="${styles.appInfo} accountInfo-appInfo">
           <b>App Version ${version}</b>
           <div class="link-holder">
-            <a href="">Terms of Service</a>
+            <a onclick="${openTerms}">Terms of Service</a>
             <b>|</b>
-            <a href="">Contact Support</a>
+            <a href="mailto:support@ara.one">Contact Support</a>
           </div>
           <div>
             Copyright 2018, Ara Blocks LLC.

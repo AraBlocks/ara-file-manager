@@ -2,9 +2,9 @@
 
 const debug = require('debug')('acm:boot:tray')
 const isDev = require('electron-is-dev')
-const { Menu, Tray, screen } = require('electron')
+const { Menu, Tray } = require('electron')
 const path = require('path')
-const windowManager = require('electron-window-manager')
+const { openWindow, closeWindow } = require('electron-window-manager')
 const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
 const { internalEmitter } = require('electron-window-manager')
 const k = require('../lib/constants/stateManagement')
@@ -20,8 +20,22 @@ const buildTray = () => {
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
     { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(k.DEPLOY_PROXY) },
     { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
-    { label: 'Register', type: 'normal', click: () => openWindow('registration') },
-    { label: 'Login', type: 'normal', click: () => openWindow('login') },
+    {
+      label: 'Register',
+      type: 'normal',
+      click: () => {
+        openWindow('registration')
+        closeWindow('login')
+      }
+    },
+    {
+      label: 'Login',
+      type: 'normal',
+      click: () => {
+        openWindow('login')
+        closeWindow('registration')
+      }
+    },
     { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(k.LOGOUT) },
     { label: 'Quit', type: 'normal', click: () => internalEmitter.emit(k.CONFIRM_QUIT)}
   ]
@@ -34,52 +48,21 @@ const buildTray = () => {
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)
   tray.on('click', () => tray.popUpContextMenu(contextMenu))
-
-  function openWindow(view) {
-    const window = windowManager.get(view) || createWindow(view)
-    window.open()
-    window.object.show()
-  }
-
-  function createWindow(view) {
-    return windowManager.createNew(
-      view,
-      view,
-      windowManager.loadURL(view),
-      false,
-      {
-        backgroundColor: 'white',
-        frame: false,
-        ...windowManager.setSize(view),
-      }
-    )
-  }
-
   isDev && openWindow('developer')
 }
 
 function switchLoginState(loggedIn) {
-  if (isDev) {
-    contextMenu.commandsMap['46'].visible = loggedIn //FileManager
-    contextMenu.commandsMap['47'].visible = loggedIn //Publish File View
-    contextMenu.commandsMap['48'].visible = loggedIn //Account Info
-    contextMenu.commandsMap['49'].visible = !loggedIn //Register
-    contextMenu.commandsMap['50'].visible = !loggedIn //Login
-    contextMenu.commandsMap['51'].visible = loggedIn  //Log out
-  } else {
-    contextMenu.commandsMap['1'].visible = loggedIn //FileManager
-    contextMenu.commandsMap['2'].visible = loggedIn //Publish File View
-    contextMenu.commandsMap['3'].visible = loggedIn //Account Info
-    contextMenu.commandsMap['4'].visible = !loggedIn //Register
-    contextMenu.commandsMap['5'].visible = !loggedIn //Login
-    contextMenu.commandsMap['6'].visible = loggedIn  //Log out
-  }
+  const menuItems = contextMenu.items
+  menuItems[0].visible = loggedIn //FileManager
+  menuItems[1].visible = loggedIn //Publish File View
+  menuItems[2].visible = loggedIn //Account Info
+  menuItems[3].visible = !loggedIn //Register
+  menuItems[4].visible = !loggedIn //Login
+  menuItems[5].visible = loggedIn  //Log out
 }
 
 function switchPendingTransactionState(pending) {
-  isDev
-    ? contextMenu.commandsMap['47'].enabled = !pending //Publish File View Dev
-    : contextMenu.commandsMap['2'].enabled = !pending //Publish File View Build
+  contextMenu.items[1].enabled = !pending //Publish File View
 }
 
 module.exports = {

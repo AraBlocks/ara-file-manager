@@ -93,7 +93,7 @@ module.exports = {
     :host {
       display: flex;
       justify-content: space-between;
-      width: 25px;
+      width: 30px;
     }
   `
 }

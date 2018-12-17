@@ -29,17 +29,17 @@ module.exports = ({
     switch (status) {
       case k.DOWNLOADED_PUBLISHED:
         shouldBroadcast
-          ? menuItems.addItem('Stop Seeding AFS', k.STOP_SEEDING)
-          : menuItems.addItem('Seed AFS', k.START_SEEDING)
-          menuItems.addItem('Open AFS', k.OPEN_AFS)
-        if (owner) menuItems.addItem('Manage File', k.FEED_MANAGE_FILE)
+          ? menuItems.addItem('Stop Seeding', k.STOP_SEEDING)
+          : menuItems.addItem('Seed', k.START_SEEDING)
+          menuItems.addItem('Open Package', k.OPEN_AFS)
+        if (owner) menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE)
         break
       case k.AWAITING_DOWNLOAD:
-        menuItems.addItem('Download AFS', k.DOWNLOAD)
+        menuItems.addItem('Download Package', k.DOWNLOAD)
         break
       case k.UPDATE_AVAILABLE:
-        menuItems.addItem('Open AFS', k.OPEN_AFS)
-        menuItems.addItem('Update AFS', k.DOWNLOAD)
+        menuItems.addItem('Open Package', k.OPEN_AFS)
+        menuItems.addItem('Update Package', k.DOWNLOAD)
         break
       case k.PAUSED:
         menuItems.addItem('Continue Download', k.DOWNLOAD)
@@ -49,11 +49,16 @@ module.exports = ({
         break
       case k.OUT_OF_SYNC:
         //TODO: this event is not correct
-        menuItems.addItem('Sync AFS', k.UPDATE_FILE)
+        menuItems.addItem('Sync Package', k.UPDATE_FILE)
+        break
+      case k.UNCOMMITTED:
+        menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE)
+      case k.CONNECTING:
+      menuItems.addItem('Stop Connecting', k.STOP_SEEDING)
     }
 
   if (allocatedRewards && redeeming === false) {
-    menuItems.addItem('Reedeem Rewards', k.REDEEM_REWARDS)
+    menuItems.addItem('Redeem Rewards', k.REDEEM_REWARDS)
   }
   return new Hamburger(menuItems)
 }

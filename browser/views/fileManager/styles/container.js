@@ -14,6 +14,10 @@ module.exports = {
     :host > div {
       width: 95%;
     }
+
+    :host a {
+      cursor: pointer;
+    }
   `,
 
   noFilesContainer: css`
@@ -48,13 +52,15 @@ module.exports = {
     }
   `,
 
-  sectionContainer: css`
-    :host {
-      animation: fadein 1500ms;
-      height: 450px;
-      overflow-y: scroll;
-    }
-  `,
+  sectionContainer(isTestnet) {
+    return css`
+      :host {
+        animation: fadein 1500ms;
+        height: ${isTestnet ? '430px' : '450px'};
+        overflow-y: scroll;
+      }
+    `
+  },
 
   spinnerBarHolder: css`
     :host {

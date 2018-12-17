@@ -17,7 +17,6 @@ class Container extends Nanocomponent {
 		super()
 
 		this.state = {
-			currency: '',
 			fileName: '',
 			fileList: [],
 			price: ''
@@ -65,10 +64,11 @@ class Container extends Nanocomponent {
 			userAid: account.userAid,
 			password: account.password,
 			paths,
-			name: fileName || 'Unnamed',
-			price
+			name: fileName,
+			price: Number(price) === 0 ? '' : price
 		}
-		if (fileList.length !== 0) { windowManagement.emit({ event: PUBLISH, load }) }
+
+		if (fileList.length !== 0 && price >= 0) { windowManagement.emit({ event: PUBLISH, load }) }
 		this.render({})
 	}
 
@@ -84,7 +84,7 @@ class Container extends Nanocomponent {
 				${overlay(spinner)}
 				<div class="${styles.container} PublishFileContainer-container">
 					<div class="${styles.horizontalContainer} ${styles.title} PublishFileContainer-horizontalContainer,title">
-						Publish File
+						Publish Package
 						${children.utilityButton.render({ children: 'close' })}
 					</div>
 					<div class="${styles.content} PublishFileContainer-content">
@@ -96,9 +96,9 @@ class Container extends Nanocomponent {
 					<div class="${styles.divider} PublishFileContainer-divider"></div>
 					${children.fileInfo.render({})}
 					${children.publishButton.render({
-						cssClass: (state.fileList.length === 0)
-							? { name: 'thinBorder' }
-							: { name: 'standard' },
+						cssClass: (state.fileList.length != 0 && state.price >= 0)
+							? { name: 'standard' }
+							: { name: 'thinBorder' },
 						children: [
 							'Publish',
 							html`

@@ -1,60 +1,34 @@
 'use strict'
 
 const Button = require('../../components/button')
-const deeplink = require('../../lib/tools/deeplink')
 const { fileSystemManager, windowManagement } = require('../../lib/tools')
 const FileInfo = require('./fileInfo')
 const overlay = require('../../components/overlay')
 const { UPDATE_FILE } = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
-const { remote } = require('electron')
-const windowManager = remote.require('electron-window-manager')
-const { account } = windowManager.sharedData.fetch('store')
 const filesize = require('filesize')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {
-	constructor({
-		account,
-		currency,
-		did,
-		name,
-		fileList,
-		price,
-		tokenPrice,
-	}) {
+	constructor(opts) {
 		super()
 
-		this.props = { account }
+		this.props = { account: opts.account }
 		this.state = {
-			afsContents: fileList,
-			currency,
-			did,
-			distributionLink: deeplink.getDeeplink(did, name),
-			name,
-			fileList,
-			oldPrice: price,
-			price,
-			tokenPrice,
+			afsContents: opts.fileList,
+			did: opts.did,
+			name: opts.name,
+			fileList: opts.fileList,
+			oldPrice: opts.price,
+			price: opts.price,
 		}
 
 		this.children = {
-			// deleteButton: new Button({
-			// 	children: 'Delete From Network',
-			// 	cssClass: {
-			// 		name: 'smallInvisible',
-			// 		opts: {
-			// 			color: 'blue',
-			// 			weight: 'bold',
-			// 			height: '36px'
-			// 		}
-			// 	}
-			// }),
 			fileInfo: new FileInfo({
 				addItems: this.addItems.bind(this),
-				did,
+				did: opts.did,
 				parentState: this.state,
 				renderView: this.renderView.bind(this)
 			}),
@@ -81,7 +55,7 @@ class Container extends Nanocomponent {
 		const priceChanged = state.oldPrice != state.price
 		const shouldCommit = !(addPaths.length == 0 && removePaths.length == 0)
 		const notEmpty = state.fileList.length != 0
-		return (priceChanged || shouldCommit) && notEmpty && !props.account.pendingTransaction
+		return (priceChanged || shouldCommit) && notEmpty && !props.account.pendingTransaction && state.price >= 0
 	}
 
 	renderView() {
@@ -118,6 +92,7 @@ class Container extends Nanocomponent {
 			name: state.name,
 			password: account.password,
 			removePaths,
+			size: state.fileList.reduce((sum, file) => sum += file.size, 0),
 			shouldCommit: !(addPaths.length == 0 && removePaths.length == 0),
 			shouldUpdatePrice: state.oldPrice != state.price,
 			price: state.price == "" ? null : state.price,
@@ -134,18 +109,25 @@ class Container extends Nanocomponent {
 			<div class="${styles.container} ManageFileContainer-container">
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} ManageFileContainer-horizontalContainer,title">
-					Manage File
+					Manage Package
 					${children.utilityButton.render({ children: 'close' })}
 				</div>
 				<div class="${styles.content} ManageFileContainer-content">
 					This file has been published to the Ara Network. You can edit and update the file here. The changes will be pushed to all users on the network.<br><br>
-					This is also where you can find this file’s <b>distribution</b> link, which you will need for users to purchase this file with their Ara File Manager.
+					<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
+						to be able to download it.
 				</div>
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
 				${children.publishButton.render({
 					cssClass: fileInfoChanged() ? { name: 'standard' } : { name: 'thinBorder' },
-					children: `Publish Update ( ${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) } )`
+					children: [
+							'Publish',
+							html`
+								<span style="font-family: ProximaNova-light;">
+									(${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) })
+								</span>`
+						]
 				})}
 			</div>
 		`

@@ -19,19 +19,24 @@ class FileDescriptor extends Nanocomponent {
     shouldBroadcast,
   }) {
     super()
-    this.props = { name, size }
+
+    this.props = {
+      name: name || did.slice(8,23) + '...',
+      size
+    }
 
     this.children = {
       hamburger: hamburgerHelper({
         allocatedRewards,
         did,
-        name,
+        name: name,
         owner,
         redeeming,
         shouldBroadcast,
         status,
       })
     }
+
     this.createSummary = this.createSummary.bind(this)
   }
 
@@ -44,7 +49,7 @@ class FileDescriptor extends Nanocomponent {
     const nameDiv = html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
           <div class="${styles.name} fileDescriptor-name">
-            ${[k.OUT_OF_SYNC, k.UPDATE_AVAILABLE].includes(status)
+            ${[k.OUT_OF_SYNC, k.UPDATE_AVAILABLE, k.UNCOMMITTED].includes(status)
               ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
               : name}
           </div>
@@ -88,6 +93,10 @@ class FileDescriptor extends Nanocomponent {
       case k.UPDATE_AVAILABLE:
         spanColor = 'orange'
         msg = '(Update Available)'
+        break
+      case k.UNCOMMITTED:
+        spanColor = 'orange'
+        msg = '(Not Published)'
     }
 
     const [_size, unit] = filesize(size, { output: 'array' })

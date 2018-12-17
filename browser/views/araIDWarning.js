@@ -25,7 +25,10 @@ class AraIDWarning extends Nanocomponent {
       confirmButton: new Button({
         children: "I've saved my Ara ID",
         cssClass: { name: 'thinBorder' },
-        onclick: () => windowManagement.transitionModal('mnemonicWarning')
+        onclick: () => {
+          if (!this.state.copied) { return }
+          windowManagement.transitionModal('mnemonicWarning')
+        }
       })
     }
   }

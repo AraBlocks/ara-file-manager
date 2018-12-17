@@ -14,6 +14,7 @@ module.exports = {
   container: css`
     :host {
       align-items: center;
+      box-sizing: border-box;
       border: 1px solid var(--ara-grey);
       display: flex;
       justify-content: space-between;

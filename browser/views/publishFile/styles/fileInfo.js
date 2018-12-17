@@ -21,8 +21,8 @@ module.exports = {
 			flex-direction: column;
 			font-family: ${fonts.light};
 			font-size: 12px;
-			height: 100px;
-			justify-content: space-between;
+			height: 110px;
+			justify-content: flex-end;
 			width: 49%;
 		}
 
@@ -42,8 +42,9 @@ module.exports = {
 
 	fileDirectoryHolder: css`
 		:host {
+			width: 100%;
 			padding-top: 10px;
-			height: 320px;
+			height: 380px;
 		}
 	`,
 

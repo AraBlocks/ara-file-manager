@@ -53,7 +53,7 @@ windowManager.setSize = (view) => {
       width = 340
       height = 200
       break
-    case 'checkoutModal1':
+    case 'purchaseEstimate':
       width = 340
       height = 300
       break
@@ -96,9 +96,12 @@ windowManager.setSize = (view) => {
       height = 300
       break
     case 'registration':
-    case 'recover':
       width = 400
       height = 350
+      break
+    case 'recover':
+      width = 400
+      height = 390
       break
     case 'testing':
       width = 550
@@ -130,6 +133,9 @@ windowManager.loadURL = (view) => {
       break
     case 'araIDWarning':
       file = 'ara-id-warning'
+      break
+    case 'purchaseEstimate':
+      file = 'purchase-estimate'
       break
     case 'filemanager':
       file = 'file-manager'
@@ -180,7 +186,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
   debug('Opening deeplink: %s', deepLinkingUrl)
   try {
     const fileInfo = parseLink()
-    windowManager.internalEmitter.emit(k.PROMPT_PURCHASE, fileInfo)
+    windowManager.internalEmitter.emit(k.OPEN_DEEPLINK, fileInfo)
     return
   } catch(err) {
     debug('Deeplink error: %O', err)
@@ -190,7 +196,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
     const linkElements = deepLinkingUrl.slice(6).split("/")
     if (linkElements.length === 3 && linkElements[0] == 'download') {
       return {
-        aid: linkElements[1],
+        did: linkElements[1],
         fileName: decodeURIComponent(linkElements[2]),
       }
     }
@@ -208,7 +214,7 @@ windowManager.pingView = ({ view, event, load = null }) => {
 
 windowManager.pingAll = ({ event, load = null }) => {
   const views = ['filemanager', 'publishFileView', 'manageFileView', 'accountInfo']
-  views.forEach((view) =>windowManager.pingView({ view, event, load }))
+  views.forEach((view) => windowManager.pingView({ view, event, load }))
 }
 
 windowManager.closeWindow = (name) => {

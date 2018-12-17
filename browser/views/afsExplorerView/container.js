@@ -28,21 +28,22 @@ class Container extends Nanocomponent {
 			fileList,
 			updateAvailable
 		}
+
 		this.children = {
 			afsFileTable: new AfsFileTable({
 				did,
 				fileList,
 				renderView: this.renderView.bind(this)
 			}),
+			downloadUpdateButton: new Button({
+				children: 'Download Update',
+				cssClass: this.state.updateAvailable ? { opts: { color: 'orange' } } : { name: 'thinBorder'},
+				onclick: this.state.updateAvailable ? this.downloadUpdate.bind(this) : () => {}
+			}),
 			exportAllButton: new Button({
 				children: 'Export All',
 				cssClass: { opts: { color: 'green' } },
 				onclick: this.exportAll.bind(this)
-			}),
-			downloadUpdateButton: new Button({
-				children: 'Download Update',
-				cssClass: this.state.updateAvailable ? { name: 'thinBorder'} : { opts: { color: 'orange' } },
-				onclick: this.downloadUpdate.bind(this)
 			}),
 			utilityButton: new UtilityButton({ onclick: () => {
 				emit({
@@ -105,8 +106,8 @@ class Container extends Nanocomponent {
 					${children.utilityButton.render({ children: 'close' })}
 				</div>
 				<div class="${styles.content} AfsExplorerViewContainer-content">
-					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export files to your hard drive by dragging them out
-					from this window, or by clicking “export all”.
+					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export individual files to your hard drive by right-clicking them
+					, or by clicking “export all”.
 				</div>
 				<div class="${styles.fileTable} AfsExplorerViewContainer-fileTable">
 					${children.afsFileTable.render({ fileList: state.fileList })}

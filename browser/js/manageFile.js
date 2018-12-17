@@ -7,7 +7,6 @@ const { account, modal } = windowManager.sharedData.fetch('store')
 
 const manageFileContainer = new ManageFileContainer({
 	account,
-	currency: 'ARA',
 	did: modal.manageFileData.did,
 	fileList: modal.manageFileData.fileList,
 	name: modal.manageFileData.name,
