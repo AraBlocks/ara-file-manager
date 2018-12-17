@@ -1,3 +1,17 @@
+# [0.2.0](https://github.com/littlstar/ara-content-manager/compare/0.1.10...0.2.0) (2018-12-14)
+
+
+### Bug Fixes
+
+* Fixed blank login issue ([3876cef](https://github.com/littlstar/ara-content-manager/commit/3876cef))
+
+
+### Features
+
+* Add ara dmg icon ([c5ca146](https://github.com/littlstar/ara-content-manager/commit/c5ca146))
+
+
+
 ## [0.1.10](https://github.com/littlstar/ara-content-manager/compare/0.1.9...0.1.10) (2018-12-13)
 
 

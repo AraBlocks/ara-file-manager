@@ -3,8 +3,12 @@
 const html = require('choo/html')
 const { utils } = require('../../../lib/tools')
 const { colors } = require('styleUtils')
+const { utils } = require('../../../lib/tools')
 
-module.exports = (reedming, earnings, allocatedRewards) =>
-  reedming
+module.exports = (reedming, earnings, allocatedRewards) =>{
+  const roundedEarnings = utils.roundDecimal(earnings, 100)
+  const roundedRewards = utils.roundDecimal(allocatedRewards, 100)
+  return reedming
     ? html`<div class="spinner-tiny-teal" style="display: inline-block;"></div>`
-    : [html`<span></span>`, earnings, allocatedRewards ? html`<span style="color:${colors.araOrange};"> (+${utils.roundDecimal(allocatedRewards, 1000)})</span>` : null]
+    : [html`<span></span>`, roundedEarnings, roundedRewards ? html`<span style="color:${colors.araOrange};"> (+${roundedRewards})</span>` : null]
+}

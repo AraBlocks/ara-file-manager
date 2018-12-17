@@ -1,7 +1,6 @@
 'use strict'
 
 const k = require('../../lib/constants/stateManagement')
-const araUtil = require('ara-util')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
 const TestnetBanner = require('../components/TestnetBanner')
@@ -30,7 +29,7 @@ class AccountInfo extends Nanocomponent {
       ethAddress: account.accountAddress,
       ethBalance: account.ethBalance,
       network: application.network,
-      userDID: araUtil.getIdentifier(account.userAid),
+      userDID: account.userAid,
       version
     }
 

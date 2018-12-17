@@ -4,6 +4,7 @@ const debug = require('debug')('acm:boot:main')
 const writeFiles = require('./writeFiles')
 //Writes .ara and keyrings if doesn't exist
 if (writeFiles.writeAraRC() === false) { debug('.ararc exists, not writing file') }
+if (writeFiles.writeDotAra() === false) { debug('.ara exists, not writing directory') }
 
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
