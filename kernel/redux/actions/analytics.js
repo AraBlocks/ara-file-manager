@@ -18,7 +18,7 @@ async function getSession() {
     }
 
     // TODO: state management for staging vs production
-    const session = ua(analytics.UA_ACCOUNT_STAGING, deviceId)
+    const session = ua(analytics.UA_ACCOUNT_CURRENT, deviceId)
     session.set(analytics.VERSION, version)
     session.firstSession = firstSession
     global.session = session
