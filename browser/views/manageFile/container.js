@@ -64,7 +64,7 @@ class Container extends Nanocomponent {
 
 	update({ fileList }){
 		const { state } = this
-		if (fileList != null && state.afsContents == null) {
+		if (fileList != null && state.afsContents.length == 0) {
 			state.fileList = fileList
 			state.afsContents = fileList
 		}
