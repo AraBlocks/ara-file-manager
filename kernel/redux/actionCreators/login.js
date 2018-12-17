@@ -57,6 +57,7 @@ async function logout() {
     internalEmitter.emit(k.CANCEL_SUBSCRIPTION)
     switchLoginState(false)
     switchApplicationMenuLoginState(false)
+    //TODO: make closeAll function
     windowManager.closeWindow('filemanager')
     windowManager.closeWindow('publishFileView')
     windowManager.closeWindow('accountInfo')
@@ -79,6 +80,7 @@ async function login(_, load) {
     return
   }
 
+  //writes did signed in with to disk to autofill input next time app booted
   afmManager.cacheUserDid(load.userAid)
 
   try {
@@ -90,7 +92,7 @@ async function login(_, load) {
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
     const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
-
+    //Creates a dummy afs used to estimate deployment costs more quickly
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(load.userAid, load.password)
     dispatch({
       type: k.LOGIN,
@@ -111,12 +113,14 @@ async function login(_, load) {
     switchApplicationMenuLoginState(true)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
     const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
+    //Returns objects representing various info around purchased DIDs
     const purchased = await afsManager.surfaceAFS({
       dids: purchasedDIDs,
       userDID: load.userAid,
       DCDNStore
     })
     const publishedDIDs = await afmManager.getPublishedItems(load.userAid)
+    //Returns objects representing various info around published DIDs
     const published = await afsManager.surfaceAFS({
       dids: publishedDIDs,
       userDID: load.userAid,
