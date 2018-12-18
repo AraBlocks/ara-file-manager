@@ -134,6 +134,10 @@ function actionModalText(modalName) {
 	let description
 	let title
 	switch (modalName) {
+		case 'startDownload':
+			title = 'Purchased!'
+			description = 'Download package now?'
+			break
 		case 'logoutConfirm':
 			title = 'Log Out?'
 			description = 'This will not alter any files on this computer. Only files linked to the current Ara ID can be shared on the network.'

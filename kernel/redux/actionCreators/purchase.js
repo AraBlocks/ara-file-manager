@@ -42,11 +42,11 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		}
 
 		const price = Number(await araContractsManager.getAFSPrice({ did: load.did }))
-		const gasEstimate = Number(await araContractsManager.purchaseEstimate({
+		const gasEstimate = await araContractsManager.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
 			userDID: account.userAid,
-		}))
+		})
 
 		windowManager.pingView({ view: 'purchaseEstimate', event: k.REFRESH, load: { gasEstimate, price } })
 	} catch (err) {
@@ -73,6 +73,17 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
+
+		dispatch({ type: k.FEED_MODAL, load: {
+				modalName: 'startDownload',
+				callback: () => {
+					internalEmitter.emit(k.DOWNLOAD, load)
+				}
+			}
+		})
+		windowManager.openModal('generalActionModal')
+
+		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
 		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
 		dispatch({ type: k.GOT_REWARDS_SUB, load: { rewardsSub } })
