@@ -48,7 +48,6 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			userDID: account.userAid,
 		}))
 
-		debug({ gasEstimate, price })
 		windowManager.pingView({ view: 'purchaseEstimate', event: k.REFRESH, load: { gasEstimate, price } })
 	} catch (err) {
 		errorHandler(err)

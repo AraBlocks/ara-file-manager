@@ -211,10 +211,8 @@ async function subscribePublished({ did }) {
 		try {
 			subscription = contract.events.Purchased()
 				.on('data', async ({ returnValues }) => {
-					windowManager.internalEmitter.emit(k.UPDATE_EARNING, {
-						did,
-						earning: Number(araContracts.token.constrainTokenValue(returnValues._price))
-					})
+					const earning = Number(araContracts.token.constrainTokenValue(returnValues._price))
+					windowManager.internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
 				})
 				.on('error', debug)
 		} catch (err) {
@@ -226,27 +224,7 @@ async function subscribePublished({ did }) {
 }
 
 async function sendAra(opts) {
-	const {
-		amount,
-		completeHandler,
-		errorHandler,
-		password,
-		userDID,
-		walletAddress,
-	} = opts
-
-	try {
-		await araContracts.token.transfer({
-			did: userDID,
-			password,
-			val: amount,
-			to: walletAddress
-		})
-		completeHandler(amount)
-	} catch (err) {
-		debug('Error sending ara: %o', err)
-		errorHandler()
-	}
+	await araContracts.token.transfer(opts)
 }
 
 async function subscribeFaucet(userAddress) {
@@ -289,19 +267,27 @@ async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 async function subscribeTransfer(userAddress, userDID) {
 	const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
 
-	let transferSubscription
+	let xferReceiveSubscription
+	let xferSendSubscription
 	try {
-		transferSubscription = contract.events.Transfer({ filter: { to: userAddress } })
-			.on('data', async () => {
-				const newBalance = await getAraBalance(userDID)
-				windowManager.internalEmitter.emit(k.UPDATE_ARA_BALANCE, { araBalance: newBalance })
-			})
+		xferReceiveSubscription = contract.events.Transfer({ filter: { to: userAddress } })
+			.on('data', updateBalance)
 			.on('error', debug)
+
+		xferSendSubscription = contract.events.Transfer({ filter: { from: userAddress } })
+			.on('data', updateBalance)
+			.on('error', debug)
+
 	} catch (err) {
 		debug('Error %o', err)
 	}
 
-	return { ctx, transferSubscription }
+	return { ctx, xferReceiveSubscription, xferSendSubscription }
+
+	async function updateBalance() {
+		const newBalance = await getAraBalance(userDID)
+		windowManager.internalEmitter.emit(k.UPDATE_ARA_BALANCE, { araBalance: newBalance })
+	}
 }
 
 //budget is fixed to 10% of price for now
