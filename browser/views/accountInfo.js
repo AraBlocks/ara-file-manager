@@ -12,7 +12,6 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { shell } = require('electron')
 const tt = require('electron-tooltip')
-const afmManager = require('../../kernel/redux/actions/afmManager')
 
 tt({
   position: 'top',

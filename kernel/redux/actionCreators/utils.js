@@ -3,7 +3,11 @@
 const debug = require('debug')('acm:kernel:lib:actionCreators:utils')
 const k = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
-const { afsManager, farmerManager, afmManager } = require('../actions')
+const {
+  afsManager,
+  afmManager,
+  farmerManager
+} = require('../actions')
 const { ipcMain, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
