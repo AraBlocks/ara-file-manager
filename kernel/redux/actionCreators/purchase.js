@@ -68,9 +68,8 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
 		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userAid }
-		const purchase =  () => araContractsManager.purchaseItem(itemLoad)
 
-		const jobId = await autoQueue.push(purchase)
+		const jobId = await autoQueue.push(() => araContractsManager.purchaseItem(itemLoad))
 
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })

@@ -31,11 +31,9 @@ function createFarmer({ did: userId, password }) {
 	farmer.on('download-complete', (did) => {
 		debug('Download complete!')
 		internalEmitter.emit(k.DOWNLOADED, { did })
-		internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 	})
 	farmer.on('request-complete', (did) => {
 		debug('Rewards allocated')
-		internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 	})
 	return farmer
 }

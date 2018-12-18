@@ -150,7 +150,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
-
     windowManager.closeWindow('publishFileView')
 
     dispatch({ type: k.PUBLISHING, load: { did: load.did, status: k.PUBLISHING } })
@@ -166,8 +165,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     let descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
 
-    const commit = () => afs.commit({ did: load.did, price: Number(load.price), password: password })
-    await autoQueue.push(commit)
+    await autoQueue.push(() => afs.commit({ did: load.did, price: Number(load.price), password: password }))
 
     const balance = await araContractsManager.getAraBalance(userAid)
     debug('Dispatching %s', k.PUBLISHED)
