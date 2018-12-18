@@ -7,11 +7,7 @@ const { account, modal } = windowManager.sharedData.fetch('store')
 
 const manageFileContainer = new ManageFileContainer({
 	account,
-	did: modal.manageFileData.did,
-	fileList: modal.manageFileData.fileList,
-	name: modal.manageFileData.name,
-	price: modal.manageFileData.price,
-	uncommitted: modal.manageFileData.uncommitted
+	...modal.manageFileData
 })
 
 document.getElementById('container').appendChild(manageFileContainer.render({ spinner: !modal.manageFileData.uncommitted }))

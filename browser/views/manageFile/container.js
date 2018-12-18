@@ -117,13 +117,27 @@ class Container extends Nanocomponent {
 
 	renderDescription() {
 		const { state } = this
-		const manageFileText = html`<div>This package has been published to the Ara Network. You can edit and update the package here. The changes will be pushed to all users on the network.<br><br>
-		<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
-			to be able to download it.</div>`
-		const publishFileText = html`<div>Publish your package for distribution on the Ara Network. You can publish a single file or an entire directory as a single
-			asset. Once published, use the provided distribution link to allow users to purchase your package.<br><br>
-			<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
-			to be able to download it.</div>`
+		const manageFileText = html`
+			<div class="${styles.descriptionHolder} manageFileContainer-descriptionHolder">
+				<div>
+					This package has been published to the Ara Network. You can edit and update the package here. The changes will be pushed to all users on the network.
+				</div>
+				<div>
+					<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
+					to be able to download it.
+				</div>
+			</div>`
+		const publishFileText = html`
+			<div class="${styles.descriptionHolder} manageFileContainer-descriptionHolder">
+				<div>
+					Publish your package for distribution on the Ara Network. You can publish a single file or an entire directory as a single
+					asset. Once published, use the provided distribution link to allow users to purchase your package.
+				</div>
+				<div>
+					<b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
+					to be able to download it.
+				</div>
+			</div>`
 		return state.uncommitted ? publishFileText : manageFileText
 	}
 

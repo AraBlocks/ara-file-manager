@@ -43,8 +43,8 @@ module.exports = {
 		:host {
 			display: flex;
 			flex-direction: column;
-			height: 49%;
-			justify-content: center;
+			height: 35%;
+			justify-content: start;
 		}
 	`,
 
@@ -55,7 +55,7 @@ module.exports = {
 			font-family: ${fonts.light};
 			font-size: 12px;
 			height: 110px;
-			justify-content: flex-end;
+			justify-content: space-between;
 			width: 49%;
 		}
 

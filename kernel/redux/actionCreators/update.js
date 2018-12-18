@@ -19,10 +19,10 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) =>  {
       type: k.FEED_MANAGE_FILE,
       load: {
         did: load.did,
-        price: file ? file.price : 0,
-        name: load.name ? load.name : '',
+        price: file.price,
+        name: load.name || '',
         fileList: [],
-        uncommitted: file.status === k.UNCOMMITTED ? true : false
+        uncommitted: file.status === k.UNCOMMITTED
       }
     })
     windowManager.openWindow('manageFileView')

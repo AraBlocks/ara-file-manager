@@ -32,6 +32,15 @@ module.exports = {
 		}
 	`,
 
+	descriptionHolder: css`
+		:host {
+			display: flex;
+			flex-direction: column;
+			height: 60px;
+			justify-content: space-between;
+		}
+	`,
+
 	horizontalContainer: css`
 		:host {
 			display: flex;
