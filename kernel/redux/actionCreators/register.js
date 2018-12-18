@@ -39,6 +39,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
       load: {
         accountAddress,
         araBalance: 0,
+        autoQueue: farmerManager.createAutoQueue(),
         deployEstimateDid,
         ethBalance: 0,
         farmer,

@@ -104,7 +104,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
       }
     })
 
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
+    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
     windowManager.closeWindow('manageFileView')
 
     if (load.shouldUpdatePrice && !load.shouldCommit) {
@@ -121,7 +121,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
     dispatch({ type: k.UPDATED_FILE, load })
     debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load)
     internalEmitter.emit(k.START_SEEDING, load )
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
     windowManager.openModal('generalMessageModal')

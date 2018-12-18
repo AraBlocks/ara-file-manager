@@ -2,10 +2,15 @@
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
 const araContractsManager = require('./araContractsManager')
+const { AutoQueue } = require('../../lib/')
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
 const { internalEmitter } = require('electron-window-manager')
 const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
+
+function createAutoQueue() {
+	return new AutoQueue
+}
 
 function createFarmer({ did: userId, password }) {
 	debug('Creating Farmer')
@@ -26,11 +31,11 @@ function createFarmer({ did: userId, password }) {
 	farmer.on('download-complete', (did) => {
 		debug('Download complete!')
 		internalEmitter.emit(k.DOWNLOADED, { did })
-		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
+		internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 	})
 	farmer.on('request-complete', (did) => {
 		debug('Rewards allocated')
-		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+		internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 	})
 	return farmer
 }
@@ -121,6 +126,7 @@ async function _calculateBudget(did) {
 }
 
 module.exports = {
+	createAutoQueue,
 	createFarmer,
 	download,
 	getBroadcastingState,

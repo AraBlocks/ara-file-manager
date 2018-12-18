@@ -46,7 +46,7 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 		let dispatchLoad = { modalName: 'sendingAra', load }
 		dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
 		windowManager.openModal('generalPleaseWaitModal')
-		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
+		windowManager.internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 		let walletAddress = load.receiver
 		if (!web3.isAddress(load.receiver)) {
 			walletAddress = await araUtil.getAddressFromDID(load.receiver)
@@ -61,13 +61,13 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 		})
 	} catch (err) {
 		debug('Error sending ara: %o', err)
-		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+		windowManager.internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 	}
 })
 
 async function araSent(amount) {
 	windowManager.closeModal('generalPleaseWaitModal')
-	windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+	windowManager.internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 	dispatch({
 		type: k.FEED_MODAL, load: {
 			modalName: 'araSent',

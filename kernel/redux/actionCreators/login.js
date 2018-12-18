@@ -35,7 +35,7 @@ ipcMain.on(k.RECOVER, async (event, load) => {
     const identity = await identityManager.recover(load)
     await identityManager.archive(identity)
 
-    const { did: { did } } = identity
+    const { did } = identity.did
     login(null, { userAid: did, password: load.password })
 
     windowManager.pingView({ view: 'recover', event: k.RECOVERED })
@@ -99,6 +99,7 @@ async function login(_, load) {
       load: {
         accountAddress,
         araBalance,
+        autoQueue: farmerManager.createAutoQueue(),
         deployEstimateDid,
         ethBalance,
         farmer,
