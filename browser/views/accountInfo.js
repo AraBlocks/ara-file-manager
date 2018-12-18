@@ -3,15 +3,16 @@
 const k = require('../../lib/constants/stateManagement')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
+const { emit } = require('../lib/tools/windowManagement')
 const TestnetBanner = require('../components/TestnetBanner')
 const UtilityButton = require('../components/UtilityButton')
 const styles = require('./styles/accountInfo')
 const { utils, windowManagement } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const { version } = require('../../package.json')
 const { shell } = require('electron')
 const tt = require('electron-tooltip')
+const afmManager = require('../../kernel/redux/actions/afmManager')
 
 tt({
   position: 'top',
@@ -24,13 +25,13 @@ class AccountInfo extends Nanocomponent {
     const { account, application } = props
 
     this.props = {
-      faucetStatus: account.faucetStatus,
+      account,
       araBalance: account.araBalance,
       ethAddress: account.accountAddress,
       ethBalance: account.ethBalance,
+      faucetStatus: account.faucetStatus,
       network: application.network,
-      userDID: account.userAid,
-      version
+      userDID: account.userAid
     }
 
     this.children = {
@@ -47,6 +48,7 @@ class AccountInfo extends Nanocomponent {
     this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
     this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
     this.renderCopyableText = this.renderCopyableText.bind(this)
+    this.toggleAnalyticsPermission = this.toggleAnalyticsPermission.bind(this)
     this.rerender = this.rerender.bind(this)
   }
 
@@ -109,6 +111,11 @@ class AccountInfo extends Nanocomponent {
     shell.openExternal("https://ara.one/terms")
   }
 
+  toggleAnalyticsPermission() {
+    emit({ event: k.TOGGLE_ANALYTICS_PERMISSION })
+    this.render({})
+  }
+
   update(props = {}) {
     this.props = { ...this.props, ...props.account }
     return true
@@ -119,6 +126,7 @@ class AccountInfo extends Nanocomponent {
       children,
       faucetButtonOpts,
       openTerms,
+      toggleAnalyticsPermission,
       props,
       renderCopyableText
     } = this
@@ -172,7 +180,11 @@ class AccountInfo extends Nanocomponent {
           </div>
         </div>
         <div class="${styles.appInfo} accountInfo-appInfo">
-          <b>App Version ${version}</b>
+          <div>
+            <a onclick=${toggleAnalyticsPermission}>
+              ${props.account.analyticsPermission ? 'Disable Analytics' : 'Enable Analytics' }
+            </a>
+          </div>
           <div class="link-holder">
             <a onclick="${openTerms}">Terms of Service</a>
             <b>|</b>

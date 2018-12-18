@@ -33,11 +33,13 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     const network = await araUtils.getNetwork()
     const farmer = farmerManager.createFarmer({ did, password })
     afmManager.cacheUserDid(did)
+    const analyticsPermission = afmManager.getAnalyticsPermission()
     debug('Dispatching %s', k.REGISTERED)
     dispatch({
       type: k.REGISTERED,
       load: {
         accountAddress,
+        analyticsPermission,
         araBalance: 0,
         deployEstimateDid,
         ethBalance: 0,

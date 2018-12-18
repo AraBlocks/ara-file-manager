@@ -3,7 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actionCreators:utils')
 const k = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
-const { afsManager, farmerManager } = require('../actions')
+const { afsManager, farmerManager, afmManager } = require('../actions')
 const { ipcMain, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
@@ -49,4 +49,9 @@ ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
 internalEmitter.on(k.CONFIRM_QUIT, async () => {
   dispatch({ type: k.FEED_MODAL, load: { modalName: 'quitConfirm', callback: () => app.quit() } })
   windowManager.openModal('generalActionModal')
+})
+
+ipcMain.on(k.TOGGLE_ANALYTICS_PERMISSION, () => {
+  const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userAid)
+  dispatch({ type: k.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission }})
 })

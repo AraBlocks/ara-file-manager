@@ -88,6 +88,7 @@ async function login(_, load) {
     dispatch({ type: k.GETTING_USER_DATA, load: { userAid: load.userAid, network } })
     windowManager.openWindow('filemanager')
 
+    const analyticsPermission = afmManager.getAnalyticsPermission(load.userAid)
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
@@ -97,6 +98,7 @@ async function login(_, load) {
     dispatch({
       type: k.LOGIN,
       load: {
+        analyticsPermission,
         accountAddress,
         araBalance,
         deployEstimateDid,

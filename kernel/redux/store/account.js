@@ -1,4 +1,5 @@
 module.exports = {
+  analyticsPermission: true,
   accountAddress: null,
   araBalance: null,
   deployEstimateDid: null ,
