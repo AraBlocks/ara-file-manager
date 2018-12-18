@@ -49,6 +49,7 @@ module.exports = {
         flex-direction: column;
         height: ${height}%;
         justify-content: ${justifyContent};
+        overflow-wrap: break-word;
         text-align: center;
         width: 90%;
       }
