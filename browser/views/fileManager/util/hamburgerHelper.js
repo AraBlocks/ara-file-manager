@@ -52,6 +52,7 @@ module.exports = ({
         menuItems.addItem('Sync Package', k.UPDATE_FILE)
         break
       case k.UNCOMMITTED:
+        //Listener for DEPLOY_PROXY will check for unpublished AFS, find it, and open publishView. No proxy will be deployed
         menuItems.pop()
         menuItems.addItem('Publish Package', k.DEPLOY_PROXY)
         break

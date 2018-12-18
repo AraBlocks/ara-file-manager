@@ -31,7 +31,8 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
 
     const network = await araUtils.getNetwork()
-    const farmer = farmerManager.createFarmer({ did, password })
+    const autoQueue = farmerManager.createAutoQueue()
+    const farmer = farmerManager.createFarmer({ did, password, queue: autoQueue })
     afmManager.cacheUserDid(did)
     debug('Dispatching %s', k.REGISTERED)
     dispatch({
@@ -39,6 +40,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
       load: {
         accountAddress,
         araBalance: 0,
+        autoQueue,
         deployEstimateDid,
         ethBalance: 0,
         farmer,
