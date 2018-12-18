@@ -4,6 +4,7 @@
 const Button = require('../../components/button')
 const { clipboard } = require('electron')
 const { DEPLOY_PROXY } = require('../../../lib/constants/stateManagement')
+const DynamicTooltip = require('../../components/dynamicTooltip')
 const { emit } = require('../../lib/tools/windowManagement')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
@@ -12,12 +13,6 @@ const TabItem = require('../../components/tabItem')
 const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
-const tt = require('electron-tooltip')
-
-tt({
-  position: 'top',
-  style: { width: '130px' }
-})
 
 class Header extends Nanocomponent {
   constructor({ selectTab, account }) {
@@ -37,14 +32,14 @@ class Header extends Nanocomponent {
         }
       }),
       closeButton: new UtilityButton({ children: 'close' }),
+      copyDidTooltip: new DynamicTooltip({
+        children: "ID: " + this.props.userDID.slice(0, 8),
+        onclick: () => clipboard.writeText(this.props.userDID),
+        cssClass: { color: 'black' }
+      }),
       minimizeButton: new UtilityButton({ children: 'minimize', onclick: windowManagement.minimizeWindow }),
       tabs: this.makeTabs(selectTab)
     }
-
-    this.eventMouseLeave = document.createEvent('MouseEvents')
-    this.eventMouseEnter = document.createEvent('MouseEvents')
-    this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
-    this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
   }
 
   makeTabs(selectTab) {
@@ -65,7 +60,6 @@ class Header extends Nanocomponent {
   createElement({ activeTab, araBalance }) {
     const {
       children,
-      eventMouseEnter,
       props
     } = this
     const balanceElements = [
@@ -88,20 +82,7 @@ class Header extends Nanocomponent {
             File Manager
           </div>
           <div class="${styles.userHolder} header-userHolder">
-            <div
-              data-tooltip="Copy to Clipboard"
-              class="${styles.didHolder} header-didHolder"
-              onclick="${({ target }) => {
-                target.parentElement.dataset.tooltip = 'Copied!'
-                target.parentElement.dispatchEvent(eventMouseEnter)
-                target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
-                clipboard.writeText(props.userDID)
-              }}"
-              onmouseenter="${({ target }) => target.style.backgroundColor = '#d0d0d0'}"
-              onmouseleave="${({ target }) => target.style.backgroundColor = ''}"
-            >
-              <b>ID: ${props.userDID.slice(8, 16)}...</b>
-            </div>
+            ${children.copyDidTooltip.render()}
             <div>
               ${araBalance >= 0 ? balanceElements : 'Calculating Balance...'}
             </div>

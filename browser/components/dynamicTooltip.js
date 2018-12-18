@@ -14,8 +14,8 @@ class DynamicTooltip extends Nanocomponent {
 	constructor(opts) {
 		super()
 		this.props = {
-			beforeTooltipText: opts.beforeTooltipText,
-			afterTooltipText: opts.afterTooltipText,
+			beforeTooltipText: opts.beforeTooltipText || 'Copy to Clipboard',
+			afterTooltipText: opts.afterTooltipText || 'Copied!',
 			itemClicked: opts.onclick,
 			cssClass: opts.cssClass || {}
 		}
