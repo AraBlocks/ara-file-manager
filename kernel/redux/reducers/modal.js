@@ -17,13 +17,12 @@ module.exports = (state, { load = null, type }) => {
       state.contentViewerData = load
     case k.REGISTERED:
       state.data.mnemonic = load.mnemonic
-      state.data.userDID = load.userAid
       state.data.freezeData = true
       break
     case k.PROXY_DEPLOYED:
       state.data.mnemonic = load.mnemonic
-      state.data.userDID = load.userAid
       state.data.isAFS = load.isAFS
+      state.data.contentDID = load.contentDID
       state.data.freezeData = true
     case k.USE_UNCOMMITTED:
       state.publishFileData.contentDID = load.contentDID

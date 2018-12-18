@@ -7,15 +7,16 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
+const k = require('../../lib/constants/stateManagement')
 
 class MnemonicWarning extends Nanocomponent {
-  constructor({ mnemonic = null, isAFS = false }) {
+  constructor({ mnemonic = null, isAFS = false, contentDID = null }) {
     super()
     this.props = { mnemonic, isAFS }
     this.state = { copied: false }
 
     this.children = {
-      copyMnemonicButton: new Button({
+    copyMnemonicButton: new Button({
         children: "Copy mnemonic",
         cssClass: {
           opts: { color: 'green' }
@@ -29,7 +30,7 @@ class MnemonicWarning extends Nanocomponent {
         onclick: () => {
           if (!this.state.copied) { return }
           this.props.isAFS
-            ? windowManager.openWindow('publishFileView')
+            ? windowManagement.emit({ event: k.FEED_MANAGE_FILE, load: { did: contentDID }})
             : windowManager.openWindow('filemanager')
           windowManagement.closeModal('mnemonicWarning')
         }

@@ -20,12 +20,14 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) =>  {
       load: {
         did: load.did,
         price: file.price,
-        name: load.name,
-        fileList: []
+        name: load.name || '',
+        fileList: [],
+        uncommitted: file.status === k.UNCOMMITTED
       }
     })
-
     windowManager.openWindow('manageFileView')
+
+    if (file.status === k.UNCOMMITTED) { return }
     dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
 
@@ -33,12 +35,12 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) =>  {
       type: k.FEED_MANAGE_FILE,
       load: {
         did: load.did,
-        price: file.price,
+        price: file ? file.price : 0,
         name: load.name,
-        fileList: await afsManager.getFileList(load.did)
+        fileList: await afsManager.getFileList(load.did),
+        uncommitted: false
       }
     })
-
     windowManager.pingView({ view: 'manageFileView', event: k.REFRESH })
   } catch (err) {
     debug('Error: %o', err)
