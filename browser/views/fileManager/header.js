@@ -32,7 +32,7 @@ class Header extends Nanocomponent {
         children: 'Publish New File',
         cssClass: { opts: { fontSize: 14 } },
         onclick: () => {
-          if (account.pendingTransaction) { return }
+          if (account.pendingPublish) { return }
           emit({ event: DEPLOY_PROXY })
         }
       }),
@@ -112,7 +112,7 @@ class Header extends Nanocomponent {
         </div>
         <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
           ${children.publishFilebutton.render({
-        cssClass: props.account.pendingTransaction
+        cssClass: props.account.pendingPublish
           ? { name: 'thinBorder', opts: { fontSize: 14 } }
           : { opts: { fontSize: 14 } }
       })}

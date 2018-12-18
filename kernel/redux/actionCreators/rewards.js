@@ -30,16 +30,14 @@ ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
 ipcMain.on(k.CONFIRM_REDEEM, async (event, load) => {
   debug('%s HEARD', k.CONFIRM_REDEEM)
   try {
-    const { account } = store
+    const { account, account: { autoQueue } } = store
 
     debug('DISPATCHING %s', k.REDEEMING_REWARDS)
     dispatch({ type: k.REDEEMING_REWARDS, load: { did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-    const value = await rewards.redeem({
-      farmerDid: account.userAid,
-      password: account.password,
-      contentDid: load.did
-    })
+
+    const redeemLoad = { farmerDid: account.userAid, password: account.password, contentDid: load.did }
+    const value = await autoQueue.push(() => rewards.redeem(redeemLoad))
 
     debug('DISPATCHING %s', k.REWARDS_REDEEMED)
     dispatch({ type: k.REWARDS_REDEEMED, load: { did: load.did, value } })

@@ -108,7 +108,7 @@ module.exports = (state, { load = null, type }) => {
       if (file == null) { break }
       file.earnings += Number(load.earning)
       break
-    case k.UPDATE_PEER_COUNT: 
+    case k.UPDATE_PEER_COUNT:
       file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
       file.peers = load.peers

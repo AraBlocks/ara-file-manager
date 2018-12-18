@@ -40,7 +40,7 @@ class Container extends Nanocomponent {
 			}),
 			utilityButton: new UtilityButton({
 				onclick: () => {
-					windowManagement.emit({ event: k.CHANGE_PENDING_TRANSACTION_STATE, load: false })
+					windowManagement.emit({ event: k.CHANGE_PENDING_PUBLISH_STATE, load: false })
 					windowManagement.closeWindow()
 				}
 			})
