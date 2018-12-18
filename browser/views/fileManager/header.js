@@ -33,7 +33,7 @@ class Header extends Nanocomponent {
       }),
       closeButton: new UtilityButton({ children: 'close' }),
       copyDidTooltip: new DynamicTooltip({
-        children: "ID: " + this.props.userDID.slice(0, 8),
+        children: "ID: " + this.props.userDID.slice(0, 8) + "...",
         onclick: () => clipboard.writeText(this.props.userDID),
         cssClass: { color: 'black' }
       }),
