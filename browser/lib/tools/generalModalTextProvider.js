@@ -8,7 +8,7 @@ function generalModalText(modalName, load) {
 	switch (modalName) {
 		case 'araSent':
 			title = 'Success!'
-			description = html `<div><b>${load.amount} Ara</b> has been sent.</div>`
+			description = html `<div><b>${load.amount} Ara</b> has been sent to <b>${load.did}</b></div>`
 			break
 		case 'alreadyOwn':
 			title = 'You already own this package'
