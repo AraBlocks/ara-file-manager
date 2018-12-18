@@ -53,9 +53,12 @@ module.exports = ({
         break
       case k.UNCOMMITTED:
         //Listener for DEPLOY_PROXY will check for unpublished AFS, find it, and open publishView. No proxy will be deployed
-        menuItems.addItem('Manage Package', k.DEPLOY_PROXY)
+        menuItems.pop()
+        menuItems.addItem('Publish Package', k.DEPLOY_PROXY)
+        break
       case k.CONNECTING:
-      menuItems.addItem('Stop Connecting', k.STOP_SEEDING)
+        menuItems.addItem('Stop Connecting', k.STOP_SEEDING)
+        break
     }
 
   if (allocatedRewards && redeeming === false) {

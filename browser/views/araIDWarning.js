@@ -8,11 +8,11 @@ const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 
 class AraIDWarning extends Nanocomponent {
-  constructor({ userDID }) {
+  constructor({ userAid }) {
     super()
 
     this.state = { copied: false }
-    this.props = { userDID }
+    this.props = { userAid }
 
     this.children = {
       copyIDButton: new Button({
@@ -35,7 +35,7 @@ class AraIDWarning extends Nanocomponent {
 
   copyID(e) {
     const { props, state } = this
-    clipboard.writeText(props.userDID)
+    clipboard.writeText(props.userAid)
     const span = e.target.parentElement.children[1]
 
     state.copied = true
@@ -69,7 +69,7 @@ class AraIDWarning extends Nanocomponent {
           <div class="${styles.smallMessage({})} modal-smallMessage">
             The following string of characters is your <b>Ara ID</b>. Please <b>copy it and keep it in a safe place</b>.
           </div>
-          <div class="${styles.araIDHolder} modal-araIDHolder">${props.userDID.slice(-64)}</div>
+          <div class="${styles.araIDHolder} modal-araIDHolder">${props.userAid.slice(-64)}</div>
           <div class="${styles.copyItemContainer} modal-copyItemContainer" >
             <div class="${styles.clipboard}">
               ${children.copyIDButton.render({})}

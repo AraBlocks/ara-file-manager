@@ -21,7 +21,7 @@ class FileDescriptor extends Nanocomponent {
     super()
 
     this.props = {
-      name: name || did.slice(8,23) + '...',
+      name: name || did.slice(0,15) + '...',
       size
     }
 

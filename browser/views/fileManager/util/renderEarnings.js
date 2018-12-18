@@ -1,8 +1,8 @@
 'use strict'
 
 const html = require('choo/html')
-const { colors } = require('styleUtils')
 const { utils } = require('../../../lib/tools')
+const { colors } = require('styleUtils')
 
 module.exports = (reedming, earnings, allocatedRewards) =>{
   const roundedEarnings = utils.roundDecimal(earnings, 100)

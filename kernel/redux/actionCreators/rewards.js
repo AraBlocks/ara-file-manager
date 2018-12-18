@@ -32,6 +32,7 @@ ipcMain.on(k.CONFIRM_REDEEM, async (event, load) => {
   try {
     const { account, account: { autoQueue } } = store
 
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
     debug('DISPATCHING %s', k.REDEEMING_REWARDS)
     dispatch({ type: k.REDEEMING_REWARDS, load: { did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
@@ -40,6 +41,7 @@ ipcMain.on(k.CONFIRM_REDEEM, async (event, load) => {
     const value = await autoQueue.push(() => rewards.redeem(redeemLoad))
 
     debug('DISPATCHING %s', k.REWARDS_REDEEMED)
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     dispatch({ type: k.REWARDS_REDEEMED, load: { did: load.did, value } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
@@ -51,6 +53,7 @@ internalEmitter.on(k.REWARDS_ALLOCATED, (load) => {
   debug('%s HEARD', k.REWARDS_ALLOCATED)
   try {
     dispatch({ type: k.REWARDS_ALLOCATED, load })
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
     debug('Error: %o', o)
