@@ -41,6 +41,9 @@ module.exports = async (state, { load = null, type }) => {
       state.araBalance = load.araBalance || state.araBalance
       state.ethBalance = load.ethBalance || state.ethBalance
       break
+    case k.TOGGLE_ANALYTICS_PERMISSION:
+      state.analyticsPermission = load.analyticsPermission
+      break
     default:
       return state
   }

@@ -34,7 +34,6 @@ app.setName(application.APP_NAME)
 app.on('ready', () => {
   debug('App initialzed')
   windowManager.init()
-  analytics.trackAppOpen()
 
   //Creates tray menu
   require('./tray').buildTray()
@@ -61,6 +60,7 @@ app.on('ready', () => {
   if (process.argv.includes('loggedin') === false) {
     windowManager.openWindow('login')
   }
+  analytics.trackAppOpen()
 })
 //Prevents app from closing when all windows are shut
 app.on('window-all-closed', () => { })
@@ -80,5 +80,11 @@ app.on('before-quit', () => {
   farmerManager.stopAllBroadcast(farm)
 })
 
-process.on('uncaughtException', err => debug('uncaught exception: %o', err))
-process.on('unhandledRejection', err => debug('unhandled rejection: %o', err))
+process.on('uncaughtException', async err => {
+  await analytics.trackError(err.stack)
+  debug('uncaught exception: %o', err)
+})
+process.on('unhandledRejection', async err => {
+  await analytics.trackError(err.stack)
+  debug('unhandled rejection: %o', err)
+})

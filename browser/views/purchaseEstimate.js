@@ -29,12 +29,7 @@ class purchaseEstimate extends Nanocomponent {
 
   purchase() {
     const { props } = this
-    const load = {
-      did: props.did,
-      fileName: props.fileName,
-      price: props.price
-    }
-    emit({ event: k.CONFIRM_PURCHASE, load })
+    emit({ event: k.CONFIRM_PURCHASE, load: props })
     closeWindow('purchaseEstimate')
   }
 
