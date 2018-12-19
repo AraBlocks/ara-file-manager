@@ -19,7 +19,7 @@ class AccountInfo extends Nanocomponent {
     const { account, application } = props
 
     this.props = {
-      account,
+      analyticsPermission: account.analyticsPermission,
       araBalance: account.araBalance,
       ethAddress: account.accountAddress,
       ethBalance: account.ethBalance,
@@ -151,7 +151,7 @@ class AccountInfo extends Nanocomponent {
         <div class="${styles.appInfo} accountInfo-appInfo">
           <div>
             <a onclick=${toggleAnalyticsPermission}>
-              ${props.account.analyticsPermission ? 'Disable Analytics' : 'Enable Analytics' }
+              ${props.analyticsPermission ? 'Disable Analytics' : 'Enable Analytics' }
             </a>
           </div>
           <div class="link-holder">

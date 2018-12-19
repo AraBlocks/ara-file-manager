@@ -4,6 +4,8 @@ const uuid = require('uuid/v4');
 const { version } = require('../../../package.json')
 const { getAppData } = require('./afmManager')
 const { analytics, application } = require('../../../lib/constants/index')
+const windowManager = require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 
 async function getSession() {
     if (global.session) return global.session
@@ -47,8 +49,6 @@ async function trackEvent(category, action, label, value) {
 }
 
 function hasAnalyticsPermission() {
-    const windowManager = require('electron-window-manager')
-    const store = windowManager.sharedData.fetch('store')
     if (store == null) { return true }
     return store.account.analyticsPermission
 }

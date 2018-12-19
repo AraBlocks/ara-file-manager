@@ -58,4 +58,5 @@ internalEmitter.on(k.CONFIRM_QUIT, async () => {
 ipcMain.on(k.TOGGLE_ANALYTICS_PERMISSION, () => {
   const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userAid)
   dispatch({ type: k.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission }})
+  windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 })
