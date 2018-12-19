@@ -51,7 +51,9 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
   debug('%s heard. Load: %O', k.UPDATE_FILE, load)
   const { account } = store
   try {
-    event.sender.send(k.ESTIMATING_COST)
+    dispatch({ type: k.FEED_MODAL, load: { load: { fileName: load.name } }})
+    windowManager.openModal('generalPleaseWaitModal')
+    windowManager.closeWindow('manageFileView')
     let estimate
 
     if (load.shouldUpdatePrice && !load.shouldCommit) {
@@ -86,7 +88,8 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
 
     debug('Dispatching %s . Load: %O', k.FEED_MODAL, dispatchLoad)
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-    event.sender.send(k.ESTIMATION)
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.openModal('updateConfirmModal')
   } catch (err) {
     debug('Error: %O', err)
   }

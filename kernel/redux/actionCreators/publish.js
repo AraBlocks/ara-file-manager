@@ -108,6 +108,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     let dispatchLoad = { load: { fileName: load.name } }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
+    windowManager.closeWindow('manageFileView')
 
     await (await afs.add({ did, paths: load.paths, password })).close()
 
@@ -160,8 +161,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
-    windowManager.closeWindow('publishFileView')
-
     dispatch({ type: k.PUBLISHING, load: { did: load.did, status: k.PUBLISHING } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
@@ -176,7 +175,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.PUBLISHING, load: descriptor })
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-    windowManager.closeWindow('manageFileView')
 
     const balance = await araContractsManager.getAraBalance(userAid)
     debug('Dispatching %s', k.PUBLISHED)

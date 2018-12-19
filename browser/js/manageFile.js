@@ -13,10 +13,4 @@ const manageFileContainer = new ManageFileContainer({
 document.getElementById('container').appendChild(manageFileContainer.render({ spinner: !modal.manageFileData.uncommitted }))
 
 ipcRenderer.on(k.ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
-ipcRenderer.on(k.ESTIMATION, () => windowManagement.openModal('updateConfirmModal'))
 ipcRenderer.on(k.REFRESH, () => manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList }))
-
-window.onunload = () => {
-	!modal.manageFileData.uncommitted
-		&& windowManagement.emit({ event: k.START_SEEDING, load: { did: modal.manageFileData.did } })
-}
