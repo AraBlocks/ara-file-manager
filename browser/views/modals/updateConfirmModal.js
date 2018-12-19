@@ -1,7 +1,7 @@
 'use strict'
 
 const { CONFIRM_UPDATE_FILE } = require('../../../lib/constants/stateManagement')
-const { closeModal, closeWindow, emit } = require('../../lib/tools/windowManagement')
+const { closeModal, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles')
@@ -18,7 +18,6 @@ module.exports = (load) => {
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
     onclick: () => {
-      closeWindow('manageFileView')
       closeModal()
     }
   })

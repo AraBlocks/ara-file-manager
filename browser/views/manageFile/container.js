@@ -38,7 +38,13 @@ class Container extends Nanocomponent {
 				cssClass: { name: 'thinBorder' },
 				onclick: this.updateFile.bind(this)
 			}),
-			utilityButton: new UtilityButton({})
+			utilityButton: new UtilityButton({
+				onclick: () => {
+					!this.state.uncommitted
+						&& windowManagement.emit({ event: k.START_SEEDING, load: { did: opts.did } })
+					windowManagement.closeWindow('manageFileView')
+				}
+			})
 		}
 		this.getPathDiff = this.getPathDiff.bind(this)
 		this.fileInfoChanged = this.fileInfoChanged.bind(this)
@@ -56,7 +62,7 @@ class Container extends Nanocomponent {
 		const priceChanged = state.oldPrice != state.price
 		const shouldCommit = !(addPaths.length == 0 && removePaths.length == 0)
 		const notEmpty = state.fileList.length != 0
-		return (priceChanged || shouldCommit) && notEmpty && !props.account.pendingPublish && state.price >= 0
+		return (priceChanged || shouldCommit) && notEmpty && state.price >= 0
 	}
 
 	renderView() {
