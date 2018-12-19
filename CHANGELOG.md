@@ -1,3 +1,25 @@
+# [0.3.0](https://github.com/littlstar/ara-content-manager/compare/0.2.0...0.3.0) (2018-12-19)
+
+
+### Bug Fixes
+
+* **.gitignore:** add analytics.js.bak file ([c38315b](https://github.com/littlstar/ara-content-manager/commit/c38315b))
+* Empty manage file view ([0d4707d](https://github.com/littlstar/ara-content-manager/commit/0d4707d))
+* Empty manage file view ([d39c460](https://github.com/littlstar/ara-content-manager/commit/d39c460))
+* **package.json:** Rename build-dist to dist ([5b837f3](https://github.com/littlstar/ara-content-manager/commit/5b837f3))
+* Manage and Publish Flow ([#331](https://github.com/littlstar/ara-content-manager/issues/331)) ([9136f54](https://github.com/littlstar/ara-content-manager/commit/9136f54))
+
+
+### Features
+
+* Add build script for dev and production ([ef208cc](https://github.com/littlstar/ara-content-manager/commit/ef208cc))
+* **autoQueue.js:** enqueues transactions! ([d69494d](https://github.com/littlstar/ara-content-manager/commit/d69494d))
+* Dynamic Tooltip Component ([ca02253](https://github.com/littlstar/ara-content-manager/commit/ca02253))
+* Merge Manage File and Publish File ([da130a7](https://github.com/littlstar/ara-content-manager/commit/da130a7))
+* PE-753 Google Analytics for pageviews and crash logs ([4bcb135](https://github.com/littlstar/ara-content-manager/commit/4bcb135))
+
+
+
 # [0.2.0](https://github.com/littlstar/ara-content-manager/compare/0.1.10...0.2.0) (2018-12-14)
 
 
