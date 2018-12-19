@@ -42,11 +42,11 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		}
 
 		const price = Number(await araContractsManager.getAFSPrice({ did: load.did }))
-		const gasEstimate = await araContractsManager.purchaseEstimate({
+		const gasEstimate = Number(await araContractsManager.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
 			userDID: account.userAid,
-		})
+		}))
 
 		windowManager.pingView({ view: 'purchaseEstimate', event: k.REFRESH, load: { gasEstimate, price } })
 	} catch (err) {
