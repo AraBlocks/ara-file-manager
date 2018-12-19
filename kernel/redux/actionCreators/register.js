@@ -34,7 +34,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     const autoQueue = farmerManager.createAutoQueue()
     const farmer = farmerManager.createFarmer({ did, password, queue: autoQueue })
     afmManager.cacheUserDid(did)
-    const analyticsPermission = afmManager.getAnalyticsPermission()
+    const analyticsPermission = afmManager.getAnalyticsPermission(did)
     debug('Dispatching %s', k.REGISTERED)
     dispatch({
       type: k.REGISTERED,
