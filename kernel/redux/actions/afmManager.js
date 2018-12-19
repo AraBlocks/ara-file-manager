@@ -70,6 +70,22 @@ function getCachedUserDid() {
 	return cachedData.cachedUserDid ? cachedData.cachedUserDid : ''
 }
 
+function getAnalyticsPermission(userDID) {
+	const userData = getUserData(userDID)
+	if (userData.analyticsPermission == null) {
+		userData.analyticsPermission = true
+		saveUserData({ userDID, userData })
+	}
+	return userData.analyticsPermission
+}
+
+function toggleAnalyticsPermission(userDID) {
+	const userData = getUserData(userDID)
+	userData.analyticsPermission = !userData.analyticsPermission
+	saveUserData({ userDID, userData })
+	return userData.analyticsPermission
+}
+
 function parseJSON(path) {
 	try {
 		const data = fs.readFileSync(path)
@@ -107,11 +123,13 @@ function saveUserData( { userDID, userData }) {
 module.exports = {
 	cacheUserDid,
 	getAFMPath,
+	getAnalyticsPermission,
 	getCachedUserDid,
 	getPublishedItems,
 	getAppData,
 	getUserData,
 	savePublishedItem,
 	saveUserData,
+	toggleAnalyticsPermission,
 	removedPublishedItem
 }
