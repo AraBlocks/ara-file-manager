@@ -4,6 +4,7 @@ const k = require('../../lib/constants/stateManagement')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
 const { emit } = require('../lib/tools/windowManagement')
+const DynamicTooltip = require('../components/dynamicTooltip')
 const TestnetBanner = require('../components/TestnetBanner')
 const UtilityButton = require('../components/UtilityButton')
 const styles = require('./styles/accountInfo')
@@ -11,12 +12,6 @@ const { utils, windowManagement } = require('../lib/tools')
 const html = require('choo/html')
 const Nanocomponent = require('nanocomponent')
 const { shell } = require('electron')
-const tt = require('electron-tooltip')
-
-tt({
-  position: 'top',
-  style: { width: '130px' }
-})
 
 class AccountInfo extends Nanocomponent {
   constructor(props) {
@@ -40,39 +35,19 @@ class AccountInfo extends Nanocomponent {
         children: 'Send Tokens',
         cssClass: { opts: { fontSize: '14', height: '3' } },
         onclick: () => windowManagement.openWindow('sendAra')
+      }),
+      araIDTooltip: new DynamicTooltip({
+        children: this.props.userDID,
+        onclick: () => clipboard.writeText(this.props.userDID)
+      }),
+      ethAddressTooltip: new DynamicTooltip({
+        children: this.props.ethAddress,
+        cssClass: { color: 'green' },
+        onclick: () => clipboard.writeText(this.props.ethAddress)
       })
     }
-    this.eventMouseLeave = document.createEvent('MouseEvents')
-    this.eventMouseEnter = document.createEvent('MouseEvents')
-    this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
-    this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
-    this.renderCopyableText = this.renderCopyableText.bind(this)
     this.toggleAnalyticsPermission = this.toggleAnalyticsPermission.bind(this)
     this.rerender = this.rerender.bind(this)
-  }
-
-  renderCopyableText(textType) {
-    const { eventMouseEnter, props } = this
-
-    const text = textType === 'did'
-      ? props.userDID
-      : props.ethAddress
-    return html`
-      <div
-        data-tooltip="Copy to Clipboard"
-        class="${styles.copyableText} header-didHolder"
-        onclick="${({ target }) => {
-          target.parentElement.dataset.tooltip = 'Copied!'
-          target.parentElement.dispatchEvent(eventMouseEnter)
-          target.parentElement.dataset.tooltip = 'Copy to Clipboard!'
-          clipboard.writeText(text)
-        }}"
-        onmouseenter="${({ target }) => target.style.backgroundColor = '#d0d0d0'}"
-        onmouseleave="${({ target }) => target.style.backgroundColor = ''}"
-      >
-        <div class="${textType}">${text}</div>
-      </div>
-    `
   }
 
   get faucetButtonOpts() {
@@ -127,7 +102,6 @@ class AccountInfo extends Nanocomponent {
       openTerms,
       toggleAnalyticsPermission,
       props,
-      renderCopyableText
     } = this
 
     return html`
@@ -156,14 +130,10 @@ class AccountInfo extends Nanocomponent {
           </div>
           <div class="${styles.idHolder} accountInfo-idHolder">
             <div class="container">
-              <div>
                 <div>Your <b>Ara ID is:</b></div>
-                ${renderCopyableText('did')}
-              </div>
-              <div>
+                ${children.araIDTooltip.render()}
                 <div>Your <b>Wallet Address</b> is:</div>
-                ${renderCopyableText('eth')}
-              </div>
+                ${children.ethAddressTooltip.render()}
             </div>
           </div>
           <div class="${styles.interactiveSection} accountInfo-interactiveSection">
