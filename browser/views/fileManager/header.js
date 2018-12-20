@@ -6,6 +6,7 @@ const { clipboard } = require('electron')
 const { DEPLOY_PROXY } = require('../../../lib/constants/stateManagement')
 const DynamicTooltip = require('../../components/dynamicTooltip')
 const { emit } = require('../../lib/tools/windowManagement')
+window.emit = emit
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
