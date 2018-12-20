@@ -3,5 +3,6 @@ module.exports = {
   rewards: [],
   transfer: null,
   transferEth: null,
-  faucet: null
+  faucet: null,
+  updates: []
 }
