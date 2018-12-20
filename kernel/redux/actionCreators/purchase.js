@@ -58,6 +58,10 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 	const { autoQueue } = account
 	debug('%s heard: %s', k.CONFIRM_PURCHASE, load.did)
 	try {
+		if (account.ethBalance < load.gasEstimate) {
+			throw new Error('Not enough eth')
+		}
+
 		const descriptorOpts = {
 			peers: 1,
 			name: load.fileName,
@@ -74,6 +78,17 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 		const araBalance = await araContractsManager.getAraBalance(account.userAid)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
 
+		dispatch({ type: k.FEED_MODAL, load: {
+				modalName: 'startDownload',
+				callback: () => {
+					internalEmitter.emit(k.DOWNLOAD, load)
+				}
+			}
+		})
+		windowManager.openModal('generalActionModal')
+
+		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+
 		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
 		dispatch({ type: k.GOT_REWARDS_SUB, load: { rewardsSub } })
 	} catch (err) {
@@ -85,7 +100,9 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 function errorHandler(err) {
 	debug(err)
-	dispatch({ type: k.FEED_MODAL, load: { modalName: 'purchaseFailed' } })
+	err.message === 'Not enough eth'
+		? dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
+		: dispatch({ type: k.FEED_MODAL, load: { modalName: 'purchaseFailed' } })
 	windowManager.openModal('generalMessageModal')
 	internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 }

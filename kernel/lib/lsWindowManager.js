@@ -1,6 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:lsWindowManager')
+const analytics = require('../redux/actions/analytics')
 const k = require('../../lib/constants/stateManagement')
 const EventEmitter = require('events')
 const path = require('path')
@@ -41,7 +42,7 @@ windowManager.setSize = (view) => {
       break
     case 'accountInfo':
       width = 325
-      height = 650
+      height = 690
       break
     case 'developer':
       width = 300
@@ -222,6 +223,7 @@ windowManager.closeWindow = (name) => {
 }
 
 windowManager.openWindow = (view) => {
+  analytics.trackScreenView(view)
 	windowManager.get(view)
 		? windowManager.get(view).focus()
 		: windowManager.open(

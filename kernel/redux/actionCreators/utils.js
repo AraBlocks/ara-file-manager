@@ -3,7 +3,11 @@
 const debug = require('debug')('acm:kernel:lib:actionCreators:utils')
 const k = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
-const { afsManager, farmerManager } = require('../actions')
+const {
+  afsManager,
+  afmManager,
+  farmerManager
+} = require('../actions')
 const { ipcMain, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
@@ -22,9 +26,9 @@ ipcMain.on(k.OPEN_AFS, async (event, load) => {
     const allFiles = files.published.concat(files.purchased)
     const file = allFiles.find(file => file.did === load.did)
     const updateAvailable = file.status === k.UPDATE_AVAILABLE ? true : false
-    await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] } })
     windowManager.openWindow('afsExplorerView')
+    await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     const fileList = await afsManager.getFileList(load.did)
     dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable } })
     windowManager.pingView({ view: 'afsExplorerView', event: k.REFRESH })
@@ -49,4 +53,10 @@ ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
 internalEmitter.on(k.CONFIRM_QUIT, async () => {
   dispatch({ type: k.FEED_MODAL, load: { modalName: 'quitConfirm', callback: () => app.quit() } })
   windowManager.openModal('generalActionModal')
+})
+
+ipcMain.on(k.TOGGLE_ANALYTICS_PERMISSION, () => {
+  const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userAid)
+  dispatch({ type: k.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission }})
+  windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 })

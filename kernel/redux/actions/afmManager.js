@@ -9,6 +9,8 @@ const araUtil = require('ara-util')
 const toilet = require('toiletdb')
 const pify = require('pify')
 const { application } = require('../../../lib/constants/index')
+const { version } = require('../../../package.json')
+const rimraf = require('rimraf')
 
 async function getAppData() {
 	if (global.appData) return global.appData
@@ -30,6 +32,27 @@ function getAFMDirectory() {
 	const afmDirectory = path.resolve(userHome, '.ara', 'afm')
 	fs.existsSync(afmDirectory) || fs.mkdirSync(afmDirectory)
 	return afmDirectory
+}
+
+function cleanOutdatedData() {
+	const filePath = path.resolve(getAFMDirectory(), 'store.json')
+	const storeData = parseJSON(filePath)
+	const compatible = storeData.version === version
+	if (compatible) {
+		debug('Version is compatible')
+		return
+	}
+	const afmDirectory = path.resolve(userHome, '.ara', 'afm')
+	const afsDirectory = path.resolve(userHome, '.ara', 'afs')
+	const dcdnDirectory = path.resolve(userHome, '.ara', 'dcdn')
+	fs.existsSync(afmDirectory) && rimraf(afmDirectory, () => {
+		debug('remove afm')
+		storeData.version = version
+		const storePath = path.resolve(getAFMDirectory(), 'store.json')
+		fs.writeFileSync(storePath, JSON.stringify(storeData))
+	})
+	fs.existsSync(afsDirectory) && rimraf(afsDirectory, () => { debug('remove afs') })
+	fs.existsSync(dcdnDirectory) && rimraf(dcdnDirectory, () => { debug('remove dcdn')})
 }
 
 function getUserData(userDID) {
@@ -70,6 +93,22 @@ function getCachedUserDid() {
 	return cachedData.cachedUserDid ? cachedData.cachedUserDid : ''
 }
 
+function getAnalyticsPermission(userDID) {
+	const userData = getUserData(userDID)
+	if (userData.analyticsPermission == null) {
+		userData.analyticsPermission = true
+		saveUserData({ userDID, userData })
+	}
+	return userData.analyticsPermission
+}
+
+function toggleAnalyticsPermission(userDID) {
+	const userData = getUserData(userDID)
+	userData.analyticsPermission = !userData.analyticsPermission
+	saveUserData({ userDID, userData })
+	return userData.analyticsPermission
+}
+
 function parseJSON(path) {
 	try {
 		const data = fs.readFileSync(path)
@@ -107,11 +146,14 @@ function saveUserData( { userDID, userData }) {
 module.exports = {
 	cacheUserDid,
 	getAFMPath,
+	getAnalyticsPermission,
 	getCachedUserDid,
 	getPublishedItems,
 	getAppData,
 	getUserData,
 	savePublishedItem,
 	saveUserData,
+	toggleAnalyticsPermission,
+	cleanOutdatedData,
 	removedPublishedItem
 }

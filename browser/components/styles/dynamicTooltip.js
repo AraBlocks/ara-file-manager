@@ -12,7 +12,7 @@ module.exports = {
 			border-radius: 7px;
 			cursor: pointer;
 			transition: all ease-in-out;
-			padding: 4px 4px;
+			padding: 2px 0px;
 		}
 	`,
 

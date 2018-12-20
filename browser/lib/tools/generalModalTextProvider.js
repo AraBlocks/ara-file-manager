@@ -31,7 +31,7 @@ function generalModalText(modalName, load) {
 			break
 		case 'failureModal2':
 			title = 'Something went wrong'
-			description = 'There could be a problem with with your file or your ability to access the network. Please check your connection and try again.'
+			description = 'There could be a problem with your file or your ability to access the network. Please check your connection and try again.'
 			break
 		case 'purchaseFailed':
 			title = 'Something went wrong'
@@ -134,6 +134,10 @@ function actionModalText(modalName) {
 	let description
 	let title
 	switch (modalName) {
+		case 'startDownload':
+			title = 'Purchased!'
+			description = 'Download package now?'
+			break
 		case 'logoutConfirm':
 			title = 'Log Out?'
 			description = 'This will not alter any files on this computer. Only files linked to the current Ara ID can be shared on the network.'

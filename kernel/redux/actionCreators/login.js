@@ -80,14 +80,16 @@ async function login(_, load) {
     return
   }
 
+  const userAid = araUtil.getIdentifier(load.userAid)
   //writes did signed in with to disk to autofill input next time app booted
-  afmManager.cacheUserDid(load.userAid)
+  afmManager.cacheUserDid(userAid)
 
   try {
     const network = await utils.getNetwork()
     dispatch({ type: k.GETTING_USER_DATA, load: { userAid: load.userAid, network } })
     windowManager.openWindow('filemanager')
 
+    const analyticsPermission = afmManager.getAnalyticsPermission(load.userAid)
     const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
     const araBalance = await araContractsManager.getAraBalance(load.userAid)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
@@ -98,6 +100,7 @@ async function login(_, load) {
     dispatch({
       type: k.LOGIN,
       load: {
+        analyticsPermission,
         accountAddress,
         araBalance,
         autoQueue,
@@ -105,7 +108,7 @@ async function login(_, load) {
         ethBalance,
         farmer,
         password: load.password,
-        userAid: load.userAid
+        userAid
       }
     })
 

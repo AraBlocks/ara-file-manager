@@ -9,7 +9,10 @@ const { internalEmitter } = require('electron-window-manager')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(k.DOWNLOAD, async (event, load) => {
+ipcMain.on(k.DOWNLOAD, download)
+internalEmitter.on(k.DOWNLOAD, (load) => download(null, load))
+
+async function download(event, load) {
 	debug('%s heard', k.DOWNLOAD)
 	try {
 		const { jobId } = store.files.purchased.find(({ did }) => did === load.did)
@@ -26,7 +29,7 @@ ipcMain.on(k.DOWNLOAD, async (event, load) => {
 	} catch (err) {
 		debug('Error: %O', err)
 	}
-})
+}
 
 ipcMain.on(k.PAUSE_DOWNLOAD, async (event, load) => {
 	debug('%s heard', k.PAUSE_DOWNLOAD)

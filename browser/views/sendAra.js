@@ -31,7 +31,8 @@ class SendAra extends Nanocomponent {
         placeholder: '0.0',
         parentState: this.state,
 				field: 'amount',
-				type: 'number'
+        type: 'number',
+        step: 'any'
       }),
 
       sendButton: new Button({
