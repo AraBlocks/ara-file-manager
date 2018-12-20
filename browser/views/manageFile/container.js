@@ -1,7 +1,9 @@
 'use strict'
 
 const Button = require('../../components/button')
+const { clipboard } = require('electron')
 const { fileSystemManager, windowManagement } = require('../../lib/tools')
+const DynamicTooltip = require('../../components/dynamicTooltip')
 const FileInfo = require('./fileInfo')
 const overlay = require('../../components/overlay')
 const { UPDATE_FILE, PUBLISH } = require('../../../lib/constants/stateManagement')
@@ -37,6 +39,10 @@ class Container extends Nanocomponent {
 				children: 'Publish Update',
 				cssClass: { name: 'thinBorder' },
 				onclick: this.updateFile.bind(this)
+			}),
+			packageIDTooltip: new DynamicTooltip({
+				children: "Package ID: " + opts.did,
+				onclick: () => clipboard.writeText(opts.did)
 			}),
 			utilityButton: new UtilityButton({
 				onclick: () => {
@@ -159,6 +165,7 @@ class Container extends Nanocomponent {
 				<div class="${styles.content} ManageFileContainer-content">
 					${this.renderDescription()}
 				</div>
+				${children.packageIDTooltip.render()}
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
 				${children.publishButton.render({
