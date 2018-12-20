@@ -42,11 +42,9 @@ function cleanOutdatedData() {
 		debug('Version is compatible')
 		return
 	}
-	const ararcPath = path.resolve(userHome, '.ararc')
 	const afmDirectory = path.resolve(userHome, '.ara', 'afm')
 	const afsDirectory = path.resolve(userHome, '.ara', 'afs')
 	const dcdnDirectory = path.resolve(userHome, '.ara', 'dcdn')
-	//fs.existsSync(ararcPath) && fs.unlinkSync(ararcPath)
 	fs.existsSync(afmDirectory) && rimraf(afmDirectory, () => {
 		debug('remove afm')
 		storeData.version = version

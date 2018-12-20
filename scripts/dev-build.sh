@@ -1,6 +1,4 @@
 #!/bin/bash
-echo 'Adding ararc'
-mv ararc.txt .ararc
 echo 'Packaging dev build'
 
 electron-packager . \
@@ -11,6 +9,3 @@ electron-packager . \
 --prune=true \
 --out=release-builds \
 --app-bundle-id=\"com.ara.one.araFileManager\"
-
-echo 'Finish packaging, removing .ararc from repo'
-mv .ararc ararc.txt

@@ -3,6 +3,7 @@
 const debug = require('debug')('acm:boot:main')
 const writeFiles = require('./writeFiles')
 //Writes .ara and keyrings if doesn't exist
+if (writeFiles.updateAraRC() === false) { debug('.ararc exists, not writing file') }
 if (writeFiles.writeDotAra() === false) { debug('.ara exists, not writing directory') }
 
 const { cleanOutdatedData } = require('../kernel/redux/actions/afmManager')
