@@ -2,6 +2,8 @@
 
 const AfsFileTable = require('../../components/afsFileTable/afsFileTable')
 const Button = require('../../components/button')
+const { clipboard } = require('electron')
+const DynamicTooltip = require('../../components/dynamicTooltip')
 const { emit } = require('../../lib/tools/windowManagement')
 const { EXPORT_FILE, CLOSE_AFS_EXPLORER, DOWNLOAD } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
@@ -34,6 +36,10 @@ class Container extends Nanocomponent {
 				did,
 				fileList,
 				renderView: this.renderView.bind(this)
+			}),
+			araIdTooltip: new DynamicTooltip({
+				children: "Package ID: " + did.slice(0,50) + "...",
+				onclick: () => clipboard.writeText(did)
 			}),
 			downloadUpdateButton: new Button({
 				children: 'Download Update',
@@ -105,6 +111,7 @@ class Container extends Nanocomponent {
 					${props.afsName}
 					${children.utilityButton.render({ children: 'close' })}
 				</div>
+				${children.araIdTooltip.render()}
 				<div class="${styles.content} AfsExplorerViewContainer-content">
 					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export individual files to your hard drive by right-clicking them
 					, or by clicking “export all”.

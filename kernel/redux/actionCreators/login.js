@@ -80,8 +80,9 @@ async function login(_, load) {
     return
   }
 
+  const userAid = araUtil.getIdentifier(load.userAid)
   //writes did signed in with to disk to autofill input next time app booted
-  afmManager.cacheUserDid(load.userAid)
+  afmManager.cacheUserDid(userAid)
 
   try {
     const network = await utils.getNetwork()
@@ -107,7 +108,7 @@ async function login(_, load) {
         ethBalance,
         farmer,
         password: load.password,
-        userAid: load.userAid
+        userAid
       }
     })
 

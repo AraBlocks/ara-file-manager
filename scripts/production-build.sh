@@ -6,6 +6,8 @@ ANALYTICS_CONSTANTS=./lib/constants/analytics.js
 
 sed -i.bak s/"UA_ACCOUNT_CURRENT:"[[:print:]]*/"UA_ACCOUNT_CURRENT: UA_ACCOUNT_PRODUCTION"/ "$ANALYTICS_CONSTANTS"
 
+echo 'Packaging production build'
+
 electron-packager . \
 --overwrite \
 --platform=darwin \

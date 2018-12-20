@@ -31,7 +31,7 @@ function generalModalText(modalName, load) {
 			break
 		case 'failureModal2':
 			title = 'Something went wrong'
-			description = 'There could be a problem with with your file or your ability to access the network. Please check your connection and try again.'
+			description = 'There could be a problem with your file or your ability to access the network. Please check your connection and try again.'
 			break
 		case 'purchaseFailed':
 			title = 'Something went wrong'
