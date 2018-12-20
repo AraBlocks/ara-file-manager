@@ -86,7 +86,7 @@ async function login(_, load) {
 
   try {
     const network = await utils.getNetwork()
-    dispatch({ type: k.GETTING_USER_DATA, load: { userAid: userAid, network } })
+    dispatch({ type: k.GETTING_USER_DATA, load: { userAid, network } })
     windowManager.openWindow('filemanager')
 
     const analyticsPermission = afmManager.getAnalyticsPermission(userAid)
