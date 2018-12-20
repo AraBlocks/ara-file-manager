@@ -298,11 +298,8 @@ async function subscribeAFSUpdates(contentDID) {
 		try {
 			subscription = contract.events.Commit()
 				.on('data', async () => {
-					debug('🐿 updateeeeee')
 					const updateAvailable = await araFilesystem.isUpdateAvailable({ did: contentDID })
-					if (updateAvailable) {
-						windowManager.internalEmitter.emit(k.UPDATE_AVAILABLE, { did: contentDID })
-					}
+					updateAvailable && windowManager.internalEmitter.emit(k.UPDATE_AVAILABLE, { did: contentDID })
 				})
 				.on('error', debug)
 		} catch (err) {

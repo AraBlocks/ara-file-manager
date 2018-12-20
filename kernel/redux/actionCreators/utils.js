@@ -62,7 +62,7 @@ ipcMain.on(k.TOGGLE_ANALYTICS_PERMISSION, () => {
 })
 
 internalEmitter.on(k.UPDATE_AVAILABLE, (load) => {
-  debug('%s HEARD: %s', k.UPDATE_AVAILABLE, load.did)
+  debug('%s HEARD', k.UPDATE_AVAILABLE)
   dispatch({ type: k.UPDATE_AVAILABLE, load: { did : load.did }})
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 })
