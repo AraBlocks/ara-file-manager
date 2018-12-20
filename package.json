@@ -8,7 +8,7 @@
   "scripts": {
     "start-dev": "electron boot/main.js",
     "test": "electron test/main.js",
-    "postinstall": "install-app-deps",
+    "postinstall": "sh ./scripts/postinstall.sh && install-app-deps",
     "pack": "build --dir",
     "mac-installer": "electron-installer-dmg ./release-builds/Ara\\ File\\ Manager-darwin-x64/Ara\\ File\\ Manager.app Ara\\ File\\ Manager --icon=build/icons/mac/ara_DMG.icns",
     "build-dev": "./scripts/dev-build.sh",
@@ -53,6 +53,7 @@
     "rimraf": "^2.6.2",
     "styleUtils": "file:browser/lib/styleUtils",
     "toiletdb": "^1.4.1",
+    "truffle": "^4.1.14",
     "universal-analytics": "^0.4.20",
     "user-home": "^2.0.0",
     "uuid": "^3.3.2",
