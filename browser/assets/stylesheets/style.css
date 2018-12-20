@@ -21,6 +21,8 @@ button {
 input[type="submit"],
 input[type="reset"],
 input[type="button"],
+input[type="password"],
+input[type="number"],
 input[type="text"],
 textarea {
 	-webkit-app-region: no-drag;
