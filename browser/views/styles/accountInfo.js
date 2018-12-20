@@ -4,6 +4,7 @@ const { fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
+  fonts,
   appInfo: css`
     :host {
       align-items: center;
