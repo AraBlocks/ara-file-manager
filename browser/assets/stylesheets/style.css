@@ -14,7 +14,16 @@ body {
 }
 
 button {
+  -webkit-app-region: no-drag;
   cursor: pointer;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="text"],
+textarea {
+	-webkit-app-region: no-drag;
 }
 
 a {
