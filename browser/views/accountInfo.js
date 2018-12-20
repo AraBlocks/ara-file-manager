@@ -47,7 +47,11 @@ class AccountInfo extends Nanocomponent {
       }),
       contactSupportTooltip: new DynamicTooltip({
         children: 'Contact Support',
-        cssClass: { color: 'orange', fontSize: 12, fontFamily: styles.fonts.regular },
+        cssClass: {
+          color: 'orange',
+          fontSize: 12,
+          fontFamily: styles.fonts.regular
+        },
         beforeTooltipText: 'Copy Email',
         onclick: () => clipboard.writeText('support@ara.one')
       })
