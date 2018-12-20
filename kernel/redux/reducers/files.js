@@ -90,6 +90,11 @@ module.exports = (state, { load = null, type }) => {
     case k.PROXY_DEPLOYED:
       state.published.push(load.descriptor)
       break
+    case k.UPDATE_AVAILABLE:
+      file = findFile(load.did, state.purchased)
+      if (file == null) { break }
+      file.status = k.UPDATE_AVAILABLE
+      break
     case k.UPDATING_FILE:
       file = findFile(load.did, state.published)
       if (file == null) { break }

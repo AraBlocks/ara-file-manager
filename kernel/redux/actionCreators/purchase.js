@@ -90,7 +90,9 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
 		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
-		dispatch({ type: k.GOT_REWARDS_SUB, load: { rewardsSub } })
+		const updateSub = await araContractsManager.subscribeAFSUpdates(load.did)
+
+		dispatch({ type: k.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
 	} catch (err) {
 		errorHandler(err)
 		dispatch({ type: k.ERROR_PURCHASING, load: { did: load.did } })

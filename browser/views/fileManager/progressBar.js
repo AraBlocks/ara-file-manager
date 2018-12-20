@@ -11,6 +11,7 @@ module.exports = ({
   shouldBroadcast
 }) => {
   let color
+
   switch (status) {
     case k.DOWNLOADED_PUBLISHED:
       color = shouldBroadcast ? 'teal' : 'black'

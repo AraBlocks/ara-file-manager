@@ -24,13 +24,15 @@ module.exports = (state, { load = null, type }) => {
       state.rewards.push(...load.rewardsSubs)
       state.transfer = load.transferSub
       state.transferEth = load.transferEthSub
+      state.updates.push(...load.updateSubs)
       break
     case k.GOT_PUBLISHED_SUB:
       state.published.push(load.publishedSub)
       state.rewards.push(load.rewardsSub)
       break
-    case k.GOT_REWARDS_SUB:
+    case k.GOT_PURCHASED_SUBS:
       state.rewards.push(load.rewardsSub)
+      state.updates.push(load.updateSub)
       break
     case k.LOGOUT:
       state.published = []

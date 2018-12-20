@@ -164,6 +164,7 @@ async function login(_, load) {
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
     const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
       .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, load.userAid)))
+    const updateSubs = await Promise.all(files.purchased.map(({ did }) => araContractsManager.subscribeAFSUpdates(did)))
 
     dispatch({
       type: k.GOT_SUBSCRIPTIONS,
@@ -171,7 +172,8 @@ async function login(_, load) {
         publishedSubs,
         rewardsSubs,
         transferSub,
-        transferEthSub
+        transferEthSub,
+        updateSubs
       }
     })
 

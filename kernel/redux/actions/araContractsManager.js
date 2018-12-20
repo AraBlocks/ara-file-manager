@@ -290,6 +290,29 @@ async function subscribeTransfer(userAddress, userDID) {
 	}
 }
 
+async function subscribeAFSUpdates(contentDID) {
+	const { contract, ctx } = await getAFSContract(contentDID)
+
+	let subscription
+	if (contract) {
+		try {
+			subscription = contract.events.Commit()
+				.on('data', async () => {
+					debug('🐿 updateeeeee')
+					const updateAvailable = await araFilesystem.isUpdateAvailable({ did: contentDID })
+					if (updateAvailable) {
+						windowManager.internalEmitter.emit(k.UPDATE_AVAILABLE, { did: contentDID })
+					}
+				})
+				.on('error', debug)
+		} catch (err) {
+			debug('Error subscribing to rewards: %o', err)
+		}
+	}
+
+	return { ctx, subscription }
+}
+
 //budget is fixed to 10% of price for now
 async function _calculateBudget(did) {
 	let budget
@@ -317,6 +340,7 @@ module.exports = {
 	purchaseEstimate,
 	sendAra,
 	subscribeEthBalance,
+	subscribeAFSUpdates,
 	subscribeFaucet,
 	subscribePublished,
 	subscribeRewardsAllocated,

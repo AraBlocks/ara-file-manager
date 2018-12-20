@@ -50,7 +50,7 @@ ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
   }
 })
 
-internalEmitter.on(k.CONFIRM_QUIT, async () => {
+internalEmitter.on(k.CONFIRM_QUIT, () => {
   dispatch({ type: k.FEED_MODAL, load: { modalName: 'quitConfirm', callback: () => app.quit() } })
   windowManager.openModal('generalActionModal')
 })
@@ -59,4 +59,10 @@ ipcMain.on(k.TOGGLE_ANALYTICS_PERMISSION, () => {
   const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userAid)
   dispatch({ type: k.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission }})
   windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
+})
+
+internalEmitter.on(k.UPDATE_AVAILABLE, (load) => {
+  debug('%s HEARD: %s', k.UPDATE_AVAILABLE, load.did)
+  dispatch({ type: k.UPDATE_AVAILABLE, load: { did : load.did }})
+  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 })
