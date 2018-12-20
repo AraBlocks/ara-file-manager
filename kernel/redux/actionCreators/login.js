@@ -86,17 +86,17 @@ async function login(_, load) {
 
   try {
     const network = await utils.getNetwork()
-    dispatch({ type: k.GETTING_USER_DATA, load: { userAid: load.userAid, network } })
+    dispatch({ type: k.GETTING_USER_DATA, load: { userAid: userAid, network } })
     windowManager.openWindow('filemanager')
 
-    const analyticsPermission = afmManager.getAnalyticsPermission(load.userAid)
-    const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
-    const araBalance = await araContractsManager.getAraBalance(load.userAid)
+    const analyticsPermission = afmManager.getAnalyticsPermission(userAid)
+    const accountAddress = await araContractsManager.getAccountAddress(userAid, load.password)
+    const araBalance = await araContractsManager.getAraBalance(userAid)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
     const autoQueue = farmerManager.createAutoQueue()
-    const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password, queue: autoQueue })
+    const farmer = farmerManager.createFarmer({ did: userAid, password: load.password, queue: autoQueue })
     //Creates a dummy afs used to estimate deployment costs more quickly
-    const deployEstimateDid = await afsManager.createDeployEstimateAfs(load.userAid, load.password)
+    const deployEstimateDid = await afsManager.createDeployEstimateAfs(userAid, load.password)
     dispatch({
       type: k.LOGIN,
       load: {
@@ -117,18 +117,18 @@ async function login(_, load) {
     switchLoginState(true)
     switchApplicationMenuLoginState(true)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
-    const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
+    const purchasedDIDs = await araContractsManager.getLibraryItems(userAid)
     //Returns objects representing various info around purchased DIDs
     const purchased = await afsManager.surfaceAFS({
       dids: purchasedDIDs,
-      userDID: load.userAid,
+      userDID: userAid,
       DCDNStore
     })
-    const publishedDIDs = await afmManager.getPublishedItems(load.userAid)
+    const publishedDIDs = await afmManager.getPublishedItems(userAid)
     //Returns objects representing various info around published DIDs
     const published = await afsManager.surfaceAFS({
       dids: publishedDIDs,
-      userDID: load.userAid,
+      userDID: userAid,
       published: true,
       DCDNStore
     })
@@ -140,9 +140,9 @@ async function login(_, load) {
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     //Gets redeemable rewards for published and purchased items
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
-      araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
+      araContractsManager.getAllocatedRewards(item, userAid, load.password)))
     let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
-      araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
+      araContractsManager.getAllocatedRewards(item, userAid, load.password)))
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
     //Gets total redeemed rewards for published and purchased items
       araContractsManager.getRewards(item, accountAddress)))
@@ -159,11 +159,11 @@ async function login(_, load) {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     //Creates subscriptions in background
-    const transferSub = await araContractsManager.subscribeTransfer(accountAddress, load.userAid)
+    const transferSub = await araContractsManager.subscribeTransfer(accountAddress, userAid)
     const transferEthSub = await araContractsManager.subscribeEthBalance(accountAddress)
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
     const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
-      .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, load.userAid)))
+      .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, userAid)))
     const updateSubs = await Promise.all(files.purchased.map(({ did }) => araContractsManager.subscribeAFSUpdates(did)))
 
     dispatch({
