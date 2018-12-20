@@ -27,6 +27,7 @@ module.exports = {
         transition: all 100ms;
         width: 100%;
         cursor: default;
+        -webkit-app-region: no-drag;
       }
     `
   } ,
@@ -46,6 +47,7 @@ module.exports = {
         height: ${height}px;
         transition: all 100ms;
         width: 100%;
+        -webkit-app-region: no-drag;
       }
 
       :host:hover {
@@ -69,6 +71,7 @@ module.exports = {
         height: ${height}em;
         transition: all 100ms;
         width: 100%;
+        -webkit-app-region: no-drag;
       }
 
       :host:hover {
@@ -94,6 +97,7 @@ module.exports = {
         transition: all 100ms;
         width: 100%;
         cursor: default;
+        -webkit-app-region: no-drag;
       }
     `
   } ,
