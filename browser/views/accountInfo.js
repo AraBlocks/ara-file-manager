@@ -44,6 +44,12 @@ class AccountInfo extends Nanocomponent {
         children: this.props.ethAddress,
         cssClass: { color: 'green' },
         onclick: () => clipboard.writeText(this.props.ethAddress)
+      }),
+      contactSupportTooltip: new DynamicTooltip({
+        children: 'Contact Support',
+        cssClass: { color: 'orange', fontSize: 12, fontFamily: styles.fonts.regular },
+        beforeTooltipText: 'Copy Email',
+        onclick: () => clipboard.writeText('support@ara.one')
       })
     }
     this.toggleAnalyticsPermission = this.toggleAnalyticsPermission.bind(this)
@@ -157,7 +163,7 @@ class AccountInfo extends Nanocomponent {
           <div class="link-holder">
             <a onclick="${openTerms}">Terms of Service</a>
             <b>|</b>
-            <a href="mailto:support@ara.one">Contact Support</a>
+            ${children.contactSupportTooltip.render()}
           </div>
           <div>
             Copyright 2018, Ara Blocks LLC.
