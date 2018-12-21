@@ -122,9 +122,11 @@ class Container extends Nanocomponent {
 			price: state.price == "" ? null : state.price,
 			userAid: account.userAid
 		}
-		this.fileInfoChanged() && state.uncommitted
-			? windowManagement.emit({ event: PUBLISH, load })
-			: windowManagement.emit({ event: UPDATE_FILE, load })
+		if (this.fileInfoChanged() && state.uncommitted) {
+			windowManagement.emit({ event: PUBLISH, load })
+		} else if (this.fileInfoChanged()) {
+			windowManagement.emit({ event: UPDATE_FILE, load })
+		}
 	}
 
 	renderDescription() {
