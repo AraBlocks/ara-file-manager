@@ -1,4 +1,4 @@
-## [0.3.1](https://github.com/littlstar/ara-content-manager/compare/0.2.0...0.3.1) (2018-12-21)
+## [0.3.2](https://github.com/littlstar/ara-content-manager/compare/0.2.0...0.3.2) (2018-12-21)
 
 
 ### Bug Fixes
@@ -8,6 +8,7 @@
 * Empty manage file view ([d39c460](https://github.com/littlstar/ara-content-manager/commit/d39c460))
 * Manage and Publish Flow ([#331](https://github.com/littlstar/ara-content-manager/issues/331)) ([9136f54](https://github.com/littlstar/ara-content-manager/commit/9136f54))
 * **login.js:** not render did:ara: anymoar ([5d5bbe2](https://github.com/littlstar/ara-content-manager/commit/5d5bbe2))
+* **package.json:** removed find&replace err ([26c6d0f](https://github.com/littlstar/ara-content-manager/commit/26c6d0f))
 * **package.json:** Rename build-dist to dist ([5b837f3](https://github.com/littlstar/ara-content-manager/commit/5b837f3))
 * **publish.js:** fixed autoq rebase issue ([c5dea08](https://github.com/littlstar/ara-content-manager/commit/c5dea08))
 * **scripts:** added script to allow windows builds ([#333](https://github.com/littlstar/ara-content-manager/issues/333)) ([200292c](https://github.com/littlstar/ara-content-manager/commit/200292c))
