@@ -1,3 +1,12 @@
+## [0.3.3](https://github.com/littlstar/ara-content-manager/compare/0.3.2...0.3.3) (2018-12-21)
+
+
+### Features
+
+* seeds eth on registration ([4d8aa26](https://github.com/littlstar/ara-content-manager/commit/4d8aa26))
+
+
+
 ## [0.3.2](https://github.com/littlstar/ara-content-manager/compare/0.2.0...0.3.2) (2018-12-21)
 
 
