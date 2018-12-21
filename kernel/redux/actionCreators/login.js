@@ -26,7 +26,7 @@ internalEmitter.on(k.LOGOUT, () => {
 })
 
 internalEmitter.on(k.GET_CACHED_DID, async () => {
-  let did = await afmManager.getCachedUserDid()
+  const did = await afmManager.getCachedUserDid()
   dispatch({ type: k.GOT_CACHED_DID, load: { did }})
   windowManager.pingView({ view: 'login', event: k.REFRESH})
 })
