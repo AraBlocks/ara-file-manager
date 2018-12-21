@@ -88,7 +88,7 @@ async function getCachedUserDid() {
 	try {
 		const appData = await getAppData()
 		did = await pify(appData.read)(application.CACHED_USER_DID)
-		return did
+		return did || ''
 	} catch(e) {
 		debug(err)
 		return ''
