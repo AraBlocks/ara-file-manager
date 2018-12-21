@@ -25,6 +25,12 @@ internalEmitter.on(k.LOGOUT, () => {
   windowManager.openModal('generalActionModal')
 })
 
+internalEmitter.on(k.GET_CACHED_DID, async () => {
+  const did = await afmManager.getCachedUserDid()
+  dispatch({ type: k.GOT_CACHED_DID, load: { did }})
+  windowManager.pingView({ view: 'login', event: k.REFRESH})
+})
+
 ipcMain.on(k.LOGIN, login)
 
 ipcMain.on(k.RECOVER, async (event, load) => {
@@ -124,7 +130,8 @@ async function login(_, load) {
       userDID: userAid,
       DCDNStore
     })
-    const publishedDIDs = await afmManager.getPublishedItems(userAid)
+    const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
+
     //Returns objects representing various info around published DIDs
     const published = await afsManager.surfaceAFS({
       dids: publishedDIDs,

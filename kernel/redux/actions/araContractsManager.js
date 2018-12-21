@@ -1,14 +1,15 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
-const { abi: AFSAbi } = require('ara-contracts/build/contracts/AFS.json')
-const { abi: tokenAbi } = require('ara-contracts/build/contracts/AraToken.json')
+const { abi: AFSabi } = require('ara-contracts/build/contracts/AFS.json')
+const { abi: tokenABI } = require('ara-contracts/build/contracts/AraToken.json')
+const { abi: registryABI } = require('ara-contracts/build/contracts/Registry.json')
 const araFilesystem = require('ara-filesystem')
 const k = require('../../../lib/constants/stateManagement')
 const { FAUCET_OWNER } = require('../../../lib/constants/networkKeys')
-const { ARA_TOKEN_ADDRESS } = require('ara-contracts/constants')
+const { ARA_TOKEN_ADDRESS, REGISTRY_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
-const windowManager = require('electron-window-manager')
+const { internalEmitter } = require('electron-window-manager')
 const createContext = require('ara-context')
 const {
 	web3: {
@@ -130,7 +131,7 @@ async function getPublishedEarnings(items) {
 async function getAFSContract(contentDID) {
 	if (!araContracts.registry.proxyExists(contentDID)) { return {} }
 	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
-	return await contractUtil.get(AFSAbi, proxyAddress)
+	return await contractUtil.get(AFSabi, proxyAddress)
 }
 
 async function getAllocatedRewards(item, userDID, password) {
@@ -194,7 +195,7 @@ async function subscribeEthBalance(userAddress) {
 				debug("Error: %o", err)
 			} else {
 				const ethBalance = await getEtherBalance(userAddress)
-				windowManager.internalEmitter.emit(k.UPDATE_ETH_BALANCE, { ethBalance })
+				internalEmitter.emit(k.UPDATE_ETH_BALANCE, { ethBalance })
 			}
 		})
 	} catch (err) {
@@ -212,7 +213,7 @@ async function subscribePublished({ did }) {
 			subscription = contract.events.Purchased()
 				.on('data', async ({ returnValues }) => {
 					const earning = Number(araContracts.token.constrainTokenValue(returnValues._price))
-					windowManager.internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
+					internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
 				})
 				.on('error', debug)
 		} catch (err) {
@@ -228,12 +229,12 @@ async function sendAra(opts) {
 }
 
 async function subscribeFaucet(userAddress) {
-	const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
+	const { contract, ctx } = await contractUtil.get(tokenABI, ARA_TOKEN_ADDRESS)
 
 	let subscription
 	try {
 		subscription = contract.events.Transfer({ filter: { to: userAddress, from: FAUCET_OWNER } })
-			.on('data', () => windowManager.internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
+			.on('data', () => internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
 			.on('error', debug)
 	} catch (err) {
 		debug('Error %o', err)
@@ -253,7 +254,7 @@ async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 				.on('data', async ({ returnValues }) => {
 					if (returnValues._farmer !== ethereumAddress) { return }
 					const rewardsBalance = await rewards.getRewardsBalance({ contentDid: contentDID, farmerDid: userDID })
-					windowManager.internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
+					internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
 				})
 				.on('error', debug)
 		} catch (err) {
@@ -265,7 +266,7 @@ async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 }
 
 async function subscribeTransfer(userAddress, userDID) {
-	const { contract, ctx } = await contractUtil.get(tokenAbi, ARA_TOKEN_ADDRESS)
+	const { contract, ctx } = await contractUtil.get(tokenABI, ARA_TOKEN_ADDRESS)
 
 	let xferReceiveSubscription
 	let xferSendSubscription
@@ -286,7 +287,26 @@ async function subscribeTransfer(userAddress, userDID) {
 
 	async function updateBalance() {
 		const newBalance = await getAraBalance(userDID)
-		windowManager.internalEmitter.emit(k.UPDATE_ARA_BALANCE, { araBalance: newBalance })
+		internalEmitter.emit(k.UPDATE_ARA_BALANCE, { araBalance: newBalance })
+	}
+}
+
+async function getDeployedProxies(ethAddress) {
+	try {
+		const { contract, ctx } = await contractUtil.get(registryABI, REGISTRY_ADDRESS)
+		const opts = {
+			fromBlock: 0,
+			toBlock: 'latest',
+			filter: { _owner: ethAddress }
+		}
+		const contentDIDs = (await contract.getPastEvents('ProxyDeployed', opts))
+			.map(({ returnValues }) => returnValues._contentId.slice(-64))
+
+		ctx.close()
+		return contentDIDs
+	} catch (err) {
+		debug('Err getting deployed proxies: %o', err)
+		return []
 	}
 }
 
@@ -299,7 +319,7 @@ async function subscribeAFSUpdates(contentDID) {
 			subscription = contract.events.Commit()
 				.on('data', async () => {
 					const updateAvailable = await araFilesystem.isUpdateAvailable({ did: contentDID })
-					updateAvailable && windowManager.internalEmitter.emit(k.UPDATE_AVAILABLE, { did: contentDID })
+					updateAvailable && internalEmitter.emit(k.UPDATE_AVAILABLE, { did: contentDID })
 				})
 				.on('error', debug)
 		} catch (err) {
@@ -328,6 +348,7 @@ module.exports = {
 	getAFSPrice,
 	getAllocatedRewards,
 	getAraBalance,
+	getDeployedProxies,
 	getEarnings,
 	getEtherBalance,
 	getLibraryItems,
