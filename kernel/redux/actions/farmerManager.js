@@ -12,9 +12,9 @@ function createAutoQueue() {
 	return new AutoQueue
 }
 
-function createFarmer({ did: userId, password }) {
+function createFarmer({ did: userId, password, queue }) {
 	debug('Creating Farmer')
-	const farmer = new farmDCDN({ userId, password })
+	const farmer = new farmDCDN({ userId, password, queue })
 	farmer.on('peer-update', (did, count) => {
 		internalEmitter.emit(k.UPDATE_PEER_COUNT, {
 			did,
