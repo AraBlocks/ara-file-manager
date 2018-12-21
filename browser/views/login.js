@@ -6,7 +6,7 @@ const Button = require('../components/button')
 const Input = require('../components/input')
 const { LOGIN } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/login')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Login extends Nanocomponent {

@@ -1,7 +1,7 @@
 'use strict'
 
 const styles = require('./styles/checkbox')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Checkbox extends Nanocomponent {

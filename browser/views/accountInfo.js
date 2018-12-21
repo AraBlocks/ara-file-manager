@@ -9,7 +9,7 @@ const TestnetBanner = require('../components/TestnetBanner')
 const UtilityButton = require('../components/UtilityButton')
 const styles = require('./styles/accountInfo')
 const { utils, windowManagement } = require('../lib/tools')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const { shell } = require('electron')
 

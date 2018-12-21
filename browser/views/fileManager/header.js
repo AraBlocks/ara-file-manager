@@ -11,7 +11,7 @@ const styles = require('./styles/header')
 const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
 const windowManagement = require('../../lib/tools/windowManagement')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Header extends Nanocomponent {

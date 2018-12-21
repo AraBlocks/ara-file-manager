@@ -3,7 +3,7 @@
 const Button = require('../../components/button')
 const { closeModal, openWindow } = require('../../lib/tools/windowManagement')
 const { generalModalText } = require('../../lib/tools/generalModalTextProvider')
-const html = require('choo/html')
+const html = require('nanohtml')
 const styles = require('./styles')
 
 module.exports = ({

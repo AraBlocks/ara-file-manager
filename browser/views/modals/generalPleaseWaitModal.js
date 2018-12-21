@@ -1,7 +1,7 @@
 'use strict'
 
 const { waitModalText } = require('../../lib/tools/generalModalTextProvider')
-const html = require('choo/html')
+const html = require('nanohtml')
 const styles = require('./styles')
 
 module.exports = ({ modalName, load }) => {

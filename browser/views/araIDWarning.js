@@ -4,7 +4,7 @@ const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const styles = require('./modals/styles')
 const { clipboard } = require('electron')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class AraIDWarning extends Nanocomponent {

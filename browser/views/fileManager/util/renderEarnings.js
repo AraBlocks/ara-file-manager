@@ -1,6 +1,6 @@
 'use strict'
 
-const html = require('choo/html')
+const html = require('nanohtml')
 const { utils } = require('../../../lib/tools')
 const { colors } = require('styleUtils')
 

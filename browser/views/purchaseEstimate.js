@@ -4,7 +4,7 @@ const Button = require('../components/button')
 const { closeWindow, emit } = require('../lib/tools/windowManagement')
 const k = require('../../lib/constants/stateManagement')
 const styles = require('./styles/purchaseEstimate')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const { utils } = require('../lib/tools')
 

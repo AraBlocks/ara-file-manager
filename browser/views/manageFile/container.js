@@ -10,7 +10,7 @@ const { UPDATE_FILE, PUBLISH } = require('../../../lib/constants/stateManagement
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
 const filesize = require('filesize')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {

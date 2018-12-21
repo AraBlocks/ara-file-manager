@@ -7,7 +7,7 @@ const fileListUtil = require('../../lib/tools/fileListUtil')
 const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class AfsFileRow extends Nanocomponent {

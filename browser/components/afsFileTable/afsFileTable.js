@@ -6,7 +6,7 @@ const k = require('../../../lib/constants/stateManagement')
 const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/AfsFileTable')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class AfsFileTable extends Nanocomponent {

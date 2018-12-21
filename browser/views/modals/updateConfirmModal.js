@@ -5,7 +5,7 @@ const { closeModal, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles')
-const html = require('choo/html')
+const html = require('nanohtml')
 
 module.exports = (load) => {
   const updateButton = new Button({

@@ -4,7 +4,7 @@ const Button = require('../../components/button')
 const { CONFIRM_REDEEM } = require('../../../lib/constants/stateManagement')
 const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
-const html = require('choo/html')
+const html = require('nanohtml')
 
 module.exports = ({ estimate, did }) => {
   const downloadButton = new Button({

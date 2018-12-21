@@ -4,7 +4,7 @@ const Checkbox = require('./checkbox')
 const optionsTitleProvider = require('../lib/tools/optionsTitleProvider')
 const styles = require('./styles/optionsCheckbox')
 const Tooltip = require('./tooltip')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class OptionsCheckbox extends Nanocomponent {

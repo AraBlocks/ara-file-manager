@@ -2,7 +2,7 @@
 
 const ItemRow = require('./itemRow')
 const styles = require('./styles/section')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Section extends Nanocomponent {

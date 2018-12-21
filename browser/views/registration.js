@@ -7,7 +7,7 @@ const ErrorInput = require('../components/errorInput')
 const overlay = require('../components/overlay')
 const styles = require('./styles/registration')
 const k = require('../../lib/constants/stateManagement')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Registration extends Nanocomponent {

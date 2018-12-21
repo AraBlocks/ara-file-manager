@@ -1,7 +1,7 @@
 'use strict'
 
 const styles = require('./styles/spinnerBar')
-const html = require('choo/html')
+const html = require('nanohtml')
 
 module.exports = () =>
   html`

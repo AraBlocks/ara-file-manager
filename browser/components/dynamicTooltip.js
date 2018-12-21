@@ -1,7 +1,7 @@
 'use strict'
 
 const styles = require('./styles/dynamicTooltip')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const tt = require('electron-tooltip')
 

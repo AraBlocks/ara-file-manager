@@ -3,7 +3,7 @@
         "prefix": "lsnano",
         "body": ["'use strict'\n",
             "const styles = require('./styles/tooltip')",
-            "const html = require('choo/html')",
+            "const html = require('nanohtml')",
             "const Nanocomponent = require('nanocomponent')\n",
             "class ${className} extends Nanocomponent {",
             "\tconstructor() {",

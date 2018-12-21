@@ -3,7 +3,7 @@
 const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const styles = require('./modals/styles')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const { clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')

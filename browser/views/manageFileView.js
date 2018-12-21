@@ -1,7 +1,7 @@
 'use strict'
 
 const ManageFileContainer = require('./manageFile/container')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class ManageFileView extends Nanocomponent {
