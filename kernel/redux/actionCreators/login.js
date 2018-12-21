@@ -131,6 +131,7 @@ async function login(_, load) {
       DCDNStore
     })
     const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
+
     //Returns objects representing various info around published DIDs
     const published = await afsManager.surfaceAFS({
       dids: publishedDIDs,

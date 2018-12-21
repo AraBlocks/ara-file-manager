@@ -76,8 +76,6 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 
     const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED })
 
-    afmManager.savePublishedItem(did, userAid)
-
     windowManager.closeWindow('generalPleaseWaitModal')
 
     dispatch({
@@ -170,13 +168,14 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       owner: true,
       price: load.price,
       size: load.size,
+      status: k.PUBLISHING
     }
     let descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     await autoQueue.push(() => afs.commit({ did: load.did, price: Number(load.price), password: password }))
     const balance = await araContractsManager.getAraBalance(userAid)
-
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     debug('Dispatching %s', k.PUBLISHED)
@@ -199,7 +198,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
 
-    afmManager.removedPublishedItem(load.did, userAid)
     dispatch({ type: k.ERROR_PUBLISHING })
 
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
