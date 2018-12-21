@@ -53,7 +53,6 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
     if (feed && feed.length) {
 			downloadPercent = feed.downloaded() / feed.length
 		}
-		await newAfs.close()
 		if (downloadPercent === 1) {
 			status = k.DOWNLOADED_PUBLISHED
 		} else if (downloadPercent > 0) {
@@ -63,7 +62,9 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
 		}
   } catch(err) {
     debug('Error getting download status %o', err)
-  }
+	}
+
+	await newAfs.close()
   return { downloadPercent, status }
 }
 
@@ -93,13 +94,17 @@ async function readFileMetadata(did) {
 	return fileInfo
 }
 
-async function requestFromFaucet(userDID) {
+async function requestAraFaucet(userDID) {
 	return await request.post({
 		method: 'POST',
 		uri: networkKeys.FAUCET_URI,
 		body: { to: userDID },
 		json: true
 	})
+}
+
+async function requestEthFaucet(ethAddress) {
+	return await request(`https://faucet.ropsten.be/donate/${ethAddress}`)
 }
 
 async function writeFileMetaData({
@@ -129,6 +134,7 @@ module.exports = {
 	getNetwork,
 	makeAfsPath,
 	readFileMetadata,
-	requestFromFaucet,
+	requestAraFaucet,
+	requestEthFaucet,
 	writeFileMetaData
 }

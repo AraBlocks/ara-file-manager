@@ -67,6 +67,11 @@ class AccountInfo extends Nanocomponent {
     buttonOpts.cssClass.name = 'thinBorder'
     buttonOpts.cssClass.opts = { fontSize: '14', height: '3' }
     buttonOpts.onclick = () => {}
+    buttonOpts.children = '1000 Tokens is Faucet limit!'
+
+    if (Number(props.araBalance) >= 1000) {
+      return buttonOpts
+    }
 
     switch (props.faucetStatus) {
       case null:

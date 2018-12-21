@@ -43,7 +43,6 @@ function cleanOutdatedData() {
 		return
 	}
 	const afmDirectory = path.resolve(userHome, '.ara', 'afm')
-	//const afsDirectory = path.resolve(userHome, '.ara', 'afs')
 	const dcdnDirectory = path.resolve(userHome, '.ara', 'dcdn')
 	fs.existsSync(afmDirectory) && rimraf(afmDirectory, () => {
 		debug('remove afm')
@@ -51,7 +50,6 @@ function cleanOutdatedData() {
 		const storePath = path.resolve(getAFMDirectory(), 'store.json')
 		fs.writeFileSync(storePath, JSON.stringify(storeData))
 	})
-	//fs.existsSync(afsDirectory) && rimraf(afsDirectory, () => { debug('remove afs') })
 	fs.existsSync(dcdnDirectory) && rimraf(dcdnDirectory, () => { debug('remove dcdn')})
 }
 
@@ -76,21 +74,25 @@ function removedPublishedItem(contentDID, userDID) {
 	}
 }
 
-function cacheUserDid(did) {
+async function cacheUserDid(did) {
 	try {
-		const filePath = path.resolve(getAFMDirectory(), 'store.json')
-		const cachedData = parseJSON(filePath)
-		cachedData.cachedUserDid = did
-		fs.writeFileSync(filePath, JSON.stringify(cachedData))
-	} catch(err) {
+		const appData = await getAppData()
+		await pify(appData.write)(application.CACHED_USER_DID, did)
+	} catch(e) {
 		debug(err)
 	}
 }
 
-function getCachedUserDid() {
-	const filePath = path.resolve(getAFMDirectory(), 'store.json')
-	const cachedData = parseJSON(filePath)
-	return cachedData.cachedUserDid ? cachedData.cachedUserDid : ''
+async function getCachedUserDid() {
+	let did
+	try {
+		const appData = await getAppData()
+		did = await pify(appData.read)(application.CACHED_USER_DID)
+		return did || ''
+	} catch(e) {
+		debug(err)
+		return ''
+	}
 }
 
 function getAnalyticsPermission(userDID) {
@@ -119,20 +121,6 @@ function parseJSON(path) {
 	}
 }
 
-function savePublishedItem(contentDID, userDID) {
-	try {
-		debug('Saving published item %s', contentDID)
-		const userData = getUserData(userDID)
-		userData.published == null
-			? userData.published = [contentDID]
-			: userData.published.push(contentDID)
-		saveUserData({ userDID, userData })
-		return
-	} catch (err) {
-		debug('Error saving published item: %o', err)
-	}
-}
-
 function saveUserData( { userDID, userData }) {
 	try {
 		debug('Saving User Data in .afm')
@@ -148,12 +136,9 @@ module.exports = {
 	getAFMPath,
 	getAnalyticsPermission,
 	getCachedUserDid,
-	getPublishedItems,
 	getAppData,
 	getUserData,
-	savePublishedItem,
 	saveUserData,
 	toggleAnalyticsPermission,
-	cleanOutdatedData,
-	removedPublishedItem
+	cleanOutdatedData
 }
