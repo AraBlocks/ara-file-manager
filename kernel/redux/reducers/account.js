@@ -4,8 +4,8 @@ const k = require('../../../lib/constants/stateManagement')
 
 module.exports = async (state, { load = null, type }) => {
   switch (type) {
-    case k.CHANGE_PENDING_TRANSACTION_STATE:
-      state.pendingTransaction = load.pendingTransaction
+    case k.CHANGE_PENDING_PUBLISH_STATE:
+      state.pendingPublish = load.pendingPublish
       break
     case k.FAUCET_ARA_RECEIVED:
       state.faucetStatus = null
@@ -27,12 +27,7 @@ module.exports = async (state, { load = null, type }) => {
       break
     case k.LOGIN:
     case k.REGISTERED:
-      state.accountAddress = load.accountAddress
-      state.araBalance = load.araBalance
-      state.deployEstimateDid = load.deployEstimateDid
-      state.ethBalance = load.ethBalance
-      state.password = load.password
-      state.userAid = load.userAid
+      Object.assign(state, load)
       break
     case k.LOGOUT:
       Object.keys(state).forEach(key => state[key] = null)
@@ -45,6 +40,9 @@ module.exports = async (state, { load = null, type }) => {
     case k.PURCHASED:
       state.araBalance = load.araBalance || state.araBalance
       state.ethBalance = load.ethBalance || state.ethBalance
+      break
+    case k.TOGGLE_ANALYTICS_PERMISSION:
+      state.analyticsPermission = load.analyticsPermission
       break
     default:
       return state

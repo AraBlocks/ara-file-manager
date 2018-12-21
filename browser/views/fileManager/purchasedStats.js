@@ -3,7 +3,7 @@
 const k = require('../../../lib/constants/stateManagement')
 const { renderEarnings } = require('./util')
 const styles = require('./styles/purchasedStats')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class PurchasedStats extends Nanocomponent {

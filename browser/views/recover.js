@@ -6,7 +6,7 @@ const ErrorInput = require('../components/errorInput')
 const overlay = require('../components/overlay')
 const styles = require('./styles/recover')
 const windowManagement = require('../lib/tools/windowManagement')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Recover extends Nanocomponent {

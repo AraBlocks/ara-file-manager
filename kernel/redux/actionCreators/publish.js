@@ -27,8 +27,17 @@ async function _deployProxy() {
   try {
     const unpublishedAFS = files.published.find(({ status }) => status === k.UNCOMMITTED)
     if (unpublishedAFS) {
-      dispatch({ type: k.USE_UNCOMMITTED, load: { contentDID: unpublishedAFS.did } })
-      windowManager.openWindow('publishFileView')
+      dispatch({
+        type: k.FEED_MANAGE_FILE,
+        load: {
+          did: unpublishedAFS.did,
+          price: 0,
+          name: '',
+          fileList: [],
+          uncommitted: true
+        }
+      })
+      windowManager.openWindow('manageFileView')
       return
     }
 
@@ -53,16 +62,17 @@ async function _deployProxy() {
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY)
 
-  const { userAid, password } = store.account
+  const { autoQueue, password, userAid } = store.account
   try {
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
+    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'pleaseWait' } })
     windowManager.openModal('generalPleaseWaitModal')
 
     let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userAid, password })
     await newAfs.close()
-    await afs.deploy({ password, did })
+
+    await autoQueue.push(() => afs.deploy({ password, did }))
 
     const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED })
 
@@ -83,6 +93,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     windowManager.openModal('mnemonicWarning')
+    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
   } catch (err) {
     debug('Error deploying proxy %o:', err)
     errorHandling(err)
@@ -92,11 +103,12 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
-  const did = load.contentDID
+  const did = load.did
   try {
     let dispatchLoad = { load: { fileName: load.name } }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
+    windowManager.closeWindow('manageFileView')
 
     await (await afs.add({ did, paths: load.paths, password })).close()
 
@@ -130,7 +142,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   } catch (err) {
     debug('Error publishing file %o:', err)
 
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
     windowManager.closeModal('generalPleaseWaitModal')
     errorHandling(err)
 
@@ -140,9 +152,17 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
 
 ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   debug('%s heard', k.CONFIRM_PUBLISH)
-  const { account, farmer } = store
+  const {
+    accountAddress,
+    autoQueue,
+    password,
+    userAid
+  } = store.account
   try {
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
+    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
+
+    dispatch({ type: k.PUBLISHING, load: { did: load.did, status: k.PUBLISHING } })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const descriptorOpts = {
       datePublished: new Date,
@@ -150,26 +170,18 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       owner: true,
       price: load.price,
       size: load.size,
-      status: k.PUBLISHING
     }
     let descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
 
+    await autoQueue.push(() => afs.commit({ did: load.did, price: Number(load.price), password: password }))
+    const balance = await araContractsManager.getAraBalance(userAid)
+
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-    windowManager.closeWindow('publishFileView')
 
-    await afs.commit({ did: load.did, price: Number(load.price), password: account.password })
-
-    const balance = await araContractsManager.getAraBalance(account.userAid)
     debug('Dispatching %s', k.PUBLISHED)
     dispatch({ type: k.PUBLISHED, load: { balance, did: load.did } })
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
-
-    const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
-    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
-    dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
-
-    internalEmitter.emit(k.START_SEEDING, load )
+    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 
     debug('Dispatching %s', k.FEED_MODAL)
     dispatch({
@@ -177,14 +189,20 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       load: { did: load.did, name: load.name }
     })
     windowManager.openModal('publishSuccessModal')
+
+    const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
+    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, accountAddress, userAid)
+    dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
+
+    internalEmitter.emit(k.START_SEEDING, load )
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
 
-    afmManager.removedPublishedItem(load.did, account.userAid)
+    afmManager.removedPublishedItem(load.did, userAid)
     dispatch({ type: k.ERROR_PUBLISHING })
 
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
     windowManager.closeModal('generalPleaseWaitModal')
     //Needs short delay. Race conditions cause modal state to dump after its loaded
     setTimeout(() => {

@@ -4,6 +4,7 @@ const { fonts } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
+  fonts,
   appInfo: css`
     :host {
       align-items: center;
@@ -114,24 +115,10 @@ module.exports = {
     }
 
     :host .container {
-      height: 105px;
+      height: 110px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-    }
-
-    :host .did {
-      color: var(--ara-teal);
-      font-family: ${fonts.bold};
-      font-size: 14px;
-      margin-top: 8px;
-    }
-
-    :host .eth {
-      color: var(--ara-green);
-      font-family: ${fonts.bold};
-      font-size: 14px;
-      margin-top: 8px;
     }
   `,
 

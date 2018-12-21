@@ -2,7 +2,7 @@
 
 const fileSystemManager = require('../lib/tools/fileSystemManager')
 const Input = require('../components/input')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class FileSelector extends Nanocomponent {

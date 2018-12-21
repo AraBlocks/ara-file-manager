@@ -5,7 +5,7 @@ const progressBar = require('./progressBar')
 const PublishedStats = require('./publishedStats')
 const PurchasedStats = require('./purchasedStats')
 const styles = require('./styles/itemRow')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class ItemRow extends Nanocomponent {

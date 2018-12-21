@@ -4,7 +4,7 @@ const Button = require('../components/button')
 const { closeWindow, emit } = require('../lib/tools/windowManagement')
 const k = require('../../lib/constants/stateManagement')
 const styles = require('./styles/purchaseEstimate')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const { utils } = require('../lib/tools')
 
@@ -29,12 +29,7 @@ class purchaseEstimate extends Nanocomponent {
 
   purchase() {
     const { props } = this
-    const load = {
-      did: props.did,
-      fileName: props.fileName,
-      price: props.price
-    }
-    emit({ event: k.CONFIRM_PURCHASE, load })
+    emit({ event: k.CONFIRM_PURCHASE, load: props })
     closeWindow('purchaseEstimate')
   }
 

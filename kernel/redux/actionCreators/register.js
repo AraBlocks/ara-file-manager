@@ -13,6 +13,7 @@ const {
  } = require('../actions')
 const { switchLoginState } = require('../../../boot/tray')
 const { switchApplicationMenuLoginState } = require('../../../boot/menu')
+const araUtil = require('ara-util')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
@@ -31,21 +32,27 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
 
     const network = await araUtils.getNetwork()
-    const farmer = farmerManager.createFarmer({ did, password })
-    afmManager.cacheUserDid(did)
+    const autoQueue = farmerManager.createAutoQueue()
+    const farmer = farmerManager.createFarmer({ did, password, queue: autoQueue })
+    const didIdentifier = araUtil.getIdentifier(did)
+    afmManager.cacheUserDid(didIdentifier)
+    const analyticsPermission = afmManager.getAnalyticsPermission(did)
+    
     debug('Dispatching %s', k.REGISTERED)
     dispatch({
       type: k.REGISTERED,
       load: {
         accountAddress,
+        analyticsPermission,
         araBalance: 0,
+        autoQueue,
         deployEstimateDid,
         ethBalance: 0,
         farmer,
         mnemonic,
         network,
         password,
-        userAid: did
+        userAid: didIdentifier
       }
     })
     switchLoginState(true)

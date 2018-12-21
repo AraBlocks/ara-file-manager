@@ -1,3 +1,31 @@
+## [0.3.2](https://github.com/littlstar/ara-content-manager/compare/0.2.0...0.3.2) (2018-12-21)
+
+
+### Bug Fixes
+
+* **.gitignore:** add analytics.js.bak file ([c38315b](https://github.com/littlstar/ara-content-manager/commit/c38315b))
+* Empty manage file view ([0d4707d](https://github.com/littlstar/ara-content-manager/commit/0d4707d))
+* Empty manage file view ([d39c460](https://github.com/littlstar/ara-content-manager/commit/d39c460))
+* Manage and Publish Flow ([#331](https://github.com/littlstar/ara-content-manager/issues/331)) ([9136f54](https://github.com/littlstar/ara-content-manager/commit/9136f54))
+* **login.js:** not render did:ara: anymoar ([5d5bbe2](https://github.com/littlstar/ara-content-manager/commit/5d5bbe2))
+* **package.json:** removed find&replace err ([26c6d0f](https://github.com/littlstar/ara-content-manager/commit/26c6d0f))
+* **package.json:** Rename build-dist to dist ([5b837f3](https://github.com/littlstar/ara-content-manager/commit/5b837f3))
+* **publish.js:** fixed autoq rebase issue ([c5dea08](https://github.com/littlstar/ara-content-manager/commit/c5dea08))
+* **scripts:** added script to allow windows builds ([#333](https://github.com/littlstar/ara-content-manager/issues/333)) ([200292c](https://github.com/littlstar/ara-content-manager/commit/200292c))
+
+
+### Features
+
+* Add build script for dev and production ([ef208cc](https://github.com/littlstar/ara-content-manager/commit/ef208cc))
+* **autoQueue.js:** enqueues transactions! ([d69494d](https://github.com/littlstar/ara-content-manager/commit/d69494d))
+* Clean out outdated ara folders ([#335](https://github.com/littlstar/ara-content-manager/issues/335)) ([08fa275](https://github.com/littlstar/ara-content-manager/commit/08fa275))
+* Copy contact support email ([12c9aba](https://github.com/littlstar/ara-content-manager/commit/12c9aba))
+* Dynamic Tooltip Component ([ca02253](https://github.com/littlstar/ara-content-manager/commit/ca02253))
+* Merge Manage File and Publish File ([da130a7](https://github.com/littlstar/ara-content-manager/commit/da130a7))
+* PE-753 Google Analytics for pageviews and crash logs ([4bcb135](https://github.com/littlstar/ara-content-manager/commit/4bcb135))
+
+
+
 # [0.2.0](https://github.com/littlstar/ara-content-manager/compare/0.1.10...0.2.0) (2018-12-14)
 
 

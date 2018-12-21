@@ -5,7 +5,7 @@ const FileTable = require('../../components/afsFileTable/editableFileTable')
 const ErrorInput = require('../../components/errorInput')
 const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/fileInfo')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class FileInfo extends Nanocomponent {

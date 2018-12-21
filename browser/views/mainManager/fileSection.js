@@ -5,7 +5,7 @@ const ItemRow = require('./itemRow')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/fileSection')
 const windowManagement = require('../../lib/tools/windowManagement')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class FileSection extends Nanocomponent {

@@ -10,4 +10,3 @@ const fileManager = new FileManager(store)
 document.getElementById('container').appendChild(fileManager.render(store))
 
 ipcRenderer.on(REFRESH, () => fileManager.render(store))
-

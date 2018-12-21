@@ -35,7 +35,7 @@ ipcMain.on(k.RECOVER, async (event, load) => {
     const identity = await identityManager.recover(load)
     await identityManager.archive(identity)
 
-    const { did: { did } } = identity
+    const { did } = identity.did
     login(null, { userAid: did, password: load.password })
 
     windowManager.pingView({ view: 'recover', event: k.RECOVERED })
@@ -80,30 +80,35 @@ async function login(_, load) {
     return
   }
 
+  const userAid = araUtil.getIdentifier(load.userAid)
   //writes did signed in with to disk to autofill input next time app booted
-  afmManager.cacheUserDid(load.userAid)
+  afmManager.cacheUserDid(userAid)
 
   try {
     const network = await utils.getNetwork()
-    dispatch({ type: k.GETTING_USER_DATA, load: { userAid: load.userAid, network } })
+    dispatch({ type: k.GETTING_USER_DATA, load: { userAid, network } })
     windowManager.openWindow('filemanager')
 
-    const accountAddress = await araContractsManager.getAccountAddress(load.userAid, load.password)
-    const araBalance = await araContractsManager.getAraBalance(load.userAid)
+    const analyticsPermission = afmManager.getAnalyticsPermission(userAid)
+    const accountAddress = await araContractsManager.getAccountAddress(userAid, load.password)
+    const araBalance = await araContractsManager.getAraBalance(userAid)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
-    const farmer = farmerManager.createFarmer({ did: load.userAid, password: load.password })
+    const autoQueue = farmerManager.createAutoQueue()
+    const farmer = farmerManager.createFarmer({ did: userAid, password: load.password, queue: autoQueue })
     //Creates a dummy afs used to estimate deployment costs more quickly
-    const deployEstimateDid = await afsManager.createDeployEstimateAfs(load.userAid, load.password)
+    const deployEstimateDid = await afsManager.createDeployEstimateAfs(userAid, load.password)
     dispatch({
       type: k.LOGIN,
       load: {
+        analyticsPermission,
         accountAddress,
         araBalance,
+        autoQueue,
         deployEstimateDid,
         ethBalance,
         farmer,
         password: load.password,
-        userAid: load.userAid
+        userAid
       }
     })
 
@@ -112,48 +117,54 @@ async function login(_, load) {
     switchLoginState(true)
     switchApplicationMenuLoginState(true)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
-    const purchasedDIDs = await araContractsManager.getLibraryItems(load.userAid)
+    const purchasedDIDs = await araContractsManager.getLibraryItems(userAid)
     //Returns objects representing various info around purchased DIDs
     const purchased = await afsManager.surfaceAFS({
       dids: purchasedDIDs,
-      userDID: load.userAid,
+      userDID: userAid,
       DCDNStore
     })
-    const publishedDIDs = await afmManager.getPublishedItems(load.userAid)
+    const publishedDIDs = await afmManager.getPublishedItems(userAid)
     //Returns objects representing various info around published DIDs
     const published = await afsManager.surfaceAFS({
       dids: publishedDIDs,
-      userDID: load.userAid,
+      userDID: userAid,
       published: true,
       DCDNStore
     })
 
     let files;
     ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
-
+    //TODO: refactor to loop through only once
+    //Gets earnings for published items
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
+    //Gets redeemable rewards for published and purchased items
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
-      araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
+      araContractsManager.getAllocatedRewards(item, userAid, load.password)))
     let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
-      araContractsManager.getAllocatedRewards(item, load.userAid, load.password)))
+      araContractsManager.getAllocatedRewards(item, userAid, load.password)))
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
+    //Gets total redeemed rewards for published and purchased items
       araContractsManager.getRewards(item, accountAddress)))
     updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map((item) =>
       araContractsManager.getRewards(item, accountAddress)))
+    //Gets update available status for purchased items
     updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map(afsManager.getUpdateAvailableStatus));
 
     ({ files } = dispatch({
       type: k.LOADED_BACKGROUND_AFS_DATA,
       load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
     }))
-
+    //Refreshes filemanager view and renders items
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const transferSub = await araContractsManager.subscribeTransfer(accountAddress, load.userAid)
+    //Creates subscriptions in background
+    const transferSub = await araContractsManager.subscribeTransfer(accountAddress, userAid)
     const transferEthSub = await araContractsManager.subscribeEthBalance(accountAddress)
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
     const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
-      .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, load.userAid)))
+      .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, userAid)))
+    const updateSubs = await Promise.all(files.purchased.map(({ did }) => araContractsManager.subscribeAFSUpdates(did)))
 
     dispatch({
       type: k.GOT_SUBSCRIPTIONS,
@@ -161,7 +172,8 @@ async function login(_, load) {
         publishedSubs,
         rewardsSubs,
         transferSub,
-        transferEthSub
+        transferEthSub,
+        updateSubs
       }
     })
 

@@ -3,7 +3,7 @@
 const ProgressRing = require('../../components/progressRing')
 const styles = require('./styles/itemRow')
 const filesize = require('filesize')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class ItemRow extends Nanocomponent {

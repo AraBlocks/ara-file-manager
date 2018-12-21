@@ -4,7 +4,7 @@ const Button = require('../../components/button')
 const { DOWNLOAD } = require('../../../lib/constants/stateManagement')
 const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
-const html = require('choo/html')
+const html = require('nanohtml')
 
 module.exports = ({ aid, fileName, price }) => {
   const downloadButton = new Button({

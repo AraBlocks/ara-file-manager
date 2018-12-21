@@ -5,7 +5,7 @@ const { closeModal, closeWindow, emit } = require('../lib/tools/windowManagement
 const k = require('../../lib/constants/stateManagement')
 const { utils } = require('../lib/tools')
 const styles = require('./styles/deployEstimate')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class DeployEstimate extends Nanocomponent {

@@ -61,12 +61,12 @@ function switchLoginState(loggedIn) {
   menuItems[5].visible = loggedIn  //Log out
 }
 
-function switchPendingTransactionState(pending) {
+function switchPendingPublishState(pending) {
   contextMenu.items[1].enabled = !pending //Publish File View
 }
 
 module.exports = {
   buildTray,
   switchLoginState,
-  switchPendingTransactionState
+  switchPendingPublishState
 }
