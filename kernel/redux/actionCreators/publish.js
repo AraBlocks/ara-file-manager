@@ -170,7 +170,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       size: load.size,
       status: k.PUBLISHING
     }
-    let descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
+    const descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
