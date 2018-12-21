@@ -25,6 +25,12 @@ internalEmitter.on(k.LOGOUT, () => {
   windowManager.openModal('generalActionModal')
 })
 
+internalEmitter.on(k.GET_CACHED_DID, async () => {
+  let did = await afmManager.getCachedUserDid()
+  dispatch({ type: k.GOT_CACHED_DID, load: { did }})
+  windowManager.pingView({ view: 'login', event: k.REFRESH})
+})
+
 ipcMain.on(k.LOGIN, login)
 
 ipcMain.on(k.RECOVER, async (event, load) => {
