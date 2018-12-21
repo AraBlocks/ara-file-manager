@@ -1,7 +1,7 @@
 'use strict'
 
 const styles = require('./styles/input')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Input extends Nanocomponent {
@@ -14,7 +14,8 @@ class Input extends Nanocomponent {
     placeholder = '',
     readOnly = false,
     renderView = () => {},
-    type = 'text'
+    type = 'text',
+    step
   }) {
     super()
 
@@ -27,7 +28,8 @@ class Input extends Nanocomponent {
       placeholder,
       readOnly,
       renderView,
-      type
+      type,
+      step
     }
 
     this.state = {
@@ -81,6 +83,7 @@ class Input extends Nanocomponent {
           placeholder="${props.placeholder}"
           value="${state.value}"
           type="${props.type}"
+          step="${props.step}"
           "${props.readOnly ? 'readonly' : ''}"
         >
         ${generateButton()}

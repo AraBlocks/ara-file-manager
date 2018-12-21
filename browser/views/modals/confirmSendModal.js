@@ -3,7 +3,7 @@
 const Button = require('../../components/button')
 const { CONFIRM_SEND_ARA } = require('../../../lib/constants/stateManagement')
 const { emit, closeModal } = require('../../lib/tools/windowManagement')
-const html = require('choo/html')
+const html = require('nanohtml')
 const styles = require('./styles')
 
 module.exports = ({

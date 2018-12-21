@@ -2,7 +2,7 @@
 
 const styles = require('./styles/utilityButton')
 const windowManagement = require('../lib/tools/windowManagement')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class UtilityButton extends Nanocomponent {

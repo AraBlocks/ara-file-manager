@@ -8,7 +8,7 @@ const overlay = require('../components/overlay')
 const UtilityButton = require('../components/utilityButton')
 const styles = require('./styles/sendAra')
 const k = require('../../lib/constants/stateManagement')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class SendAra extends Nanocomponent {
@@ -31,7 +31,8 @@ class SendAra extends Nanocomponent {
         placeholder: '0.0',
         parentState: this.state,
 				field: 'amount',
-				type: 'number'
+        type: 'number',
+        step: 'any'
       }),
 
       sendButton: new Button({

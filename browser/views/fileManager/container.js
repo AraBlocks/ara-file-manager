@@ -6,7 +6,7 @@ const spinnerBar = require('../../components/spinnerBar')
 const styles = require('./styles/container')
 const TestnetBanner = require('../../components/testnetBanner')
 const { utils } = require('../../lib/tools')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const { shell } = require('electron')
 

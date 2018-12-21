@@ -4,6 +4,8 @@ const uuid = require('uuid/v4');
 const { version } = require('../../../package.json')
 const { getAppData } = require('./afmManager')
 const { analytics, application } = require('../../../lib/constants/index')
+const windowManager = require('electron-window-manager')
+const store = windowManager.sharedData.fetch('store')
 
 async function getSession() {
     if (global.session) return global.session
@@ -17,7 +19,6 @@ async function getSession() {
         await pify(appData.write)(application.DEVICE_ID, deviceId)
     }
 
-    // TODO: state management for staging vs production
     const session = ua(analytics.UA_ACCOUNT_CURRENT, deviceId)
     session.set(analytics.VERSION, version)
     session.firstSession = firstSession
@@ -31,22 +32,36 @@ async function trackAppOpen() {
 }
 
 async function trackScreenView(screen) {
+    if(!hasAnalyticsPermission()) { return }
     const session = await getSession()
-    session.screenview(screen, analytics.APP_NAME).send()
+    session.pageview(screen, analytics.APP_NAME, screen).send()
 }
 
 async function trackEvent(category, action, label, value) {
+    if(!hasAnalyticsPermission()) { return }
     const session = await getSession()
     session.event({
         ec: category,
         ea: action,
         el: label,
         ev: value,
-    }).send();
+    }).send()
+}
+
+function hasAnalyticsPermission() {
+    if (store == null) { return true }
+    return store.account.analyticsPermission
+}
+
+async function trackError(err) {
+    if(!hasAnalyticsPermission()) { return }
+    const session = await getSession()
+    session.exception(err, () => {}).send()
 }
 
 module.exports = {
     trackAppOpen,
     trackEvent,
+    trackError,
     trackScreenView
 }

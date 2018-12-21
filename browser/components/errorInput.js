@@ -2,7 +2,7 @@
 
 const Input = require('../components/input')
 const styles = require('./styles/errorInput')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class ErrorInput extends Nanocomponent {

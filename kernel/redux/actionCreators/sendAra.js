@@ -40,52 +40,41 @@ ipcMain.on(k.SEND_ARA, (event, load) => {
 })
 
 ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
-	const { account } = store
+	const { account, account: { autoQueue } } = store
 	try {
 		debug('%s heard', k.CONFIRM_SEND_ARA)
-		let dispatchLoad = { modalName: 'sendingAra', load }
-		dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-		windowManager.openModal('generalPleaseWaitModal')
-		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
+
 		let walletAddress = load.receiver
 		if (!web3.isAddress(load.receiver)) {
 			walletAddress = await araUtil.getAddressFromDID(load.receiver)
 		}
-		await araContractsManager.sendAra({
-			amount: load.amount,
-			completeHandler: araSent,
-			errorHandler: failedToSend,
+
+		const sendAraLoad = {
+			val: load.amount,
 			password: account.password,
-			userDID: account.userAid,
-			walletAddress,
+			did: account.userAid,
+			to: walletAddress,
+		}
+		await autoQueue.push(() => araContractsManager.sendAra(sendAraLoad))
+
+		dispatch({
+			type: k.FEED_MODAL, load: {
+				modalName: 'araSent', load: {
+					amount: load.amount,
+					did: load.receiver
+				}
+			}
 		})
+		windowManager.openModal('generalMessageModal')
 	} catch (err) {
 		debug('Error sending ara: %o', err)
-		windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
+
+		dispatch({
+			type: k.FEED_MODAL, load: {
+				modalName: 'generalFailure',
+				callback: () => windowManager.openWindow('sendAra')
+			}
+		})
+		windowManager.openModal('generalMessageModal')
 	}
 })
-
-async function araSent(amount) {
-	windowManager.closeModal('generalPleaseWaitModal')
-	windowManager.internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
-	dispatch({
-		type: k.FEED_MODAL, load: {
-			modalName: 'araSent',
-			load: { amount }
-		}
-	})
-	windowManager.openModal('generalMessageModal')
-	const newBalance = await araContractsManager.getAraBalance(store.account.userAid)
-	windowManager.internalEmitter.emit(k.UPDATE_ARA_BALANCE, { araBalance: newBalance })
-}
-
-function failedToSend() {
-	windowManager.closeModal('generalPleaseWaitModal')
-	dispatch({
-		type: k.FEED_MODAL, load: {
-			modalName: 'generalFailure',
-			callback: () => windowManager.openWindow('sendAra')
-		}
-	})
-	windowManager.openModal('generalMessageModal')
-}

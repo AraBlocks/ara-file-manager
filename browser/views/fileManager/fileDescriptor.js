@@ -4,7 +4,7 @@ const k = require('../../../lib/constants/stateManagement')
 const { hamburgerHelper } = require('./util')
 const styles = require('./styles/fileDescriptor')
 const filesize = require('filesize')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
@@ -21,7 +21,7 @@ class FileDescriptor extends Nanocomponent {
     super()
 
     this.props = {
-      name: name || did.slice(8,23) + '...',
+      name: name || did.slice(0,15) + '...',
       size
     }
 

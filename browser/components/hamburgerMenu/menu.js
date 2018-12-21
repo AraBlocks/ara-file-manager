@@ -1,6 +1,6 @@
 'use strict'
 
-const html = require('choo/html')
+const html = require('nanohtml')
 const MenuItem = require('./menuItem')
 const styles = require('./styles/menu')
 const Nanocomponent = require('nanocomponent')

@@ -3,9 +3,10 @@
 const debug = require('debug')('acm:boot:main')
 const writeFiles = require('./writeFiles')
 //Writes .ara and keyrings if doesn't exist
-if (writeFiles.writeAraRC() === false) { debug('.ararc exists, not writing file') }
+if (writeFiles.updateAraRC() === false) { debug('.ararc exists, not writing file') }
 if (writeFiles.writeDotAra() === false) { debug('.ara exists, not writing directory') }
 
+const { cleanOutdatedData } = require('../kernel/redux/actions/afmManager')
 const { app, globalShortcut } = require('electron')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { application } = require('../lib/constants/index')
@@ -16,8 +17,8 @@ const { internalEmitter } = require('electron-window-manager')
 const { CANCEL_SUBSCRIPTION } = require('../lib/constants/stateManagement')
 //Creates dev view
 isDev && require('./ipc-dev')
-
 let deepLinkingUrl
+cleanOutdatedData() //!!! Very Dangerous code !!!
 
 const shouldQuit = app.makeSingleInstance(argv => {
   if (process.platform == 'win32') {
@@ -34,7 +35,6 @@ app.setName(application.APP_NAME)
 app.on('ready', () => {
   debug('App initialzed')
   windowManager.init()
-  analytics.trackAppOpen()
 
   //Creates tray menu
   require('./tray').buildTray()
@@ -61,6 +61,7 @@ app.on('ready', () => {
   if (process.argv.includes('loggedin') === false) {
     windowManager.openWindow('login')
   }
+  analytics.trackAppOpen()
 })
 //Prevents app from closing when all windows are shut
 app.on('window-all-closed', () => { })
@@ -80,5 +81,11 @@ app.on('before-quit', () => {
   farmerManager.stopAllBroadcast(farm)
 })
 
-process.on('uncaughtException', err => debug('uncaught exception: %o', err))
-process.on('unhandledRejection', err => debug('unhandled rejection: %o', err))
+process.on('uncaughtException', async err => {
+  await analytics.trackError(err.stack)
+  debug('uncaught exception: %o', err)
+})
+process.on('unhandledRejection', async err => {
+  await analytics.trackError(err.stack)
+  debug('unhandled rejection: %o', err)
+})

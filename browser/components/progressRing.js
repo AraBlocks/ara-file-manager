@@ -6,7 +6,7 @@ const {
   DOWNLOAD_FAILED
 } = require('../../lib/constants/stateManagement')
 const styles = require('./styles/progressRing')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class ProgressRing extends Nanocomponent {
