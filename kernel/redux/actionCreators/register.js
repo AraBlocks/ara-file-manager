@@ -9,7 +9,7 @@ const {
   afsManager,
   afmManager,
   farmerManager,
-  utils: araUtils
+  utils: actionUtils
  } = require('../actions')
 const { switchLoginState } = require('../../../boot/tray')
 const { switchApplicationMenuLoginState } = require('../../../boot/menu')
@@ -31,7 +31,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
 
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
 
-    const network = await araUtils.getNetwork()
+    const network = await actionUtils.getNetwork()
     const autoQueue = farmerManager.createAutoQueue()
     const farmer = farmerManager.createFarmer({ did, password, queue: autoQueue })
     const didIdentifier = araUtil.getIdentifier(did)
@@ -70,10 +70,16 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     const subscriptionLoad = { transferEth, transfer }
 
     try {
-      await araUtils.requestFromFaucet(did)
+      await actionUtils.requestAraFaucet(did)
       subscriptionLoad.faucet = await araContractsManager.subscribeFaucet(accountAddress)
     } catch (err) {
-      debug('Error requesting faucet: %o', err)
+      debug('Error requesting from ara faucet: %o', err)
+    }
+
+    try {
+      await actionUtils.requestEthFaucet(accountAddress)
+    } catch (err) {
+      debug('Error requesting from eth faucet: %s', err.message)
     }
 
     dispatch({ type: k.GOT_REGISTRATION_SUBS, load: subscriptionLoad })

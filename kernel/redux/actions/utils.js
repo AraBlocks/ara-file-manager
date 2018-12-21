@@ -93,13 +93,17 @@ async function readFileMetadata(did) {
 	return fileInfo
 }
 
-async function requestFromFaucet(userDID) {
+async function requestAraFaucet(userDID) {
 	return await request.post({
 		method: 'POST',
 		uri: networkKeys.FAUCET_URI,
 		body: { to: userDID },
 		json: true
 	})
+}
+
+async function requestEthFaucet(ethAddress) {
+	return await request(`https://faucet.ropsten.be/donate/${ethAddress}`)
 }
 
 async function writeFileMetaData({
@@ -129,6 +133,7 @@ module.exports = {
 	getNetwork,
 	makeAfsPath,
 	readFileMetadata,
-	requestFromFaucet,
+	requestAraFaucet,
+	requestEthFaucet,
 	writeFileMetaData
 }
