@@ -1,8 +1,16 @@
-## [0.3.3](https://github.com/littlstar/ara-content-manager/compare/0.3.2...0.3.3) (2018-12-21)
+## [0.3.4](https://github.com/littlstar/ara-content-manager/compare/0.3.2...0.3.4) (2018-12-21)
+
+
+### Bug Fixes
+
+* Stop People from publishing empty afs ([8b5527d](https://github.com/littlstar/ara-content-manager/commit/8b5527d))
 
 
 ### Features
 
+* get published via proxy ([b0a7c77](https://github.com/littlstar/ara-content-manager/commit/b0a7c77))
+* **accountInfo:** Greys out faucet btn if >= 1000 ([d1637eb](https://github.com/littlstar/ara-content-manager/commit/d1637eb))
+* Pass Auto q into farmer ([a84efe7](https://github.com/littlstar/ara-content-manager/commit/a84efe7))
 * seeds eth on registration ([4d8aa26](https://github.com/littlstar/ara-content-manager/commit/4d8aa26))
 
 
