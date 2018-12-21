@@ -53,7 +53,6 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
     if (feed && feed.length) {
 			downloadPercent = feed.downloaded() / feed.length
 		}
-		await newAfs.close()
 		if (downloadPercent === 1) {
 			status = k.DOWNLOADED_PUBLISHED
 		} else if (downloadPercent > 0) {
@@ -63,7 +62,9 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
 		}
   } catch(err) {
     debug('Error getting download status %o', err)
-  }
+	}
+
+	await newAfs.close()
   return { downloadPercent, status }
 }
 
