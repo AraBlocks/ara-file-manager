@@ -43,7 +43,6 @@ function cleanOutdatedData() {
 		return
 	}
 	const afmDirectory = path.resolve(userHome, '.ara', 'afm')
-	//const afsDirectory = path.resolve(userHome, '.ara', 'afs')
 	const dcdnDirectory = path.resolve(userHome, '.ara', 'dcdn')
 	fs.existsSync(afmDirectory) && rimraf(afmDirectory, () => {
 		debug('remove afm')
@@ -51,7 +50,6 @@ function cleanOutdatedData() {
 		const storePath = path.resolve(getAFMDirectory(), 'store.json')
 		fs.writeFileSync(storePath, JSON.stringify(storeData))
 	})
-	//fs.existsSync(afsDirectory) && rimraf(afsDirectory, () => { debug('remove afs') })
 	fs.existsSync(dcdnDirectory) && rimraf(dcdnDirectory, () => { debug('remove dcdn')})
 }
 
@@ -123,20 +121,6 @@ function parseJSON(path) {
 	}
 }
 
-function savePublishedItem(contentDID, userDID) {
-	try {
-		debug('Saving published item %s', contentDID)
-		const userData = getUserData(userDID)
-		userData.published == null
-			? userData.published = [contentDID]
-			: userData.published.push(contentDID)
-		saveUserData({ userDID, userData })
-		return
-	} catch (err) {
-		debug('Error saving published item: %o', err)
-	}
-}
-
 function saveUserData( { userDID, userData }) {
 	try {
 		debug('Saving User Data in .afm')
@@ -152,12 +136,9 @@ module.exports = {
 	getAFMPath,
 	getAnalyticsPermission,
 	getCachedUserDid,
-	getPublishedItems,
 	getAppData,
 	getUserData,
-	savePublishedItem,
 	saveUserData,
 	toggleAnalyticsPermission,
-	cleanOutdatedData,
-	removedPublishedItem
+	cleanOutdatedData
 }
