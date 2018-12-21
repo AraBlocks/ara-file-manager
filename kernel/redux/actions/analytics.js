@@ -56,7 +56,7 @@ function hasAnalyticsPermission() {
 async function trackError(err) {
     if(!hasAnalyticsPermission()) { return }
     const session = await getSession()
-    session.exception(err).send()
+    session.exception(err, () => {}).send()
 }
 
 module.exports = {
