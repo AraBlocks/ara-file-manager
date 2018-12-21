@@ -1,6 +1,5 @@
 'use strict'
 
-const afmManager = require('../../kernel/redux/actions/afmManager')
 const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const Input = require('../components/input')
@@ -10,12 +9,12 @@ const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Login extends Nanocomponent {
-  constructor() {
+  constructor({ userDID }) {
     super()
 
     this.state = {
       password: '',
-      userDID: afmManager.getCachedUserDid()
+      userDID
     }
 
     this.children = {
@@ -78,7 +77,10 @@ class Login extends Nanocomponent {
     windowManagement.closeWindow('login')
   }
 
-  update() {
+  update({ userDID }) {
+    if (userDID) {
+      this.state.userDID = userDID
+    }
     return true
   }
 

@@ -16,6 +16,9 @@ module.exports = async (state, { load = null, type }) => {
     case k.FAUCET_LIMIT_HIT:
       state.faucetStatus = k.FAUCET_LIMIT_HIT
       break
+    case k.GOT_CACHED_DID:
+      state.cachedUserDid = load.did
+      break
     case k.GETTING_USER_DATA:
       state.userAid = load.userAid
       break
