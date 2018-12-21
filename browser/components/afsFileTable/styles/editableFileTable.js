@@ -60,6 +60,7 @@ module.exports = {
 			font-family: ${fonts.regular};
 			text-align: left;
 			width: 100%;
+			-webkit-app-region: no-drag;
 		}
 
 		:host th {
