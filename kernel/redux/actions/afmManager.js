@@ -76,21 +76,25 @@ function removedPublishedItem(contentDID, userDID) {
 	}
 }
 
-function cacheUserDid(did) {
+async function cacheUserDid(did) {
 	try {
-		const filePath = path.resolve(getAFMDirectory(), 'store.json')
-		const cachedData = parseJSON(filePath)
-		cachedData.cachedUserDid = did
-		fs.writeFileSync(filePath, JSON.stringify(cachedData))
-	} catch(err) {
+		const appData = await getAppData()
+		await pify(appData.write)(application.CACHED_USER_DID, did)
+	} catch(e) {
 		debug(err)
 	}
 }
 
-function getCachedUserDid() {
-	const filePath = path.resolve(getAFMDirectory(), 'store.json')
-	const cachedData = parseJSON(filePath)
-	return cachedData.cachedUserDid ? cachedData.cachedUserDid : ''
+async function getCachedUserDid() {
+	let did
+	try {
+		const appData = await getAppData()
+		did = await pify(appData.read)(application.CACHED_USER_DID)
+		return did
+	} catch(e) {
+		debug(err)
+		return ''
+	}
 }
 
 function getAnalyticsPermission(userDID) {

@@ -14,7 +14,7 @@ const analytics = require('../kernel/redux/actions/analytics')
 const isDev = require('electron-is-dev')
 const path = require('path')
 const { internalEmitter } = require('electron-window-manager')
-const { CANCEL_SUBSCRIPTION } = require('../lib/constants/stateManagement')
+const { CANCEL_SUBSCRIPTION, GET_CACHED_DID } = require('../lib/constants/stateManagement')
 //Creates dev view
 isDev && require('./ipc-dev')
 let deepLinkingUrl
@@ -57,11 +57,12 @@ app.on('ready', () => {
       try { windowManager.getCurrent().object.reload() } catch (e) { }
     })
   }
+  internalEmitter.emit(GET_CACHED_DID)
+  analytics.trackAppOpen()
 
   if (process.argv.includes('loggedin') === false) {
     windowManager.openWindow('login')
   }
-  analytics.trackAppOpen()
 })
 //Prevents app from closing when all windows are shut
 app.on('window-all-closed', () => { })
