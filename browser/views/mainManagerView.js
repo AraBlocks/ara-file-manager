@@ -5,7 +5,7 @@ const { remote } = require('electron')
 const styles = require('./styles/mainManagerView')
 const windowManager = remote.require('electron-window-manager')
 const { files } = windowManager.sharedData.fetch('store')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class MainManagerView extends Nanocomponent {

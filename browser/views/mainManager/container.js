@@ -6,7 +6,7 @@ const { openWindow, quitApp } = require('../../lib/tools/windowManagement')
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
 const WalletInfo = require('./walletInfo')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Container extends Nanocomponent {

@@ -2,7 +2,7 @@
 
 const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/progressBar')
-const html = require('choo/html')
+const html = require('nanohtml')
 
 module.exports = ({
   downloadPercent,

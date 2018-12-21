@@ -1,7 +1,7 @@
 'use strict'
 
 const styles = require('./styles/tooltip')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class Tooltip extends Nanocomponent {

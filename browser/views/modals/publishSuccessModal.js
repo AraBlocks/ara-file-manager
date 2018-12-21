@@ -3,7 +3,7 @@
 const Button = require('../../components/button')
 const { closeModal } = require('../../lib/tools/windowManagement')
 const { deeplink } = require('../../lib/tools/')
-const html = require('choo/html')
+const html = require('nanohtml')
 const styles = require('./styles')
 
 module.exports = ({ did, name }) => {

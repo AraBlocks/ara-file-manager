@@ -6,7 +6,7 @@ const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')
 const { fileSystemManager } = require('../../lib/tools')
 const styles = require('./styles/editableFileTable')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class EditableFileTable extends Nanocomponent {

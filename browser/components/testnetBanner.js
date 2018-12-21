@@ -1,6 +1,6 @@
 'use strict'
 
-const html = require('choo/html')
+const html = require('nanohtml')
 const styles = require('./styles/testnetBanner')
 
 module.exports = () =>

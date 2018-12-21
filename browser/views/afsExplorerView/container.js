@@ -10,7 +10,7 @@ const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/container')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const windowManagement = require('../../lib/tools/windowManagement')
 

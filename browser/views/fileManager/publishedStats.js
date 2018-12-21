@@ -2,7 +2,7 @@
 
 const { renderEarnings } = require('./util')
 const styles = require('./styles/publishedStats')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class PublishedStats extends Nanocomponent {

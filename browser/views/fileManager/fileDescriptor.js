@@ -4,7 +4,7 @@ const k = require('../../../lib/constants/stateManagement')
 const { hamburgerHelper } = require('./util')
 const styles = require('./styles/fileDescriptor')
 const filesize = require('filesize')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {

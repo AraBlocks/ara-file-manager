@@ -2,7 +2,7 @@
 
 const FileInfo = require('./publishFile/fileInfo')
 const PublishFileContainer = require('./publishFile/container')
-const html = require('choo/html')
+const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class PublishFileVIew extends Nanocomponent {

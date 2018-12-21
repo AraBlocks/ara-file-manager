@@ -2,7 +2,7 @@
 
 const Nanocomponent = require('nanocomponent')
 const Button = require('../components/Button')
-const html = require('choo/html')
+const html = require('nanohtml')
 
 class ProgressBarView extends Nanocomponent {
   constructor() {

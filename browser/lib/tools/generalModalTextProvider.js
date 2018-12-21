@@ -1,6 +1,6 @@
 'use strict'
 
-const html = require('choo/html')
+const html = require('nanohtml')
 
 function generalModalText(modalName, load) {
 	let title
