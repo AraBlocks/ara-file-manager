@@ -13,6 +13,7 @@ module.exports = {
 			height: 100%;
 			font-size: 12px;
 			position: relative;
+			-webkit-app-region: no-drag;
 		}
 	`,
 

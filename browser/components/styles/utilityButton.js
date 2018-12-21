@@ -13,6 +13,7 @@ module.exports = {
 			height: 10px;
 			width: 10px;
 			font-size: 12px;
+			-webkit-app-region: no-drag;
 		}
 	`,
 

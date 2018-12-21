@@ -13,6 +13,7 @@ module.exports = {
 			text-align: left;
 			width: 100%;
 			border-collapse: collapse;
+			-webkit-app-region: no-drag;
 		}
 
 		:host th {
