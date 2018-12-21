@@ -12,6 +12,7 @@ module.exports = {
         font-size: 14px;
         transition: all 50ms ease-in-out;
         text-shadow: ${isActive ? '1px' : '0px'} 0 0 currentColor;
+        -webkit-app-region: no-drag;
       }
 
       ${!isActive &&

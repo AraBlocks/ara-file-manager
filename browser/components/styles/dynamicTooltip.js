@@ -13,6 +13,7 @@ module.exports = {
 			cursor: pointer;
 			transition: all ease-in-out;
 			padding: 2px 4px;
+			-webkit-app-region: no-drag;
 		}
 	`,
 

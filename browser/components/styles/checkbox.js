@@ -29,6 +29,7 @@ module.exports = {
 						: colorSelector(colorUnchecked)
 				};
 				cursor: pointer;
+				-webkit-app-region: no-drag;
 			}
 		`
 	},

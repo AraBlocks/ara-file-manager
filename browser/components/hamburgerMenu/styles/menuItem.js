@@ -22,6 +22,7 @@ module.exports = {
       text-align: center;
       text-overflow: ellipsis;
       vertical-align: middle;
+      -webkit-app-region: no-drag;
     }
 
     :host:hover {
