@@ -7,14 +7,6 @@ module.exports = {
 	colors,
 	fonts,
 
-	container: css`
-		:host {
-			border-radius: 7px;
-			cursor: pointer;
-			transition: all ease-in-out;
-		}
-	`,
-
 	clickableText({
 		color = 'teal',
 		fontSize = 14,
@@ -31,24 +23,31 @@ module.exports = {
 
 	tooltip: css`
 		:host {
+			border-radius: 7px;
+			cursor: pointer;
+			padding: 1px;
 			position: relative;
 			display: inline-block;
-			border-bottom: 1px dotted black;
+		}
+
+		:host:hover {
+			background-color: #d0d0d0;
 		}
 
 		:host .tooltipText {
+			font-family: ${fonts.regular};
+			font-size: 12px;
 			visibility: hidden;
-			width: 110px;
-			bottom: 100%;
+			width: 120px;
+			bottom: 130%;
 			left: 50%;
 			margin-left: -60px;
 			background-color: black;
 			color: #fff;
 			text-align: center;
+			transition: opacity 1s;
 			border-radius: 6px;
 			padding: 5px 0;
-
-			/* Position the tooltip */
 			position: absolute;
 			z-index: 1;
 		}
@@ -56,6 +55,17 @@ module.exports = {
 		:host:hover .tooltipText{
 			visibility: visible;
 			opacity: 1;
+		}
+
+		:host .tooltipText:after {
+			content: " ";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: black transparent transparent transparent;
 		}
 	`,
 }

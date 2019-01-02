@@ -13,6 +13,7 @@ class DynamicTooltip extends Nanocomponent {
 			itemClicked: opts.onclick,
 			cssClass: opts.cssClass || {}
 		}
+		this.state = { clicked: false }
 		this.children = opts.children
 	}
 
@@ -21,11 +22,23 @@ class DynamicTooltip extends Nanocomponent {
 	}
 
 	createElement() {
-		const { eventMouseEnter, props, children} = this
+		const { eventMouseEnter, props, children, state} = this
 		return html`
-			<div class=${styles.tooltip}>
-				${children}
-				<span class="tooltipText">hi</span>
+			<div class=${styles.tooltip}
+				onclick="${() => {
+					props.itemClicked()
+					state.clicked = true
+					this.render()
+				}}"
+				onmouseleave="${() => {
+					state.clicked = false
+					this.render()
+				}}"
+			>
+				<div class=${styles.clickableText(props.cssClass)}>
+					${children}
+				</div>
+				<span class="tooltipText">${state.clicked ? props.afterTooltipText : props.beforeTooltipText}</span>
 			</div>
 		`
 	}
