@@ -14,7 +14,7 @@ ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
   try {
     const { account } = store
     const estimate = await rewards.redeem({
-      farmerDid: account.userAid,
+      farmerDid: account.userDID,
       password: account.password,
       contentDid: load.did,
       estimate: true
@@ -37,7 +37,7 @@ ipcMain.on(k.CONFIRM_REDEEM, async (event, load) => {
     dispatch({ type: k.REDEEMING_REWARDS, load: { did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const redeemLoad = { farmerDid: account.userAid, password: account.password, contentDid: load.did }
+    const redeemLoad = { farmerDid: account.userDID, password: account.password, contentDid: load.did }
     const value = await autoQueue.push(() => rewards.redeem(redeemLoad))
 
     debug('DISPATCHING %s', k.REWARDS_REDEEMED)

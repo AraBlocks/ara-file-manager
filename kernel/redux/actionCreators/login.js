@@ -42,7 +42,7 @@ ipcMain.on(k.RECOVER, async (event, load) => {
     await identityManager.archive(identity)
 
     const { did } = identity.did
-    login(null, { userAid: did, password: load.password })
+    login(null, { userDID: did, password: load.password })
 
     windowManager.pingView({ view: 'recover', event: k.RECOVERED })
   } catch (err) {
@@ -76,7 +76,7 @@ async function logout() {
 async function login(_, load) {
   debug('%s heard', k.LOGIN)
   try {
-    const ddo = await aid.resolve(load.userAid)
+    const ddo = await aid.resolve(load.userDID)
     const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password }))
     if (incorrectPW) { throw 'IncorrectPW' }
   } catch (err) {
@@ -86,23 +86,23 @@ async function login(_, load) {
     return
   }
 
-  const userAid = araUtil.getIdentifier(load.userAid)
+  const userDID = araUtil.getIdentifier(load.userDID)
   //writes did signed in with to disk to autofill input next time app booted
-  afmManager.cacheUserDid(userAid)
+  afmManager.cacheUserDid(userDID)
 
   try {
     const network = await utils.getNetwork()
-    dispatch({ type: k.GETTING_USER_DATA, load: { userAid, network } })
+    dispatch({ type: k.GETTING_USER_DATA, load: { userDID, network } })
     windowManager.openWindow('filemanager')
 
-    const analyticsPermission = afmManager.getAnalyticsPermission(userAid)
-    const accountAddress = await araContractsManager.getAccountAddress(userAid, load.password)
-    const araBalance = await araContractsManager.getAraBalance(userAid)
+    const analyticsPermission = afmManager.getAnalyticsPermission(userDID)
+    const accountAddress = await araContractsManager.getAccountAddress(userDID, load.password)
+    const araBalance = await araContractsManager.getAraBalance(userDID)
     const ethBalance = await araContractsManager.getEtherBalance(accountAddress)
     const autoQueue = farmerManager.createAutoQueue()
-    const farmer = farmerManager.createFarmer({ did: userAid, password: load.password, queue: autoQueue })
+    const farmer = farmerManager.createFarmer({ did: userDID, password: load.password, queue: autoQueue })
     //Creates a dummy afs used to estimate deployment costs more quickly
-    const deployEstimateDid = await afsManager.createDeployEstimateAfs(userAid, load.password)
+    const deployEstimateDid = await afsManager.createDeployEstimateAfs(userDID, load.password)
     dispatch({
       type: k.LOGIN,
       load: {
@@ -114,7 +114,7 @@ async function login(_, load) {
         ethBalance,
         farmer,
         password: load.password,
-        userAid
+        userDID
       }
     })
 
@@ -123,11 +123,11 @@ async function login(_, load) {
     switchLoginState(true)
     switchApplicationMenuLoginState(true)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
-    const purchasedDIDs = await araContractsManager.getLibraryItems(userAid)
+    const purchasedDIDs = await araContractsManager.getLibraryItems(userDID)
     //Returns objects representing various info around purchased DIDs
     const purchased = await afsManager.surfaceAFS({
       dids: purchasedDIDs,
-      userDID: userAid,
+      userDID: userDID,
       DCDNStore
     })
     const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
@@ -135,7 +135,7 @@ async function login(_, load) {
     //Returns objects representing various info around published DIDs
     const published = await afsManager.surfaceAFS({
       dids: publishedDIDs,
-      userDID: userAid,
+      userDID: userDID,
       published: true,
       DCDNStore
     })
@@ -147,9 +147,9 @@ async function login(_, load) {
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     //Gets redeemable rewards for published and purchased items
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
-      araContractsManager.getAllocatedRewards(item, userAid, load.password)))
+      araContractsManager.getAllocatedRewards(item, userDID, load.password)))
     let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
-      araContractsManager.getAllocatedRewards(item, userAid, load.password)))
+      araContractsManager.getAllocatedRewards(item, userDID, load.password)))
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
     //Gets total redeemed rewards for published and purchased items
       araContractsManager.getRewards(item, accountAddress)))
@@ -166,11 +166,11 @@ async function login(_, load) {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     //Creates subscriptions in background
-    const transferSub = await araContractsManager.subscribeTransfer(accountAddress, userAid)
+    const transferSub = await araContractsManager.subscribeTransfer(accountAddress, userDID)
     const transferEthSub = await araContractsManager.subscribeEthBalance(accountAddress)
     const publishedSubs = await Promise.all(files.published.map(araContractsManager.subscribePublished))
     const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
-      .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, userAid)))
+      .map(({ did }) => araContractsManager.subscribeRewardsAllocated(did, accountAddress, userDID)))
     const updateSubs = await Promise.all(files.purchased.map(({ did }) => araContractsManager.subscribeAFSUpdates(did)))
 
     dispatch({

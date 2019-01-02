@@ -16,7 +16,7 @@ const { account } = windowManager.sharedData.fetch('store')
 internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
 	debug('%s heard', k.OPEN_DEEPLINK)
 	dispatch({ type: k.OPEN_DEEPLINK, load })
-	if (account.userAid == null) {
+	if (account.userDID == null) {
 		debug('not logged in')
 		dispatch({ type: k.FEED_MODAL, load: { modalName: 'notLoggedIn' } })
 		windowManager.openModal('generalMessageModal')
@@ -32,7 +32,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		dispatch({ type: k.FEED_MODAL, load })
 
 		windowManager.openWindow('purchaseEstimate')
-		const library = await araContractsManager.getLibraryItems(account.userAid)
+		const library = await araContractsManager.getLibraryItems(account.userDID)
 		if (library.includes('0x' + araUtil.getIdentifier(load.did))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
@@ -45,7 +45,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		const gasEstimate = Number(await araContractsManager.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
-			userDID: account.userAid,
+			userDID: account.userDID,
 		}))
 
 		windowManager.pingView({ view: 'purchaseEstimate', event: k.REFRESH, load: { gasEstimate, price } })
@@ -71,11 +71,11 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 		dispatch({ type: k.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userAid }
+		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userDID }
 
 		const jobId = await autoQueue.push(() => araContractsManager.purchaseItem(itemLoad))
 
-		const araBalance = await araContractsManager.getAraBalance(account.userAid)
+		const araBalance = await araContractsManager.getAraBalance(account.userDID)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
 
 		dispatch({ type: k.FEED_MODAL, load: {
@@ -89,7 +89,7 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
-		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
+		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
 		const updateSub = await araContractsManager.subscribeAFSUpdates(load.did)
 
 		dispatch({ type: k.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })

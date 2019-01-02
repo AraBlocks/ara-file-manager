@@ -15,7 +15,7 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
     dispatch({ type: k.IN_FAUCET_QUEUE })
     windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 
-    const response = await actionUtils.requestAraFaucet(store.account.userAid)
+    const response = await actionUtils.requestAraFaucet(store.account.userDID)
 
     let dispatchLoad
     if (response.status === 'Queued') {
