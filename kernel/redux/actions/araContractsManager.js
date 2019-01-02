@@ -121,8 +121,13 @@ async function getLibraryItems(userDID) {
 	}
 }
 
-function getPublishedEarnings(did, dispatchAndRefresh = () => { }, index) {
-	return getEarnings(did).then(earnings => dispatchAndRefresh(k.GOT_EARNING, { did, earnings }, index))
+async function getPublishedEarnings(did, dispatchAndRefresh = () => { }, index) {
+	try {
+		const earnings = await getEarnings(did)
+		dispatchAndRefresh(k.GOT_EARNING, { did, earnings }, index)
+	} catch (err) {
+		debug('Error getting earning: %o', err)
+	}
 }
 
 async function getAFSContract(contentDID) {
