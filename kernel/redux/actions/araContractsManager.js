@@ -128,6 +128,10 @@ async function getPublishedEarnings(items) {
 	return Promise.all(updatedEarnings)
 }
 
+function getPublishedEarnings2(did, dispatchEarnings = () => { }) {
+	getEarnings(did).then(earning => dispatchEarnings(did, earning))
+}
+
 async function getAFSContract(contentDID) {
 	if (!araContracts.registry.proxyExists(contentDID)) { return {} }
 	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
@@ -144,7 +148,7 @@ async function getAllocatedRewards(item, userDID, password) {
 	return { ...item, allocatedRewards }
 }
 
-async function getEarnings({ did }) {
+async function getEarnings(did) {
 	const { contract, ctx } = await getAFSContract(did)
 
 	let earnings = 0
@@ -353,6 +357,7 @@ module.exports = {
 	getEtherBalance,
 	getLibraryItems,
 	getPublishedEarnings,
+	getPublishedEarnings2,
 	getRewards,
 	purchaseItem,
 	purchaseEstimate,

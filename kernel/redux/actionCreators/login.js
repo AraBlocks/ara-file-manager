@@ -154,6 +154,12 @@ async function login(_, load) {
 
     //TODO: refactor to loop through only once
     //Gets earnings for published items
+    function dispatchEarnings(did, earning) {
+      dispatch({ type: k.GOT_EARNING, load: { did, earning } })
+    }
+    const allFiles = files.published.concat(files.purchased)
+
+    allFiles.forEach(araContractsManager.getPublishedEarnings2, dispatchEarnings)
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     //Gets redeemable rewards for published and purchased items
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
