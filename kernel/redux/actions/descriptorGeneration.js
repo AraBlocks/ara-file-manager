@@ -4,6 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actions:descriptorGeneration')
 const { stateManagement: k } = require('k')
 const afs = require('ara-filesystem')
 const araContractsManager = require('./araContractsManager')
+const farmerManager = require('./farmerManager')
 const araUtil = require('ara-util')
 const fs = require('fs')
 const { makeAfsPath, readFileMetadata } = require('./utils')
@@ -29,14 +30,15 @@ class _Descriptor {
 	}
 }
 
-function makeDummyDescriptor(did) {
+function makeDummyDescriptor(did, DCDNStore) {
 	did = araUtil.getIdentifier(did)
 	const AFSPath = makeAfsPath(did)
 	return new _Descriptor({
 		AFSExists: fs.existsSync(AFSPath),
 		AFSPath,
 		did,
-		status: k.AWAITING_STATUS
+		status: k.AWAITING_STATUS,
+		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
 	})
 }
 

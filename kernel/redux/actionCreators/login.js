@@ -13,6 +13,7 @@ const {
   descriptorGeneration
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
+const fs = require('fs')
 const { stateManagement: k } = require('k')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
@@ -129,13 +130,17 @@ async function login(_, load) {
     //Returns objects representing various info around DIDs
     let purchased = purchasedDIDs.map(descriptorGeneration.makeDummyDescriptor)
 
-    const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
+    const publishedDIDs = (await araContractsManager.getDeployedProxies(accountAddress)).map(araUtil.getIdentifier)
     let published = publishedDIDs.map(descriptorGeneration.makeDummyDescriptor)
 
     let { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
+    const allAFS = files.published.concat(files.purchased)
+
+    //Gets earnings from purchases for published files and updates ui
     await Promise.all(files.published.map(({ did }, i) => araContractsManager.getPublishedEarnings(did, dispatchAndRefresh, i)))
+    await Promise.all(allAFS.map(readMeta))
 
     //Returns objects with more detailed info around DIDs
     published = await afsManager.surfaceAFS({
@@ -209,4 +214,14 @@ async function login(_, load) {
 function dispatchAndRefresh(type, load, index) {
   dispatch({ type, load })
   index % 3 === 0 && windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+}
+
+async function readMeta({ did }, index) {
+  const AFSPath = utils.makeAfsPath(did)
+  const AFSExists = fs.existsSync(AFSPath)
+  if (AFSExists) {
+    const meta = await utils.readFileMetadata(did)
+    dispatchAndRefresh(k.GOT_META, { did, meta }, index)
+    return
+  }
 }

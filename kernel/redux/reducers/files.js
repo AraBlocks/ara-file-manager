@@ -53,6 +53,12 @@ module.exports = (state, { load = null, type }) => {
       file = findFile(load.did, state.published.concat(state.purchased))
       file.earnings += Number(load.earnings)
       break
+    case k.GOT_META:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.name = load.meta.title || null
+      file.size = load.meta.size || 0
+      file.datePublished = load.meta.timestamp || null
+      break
     case k.GETTING_USER_DATA:
       state.loadingLibrary = true
       break
