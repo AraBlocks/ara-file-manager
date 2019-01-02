@@ -138,8 +138,9 @@ async function login(_, load) {
 
     const allAFS = files.published.concat(files.purchased)
 
-    //Gets earnings from purchases for published files and updates ui
+    //Gets earnings from purchases for published AFS and pupdates ui
     await Promise.all(files.published.map(({ did }, i) => araContractsManager.getPublishedEarnings(did, dispatchAndRefresh, i)))
+    //Gets metadata for all AFS and pupdates ui
     await Promise.all(allAFS.map(readMeta))
 
     //Returns objects with more detailed info around DIDs
