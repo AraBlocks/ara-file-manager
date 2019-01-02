@@ -4,6 +4,7 @@ const debug = require('debug')('acm:kernel:lib:actions:afsManager')
 const k = require('../../../lib/constants/stateManagement')
 const actionsUtil = require('./utils')
 const afmManager = require('./afmManager')
+const descriptorGeneration = require('./descriptorGeneration')
 const araContracts = require('ara-contracts')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
@@ -157,7 +158,7 @@ async function isCommitted(did) {
 
 async function surfaceAFS({ dids, DCDNStore, published = false }) {
   return Promise.all(dids.map(async (did) => {
-    const descriptor = await actionsUtil.descriptorGenerator(did, {
+    const descriptor = await descriptorGeneration.makeDescriptor(did, {
       shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
       owner: published,
     })

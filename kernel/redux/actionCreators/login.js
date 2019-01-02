@@ -9,7 +9,8 @@ const {
   araContractsManager,
   farmerManager,
   identityManager,
-  utils
+  utils,
+  descriptorGeneration
 } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const { stateManagement: k } = require('k')
@@ -27,8 +28,8 @@ internalEmitter.on(k.LOGOUT, () => {
 
 internalEmitter.on(k.GET_CACHED_DID, async () => {
   const did = await afmManager.getCachedUserDid()
-  dispatch({ type: k.GOT_CACHED_DID, load: { did }})
-  windowManager.pingView({ view: 'login', event: k.REFRESH})
+  dispatch({ type: k.GOT_CACHED_DID, load: { did } })
+  windowManager.pingView({ view: 'login', event: k.REFRESH })
 })
 
 ipcMain.on(k.LOGIN, login)
@@ -48,7 +49,7 @@ ipcMain.on(k.RECOVER, async (event, load) => {
   } catch (err) {
     const dispatchLoad = {
       modalName: 'recoveryFailure',
-      callback: () => windowManager.pingView({ view: 'recover', event: k.RECOVER_FAILED})
+      callback: () => windowManager.pingView({ view: 'recover', event: k.RECOVER_FAILED })
     }
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalMessageModal')
@@ -122,26 +123,35 @@ async function login(_, load) {
 
     switchLoginState(true)
     switchApplicationMenuLoginState(true)
+
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
     const purchasedDIDs = await araContractsManager.getLibraryItems(userDID)
-    //Returns objects representing various info around purchased DIDs
-    const purchased = await afsManager.surfaceAFS({
-      dids: purchasedDIDs,
-      userDID,
-      DCDNStore
-    })
-    const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
+    //Returns objects representing various info around DIDs
+    let purchased = purchasedDIDs.map(descriptorGeneration.makeDummyDescriptor)
 
-    //Returns objects representing various info around published DIDs
-    const published = await afsManager.surfaceAFS({
+    const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
+    let published = publishedDIDs.map(descriptorGeneration.makeDummyDescriptor)
+
+    dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+    //Returns objects with more detailed info around DIDs
+    published = await afsManager.surfaceAFS({
       dids: publishedDIDs,
       userDID,
       published: true,
       DCDNStore
     })
 
-    let files;
-    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
+    purchased = await afsManager.surfaceAFS({
+      dids: purchasedDIDs,
+      userDID,
+      DCDNStore
+    })
+
+    let { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
     //TODO: refactor to loop through only once
     //Gets earnings for published items
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
@@ -151,7 +161,7 @@ async function login(_, load) {
     let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
       araContractsManager.getAllocatedRewards(item, userDID, load.password)))
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
-    //Gets total redeemed rewards for published and purchased items
+      //Gets total redeemed rewards for published and purchased items
       araContractsManager.getRewards(item, accountAddress)))
     updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map((item) =>
       araContractsManager.getRewards(item, accountAddress)))
