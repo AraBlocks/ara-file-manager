@@ -25,7 +25,6 @@ module.exports = {
 		:host {
 			border-radius: 7px;
 			cursor: pointer;
-			padding: 1px;
 			position: relative;
 			display: inline-block;
 		}
@@ -39,22 +38,23 @@ module.exports = {
 			font-size: 12px;
 			visibility: hidden;
 			width: 120px;
-			bottom: 130%;
+			bottom: 135%;
 			left: 50%;
 			margin-left: -60px;
 			background-color: black;
 			color: #fff;
 			text-align: center;
-			transition: opacity 1s;
 			border-radius: 6px;
 			padding: 5px 0;
 			position: absolute;
 			z-index: 1;
+			transform: scale(0.9);
+			transition: transform 0.2s ease-in-out;
 		}
 
 		:host:hover .tooltipText{
 			visibility: visible;
-			opacity: 1;
+			transform: scale(1);
 		}
 
 		:host .tooltipText:after {
