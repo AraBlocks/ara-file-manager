@@ -45,7 +45,7 @@ class ItemRow extends Nanocomponent {
           downloadPercent,
           last,
           status,
-          shouldBroadcast
+          shouldBroadcast,
         })}
       </div>
     `

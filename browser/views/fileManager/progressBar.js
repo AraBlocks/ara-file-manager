@@ -20,6 +20,7 @@ module.exports = ({
       color = 'black'
       break
     case k.AWAITING_DOWNLOAD:
+    case k.AWAITING_STATUS:
       color = 'grey'
       break
     case k.DOWNLOADING:

@@ -32,8 +32,12 @@ class _Descriptor {
 function makeDummyDescriptor(did) {
 	did = araUtil.getIdentifier(did)
 	const AFSPath = makeAfsPath(did)
-	const AFSExists = fs.existsSync(AFSPath)
-	return new _Descriptor({ did, AFSPath, AFSExists })
+	return new _Descriptor({
+		AFSExists: fs.existsSync(AFSPath),
+		AFSPath,
+		did,
+		status: k.AWAITING_STATUS
+	})
 }
 
 async function makeDescriptor(did, opts = {}) {
