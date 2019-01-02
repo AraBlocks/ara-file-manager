@@ -121,8 +121,8 @@ async function getLibraryItems(userDID) {
 	}
 }
 
-function getPublishedEarnings(did, dispatchAndRefresh = () => { }) {
-	return getEarnings(did).then(earnings => dispatchAndRefresh(k.GOT_EARNING, { did, earnings }))
+function getPublishedEarnings(did, dispatchAndRefresh = () => { }, index) {
+	return getEarnings(did).then(earnings => dispatchAndRefresh(k.GOT_EARNING, { did, earnings }, index))
 }
 
 async function getAFSContract(contentDID) {
@@ -350,7 +350,6 @@ module.exports = {
 	getEtherBalance,
 	getLibraryItems,
 	getPublishedEarnings,
-	getPublishedEarnings2,
 	getRewards,
 	purchaseItem,
 	purchaseEstimate,

@@ -135,9 +135,7 @@ async function login(_, load) {
     let { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const allAFS = files.published.concat(files.purchased)
-
-    await Promise.all(allAFS.map(({ did }) => araContractsManager.getPublishedEarnings(did, dispatchAndRefresh)))
+    await Promise.all(files.published.map(({ did }, i) => araContractsManager.getPublishedEarnings(did, dispatchAndRefresh, i)))
 
     //Returns objects with more detailed info around DIDs
     published = await afsManager.surfaceAFS({
@@ -158,7 +156,7 @@ async function login(_, load) {
 
     //TODO: refactor to loop through only once
     //Gets redeemable rewards for published and purchased items
-    updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
+    let updatedPublishedItems = await Promise.all(files.published.map((item) =>
       araContractsManager.getAllocatedRewards(item, userDID, load.password)))
     let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
       araContractsManager.getAllocatedRewards(item, userDID, load.password)))
@@ -208,7 +206,7 @@ async function login(_, load) {
   }
 }
 
-function dispatchAndRefresh(type, load) {
+function dispatchAndRefresh(type, load, index) {
   dispatch({ type, load })
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+  index % 3 === 0 && windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }
