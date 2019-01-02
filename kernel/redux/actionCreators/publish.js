@@ -5,9 +5,9 @@ const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
-  afmManager,
   araContractsManager,
-  utils: actionsUtil
+  utils: actionsUtil,
+  descriptorGeneration
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
@@ -74,7 +74,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 
     await autoQueue.push(() => afs.deploy({ password, did }))
 
-    const descriptor = await actionsUtil.makeDescriptor(did, { owner: true, status: k.UNCOMMITTED })
+    const descriptor = await descriptorGeneration.makeDescriptor(did, { owner: true, status: k.UNCOMMITTED })
 
     windowManager.closeWindow('generalPleaseWaitModal')
 
@@ -170,7 +170,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       size: load.size,
       status: k.PUBLISHING
     }
-    const descriptor = await actionsUtil.makeDescriptor(load.did, descriptorOpts)
+    const descriptor = await descriptorGeneration.makeDescriptor(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 

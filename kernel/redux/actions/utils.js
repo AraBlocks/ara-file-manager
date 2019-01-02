@@ -11,38 +11,6 @@ const fs = require('fs')
 const createContext = require('ara-context')
 const request = require('request-promise')
 
-
-//TODO: figure out why reading metadata causes error for uncommitted afs
-async function makeDescriptor(did, opts = {}) {
-	try {
-		did = araUtil.getIdentifier(did)
-		const AFSPath = await makeAfsPath(did)
-		const AFSExists = fs.existsSync(AFSPath)
-		const meta = AFSExists ? await readFileMetadata(did) : null
-		const { downloadPercent, status } = await getAfsDownloadStatus(did, opts.shouldBroadcast)
-
-		const descriptor = {
-			allocatedRewards: 0,
-			did,
-			downloadPercent,
-			datePublished: meta ? meta.timestamp : null,
-			earnings: 0,
-			name: meta ? meta.title : null,
-			owner: false,
-			path: AFSPath,
-			peers: 0,
-			price: Number(await araContractsManager.getAFSPrice({ did })),
-			redeeming: false,
-			shouldBroadcast: false,
-			size: meta ? meta.size : 0,
-			status
-		}
-		return Object.assign(descriptor, opts)
-	} catch (err) {
-		debug('makeDescriptor Error:, %o', err)
-	}
-}
-
 async function getAfsDownloadStatus(did, shouldBroadcast) {
 	let downloadPercent = 0
 	let status = k.AWAITING_DOWNLOAD
@@ -130,7 +98,6 @@ async function writeFileMetaData({
 }
 
 module.exports = {
-	makeDescriptor,
 	getNetwork,
 	makeAfsPath,
 	readFileMetadata,

@@ -2,10 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
-const {
-	utils: actionsUtil,
-	araContractsManager,
-} = require('../actions')
+const { araContractsManager, descriptorGeneration } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const araUtil = require('ara-util')
 const { ipcMain } = require('electron')
@@ -67,7 +64,7 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 			name: load.fileName,
 			status: k.PURCHASING,
 		}
-		const descriptor = await actionsUtil.makeDescriptor(load.did, descriptorOpts)
+		const descriptor = await descriptorGeneration.makeDescriptor(load.did, descriptorOpts)
 		dispatch({ type: k.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
