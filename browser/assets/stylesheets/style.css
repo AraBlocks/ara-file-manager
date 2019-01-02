@@ -31,6 +31,7 @@ textarea {
 a {
   color: var(--ara-orange);
   text-decoration: none;
+  -webkit-app-region: no-drag;
 }
 
 input::-webkit-outer-spin-button,

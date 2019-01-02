@@ -21,6 +21,7 @@ module.exports = {
 			cursor: pointer;
 			font-family: ${fonts.bold};
 			font-size: 14px;
+			-webkit-app-region: no-drag;
 		}
 
 		:host:hover {
