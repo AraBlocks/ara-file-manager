@@ -8,7 +8,7 @@ const araUtil = require('ara-util')
 const fs = require('fs')
 const { makeAfsPath, readFileMetadata } = require('./utils')
 
-class Descriptor {
+class _Descriptor {
 	constructor(opts = {}) {
 		return Object.assign({
 			allocatedRewards: 0,
@@ -29,14 +29,14 @@ class Descriptor {
 	}
 }
 
-function dummyGenerator(did) {
+function makeDummyDescriptor(did) {
 	did = araUtil.getIdentifier(did)
 	const AFSPath = makeAfsPath(did)
 	const AFSExists = fs.existsSync(AFSPath)
-	return new Descriptor({ did, AFSPath, AFSExists })
+	return new _Descriptor({ did, AFSPath, AFSExists })
 }
 
-async function descriptorGenerator(did, opts = {}) {
+async function makeDescriptor(did, opts = {}) {
 	try {
 		did = araUtil.getIdentifier(did)
 		const AFSPath = await makeAfsPath(did)
@@ -44,7 +44,7 @@ async function descriptorGenerator(did, opts = {}) {
 		const meta = AFSExists ? await readFileMetadata(did) : null
 		const { downloadPercent, status } = await _getAfsDownloadStatus(did, opts.shouldBroadcast)
 
-		return Object.assign(new Descriptor, {
+		return Object.assign(new _Descriptor, {
 			did,
 			downloadPercent,
 			datePublished: meta ? meta.timestamp : null,
@@ -55,7 +55,7 @@ async function descriptorGenerator(did, opts = {}) {
 			status
 		}, opts)
 	} catch (err) {
-		debug('descriptorGenerator Error:, %o', err)
+		debug('makeDescriptor Error:, %o', err)
 	}
 }
 
@@ -83,9 +83,7 @@ async function _getAfsDownloadStatus(did, shouldBroadcast) {
 	await newAfs.close()
 	return { downloadPercent, status }
 }
-//x
 module.exports = {
-	Descriptor,
-	descriptorGenerator,
-	dummyGenerator
+	makeDescriptor,
+	makeDummyDescriptor
 }

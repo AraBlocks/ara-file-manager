@@ -157,7 +157,7 @@ async function isCommitted(did) {
 
 async function surfaceAFS({ dids, DCDNStore, published = false }) {
   return Promise.all(dids.map(async (did) => {
-    const descriptor = await actionsUtil.descriptorGenerator(did, {
+    const descriptor = await actionsUtil.makeDescriptor(did, {
       shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
       owner: published,
     })

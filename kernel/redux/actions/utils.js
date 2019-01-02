@@ -13,7 +13,7 @@ const request = require('request-promise')
 
 
 //TODO: figure out why reading metadata causes error for uncommitted afs
-async function descriptorGenerator(did, opts = {}) {
+async function makeDescriptor(did, opts = {}) {
 	try {
 		did = araUtil.getIdentifier(did)
 		const AFSPath = await makeAfsPath(did)
@@ -39,7 +39,7 @@ async function descriptorGenerator(did, opts = {}) {
 		}
 		return Object.assign(descriptor, opts)
 	} catch (err) {
-		debug('descriptorGenerator Error:, %o', err)
+		debug('makeDescriptor Error:, %o', err)
 	}
 }
 
@@ -130,7 +130,7 @@ async function writeFileMetaData({
 }
 
 module.exports = {
-	descriptorGenerator,
+	makeDescriptor,
 	getNetwork,
 	makeAfsPath,
 	readFileMetadata,

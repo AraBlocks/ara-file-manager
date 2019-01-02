@@ -74,7 +74,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 
     await autoQueue.push(() => afs.deploy({ password, did }))
 
-    const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED })
+    const descriptor = await actionsUtil.makeDescriptor(did, { owner: true, status: k.UNCOMMITTED })
 
     windowManager.closeWindow('generalPleaseWaitModal')
 
@@ -170,7 +170,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       size: load.size,
       status: k.PUBLISHING
     }
-    const descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
+    const descriptor = await actionsUtil.makeDescriptor(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 

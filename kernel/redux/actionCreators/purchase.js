@@ -67,7 +67,7 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 			name: load.fileName,
 			status: k.PURCHASING,
 		}
-		const descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
+		const descriptor = await actionsUtil.makeDescriptor(load.did, descriptorOpts)
 		dispatch({ type: k.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
