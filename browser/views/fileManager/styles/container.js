@@ -45,6 +45,7 @@ module.exports = {
       font-family: ${fonts.light};
       font-size: 13px;
       text-decoration: none;
+      -webkit-app-region: no-drag;
     }
 
     :host a:hover {
