@@ -31,7 +31,7 @@ class ItemRow extends Nanocomponent {
       status,
       shouldBroadcast
     } = file
-    const { children, props } = this
+    const { children } = this
 
     return html`
       <div>
