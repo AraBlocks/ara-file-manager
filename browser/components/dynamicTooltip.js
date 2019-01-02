@@ -22,8 +22,8 @@ class DynamicTooltip extends Nanocomponent {
 		this.children = opts.children
 		this.eventMouseLeave = document.createEvent('MouseEvents')
     this.eventMouseEnter = document.createEvent('MouseEvents')
-    this.eventMouseLeave.initMouseEvent('mouseout', false, true)
-    this.eventMouseEnter.initMouseEvent('mouseenter', false, true)
+    this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
+    this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
 	}
 
 	update(){
@@ -35,11 +35,11 @@ class DynamicTooltip extends Nanocomponent {
 		return html`
 			<div
 				data-tooltip="${props.beforeTooltipText}"
-				class="${styles.container} ${styles.clickableText(props.cssClass)} dynamicTooltip-copyableText"
+				class="${styles.container} dynamicTooltip-copyableText"
 				onclick="${({ target }) => {
-					target.dataset.tooltip = props.afterTooltipText
-					target.dispatchEvent(eventMouseEnter)
-					target.dataset.tooltip = props.beforeTooltipText
+					target.parentElement.dataset.tooltip = props.afterTooltipText
+					target.parentElement.dispatchEvent(eventMouseEnter)
+					target.parentElement.dataset.tooltip = props.beforeTooltipText
 					props.itemClicked()
 				}}"
 				onmouseenter="${(e) => {
@@ -47,13 +47,15 @@ class DynamicTooltip extends Nanocomponent {
 					e.preventDefault()
 					e.target.style.backgroundColor = '#d0d0d0'
 				}}"
-				onmouseout="${(e) => {
+				onmouseleave="${(e) => {
 					console.log("on Mouse Leave")
 					e.preventDefault()
 					e.target.style.backgroundColor = ''
 				}}"
 			>
-				${this.children}
+				<div class=${styles.clickableText(props.cssClass)}>
+					${this.children}
+				</div>
 			</div>
 		`
 	}
