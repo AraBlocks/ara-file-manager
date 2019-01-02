@@ -6,7 +6,6 @@ const html = require('nanohtml')
 
 module.exports = ({
   downloadPercent,
-  index,
   last = false,
   status,
   shouldBroadcast
@@ -21,28 +20,13 @@ module.exports = ({
       color = 'black'
       break
     case k.AWAITING_DOWNLOAD:
+    case k.AWAITING_STATUS:
       color = 'grey'
       break
     case k.DOWNLOADING:
     case k.UPDATE_AVAILABLE:
       color = 'orange'
       break
-    case k.AWAITING_STATUS:
-      const { css } = require('css')
-      const tempStyles = css`
-        :host {
-          background-color: var(--ara-grey);
-          height: 1px;
-          margin-bottom: 20px;
-          width: 20%;
-          position: relative;
-        }
-      `
-      return html`
-        <div class="${tempStyles} ${index % 2 ? 'back-and-forth' : 'forth-and-back'}">
-          <div></div>
-        </div>
-      `
     default:
       return html`
         <div class="${styles.holder} progressBar-holder" style="background-color: rgba(0,0,0,0);">
