@@ -127,7 +127,7 @@ async function login(_, load) {
     //Returns objects representing various info around purchased DIDs
     const purchased = await afsManager.surfaceAFS({
       dids: purchasedDIDs,
-      userDID: userDID,
+      userDID,
       DCDNStore
     })
     const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
@@ -135,7 +135,7 @@ async function login(_, load) {
     //Returns objects representing various info around published DIDs
     const published = await afsManager.surfaceAFS({
       dids: publishedDIDs,
-      userDID: userDID,
+      userDID,
       published: true,
       DCDNStore
     })
