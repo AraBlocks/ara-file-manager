@@ -9,9 +9,9 @@ const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class ItemRow extends Nanocomponent {
-  constructor({ file, typeRow }) {
+  constructor({ file, typeRow, index }) {
     super()
-    this.props = { typeRow }
+    this.props = { typeRow, index }
     this.children = {
       fileDescriptor: new FileDescriptor({ ...file }),
       stats: typeRow === 'published'
@@ -31,7 +31,7 @@ class ItemRow extends Nanocomponent {
       status,
       shouldBroadcast
     } = file
-    const { children } = this
+    const { children, props } = this
 
     return html`
       <div>
@@ -45,7 +45,8 @@ class ItemRow extends Nanocomponent {
           downloadPercent,
           last,
           status,
-          shouldBroadcast
+          shouldBroadcast,
+          index: props.index
         })}
       </div>
     `

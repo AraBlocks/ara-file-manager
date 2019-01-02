@@ -17,7 +17,7 @@ class Section extends Nanocomponent {
 
   createElement({ files }) {
     const { props: { typeRow } } = this
-    const fileRows = files[typeRow].map(file => new ItemRow({ file, typeRow }))
+    const fileRows = files[typeRow].map((file, index) => new ItemRow({ file, typeRow, index }))
     return html`
       <div class="${styles.container} section-container">
         <div class="${styles.header} section-header">
