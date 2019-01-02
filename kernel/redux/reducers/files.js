@@ -51,7 +51,7 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.GOT_EARNING:
       file = findFile(load.did, state.published.concat(state.purchased))
-      file.earnings = Number(load.earnings)
+      file.earnings += Number(load.earnings)
       break
     case k.GETTING_USER_DATA:
       state.loadingLibrary = true

@@ -121,15 +121,8 @@ async function getLibraryItems(userDID) {
 	}
 }
 
-async function getPublishedEarnings(items) {
-	debug('Getting earnings for published items')
-	const updatedEarnings = items.map(async (item) => ({ ...item, earnings: await getEarnings(item) }))
-
-	return Promise.all(updatedEarnings)
-}
-
-function getPublishedEarnings2(did, dispatchAndRefresh = () => { }, index = 1) {
-	getEarnings(did).then(earnings => dispatchAndRefresh(k.GOT_EARNING, { did, earnings }, index))
+function getPublishedEarnings(did, dispatchAndRefresh = () => { }) {
+	return getEarnings(did).then(earnings => dispatchAndRefresh(k.GOT_EARNING, { did, earnings }))
 }
 
 async function getAFSContract(contentDID) {
