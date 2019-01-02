@@ -8,26 +8,28 @@ module.exports = {
 
 	addOptions: css`
 		:host {
-			background-color: white;
 			bottom: 0;
 			padding: 5px 0 0 20px;
 			width: 100%;
 		}
 	`,
 
-	add: css`
-		:host {
-			color: ${colorSelector('teal')};
-			cursor: pointer;
-			font-family: ${fonts.bold};
-			font-size: 14px;
-			-webkit-app-region: no-drag;
-		}
+	add(visible = true) {
+		return css`
+			:host {
+				display: ${visible ? 'inline' : 'none'};
+				color: ${colorSelector('teal')};
+				cursor: pointer;
+				font-family: ${fonts.bold};
+				font-size: 14px;
+				-webkit-app-region: no-drag;
+			}
 
-		:host:hover {
-			color: ${colorSelector('teal', true)};
-		}
-	`,
+			:host:hover {
+				color: ${colorSelector('teal', true)};
+			}
+		`
+	},
 
 	container: css`
 		:host {

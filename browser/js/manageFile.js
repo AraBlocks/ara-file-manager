@@ -15,7 +15,7 @@ document.getElementById('container').appendChild(manageFileContainer.render({ sp
 ipcRenderer.on(k.ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
 ipcRenderer.on(k.REFRESH, () => manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList }))
 
-['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   document.body.addEventListener(eventName, preventDefaults, false)
 })
 

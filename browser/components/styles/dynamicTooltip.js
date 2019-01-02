@@ -12,7 +12,6 @@ module.exports = {
 			border-radius: 7px;
 			cursor: pointer;
 			transition: all ease-in-out;
-			padding: 2px 4px;
 			-webkit-app-region: no-drag;
 		}
 	`,
@@ -27,6 +26,7 @@ module.exports = {
 				color: ${colorSelector(color)};
 				font-family: ${fontFamily};
 				font-size: ${fontSize}px;
+				-webkit-app-region: no-drag;
 			}
 		`
 	}

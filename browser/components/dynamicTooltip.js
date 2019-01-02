@@ -42,8 +42,16 @@ class DynamicTooltip extends Nanocomponent {
 					target.parentElement.dataset.tooltip = props.beforeTooltipText
 					props.itemClicked()
 				}}"
-				onmouseenter="${({ target }) => target.style.backgroundColor = '#d0d0d0'}"
-				onmouseleave="${({ target }) => target.style.backgroundColor = ''}"
+				onmouseenter="${(e) => {
+					console.log("on Mouse Enter")
+					e.preventDefault()
+					e.target.style.backgroundColor = '#d0d0d0'
+				}}"
+				onmouseleave="${(e) => {
+					console.log("on Mouse Leave")
+					e.preventDefault()
+					e.target.style.backgroundColor = ''
+				}}"
 			>
 				<div class=${styles.clickableText(props.cssClass)}>
 					${this.children}

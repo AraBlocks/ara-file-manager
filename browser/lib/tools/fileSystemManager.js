@@ -24,6 +24,20 @@ module.exports = {
 		const opts = {
 			properties: [
 				'openFile',
+				'multiSelections'
+			]
+		}
+		return new Promise((resolve) => {
+			dialog.showOpenDialog(opts, (fileNames, error) =>
+				fileNames ? resolve(fileNames) : resolve([])
+			)
+		})
+	},
+
+	showSelectFileAndFolderDialog() {
+		const opts = {
+			properties: [
+				'openFile',
 				'openDirectory',
 				'multiSelections'
 			]
