@@ -132,8 +132,18 @@ async function login(_, load) {
     const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
     let published = publishedDIDs.map(descriptorGeneration.makeDummyDescriptor)
 
-    dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
+    let { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+    function dispatchAndRefresh(type, load, index) {
+      dispatch({ type, load })
+      index % 2 && windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    }
+
+    const allAFS = files.published.concat(files.purchased)
+
+    allAFS.forEach(({ did }, i) => araContractsManager.getPublishedEarnings2(did, dispatchAndRefresh, i))
+    return
 
     //Returns objects with more detailed info around DIDs
     published = await afsManager.surfaceAFS({
@@ -149,17 +159,11 @@ async function login(_, load) {
       DCDNStore
     })
 
-    let { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
+      ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     //TODO: refactor to loop through only once
     //Gets earnings for published items
-    function dispatchEarnings(did, earning) {
-      dispatch({ type: k.GOT_EARNING, load: { did, earning } })
-    }
-    const allFiles = files.published.concat(files.purchased)
-
-    allFiles.forEach(araContractsManager.getPublishedEarnings2, dispatchEarnings)
     let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     //Gets redeemable rewards for published and purchased items
     updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>

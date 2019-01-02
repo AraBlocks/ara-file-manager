@@ -128,8 +128,8 @@ async function getPublishedEarnings(items) {
 	return Promise.all(updatedEarnings)
 }
 
-function getPublishedEarnings2(did, dispatchEarnings = () => { }) {
-	getEarnings(did).then(earning => dispatchEarnings(did, earning))
+function getPublishedEarnings2(did, dispatchAndRefresh = () => { }, index = 1) {
+	getEarnings(did).then(earnings => dispatchAndRefresh(k.GOT_EARNING, { did, earnings }, index))
 }
 
 async function getAFSContract(contentDID) {
