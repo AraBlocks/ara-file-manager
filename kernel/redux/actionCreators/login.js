@@ -132,8 +132,10 @@ async function login(_, load) {
     const publishedDIDs = await araContractsManager.getDeployedProxies(accountAddress)
     let published = publishedDIDs.map(descriptorGeneration.makeDummyDescriptor)
 
-    dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
+    let { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+    await Promise.all(files.published.map(({ did }, i) => araContractsManager.getPublishedEarnings(did, dispatchAndRefresh, i)))
 
     //Returns objects with more detailed info around DIDs
     published = await afsManager.surfaceAFS({
@@ -147,16 +149,14 @@ async function login(_, load) {
       dids: purchasedDIDs,
       userDID,
       DCDNStore
-    })
+    });
 
-    let { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
+    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     //TODO: refactor to loop through only once
-    //Gets earnings for published items
-    let updatedPublishedItems = await araContractsManager.getPublishedEarnings(files.published)
     //Gets redeemable rewards for published and purchased items
-    updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
+    let updatedPublishedItems = await Promise.all(files.published.map((item) =>
       araContractsManager.getAllocatedRewards(item, userDID, load.password)))
     let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
       araContractsManager.getAllocatedRewards(item, userDID, load.password)))
@@ -204,4 +204,9 @@ async function login(_, load) {
   } catch (err) {
     debug('Error: %O', err)
   }
+}
+
+function dispatchAndRefresh(type, load, index) {
+  dispatch({ type, load })
+  index % 3 === 0 && windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }

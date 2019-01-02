@@ -121,11 +121,13 @@ async function getLibraryItems(userDID) {
 	}
 }
 
-async function getPublishedEarnings(items) {
-	debug('Getting earnings for published items')
-	const updatedEarnings = items.map(async (item) => ({ ...item, earnings: await getEarnings(item) }))
-
-	return Promise.all(updatedEarnings)
+async function getPublishedEarnings(did, dispatchAndRefresh = () => { }, index) {
+	try {
+		const earnings = await getEarnings(did)
+		dispatchAndRefresh(k.GOT_EARNING, { did, earnings }, index)
+	} catch (err) {
+		debug('Error getting earning: %o', err)
+	}
 }
 
 async function getAFSContract(contentDID) {
@@ -144,7 +146,7 @@ async function getAllocatedRewards(item, userDID, password) {
 	return { ...item, allocatedRewards }
 }
 
-async function getEarnings({ did }) {
+async function getEarnings(did) {
 	const { contract, ctx } = await getAFSContract(did)
 
 	let earnings = 0
