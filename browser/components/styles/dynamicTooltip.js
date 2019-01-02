@@ -25,8 +25,8 @@ module.exports = {
 		:host {
 			border-radius: 7px;
 			cursor: pointer;
-			position: relative;
 			display: inline-block;
+			position: relative;
 		}
 
 		:host:hover {
@@ -34,22 +34,22 @@ module.exports = {
 		}
 
 		:host .tooltipText {
+			bottom: 135%;
+			background-color: black;
+			border-radius: 6px;
+			color: #fff;
 			font-family: ${fonts.regular};
 			font-size: 12px;
-			visibility: hidden;
-			width: 120px;
-			bottom: 135%;
 			left: 50%;
 			margin-left: -60px;
-			background-color: black;
-			color: #fff;
-			text-align: center;
-			border-radius: 6px;
-			padding: 5px 0;
 			position: absolute;
-			z-index: 1;
+			padding: 5px 0;
+			visibility: hidden;
 			transform: scale(0.9);
 			transition: transform 0.2s ease-in-out;
+			text-align: center;
+			width: 120px;
+			z-index: 1;
 		}
 
 		:host:hover .tooltipText{
@@ -59,13 +59,13 @@ module.exports = {
 
 		:host .tooltipText:after {
 			content: " ";
-			position: absolute;
-			top: 100%;
-			left: 50%;
-			margin-left: -5px;
 			border-width: 5px;
 			border-style: solid;
 			border-color: black transparent transparent transparent;
+			left: 50%;
+			margin-left: -5px;
+			position: absolute;
+			top: 100%;
 		}
 	`,
 }

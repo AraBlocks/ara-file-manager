@@ -38,7 +38,9 @@ class DynamicTooltip extends Nanocomponent {
 				<div class=${styles.clickableText(props.cssClass)}>
 					${children}
 				</div>
-				<div class="tooltipText">${state.clicked ? props.afterTooltipText : props.beforeTooltipText}</div>
+				<div class="tooltipText">
+					${state.clicked ? props.afterTooltipText : props.beforeTooltipText}
+				</div>
 			</div>
 		`
 	}
