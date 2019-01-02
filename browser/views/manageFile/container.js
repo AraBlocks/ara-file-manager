@@ -120,7 +120,7 @@ class Container extends Nanocomponent {
 			shouldCommit: !(addPaths.length == 0 && removePaths.length == 0),
 			shouldUpdatePrice: state.oldPrice != state.price,
 			price: state.price == "" ? null : state.price,
-			userAid: account.userAid
+			userDID: account.userDID
 		}
 		if (this.fileInfoChanged() && state.uncommitted) {
 			windowManagement.emit({ event: PUBLISH, load })

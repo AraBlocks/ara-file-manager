@@ -52,7 +52,7 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 		const sendAraLoad = {
 			val: load.amount,
 			password: account.password,
-			did: account.userAid,
+			did: account.userDID,
 			to: walletAddress,
 		}
 		await autoQueue.push(() => araContractsManager.sendAra(sendAraLoad))

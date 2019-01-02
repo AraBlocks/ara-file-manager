@@ -62,14 +62,14 @@ async function _deployProxy() {
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY)
 
-  const { autoQueue, password, userAid } = store.account
+  const { autoQueue, password, userDID } = store.account
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'pleaseWait' } })
     windowManager.openModal('generalPleaseWaitModal')
 
-    let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userAid, password })
+    let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userDID, password })
     await newAfs.close()
 
     await autoQueue.push(() => afs.deploy({ password, did }))
@@ -83,7 +83,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
       load: {
         contentDID: did,
         mnemonic,
-        userAid,
+        userDID,
         isAFS: true,
         descriptor
       }
@@ -154,7 +154,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     accountAddress,
     autoQueue,
     password,
-    userAid
+    userDID
   } = store.account
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
@@ -175,7 +175,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     await autoQueue.push(() => afs.commit({ did: load.did, price: Number(load.price), password: password }))
-    const balance = await araContractsManager.getAraBalance(userAid)
+    const balance = await araContractsManager.getAraBalance(userDID)
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     debug('Dispatching %s', k.PUBLISHED)
@@ -190,7 +190,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     windowManager.openModal('publishSuccessModal')
 
     const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
-    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, accountAddress, userAid)
+    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, accountAddress, userDID)
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
     internalEmitter.emit(k.START_SEEDING, load )

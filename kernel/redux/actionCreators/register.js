@@ -52,7 +52,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
         mnemonic,
         network,
         password,
-        userAid: didIdentifier
+        userDID: didIdentifier
       }
     })
     switchLoginState(true)
@@ -61,7 +61,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
 
     internalEmitter.emit(k.LOGIN, {
-      userAid: did,
+      userDID: did,
       password
     })
 
