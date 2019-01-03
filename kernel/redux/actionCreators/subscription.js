@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:wallet')
-const { araContractsManager, utils: actionUtils } = require('../actions')
+const { acmManager, utils: actionUtils } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
@@ -20,7 +20,7 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
     let dispatchLoad
     if (response.status === 'Queued') {
       debug('IN FAUCET QUEUE')
-      const faucetSub = await araContractsManager.subscribeFaucet(store.account.accountAddress)
+      const faucetSub = await acmManager.subscribeFaucet(store.account.accountAddress)
       dispatchLoad = { type: k.GOT_FAUCET_SUB, load: { faucetSub } }
     } else if (response.error.includes('greylisted')) {
       debug('GREY LISTED FROM FAUCET 🙀')

@@ -3,7 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:descriptorGeneration')
 const { stateManagement: k } = require('k')
 const afs = require('ara-filesystem')
-const araContractsManager = require('./araContractsManager')
+const acmManager = require('./acmManager')
 const farmerManager = require('./farmerManager')
 const araUtil = require('ara-util')
 const fs = require('fs')
@@ -56,7 +56,7 @@ async function makeDescriptor(did, opts = {}) {
 			datePublished: meta ? meta.timestamp : null,
 			name: meta ? meta.title : null,
 			path: AFSPath,
-			price: Number(await araContractsManager.getAFSPrice({ did })),
+			price: Number(await acmManager.getAFSPrice({ did })),
 			size: meta ? meta.size : 0,
 			status
 		}, opts)

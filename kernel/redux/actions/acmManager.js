@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
+const debug = require('debug')('acm:kernel:lib:actions:acmManager')
 const { abi: AFSabi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenABI } = require('ara-contracts/build/contracts/AraToken.json')
 const { abi: registryABI } = require('ara-contracts/build/contracts/Registry.json')
@@ -118,15 +118,6 @@ async function getLibraryItems(userDID) {
 		return lib
 	} catch (err) {
 		debug('Error getting lib items: %o', err)
-	}
-}
-
-async function getPublishedEarnings(did, dispatchAndRefresh = () => { }, index) {
-	try {
-		const earnings = await getEarnings(did)
-		dispatchAndRefresh(k.GOT_EARNING, { did, earnings }, index)
-	} catch (err) {
-		debug('Error getting earning: %o', err)
 	}
 }
 
@@ -354,7 +345,6 @@ module.exports = {
 	getEarnings,
 	getEtherBalance,
 	getLibraryItems,
-	getPublishedEarnings,
 	getRewards,
 	purchaseItem,
 	purchaseEstimate,
