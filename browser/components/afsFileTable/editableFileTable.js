@@ -87,7 +87,7 @@ class EditableFileTable extends Nanocomponent {
 
 	async getFiles() {
 		let files
-		process.platform == 'win32'
+		process.platform == 'darwin'
 			? files = await fileSystemManager.showSelectFileAndFolderDialog()
 			: files = await fileSystemManager.showSelectFileDialog()
 		this.props.addItems(files)
@@ -119,7 +119,7 @@ class EditableFileTable extends Nanocomponent {
 						<span class="${styles.add()} editableFileTable-add" onclick="${getFiles}">
 							add files
 						</span>
-						<span class="${styles.add(process.platform !== 'win32')} editableFileTable-add" onclick="${getFolders}">
+						<span class="${styles.add(process.platform !== 'darwin')} editableFileTable-add" onclick="${getFolders}">
 							/ add folders
 						</span>
 						from finder
