@@ -59,13 +59,6 @@ module.exports = {
 		`
 	},
 
-	menuItemHolder: css`
-		:host {
-			display: flex;
-			flex-direction: column;
-		}
-	`,
-
 	menuBar: css`
 		:host {
 			background-color: black;
