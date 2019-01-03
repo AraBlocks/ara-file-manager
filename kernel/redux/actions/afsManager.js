@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:afsManager')
+const debug = require('debug')('afm:kernel:lib:actions:afsManager')
 const k = require('../../../lib/constants/stateManagement')
 const actionsUtil = require('./utils')
 const afmManager = require('./afmManager')
@@ -67,6 +67,31 @@ async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
   }
 }
 
+async function getAfsDownloadStatus(did, shouldBroadcast) {
+	let downloadPercent = 0
+	let status = k.AWAITING_DOWNLOAD
+	let newAfs
+	try {
+		({ afs: newAfs } = await araFilesystem.create({ did }))
+		const feed = newAfs.partitions.home.content
+		if (feed && feed.length) {
+			downloadPercent = feed.downloaded() / feed.length
+		}
+		if (downloadPercent === 1) {
+			status = k.DOWNLOADED_PUBLISHED
+		} else if (downloadPercent > 0) {
+			status = k.DOWNLOADING
+		} else if (downloadPercent === 0 && shouldBroadcast) {
+			status = k.CONNECTING
+		}
+	} catch (err) {
+		debug('Error getting download status %o', err)
+	}
+
+	await newAfs.close()
+	return { downloadPercent, status }
+}
+
 async function getFileList(did) {
   debug('Getting file list in AFS')
   let afs
@@ -119,17 +144,14 @@ async function _getContentsInFolder(afs, folderPath) {
   }
 }
 
-async function getUpdateAvailableStatus(item) {
-  let updateAvailable
+async function isUpdateAvailable(did, downloadPercent) {
+  let updateAvailable = false
   try {
-    updateAvailable = await araFilesystem.isUpdateAvailable({ did: item.did })
+    updateAvailable = await araFilesystem.isUpdateAvailable({ did })
   } catch (err) {
-    debug('Error getting update available status')
+    debug('Error getting update available status: %o', err)
   }
-  return {
-    ...item,
-    status: updateAvailable && item.downloadPercent === 1 ? k.UPDATE_AVAILABLE : item.status
-  }
+  return updateAvailable && downloadPercent === 1
 }
 
 async function isCommitted(did) {
@@ -182,8 +204,9 @@ module.exports = {
   createDeployEstimateAfs,
   exportFile,
   exportFolder,
+  getAfsDownloadStatus,
   getFileList,
-  getUpdateAvailableStatus,
+  isUpdateAvailable,
   isCommitted,
   surfaceAFS,
   unarchiveAFS,

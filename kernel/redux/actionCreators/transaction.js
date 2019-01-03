@@ -1,4 +1,4 @@
-const debug = require('debug')('acm:kernel:lib:actionCreators:transaction')
+const debug = require('debug')('afm:kernel:lib:actionCreators:transaction')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')

@@ -1,25 +1,23 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:login')
+const debug = require('debug')('afm:kernel:lib:actionCreators:login')
 const araUtil = require('ara-util')
 const aid = require('ara-identity')
 const {
   afmManager,
-  afsManager,
   acmManager,
   farmerManager,
   identityManager,
-  utils,
   descriptorGeneration
 } = require('../../actions')
 const dispatch = require('../../reducers/dispatch')
 const helpers = require('./helpers')
 const { stateManagement: k } = require('k')
-const windowManager = require('electron-window-manager')
-const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
 const { switchLoginState } = require('../../../../boot/tray')
 const { switchApplicationMenuLoginState } = require('../../../../boot/menu')
+const { ipcMain } = require('electron')
+const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
@@ -93,34 +91,7 @@ async function login(_, load) {
   afmManager.cacheUserDid(userDID)
 
   try {
-    const network = await utils.getNetwork()
-    dispatch({ type: k.GETTING_USER_DATA, load: { userDID, network } })
-    windowManager.openWindow('filemanager')
-
-    const analyticsPermission = afmManager.getAnalyticsPermission(userDID)
-    const accountAddress = await acmManager.getAccountAddress(userDID, load.password)
-    const araBalance = await acmManager.getAraBalance(userDID)
-    const ethBalance = await acmManager.getEtherBalance(accountAddress)
-    const autoQueue = farmerManager.createAutoQueue()
-    const farmer = farmerManager.createFarmer({ did: userDID, password: load.password, queue: autoQueue })
-    //Creates a dummy afs used to estimate deployment costs more quickly
-    const deployEstimateDid = await afsManager.createDeployEstimateAfs(userDID, load.password)
-    dispatch({
-      type: k.LOGIN,
-      load: {
-        analyticsPermission,
-        accountAddress,
-        araBalance,
-        autoQueue,
-        deployEstimateDid,
-        ethBalance,
-        farmer,
-        password: load.password,
-        userDID
-      }
-    })
-
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, load.password)
 
     switchLoginState(true)
     switchApplicationMenuLoginState(true)
@@ -128,77 +99,20 @@ async function login(_, load) {
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
     const purchasedDIDs = await acmManager.getLibraryItems(userDID)
     //Returns objects representing various info around DIDs
-    let purchased = purchasedDIDs.map(descriptorGeneration.makeDummyDescriptor)
-
+    let purchased = purchasedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore))
     const publishedDIDs = (await acmManager.getDeployedProxies(accountAddress)).map(araUtil.getIdentifier)
-    let published = publishedDIDs.map(descriptorGeneration.makeDummyDescriptor)
+    let published = publishedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore, true))
 
-    let { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
+    const { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
+
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const allAFS = files.published.concat(files.purchased)
+    //Need to throttle to allow UI to updated. Main thread gets flooded and laggy if you dont
+    await pause(250)
 
-    //Gets earnings from purchases for published AFS and pupdates ui
-    await Promise.all(files.published.map(helpers.getPublishedEarnings))
-    //Gets metadata for all AFS and pupdates ui
-    await Promise.all(allAFS.map(helpers.readMeta))
-
-    //Returns objects with more detailed info around DIDs
-    published = await afsManager.surfaceAFS({
-      dids: publishedDIDs,
-      userDID,
-      published: true,
-      DCDNStore
-    })
-
-    purchased = await afsManager.surfaceAFS({
-      dids: purchasedDIDs,
-      userDID,
-      DCDNStore
-    });
-
-    ({ files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } }))
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-
-    //TODO: refactor to loop through only once
-    //Gets redeemable rewards for published and purchased items
-    let updatedPublishedItems = await Promise.all(files.published.map((item) =>
-      acmManager.getAllocatedRewards(item, userDID, load.password)))
-    let updatedPurchasedItems = await Promise.all(files.purchased.map((item) =>
-      acmManager.getAllocatedRewards(item, userDID, load.password)))
-    updatedPublishedItems = await Promise.all(updatedPublishedItems.map((item) =>
-      //Gets total redeemed rewards for published and purchased items
-      acmManager.getRewards(item, accountAddress)))
-    updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map((item) =>
-      acmManager.getRewards(item, accountAddress)))
-    //Gets update available status for purchased items
-    updatedPurchasedItems = await Promise.all(updatedPurchasedItems.map(afsManager.getUpdateAvailableStatus));
-
-    ({ files } = dispatch({
-      type: k.LOADED_BACKGROUND_AFS_DATA,
-      load: { published: updatedPublishedItems, purchased: updatedPurchasedItems }
-    }))
-    //Refreshes filemanager view and renders items
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-
-    //Creates subscriptions in background
-    const transferSub = await acmManager.subscribeTransfer(accountAddress, userDID)
-    const transferEthSub = await acmManager.subscribeEthBalance(accountAddress)
-    const publishedSubs = await Promise.all(files.published.map(acmManager.subscribePublished))
-    const rewardsSubs = await Promise.all(files.published.concat(files.purchased)
-      .map(({ did }) => acmManager.subscribeRewardsAllocated(did, accountAddress, userDID)))
-    const updateSubs = await Promise.all(files.purchased.map(({ did }) => acmManager.subscribeAFSUpdates(did)))
-
-    dispatch({
-      type: k.GOT_SUBSCRIPTIONS,
-      load: {
-        publishedSubs,
-        rewardsSubs,
-        transferSub,
-        transferEthSub,
-        updateSubs
-      }
-    })
+    const credentials = { userDID, accountAddress, password: load.password }
+    await helpers.populateUI(files.published, files.purchased, credentials)
+    await helpers.getSubscriptions(files.purchased, files.purchased.concat(files.published), credentials)
 
     if (store.files.deepLinkData !== null) {
       internalEmitter.emit(k.PROMPT_PURCHASE, store.files.deepLinkData)
@@ -212,3 +126,6 @@ async function login(_, load) {
   }
 }
 
+async function pause(time) {
+  await new Promise(_ => setTimeout(_, time))
+}

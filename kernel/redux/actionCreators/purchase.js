@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:purchase')
+const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
 const { acmManager, descriptorGeneration } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')

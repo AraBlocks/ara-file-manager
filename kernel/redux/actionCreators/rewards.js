@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:rewards')
+const debug = require('debug')('afm:kernel:lib:actionCreators:rewards')
 const k = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
 const { rewards } = require('ara-contracts')

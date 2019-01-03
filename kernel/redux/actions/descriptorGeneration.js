@@ -1,9 +1,9 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:descriptorGeneration')
+const debug = require('debug')('afm:kernel:lib:actions:descriptorGeneration')
 const { stateManagement: k } = require('k')
-const afs = require('ara-filesystem')
 const acmManager = require('./acmManager')
+const afsManager = require('./afsManager')
 const farmerManager = require('./farmerManager')
 const araUtil = require('ara-util')
 const fs = require('fs')
@@ -30,13 +30,14 @@ class _Descriptor {
 	}
 }
 
-function makeDummyDescriptor(did, DCDNStore) {
+function makeDummyDescriptor(did, DCDNStore, owner = false) {
 	did = araUtil.getIdentifier(did)
 	const AFSPath = makeAfsPath(did)
 	return new _Descriptor({
 		AFSExists: fs.existsSync(AFSPath),
 		AFSPath,
 		did,
+		owner,
 		status: k.AWAITING_STATUS,
 		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
 	})
@@ -48,7 +49,7 @@ async function makeDescriptor(did, opts = {}) {
 		const AFSPath = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(AFSPath)
 		const meta = AFSExists ? await readFileMetadata(did) : null
-		const { downloadPercent, status } = await _getAfsDownloadStatus(did, opts.shouldBroadcast)
+		const { downloadPercent, status } = await afsManager.getAfsDownloadStatus(did, opts.shouldBroadcast)
 
 		return Object.assign(new _Descriptor, {
 			did,
@@ -65,30 +66,6 @@ async function makeDescriptor(did, opts = {}) {
 	}
 }
 
-async function _getAfsDownloadStatus(did, shouldBroadcast) {
-	let downloadPercent = 0
-	let status = k.AWAITING_DOWNLOAD
-	let newAfs
-	try {
-		({ afs: newAfs } = await afs.create({ did }))
-		const feed = newAfs.partitions.home.content
-		if (feed && feed.length) {
-			downloadPercent = feed.downloaded() / feed.length
-		}
-		if (downloadPercent === 1) {
-			status = k.DOWNLOADED_PUBLISHED
-		} else if (downloadPercent > 0) {
-			status = k.DOWNLOADING
-		} else if (downloadPercent === 0 && shouldBroadcast) {
-			status = k.CONNECTING
-		}
-	} catch (err) {
-		debug('Error getting download status %o', err)
-	}
-
-	await newAfs.close()
-	return { downloadPercent, status }
-}
 module.exports = {
 	makeDescriptor,
 	makeDummyDescriptor
