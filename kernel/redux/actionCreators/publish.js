@@ -5,7 +5,7 @@ const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
-  araContractsManager,
+  acmManager,
   utils: actionsUtil,
   descriptorGeneration
 } = require('../actions')
@@ -45,7 +45,7 @@ async function _deployProxy() {
     const deployEstimateDid = store.account.deployEstimateDid
 
     const deployCost = await afs.deploy({ password, did: deployEstimateDid, estimate: true })
-    const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
+    const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
     if (ethAmount < deployCost) {
       throw new Error('Not enough eth')
     }
@@ -113,7 +113,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
 
     await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
-    const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
+    const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
 
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0
@@ -175,7 +175,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     await autoQueue.push(() => afs.commit({ did: load.did, price: Number(load.price), password: password }))
-    const balance = await araContractsManager.getAraBalance(userDID)
+    const balance = await acmManager.getAraBalance(userDID)
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     debug('Dispatching %s', k.PUBLISHED)
@@ -189,8 +189,8 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     })
     windowManager.openModal('publishSuccessModal')
 
-    const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
-    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, accountAddress, userDID)
+    const publishedSub = await acmManager.subscribePublished({ did: load.did })
+    const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, accountAddress, userDID)
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
     internalEmitter.emit(k.START_SEEDING, load )

@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:register')
 const { stateManagement: k } = require('k')
-const araContractsManager = require('../actions/araContractsManager')
+const acmManager = require('../actions/acmManager')
 const dispatch = require('../reducers/dispatch')
 const {
   identityManager,
@@ -27,7 +27,7 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     await identityManager.archive(identity)
 
     const { did: { did }, mnemonic } = identity
-    const accountAddress = await araContractsManager.getAccountAddress(did, password)
+    const accountAddress = await acmManager.getAccountAddress(did, password)
 
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
 
@@ -65,13 +65,13 @@ ipcMain.on(k.REGISTER, async (event, password) => {
       password
     })
 
-    const transfer = await araContractsManager.subscribeTransfer(accountAddress, did)
-    const transferEth = await araContractsManager.subscribeEthBalance(accountAddress)
+    const transfer = await acmManager.subscribeTransfer(accountAddress, did)
+    const transferEth = await acmManager.subscribeEthBalance(accountAddress)
     const subscriptionLoad = { transferEth, transfer }
 
     try {
       await actionUtils.requestAraFaucet(did)
-      subscriptionLoad.faucet = await araContractsManager.subscribeFaucet(accountAddress)
+      subscriptionLoad.faucet = await acmManager.subscribeFaucet(accountAddress)
     } catch (err) {
       debug('Error requesting from ara faucet: %o', err)
     }

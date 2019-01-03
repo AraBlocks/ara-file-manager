@@ -3,7 +3,7 @@
 const debug = require('debug')('acm:kernel:lib:actions:util')
 const { stateManagement: k, networkKeys } = require('k')
 const afs = require('ara-filesystem')
-const araContractsManager = require('./araContractsManager')
+const acmManager = require('./acmManager')
 const araUtil = require('ara-util')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')

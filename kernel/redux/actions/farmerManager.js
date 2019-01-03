@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
-const araContractsManager = require('./araContractsManager')
+const acmManager = require('./acmManager')
 const { AutoQueue } = require('../../lib/')
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
 const { internalEmitter } = require('electron-window-manager')
@@ -114,7 +114,7 @@ async function download({
 async function _calculateBudget(did) {
 	let budget
 	try {
-		budget = (await araContractsManager.getAFSPrice({ did })) / 10
+		budget = (await acmManager.getAFSPrice({ did })) / 10
 	} catch (err) {
 		debug('Err getting AFS price: %o', err)
 		budget = 0
