@@ -10,6 +10,11 @@ module.exports = {
 	container: css`
 		:host {
 			cursor: pointer;
+			display: flex;
+			flex-direction: cloumn;
+			align-items: center;
+			background-color: red;
+			width: 100%;
 			height: 100%;
 			font-size: 12px;
 			position: relative;
@@ -27,7 +32,8 @@ module.exports = {
 
 	hamburger: css`
 		:host {
-			height: 100%;
+			height: 8px;
+			width: 50%;
 		}
 	`,
 
@@ -35,6 +41,7 @@ module.exports = {
 		return css`
 			:host {
 				align-items: space-between;
+				top: 100%;
 				background-color: white;
 				border: 1px ${colors.araGrey} solid;
 				border-bottom: 0px;
