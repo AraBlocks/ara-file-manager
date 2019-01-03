@@ -32,6 +32,7 @@ module.exports = {
 	invisibleBorder: css`
 		:host {
 			width: 100%;
+			background-color: green;
 			height: 15px;
 		}
 	`,
