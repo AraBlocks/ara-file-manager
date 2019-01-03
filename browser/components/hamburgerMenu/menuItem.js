@@ -17,6 +17,7 @@ class MenuItem extends Nanocomponent {
       onclickText
     }
     this.itemClicked = this.itemClicked.bind(this)
+    this.cancelAnimation = this.cancelAnimation.bind(this)
   }
 
   itemClicked(e) {
@@ -34,18 +35,28 @@ class MenuItem extends Nanocomponent {
     })
   }
 
+  cancelAnimation(e) {
+    const { props } = this
+    if (props.onclickText === "") { return }
+    const span = e.target.children[0]
+    span.classList.remove('expand'), false
+    span.style.zIndex = -1
+    this.render()
+  }
+
   update() {
     return true
   }
 
   createElement() {
-    const { props, itemClicked } = this
+    const { props, itemClicked, cancelAnimation } = this
 
     return html`
       <div
         class="${styles.container} MenuItem-container"
         data-hamburger=true
         onclick=${itemClicked}
+        onmouseleave=${cancelAnimation}
       >
         ${props.children}
         <span>${props.onclickText}</span>
