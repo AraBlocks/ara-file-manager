@@ -12,6 +12,8 @@ module.exports = {
     :host {
       align-items: center;
       background-color: white;
+      border: 1px ${colors.araGrey} solid;
+      border-width: 0px 1px;
       cursor: pointer;
       display: block;
       font-family: ${fonts.light};
