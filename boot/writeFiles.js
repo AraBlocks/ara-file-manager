@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:boot:writeFiles')
+const debug = require('debug')('afm:boot:writeFiles')
 const k = require('../lib/constants/networkKeys')
 const fs = require('fs')
 const path = require('path')

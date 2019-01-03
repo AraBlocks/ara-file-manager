@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:register')
+const debug = require('debug')('afm:kernel:lib:actions:register')
 const aid = require('ara-identity')
 const { DID } = require('did-uri')
 const createContext = require('ara-context')

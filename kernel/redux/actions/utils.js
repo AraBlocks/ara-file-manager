@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:util')
+const debug = require('debug')('afm:kernel:lib:actions:util')
 const { stateManagement: k, networkKeys } = require('k')
 const afs = require('ara-filesystem')
 const acmManager = require('./acmManager')

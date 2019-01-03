@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:boot:tray')
+const debug = require('debug')('afm:boot:tray')
 const isDev = require('electron-is-dev')
 const { Menu, Tray } = require('electron')
 const path = require('path')

@@ -44,6 +44,15 @@ module.exports = (state, { load = null, type }) => {
       state.published = load.published
       state.purchased = load.purchased
       break
+    case k.GOT_COMMIT_STATUS:
+      file = findFile(load.did, state.published)
+      file.status = load.status === k.UNCOMMITTED ? k.UNCOMMITTED : file.status
+      break
+    case k.GOT_DL_PERC_AND_STATUS:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.status = load.status
+      file.downloadPercent = load.downloadPercent
+      break
     case k.GOT_LIBRARY:
       state.loadingLibrary = false
       state.published = load.published
@@ -58,6 +67,14 @@ module.exports = (state, { load = null, type }) => {
       file.name = load.meta.title || null
       file.size = load.meta.size || 0
       file.datePublished = load.meta.timestamp || null
+      break
+    case k.GOT_PRICE:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.price = load.price
+      break
+    case k.GOT_REWARDS:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.allocatedRewards = load.allocatedRewards
       break
     case k.GETTING_USER_DATA:
       state.loadingLibrary = true

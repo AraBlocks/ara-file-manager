@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:acmManager')
+const debug = require('debug')('afm:kernel:lib:actions:acmManager')
 const { abi: AFSabi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenABI } = require('ara-contracts/build/contracts/AraToken.json')
 const { abi: registryABI } = require('ara-contracts/build/contracts/Registry.json')
@@ -127,14 +127,14 @@ async function getAFSContract(contentDID) {
 	return await contractUtil.get(AFSabi, proxyAddress)
 }
 
-async function getAllocatedRewards(item, userDID, password) {
+async function getAllocatedRewards(did, userDID, password) {
 	const allocatedRewards = Number(await araContracts.rewards.getRewardsBalance({
 		farmerDid: userDID,
-		contentDid: 'did:ara:' + item.did,
+		contentDid: did,
 		password
 	}))
 
-	return { ...item, allocatedRewards }
+	return allocatedRewards
 }
 
 async function getEarnings(did) {
@@ -155,8 +155,8 @@ async function getEarnings(did) {
 	return earnings
 }
 
-async function getRewards(item, userEthAddress) {
-	const { contract, ctx } = await getAFSContract(item.did)
+async function getRewards(did, userEthAddress) {
+	const { contract, ctx } = await getAFSContract(did)
 
 	let totalRewards = 0
 	if (contract) {
@@ -169,12 +169,12 @@ async function getRewards(item, userEthAddress) {
 						: sum
 					, 0)
 		} catch (err) {
-			debug('Error getting rewards for %s : %o', item.did, err)
+			debug('Error getting rewards for %s : %o', did, err)
 		}
 	}
 
 	ctx.close()
-	return { ...item, earnings: item.earnings += totalRewards }
+	return totalRewards
 }
 
 async function subscribeEthBalance(userAddress) {

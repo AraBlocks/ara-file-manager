@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:farmerManager')
+const debug = require('debug')('afm:kernel:lib:actions:farmerManager')
 const acmManager = require('./acmManager')
 const { AutoQueue } = require('../../lib/')
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')

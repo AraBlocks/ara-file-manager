@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:wallet')
+const debug = require('debug')('afm:kernel:lib:actionCreators:wallet')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
 const windowManager = require('electron-window-manager')

@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:download')
+const debug = require('debug')('afm:kernel:lib:actionCreators:download')
 const { acmManager, identityManager } = require('../actions')
 const araUtil = require('ara-util')
 const dispatch = require('../reducers/dispatch')
