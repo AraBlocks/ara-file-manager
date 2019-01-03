@@ -2,7 +2,7 @@
 
 const debug = require('debug')('acm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
-const { araContractsManager, descriptorGeneration } = require('../actions')
+const { acmManager, descriptorGeneration } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const araUtil = require('ara-util')
 const { ipcMain } = require('electron')
@@ -29,7 +29,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		dispatch({ type: k.FEED_MODAL, load })
 
 		windowManager.openWindow('purchaseEstimate')
-		const library = await araContractsManager.getLibraryItems(account.userDID)
+		const library = await acmManager.getLibraryItems(account.userDID)
 		if (library.includes('0x' + araUtil.getIdentifier(load.did))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
@@ -38,8 +38,8 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
-		const price = Number(await araContractsManager.getAFSPrice({ did: load.did }))
-		const gasEstimate = Number(await araContractsManager.purchaseEstimate({
+		const price = Number(await acmManager.getAFSPrice({ did: load.did }))
+		const gasEstimate = Number(await acmManager.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
 			userDID: account.userDID,
@@ -70,9 +70,9 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userDID }
 
-		const jobId = await autoQueue.push(() => araContractsManager.purchaseItem(itemLoad))
+		const jobId = await autoQueue.push(() => acmManager.purchaseItem(itemLoad))
 
-		const araBalance = await araContractsManager.getAraBalance(account.userDID)
+		const araBalance = await acmManager.getAraBalance(account.userDID)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
 
 		dispatch({ type: k.FEED_MODAL, load: {
@@ -86,8 +86,8 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
-		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
-		const updateSub = await araContractsManager.subscribeAFSUpdates(load.did)
+		const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
+		const updateSub = await acmManager.subscribeAFSUpdates(load.did)
 
 		dispatch({ type: k.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
 	} catch (err) {
