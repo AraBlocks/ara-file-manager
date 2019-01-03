@@ -6,5 +6,6 @@ module.exports = {
   utils: require('./utils'),
   afsManager: require('./afsManager'),
   identityManager: require('./identityManager'),
-  farmerManager: require('./farmerManager')
+  farmerManager: require('./farmerManager'),
+  descriptorGeneration: require('./descriptorGeneration')
 }

@@ -3,12 +3,6 @@
 const styles = require('./styles/dynamicTooltip')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
-const tt = require('electron-tooltip')
-
-tt({
-  position: 'top',
-  style: { width: '130px' }
-})
 
 class DynamicTooltip extends Nanocomponent {
 	constructor(opts) {
@@ -19,11 +13,8 @@ class DynamicTooltip extends Nanocomponent {
 			itemClicked: opts.onclick,
 			cssClass: opts.cssClass || {}
 		}
+		this.state = { clicked: false }
 		this.children = opts.children
-		this.eventMouseLeave = document.createEvent('MouseEvents')
-    this.eventMouseEnter = document.createEvent('MouseEvents')
-    this.eventMouseLeave.initMouseEvent('mouseleave', true, true)
-    this.eventMouseEnter.initMouseEvent('mouseenter', true, true)
 	}
 
 	update(){
@@ -31,30 +22,24 @@ class DynamicTooltip extends Nanocomponent {
 	}
 
 	createElement() {
-		const { eventMouseEnter, props } = this
+		const { eventMouseEnter, props, children, state} = this
 		return html`
-			<div
-				data-tooltip="${props.beforeTooltipText}"
-				class="${styles.container} dynamicTooltip-copyableText"
-				onclick="${({ target }) => {
-					target.parentElement.dataset.tooltip = props.afterTooltipText
-					target.parentElement.dispatchEvent(eventMouseEnter)
-					target.parentElement.dataset.tooltip = props.beforeTooltipText
+			<div class=${styles.tooltip}
+				onclick="${() => {
 					props.itemClicked()
+					state.clicked = true
+					this.render()
 				}}"
-				onmouseenter="${(e) => {
-					console.log("on Mouse Enter")
-					e.preventDefault()
-					e.target.style.backgroundColor = '#d0d0d0'
-				}}"
-				onmouseleave="${(e) => {
-					console.log("on Mouse Leave")
-					e.preventDefault()
-					e.target.style.backgroundColor = ''
+				onmouseleave="${() => {
+					state.clicked = false
+					this.render()
 				}}"
 			>
 				<div class=${styles.clickableText(props.cssClass)}>
-					${this.children}
+					${children}
+				</div>
+				<div class="tooltipText">
+					${state.clicked ? props.afterTooltipText : props.beforeTooltipText}
 				</div>
 			</div>
 		`

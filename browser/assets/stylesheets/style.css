@@ -186,7 +186,6 @@ input::-webkit-inner-spin-button,
   animation-delay: -1.0s;
 }
 
-
 /* animations */
 @keyframes spin {
   0% {
