@@ -46,6 +46,7 @@ class Menu extends Nanocomponent {
 					data-hamburger=true
 					onmouseout=${toggleMenu}
 				>
+					<div class="${styles.divider} Menu-divider" data-hamburger=true></div>
 					${props.items.map(item => [
 						item.render(),
 						html`<div class="${styles.divider} Menu-divider" data-hamburger=true></div>`
