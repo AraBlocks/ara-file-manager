@@ -23,9 +23,7 @@ class Menu extends Nanocomponent {
 
 	toggleMenu(e) {
 		const { state } = this
-		console.log(e.toElement)
-		console.log(e.toElement.dataset)
-		if (e.type === 'mouseout' && (e.toElement.dataset == null || e.toElement.dataset.hamburger == null)) { state.displayItems = false }
+		if (e.type === 'mouseout' && (e.toElement == null || e.toElement.dataset == null|| e.toElement.dataset.hamburger == null)) { state.displayItems = false }
 		if (e.type === 'click') { state.displayItems = !state.displayItems }
 		this.render()
 	}
