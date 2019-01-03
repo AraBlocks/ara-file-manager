@@ -4,11 +4,9 @@ const debug = require('debug')('afm:kernel:lib:actions:afsManager')
 const k = require('../../../lib/constants/stateManagement')
 const actionsUtil = require('./utils')
 const afmManager = require('./afmManager')
-const descriptorGeneration = require('./descriptorGeneration')
 const araContracts = require('ara-contracts')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
-const farmerManager = require('../actions/farmerManager')
 const mirror = require('mirror-folder')
 const path = require('path')
 const { shell } = require('electron')
@@ -178,19 +176,6 @@ async function isCommitted(did) {
   return published
 }
 
-async function surfaceAFS({ dids, DCDNStore, published = false }) {
-  return Promise.all(dids.map(async (did) => {
-    const descriptor = await descriptorGeneration.makeDescriptor(did, {
-      shouldBroadcast: farmerManager.getBroadcastingState({ did: did.slice(-64), DCDNStore }),
-      owner: published,
-    })
-
-    return published
-      ? Object.assign(descriptor, { status: await isCommitted(did) ? descriptor.status : k.UNCOMMITTED })
-      : descriptor
-  }))
-}
-
 function unarchiveAFS({ did }) {
   debug('Unarchiving %s', did)
   try {
@@ -208,6 +193,5 @@ module.exports = {
   getFileList,
   isUpdateAvailable,
   isCommitted,
-  surfaceAFS,
   unarchiveAFS,
 }

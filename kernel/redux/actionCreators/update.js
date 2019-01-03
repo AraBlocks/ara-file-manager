@@ -48,7 +48,7 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
 })
 
 ipcMain.on(k.UPDATE_FILE, async (event, load) => {
-  debug('%s heard. Load: %O', k.UPDATE_FILE, load)
+  debug('%s heard', k.UPDATE_FILE)
   const { account } = store
   try {
     dispatch({ type: k.FEED_MODAL, load: { load: { fileName: load.name } } })
@@ -96,7 +96,7 @@ ipcMain.on(k.UPDATE_FILE, async (event, load) => {
 })
 
 ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
-  debug('%s heard. Load: %o', k.CONFIRM_UPDATE_FILE, load)
+  debug('%s heard', k.CONFIRM_UPDATE_FILE)
   const { account } = store
   try {
     dispatch({
