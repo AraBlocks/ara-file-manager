@@ -23,7 +23,7 @@ class Menu extends Nanocomponent {
 
 	toggleMenu(e) {
 		const { state } = this
-		if (e.type === 'mouseout' && e.toElement.dataset.hamburger !== "true") { state.displayItems = false }
+		if (e.type === 'mouseleave' && e.toElement.dataset.hamburger !== "true") { state.displayItems = false }
 		if (e.type === 'click') { state.displayItems = !state.displayItems }
 		this.render()
 	}
@@ -43,7 +43,7 @@ class Menu extends Nanocomponent {
 				/>
 				<div class="${styles.menu(state.displayItems)} Menu-menu"
 					data-hamburger=true
-					onmouseout=${toggleMenu}
+					onmouseleave=${toggleMenu}
 				>
 					${props.items.map(item => [
 						item.render(),
