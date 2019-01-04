@@ -38,14 +38,24 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
-		const price = Number(await acmManager.getAFSPrice({ did: load.did }))
+		const price = await acmManager.getAFSPrice({ did: load.did })
+		const fee = acmManager.getPurchaseFee(price)
 		const gasEstimate = Number(await acmManager.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
 			userDID: account.userDID,
 		}))
 
-		windowManager.pingView({ view: 'purchaseEstimate', event: k.REFRESH, load: { gasEstimate, price } })
+		windowManager.pingView({
+			view: 'purchaseEstimate',
+			event: k.REFRESH,
+			load: {
+				fee,
+				gasEstimate,
+				price: Number(price)
+			}
+		})
+
 	} catch (err) {
 		errorHandler(err)
 	}
