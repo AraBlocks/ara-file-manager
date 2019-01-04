@@ -61,6 +61,7 @@ async function logout() {
     dispatch({ type: k.LOGOUT })
     internalEmitter.emit(k.DUMP_DEEPLINK_DATA)
     internalEmitter.emit(k.CANCEL_SUBSCRIPTION)
+    internalEmitter.emit(k.GET_CACHED_DID)
     switchLoginState(false)
     switchApplicationMenuLoginState(false)
     //TODO: make closeAll function
