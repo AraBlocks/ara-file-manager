@@ -17,6 +17,7 @@ module.exports = {
 				color: ${colorSelector(color)};
 				font-family: ${fontFamily};
 				font-size: ${fontSize}px;
+				-webkit-app-region: no-drag;
 			}
 		`
 	},

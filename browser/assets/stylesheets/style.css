@@ -14,12 +14,24 @@ body {
 }
 
 button {
+  -webkit-app-region: no-drag;
   cursor: pointer;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="password"],
+input[type="number"],
+input[type="text"],
+textarea {
+	-webkit-app-region: no-drag;
 }
 
 a {
   color: var(--ara-orange);
   text-decoration: none;
+  -webkit-app-region: no-drag;
 }
 
 input::-webkit-outer-spin-button,
