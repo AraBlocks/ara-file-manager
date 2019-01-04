@@ -12,6 +12,8 @@ module.exports = {
     :host {
       align-items: center;
       background-color: white;
+      border: 1px ${colors.araGrey} solid;
+      border-width: 0px 1px;
       cursor: pointer;
       display: block;
       font-family: ${fonts.light};
@@ -22,6 +24,8 @@ module.exports = {
       text-align: center;
       text-overflow: ellipsis;
       vertical-align: middle;
+      -webkit-app-region: no-drag;
+      z-index: 9999;
     }
 
     :host:hover {
@@ -41,6 +45,7 @@ module.exports = {
       left: 25%;
       opacity: 0;
       position: absolute;
+      pointer-events: none;
       top: 0.4em;
       width: 50%;
       z-index: -1;
