@@ -9,7 +9,7 @@ class Menu extends Nanocomponent {
 	constructor(items = []) {
 		super()
 		this.props = { items: this.makeButtons(items) }
-		this.state = { displayItems:!false }
+		this.state = { displayItems: false }
 		this.toggleMenu = this.toggleMenu.bind(this)
 	}
 
@@ -22,27 +22,30 @@ class Menu extends Nanocomponent {
 	}
 
 	toggleMenu(e) {
-		console.log(e.toElement)
 		const { state } = this
-		e.type === 'mouseout'
+		e.type === 'mouseleave'
 			? state.displayItems = false
 			: state.displayItems = !state.displayItems
 		this.render()
 	}
 
+
 	createElement() {
 		const { props, state, toggleMenu } = this
+		
 		return html`
 			<div 
 				class="${styles.container} Menu-container"
 				onclick=${toggleMenu}
+				onmouseleave=${toggleMenu}
 			>
 				<img
 					class="${styles.hamburger} Menu-hamburger"
 					src="../assets/images/utilityButtons/Hamburger.svg"
 				/>
-				<div class="${styles.menu(state.displayItems)} Menu-menu"
-				onmouseleave=${toggleMenu}
+				<div 
+					class="${styles.menu(state.displayItems)} Menu-menu"
+					onmouseleave=${toggleMenu}
 				>
 					<div class="${styles.divider} Menu-divider" ></div>
 					${props.items.map(item => [
