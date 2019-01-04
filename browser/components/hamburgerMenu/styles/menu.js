@@ -46,14 +46,6 @@ module.exports = {
 				justify-content: space-between;
 				min-width: 130px;
 				position: absolute;
-				z-index: 999;
-			}
-
-			:host:before {
-				content: " ";
-				visible: false;
-				height: 25px;
-				width: 100%;
 			}
 		`
 	},

@@ -35,7 +35,9 @@ class ItemRow extends Nanocomponent {
 
     return html`
       <div>
-        <div class="${styles.container} ItemRow-container">
+        <div class="${styles.container} ItemRow-container"
+          style="-webkit-app-region: no-drag;"
+        >
           <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
             ${children.fileDescriptor.render({ downloadPercent, status, shouldBroadcast })}
           </div>
