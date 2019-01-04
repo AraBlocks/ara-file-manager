@@ -45,6 +45,7 @@ module.exports = {
       left: 25%;
       opacity: 0;
       position: absolute;
+      pointer-events: none;
       top: 0.4em;
       width: 50%;
       z-index: -1;
