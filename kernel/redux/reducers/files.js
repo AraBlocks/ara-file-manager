@@ -21,6 +21,7 @@ module.exports = (state, { load = null, type }) => {
     case k.DOWNLOADED:
       file = findFile(load.did, state.purchased)
       if (file == null) { break }
+      file.name = load.name
       file.downloadPercent = 1
       file.status = k.DOWNLOADED_PUBLISHED
       file.shouldBroadcast = true
