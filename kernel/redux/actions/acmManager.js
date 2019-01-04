@@ -9,6 +9,7 @@ const k = require('../../../lib/constants/stateManagement')
 const { FAUCET_OWNER } = require('../../../lib/constants/networkKeys')
 const { ARA_TOKEN_ADDRESS, REGISTRY_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
+const { DEFAULT_REWARD_PERCENTAGE } = require('ara-reward-dcdn/src/constants')
 const { internalEmitter } = require('electron-window-manager')
 const createContext = require('ara-context')
 const {
@@ -37,6 +38,17 @@ async function getAFSPrice({ did }) {
 		debug('Error getting price: %o', err)
 	}
 	return result
+}
+
+function getPurchaseFee(price) {
+	let fee = 0
+	try {
+		const expandedfee = Number(araContracts.token.expandTokenValue(price)) * DEFAULT_REWARD_PERCENTAGE
+		fee = Number(araContracts.token.constrainTokenValue(String(expandedfee)))
+	} catch(err) {
+		debug('Error getting purchase fee: %o', err)
+	}
+	return fee
 }
 
 async function getAraBalance(userDID) {
@@ -345,6 +357,7 @@ module.exports = {
 	getEarnings,
 	getEtherBalance,
 	getLibraryItems,
+	getPurchaseFee,
 	getRewards,
 	purchaseItem,
 	purchaseEstimate,
