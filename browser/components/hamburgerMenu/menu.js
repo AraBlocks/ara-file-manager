@@ -50,7 +50,7 @@ class Menu extends Nanocomponent {
 					<div class="${styles.divider} Menu-divider" ></div>
 					${props.items.map(item => [
 						item.render(),
-						html`<div class="${styles.divider} Menu-divider" ></div>`
+						html`<div class="${styles.divider} Menu-divider"></div>`
 					])}
 				</div>
 			</div>
