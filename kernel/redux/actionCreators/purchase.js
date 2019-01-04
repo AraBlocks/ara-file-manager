@@ -3,7 +3,7 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
 const { acmManager, descriptorGeneration } = require('../actions')
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 const araUtil = require('ara-util')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
