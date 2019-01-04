@@ -17,7 +17,6 @@ module.exports = {
 			height: 100%;
 			font-size: 12px;
 			position: relative;
-			-webkit-app-region: no-drag;
 		}
 	`,
 
@@ -26,6 +25,7 @@ module.exports = {
 			background-color: ${colors.araGrey};
 			height: 1px;
 			width: 100%;
+			z-index: 9999;
 		}
 	`,
 
@@ -39,8 +39,7 @@ module.exports = {
   menu(visible) {
 		return css`
 			:host {
-				align-items: space-between;
-				top: 10%;
+				top: 86%;
 				display: ${visible ? 'flex' : 'none'};
 				flex-direction: column;
 				justify-content: space-between;

@@ -44,7 +44,6 @@ class MenuItem extends Nanocomponent {
     return html`
       <div
         class="${styles.container} MenuItem-container"
-        data-hamburger=true
         onclick=${itemClicked}
       >
         ${props.children}

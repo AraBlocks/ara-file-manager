@@ -15,6 +15,18 @@ module.exports = {
       height: 150px;
       justify-content: space-between;
       margin-bottom: 65px;
+      -webkit-app-region: drag;
+    }
+
+    :host:before {
+      content: "";
+      height: 160px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      -webkit-app-region: drag;
+      z-index: -1;
     }
   `,
 
