@@ -9,8 +9,10 @@ class Menu extends Nanocomponent {
 	constructor(items = []) {
 		super()
 		this.props = { items: this.makeButtons(items) }
-		this.state = { displayItems: false }
+		this.state = { displayItems:!false }
 		this.toggleMenu = this.toggleMenu.bind(this)
+		this.on = this.on.bind(this)
+		this.off = this.off.bind(this)
 	}
 
 	makeButtons(items) {
@@ -22,34 +24,42 @@ class Menu extends Nanocomponent {
 	}
 
 	toggleMenu(e) {
+		console.log(e.type, e.target)
 		const { state } = this
-		if (e.type === 'mouseout' && (e.toElement == null || e.toElement.dataset == null|| e.toElement.dataset.hamburger == null)) { state.displayItems = false }
-		if (e.type === 'click') { state.displayItems = !state.displayItems }
+		e.type === 'mouseout'
+			? state.displayItems = false
+			: state.displayItems = !state.displayItems
+		this.render()
+	}
+
+	on(e) {
+		console.log('on')
+		this.state.displayItems = !this.state.displayItems
+		this.render()
+	}
+
+	off(e) {
+		this.state.displayItems = false
 		this.render()
 	}
 
 	createElement() {
-		const { props, state, toggleMenu } = this
-
+		const { props, state, on, off } = this
 		return html`
 			<div class="${styles.container} Menu-container"
-				onclick=${toggleMenu}
-				onmouseout=${toggleMenu}
-				data-hamburger=true
+				onclick=${on}
 			>
 				<img
 					class="${styles.hamburger} Menu-hamburger"
 					src="../assets/images/utilityButtons/Hamburger.svg"
-					data-hamburger=true
+
 				/>
 				<div class="${styles.menu(state.displayItems)} Menu-menu"
-					data-hamburger=true
-					onmouseout=${toggleMenu}
+				onmouseleave=${off}
 				>
-					<div class="${styles.divider} Menu-divider" data-hamburger=true></div>
+					<div class="${styles.divider} Menu-divider" ></div>
 					${props.items.map(item => [
 						item.render(),
-						html`<div class="${styles.divider} Menu-divider" data-hamburger=true></div>`
 					])}
 				</div>
 			</div>
