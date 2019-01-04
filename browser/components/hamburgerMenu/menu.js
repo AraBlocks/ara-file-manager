@@ -11,8 +11,6 @@ class Menu extends Nanocomponent {
 		this.props = { items: this.makeButtons(items) }
 		this.state = { displayItems:!false }
 		this.toggleMenu = this.toggleMenu.bind(this)
-		this.on = this.on.bind(this)
-		this.off = this.off.bind(this)
 	}
 
 	makeButtons(items) {
@@ -24,7 +22,7 @@ class Menu extends Nanocomponent {
 	}
 
 	toggleMenu(e) {
-		console.log(e.type, e.target)
+		console.log(e.toElement)
 		const { state } = this
 		e.type === 'mouseout'
 			? state.displayItems = false
@@ -32,34 +30,24 @@ class Menu extends Nanocomponent {
 		this.render()
 	}
 
-	on(e) {
-		console.log('on')
-		this.state.displayItems = !this.state.displayItems
-		this.render()
-	}
-
-	off(e) {
-		this.state.displayItems = false
-		this.render()
-	}
-
 	createElement() {
-		const { props, state, on, off } = this
+		const { props, state, toggleMenu } = this
 		return html`
-			<div class="${styles.container} Menu-container"
-				onclick=${on}
+			<div 
+				class="${styles.container} Menu-container"
+				onclick=${toggleMenu}
 			>
 				<img
 					class="${styles.hamburger} Menu-hamburger"
 					src="../assets/images/utilityButtons/Hamburger.svg"
-
 				/>
 				<div class="${styles.menu(state.displayItems)} Menu-menu"
-				onmouseleave=${off}
+				onmouseleave=${toggleMenu}
 				>
 					<div class="${styles.divider} Menu-divider" ></div>
 					${props.items.map(item => [
 						item.render(),
+						html`<div class="${styles.divider} Menu-divider" ></div>`
 					])}
 				</div>
 			</div>

@@ -8,6 +8,7 @@ module.exports = {
       display: flex;
       height: 44px;
       justify-content: space-between;
+      -webkit-app-region: no-drag;
     }
   `,
 
