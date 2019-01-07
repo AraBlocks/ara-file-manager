@@ -19,6 +19,7 @@ module.exports = {
       display: flex;
       justify-content: space-between;
       width: 100%;
+      -webkit-app-region: no-drag;
     }
   `,
 

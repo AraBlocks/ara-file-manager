@@ -1,47 +1,15 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:util')
+const debug = require('debug')('afm:kernel:lib:actions:util')
 const { stateManagement: k, networkKeys } = require('k')
 const afs = require('ara-filesystem')
-const araContractsManager = require('./araContractsManager')
+const acmManager = require('./acmManager')
 const araUtil = require('ara-util')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
 const fs = require('fs')
 const createContext = require('ara-context')
 const request = require('request-promise')
-
-
-//TODO: figure out why reading metadata causes error for uncommitted afs
-async function descriptorGenerator(did, opts = {}) {
-	try {
-		did = araUtil.getIdentifier(did)
-		const AFSPath = await makeAfsPath(did)
-		const AFSExists = fs.existsSync(AFSPath)
-		const meta = AFSExists ? await readFileMetadata(did) : null
-		const { downloadPercent, status } = await getAfsDownloadStatus(did, opts.shouldBroadcast)
-
-		const descriptor = {
-			allocatedRewards: 0,
-			did,
-			downloadPercent,
-			datePublished: meta ? meta.timestamp : null,
-			earnings: 0,
-			name: meta ? meta.title : null,
-			owner: false,
-			path: AFSPath,
-			peers: 0,
-			price: Number(await araContractsManager.getAFSPrice({ did })),
-			redeeming: false,
-			shouldBroadcast: false,
-			size: meta ? meta.size : 0,
-			status
-		}
-		return Object.assign(descriptor, opts)
-	} catch (err) {
-		debug('descriptorGenerator Error:, %o', err)
-	}
-}
 
 async function getAfsDownloadStatus(did, shouldBroadcast) {
 	let downloadPercent = 0
@@ -130,7 +98,6 @@ async function writeFileMetaData({
 }
 
 module.exports = {
-	descriptorGenerator,
 	getNetwork,
 	makeAfsPath,
 	readFileMetadata,

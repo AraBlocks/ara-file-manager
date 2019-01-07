@@ -12,6 +12,7 @@ module.exports = {
       height: 1px;
       margin-bottom: 20px;
       width: 100%;
+
     }
 
     :host > div {

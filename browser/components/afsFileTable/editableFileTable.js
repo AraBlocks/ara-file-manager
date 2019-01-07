@@ -34,6 +34,7 @@ class EditableFileTable extends Nanocomponent {
 		}
 		this.deleteFile = this.deleteFile.bind(this)
 		this.getFiles = this.getFiles.bind(this)
+		this.getFolders = this.getFolders.bind(this)
 		this.onFileDrop = this.onFileDrop.bind(this)
 		this.preventDefault = this.preventDefault.bind(this)
 		this.renderAddOpts = this.renderAddOpts.bind(this)
@@ -85,17 +86,28 @@ class EditableFileTable extends Nanocomponent {
 	}
 
 	async getFiles() {
-		const files = await fileSystemManager.showSelectFileDialog()
+		let files
+		process.platform == 'win32'
+			? files = await fileSystemManager.showSelectFileAndFolderDialog()
+			: files = await fileSystemManager.showSelectFileDialog()
 		this.props.addItems(files)
 	}
 
+	async getFolders() {
+		const folders = await fileSystemManager.showSelectDirectoryDialog()
+		this.props.addItems(folders)
+	}
+
 	renderAddOpts(length) {
-		const { getFiles } = this
+		const { getFiles, getFolders } = this
 		return length
 			? html`
 				<div class="${styles.addOptions} editableFileTable-addOptions">
-					<span class="${styles.add} editableFileTable-add" onclick="${getFiles}">
+					<span class="${styles.add()} editableFileTable-add" onclick="${getFiles}">
 						Add file +
+					</span>
+					<span class="${styles.add(process.platform !== 'win32')} editableFileTable-add" onclick="${getFolders}">
+						Add folder +
 					</span>
 				</div>
 			`
@@ -104,8 +116,11 @@ class EditableFileTable extends Nanocomponent {
 					Drop files here
 					<div>
 						Or 
-						<span class="${styles.add} editableFileTable-add" onclick="${getFiles}">
+						<span class="${styles.add()} editableFileTable-add" onclick="${getFiles}">
 							add files
+						</span>
+						<span class="${styles.add(process.platform !== 'win32')} editableFileTable-add" onclick="${getFolders}">
+							/ add folders
 						</span>
 						from finder
 					</div>

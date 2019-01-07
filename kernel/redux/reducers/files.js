@@ -21,6 +21,7 @@ module.exports = (state, { load = null, type }) => {
     case k.DOWNLOADED:
       file = findFile(load.did, state.purchased)
       if (file == null) { break }
+      file.name = load.name
       file.downloadPercent = 1
       file.status = k.DOWNLOADED_PUBLISHED
       file.shouldBroadcast = true
@@ -44,10 +45,37 @@ module.exports = (state, { load = null, type }) => {
       state.published = load.published
       state.purchased = load.purchased
       break
+    case k.GOT_COMMIT_STATUS:
+      file = findFile(load.did, state.published)
+      file.status = load.status === k.UNCOMMITTED ? k.UNCOMMITTED : file.status
+      break
+    case k.GOT_DL_PERC_AND_STATUS:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.status = load.status
+      file.downloadPercent = load.downloadPercent
+      break
     case k.GOT_LIBRARY:
       state.loadingLibrary = false
       state.published = load.published
       state.purchased = load.purchased
+      break
+    case k.GOT_EARNING:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.earnings += Number(load.earnings)
+      break
+    case k.GOT_META:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.name = load.meta.title || null
+      file.size = load.meta.size || 0
+      file.datePublished = load.meta.timestamp || null
+      break
+    case k.GOT_PRICE:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.price = load.price
+      break
+    case k.GOT_REWARDS:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.allocatedRewards = load.allocatedRewards
       break
     case k.GETTING_USER_DATA:
       state.loadingLibrary = true

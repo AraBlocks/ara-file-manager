@@ -20,7 +20,7 @@ module.exports = async (state, { load = null, type }) => {
       state.cachedUserDid = load.did
       break
     case k.GETTING_USER_DATA:
-      state.userAid = load.userAid
+      state.userDID = load.userDID
       break
     case k.GREYLISTED_FROM_FAUCET:
       state.faucetStatus = k.GREYLISTED_FROM_FAUCET

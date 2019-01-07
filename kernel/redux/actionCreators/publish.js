@@ -1,13 +1,13 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:publish')
+const debug = require('debug')('afm:kernel:lib:actionCreators:publish')
 const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
-  afmManager,
-  araContractsManager,
-  utils: actionsUtil
+  acmManager,
+  utils: actionsUtil,
+  descriptorGeneration
 } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
@@ -45,7 +45,7 @@ async function _deployProxy() {
     const deployEstimateDid = store.account.deployEstimateDid
 
     const deployCost = await afs.deploy({ password, did: deployEstimateDid, estimate: true })
-    const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
+    const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
     if (ethAmount < deployCost) {
       throw new Error('Not enough eth')
     }
@@ -62,19 +62,19 @@ async function _deployProxy() {
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY)
 
-  const { autoQueue, password, userAid } = store.account
+  const { autoQueue, password, userDID } = store.account
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'pleaseWait' } })
     windowManager.openModal('generalPleaseWaitModal')
 
-    let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userAid, password })
+    let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userDID, password })
     await newAfs.close()
 
     await autoQueue.push(() => afs.deploy({ password, did }))
 
-    const descriptor = await actionsUtil.descriptorGenerator(did, { owner: true, status: k.UNCOMMITTED })
+    const descriptor = await descriptorGeneration.makeDescriptor(did, { owner: true, status: k.UNCOMMITTED })
 
     windowManager.closeWindow('generalPleaseWaitModal')
 
@@ -83,7 +83,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
       load: {
         contentDID: did,
         mnemonic,
-        userAid,
+        userDID,
         isAFS: true,
         descriptor
       }
@@ -113,7 +113,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
 
     await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
-    const ethAmount = await araContractsManager.getEtherBalance(store.account.accountAddress)
+    const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
 
     const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0
@@ -154,7 +154,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     accountAddress,
     autoQueue,
     password,
-    userAid
+    userDID
   } = store.account
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
@@ -170,12 +170,12 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       size: load.size,
       status: k.PUBLISHING
     }
-    const descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
+    const descriptor = await descriptorGeneration.makeDescriptor(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     await autoQueue.push(() => afs.commit({ did: load.did, price: Number(load.price), password: password }))
-    const balance = await araContractsManager.getAraBalance(userAid)
+    const balance = await acmManager.getAraBalance(userDID)
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     debug('Dispatching %s', k.PUBLISHED)
@@ -189,8 +189,8 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     })
     windowManager.openModal('publishSuccessModal')
 
-    const publishedSub = await araContractsManager.subscribePublished({ did: load.did })
-    const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, accountAddress, userAid)
+    const publishedSub = await acmManager.subscribePublished({ did: load.did })
+    const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, accountAddress, userDID)
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
     internalEmitter.emit(k.START_SEEDING, load )

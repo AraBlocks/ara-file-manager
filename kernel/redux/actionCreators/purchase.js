@@ -1,12 +1,9 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:purchase')
+const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
 const dispatch = require('../reducers/dispatch')
-const {
-	utils: actionsUtil,
-	araContractsManager,
-} = require('../actions')
-const k = require('../../../lib/constants/stateManagement')
+const { acmManager, descriptorGeneration } = require('../actions')
+const { stateManagement: k } = require('k')
 const araUtil = require('ara-util')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
@@ -16,7 +13,7 @@ const { account } = windowManager.sharedData.fetch('store')
 internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
 	debug('%s heard', k.OPEN_DEEPLINK)
 	dispatch({ type: k.OPEN_DEEPLINK, load })
-	if (account.userAid == null) {
+	if (account.userDID == null) {
 		debug('not logged in')
 		dispatch({ type: k.FEED_MODAL, load: { modalName: 'notLoggedIn' } })
 		windowManager.openModal('generalMessageModal')
@@ -32,7 +29,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		dispatch({ type: k.FEED_MODAL, load })
 
 		windowManager.openWindow('purchaseEstimate')
-		const library = await araContractsManager.getLibraryItems(account.userAid)
+		const library = await acmManager.getLibraryItems(account.userDID)
 		if (library.includes('0x' + araUtil.getIdentifier(load.did))) {
 			debug('already own item')
 			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
@@ -41,14 +38,24 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
-		const price = Number(await araContractsManager.getAFSPrice({ did: load.did }))
-		const gasEstimate = Number(await araContractsManager.purchaseEstimate({
+		const price = await acmManager.getAFSPrice({ did: load.did })
+		const fee = acmManager.getPurchaseFee(price)
+		const gasEstimate = Number(await acmManager.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
-			userDID: account.userAid,
+			userDID: account.userDID,
 		}))
 
-		windowManager.pingView({ view: 'purchaseEstimate', event: k.REFRESH, load: { gasEstimate, price } })
+		windowManager.pingView({
+			view: 'purchaseEstimate',
+			event: k.REFRESH,
+			load: {
+				fee,
+				gasEstimate,
+				price: Number(price)
+			}
+		})
+
 	} catch (err) {
 		errorHandler(err)
 	}
@@ -62,21 +69,24 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 			throw new Error('Not enough eth')
 		}
 
+		if (account.araBalance < load.price + load.fee) { throw new Error('Not enough Ara') }
+
 		const descriptorOpts = {
 			peers: 1,
 			name: load.fileName,
 			status: k.PURCHASING,
 		}
-		const descriptor = await actionsUtil.descriptorGenerator(load.did, descriptorOpts)
+		const descriptor = await descriptorGeneration.makeDescriptor(load.did, descriptorOpts)
 		dispatch({ type: k.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userAid }
+		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userDID }
 
-		const jobId = await autoQueue.push(() => araContractsManager.purchaseItem(itemLoad))
+		const jobId = await autoQueue.push(() => acmManager.purchaseItem(itemLoad))
 
-		const araBalance = await araContractsManager.getAraBalance(account.userAid)
+		const araBalance = await acmManager.getAraBalance(account.userDID)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
+		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
 		dispatch({ type: k.FEED_MODAL, load: {
 				modalName: 'startDownload',
@@ -89,8 +99,8 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
 
-		const rewardsSub = await araContractsManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userAid)
-		const updateSub = await araContractsManager.subscribeAFSUpdates(load.did)
+		const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
+		const updateSub = await acmManager.subscribeAFSUpdates(load.did)
 
 		dispatch({ type: k.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
 	} catch (err) {
@@ -102,9 +112,17 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 function errorHandler(err) {
 	debug(err)
-	err.message === 'Not enough eth'
-		? dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
-		: dispatch({ type: k.FEED_MODAL, load: { modalName: 'purchaseFailed' } })
+	switch(err.message) {
+		case 'Not enough eth':
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
+			break
+		case 'Not enough Ara':
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughAra' } })
+			break
+		default:
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'purchaseFailed' } })
+			break
+	}
 	windowManager.openModal('generalMessageModal')
 	internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 }

@@ -108,7 +108,7 @@ class Container extends Nanocomponent {
 			<div class="${styles.container} AfsExplorerViewContainer-container">
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} AfsExplorerViewContainer-horizontalContainer,title">
-					${props.afsName}
+					${props.afsName || 'Unnamed Package'}
 					${children.utilityButton.render({ children: 'close' })}
 				</div>
 				${children.araIdTooltip.render()}

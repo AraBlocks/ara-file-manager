@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:seed')
+const debug = require('debug')('afm:kernel:lib:actionCreators:seed')
 const { farmerManager } = require('../actions')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')

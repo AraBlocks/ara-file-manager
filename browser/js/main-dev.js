@@ -49,7 +49,7 @@ if (argv.includes('loggedin')) {
   const { LOGIN } = require('../../lib/constants/stateManagement')
   emit({ event: LOGIN, load: {
       password: argv[argv.length - 1],
-      userAid: argv[argv.length - 2]
+      userDID: argv[argv.length - 2]
     }
   })
 }

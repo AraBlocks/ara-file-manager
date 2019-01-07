@@ -1,11 +1,12 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:download')
+const debug = require('debug')('afm:kernel:lib:actionCreators:download')
 const dispatch = require('../reducers/dispatch')
 const { farmerManager } = require('../actions')
 const k = require('../../../lib/constants/stateManagement')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
+const utils = require('../actions/utils')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
@@ -70,9 +71,10 @@ internalEmitter.on(k.DOWNLOADING, (load) => {
 	}
 })
 
-internalEmitter.on(k.DOWNLOADED, (load) => {
+internalEmitter.on(k.DOWNLOADED, async (load) => {
 	debug('Dispatching %s', k.DOWNLOADED)
-	dispatch({ type: k.DOWNLOADED, load })
+	const fileInfo = await utils.readFileMetadata(load.did)
+	dispatch({ type: k.DOWNLOADED, load: { did: load.did, name: fileInfo.title } })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 })
 

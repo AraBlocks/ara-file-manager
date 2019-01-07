@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:afmManager')
+const debug = require('debug')('afm:kernel:lib:actions:afmManager')
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')

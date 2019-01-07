@@ -1,7 +1,7 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:download')
-const { araContractsManager, identityManager } = require('../actions')
+const debug = require('debug')('afm:kernel:lib:actionCreators:download')
+const { acmManager, identityManager } = require('../actions')
 const araUtil = require('ara-util')
 const dispatch = require('../reducers/dispatch')
 const k = require('../../../lib/constants/stateManagement')
@@ -52,10 +52,10 @@ ipcMain.on(k.CONFIRM_SEND_ARA, async (event, load) => {
 		const sendAraLoad = {
 			val: load.amount,
 			password: account.password,
-			did: account.userAid,
+			did: account.userDID,
 			to: walletAddress,
 		}
-		await autoQueue.push(() => araContractsManager.sendAra(sendAraLoad))
+		await autoQueue.push(() => acmManager.sendAra(sendAraLoad))
 
 		dispatch({
 			type: k.FEED_MODAL, load: {
