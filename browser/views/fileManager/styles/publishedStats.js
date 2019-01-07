@@ -52,7 +52,7 @@ module.exports = {
 
   iconHolder: css`
     :host {
-      margin-right: 3px;
+      margin-left: 5px;
       width: 11px;
     }
   `,
