@@ -11,7 +11,6 @@ const { internalEmitter } = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
-	debug('OPEN_DEEPLINK----------------- %s',load)
 	debug('%s heard', k.OPEN_DEEPLINK)
 	dispatch({ type: k.OPEN_DEEPLINK, load })
 	if (account.userDID == null) {
@@ -24,7 +23,6 @@ internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
 })
 
 internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
-	debug('PROMPT_PURCHASE----------------- %s',load)
 	try {
 		debug('%s heard', k.PROMPT_PURCHASE)
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
