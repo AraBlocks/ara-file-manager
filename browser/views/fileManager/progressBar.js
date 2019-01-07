@@ -14,7 +14,9 @@ module.exports = ({
   let color
   switch (status) {
     case k.DOWNLOADED_PUBLISHED:
-      color = packageOpened ? 'grey' : shouldBroadcast ? 'teal' : 'black'
+      color = packageOpened
+        ? 'grey'
+        : shouldBroadcast ? 'teal' : 'black'
       break
     case k.PAUSED:
     case k.UNCOMMITTED:
