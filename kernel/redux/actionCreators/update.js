@@ -35,7 +35,7 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
       type: k.FEED_MANAGE_FILE,
       load: {
         did: load.did,
-        price: file ? file.price : 0,
+        price: file.price,
         name: load.name,
         fileList: await afsManager.getFileList(load.did),
         uncommitted: false
@@ -47,7 +47,7 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
   }
 })
 
-ipcMain.on(k.UPDATE_FILE, async (event, load) => {
+ipcMain.on(k.UPDATE_FILE, async (_, load) => {
   debug('%s heard', k.UPDATE_FILE)
   const { account } = store
   try {
