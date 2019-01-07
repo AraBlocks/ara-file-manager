@@ -1,6 +1,7 @@
 'use strict'
 
 const { stateManagement: k } = require('k')
+const { AutoQueue } = require('../../../lib')
 const dispatch = require('../../reducers/dispatch')
 const {
   acmManager,
@@ -19,8 +20,8 @@ async function getInitialAccountState(userDID, password) {
   windowManager.openWindow('filemanager')
 
   const accountAddress = await acmManager.getAccountAddress(userDID, password)
-  const autoQueue = farmerManager.createAutoQueue()
-  const farmer = farmerManager.createFarmer({ did: userDID, password: password, queue: autoQueue })
+  const autoQueue = new AutoQueue
+  const farmer = farmerManager.createFarmer({ did: userDID, password: password, queue: autoQueue})
   dispatch({
     type: k.LOGIN,
     load: {

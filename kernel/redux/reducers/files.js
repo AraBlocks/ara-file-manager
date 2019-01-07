@@ -138,8 +138,11 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.UPDATE_EARNING:
       file = findFile(load.did, state.published)
-      if (file == null) { break }
       file.earnings += Number(load.earning)
+      break
+    case k.UPDATE_META:
+      file = findFile(load.did, state.published)
+      Object.assign(file, load)
       break
     case k.UPDATE_PEER_COUNT:
       file = findFile(load.did, state.published.concat(state.purchased))
