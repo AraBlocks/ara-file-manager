@@ -45,7 +45,6 @@ app.on('ready', () => {
   require('../kernel/redux/actionCreators')
 
   if (process.platform == 'win32') { deepLinkingUrl = process.argv.slice(1) }
-  // deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
 
   if (isDev) {
     //Hot reloads browser side changes
