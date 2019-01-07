@@ -8,7 +8,7 @@ function copyDeeplink(aid, fileName) {
 }
 
 function getDeeplink(aid, fileName) {
-	const encodedName = encodeURIComponent(fileName)
+	const encodedName = encodeURIComponent(fileName || '')
 	return `ara://download/${aid}/${encodedName}`
 }
 
