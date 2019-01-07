@@ -11,6 +11,11 @@ module.exports = (state, { load = null, type }) => {
       file.shouldBroadcast = load.shouldBroadcast
       file.status = file.status === k.CONNECTING ? k.AWAITING_DOWNLOAD : file.status
       break
+    case k.CLOSE_AFS_EXPLORER:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      if (file == null) { break }
+      file.packageOpened = false
+      break
     case k.DOWNLOADING:
       file = findFile(load.did, state.purchased)
       if (file == null) { break }
@@ -40,6 +45,10 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.ERROR_PURCHASING:
       state.purchased = state.purchased.slice(0, state.purchased.length - 1)
+      break
+    case k.FEED_CONTENT_VIEWER:
+      file = findFile(load.did, state.published.concat(state.purchased))
+      file.packageOpened = true
       break
     case k.LOADED_BACKGROUND_AFS_DATA:
       state.published = load.published
