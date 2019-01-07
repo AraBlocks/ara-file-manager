@@ -15,7 +15,7 @@
     "build-dev-windows": "sh ./scripts/windows-dev-build.sh",
     "dist": "sh ./scripts/production-build.sh",
     "dist-windows": "sh ./scripts/windows-production-build.sh",
-    "debug": "DEBUG=acm*,arp*,ard* release-builds/Ara\\ File\\ Manager-darwin-x64/Ara\\ File\\ Manager.app/Contents/MacOS/Ara\\ File\\ Manager",
+    "debug": "DEBUG=afm*,arp*,ard* release-builds/Ara\\ File\\ Manager-darwin-x64/Ara\\ File\\ Manager.app/Contents/MacOS/Ara\\ File\\ Manager",
     "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
     "version": "npm run changelog && git add CHANGELOG.md"
   },
