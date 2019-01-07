@@ -19,6 +19,7 @@ class _Descriptor {
 			earnings: 0,
 			name: null,
 			owner: false,
+			packageOpened: false,
 			path: null,
 			peers: 0,
 			price: 0,

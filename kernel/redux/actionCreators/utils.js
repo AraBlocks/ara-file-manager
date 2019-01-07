@@ -8,6 +8,7 @@ const {
   afmManager,
   farmerManager
 } = require('../actions')
+const araFilesystem = require('ara-filesystem')
 const { ipcMain, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
@@ -28,6 +29,7 @@ ipcMain.on(k.OPEN_AFS, async (event, load) => {
     const updateAvailable = file.status === k.UPDATE_AVAILABLE ? true : false
     dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] } })
     windowManager.openWindow('afsExplorerView')
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     const fileList = await afsManager.getFileList(load.did)
     dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable } })
@@ -42,6 +44,8 @@ ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
     const { farmer, files } = store
     const fileList = files.published.concat(files.purchased)
     const file = fileList.find(file => file.did === load.did)
+    dispatch({ type: k.CLOSE_AFS_EXPLORER, load })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     if (file.shouldBroadcast) {
       internalEmitter.emit(k.START_SEEDING, load )
     }

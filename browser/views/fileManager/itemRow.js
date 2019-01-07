@@ -28,6 +28,7 @@ class ItemRow extends Nanocomponent {
     const {
       downloadPercent,
       last,
+      packageOpened,
       status,
       shouldBroadcast
     } = file
@@ -46,6 +47,7 @@ class ItemRow extends Nanocomponent {
           last,
           status,
           shouldBroadcast,
+          packageOpened
         })}
       </div>
     `
