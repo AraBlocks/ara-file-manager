@@ -17,6 +17,7 @@ const araUtil = require('ara-util')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
+const { AutoQueue } = require('../../lib')
 
 ipcMain.on(k.REGISTER, async (event, password) => {
   debug('%s heard. load: %s', k.REGISTER, password)
@@ -32,12 +33,12 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
 
     const network = await actionUtils.getNetwork()
-    const autoQueue = farmerManager.createAutoQueue()
+    const autoQueue = new AutoQueue
     const farmer = farmerManager.createFarmer({ did, password, queue: autoQueue })
     const didIdentifier = araUtil.getIdentifier(did)
     afmManager.cacheUserDid(didIdentifier)
     const analyticsPermission = afmManager.getAnalyticsPermission(did)
-    
+
     debug('Dispatching %s', k.REGISTERED)
     dispatch({
       type: k.REGISTERED,
