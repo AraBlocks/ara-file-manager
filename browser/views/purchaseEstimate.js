@@ -8,7 +8,7 @@ const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const { utils } = require('../lib/tools')
 
-class purchaseEstimate extends Nanocomponent {
+class PurchaseEstimate extends Nanocomponent {
 	constructor(opts) {
     super()
     this.props = { gasEstimate: null, ...opts }
@@ -109,4 +109,4 @@ class purchaseEstimate extends Nanocomponent {
 	}
 }
 
-module.exports = purchaseEstimate
+module.exports = PurchaseEstimate
