@@ -1,3 +1,29 @@
+# [0.4.0](https://github.com/littlstar/ara-content-manager/compare/0.3.4...0.4.0) (2019-01-07)
+
+
+### Bug Fixes
+
+* Error messages for purchase flow ([#352](https://github.com/littlstar/ara-content-manager/issues/352)) ([55d8d4a](https://github.com/littlstar/ara-content-manager/commit/55d8d4a))
+* null DID after log out ([732aee8](https://github.com/littlstar/ara-content-manager/commit/732aee8))
+
+
+### Features
+
+* dummy descriptor ([1b422bc](https://github.com/littlstar/ara-content-manager/commit/1b422bc))
+* loading style for progress bar ([b04835b](https://github.com/littlstar/ara-content-manager/commit/b04835b))
+* PE-774 Round purchase fee with more precision ([#350](https://github.com/littlstar/ara-content-manager/issues/350)) ([5276a8e](https://github.com/littlstar/ara-content-manager/commit/5276a8e))
+* promise based meta read for login ([#345](https://github.com/littlstar/ara-content-manager/issues/345)) ([025a76a](https://github.com/littlstar/ara-content-manager/commit/025a76a))
+* promise based published earnings fetch ([f20d8e7](https://github.com/littlstar/ara-content-manager/commit/f20d8e7))
+* Read File Name from Meta after downloading ([5f41aed](https://github.com/littlstar/ara-content-manager/commit/5f41aed))
+* Remove electron tooltip ([#346](https://github.com/littlstar/ara-content-manager/issues/346)) ([ad96ff9](https://github.com/littlstar/ara-content-manager/commit/ad96ff9))
+* rest of login process promise based ([26b3203](https://github.com/littlstar/ara-content-manager/commit/26b3203))
+* **dispatch:** type check added ([d2ba9c5](https://github.com/littlstar/ara-content-manager/commit/d2ba9c5))
+* window's windows are clickable ([53eeaa7](https://github.com/littlstar/ara-content-manager/commit/53eeaa7))
+* working 🍔 ([c622965](https://github.com/littlstar/ara-content-manager/commit/c622965))
+* working deeplink for windows ([2a4b787](https://github.com/littlstar/ara-content-manager/commit/2a4b787))
+
+
+
 ## [0.3.4](https://github.com/littlstar/ara-content-manager/compare/0.3.2...0.3.4) (2018-12-21)
 
 
