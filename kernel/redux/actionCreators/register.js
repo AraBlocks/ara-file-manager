@@ -23,7 +23,6 @@ ipcMain.on(k.REGISTER, async (event, password) => {
   debug('%s heard. load: %s', k.REGISTER, password)
   try {
     windowManager.pingView({ view: 'registration', event: k.REGISTERING })
-
     const identity = await identityManager.create(password)
     await identityManager.archive(identity)
 
@@ -87,5 +86,8 @@ ipcMain.on(k.REGISTER, async (event, password) => {
     farmer.start()
   } catch (err) {
     debug('Error registering: %o', err)
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'registrationFailed' } })
+    windowManager.openModal('generalMessageModal')
+    windowManager.closeWindow('registration')
   }
 })
