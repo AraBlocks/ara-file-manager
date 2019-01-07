@@ -184,7 +184,7 @@ windowManager.loadURL = (view) => {
 windowManager.makeFilePath = ({ file, parent }) => `file://${path.resolve(__dirname, '..', '..', parent, 'html', `${file}` + ".html")}`
 
 windowManager.openDeepLinking = async (deepLinkingUrl) => {
-  debug('Opening deeplink: %s', deepLinkingUrl)
+  debug('Opening deeplink')
   try {
     const fileInfo = parseLink()
     windowManager.internalEmitter.emit(k.OPEN_DEEPLINK, fileInfo)
