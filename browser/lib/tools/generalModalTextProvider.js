@@ -104,6 +104,10 @@ function generalModalText(modalName, load) {
 			description = html`<div>It appears the mnemonic you've entered is invalid<br><br>
 			Please double check the mnemonic and ensure it's correct.</div>`
 			break
+		case 'registrationFailed':
+			title = 'Something went wrong'
+			description = 'There could be a problem with your ability to access the network. Please check your connection and try again.'
+			break
 	}
 	return { description, title }
 }
