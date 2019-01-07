@@ -69,6 +69,8 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 			throw new Error('Not enough eth')
 		}
 
+		if (account.araBalance < load.price + load.fee) { throw new Error('Not enough Ara') }
+
 		const descriptorOpts = {
 			peers: 1,
 			name: load.fileName,
@@ -84,6 +86,7 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 		const araBalance = await acmManager.getAraBalance(account.userDID)
 		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
+		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
 		dispatch({ type: k.FEED_MODAL, load: {
 				modalName: 'startDownload',
@@ -109,9 +112,17 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 function errorHandler(err) {
 	debug(err)
-	err.message === 'Not enough eth'
-		? dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
-		: dispatch({ type: k.FEED_MODAL, load: { modalName: 'purchaseFailed' } })
+	switch(err.message) {
+		case 'Not enough eth':
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
+			break
+		case 'Not enough Ara':
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughAra' } })
+			break
+		default:
+			dispatch({ type: k.FEED_MODAL, load: { modalName: 'purchaseFailed' } })
+			break
+	}
 	windowManager.openModal('generalMessageModal')
 	internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 }
