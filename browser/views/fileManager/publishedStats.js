@@ -22,8 +22,8 @@ class PublishedStats extends Nanocomponent {
     return html`
       <div class="${styles.container(status, shouldBroadcast)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
-          <img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>
           ${price}
+          <img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>
         </div>
         <div class="${styles.stats} publishedStats-stats">
           <div>
