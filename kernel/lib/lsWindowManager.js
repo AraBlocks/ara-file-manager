@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:lsWindowManager')
+const debug = require('debug')('afm:kernel:lib:lsWindowManager')
 const analytics = require('../redux/actions/analytics')
 const k = require('../../lib/constants/stateManagement')
 const EventEmitter = require('events')

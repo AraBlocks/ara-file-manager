@@ -40,8 +40,8 @@ module.exports = {
 
   hamburger: css`
     :host {
-      height: 8px;
-      width: 40%;
+      height: 20px;
+      width: 100%;
     }
   `,
 

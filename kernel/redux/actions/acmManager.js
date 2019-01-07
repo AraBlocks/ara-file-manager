@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actions:araContractsManager')
+const debug = require('debug')('afm:kernel:lib:actions:acmManager')
 const { abi: AFSabi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenABI } = require('ara-contracts/build/contracts/AraToken.json')
 const { abi: registryABI } = require('ara-contracts/build/contracts/Registry.json')
@@ -9,6 +9,7 @@ const k = require('../../../lib/constants/stateManagement')
 const { FAUCET_OWNER } = require('../../../lib/constants/networkKeys')
 const { ARA_TOKEN_ADDRESS, REGISTRY_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
+const { DEFAULT_REWARD_PERCENTAGE } = require('ara-reward-dcdn/src/constants')
 const { internalEmitter } = require('electron-window-manager')
 const createContext = require('ara-context')
 const {
@@ -37,6 +38,17 @@ async function getAFSPrice({ did }) {
 		debug('Error getting price: %o', err)
 	}
 	return result
+}
+
+function getPurchaseFee(price) {
+	let fee = 0
+	try {
+		const expandedfee = Number(araContracts.token.expandTokenValue(price)) * DEFAULT_REWARD_PERCENTAGE
+		fee = Number(araContracts.token.constrainTokenValue(String(expandedfee)))
+	} catch(err) {
+		debug('Error getting purchase fee: %o', err)
+	}
+	return fee
 }
 
 async function getAraBalance(userDID) {
@@ -121,30 +133,23 @@ async function getLibraryItems(userDID) {
 	}
 }
 
-async function getPublishedEarnings(items) {
-	debug('Getting earnings for published items')
-	const updatedEarnings = items.map(async (item) => ({ ...item, earnings: await getEarnings(item) }))
-
-	return Promise.all(updatedEarnings)
-}
-
 async function getAFSContract(contentDID) {
 	if (!araContracts.registry.proxyExists(contentDID)) { return {} }
 	const proxyAddress = await araContracts.registry.getProxyAddress(contentDID)
 	return await contractUtil.get(AFSabi, proxyAddress)
 }
 
-async function getAllocatedRewards(item, userDID, password) {
+async function getAllocatedRewards(did, userDID, password) {
 	const allocatedRewards = Number(await araContracts.rewards.getRewardsBalance({
 		farmerDid: userDID,
-		contentDid: 'did:ara:' + item.did,
+		contentDid: did,
 		password
 	}))
 
-	return { ...item, allocatedRewards }
+	return allocatedRewards
 }
 
-async function getEarnings({ did }) {
+async function getEarnings(did) {
 	const { contract, ctx } = await getAFSContract(did)
 
 	let earnings = 0
@@ -162,8 +167,8 @@ async function getEarnings({ did }) {
 	return earnings
 }
 
-async function getRewards(item, userEthAddress) {
-	const { contract, ctx } = await getAFSContract(item.did)
+async function getRewards(did, userEthAddress) {
+	const { contract, ctx } = await getAFSContract(did)
 
 	let totalRewards = 0
 	if (contract) {
@@ -176,12 +181,12 @@ async function getRewards(item, userEthAddress) {
 						: sum
 					, 0)
 		} catch (err) {
-			debug('Error getting rewards for %s : %o', item.did, err)
+			debug('Error getting rewards for %s : %o', did, err)
 		}
 	}
 
 	ctx.close()
-	return { ...item, earnings: item.earnings += totalRewards }
+	return totalRewards
 }
 
 async function subscribeEthBalance(userAddress) {
@@ -352,7 +357,7 @@ module.exports = {
 	getEarnings,
 	getEtherBalance,
 	getLibraryItems,
-	getPublishedEarnings,
+	getPurchaseFee,
 	getRewards,
 	purchaseItem,
 	purchaseEstimate,

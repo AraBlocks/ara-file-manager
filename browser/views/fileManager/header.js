@@ -20,7 +20,7 @@ class Header extends Nanocomponent {
 
     this.props = {
       account,
-      userDID: account.userAid
+      userDID: account.userDID
     }
     this.children = {
       publishFilebutton: new Button({

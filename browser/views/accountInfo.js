@@ -25,7 +25,7 @@ class AccountInfo extends Nanocomponent {
       ethBalance: account.ethBalance,
       faucetStatus: account.faucetStatus,
       network: application.network,
-      userDID: account.userAid
+      userDID: account.userDID
     }
 
     this.children = {

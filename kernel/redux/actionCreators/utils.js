@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('acm:kernel:lib:actionCreators:utils')
+const debug = require('debug')('afm:kernel:lib:actionCreators:utils')
 const k = require('../../../lib/constants/stateManagement')
 const dispatch = require('../reducers/dispatch')
 const {
@@ -56,7 +56,7 @@ internalEmitter.on(k.CONFIRM_QUIT, () => {
 })
 
 ipcMain.on(k.TOGGLE_ANALYTICS_PERMISSION, () => {
-  const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userAid)
+  const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userDID)
   dispatch({ type: k.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission }})
   windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 })

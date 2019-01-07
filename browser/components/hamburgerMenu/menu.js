@@ -29,20 +29,25 @@ class Menu extends Nanocomponent {
 		this.render()
 	}
 
+
 	createElement() {
 		const { props, state, toggleMenu } = this
-
+		
 		return html`
-			<div class="${styles.container} Menu-container"
+			<div 
+				class="${styles.container} Menu-container"
 				onclick=${toggleMenu}
+				onmouseleave=${toggleMenu}
 			>
 				<img
 					class="${styles.hamburger} Menu-hamburger"
 					src="../assets/images/utilityButtons/Hamburger.svg"
 				/>
-				<div class="${styles.menu(state.displayItems)} Menu-menu"
+				<div 
+					class="${styles.menu(state.displayItems)} Menu-menu"
 					onmouseleave=${toggleMenu}
 				>
+					<div class="${styles.divider} Menu-divider" ></div>
 					${props.items.map(item => [
 						item.render(),
 						html`<div class="${styles.divider} Menu-divider"></div>`
