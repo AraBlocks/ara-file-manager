@@ -8,3 +8,4 @@ electron-packager . \
 --icon=./build/icons/windows/ara_dev.ico \
 --prune=true \
 --out=release-builds \
+--protocol=ara \
