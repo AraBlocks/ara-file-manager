@@ -2,7 +2,7 @@
 
 module.exports = {
   roundDecimal(number, place) {
-    return Math.round(number * place) / place
+    return Math.ceil(number * place) / place
   },
 
   shouldShowBanner(network) {

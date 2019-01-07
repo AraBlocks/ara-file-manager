@@ -63,7 +63,7 @@ class Container extends Nanocomponent {
 	}
 
 	fileInfoChanged() {
-		const { state, props } = this
+		const { state } = this
 		const { addPaths, removePaths } = this.getPathDiff()
 		const priceChanged = state.oldPrice != state.price
 		const shouldCommit = !(addPaths.length == 0 && removePaths.length == 0)
@@ -119,7 +119,7 @@ class Container extends Nanocomponent {
 			size: state.fileList.reduce((sum, file) => sum += file.size, 0),
 			shouldCommit: !(addPaths.length == 0 && removePaths.length == 0),
 			shouldUpdatePrice: state.oldPrice != state.price,
-			price: state.price == "" ? null : state.price,
+			price: state.price || 0,
 			userDID: account.userDID
 		}
 		if (this.fileInfoChanged() && state.uncommitted) {

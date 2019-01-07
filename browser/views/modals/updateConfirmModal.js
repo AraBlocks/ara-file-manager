@@ -11,7 +11,7 @@ module.exports = (load) => {
   const updateButton = new Button({
     children: 'Update',
     onclick: () => {
-      emit({ event: CONFIRM_UPDATE_FILE, load: { ...load, cost: 5 } }),
+      emit({ event: CONFIRM_UPDATE_FILE, load }),
       closeModal()
     }
   })
