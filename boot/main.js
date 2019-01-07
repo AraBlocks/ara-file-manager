@@ -20,9 +20,10 @@ isDev && require('./ipc-dev')
 let deepLinkingUrl
 cleanOutdatedData() //!!! Very Dangerous code !!!
 
-const shouldQuit = app.makeSingleInstance(argv => {
+const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
   if (process.platform == 'win32') {
-    deepLinkingUrl = argv.slice(1)
+    deepLinkingUrl = argv[1]
+    deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
   }
 })
 
@@ -43,7 +44,7 @@ app.on('ready', () => {
   debug('Loading Dependencies')
   require('../kernel/redux/actionCreators')
 
-  if (process.platform == 'win32') { deepLinkingUrl = process.argv.slice(1) }
+  if (process.platform == 'win32') { deepLinkingUrl = process.argv[1] }
   deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
 
   if (isDev) {
