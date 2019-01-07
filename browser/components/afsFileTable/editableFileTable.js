@@ -1,6 +1,5 @@
 'use strict'
 
-const k = require('../../../lib/constants/stateManagement')
 const AfsFileRow = require('./afsFileRow')
 const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')
@@ -8,6 +7,8 @@ const { fileSystemManager } = require('../../lib/tools')
 const styles = require('./styles/editableFileTable')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
+
+const IS_WINDOWS = process.platform === 'win32'
 
 class EditableFileTable extends Nanocomponent {
 	constructor(opts) {
@@ -87,7 +88,7 @@ class EditableFileTable extends Nanocomponent {
 
 	async getFiles() {
 		let files
-		process.platform == 'win32'
+		IS_WINDOWS
 			? files = await fileSystemManager.showSelectFileAndFolderDialog()
 			: files = await fileSystemManager.showSelectFileDialog()
 		this.props.addItems(files)
@@ -106,7 +107,7 @@ class EditableFileTable extends Nanocomponent {
 					<span class="${styles.add()} editableFileTable-add" onclick="${getFiles}">
 						Add file +
 					</span>
-					<span class="${styles.add(process.platform !== 'win32')} editableFileTable-add" onclick="${getFolders}">
+					<span class="${styles.add(IS_WINDOWS)} editableFileTable-add" onclick="${getFolders}">
 						Add folder +
 					</span>
 				</div>
@@ -119,7 +120,7 @@ class EditableFileTable extends Nanocomponent {
 						<span class="${styles.add()} editableFileTable-add" onclick="${getFiles}">
 							add files
 						</span>
-						<span class="${styles.add(process.platform !== 'win32')} editableFileTable-add" onclick="${getFolders}">
+						<span class="${styles.add(IS_WINDOWS)} editableFileTable-add" onclick="${getFolders}">
 							/ add folders
 						</span>
 						from finder

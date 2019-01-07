@@ -32,7 +32,8 @@ class FileInfo extends Nanocomponent {
 			fileNameInput: new ErrorInput({
 				field: 'name',
 				placeholder: 'File Name',
-				parentState
+				parentState,
+				renderView
 			}),
 			fileSelector: new FileSelector({
 				field: 'filePath',

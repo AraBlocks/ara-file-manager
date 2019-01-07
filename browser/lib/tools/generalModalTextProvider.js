@@ -8,7 +8,7 @@ function generalModalText(modalName, load) {
 	switch (modalName) {
 		case 'araSent':
 			title = 'Success!'
-			description = html `<div><b>${load.amount} Ara</b> has been sent to <b>${load.did}</b></div>`
+			description = html`<div><b>${load.amount} Ara</b> has been sent to <b>${load.did}</b></div>`
 			break
 		case 'alreadyOwn':
 			title = 'You already own this package'
@@ -22,7 +22,7 @@ function generalModalText(modalName, load) {
 			break
 		case 'deleteSuccess':
 			title = 'File Deleted'
-			description = html `<div><b>${load.fileName}</b> has been successfully deleted from the network.</div>`
+			description = html`<div><b>${load.fileName}</b> has been successfully deleted from the network.</div>`
 			break
 		case 'failureModal':
 			title = 'Something went wrong'
@@ -39,8 +39,9 @@ function generalModalText(modalName, load) {
 			break
 		case 'fileMissing':
 			title = 'File Missing'
-			description = html `<div><b>${load.fileName}</b> has been deleted or altered. You cannot share a file or earn rewards unless it matches the published file on the network.<br><br>
-			Please restore the file or download it again from the network.</div>`
+			description = html`<div><b>${load.fileName}</b> has been deleted or altered. You cannot share a file or earn rewards unless it matches the
+	published file on the network.<br><br>
+	Please restore the file or download it again from the network.</div>`
 			break
 		case 'generalFailure':
 			title = 'Something went wrong'
@@ -62,17 +63,21 @@ function generalModalText(modalName, load) {
 			title = 'Login Failed'
 			description = 'Please check your Idenitity and/or password'
 			break
+		case 'nameUpdated':
+			title = "The package's name has been updated"
+			description = "You've successfully update this package's name!"
+			break
 		case 'notEnoughAra':
 			title = 'Not enough Ara'
-			description = html `<div>You do not have enough Ara Tokens to complete<br> this transaction.</div>`
+			description = html`<div>You do not have enough Ara Tokens to complete<br> this transaction.</div>`
 			break
 		case 'notEnoughAra2':
 			title = 'Not enough Ara'
-			description = html `<div>You do not have enough Ara Tokens to publish<br> this file.</div>`
+			description = html`<div>You do not have enough Ara Tokens to publish<br> this file.</div>`
 			break
 		case 'notEnoughEth':
 			title = 'Not enough Ether'
-			description = html `<div>You do not have enough Ether to complete<br> this transaction.</div>`
+			description = html`<div>You do not have enough Ether to complete<br> this transaction.</div>`
 			break
 		case 'notLoggedIn':
 			title = 'Not Logged In'
@@ -84,19 +89,19 @@ function generalModalText(modalName, load) {
 			break
 		case 'successModal':
 			title = 'Success!'
-			description = html `<div><b>${load.fileName}</b> is downloading now.<br><br>
+			description = html`<div><b>${load.fileName}</b> is downloading now.<br><br>
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
 		case 'updateSuccessModal':
 			title = 'Success!'
-			description = html `<div><b>${load.fileName}</b> has been updated on the network.<br><br>
+			description = html`<div><b>${load.fileName}</b> has been updated on the network.<br><br>
 			Keep files on your computer and host them on
 			the network to earn Ara Token rewards.</div>`
 			break
 		case 'recoveryFailure':
 			title = 'Failed to Recover Account'
-			description = html `<div>It appears the mnemonic you've entered is invalid<br><br>
+			description = html`<div>It appears the mnemonic you've entered is invalid<br><br>
 			Please double check the mnemonic and ensure it's correct.</div>`
 			break
 	}
@@ -106,19 +111,13 @@ function generalModalText(modalName, load) {
 function waitModalText(modalName, load) {
 	let description
 	switch (modalName) {
-		case 'pleaseWait':
-			description = html`<div>Completing transaction and connecting to<br>peers on the network.</div>`
-			break
-		case 'pleaseWaitUploading2':
-			description = html `<div>Updating <b>${load.fileName}</b> on the Ara Network.</div>`
-			break
-		case 'sendingAra':
-			description = html `<div>Sending ${load.amount} Ara.</div>`
+		case 'updatingName':
+			description = html`<div>Updating package name to <b>${load.packageName}</b></div>`
 			break
 		default:
 			description = load.fileName === 'Unnamed'
 				? html`<div>Getting publish estimate for your file</div>`
-				: html`<div>Getting publish estimate for <b>${load.fileName}</b></div>`
+				: html`<div>Getting publish estimate for <b>${load.packageName}</b></div>`
 	}
 	const waitTime = html`
 		<div>

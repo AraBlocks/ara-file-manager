@@ -16,6 +16,7 @@ const { stateManagement: k } = require('k')
 const { internalEmitter } = require('electron-window-manager')
 const { switchLoginState } = require('../../../../boot/tray')
 const { switchApplicationMenuLoginState } = require('../../../../boot/menu')
+const { pause } = require('../../../lib')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
@@ -125,8 +126,4 @@ async function login(_, load) {
   } catch (err) {
     debug('Error: %O', err)
   }
-}
-
-async function pause(time) {
-  await new Promise(_ => setTimeout(_, time))
 }

@@ -6,7 +6,7 @@ const { fileSystemManager, windowManagement } = require('../../lib/tools')
 const DynamicTooltip = require('../../components/dynamicTooltip')
 const FileInfo = require('./fileInfo')
 const overlay = require('../../components/overlay')
-const { UPDATE_FILE, PUBLISH } = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
 const filesize = require('filesize')
@@ -23,6 +23,7 @@ class Container extends Nanocomponent {
 			did: opts.did,
 			name: opts.name,
 			fileList: opts.fileList,
+			oldName: opts.name,
 			oldPrice: opts.price,
 			price: opts.price,
 			uncommitted: opts.uncommitted
@@ -52,8 +53,6 @@ class Container extends Nanocomponent {
 				}
 			})
 		}
-		this.getPathDiff = this.getPathDiff.bind(this)
-		this.fileInfoChanged = this.fileInfoChanged.bind(this)
 	}
 
 	addItems(items) {
@@ -62,13 +61,23 @@ class Container extends Nanocomponent {
 		this.rerender()
 	}
 
-	fileInfoChanged() {
+	get fileInfoChanged() {
 		const { state } = this
-		const { addPaths, removePaths } = this.getPathDiff()
+		const { addPaths, removePaths } = this.pathDiff
+
 		const priceChanged = state.oldPrice != state.price
 		const shouldCommit = !(addPaths.length == 0 && removePaths.length == 0)
 		const notEmpty = state.fileList.length != 0
+
 		return (priceChanged || shouldCommit) && notEmpty && state.price >= 0
+	}
+
+	get nameChanged() {
+		return this.state.oldName !== this.state.name
+	}
+
+	get somethingChanged() {
+		return this.nameChanged || this.fileInfoChanged
 	}
 
 	renderView() {
@@ -84,7 +93,7 @@ class Container extends Nanocomponent {
 		return true
 	}
 
-	getPathDiff() {
+	get pathDiff() {
 		const { state } = this
 		const subPaths = state.fileList.map(file => file.subPath)
 		const removePaths = state.afsContents.filter(file =>
@@ -107,7 +116,7 @@ class Container extends Nanocomponent {
 			addPaths,
 			allPaths,
 			removePaths
-		} = this.getPathDiff()
+		} = this.pathDiff
 
 		const load = {
 			addPaths,
@@ -122,10 +131,12 @@ class Container extends Nanocomponent {
 			price: state.price || 0,
 			userDID: account.userDID
 		}
-		if (this.fileInfoChanged() && state.uncommitted) {
-			windowManagement.emit({ event: PUBLISH, load })
-		} else if (this.fileInfoChanged()) {
-			windowManagement.emit({ event: UPDATE_FILE, load })
+		if (this.fileInfoChanged && state.uncommitted) {
+			windowManagement.emit({ event: k.PUBLISH, load })
+		} else if (this.fileInfoChanged) {
+			windowManagement.emit({ event: k.UPDATE_FILE, load })
+		} else if (this.nameChanged) {
+			windowManagement.emit({ event: k.UPDATE_META, load: { did: load.did, name: load.name }})
 		}
 	}
 
@@ -156,7 +167,7 @@ class Container extends Nanocomponent {
 	}
 
 	createElement({ spinner = false }) {
-		const { children, state, fileInfoChanged } = this
+		const { children, state, somethingChanged } = this
 		return html`
 			<div class="${styles.container} ManageFileContainer-container">
 				${overlay(spinner)}
@@ -171,7 +182,7 @@ class Container extends Nanocomponent {
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
 				${children.publishButton.render({
-					cssClass: fileInfoChanged() ? { name: 'standard' } : { name: 'thinBorder' },
+					cssClass: somethingChanged ? { name: 'standard' } : { name: 'thinBorder' },
 					children: [
 							'Publish',
 							html`
