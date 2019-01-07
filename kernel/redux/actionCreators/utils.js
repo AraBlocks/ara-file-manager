@@ -44,8 +44,7 @@ ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
     const { farmer, files } = store
     const fileList = files.published.concat(files.purchased)
     const file = fileList.find(file => file.did === load.did)
-    const updateAvailable = await araFilesystem.isUpdateAvailable({ did: load.did })
-    dispatch({ type: k.CLOSE_AFS_EXPLORER, load: { did: load.did, status: updateAvailable ? k.UPDATE_AVAILABLE : k.DOWNLOADED_PUBLISHED } })
+    dispatch({ type: k.CLOSE_AFS_EXPLORER, load })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     if (file.shouldBroadcast) {
       internalEmitter.emit(k.START_SEEDING, load )

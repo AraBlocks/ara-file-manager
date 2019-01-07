@@ -14,7 +14,7 @@ module.exports = (state, { load = null, type }) => {
     case k.CLOSE_AFS_EXPLORER:
       file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
-      file.status = load.status
+      file.packageOpened = false
       break
     case k.DOWNLOADING:
       file = findFile(load.did, state.purchased)
@@ -48,7 +48,7 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.FEED_CONTENT_VIEWER:
       file = findFile(load.did, state.published.concat(state.purchased))
-      file.status = k.PACKAGE_OPENED
+      file.packageOpened = true
       break
     case k.LOADED_BACKGROUND_AFS_DATA:
       state.published = load.published
