@@ -5,7 +5,8 @@ const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const { afsManager, farmerManager, utils: actionsUtil } = require('../actions')
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
+const { pause } = require('../../lib')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
@@ -47,6 +48,31 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
   }
 })
 
+ipcMain.on(k.UPDATE_META, async (_, load) => {
+  debug('%s heard', k.UPDATE_META)
+  const { account } = store
+  const { name, did } = load
+
+  const waitModalLoad = { load: { packageName: load.name }, modalName: 'updatingName' }
+  dispatch({ type: k.FEED_MODAL, load: waitModalLoad })
+  windowManager.closeWindow('manageFileView')
+  windowManager.openModal('generalPleaseWaitModal')
+
+  await pause(2000)
+
+  try {
+    await actionsUtil.writeFileMetaData({ did, title: name, password: account.password })
+
+    dispatch({ type: k.UPDATE_META, load: { name, did } })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'nameUpdated' } })
+
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    windowManager.closeWindow('generalPleaseWaitModal')
+    windowManager.openModal('generalMessageModal')
+  } catch (err) {
+  }
+})
+
 ipcMain.on(k.UPDATE_FILE, async (_, load) => {
   debug('%s heard', k.UPDATE_FILE)
   const { account } = store
@@ -54,8 +80,15 @@ ipcMain.on(k.UPDATE_FILE, async (_, load) => {
     dispatch({ type: k.FEED_MODAL, load: { load: { fileName: load.name } } })
     windowManager.openModal('generalPleaseWaitModal')
     windowManager.closeWindow('manageFileView')
-    let estimate
 
+    await actionsUtil.writeFileMetaData({
+      did: load.did,
+      size: load.size,
+      title: load.name,
+      password: account.password
+    })
+
+    let estimate
     if (load.shouldUpdatePrice && !load.shouldCommit) {
       debug('Estimating gas for set price')
       estimate = await afs.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
@@ -66,7 +99,6 @@ ipcMain.on(k.UPDATE_FILE, async (_, load) => {
       if (load.removePaths.length != 0) {
         await (await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })).close()
       }
-      await actionsUtil.writeFileMetaData({ did: load.did, size: load.size, title: load.name, password: account.password })
       if (load.shouldUpdatePrice) {
         debug('Estimate gas for commit and set price')
         estimate = await afs.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
@@ -95,7 +127,7 @@ ipcMain.on(k.UPDATE_FILE, async (_, load) => {
   }
 })
 
-ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
+ipcMain.on(k.CONFIRM_UPDATE_FILE, async (_, load) => {
   debug('%s heard', k.CONFIRM_UPDATE_FILE)
   const { account } = store
   try {
@@ -124,10 +156,10 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (event, load) => {
     }
 
     dispatch({ type: k.UPDATED_FILE, load })
-    debug('Dispatch %s . Load: %s', k.UPDATED_FILE, load)
+
     internalEmitter.emit(k.START_SEEDING, load)
 
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { packageName: load.name } } })
     windowManager.openModal('generalMessageModal')
   } catch (err) {
     debug('Error: %O', err)

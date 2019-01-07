@@ -2,15 +2,10 @@
 
 const debug = require('debug')('afm:kernel:lib:actions:farmerManager')
 const acmManager = require('./acmManager')
-const { AutoQueue } = require('../../lib/')
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
 const { internalEmitter } = require('electron-window-manager')
 const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
-
-function createAutoQueue() {
-	return new AutoQueue
-}
 
 function createFarmer({ did: userId, password, queue }) {
 	debug('Creating Farmer')
@@ -124,7 +119,6 @@ async function _calculateBudget(did) {
 }
 
 module.exports = {
-	createAutoQueue,
 	createFarmer,
 	download,
 	getBroadcastingState,
