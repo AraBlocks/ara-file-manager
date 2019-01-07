@@ -22,7 +22,7 @@ cleanOutdatedData() //!!! Very Dangerous code !!!
 
 const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
   if (process.platform == 'win32') {
-    [deepLinkingUrl] = argv.slice(1)
+    deepLinkingUrl = argv[1]
     deepLinkingUrl && windowManager.openDeepLinking(deepLinkingUrl)
   }
 })
