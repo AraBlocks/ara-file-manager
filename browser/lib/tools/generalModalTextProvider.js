@@ -112,16 +112,19 @@ function generalModalText(modalName, load) {
 	return { description, title }
 }
 
-function waitModalText(modalName, load) {
+function waitModalText(modalName, load = {}) {
 	let description
 	switch (modalName) {
 		case 'updatingName':
 			description = html`<div>Updating package name to <b>${load.packageName}</b></div>`
 			break
+		case 'deployingProxy':
+			description = html`<div>Creating a package for you</div>`
+			break
 		default:
-			description = load.fileName === 'Unnamed'
-				? html`<div>Getting publish estimate for your file</div>`
-				: html`<div>Getting publish estimate for <b>${load.packageName}</b></div>`
+			description = load.fileName
+				? html`<div>Getting publish estimate for <b>${load.packageName}</b></div>`
+				: html`<div>Getting publish estimate for your file</div>`
 	}
 	const waitTime = html`
 		<div>
