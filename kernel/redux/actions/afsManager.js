@@ -168,16 +168,22 @@ async function isCommitted(did) {
 }
 
 async function removeAllFiles({ did, password }) {
+  let afs
+  let instance
   try {
-    const { afs } = await araFilesystem.create({ did })
+    ({ afs } = await araFilesystem.create({ did }));
     const result = await afs.readdir(afs.HOME)
     await afs.close()
+    afs = null
     if (result.length === 0) { return }
-    const instance = await araFilesystem.remove({ did, password, paths: result })
+    instance = await araFilesystem.remove({ did, password, paths: result })
     await instance.close()
+    instance = null
   } catch(err) {
     debug('Error removing all files %o', err)
   }
+  afs && afs.close()
+  instance && instance.close()
 }
 
 function unarchiveAFS({ did }) {
