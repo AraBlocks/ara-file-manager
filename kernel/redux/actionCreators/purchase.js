@@ -97,8 +97,6 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 		})
 		windowManager.openModal('generalActionModal')
 
-		internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
-
 		const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
 		const updateSub = await acmManager.subscribeAFSUpdates(load.did)
 

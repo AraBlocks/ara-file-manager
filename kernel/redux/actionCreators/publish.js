@@ -92,7 +92,6 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     windowManager.openModal('mnemonicWarning')
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
   } catch (err) {
     debug('Error deploying proxy %o:', err)
     errorHandling(err)
