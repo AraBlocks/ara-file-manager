@@ -41,7 +41,7 @@ class RedeemEstimate extends Nanocomponent {
       ? html`
         <div>
           <div class="${styles.spinnerText} redeemEstimate-spinnerText">This will cost:</div>
-          <span class="${styles.postheader} deployEstimate-postheader" style="animation: fadein 1500ms;">
+          <span class="${styles.postheader} redeemEstimate-postheader" style="animation: fadein 1500ms;">
             ${utils.roundDecimal(this.props.estimate, 1000).toLocaleString()} eth
           </span>
         </div>
@@ -49,7 +49,7 @@ class RedeemEstimate extends Nanocomponent {
       : html`
         <div>
           <div class="${styles.spinnerText} redeemEstimate-spinnerText">This will cost:</div>
-          <div class="${styles.spinnerHolder} deployEstimate-spinnerHolder">
+          <div class="${styles.spinnerHolder} redeemEstimate-spinnerHolder">
             <div class="spinner-small-teal ${styles.spinnerHolder}"></div>
           </div>
         </div>
@@ -77,13 +77,13 @@ class RedeemEstimate extends Nanocomponent {
       confirmButtonStyle
     } = this
     return html`
-      <div class=${styles.container} deployEstimate-container>
+      <div class=${styles.container} redeemEstimate-container>
         <div>
-          <div class="${styles.messageBold} ${styles.bottomMargin} deployEstimate-messageBold/bottomMargin">
+          <div class="${styles.messageBold} ${styles.bottomMargin} redeemEstimate-messageBold/bottomMargin">
             ${props.header}
           </div>
-          <div class="${styles.verticalContainer} deployEstimate-verticalContainer">
-            <div class="${styles.smallMessage()} deployEstimate-smallMessage">
+          <div class="${styles.verticalContainer} redeemEstimate-verticalContainer">
+            <div class="${styles.smallMessage()} redeemEstimate-smallMessage">
               ${props.smallMessageText}
             </div>
             <div class=${styles.estimateHolder}>
@@ -91,7 +91,7 @@ class RedeemEstimate extends Nanocomponent {
             </div>
           </div>
         </div>
-        <div class="${styles.buttonHolder} deployEstimate-buttonHolder">
+        <div class="${styles.buttonHolder} redeemEstimate-buttonHolder">
           ${children.confirmButton.render(confirmButtonStyle)}
           ${children.cancelbutton.render({})}
         </div>
