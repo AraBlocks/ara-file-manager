@@ -88,6 +88,7 @@ windowManager.setSize = (view) => {
       height = 730
       break
     case 'deployEstimate':
+    case 'redeemEstimate':
     case 'publishConfirmModal':
       width = 360
       height = 225
@@ -140,6 +141,9 @@ windowManager.loadURL = (view) => {
       break
     case 'filemanager':
       file = 'file-manager'
+      break
+    case 'redeemEstimate':
+      file = 'redeem-estimate'
       break
     case 'developer':
       file = 'index-dev'
