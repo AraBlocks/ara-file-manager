@@ -11,15 +11,15 @@ const { internalEmitter } = require('electron-window-manager')
 const { account } = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
-	debug('%s heard', k.OPEN_DEEPLINK)
-	dispatch({ type: k.OPEN_DEEPLINK, load })
-	if (account.userDID == null) {
-		debug('not logged in')
-		dispatch({ type: k.FEED_MODAL, load: { modalName: 'notLoggedIn' } })
-		windowManager.openModal('generalMessageModal')
-		return
+	try {
+		debug('%s heard', k.OPEN_DEEPLINK)
+		dispatch({ type: k.OPEN_DEEPLINK, load })
+		if (account.userDID == null) { throw new Error('Not logged in') }
+		if (load == null ) { throw new Error('Broken link') }
+		internalEmitter.emit(k.PROMPT_PURCHASE, load)
+	} catch(err) {
+		errorHandler(err)
 	}
-	internalEmitter.emit(k.PROMPT_PURCHASE, load)
 })
 
 internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
@@ -112,17 +112,25 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 
 function errorHandler(err) {
 	debug(err)
+	let modalName
 	switch(err.message) {
 		case 'Not enough eth':
-			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughEth' } })
+			modalName = 'notEnoughEth'
 			break
 		case 'Not enough Ara':
-			dispatch({ type: k.FEED_MODAL, load: { modalName: 'notEnoughAra' } })
+			modalName = 'notEnoughAra'
+			break
+		case 'Not logged in':
+			modalName = 'notLoggedIn'
+			break
+		case 'Broken link':
+			modalName = 'brokenLink'
 			break
 		default:
-			dispatch({ type: k.FEED_MODAL, load: { modalName: 'purchaseFailed' } })
+			modalName = 'purchaseFailed'
 			break
 	}
+	dispatch({ type: k.FEED_MODAL, load: { modalName } })
 	windowManager.openModal('generalMessageModal')
 	internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 }
