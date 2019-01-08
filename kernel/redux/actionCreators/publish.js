@@ -157,13 +157,12 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     password,
     userDID
   } = store.account
+
+  let oldStatus
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
-    const oldStatus = store.files.published[store.files.published.length - 1 ].status
-
-    console.log(oldStatus)
-    return
+    oldStatus = store.files.published[store.files.published.length - 1].status
     //makeDescriptor takes a little time and causes lag. Dispatch this first to indicate response in UI
     dispatch({ type: k.PUBLISHING, load: { did: load.did, status: k.PUBLISHING } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
@@ -199,12 +198,12 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, accountAddress, userDID)
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
-    internalEmitter.emit(k.START_SEEDING, load )
+    internalEmitter.emit(k.START_SEEDING, load)
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
 
-    dispatch({ type: k.ERROR_PUBLISHING })
+    dispatch({ type: k.ERROR_PUBLISHING, load: { oldStatus } })
 
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
     windowManager.closeModal('generalPleaseWaitModal')
