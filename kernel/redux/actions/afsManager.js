@@ -86,7 +86,7 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
 		debug('Error getting download status %o', err)
 	}
 
-	await newAfs.close()
+  newAfs && await newAfs.close()
 	return { downloadPercent, status }
 }
 
@@ -101,7 +101,7 @@ async function getFileList(did) {
     debug('Error getting file list in afs: %o', err)
   }
 
-  await afs.close()
+  afs && await afs.close()
   return fileList
 }
 
@@ -156,24 +156,28 @@ async function isCommitted(did) {
   const { registry, storage } = araContracts
 
   let published = true
-  let afs
-  let version
   try {
-    ({ afs, afs: { version } } = await araFilesystem.create({ did }))
-    await afs.close()
-    //if null, don't have AFS locally - Will need to check proxy instead
-    if (version === null) {
-      const address = await registry.getProxyAddress(did)
-      const buffer = await storage.read({ address, fileIndex: 0, offset: 0 })
-      published = Boolean(buffer)
-    } else {
-      published = version > 1
-    }
+    const address = await registry.getProxyAddress(did)
+    const buffer = await storage.read({ address, fileIndex: 0, offset: 0 })
+    published = Boolean(buffer)
   } catch (err) {
     debug('Err checking proxy: o%', err)
   }
 
   return published
+}
+
+async function removeAllFiles({ did, password }) {
+  try {
+    const { afs } = await araFilesystem.create({ did })
+    const result = await afs.readdir(afs.HOME)
+    await afs.close()
+    if (result.length === 0) { return }
+    const instance = await araFilesystem.remove({ did, password, paths: result })
+    await instance.close()
+  } catch(err) {
+    debug('Error removing all files %o', err)
+  }
 }
 
 function unarchiveAFS({ did }) {
@@ -193,5 +197,6 @@ module.exports = {
   getFileList,
   isUpdateAvailable,
   isCommitted,
+  removeAllFiles,
   unarchiveAFS,
 }
