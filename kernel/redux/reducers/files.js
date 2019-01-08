@@ -112,7 +112,7 @@ module.exports = (state, { load = null, type }) => {
       file = findFile(load.did, state.published)
       if (file == null) { break }
       file.status = k.DOWNLOADED_PUBLISHED,
-        file.datePublished = new Date
+      file.datePublished = new Date
       file.shouldBroadcast = true
       file.owner = true
       break
@@ -121,7 +121,6 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.PURCHASED:
       file = findFile(load.did, state.purchased)
-      if (file == null) { break }
       file.jobId = load.jobId
       file.status = k.AWAITING_DOWNLOAD
       break
