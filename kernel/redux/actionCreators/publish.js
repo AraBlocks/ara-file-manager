@@ -66,7 +66,7 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'pleaseWait' } })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'deployingProxy' } })
     windowManager.openModal('generalPleaseWaitModal')
 
     let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userDID, password })
