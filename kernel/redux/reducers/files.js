@@ -41,7 +41,8 @@ module.exports = (state, { load = null, type }) => {
       state.deepLinkData = null
       break
     case k.ERROR_PUBLISHING:
-      state.published = state.published.slice(0, state.published.length - 1)
+      file = state.published[state.published.length - 1]
+      file.status = k.UNCOMMITTED
       break
     case k.ERROR_PURCHASING:
       state.purchased = state.purchased.slice(0, state.purchased.length - 1)
@@ -104,14 +105,13 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.PUBLISHING:
       file = findFile(load.did, state.published)
-      if (file == null) { break }
       Object.assign(file, load)
       break
     case k.PUBLISHED:
       file = findFile(load.did, state.published)
       if (file == null) { break }
       file.status = k.DOWNLOADED_PUBLISHED,
-      file.datePublished = new Date
+        file.datePublished = new Date
       file.shouldBroadcast = true
       file.owner = true
       break
