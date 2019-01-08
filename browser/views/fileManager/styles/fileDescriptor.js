@@ -45,13 +45,16 @@ module.exports = {
     }
   `,
 
-  name: css`
-    :host {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  `,
+  name(loading) {
+    return css`
+      :host {
+        overflow: hidden;
+        color: ${loading ? colorSelector('grey') : 'black'};
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    `
+  },
 
   nameHolder: css`
     :host {
