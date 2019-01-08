@@ -11,28 +11,30 @@ const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
   debug('%s HEARD', k.REDEEM_REWARDS)
+  const { did } = load
   try {
     const { account } = store
+
+    windowManager.openWindow('redeemEstimate')
+
     const estimate = await rewards.redeem({
       farmerDid: account.userDID,
       password: account.password,
-      contentDid: load.did,
+      contentDid: did,
       estimate: true
     })
 
-    dispatch({ type: k.FEED_MODAL, load: { estimate, did: load.did } })
-    windowManager.openModal('redeemConfirmModal')
+    windowManager.pingView({ view: 'redeemEstimate', event: k.REFRESH, load: { estimate, did } })
   } catch (err) {
     debug('Error redeeming rewards: %o', err)
   }
 })
 
-ipcMain.on(k.CONFIRM_REDEEM, async (event, load) => {
+ipcMain.on(k.CONFIRM_REDEEM, async (_, load) => {
   debug('%s HEARD', k.CONFIRM_REDEEM)
   try {
     const { account, account: { autoQueue } } = store
 
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, true)
     debug('DISPATCHING %s', k.REDEEMING_REWARDS)
     dispatch({ type: k.REDEEMING_REWARDS, load: { did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
@@ -41,7 +43,6 @@ ipcMain.on(k.CONFIRM_REDEEM, async (event, load) => {
     const value = await autoQueue.push(() => rewards.redeem(redeemLoad))
 
     debug('DISPATCHING %s', k.REWARDS_REDEEMED)
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     dispatch({ type: k.REWARDS_REDEEMED, load: { did: load.did, value } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
@@ -53,7 +54,6 @@ internalEmitter.on(k.REWARDS_ALLOCATED, (load) => {
   debug('%s HEARD', k.REWARDS_ALLOCATED)
   try {
     dispatch({ type: k.REWARDS_ALLOCATED, load })
-    internalEmitter.emit(k.CHANGE_PENDING_TRANSACTION_STATE, false)
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {
     debug('Error: %o', o)

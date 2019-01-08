@@ -48,8 +48,10 @@ class DeployEstimate extends Nanocomponent {
 					${utils.roundDecimal(estimate, 1000).toLocaleString()} eth
 				</span>`
 			: html `
-				<div class="${styles.spinnerHolder} deployEstimate-spinnerHolder">
-					<div class="spinner-small-teal ${styles.spinnerHolder}"></div>
+				<div>
+					<div class="${styles.spinnerHolder} deployEstimate-spinnerHolder">
+						<div class="spinner-small-teal ${styles.spinnerHolder}"></div>
+					</div>
 				</div>
 			`
 	}
