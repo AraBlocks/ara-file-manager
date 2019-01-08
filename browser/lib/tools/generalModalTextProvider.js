@@ -14,6 +14,10 @@ function generalModalText(modalName, load) {
 			title = 'You already own this package'
 			description = 'You can not purchase this package again'
 			break
+		case 'brokenLink':
+			title = 'Broken Link'
+			description = 'There could be a problem with the link. Please check your link and try again.'
+			break
 		case 'diskSpaceModal':
 			title = 'Not enough disk space'
 			description = 'You do not have enough space to download File Name at this time. \
@@ -35,7 +39,7 @@ function generalModalText(modalName, load) {
 			break
 		case 'purchaseFailed':
 			title = 'Something went wrong'
-			description = 'There could be a problem with with the link or your ability to access the network. Please check your connection and try again.'
+			description = 'There could be a problem with the link or your ability to access the network. Please check your connection and try again.'
 			break
 		case 'fileMissing':
 			title = 'File Missing'
