@@ -91,6 +91,10 @@ function generalModalText(modalName, load) {
 			title = "Pending Transaction"
 			description = "Please wait for your previous transaction to finish"
 			break
+		case 'packageOwner':
+			title = 'This package was published by you'
+			description = 'You do not need to purchase this package'
+			break
 		case 'successModal':
 			title = 'Success!'
 			description = html`<div><b>${load.fileName}</b> is downloading now.<br><br>
