@@ -108,7 +108,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
     windowManager.openModal('generalPleaseWaitModal')
     windowManager.closeWindow('manageFileView')
-    await afsManager.removeAllFiles({ did, password })
+    // await afsManager.removeAllFiles({ did, password })
     await (await afs.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
@@ -160,6 +160,11 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
   try {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
+    const oldStatus = store.files.published[store.files.published.length - 1 ].status
+
+    console.log(oldStatus)
+    return
+    //makeDescriptor takes a little time and causes lag. Dispatch this first to indicate response in UI
     dispatch({ type: k.PUBLISHING, load: { did: load.did, status: k.PUBLISHING } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
