@@ -60,24 +60,24 @@ class FileInfo extends Nanocomponent {
 		const { children, props: { parentState } } = this
 		return html`
 			<div class="${styles.container} manageFile-fileInfo-container">
-				<div class="${styles.verticalContainer}">
-					<div class="${styles.infoTipHolder}">
+				<div class=${styles.verticalContainer}>
+					<div class=${styles.infoTipHolder}>
 						${children.fileNameInput.render({ value: parentState.name })}
-						<div class="${styles.infoTip}">
+						<div class=${styles.infoTip}>
 							<div>
 								<b>Recommended:</b> If this field is left blank, users will only
 								see the package's generic Ara ID.
 							</div>
 						</div>
 					</div>
-					<div class="${styles.infoTipHolder}">
+					<div class=${styles.infoTipHolder}>
 						${children.priceInput.render({ value: parentState.price, displayError: parentState.price < 0 })}
-						<div class="${styles.infoTip}">
+						<div class=${styles.infoTip}>
 							Leave blank if you do not want to charge for this file.
 						</div>
-						<div class="${styles.araPriceHolder}">
+						<div class=${styles.araPriceHolder}>
 							<b>Ara Token Price:</b>
-							<div class="${styles.araPrice}">
+							<div class=${styles.araPrice}>
 								<b>${parentState.tokenPrice} Ara</b>
 							</div>
 						</div>
