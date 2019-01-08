@@ -3,6 +3,7 @@ const k = require('../../lib/constants/stateManagement')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { account, modal } = windowManager.sharedData.fetch('store')
+const isDev = require('electron-is-dev')
 
 const manageFileContainer = new ManageFileContainer({
 	account,
@@ -22,3 +23,5 @@ function preventDefaults(e) {
   e.preventDefault()
   e.stopPropagation()
 }
+
+isDev && (window.store = windowManager.sharedData.fetch('store'))

@@ -77,7 +77,7 @@ class Container extends Nanocomponent {
 	}
 
 	get somethingChanged() {
-		return this.nameChanged || this.fileInfoChanged
+		return this.nameChanged && !this.state.uncommitted || this.fileInfoChanged
 	}
 
 	renderView() {
@@ -135,7 +135,7 @@ class Container extends Nanocomponent {
 			windowManagement.emit({ event: k.PUBLISH, load })
 		} else if (this.fileInfoChanged) {
 			windowManagement.emit({ event: k.UPDATE_FILE, load })
-		} else if (this.nameChanged) {
+		} else if (this.nameChanged && state.uncommitted !== true) {
 			windowManagement.emit({ event: k.UPDATE_META, load: { did: load.did, name: load.name }})
 		}
 	}
@@ -166,8 +166,24 @@ class Container extends Nanocomponent {
 		return state.uncommitted ? publishFileText : manageFileText
 	}
 
+	get publishBtnAttributes() {
+		const attributes = {}
+		attributes.cssClass = this.somethingChanged ? { name: 'standard' } : { name: 'thinBorder' }
+
+		if (this.fileInfoChanged) {
+			const span = html`
+				<span style="font-family: ProximaNova-light;">
+					(${ filesize(this.state.fileList.reduce((sum, file) => sum += file.size, 0)) })
+				</span>
+			`
+			attributes.children = [ 'Publish', span ]
+		}
+
+		return attributes
+	}
+
 	createElement({ spinner = false }) {
-		const { children, state, somethingChanged } = this
+		const { children, state, publishBtnAttributes } = this
 		return html`
 			<div class="${styles.container} ManageFileContainer-container">
 				${overlay(spinner)}
@@ -181,16 +197,7 @@ class Container extends Nanocomponent {
 				${children.packageIDTooltip.render()}
 				<div class="${styles.divider} ManageFileContainer-divider"></div>
 				${children.fileInfo.render({ parentState: state })}
-				${children.publishButton.render({
-					cssClass: somethingChanged ? { name: 'standard' } : { name: 'thinBorder' },
-					children: [
-							'Publish',
-							html`
-								<span style="font-family: ProximaNova-light;">
-									(${ filesize(state.fileList.reduce((sum, file) => sum += file.size, 0)) })
-								</span>`
-						]
-				})}
+				${children.publishButton.render(publishBtnAttributes)}
 			</div>
 		`
 	}
