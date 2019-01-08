@@ -92,7 +92,7 @@ function generalModalText(modalName, load) {
 			description = "Please wait for your previous transaction to finish"
 			break
 		case 'packageOwner':
-			title = 'This package was published by you'
+			title = 'You published this package'
 			description = 'You do not need to purchase this package'
 			break
 		case 'successModal':
