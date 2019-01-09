@@ -23,6 +23,15 @@ internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
 	}
 })
 
+internalEmitter.on(k.DUMP_DEEPLINK_DATA, (load) => {
+	try {
+		debug('%s heard', k.DUMP_DEEPLINK_DATA)
+		dispatch({ type: k.DUMP_DEEPLINK_DATA })
+	} catch(err) {
+		debug(err)
+	}
+})
+
 internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 	try {
 		debug('%s heard', k.PROMPT_PURCHASE)
