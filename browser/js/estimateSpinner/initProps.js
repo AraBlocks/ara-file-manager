@@ -1,3 +1,5 @@
+const { stateManagement: k } = require('k')
+
 module.exports = {
   redeem: {
     confirmText: 'Redeem Rewards',
