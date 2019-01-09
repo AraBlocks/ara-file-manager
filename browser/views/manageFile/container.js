@@ -48,13 +48,7 @@ class Container extends Nanocomponent {
 				onclick: () => clipboard.writeText(opts.did)
 			}),
 
-			utilityButton: new UtilityButton({
-				onclick: () => {
-					!this.state.uncommitted
-						&& windowManagement.emit({ event: k.START_SEEDING, load: { did: opts.did } })
-					windowManagement.closeWindow('manageFileView')
-				}
-			})
+			utilityButton: new UtilityButton({ onclick: this.closeWindow.bind(this) })
 		}
 	}
 
@@ -64,7 +58,13 @@ class Container extends Nanocomponent {
 		this.rerender()
 	}
 
-	closeWindow()
+	closeWindow(){
+		if (this.state.uncommitted) {
+			windowManagement.emit({ event: k.START_SEEDING, load: { did: this.state.did } })
+		}
+		windowManagement.closeWindow('manageFileView')
+		windowManagement.emit({ event: k.CHANGE_PENDING_PUBLISH_STATE, load: false })
+	}
 
 	get fileInfoChanged() {
 		const { state } = this
