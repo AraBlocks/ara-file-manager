@@ -49,7 +49,7 @@ async function makeDescriptor(did, opts = {}) {
 		did = araUtil.getIdentifier(did)
 		const AFSPath = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(AFSPath)
-		const meta = AFSExists ? await readFileMetadata(did) : null
+		const meta = AFSExists ? await readFileMetadata(did) : {}
 		const { downloadPercent, status } = await afsManager.getAfsDownloadStatus(did, opts.shouldBroadcast)
 
 		return Object.assign(new _Descriptor, {
