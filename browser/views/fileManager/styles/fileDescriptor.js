@@ -48,8 +48,8 @@ module.exports = {
   name(loading) {
     return css`
       :host {
-        overflow: hidden;
         color: ${loading ? colorSelector('grey') : 'black'};
+        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
