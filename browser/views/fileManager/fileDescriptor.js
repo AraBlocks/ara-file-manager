@@ -8,33 +8,16 @@ const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
-  constructor({
-    allocatedRewards,
-    did,
-    name,
-    owner,
-    redeeming,
-    size = 0,
-    status,
-    shouldBroadcast,
-  }) {
+  constructor(opts) {
     super()
 
     this.props = {
-      name: name || did.slice(0,15) + '...',
-      size
+      name: opts.name || opts.did.slice(0,15) + '...',
+      size: opts.size
     }
 
     this.children = {
-      hamburger: hamburgerHelper({
-        allocatedRewards,
-        did,
-        name: name,
-        owner,
-        redeeming,
-        shouldBroadcast,
-        status,
-      })
+      hamburger: hamburgerHelper(opts)
     }
 
     this.createSummary = this.createSummary.bind(this)
@@ -46,9 +29,10 @@ class FileDescriptor extends Nanocomponent {
     status
   }) {
     const { name } = this.props
+    const awaitingStatus = status === k.AWAITING_STATUS
     const nameDiv = html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
-          <div class="${styles.name} fileDescriptor-name">
+          <div class="${styles.name(awaitingStatus)} ${awaitingStatus ? 'blinker' : ''} fileDescriptor-name">
             ${[k.OUT_OF_SYNC, k.UPDATE_AVAILABLE, k.UNCOMMITTED].includes(status)
               ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
               : name}
@@ -75,6 +59,7 @@ class FileDescriptor extends Nanocomponent {
         spanColor = shouldBroadcast ? 'teal' : 'black'
         break
       case k.AWAITING_DOWNLOAD:
+      case k.AWAITING_STATUS:
         spanColor = 'grey'
         unitColor = 'grey'
         break
@@ -124,7 +109,7 @@ class FileDescriptor extends Nanocomponent {
 
     return html`
       <div class="${styles.container} fileDescriptor-container">
-        <div class="${styles.hamburgerHolder} fileDescriptor-hamburgerHolder">
+        <div class="${styles.hamburgerHolder(status === k.AWAITING_STATUS)} fileDescriptor-hamburgerHolder">
           <div class="${styles.hamburger} fileDescriptor-hamburger">
             ${children.hamburger.render({})}
           </div>

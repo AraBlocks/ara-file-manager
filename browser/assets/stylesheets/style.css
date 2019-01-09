@@ -186,7 +186,18 @@ input::-webkit-inner-spin-button,
   animation-delay: -1.0s;
 }
 
+.blinker {
+  animation: blinker 2s infinite ease-in-out;
+}
+
 /* animations */
+
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
+  }
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

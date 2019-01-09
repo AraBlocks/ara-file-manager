@@ -6,9 +6,10 @@ const { acmManager, descriptorGeneration } = require('../actions')
 const { stateManagement: k } = require('k')
 const araUtil = require('ara-util')
 const { ipcMain } = require('electron')
+const isDev = require('electron-is-dev')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
-const { account } = windowManager.sharedData.fetch('store')
+const { account, files } = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
 	try {
@@ -30,9 +31,10 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 
 		windowManager.openWindow('purchaseEstimate')
 		const library = await acmManager.getLibraryItems(account.userDID)
-		if (library.includes('0x' + araUtil.getIdentifier(load.did))) {
+		const isOwner = !isDev && files.published.find(({ did }) => did === load.did)
+		if (library.includes('0x' + araUtil.getIdentifier(load.did)) || isOwner) {
 			debug('already own item')
-			dispatch({ type: k.FEED_MODAL, load: { modalName: 'alreadyOwn' } })
+			dispatch({ type: k.FEED_MODAL, load: { modalName: isOwner ? 'packageOwner' : 'alreadyOwn' } })
 			windowManager.openModal('generalMessageModal')
 			windowManager.close('purchaseEstimate')
 			return

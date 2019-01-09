@@ -4,36 +4,29 @@ const k = require('../../../../lib/constants/stateManagement')
 const Hamburger = require('../../../components/hamburgerMenu')
 const { deeplink, windowManagement } = require('../../../lib/tools/')
 
-module.exports = ({
-  allocatedRewards,
-  did,
-  name,
-  owner,
-  redeeming,
-  shouldBroadcast,
-  status
-}) => {
+module.exports = (opts) => {
   const menuItems = [
     {
       children: 'Copy Link',
       onclick: (e) => {
-        deeplink.copyDeeplink(did, name)
+        deeplink.copyDeeplink(opts.did, opts.name)
         e.stopPropagation()
       },
       onclickText: 'Copied!'
     }
   ]
   menuItems.addItem = function (children, event) {
-    this.push({ children, onclick: () => windowManagement.emit({ event, load: { did, name } }) })
+    this.push({ children, onclick: () => windowManagement.emit({ event, load: { did: opts.did, name: opts.name } }) })
   }
 
-  switch (status) {
+  switch (opts.status) {
     case k.DOWNLOADED_PUBLISHED:
-      shouldBroadcast
+      if (opts.packageOpened) { break }
+      opts.shouldBroadcast
         ? menuItems.addItem('Stop Seeding', k.STOP_SEEDING)
         : menuItems.addItem('Seed', k.START_SEEDING)
       menuItems.addItem('Open Package', k.OPEN_AFS)
-      if (owner) menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE)
+      if (opts.owner) menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE)
       break
     case k.AWAITING_DOWNLOAD:
       menuItems.addItem('Download Package', k.DOWNLOAD)
@@ -62,7 +55,7 @@ module.exports = ({
       break
   }
 
-  if (allocatedRewards && redeeming === false) {
+  if (opts.allocatedRewards && opts.redeeming === false) {
     menuItems.addItem('Redeem Rewards', k.REDEEM_REWARDS)
   }
   return new Hamburger(menuItems)
