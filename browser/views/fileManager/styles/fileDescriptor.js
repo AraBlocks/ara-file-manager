@@ -30,13 +30,16 @@ module.exports = {
     }
   `,
 
-  hamburgerHolder: css`
-    :host {
-      display: flex;
-      align-items: center;
-      width: 9%;
-    }
-  `,
+  hamburgerHolder(loading) {
+    return css`
+      :host {
+        align-items: center;
+        display: flex;
+        opacity: ${loading ? 0.3 : 1};
+        pointer-events: ${loading ? 'none' : 'auto'};
+        width: 9%;
+      }`
+  },
 
   hamburger: css`
     :host {
