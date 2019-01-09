@@ -22,7 +22,7 @@ internalEmitter.on(k.DEPLOY_PROXY, _deployProxy)
 
 async function _deployProxy() {
   debug('%s heard', k.DEPLOY_PROXY)
-  const { account: { password }, files } = store
+  const { account, files } = store
 
   //Checks published files to see if any haven't been committed. If true, skips deploying proxy and uses that afs to publish
   try {
@@ -42,10 +42,10 @@ async function _deployProxy() {
       return
     }
 
-    windowManager.openWindow('deployEstimate')
-    const deployEstimateDid = store.account.deployEstimateDid
+    dispatch({ type: k.FEED_ESTIMATE_SPINNER, load: { did, type: 'deploy' }})
+    windowManager.openWindow('estimateSpinner')
 
-    const deployCost = await afs.deploy({ password, did: deployEstimateDid, estimate: true })
+    const deployCost = await afs.deploy({ password: account.password, did: account.deployEstimateDid, estimate: true })
     const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
     if (ethAmount < deployCost) {
       throw new Error('Not enough eth')

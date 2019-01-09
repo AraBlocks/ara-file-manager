@@ -1,10 +1,10 @@
 'use strict'
 
-const DeployEstimate = require('../views/deployEstimate')
+const EstimateSpinner = require('../views/estimateSpinner')
 const { ipcRenderer } = require('electron')
-const { REFRESH } = require('../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 
-const deployEstimate = new DeployEstimate()
-document.getElementById('container').appendChild(deployEstimate.render({}))
+const estimateSpinner = new EstimateSpinner()
+document.getElementById('container').appendChild(estimateSpinner.render({}))
 
-ipcRenderer.on(REFRESH, (event, load) => { deployEstimate.render(load)} )
+ipcRenderer.on(k.REFRESH, (_, load) => estimateSpinner.render(load))

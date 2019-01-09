@@ -1,6 +1,6 @@
 'use strict'
 
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 
 module.exports = (state, { load = null, type }) => {
   switch (type) {
@@ -45,5 +45,4 @@ module.exports = (state, { load = null, type }) => {
     default:
       return state
   }
-  return state
 }
