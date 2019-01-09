@@ -21,7 +21,7 @@ async function getInitialAccountState(userDID, password) {
 
   const accountAddress = await acmManager.getAccountAddress(userDID, password)
   const autoQueue = new AutoQueue
-  const farmer = farmerManager.createFarmer({ did: userDID, password: password, queue: autoQueue})
+  const farmer = farmerManager.createFarmer({ did: userDID, password: password, queue: autoQueue })
   dispatch({
     type: k.LOGIN,
     load: {
@@ -60,7 +60,10 @@ async function populateUI(publishedAFS, purchasedAFS, credentials) {
   const { userDID, accountAddress, password } = credentials
   const allAFS = publishedAFS.concat(purchasedAFS)
 
-  Promise.all(allAFS.map(_getDownloadPercAndStatus))
+  await Promise.all(publishedAFS.map(_getCommitStatus))
+  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
+  Promise.all(_getDownloadPercAndStatus(store.files.published.concat(store.files.purchased)))
     .then(async () => {
       windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
       //Inside `then` cb bc it relies on `downloadPercent` a value derived from `getDownloadPercAndStatus`
@@ -76,9 +79,6 @@ async function populateUI(publishedAFS, purchasedAFS, credentials) {
 
   await Promise.all(publishedAFS.map(_getPublishedEarnings))
   await Promise.all(allAFS.map(({ did }) => _getSeedEarnings(did, accountAddress)))
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-
-  await Promise.all(publishedAFS.map(_getCommitStatus))
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
   await Promise.all(allAFS.map(({ did }) => _getAllocatedRewards(did, userDID, password)))
@@ -98,9 +98,13 @@ async function _getCommitStatus({ did, status }) {
 }
 
 //Gets the download percent and descriptor status of each AFS
-async function _getDownloadPercAndStatus({ did, shouldBroadcast }) {
-  const load = await afsManager.getAfsDownloadStatus(did, shouldBroadcast)
-  dispatch({ type: k.GOT_DL_PERC_AND_STATUS, load: { did, ...load } })
+function _getDownloadPercAndStatus(files) {
+  return files.map(async (file) => {
+    const load = file.status === k.UNCOMMITTED
+      ? file
+      : await afsManager.getAfsDownloadStatus(file.did, file.shouldBroadcast)
+    dispatch({ type: k.GOT_DL_PERC_AND_STATUS, load: { did: file.did, ...load } })
+  })
 }
 
 //Gets earnings from purchases for published AFS
