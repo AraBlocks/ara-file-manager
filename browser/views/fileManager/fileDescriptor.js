@@ -8,33 +8,16 @@ const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class FileDescriptor extends Nanocomponent {
-  constructor({
-    allocatedRewards,
-    did,
-    name,
-    owner,
-    redeeming,
-    size = 0,
-    status,
-    shouldBroadcast,
-  }) {
+  constructor(opts) {
     super()
 
     this.props = {
-      name: name || did.slice(0,15) + '...',
-      size
+      name: opts.name || opts.did.slice(0,15) + '...',
+      size: opts.size
     }
 
     this.children = {
-      hamburger: hamburgerHelper({
-        allocatedRewards,
-        did,
-        name: name,
-        owner,
-        redeeming,
-        shouldBroadcast,
-        status,
-      })
+      hamburger: hamburgerHelper(opts)
     }
 
     this.createSummary = this.createSummary.bind(this)

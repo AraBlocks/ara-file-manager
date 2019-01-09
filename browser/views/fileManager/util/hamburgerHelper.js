@@ -9,6 +9,7 @@ module.exports = ({
   did,
   name,
   owner,
+  packageOpened,
   redeeming,
   shouldBroadcast,
   status
@@ -29,6 +30,7 @@ module.exports = ({
 
   switch (status) {
     case k.DOWNLOADED_PUBLISHED:
+      if (packageOpened) { break }
       shouldBroadcast
         ? menuItems.addItem('Stop Seeding', k.STOP_SEEDING)
         : menuItems.addItem('Seed', k.START_SEEDING)
