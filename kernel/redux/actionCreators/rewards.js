@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('afm:kernel:lib:actionCreators:rewards')
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 const dispatch = require('../reducers/dispatch')
 const { rewards } = require('ara-contracts')
 const { ipcMain } = require('electron')
@@ -9,13 +9,14 @@ const windowManager = require('electron-window-manager')
 const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
+ipcMain.on(k.REDEEM_REWARDS, async (_, load) => {
   debug('%s HEARD', k.REDEEM_REWARDS)
+
+  const { account } = store
   const { did } = load
   try {
-    const { account } = store
-
-    windowManager.openWindow('redeemEstimate')
+    dispatch({ type: k.FEED_ESTIMATE_SPINNER, load: { did, type: 'redeem' } })
+    windowManager.openWindow('estimateSpinner')
 
     const estimate = await rewards.redeem({
       farmerDid: account.userDID,
@@ -24,7 +25,7 @@ ipcMain.on(k.REDEEM_REWARDS, async (event, load) => {
       estimate: true
     })
 
-    windowManager.pingView({ view: 'redeemEstimate', event: k.REFRESH, load: { estimate, did } })
+    windowManager.pingView({ view: 'estimateSpinner', event: k.REFRESH, load: { estimate } })
   } catch (err) {
     debug('Error redeeming rewards: %o', err)
   }
@@ -39,7 +40,11 @@ ipcMain.on(k.CONFIRM_REDEEM, async (_, load) => {
     dispatch({ type: k.REDEEMING_REWARDS, load: { did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    const redeemLoad = { farmerDid: account.userDID, password: account.password, contentDid: load.did }
+    const redeemLoad = {
+      farmerDid: account.userDID,
+      password: account.password,
+      contentDid: load.did
+    }
     const value = await autoQueue.push(() => rewards.redeem(redeemLoad))
 
     debug('DISPATCHING %s', k.REWARDS_REDEEMED)

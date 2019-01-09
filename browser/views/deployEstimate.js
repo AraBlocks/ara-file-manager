@@ -11,9 +11,7 @@ const Nanocomponent = require('nanocomponent')
 class DeployEstimate extends Nanocomponent {
 	constructor() {
 		super()
-		this.props = {
-			gasEstimate: null
-		}
+		this.props = { gasEstimate: null }
 		this.children = {
 			publishButton: new Button({
 				children: 'Confirm',
