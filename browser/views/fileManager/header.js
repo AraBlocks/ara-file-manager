@@ -18,25 +18,23 @@ class Header extends Nanocomponent {
   constructor({ selectTab, account }) {
     super()
 
-    this.props = {
-      account,
-      userDID: account.userDID
-    }
+    this.props = { account, userDID: account.userDID }
+
     this.children = {
       publishFilebutton: new Button({
         children: 'Publish New File',
         cssClass: { opts: { fontSize: 14 } },
-        onclick: () => {
-          if (account.pendingPublish) { return }
-          emit({ event: DEPLOY_PROXY })
-        }
+        onclick: () => !account.pendingPublish && emit({ event: DEPLOY_PROXY })
       }),
+
       closeButton: new UtilityButton({ children: 'close' }),
+
       copyDidTooltip: new DynamicTooltip({
         children: "ID: " + this.props.userDID.slice(0, 8) + "...",
         onclick: () => clipboard.writeText(this.props.userDID),
         cssClass: { color: 'black' }
       }),
+
       minimizeButton: new UtilityButton({ children: 'minimize', onclick: windowManagement.minimizeWindow }),
       tabs: this.makeTabs(selectTab)
     }
@@ -63,14 +61,14 @@ class Header extends Nanocomponent {
       props
     } = this
     const balanceElements = [
-      html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg"/>`,
+      html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg" />`,
       utils.roundDecimal(araBalance, 100).toLocaleString()
     ]
     return html`
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader">
           <div>
-            <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png"/>
+            <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png" />
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
             ${children.minimizeButton.render({ children: 'minimize' })}
@@ -94,9 +92,9 @@ class Header extends Nanocomponent {
         <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
           ${children.publishFilebutton.render({
         cssClass: props.account.pendingPublish
-          ? { name: 'thinBorder', opts: { fontSize: 14 } }
-          : { opts: { fontSize: 14 } }
-      })}
+        ? { name: 'thinBorder', opts: { fontSize: 14 } }
+        : { opts: { fontSize: 14 } }
+        })}
         </div>
       </div>
     `

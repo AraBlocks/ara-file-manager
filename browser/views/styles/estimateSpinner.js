@@ -88,11 +88,20 @@ module.exports = {
     }
   `,
 
+  topContainer: css`
+    :host {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    }
+  `,
+
   verticalContainer: css`
     :host {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      width: 85%;
     }
   `,
 }
