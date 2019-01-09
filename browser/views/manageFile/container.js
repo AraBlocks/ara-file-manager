@@ -36,15 +36,18 @@ class Container extends Nanocomponent {
 				parentState: this.state,
 				renderView: this.renderView.bind(this)
 			}),
+
 			publishButton: new Button({
 				children: 'Publish Update',
 				cssClass: { name: 'thinBorder' },
 				onclick: this.updateFile.bind(this)
 			}),
+
 			packageIDTooltip: new DynamicTooltip({
 				children: "Package ID: " + opts.did,
 				onclick: () => clipboard.writeText(opts.did)
 			}),
+
 			utilityButton: new UtilityButton({
 				onclick: () => {
 					!this.state.uncommitted
@@ -60,6 +63,8 @@ class Container extends Nanocomponent {
 		this.state.fileList.push(...itemsInfo)
 		this.rerender()
 	}
+
+	closeWindow()
 
 	get fileInfoChanged() {
 		const { state } = this

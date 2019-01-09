@@ -77,7 +77,7 @@ class EstimateSpinner extends Nanocomponent {
     } = this
     return html`
       <div class="${styles.container} EstimateSpinner-container">
-        <div>
+        <div class="${styles.topContainer} estimateSpinner-topContainer">
           <div class="${styles.messageBold} ${styles.bottomMargin} EstimateSpinner-messageBold/bottomMargin">
             ${props.header}
           </div>

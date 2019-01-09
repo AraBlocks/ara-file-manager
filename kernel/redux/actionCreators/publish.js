@@ -42,21 +42,20 @@ async function _deployProxy() {
       return
     }
 
-    dispatch({ type: k.FEED_ESTIMATE_SPINNER, load: { did, type: 'deploy' }})
+    dispatch({ type: k.FEED_ESTIMATE_SPINNER, load: { type: 'deploy' }})
     windowManager.openWindow('estimateSpinner')
 
-    const deployCost = await afs.deploy({ password: account.password, did: account.deployEstimateDid, estimate: true })
+    const estimate = await afs.deploy({ password: account.password, did: account.deployEstimateDid, estimate: true })
     const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
-    if (ethAmount < deployCost) {
-      throw new Error('Not enough eth')
-    }
-    debug('Deploy Gas estimate: %s', deployCost)
-    windowManager.pingView({ view: 'deployEstimate', event: k.REFRESH, load: { estimate: deployCost } })
+
+    if (ethAmount < estimate) { throw new Error('Not enough eth') }
+
+    windowManager.pingView({ view: 'estimateSpinner', event: k.REFRESH, load: { estimate } })
   } catch (err) {
     debug('Error getting estimate for deploying proxy %o:', err)
+
     windowManager.closeWindow('deployEstimate')
     errorHandling(err)
-    return
   }
 }
 
@@ -123,8 +122,6 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
     if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
-
-    debug('Dispatching %s', k.FEED_MODAL)
 
     dispatchLoad = {
       did,
