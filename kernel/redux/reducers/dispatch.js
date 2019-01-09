@@ -7,6 +7,7 @@ const files = require('./files')
 const farmer = require('./farmer')
 const modal = require('./modal')
 const subscriptions = require('./subscriptions')
+const views = require('./views')
 const state = require('../store')
 const windowManager = require('electron-window-manager')
 
@@ -16,7 +17,8 @@ const reducers = [
   { property: 'files', reducer: files },
   { property: 'modal', reducer: modal },
   { property: 'subscriptions', reducer: subscriptions },
-  { property: 'farmer', reducer: farmer }
+  { property: 'farmer', reducer: farmer },
+  { property: 'views', reducer: views }
 ]
 
 module.exports = (action) => {
