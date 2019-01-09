@@ -59,7 +59,7 @@ class Container extends Nanocomponent {
 	}
 
 	closeWindow(){
-		if (this.state.uncommitted) {
+		if (this.state.uncommitted === false) {
 			windowManagement.emit({ event: k.START_SEEDING, load: { did: this.state.did } })
 		}
 		windowManagement.closeWindow('manageFileView')
