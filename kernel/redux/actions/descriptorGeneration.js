@@ -55,11 +55,11 @@ async function makeDescriptor(did, opts = {}) {
 		return Object.assign(new _Descriptor, {
 			did,
 			downloadPercent,
-			datePublished: meta ? meta.timestamp : null,
-			name: meta ? meta.title : null,
+			datePublished: meta.timestamp,
+			name: meta.title,
 			path: AFSPath,
 			price: Number(await acmManager.getAFSPrice({ did })),
-			size: meta ? meta.size : 0,
+			size: meta.size || 0,
 			status
 		}, opts)
 	} catch (err) {
