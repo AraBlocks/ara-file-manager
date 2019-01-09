@@ -19,7 +19,6 @@ module.exports = (load) => {
     ...styles.buttonSelector('cancel'),
     onclick: () => {
       emit({ event: k.CANCEL_TRANSACTION })
-      closeWindow('publishFileView')
       closeModal()
     }
   })
