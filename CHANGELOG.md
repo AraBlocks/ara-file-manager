@@ -1,15 +1,25 @@
-# [0.4.0](https://github.com/littlstar/ara-content-manager/compare/0.3.4...0.4.0) (2019-01-07)
+## [0.4.1](https://github.com/littlstar/ara-content-manager/compare/0.3.4...0.4.1) (2019-01-09)
 
 
 ### Bug Fixes
 
+* **deeplink:** renders did instead of null ([9f2fa8e](https://github.com/littlstar/ara-content-manager/commit/9f2fa8e))
+* **generalModalTextProvider:** added case ([e5c0c88](https://github.com/littlstar/ara-content-manager/commit/e5c0c88))
+* Close Afs proper after removing files ([57443d0](https://github.com/littlstar/ara-content-manager/commit/57443d0))
 * Error messages for purchase flow ([#352](https://github.com/littlstar/ara-content-manager/issues/352)) ([55d8d4a](https://github.com/littlstar/ara-content-manager/commit/55d8d4a))
 * null DID after log out ([732aee8](https://github.com/littlstar/ara-content-manager/commit/732aee8))
+* remove old code ([c354e17](https://github.com/littlstar/ara-content-manager/commit/c354e17))
+* **publish:** doesnt remove afs from ui if error while publishing ([e0e9d6e](https://github.com/littlstar/ara-content-manager/commit/e0e9d6e))
 
 
 ### Features
 
+* Add blinking animation for loading ([#365](https://github.com/littlstar/ara-content-manager/issues/365)) ([c30814b](https://github.com/littlstar/ara-content-manager/commit/c30814b))
+* Disable interaction with AFS when afs explorer is open ([#358](https://github.com/littlstar/ara-content-manager/issues/358)) ([766908f](https://github.com/littlstar/ara-content-manager/commit/766908f))
 * dummy descriptor ([1b422bc](https://github.com/littlstar/ara-content-manager/commit/1b422bc))
+* estimate modal with spinner for redeem ([631c1e5](https://github.com/littlstar/ara-content-manager/commit/631c1e5))
+* Fix issues when closing out publish flow ([#360](https://github.com/littlstar/ara-content-manager/issues/360)) ([ad3b20c](https://github.com/littlstar/ara-content-manager/commit/ad3b20c))
+* Handling broken links ([#362](https://github.com/littlstar/ara-content-manager/issues/362)) ([7480479](https://github.com/littlstar/ara-content-manager/commit/7480479))
 * loading style for progress bar ([b04835b](https://github.com/littlstar/ara-content-manager/commit/b04835b))
 * PE-774 Round purchase fee with more precision ([#350](https://github.com/littlstar/ara-content-manager/issues/350)) ([5276a8e](https://github.com/littlstar/ara-content-manager/commit/5276a8e))
 * promise based meta read for login ([#345](https://github.com/littlstar/ara-content-manager/issues/345)) ([025a76a](https://github.com/littlstar/ara-content-manager/commit/025a76a))
@@ -17,10 +27,14 @@
 * Read File Name from Meta after downloading ([5f41aed](https://github.com/littlstar/ara-content-manager/commit/5f41aed))
 * Remove electron tooltip ([#346](https://github.com/littlstar/ara-content-manager/issues/346)) ([ad96ff9](https://github.com/littlstar/ara-content-manager/commit/ad96ff9))
 * rest of login process promise based ([26b3203](https://github.com/littlstar/ara-content-manager/commit/26b3203))
-* **dispatch:** type check added ([d2ba9c5](https://github.com/littlstar/ara-content-manager/commit/d2ba9c5))
+* Show error modal for failed registration ([002cc82](https://github.com/littlstar/ara-content-manager/commit/002cc82))
 * window's windows are clickable ([53eeaa7](https://github.com/littlstar/ara-content-manager/commit/53eeaa7))
 * working 🍔 ([c622965](https://github.com/littlstar/ara-content-manager/commit/c622965))
 * working deeplink for windows ([2a4b787](https://github.com/littlstar/ara-content-manager/commit/2a4b787))
+* **dispatch:** type check added ([d2ba9c5](https://github.com/littlstar/ara-content-manager/commit/d2ba9c5))
+* **estimateSpinner:** reusable estimate compoonent! ([d59ea9e](https://github.com/littlstar/ara-content-manager/commit/d59ea9e))
+* **mangeFile:** allows for name pupdate only ([8de58c2](https://github.com/littlstar/ara-content-manager/commit/8de58c2))
+* **roundDecimal.js:** changed to ceil ([9edd0ab](https://github.com/littlstar/ara-content-manager/commit/9edd0ab))
 
 
 
