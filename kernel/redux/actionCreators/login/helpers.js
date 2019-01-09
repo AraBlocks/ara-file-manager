@@ -73,7 +73,7 @@ async function populateUI(publishedAFS, purchasedAFS, credentials) {
 
   await Promise.all(allAFS.map(_getPrice))
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-    return
+
   await Promise.all(publishedAFS.map(_getPublishedEarnings))
   await Promise.all(allAFS.map(({ did }) => _getSeedEarnings(did, accountAddress)))
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
