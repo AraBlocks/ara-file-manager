@@ -75,6 +75,7 @@ class EstimateSpinner extends Nanocomponent {
       props,
       confirmButtonStyle
     } = this
+    console.log(this.props)
     return html`
       <div class="${styles.container} EstimateSpinner-container">
         <div class="${styles.topContainer} estimateSpinner-topContainer">
