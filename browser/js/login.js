@@ -8,4 +8,7 @@ const LoginView = require('../views/login')
 
 const loginView = new LoginView({ userDID: application.cachedUserDid || '' })
 document.getElementById('container').appendChild(loginView.render())
-ipcRenderer.on(REFRESH, () => fileManager.render({ userDID: application.cachedUserDid }))
+const refreshListener = ipcRenderer.on(REFRESH, () => fileManager.render({ userDID: account.cachedUserDid }))
+window.onunload = () => {
+	ipcRenderer.removeListener(REFRESH, refreshListener)
+}

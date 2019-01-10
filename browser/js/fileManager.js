@@ -9,4 +9,7 @@ const FileManager = require('../views/fileManager/container')
 const fileManager = new FileManager(store)
 document.getElementById('container').appendChild(fileManager.render(store))
 
-ipcRenderer.on(REFRESH, () => fileManager.render(store))
+const refreshListener = ipcRenderer.on(REFRESH, () => fileManager.render(store))
+window.onunload = () => {
+	ipcRenderer.removeListener(REFRESH, refreshListener)
+}

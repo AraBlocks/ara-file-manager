@@ -16,6 +16,9 @@ const afsExplorer = new AFSExlorer({
 })
 document.getElementById('container').appendChild(afsExplorer.render({ spinner: modal.contentViewerData.fileList.length === 0 }))
 
-ipcRenderer.on(REFRESH, () => afsExplorer.render({ spinner: false, fileList: modal.contentViewerData.fileList }))
+const refreshListener = ipcRenderer.on(REFRESH, () => afsExplorer.render({ spinner: false, fileList: modal.contentViewerData.fileList }))
+window.onunload = () => {
+	ipcRenderer.removeListener(REFRESH, refreshListener)
+}
 
 if (isDev) { window.store = store }
