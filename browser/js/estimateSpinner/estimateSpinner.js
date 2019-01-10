@@ -11,7 +11,7 @@ const initialProps = initProps[views.estimateSpinner.type]
 const estimateSpinner = new EstimateSpinner({ ...views.estimateSpinner, ...initialProps})
 document.getElementById('container').appendChild(estimateSpinner.render({}))
 
-const refreshListener = ipcRenderer.on(k.REFRESH, (_, load) => estimateSpinner)
+const refreshListener = ipcRenderer.on(k.REFRESH, (_, load) => estimateSpinner.render(load))
 
 window.onunload = () => {
 	ipcRenderer.removeListener(k.REFRESH, refreshListener)
