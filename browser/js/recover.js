@@ -10,9 +10,15 @@ const { ipcRenderer } = require('electron')
 const recoverMnemonic = new RecoverMnemonic()
 document.getElementById('container').appendChild(recoverMnemonic.render({}))
 
-ipcRenderer.on(k.RECOVERING, () => recoverMnemonic.render({ pending: true }))
-ipcRenderer.on(k.RECOVERED, () => {
+const recoveringListener = ipcRenderer.on(k.RECOVERING, () => recoverMnemonic.render({ pending: true }))
+const recoveredListener = ipcRenderer.on(k.RECOVERED, () => {
   windowManager.openWindow('filemanager')
   windowManagement.closeWindow('recover')
 })
-ipcRenderer.on(k.RECOVER_FAILED, () => recoverMnemonic.render({}))
+const recoverFailedListener = ipcRenderer.on(k.RECOVER_FAILED, () => recoverMnemonic.render({}))
+
+window.onunload = () => {
+  ipcRenderer.removeListener(k.RECOVERING, recoveringListener)
+  ipcRenderer.removeListener(k.RECOVERED, recoveredListener)
+  ipcRenderer.removeListener(k.RECOVER_FAILED, recoverFailedListener)
+}

@@ -10,6 +10,9 @@ const isDev = require('electron-is-dev')
 const accountInfo = new AccountInfo(store)
 document.getElementById('container').appendChild(accountInfo.render(store))
 
-ipcRenderer.on(k.REFRESH, () => accountInfo.render(store))
+const refreshListener = ipcRenderer.on(k.REFRESH, () => accountInfo.render(store))
+window.onunload = () => {
+	ipcRenderer.removeListener(REFRESH, refreshListener)
+}
 
 isDev && Object.assign(window, { store })

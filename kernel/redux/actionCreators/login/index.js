@@ -66,9 +66,7 @@ async function logout() {
     switchLoginState(false)
     switchApplicationMenuLoginState(false)
     //TODO: make closeAll function
-    windowManager.closeWindow('filemanager')
-    windowManager.closeWindow('publishFileView')
-    windowManager.closeWindow('accountInfo')
+    windowManager.closeAll()
     windowManager.openWindow('login')
   } catch (err) {
     debug('Error logging out: %o', o)
