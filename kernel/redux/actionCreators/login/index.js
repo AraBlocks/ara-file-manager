@@ -60,11 +60,11 @@ async function logout() {
   try {
     await farmerManager.stopAllBroadcast(store.farmer.farm)
     dispatch({ type: k.LOGOUT })
-    internalEmitter.emit(k.DUMP_DEEPLINK_DATA)
     internalEmitter.emit(k.CANCEL_SUBSCRIPTION)
-    internalEmitter.emit(k.GET_CACHED_DID)
+
     switchLoginState(false)
     switchApplicationMenuLoginState(false)
+
     //TODO: make closeAll function
     windowManager.closeAll()
     windowManager.openWindow('login')
@@ -112,10 +112,10 @@ async function login(_, load) {
 
     const credentials = { userDID, accountAddress, password: load.password }
     await helpers.populateUI(files.published, files.purchased, credentials)
-    await helpers.getSubscriptions(files.purchased, files.purchased.concat(files.published), credentials)
+    helpers.getSubscriptions(files.purchased, files.purchased.concat(files.published), credentials)
 
-    if (store.files.deepLinkData !== null) {
-      internalEmitter.emit(k.PROMPT_PURCHASE, store.files.deepLinkData)
+    if (store.application.deepLinkData !== null) {
+      internalEmitter.emit(k.PROMPT_PURCHASE, store.application.deepLinkData)
     }
 
     farmer.start()

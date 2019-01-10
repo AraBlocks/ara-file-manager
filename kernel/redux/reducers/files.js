@@ -37,9 +37,6 @@ module.exports = (state, { load = null, type }) => {
       file.downloadPercent = 0
       file.status = k.DOWNLOAD_FAILED
       break
-    case k.DUMP_DEEPLINK_DATA:
-      state.deepLinkData = null
-      break
     case k.ERROR_PUBLISHING:
       file = state.published[state.published.length - 1]
       file.status = load.oldStatus
@@ -96,9 +93,6 @@ module.exports = (state, { load = null, type }) => {
       state.published = []
       state.purchased = []
       state.loadingLibrary = false
-      break
-    case k.OPEN_DEEPLINK:
-      state.deepLinkData = load
       break
     case k.PAUSED:
       file = findFile(load.did, state.published.concat(state.purchased))
