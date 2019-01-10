@@ -168,7 +168,7 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       datePublished: new Date,
       name: load.name,
       owner: true,
-      price: load.price,
+      price: Number(load.price),
       size: load.size,
       status: k.PUBLISHING
     }

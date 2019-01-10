@@ -218,6 +218,7 @@ async function subscribePublished({ did }) {
 			subscription = contract.events.Purchased()
 				.on('data', async ({ returnValues }) => {
 					const earning = Number(araContracts.token.constrainTokenValue(returnValues._price))
+					console.log({earning})
 					internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
 				})
 				.on('error', debug)
