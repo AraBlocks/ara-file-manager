@@ -1,6 +1,7 @@
 'use strict'
 
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
+const { account: INITIAL_STATE } = require('../store')
 
 module.exports = async (state, { load = null, type }) => {
   switch (type) {
@@ -16,9 +17,6 @@ module.exports = async (state, { load = null, type }) => {
     case k.FAUCET_LIMIT_HIT:
       state.faucetStatus = k.FAUCET_LIMIT_HIT
       break
-    case k.GOT_CACHED_DID:
-      state.cachedUserDid = load.did
-      break
     case k.GETTING_USER_DATA:
       state.userDID = load.userDID
       break
@@ -33,7 +31,7 @@ module.exports = async (state, { load = null, type }) => {
       Object.assign(state, load)
       break
     case k.LOGOUT:
-      Object.keys(state).forEach(key => state[key] = null)
+      state = INITIAL_STATE
       break
     case k.PUBLISHED:
       state.userBalance = load.balance

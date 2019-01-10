@@ -3,7 +3,6 @@ module.exports = {
   accountAddress: null,
   araBalance: null,
   autoQueue: null,
-  cachedUserDid: '',
   deployEstimateDid: null ,
   ethBalance: null,
   faucetStatus: null,

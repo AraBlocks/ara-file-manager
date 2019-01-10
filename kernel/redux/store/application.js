@@ -1,3 +1,4 @@
 module.exports = {
-  network: null
+  network: null,
+  cachedUserDid: null
 }
