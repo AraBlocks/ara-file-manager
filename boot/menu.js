@@ -101,13 +101,16 @@ function createMenu() {
   switchApplicationMenuLoginState(false)
 }
 
-function switchApplicationMenuLoginState(loggedIn) {
+function switchApplicationMenuLoginState(state) {
   const applicationMenu = contextMenu.items[0].submenu.items
+  const loggedIn = state === k.LOGIN
+  const loading = state === k.LOADING_LIBRARY
+
   applicationMenu[2].visible = loggedIn //FileManager
   applicationMenu[3].visible = loggedIn //PublishFile
   applicationMenu[4].visible = loggedIn //Account Info
-  applicationMenu[5].visible = !loggedIn //Register
-  applicationMenu[6].visible = !loggedIn //Login
+  applicationMenu[5].visible = !loggedIn && !loading //Register
+  applicationMenu[6].visible = !loggedIn && !loading //Login
   applicationMenu[7].visible = loggedIn //Log out
 }
 

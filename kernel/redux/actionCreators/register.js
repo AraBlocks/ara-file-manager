@@ -55,8 +55,8 @@ ipcMain.on(k.REGISTER, async (event, password) => {
         userDID: didIdentifier
       }
     })
-    switchLoginState(true)
-    switchApplicationMenuLoginState(true)
+    switchLoginState(k.LOGIN)
+    switchApplicationMenuLoginState(k.LOGIN)
 
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
 

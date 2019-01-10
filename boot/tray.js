@@ -51,13 +51,15 @@ const buildTray = () => {
   isDev && openWindow('developer')
 }
 
-function switchLoginState(loggedIn) {
+function switchLoginState(state) {
   const menuItems = contextMenu.items
+  const loggedIn = state === k.LOGIN
+  const loading = state === k.LOADING_LIBRARY
   menuItems[0].visible = loggedIn //FileManager
   menuItems[1].visible = loggedIn //Publish File View
   menuItems[2].visible = loggedIn //Account Info
-  menuItems[3].visible = !loggedIn //Register
-  menuItems[4].visible = !loggedIn //Login
+  menuItems[3].visible = !loggedIn && !loading //Register
+  menuItems[4].visible = !loggedIn && !loading //Login
   menuItems[5].visible = loggedIn  //Log out
 }
 

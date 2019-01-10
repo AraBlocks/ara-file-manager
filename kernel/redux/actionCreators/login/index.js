@@ -22,7 +22,7 @@ const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
-  dispatch({ type: k.FEED_MODAL, load: { modalName: 'logoutConfirm', callback: logout } })
+  dispatch({ type: k.FEED_MODAL, load: { modalName: 'logoutConfirm', callback: () => { internalEmitter.emit(k.CONFIRM_LOGOUT) } } })
   windowManager.openModal('generalActionModal')
 })
 
@@ -30,6 +30,24 @@ internalEmitter.on(k.GET_CACHED_DID, async () => {
   const did = await afmManager.getCachedUserDid()
   dispatch({ type: k.GOT_CACHED_DID, load: { did } })
   windowManager.pingView({ view: 'login', event: k.REFRESH })
+})
+
+internalEmitter.on(k.CONFIRM_LOGOUT, async () => {
+  debug('%s heard', k.CONFIRM_LOGOUT)
+  try {
+    await farmerManager.stopAllBroadcast(store.farmer.farm)
+    dispatch({ type: k.LOGOUT })
+    internalEmitter.emit(k.CANCEL_SUBSCRIPTION)
+
+    switchLoginState(k.LOGOUT)
+    switchApplicationMenuLoginState(k.LOGOUT)
+
+    //TODO: make closeAll function
+    windowManager.closeAll()
+    windowManager.openWindow('login')
+  } catch (err) {
+    debug('Error logging out: %o', o)
+  }
 })
 
 ipcMain.on(k.LOGIN, login)
@@ -56,23 +74,6 @@ ipcMain.on(k.RECOVER, async (event, load) => {
   }
 })
 
-async function logout() {
-  try {
-    await farmerManager.stopAllBroadcast(store.farmer.farm)
-    dispatch({ type: k.LOGOUT })
-    internalEmitter.emit(k.CANCEL_SUBSCRIPTION)
-
-    switchLoginState(false)
-    switchApplicationMenuLoginState(false)
-
-    //TODO: make closeAll function
-    windowManager.closeAll()
-    windowManager.openWindow('login')
-  } catch (err) {
-    debug('Error logging out: %o', o)
-  }
-}
-
 async function login(_, load) {
   debug('%s heard', k.LOGIN)
   try {
@@ -85,17 +86,14 @@ async function login(_, load) {
     windowManager.openModal('generalMessageModal')
     return
   }
-
+  switchLoginState(k.LOADING_LIBRARY)
+  switchApplicationMenuLoginState(k.LOADING_LIBRARY)
   const userDID = araUtil.getIdentifier(load.userDID)
   //writes did signed in with to disk to autofill input next time app booted
   afmManager.cacheUserDid(userDID)
 
   try {
     const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, load.password)
-
-    switchLoginState(true)
-    switchApplicationMenuLoginState(true)
-
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
     const purchasedDIDs = await acmManager.getLibraryItems(userDID)
     //Returns objects representing various info around DIDs
@@ -119,6 +117,9 @@ async function login(_, load) {
     }
 
     farmer.start()
+
+    switchLoginState(k.LOGIN)
+    switchApplicationMenuLoginState(k.LOGIN)
 
     debug('Login complete')
   } catch (err) {
