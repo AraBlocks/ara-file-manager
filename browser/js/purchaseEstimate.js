@@ -10,4 +10,7 @@ const { modal } = store
 const purchaseEstimate = new PurchaseEstimate(modal.data)
 document.getElementById('container').appendChild(purchaseEstimate.render({}))
 
-ipcRenderer.on(REFRESH, (event, load) => { purchaseEstimate.render(load)} )
+const refreshListener = ipcRenderer.on(REFRESH, (event, load) => { purchaseEstimate.render(load)} )
+window.onunload = () => {
+	ipcRenderer.removeListener(REFRESH, refreshListener)
+}
