@@ -1,4 +1,5 @@
 module.exports = {
   network: null,
-  cachedUserDid: null
+  cachedUserDid: null,
+  deepLinkData: null,
 }
