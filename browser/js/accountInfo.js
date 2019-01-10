@@ -12,7 +12,7 @@ document.getElementById('container').appendChild(accountInfo.render(store))
 
 const refreshListener = ipcRenderer.on(k.REFRESH, () => accountInfo.render(store))
 window.onunload = () => {
-	ipcRenderer.removeListener(REFRESH, refreshListener)
+	ipcRenderer.removeListener(k.REFRESH, refreshListener)
 }
 
 isDev && Object.assign(window, { store })
