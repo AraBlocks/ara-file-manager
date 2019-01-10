@@ -15,8 +15,8 @@ document.getElementById('container').appendChild(manageFileContainer.render({ sp
 const estimateListener = ipcRenderer.on(k.ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
 const refreshListener = ipcRenderer.on(k.REFRESH, () => manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList }))
 window.onunload = () => {
-	ipcRenderer.removeListener(REFRESH, refreshListener)
-	ipcRenderer.removeListener(ESTIMATING_COST, estimateListener)
+	ipcRenderer.removeListener(k.REFRESH, refreshListener)
+	ipcRenderer.removeListener(k.ESTIMATING_COST, estimateListener)
 }
 
 ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
