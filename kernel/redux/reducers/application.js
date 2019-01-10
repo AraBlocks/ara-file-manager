@@ -11,8 +11,13 @@ module.exports = async (state, { load = null, type }) => {
     case k.GOT_CACHED_DID:
       state.cachedUserDid = load.did
       break
-    default:
-      return state
+    case k.OPEN_DEEPLINK:
+      state.deepLinkData = load
+      break
+    case k.DUMP_DEEPLINK_DATA:
+    case k.LOGOUT:
+      state.deepLinkData = null
+      break
   }
   return state
 }
