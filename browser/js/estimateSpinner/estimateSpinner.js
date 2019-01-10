@@ -13,4 +13,4 @@ document.getElementById('container').appendChild(estimateSpinner.render({}))
 
 const refreshListener = ipcRenderer.on(k.REFRESH, (_, load) => estimateSpinwindow.onunload = () => {
 	ipcRenderer.removeListener(REFRESH, refreshListener)
-}
+})
