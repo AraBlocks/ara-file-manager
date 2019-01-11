@@ -28,6 +28,7 @@ module.exports = async (state, { load = null, type }) => {
       break
     case k.LOGIN:
     case k.REGISTERED:
+    case k.RECOVERED:
       Object.assign(state, load)
       break
     case k.LOGOUT:
