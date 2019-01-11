@@ -54,7 +54,7 @@ async function _deployProxy() {
   } catch (err) {
     debug('Error getting estimate for deploying proxy %o:', err)
 
-    windowManager.closeWindow('deployEstimate')
+    windowManager.closeWindow('estimateSpinner')
     errorHandling(err)
   }
 }
