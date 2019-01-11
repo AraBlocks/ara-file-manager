@@ -22,7 +22,10 @@ const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.LOGOUT, () => {
-  dispatch({ type: k.FEED_MODAL, load: { modalName: 'logoutConfirm', callback: () => { internalEmitter.emit(k.CONFIRM_LOGOUT) } } })
+  debug('%s HEARD', k.LOGOUT)
+  //Callback must use internal emitter. We will never know why
+  const callback = () => internalEmitter.emit(k.CONFIRM_LOGOUT)
+  dispatch({ type: k.FEED_MODAL, load: { modalName: 'logoutConfirm', callback } })
   windowManager.openModal('generalActionModal')
 })
 
@@ -42,7 +45,6 @@ internalEmitter.on(k.CONFIRM_LOGOUT, async () => {
     switchLoginState(k.LOGOUT)
     switchApplicationMenuLoginState(k.LOGOUT)
 
-    //TODO: make closeAll function
     windowManager.closeAll()
     windowManager.openWindow('login')
   } catch (err) {
