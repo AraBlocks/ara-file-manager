@@ -50,7 +50,7 @@ class PurchaseEstimate extends Nanocomponent {
               ${props.price + ' + ' + utils.roundDecimal(props.fee, 1000) + ' Network Fee'}
             </div>
             <span class="${styles.bigBold} modals-bigBold">
-              ${props.gasEstimate}
+              ${utils.roundDecimal(props.gasEstimate, 1000)}
             </span>
               Eth
             <div style="font-size: 9px;">
