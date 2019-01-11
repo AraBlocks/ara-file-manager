@@ -35,12 +35,10 @@ function createFarmer({ did: userId, password, queue }) {
 
 async function joinBroadcast({ farmer, did }) {
 	try {
-		//Rewards set at 10% of AFS price
 		await farmer.join({
 			did,
 			download: false,
 			upload: true,
-			price: await _calculateBudget(did)
 		})
 		debug('Joining broadcast for %s', did)
 	} catch (err) {
@@ -104,18 +102,6 @@ async function download({
 		debug('Error downloading: %O', err)
 		errorHandler(did)
 	}
-}
-
-async function _calculateBudget(did) {
-	let budget
-	try {
-		budget = (await acmManager.getAFSPrice({ did })) / 10
-	} catch (err) {
-		debug('Err getting AFS price: %o', err)
-		budget = 0
-	}
-
-	return budget
 }
 
 module.exports = {
