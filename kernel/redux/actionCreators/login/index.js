@@ -61,7 +61,9 @@ ipcMain.on(k.RECOVER, async (event, load) => {
     await identityManager.archive(identity)
 
     const { did } = identity.did
-    login(null, { userDID: did, password: load.password })
+    const userDID = araUtil.getIdentifier(did)
+    dispatch({ type: k.RECOVERED, load: { userDID, password: load.password }})
+    login(null, { userDID, password: load.password })
 
     windowManager.pingView({ view: 'recover', event: k.RECOVERED })
   } catch (err) {
