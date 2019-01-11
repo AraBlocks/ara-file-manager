@@ -1,9 +1,10 @@
-const ua = require('universal-analytics');
+const ua = require('universal-analytics')
 const pify = require('pify')
-const uuid = require('uuid/v4');
+const uuid = require('uuid/v4')
 const { version } = require('../../../package.json')
 const { getAppData } = require('./afmManager')
 const { analytics, application } = require('../../../lib/constants/index')
+const isDev = require('electron-is-dev')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
@@ -56,7 +57,26 @@ function hasAnalyticsPermission() {
 async function trackError(err) {
     if(!hasAnalyticsPermission()) { return }
     const session = await getSession()
-    session.exception(err, () => {}).send()
+    const sanitizedError = sanitizeErrorMessage(err)
+    session.exception(sanitizedError, () => {}).send()
+}
+
+function sanitizeErrorMessage(err) {
+    let devReg
+    let buildReg
+    switch (process.platform) {
+        case 'win32':
+            devReg = new RegExp('.*:\\\\.*ara-file-manager\\\\', 'ig')
+            buildReg = new RegExp('.*:\\\\.*resources\\\\app\\\\', 'ig')
+            break
+        default:
+            devReg = new RegExp('\/.*?\/ara-file-manager\/', 'ig') // Mac
+            buildReg = new RegExp('\/.*?Resources\/app\/', 'ig')
+        //TODO: Linux ?
+    }
+    return isDev
+        ? err.replace(devReg, '')
+        : err.replace(buildReg, '')
 }
 
 module.exports = {
