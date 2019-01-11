@@ -11,7 +11,7 @@ const {
   descriptorGeneration
 } = require('../../actions')
 const dispatch = require('../../reducers/dispatch')
-const helpers = require('./helpers')
+const helpers = require('./login.helpers')
 const { stateManagement: k } = require('k')
 const { internalEmitter } = require('electron-window-manager')
 const { switchLoginState } = require('../../../../boot/tray')
@@ -54,7 +54,7 @@ internalEmitter.on(k.CONFIRM_LOGOUT, async () => {
 
 ipcMain.on(k.LOGIN, login)
 
-ipcMain.on(k.RECOVER, async (event, load) => {
+ipcMain.on(k.RECOVER, async (_, load) => {
   debug('%s heard', k.RECOVER)
   try {
     windowManager.pingView({ view: 'recover', event: k.RECOVERING })

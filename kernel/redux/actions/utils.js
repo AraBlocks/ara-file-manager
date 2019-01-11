@@ -1,40 +1,12 @@
 'use strict'
 
 const debug = require('debug')('afm:kernel:lib:actions:util')
-const { stateManagement: k, networkKeys } = require('k')
+const { networkKeys } = require('k')
 const afs = require('ara-filesystem')
-const acmManager = require('./acmManager')
-const araUtil = require('ara-util')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
-const fs = require('fs')
 const createContext = require('ara-context')
 const request = require('request-promise')
-
-async function getAfsDownloadStatus(did, shouldBroadcast) {
-	let downloadPercent = 0
-	let status = k.AWAITING_DOWNLOAD
-  let newAfs
-  try {
-    ({ afs: newAfs } = await afs.create({ did }))
-		const feed = newAfs.partitions.home.content
-    if (feed && feed.length) {
-			downloadPercent = feed.downloaded() / feed.length
-		}
-		if (downloadPercent === 1) {
-			status = k.DOWNLOADED_PUBLISHED
-		} else if (downloadPercent > 0) {
-			status = k.DOWNLOADING
-		} else if (downloadPercent === 0 && shouldBroadcast) {
-			status = k.CONNECTING
-		}
-  } catch(err) {
-    debug('Error getting download status %o', err)
-	}
-
-	await newAfs.close()
-  return { downloadPercent, status }
-}
 
 async function getNetwork() {
 	const ctx = createContext()
@@ -65,14 +37,23 @@ async function readFileMetadata(did) {
 async function requestAraFaucet(userDID) {
 	return await request.post({
 		method: 'POST',
-		uri: networkKeys.FAUCET_URI,
+		uri: networkKeys.ARA_FAUCET_URI,
 		body: { to: userDID },
 		json: true
 	})
 }
 
 async function requestEthFaucet(ethAddress) {
-	return await request(`https://faucet.ropsten.be/donate/${ethAddress}`)
+	return await request(networkKeys.ETH_FAUCET_URI + ethAddress)
+}
+
+async function requestFallbackEthFaucet(ethAddress) {
+	return await request.post({
+		method: 'POST',
+		uri: networkKeys.FALLBACK_ETH_FAUCET_URI,
+		body: { toWhom: ethAddress },
+		json: true
+	})
 }
 
 async function writeFileMetaData({
@@ -103,5 +84,6 @@ module.exports = {
 	readFileMetadata,
 	requestAraFaucet,
 	requestEthFaucet,
+	requestFallbackEthFaucet,
 	writeFileMetaData
 }
