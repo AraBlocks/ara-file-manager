@@ -89,8 +89,8 @@ class EditableFileTable extends Nanocomponent {
 	async getFiles() {
 		let files
 		IS_WINDOWS
-			? files = await fileSystemManager.showSelectFileAndFolderDialog()
-			: files = await fileSystemManager.showSelectFileDialog()
+			? files = await fileSystemManager.showSelectFileDialog()
+			: files = await fileSystemManager.showSelectFileAndFolderDialog()
 		this.props.addItems(files)
 	}
 
