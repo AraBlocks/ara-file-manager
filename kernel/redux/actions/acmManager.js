@@ -23,8 +23,8 @@ async function getAccountAddress(owner, password) {
 	try {
 		debug('Getting account address')
 		owner = owner.includes('did') ? owner : 'did:ara:' + owner
-		const acct = await araAccount.load({ did: owner, password })
-		return acct.address
+		const { address } = await araAccount.load({ did: owner, password })
+		return address
 	} catch (e) {
 		debug('Error getting account Address: %o', e)
 	}
@@ -45,7 +45,7 @@ function getPurchaseFee(price) {
 	try {
 		const expandedfee = Number(araContracts.token.expandTokenValue(price)) * DEFAULT_REWARD_PERCENTAGE
 		fee = Number(araContracts.token.constrainTokenValue(String(expandedfee)))
-	} catch(err) {
+	} catch (err) {
 		debug('Error getting purchase fee: %o', err)
 	}
 	return fee
@@ -218,7 +218,6 @@ async function subscribePublished({ did }) {
 			subscription = contract.events.Purchased()
 				.on('data', async ({ returnValues }) => {
 					const earning = Number(araContracts.token.constrainTokenValue(returnValues._price))
-					console.log({earning})
 					internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
 				})
 				.on('error', debug)
