@@ -160,9 +160,6 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
     oldStatus = store.files.published[store.files.published.length - 1].status
-    //makeDescriptor takes a little time and causes lag. Dispatch this first to indicate response in UI
-    dispatch({ type: k.PUBLISHING, load: { did: load.did, status: k.PUBLISHING } })
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
     const descriptorOpts = {
       datePublished: new Date,
@@ -172,6 +169,11 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       size: load.size,
       status: k.PUBLISHING
     }
+
+    //makeDescriptor takes a little time and causes lag. Dispatch this first to indicate response in UI
+    dispatch({ type: k.PUBLISHING, load: { did: load.did, ...descriptorOpts } })
+    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
     const descriptor = await descriptorGeneration.makeDescriptor(load.did, descriptorOpts)
     dispatch({ type: k.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
