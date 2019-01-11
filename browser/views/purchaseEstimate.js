@@ -42,12 +42,12 @@ class PurchaseEstimate extends Nanocomponent {
           <div>
             <div>
               <span class="${styles.bigBold} modals-bigBold">
-                ${props.price ? props.price + utils.roundDecimal(props.fee, 10) : 0}
+                ${props.price ? props.price + utils.roundDecimal(props.fee, 1000) : 0}
               </span>
               Ara
             </div>
             <div style="font-size: 9px; ${props.price ? null : 'visibility: hidden;'}">
-              ${props.price + ' + ' + utils.roundDecimal(props.fee, 10) + ' Network Fee'}
+              ${props.price + ' + ' + utils.roundDecimal(props.fee, 1000) + ' Network Fee'}
             </div>
             <span class="${styles.bigBold} modals-bigBold">
               ${props.gasEstimate}
