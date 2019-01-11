@@ -4,7 +4,7 @@ echo "${BASH_SOURCE[0]}"
 
 ANALYTICS_CONSTANTS=./lib/constants/analytics.js
 
-sed -i.bak s/"UA_ACCOUNT_CURRENT:"[[:print:]]*/"UA_ACCOUNT_CURRENT: UA_ACCOUNT_PRODUCTION"/ "$ANALYTICS_CONSTANTS"
+sed -i.bak s/"const IS_PRODUCTION = "[[:print:]]*/"const IS_PRODUCTION = true"/ "$ANALYTICS_CONSTANTS"
 
 echo 'Packaging production build'
 
@@ -17,4 +17,4 @@ electron-packager . \
 --out=release-builds \
 --app-bundle-id=\"com.ara.one.araFileManager\"
 
-sed -i.bak s/"UA_ACCOUNT_CURRENT:"[[:print:]]*/"UA_ACCOUNT_CURRENT: UA_ACCOUNT_STAGING"/ "$ANALYTICS_CONSTANTS"
+sed -i.bak s/"const IS_PRODUCTION = "[[:print:]]*/"const IS_PRODUCTION = false"/ "$ANALYTICS_CONSTANTS"
