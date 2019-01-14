@@ -66,8 +66,8 @@ function sanitizeErrorMessage(err) {
     let buildReg
     switch (process.platform) {
         case 'win32':
-            devReg = new RegExp('.*:\\\\.*ara-file-manager\\\\', 'ig')
-            buildReg = new RegExp('.*:\\\\.*resources\\\\app\\\\', 'ig')
+            devReg = new RegExp('.:\\\\.*?ara-file-manager\\\\', 'ig')
+            buildReg = new RegExp('.:\\\\.*?resources\\\\app\\\\', 'ig')
             break
         default:
             devReg = new RegExp('\/.*?\/ara-file-manager\/', 'ig') // Mac
