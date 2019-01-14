@@ -113,6 +113,7 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 function errorHandler(err) {
 	debug(err)
 	let modalName
+	let callback = () => {}
 	switch(err.message) {
 		case 'Not enough eth':
 			modalName = 'notEnoughEth'
@@ -122,6 +123,7 @@ function errorHandler(err) {
 			break
 		case 'Not logged in':
 			modalName = 'notLoggedIn'
+			callback = () => windowManager.openWindow('login')
 			break
 		case 'Broken link':
 			modalName = 'brokenLink'
@@ -130,7 +132,7 @@ function errorHandler(err) {
 			modalName = 'purchaseFailed'
 			break
 	}
-	dispatch({ type: k.FEED_MODAL, load: { modalName } })
+	dispatch({ type: k.FEED_MODAL, load: { modalName, callback } })
 	windowManager.openModal('generalMessageModal')
 	internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
 }
