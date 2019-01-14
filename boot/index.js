@@ -23,7 +23,7 @@ app.on('ready', () => {
   debug('App initialzed')
   windowManager.init()
 
-  debug('Creating menu and Tray')
+  require('./squirrel')
   require('./tray').buildTray()
   require('./menu').buildMenu()
   require('../kernel/redux/actionCreators')//TODO: create proper store creation function
