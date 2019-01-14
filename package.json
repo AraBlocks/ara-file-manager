@@ -3,10 +3,10 @@
   "productName": "Ara File Manager",
   "version": "0.4.1",
   "description": "",
-  "main": "boot/main.js",
+  "main": "boot",
   "network": "test",
   "scripts": {
-    "start-dev": "electron boot/main.js",
+    "start-dev": "electron boot",
     "test": "electron test/main.js",
     "postinstall": "sh ./scripts/postinstall.sh && install-app-deps",
     "pack": "build --dir",

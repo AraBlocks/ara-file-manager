@@ -4,7 +4,7 @@ const { internalEmitter } = require('electron-window-manager')
 const k = require('../lib/constants/stateManagement')
 
 let contextMenu
-function createMenu() {
+function buildMenu() {
   const application = {
     label: "Application",
     submenu: [
@@ -114,4 +114,4 @@ function switchApplicationMenuLoginState(state) {
   applicationMenu[7].visible = loggedIn //Log out
 }
 
-module.exports = { createMenu, switchApplicationMenuLoginState }
+module.exports = { buildMenu, switchApplicationMenuLoginState }

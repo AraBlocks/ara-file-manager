@@ -14,7 +14,6 @@ const rimraf = require('rimraf')
 
 async function getAppData() {
 	if (global.appData) return global.appData
-
 	const appData = toilet(path.resolve(app.getPath('userData'), application.APP_DATA))
 	await pify(appData.open)()
 	global.appData = appData
@@ -62,16 +61,6 @@ function getUserData(userDID) {
 function getPublishedItems(userDID) {
 	const userData = getUserData(userDID)
 	return userData.published ? userData.published : []
-}
-
-function removedPublishedItem(contentDID, userDID) {
-	try {
-		const userData = getUserData(userDID)
-		userData.published = userData.published.filter(did => did !== contentDID)
-		saveUserData({ userDID, userData })
-	} catch(err) {
-		debug('Error removing published item %o', err)
-	}
 }
 
 async function cacheUserDid(did) {
