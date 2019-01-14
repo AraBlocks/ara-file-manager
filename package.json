@@ -69,7 +69,6 @@
     "electron-builder": "^20.22.0",
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
-    "express": "^4.16.4",
     "mocha": "^5.2.0"
   },
   "ava": {
