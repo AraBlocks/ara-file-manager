@@ -11,14 +11,12 @@ const {
   afmManager,
   farmerManager,
   utils: actionUtils
- } = require('../actions')
+ } = require('../../actions')
 const helpers = require('./register.helpers')
-const { switchTrayLoginState } = require('../../../boot/tray')
-const { switchMenuLoginState } = require('../../../boot/menu')
+const menuHelper = require('../../../../boot/menuHelper')
 const araUtil = require('ara-util')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
-const { internalEmitter } = require('electron-window-manager')
 
 ipcMain.on(k.REGISTER, async (_, password) => {
   debug('%s heard. load: %s', k.REGISTER, password)
@@ -58,9 +56,7 @@ ipcMain.on(k.REGISTER, async (_, password) => {
         userDID: didIdentifier
       }
     })
-    switchTrayLoginState(k.LOGIN)
-    switchMenuLoginState(k.LOGIN)
-
+    menuHelper.switchLoginState(k.LOGIN)
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
 
     const transfer = await acmManager.subscribeTransfer(accountAddress, did)

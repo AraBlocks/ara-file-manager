@@ -122,7 +122,7 @@ function switchMenuPublishState(pending) {
 }
 
 module.exports = {
-  createMenu,
+  buildMenu,
   switchMenuLoginState,
   switchMenuPublishState
 }
