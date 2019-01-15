@@ -11,31 +11,6 @@ const fs = require('fs')
 const createContext = require('ara-context')
 const request = require('request-promise')
 
-async function getAfsDownloadStatus(did, shouldBroadcast) {
-	let downloadPercent = 0
-	let status = k.AWAITING_DOWNLOAD
-  let newAfs
-  try {
-    ({ afs: newAfs } = await afs.create({ did }))
-		const feed = newAfs.partitions.home.content
-    if (feed && feed.length) {
-			downloadPercent = feed.downloaded() / feed.length
-		}
-		if (downloadPercent === 1) {
-			status = k.DOWNLOADED_PUBLISHED
-		} else if (downloadPercent > 0) {
-			status = k.DOWNLOADING
-		} else if (downloadPercent === 0 && shouldBroadcast) {
-			status = k.CONNECTING
-		}
-  } catch(err) {
-    debug('Error getting download status %o', err)
-	}
-
-	await newAfs.close()
-  return { downloadPercent, status }
-}
-
 async function getNetwork() {
 	const ctx = createContext()
 	await ctx.ready()
