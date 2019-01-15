@@ -51,7 +51,7 @@ const buildTray = () => {
   isDev && openWindow('developer')
 }
 
-function switchLoginState(state) {
+function switchTrayLoginState(state) {
   const menuItems = contextMenu.items
   const loggedIn = state === k.LOGIN
   const loading = state === k.LOADING_LIBRARY
@@ -63,12 +63,14 @@ function switchLoginState(state) {
   menuItems[5].visible = loggedIn  //Log out
 }
 
-function switchPendingPublishState(pending) {
+function switchTrayPublishState(pending) {
   contextMenu.items[1].enabled = !pending //Publish File View
+  contextMenu.items[5].enabled = !pending //Logout
+  contextMenu.items[6].enabled = !pending //Quit
 }
 
 module.exports = {
   buildTray,
-  switchLoginState,
-  switchPendingPublishState
+  switchTrayLoginState,
+  switchTrayPublishStatep
 }
