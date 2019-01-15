@@ -1,6 +1,7 @@
 'use strict'
 
 const { stateManagement: k } = require('k')
+const menuHelper = require('../../../../boot/menuHelper')
 const { AutoQueue } = require('../../../lib')
 const dispatch = require('../../reducers/dispatch')
 const {
@@ -37,6 +38,7 @@ async function getInitialAccountState(userDID, password) {
     }
   })
 
+  menuHelper.switchLoginState(k.LOADING_LIBRARY)
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   return { accountAddress, farmer }
 }
