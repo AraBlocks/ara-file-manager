@@ -72,5 +72,5 @@ function switchTrayPublishState(pending) {
 module.exports = {
   buildTray,
   switchTrayLoginState,
-  switchTrayPublishStatep
+  switchTrayPublishState
 }

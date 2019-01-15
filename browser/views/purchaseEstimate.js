@@ -19,7 +19,7 @@ class PurchaseEstimate extends Nanocomponent {
         cssClass: { name: 'thinBorder' }
       }),
 			cancelbutton: new Button({
-				...styles.buttonSelector('cancel', { height: '1em' }),
+				...styles.buttonSelector('cancel'),
 				onclick: () => closeWindow('purchaseEstimate')
 			})
 		}
@@ -81,22 +81,21 @@ class PurchaseEstimate extends Nanocomponent {
 
     return html`
       <div class="${styles.container} modals-container">
-        <div>
-          <div class="${styles.headerHolder} estimate-headerHolder">
-            <div class="${styles.preheader} modals-preheader">
-              You're about to purchase
-            </div>
-            <div class="${styles.fileName} modal-fileName">
-              ${props.fileName || props.did.slice(0, 15) + '...'}
-            </div>
-            <div class="${styles.postheader} modal-postheader">
-              from ${props.publisherName || 'Unnamed author'}
-            </div>
-            <div class="${styles.for} modal-for">
-              for
-            </div>
+        <div class="${styles.headerHolder} estimate-headerHolder">
+          <div class="${styles.preheader} modals-preheader">
+            You're about to purchase
           </div>
-          ${renderEstimate()}
+          <div class="${styles.fileName} modal-fileName">
+            ${props.fileName || props.did.slice(0, 15) + '...'}
+          </div>
+          <div class="${styles.postheader} modal-postheader">
+            from ${props.publisherName || 'Unnamed author'}
+          </div>
+          <div class="${styles.for} modal-for">
+            for
+          </div>
+        </div>
+        ${renderEstimate()}
         <div class="${styles.buttonHolder} purchaseEstimate-buttonholder">
           ${children.buyButton.render({
             cssClass: { name: props.gasEstimate ? 'standard' : 'thinBorder' },
