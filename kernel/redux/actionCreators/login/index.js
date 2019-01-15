@@ -88,7 +88,6 @@ async function login(_, load) {
     windowManager.openModal('generalMessageModal')
     return
   }
-  menuHelper.switchLoginState(k.LOADING_LIBRARY)
   const userDID = araUtil.getIdentifier(load.userDID)
   //writes did signed in with to disk to autofill input next time app booted
   afmManager.cacheUserDid(userDID)

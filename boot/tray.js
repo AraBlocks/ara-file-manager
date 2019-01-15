@@ -57,7 +57,7 @@ function switchTrayLoginState(state) {
   const loading = state === k.LOADING_LIBRARY
   menuItems[0].visible = loggedIn //FileManager
   menuItems[1].visible = loggedIn //Publish File View
-  menuItems[2].visible = loggedIn //Account Info
+  menuItems[2].visible = loading || loggedIn //Account Info
   menuItems[3].visible = !loggedIn && !loading //Register
   menuItems[4].visible = !loggedIn && !loading //Login
   menuItems[5].visible = loggedIn  //Log out
