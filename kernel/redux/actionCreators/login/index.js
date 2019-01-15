@@ -14,8 +14,7 @@ const dispatch = require('../../reducers/dispatch')
 const helpers = require('./login.helpers')
 const { stateManagement: k } = require('k')
 const { internalEmitter } = require('electron-window-manager')
-const { switchLoginState } = require('../../../../boot/tray')
-const { switchApplicationMenuLoginState } = require('../../../../boot/menu')
+const menuHelper = require('../../../../boot/menuHelper')
 const { pause } = require('../../../lib')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
@@ -42,8 +41,7 @@ internalEmitter.on(k.CONFIRM_LOGOUT, async () => {
     dispatch({ type: k.LOGOUT })
     internalEmitter.emit(k.CANCEL_SUBSCRIPTION)
 
-    switchLoginState(k.LOGOUT)
-    switchApplicationMenuLoginState(k.LOGOUT)
+    menuHelper.switchLoginState(k.LOGOUT)
 
     windowManager.closeAll()
     windowManager.openWindow('login')
@@ -90,8 +88,7 @@ async function login(_, load) {
     windowManager.openModal('generalMessageModal')
     return
   }
-  switchLoginState(k.LOADING_LIBRARY)
-  switchApplicationMenuLoginState(k.LOADING_LIBRARY)
+  menuHelper.switchLoginState(k.LOADING_LIBRARY)
   const userDID = araUtil.getIdentifier(load.userDID)
   //writes did signed in with to disk to autofill input next time app booted
   afmManager.cacheUserDid(userDID)
@@ -122,8 +119,7 @@ async function login(_, load) {
 
     farmer.start()
 
-    switchLoginState(k.LOGIN)
-    switchApplicationMenuLoginState(k.LOGIN)
+    menuHelper.switchLoginState(k.LOGIN)
 
     debug('Login complete')
   } catch (err) {

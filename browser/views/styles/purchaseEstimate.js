@@ -29,17 +29,17 @@ module.exports = {
       display: flex;
       flex-direction: column;
       height: 100%;
-      justify-content: center;
+      justify-content: space-between;
     }
 
     :host > * {
       align-items: center;
       display: flex;
       flex-direction: column;
-      width: 90%;
-      height: 90%;
-      justify-content: space-between;
+      justify-content: space-around;
+      padding-top: 20px;
       text-align: center;
+      width: 90%;
     }
   `,
 
@@ -49,7 +49,6 @@ module.exports = {
       display: flex;
       justify-content: center;
       width: 100%;
-      height: 32%;
     }
   `,
 
