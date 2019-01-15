@@ -47,12 +47,5 @@ module.exports = {
 				position: absolute;
 			}
 		`
-	},
-
-	menuBar: css`
-		:host {
-			background-color: black;
-			height: 25%;
-		}
-	`
+	}
 }

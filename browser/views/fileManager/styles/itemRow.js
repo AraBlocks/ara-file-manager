@@ -16,11 +16,5 @@ module.exports = {
     :host {
       min-width: 220px;
     }
-  `,
-
-  publishedStatsHolder: css`
-    :host {
-      width: 50%;
-    }
   `
 }

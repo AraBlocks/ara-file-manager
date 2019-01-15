@@ -6,10 +6,7 @@ const { css } = require('css')
 module.exports = {
   colors,
 
-  container({
-    tooltipColor = 'black',
-    size = '8px'
-  }) {
+  container({ tooltipColor = 'black', size = '8px' }) {
     return css`
       :host {
         cursor: pointer;
@@ -27,28 +24,6 @@ module.exports = {
 
       :host:hover div {
         visibility: visible;
-      }
-    `
-  },
-
-  textHolder({
-    maxWidth = 200
-  }) {
-    return css`
-      :host {
-        background-color: white;
-        border: .5px solid ${colors.araGrey};
-        cursor: default;
-        font-size: 12px;
-        margin-left: 2px;
-        margin-top: -115px;
-        max-width: ${maxWidth}px;
-        padding: 5px;
-        text-align: center;
-        visibility: hidden;
-        position: absolute;
-        z-index: 1;
-        position: fixed;
       }
     `
   }

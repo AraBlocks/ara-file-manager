@@ -12,19 +12,6 @@ module.exports = {
   colors,
   fonts,
 
-  buttonHolder: css`
-    :host {
-      width: 100%;
-    }
-
-    :host button {
-      font-size: 12px;
-      height: 25px;
-      text-align: right;
-      width: 100%;
-    }
-  `,
-
   bolden: css`
     :host {
       font-family:${fonts.bold};

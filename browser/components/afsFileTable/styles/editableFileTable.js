@@ -97,29 +97,6 @@ module.exports = {
 		}
 	`,
 
-	backButton: css`
-		:host {
-			display: flex;
-			flex-direction: column;
-			height: 30px;
-			justify-content: space-around;
-		}
-	`,
-
-	divider: css`
-		:host {
-			background-color: ${colorSelector('grey')};
-			height: 1px;
-			width: 100%;
-		}
-	`,
-
-	textHolder: css`
-		:host {
-			width: 100%;
-		}
-	`,
-
 	headerHolder: css`
 		:host {
 			align-items: center;
