@@ -97,12 +97,6 @@ module.exports = {
 		}
 	`,
 
-	textHolder: css`
-		:host {
-			width: 100%;
-		}
-	`,
-
 	typeHeader: css`
 		:host {
 			align-items: center;
