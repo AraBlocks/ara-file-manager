@@ -5,18 +5,6 @@ const { fonts, colorSelector } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-  buttonHolder: css`
-    :host {
-      width: 100%;
-    }
-
-    :host button {
-      font-size: 12px;
-      height: 25px;
-      text-align: left;
-    }
-  `,
-
   container: css`
     :host {
       display: flex;

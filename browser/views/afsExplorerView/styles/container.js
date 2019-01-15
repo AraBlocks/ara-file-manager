@@ -23,14 +23,6 @@ module.exports = {
 		}
 	`,
 
-	divider: css`
-		:host {
-			background-color: ${colors.araGrey};
-			height: 1px;
-			width: 100%;
-		}
-	`,
-
 	horizontalContainer: css`
 		:host {
 			display: flex;

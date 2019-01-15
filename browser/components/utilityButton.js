@@ -5,20 +5,14 @@ const windowManagement = require('../lib/tools/windowManagement')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
+const DEFAULT_CALLBACK = () => windowManagement.closeWindow()
+
 class UtilityButton extends Nanocomponent {
-  constructor({
-    children = 'close',
-    onclick = () => windowManagement.closeWindow()
-  }) {
+  constructor({ children = 'close', onclick = DEFAULT_CALLBACK }) {
     super()
 
-    this.props = {
-      onclick
-    }
-
-    this.state = {
-      children
-    }
+    this.props = { onclick }
+    this.state = { children }
   }
 
   update({ children }) {

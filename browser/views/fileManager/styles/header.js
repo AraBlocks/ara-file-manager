@@ -30,15 +30,6 @@ module.exports = {
     }
   `,
 
-  didHolder: css`
-    :host {
-      border-radius: 7px;
-      cursor: pointer;
-      margin-bottom: 5px;
-      padding: 0 6px;
-    }
-  `,
-
   iconHolder: css`
     :host {
       margin-right: 3px;
