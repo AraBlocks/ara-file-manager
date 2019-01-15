@@ -11,10 +11,10 @@ const {
   afmManager,
   farmerManager,
   utils: actionUtils
- } = require('../../actions')
+ } = require('../actions')
 const helpers = require('./register.helpers')
-const { switchLoginState } = require('../../../../boot/tray')
-const { switchApplicationMenuLoginState } = require('../../../../boot/menu')
+const { switchTrayLoginState } = require('../../../boot/tray')
+const { switchMenuLoginState } = require('../../../boot/menu')
 const araUtil = require('ara-util')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
@@ -58,9 +58,8 @@ ipcMain.on(k.REGISTER, async (_, password) => {
         userDID: didIdentifier
       }
     })
-
-    switchLoginState(k.LOGIN)
-    switchApplicationMenuLoginState(k.LOGIN)
+    switchTrayLoginState(k.LOGIN)
+    switchMenuLoginState(k.LOGIN)
 
     windowManager.pingView({ view: 'registration', event: k.REGISTERED })
 

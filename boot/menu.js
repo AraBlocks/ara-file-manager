@@ -98,10 +98,10 @@ function buildMenu() {
   ]
   contextMenu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(contextMenu)
-  switchApplicationMenuLoginState(false)
+  switchMenuLoginState(false)
 }
 
-function switchApplicationMenuLoginState(state) {
+function switchMenuLoginState(state) {
   const applicationMenu = contextMenu.items[0].submenu.items
   const loggedIn = state === k.LOGIN
   const loading = state === k.LOADING_LIBRARY
@@ -114,4 +114,15 @@ function switchApplicationMenuLoginState(state) {
   applicationMenu[7].visible = loggedIn //Log out
 }
 
-module.exports = { buildMenu, switchApplicationMenuLoginState }
+function switchMenuPublishState(pending) {
+  const applicationMenu = contextMenu.items[0].submenu.items
+  applicationMenu[3].enabled = !pending //Publish File View
+  applicationMenu[7].enabled = !pending //Log out
+  applicationMenu[9].enabled = !pending //Quit
+}
+
+module.exports = {
+  createMenu,
+  switchMenuLoginState,
+  switchMenuPublishState
+}
