@@ -13,14 +13,6 @@ module.exports = {
     }
   `,
 
-  inputRow: css`
-    :host {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-    }
-  `,
-
   logo: css`
     :host {
       align-content: center;
@@ -54,16 +46,6 @@ module.exports = {
 
     :host div > b {
       font-family: ${fonts.bold};
-    }
-  `,
-
-  textinputMnemonic: css`
-    :host {
-      border: 1px solid;
-      height: 50px;
-      font-size: 14px;
-      resize: none;
-      width: 100%;
     }
   `
 }

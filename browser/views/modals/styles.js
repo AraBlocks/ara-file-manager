@@ -38,10 +38,7 @@ module.exports = {
     }
   `,
 
-  container({
-    justifyContent = 'space-between',
-    height = 90
-  }) {
+  container({ justifyContent = 'space-between', height = 90 }) {
     return css`
       :host {
         align-items: center;
@@ -203,16 +200,7 @@ module.exports = {
     }
   `,
 
-  smallBold: css`
-    :host {
-      font-family: ${fonts.bold};
-      font-size: 20px;
-    }
-  `,
-
-  smallMessage({
-    color  = 'black',
-  }) {
+  smallMessage({ color  = 'black' }) {
     return css`
       :host {
         color: ${colorSelector(color)};

@@ -99,14 +99,6 @@ module.exports = {
     }
   `,
 
-  copyableText: css`
-    :host {
-      border-radius: 7px;
-      cursor: pointer;
-      transition: all ease-in-out;
-    }
-  `,
-
   idHolder: css`
     :host {
       border-bottom: 1px solid var(--ara-grey);

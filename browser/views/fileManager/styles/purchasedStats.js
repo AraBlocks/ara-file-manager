@@ -11,17 +11,6 @@ module.exports = {
     }
   `,
 
-  buttonHolder: css`
-    :host {
-      width: 100%;
-    }
-
-    :host button {
-      text-align: right;
-      width: 100%;
-    }
-  `,
-
   container: css`
     :host {
       display: flex;
