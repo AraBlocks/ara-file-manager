@@ -22,7 +22,7 @@ class DynamicTooltip extends Nanocomponent {
 	}
 
 	createElement() {
-		const { eventMouseEnter, props, children, state} = this
+		const { props, children, state} = this
 		return html`
 			<div class=${styles.tooltip}
 				onclick="${() => {
