@@ -51,19 +51,27 @@ class Header extends Nanocomponent {
     )
   }
 
+  get balanceElements() {
+    return [
+      html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg" />`,
+      utils.roundDecimal(this.props.account.araBalance, 100).toLocaleString()
+    ]
+  }
+
+  get publishFileProps() {
+    return {
+      cssClass: this.props.account.pendingPublish
+        ? { name: 'thinBorder', opts: { fontSize: 14 } }
+        : { opts: { fontSize: 14 } }
+    }
+  }
+
   update() {
     return true
   }
 
   createElement({ activeTab, araBalance }) {
-    const {
-      children,
-      props
-    } = this
-    const balanceElements = [
-      html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg" />`,
-      utils.roundDecimal(araBalance, 100).toLocaleString()
-    ]
+    const { balanceElements, children, publishFileProps } = this
     return html`
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader">
@@ -90,11 +98,7 @@ class Header extends Nanocomponent {
           ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index }))}
         </div>
         <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
-          ${children.publishFilebutton.render({
-        cssClass: props.account.pendingPublish
-        ? { name: 'thinBorder', opts: { fontSize: 14 } }
-        : { opts: { fontSize: 14 } }
-        })}
+          ${children.publishFilebutton.render(publishFileProps)}
         </div>
       </div>
     `
