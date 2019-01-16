@@ -27,8 +27,6 @@ class ItemRow extends Nanocomponent {
   createElement(file) {
     const {
       downloadPercent,
-      last,
-      packageOpened,
       status,
       shouldBroadcast
     } = file
@@ -42,13 +40,7 @@ class ItemRow extends Nanocomponent {
           </div>
           ${children.stats.render({ ...file })}
         </div>
-        ${progressBar({
-          downloadPercent,
-          last,
-          status,
-          shouldBroadcast,
-          packageOpened
-        })}
+        ${progressBar({ ...file })}
       </div>
     `
   }

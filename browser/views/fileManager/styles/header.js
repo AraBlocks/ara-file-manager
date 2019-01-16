@@ -43,6 +43,9 @@ module.exports = {
       display: flex;
       font-size: 14px;
       justify-content: space-between;
+      height: 35px;
+      display: flex;
+      align-items: flex-end;
     }
   `,
 
@@ -95,7 +98,7 @@ module.exports = {
     :host {
       display: flex;
       justify-content: space-between;
-      width: 30px;
+      height: 30px;
     }
   `
 }

@@ -1,18 +1,17 @@
 'use strict'
 
-
 const Button = require('../../components/button')
-const { clipboard } = require('electron')
-const { DEPLOY_PROXY } = require('../../../lib/constants/stateManagement')
+const { clipboard, remote } = require('electron')
+const { app } = remote.require('electron')
+const { stateManagement: k } = require('k')
 const DynamicTooltip = require('../../components/dynamicTooltip')
-const { emit } = require('../../lib/tools/windowManagement')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
-const UtilityButton = require('../../components/utilityButton')
 const TabItem = require('../../components/tabItem')
 const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
+const Hamburger = require('../../components/hamburger')
 
 class Header extends Nanocomponent {
   constructor({ selectTab, account }) {
@@ -24,10 +23,8 @@ class Header extends Nanocomponent {
       publishFilebutton: new Button({
         children: 'Publish New File',
         cssClass: { opts: { fontSize: 14 } },
-        onclick: () => !account.pendingPublish && emit({ event: DEPLOY_PROXY })
+        onclick: () => !account.pendingPublish && windowManagement.emit({ event: k.DEPLOY_PROXY })
       }),
-
-      closeButton: new UtilityButton({ children: 'close' }),
 
       copyDidTooltip: new DynamicTooltip({
         children: "ID: " + this.props.userDID.slice(0, 8) + "...",
@@ -35,9 +32,17 @@ class Header extends Nanocomponent {
         cssClass: { color: 'black' }
       }),
 
-      minimizeButton: new UtilityButton({ children: 'minimize', onclick: windowManagement.minimizeWindow }),
-      tabs: this.makeTabs(selectTab)
+      tabs: this.makeTabs(selectTab),
+      hamby: new Hamburger({ items: this.makeHamburgerMenuItems(), direction: 'right' })
     }
+  }
+
+  makeHamburgerMenuItems() {
+    return [
+      { children: 'Account', onclick: () => windowManager.openWindow('accountInfo') },
+      { children: 'Logout', onclick: () => windowManagement.emit({ type: k.LOGOUT }) },
+      { children: 'Quit', onclick: () => app.quit() },
+    ]
   }
 
   makeTabs(selectTab) {
@@ -52,15 +57,23 @@ class Header extends Nanocomponent {
   }
 
   get balanceElements() {
-    return [
-      html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg" />`,
-      utils.roundDecimal(this.props.account.araBalance, 100).toLocaleString()
-    ]
+    const { account } = this.props
+    return account.araBalance !== null
+      ? html`<div>${makeElements()}</div>`
+      : html`<div style="font-size: 12px;">Getting balance..</div>`
+
+    function makeElements() {
+      const img = html`<img class="${styles.iconHolder} header-iconHolder" src="../assets/images/Ara-A.svg" />`
+      const balance = utils.roundDecimal(account.araBalance, 100).toLocaleString()
+      return [img, balance]
+    }
   }
 
+
   get publishFileProps() {
+    const { account } = this.props
     return {
-      cssClass: this.props.account.pendingPublish
+      cssClass: account.pendingPublish
         ? { name: 'thinBorder', opts: { fontSize: 14 } }
         : { opts: { fontSize: 14 } }
     }
@@ -70,7 +83,7 @@ class Header extends Nanocomponent {
     return true
   }
 
-  createElement({ activeTab, araBalance }) {
+  createElement({ activeTab }) {
     const { balanceElements, children, publishFileProps } = this
     return html`
       <div class="${styles.container} header-container">
@@ -79,8 +92,7 @@ class Header extends Nanocomponent {
             <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png" />
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
-            ${children.minimizeButton.render({ children: 'minimize' })}
-            ${children.closeButton.render({ children: 'close' })}
+            ${children.hamby.render()}
           </div>
         </div>
         <div class="${styles.subHeader} header-subheader">
@@ -90,7 +102,7 @@ class Header extends Nanocomponent {
           <div class="${styles.userHolder} header-userHolder">
             ${children.copyDidTooltip.render()}
             <div>
-              ${araBalance >= 0 ? balanceElements : 'Calculating Balance...'}
+              ${balanceElements}
             </div>
           </div>
         </div>
