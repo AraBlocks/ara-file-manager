@@ -1,17 +1,16 @@
 'use strict'
 
 const { colors, fonts } = require('styleUtils')
-const { css } = require('../../../lib/cssTool/css')
+const { css } = require('css')
 
 module.exports = {
-  colors,
+	colors,
 	fonts,
 
 	container: css`
 		:host {
 			cursor: pointer;
 			display: flex;
-			flex-direction: cloumn;
 			align-items: center;
 			width: 100%;
 			height: 100%;
@@ -31,12 +30,11 @@ module.exports = {
 
 	hamburger: css`
 		:host {
-			height: 8px;
-			width: 50%;
+			height: 50%;
 		}
 	`,
 
-  menu(visible) {
+	menu({ visible, direction = 'left' }) {
 		return css`
 			:host {
 				top: 86%;
@@ -45,6 +43,7 @@ module.exports = {
 				justify-content: space-between;
 				min-width: 130px;
 				position: absolute;
+				${direction}: 0;
 			}
 		`
 	}
