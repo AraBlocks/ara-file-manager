@@ -119,19 +119,14 @@ class Container extends Nanocomponent {
       renderSpinnerBars,
       state
     } = this
-
-    const {
-      activeTab,
-      araBalance,
-      loadingLibrary,
-    } = state
+    const { activeTab, loadingLibrary } = state
 
     return html`
       <div>
         ${utils.shouldShowBanner(network) ? TestnetBanner() : html`<div></div>`}
         <div class="${styles.container} container-container">
           <div>
-            ${children.header.render({ activeTab, araBalance })}
+            ${children.header.render({ activeTab })}
             ${loadingLibrary ? renderSpinnerBars() : renderSections(network)}
           </div>
         </div>

@@ -23,11 +23,7 @@ class FileDescriptor extends Nanocomponent {
     this.createSummary = this.createSummary.bind(this)
   }
 
-  createSummary({
-    downloadPercent,
-    shouldBroadcast,
-    status
-  }) {
+  createSummary({ downloadPercent, shouldBroadcast, status}) {
     const { name } = this.props
     const awaitingStatus = status === k.AWAITING_STATUS
     const nameDiv = html`

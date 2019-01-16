@@ -1,7 +1,7 @@
 'use strict'
 
-const k = require('../../../../lib/constants/stateManagement')
-const Hamburger = require('../../../components/hamburgerMenu')
+const { stateManagement: k } = require('k')
+const Hamburger = require('../../../components/hamburger')
 const { deeplink, windowManagement } = require('../../../lib/tools/')
 
 module.exports = (opts) => {
@@ -58,5 +58,5 @@ module.exports = (opts) => {
   if (opts.allocatedRewards && opts.redeeming === false) {
     menuItems.addItem('Redeem Rewards', k.REDEEM_REWARDS)
   }
-  return new Hamburger(menuItems)
+  return new Hamburger({ items: menuItems })
 }
