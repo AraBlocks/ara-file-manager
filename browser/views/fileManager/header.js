@@ -18,6 +18,7 @@ class Header extends Nanocomponent {
     super()
 
     this.props = { account, userDID: account.userDID }
+    this.state = { hambyToggled: false }
 
     this.children = {
       publishFilebutton: new Button({
@@ -33,16 +34,25 @@ class Header extends Nanocomponent {
       }),
 
       tabs: this.makeTabs(selectTab),
-      hamby: new Hamburger({ items: this.makeHamburgerMenuItems(), direction: 'right' })
+      hamby: new Hamburger(this.hambyOpts)
     }
   }
 
-  makeHamburgerMenuItems() {
-    return [
+  get hambyOpts() {
+    const items = [
       { children: 'Account', onclick: () => windowManager.openWindow('accountInfo') },
       { children: 'Logout', onclick: () => windowManagement.emit({ type: k.LOGOUT }) },
       { children: 'Quit', onclick: () => app.quit() },
     ]
+
+    const toggleCB = (type) => {
+      type === 'mouseleave'
+        ? this.state.hambyToggled = false
+        : this.state.hambyToggled = !this.state.hambyToggled
+      this.rerender()
+    }
+
+    return { items, toggleCB, direction: 'left' }
   }
 
   makeTabs(selectTab) {
@@ -84,9 +94,15 @@ class Header extends Nanocomponent {
   }
 
   createElement({ activeTab }) {
-    const { balanceElements, children, publishFileProps } = this
+    const {
+      balanceElements,
+      children,
+      publishFileProps,
+      state
+    } = this
+
     return html`
-      <div class="${styles.container} header-container">
+      <div class="${styles.container(state.hambyToggled)} header-container">
         <div class="${styles.subHeader} header-subheader">
           <div>
             <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png" />
@@ -95,7 +111,7 @@ class Header extends Nanocomponent {
             ${children.hamby.render()}
           </div>
         </div>
-        <div class="${styles.subHeader} header-subheader">
+        <div class="${styles.subHeader} header-subheader" style="align-items: center;">
           <div class="${styles.titleHolder} header-titleHolder">
             File Manager
           </div>

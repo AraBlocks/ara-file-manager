@@ -2,7 +2,7 @@
 
 const { stateManagement: k } = require('k')
 const Hamburger = require('../../../components/hamburger')
-const { deeplink, windowManagement } = require('../../../lib/tools/')
+const { deeplink, windowManagement } = require('../../../lib/tools')
 
 module.exports = (opts) => {
   const menuItems = [

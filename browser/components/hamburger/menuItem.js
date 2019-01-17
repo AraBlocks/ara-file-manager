@@ -7,31 +7,51 @@ const Nanocomponent = require('nanocomponent')
 class MenuItem extends Nanocomponent {
   constructor({
     children = "",
-    onclick = () => {},
+    onclick = () => { },
     onclickText = ""
   }) {
     super()
+    this.state = { children, clicked: false }
+
     this.props = {
-      children,
       onclick,
-      onclickText
+      onclickText,
+      originalChildren: children
     }
     this.itemClicked = this.itemClicked.bind(this)
+    this.revertChildren = this.revertChildren.bind(this)
   }
 
   itemClicked(e) {
     const { props } = this
+
     props.onclick(e)
-    if (props.onclickText === "") { return }
-    const span = e.target.children[0]
-    this.render()
-    span.style.zIndex = 1
-    span.classList.add('expand')
-    span.addEventListener('animationend', () => {
-      span.classList.remove('expand'), false
-      span.style.zIndex = -1
-      this.render()
-    })
+
+    if (props.onclickText) {
+      this.renderNewText(e)
+    }
+
+    this.rerender()
+  }
+
+  renderNewText({ target }) {
+    const { state, props } = this
+
+    state.clicked = true
+    state.children = props.onclickText
+    this.rerender()
+
+    target.addEventListener('transitionend', this.revertChildren)
+  }
+
+  async revertChildren({ target }) {
+    await new Promise(_ => setTimeout(_, 1000))
+
+    this.state.clicked = false
+    this.state.children = this.props.originalChildren
+
+    target.removeEventListener('transitionend', this.revertChildren)
+    this.rerender()
   }
 
   update() {
@@ -39,15 +59,11 @@ class MenuItem extends Nanocomponent {
   }
 
   createElement() {
-    const { props, itemClicked } = this
+    const { itemClicked, state } = this
 
     return html`
-      <div
-        class="${styles.container} MenuItem-container"
-        onclick=${itemClicked}
-      >
-        ${props.children}
-        <span>${props.onclickText}</span>
+      <div class="${styles.container(state.clicked)} MenuItem-container" onclick=${itemClicked}>
+        ${state.children}
       </div>
     `
   }
