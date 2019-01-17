@@ -35,7 +35,7 @@ class DynamicTooltip extends Nanocomponent {
 					this.render()
 				}}"
 			>
-				<div class=${styles.clickableText(props.cssClass)}>
+				<div class="${styles.clickableText(props.cssClass)} dynamicTooltip-clickableText">
 					${children}
 				</div>
 				<div class="tooltipText">

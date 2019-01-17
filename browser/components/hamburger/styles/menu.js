@@ -34,17 +34,29 @@ module.exports = {
 		}
 	`,
 
-	menu({ visible, direction = 'left' }) {
+	menu({ visible, direction = 'right' }) {
 		return css`
 			:host {
-				top: 86%;
+				top: 25%;
 				display: ${visible ? 'flex' : 'none'};
 				flex-direction: column;
 				justify-content: space-between;
 				min-width: 130px;
 				position: absolute;
-				${direction}: 0;
+				${direction === 'right' ? 'left' : 'right'}: 0;
 			}
 		`
-	}
+	},
+
+	invisibleItem: css`
+		:host {
+			cursor: default;
+			display: block;
+			height: 15px;
+			overflow: hidden;
+			opacity: 0;
+			-webkit-app-region: no-drag;
+			z-index: 9999;
+		}
+	`
 }
