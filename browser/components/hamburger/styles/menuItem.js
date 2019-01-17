@@ -8,47 +8,34 @@ module.exports = {
   colorSelector,
   fonts,
 
-  container: css`
-    :host {
-      align-items: center;
-      background-color: white;
-      border: 1px ${colors.araGrey} solid;
-      border-width: 0px 1px;
-      cursor: pointer;
-      display: block;
-      font-family: ${fonts.light};
-      height: 2em;
-      line-height: 2em;
-      overflow: hidden;
-      padding: 0 5px;
-      text-align: center;
-      text-overflow: ellipsis;
-      vertical-align: middle;
-      -webkit-app-region: no-drag;
-      z-index: 9999;
-    }
+  container(clicked) {
+     return css`
+      :host {
+        align-items: center;
+        background-color: white;
+        border: 1px ${colors.araGrey} solid;
+        border-width: 0px 1px;
+        cursor: pointer;
+        display: block;
+        font-family: ${fonts.light};
+        height: 2em;
+        line-height: 2em;
+        overflow: hidden;
+        padding: 0 5px;
+        text-align: center;
+        text-overflow: ellipsis;
+        transition: font-weight 100ms;
+        transition: color 500ms;
+        vertical-align: middle;
+        -webkit-app-region: no-drag;
+        z-index: 9999;
+        ${clicked && 'font-weight: bold;'}
+        ${clicked && 'color: var(--ara-orange);'}
+      }
 
-    :host:hover {
-      background-color: #e2e2e2;
-    }
-
-    :host span {
-      align-items: center;
-      animation-duration: 900ms;
-      background-color: #e2e2e2;
-      color: ${colorSelector('orange')};
-      display: flex;
-      flex-direction: column;
-      font-family: ${fonts.semibold};
-      height: 1.4em;
-      justify-content: center;
-      left: 25%;
-      opacity: 0;
-      position: absolute;
-      pointer-events: none;
-      top: 0.4em;
-      width: 50%;
-      z-index: -1;
-    }
-  `
+      :host:hover {
+        background-color: #e2e2e2;
+      }
+    `
+  }
 }

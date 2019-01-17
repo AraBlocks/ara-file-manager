@@ -7,28 +7,29 @@ module.exports = {
   colors,
   fonts,
 
-  container: css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      font-family: ${fonts.light};
-      height: 150px;
-      justify-content: space-between;
-      margin-bottom: 65px;
-      -webkit-app-region: drag;
-    }
+  container(hambyToggled){ 
+    return css`
+      :host {
+        display: flex;
+        flex-direction: column;
+        font-family: ${fonts.light};
+        height: 150px;
+        justify-content: space-between;
+        margin-bottom: 65px;
+      }
 
-    :host:before {
-      content: "";
-      height: 160px;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      -webkit-app-region: drag;
-      z-index: -1;
-    }
-  `,
+      :host:before {
+        content: "";
+        height: 160px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 93%;
+        -webkit-app-region: ${hambyToggled ? 'no-drag' : 'drag'};
+        z-index: -1;
+      }
+    `
+  },
 
   iconHolder: css`
     :host {
@@ -45,7 +46,7 @@ module.exports = {
       justify-content: space-between;
       height: 35px;
       display: flex;
-      align-items: flex-end;
+      align-items: baseline;
     }
   `,
 
