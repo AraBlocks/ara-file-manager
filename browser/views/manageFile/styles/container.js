@@ -22,6 +22,17 @@ module.exports = {
 		:host b {
 			font-family: ${fonts.bold}
 		}
+
+		:host:before {
+			content: "";
+			height: 160px;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			-webkit-app-region: drag;
+			z-index: -1;
+		}
 	`,
 
 	divider: css`

@@ -9,7 +9,6 @@
 
 body {
   user-select: none;
-  -webkit-app-region: drag;
   font-family: 'ProximaNova-Regular';
 }
 
