@@ -28,6 +28,14 @@ internalEmitter.on(k.LOGOUT, () => {
   windowManager.openModal('generalActionModal')
 })
 
+ipcMain.on(k.LOGOUT, () => {
+  debug('%s HEARD', k.LOGOUT)
+  //Callback must use internal emitter. We will never know why
+  const callback = () => internalEmitter.emit(k.CONFIRM_LOGOUT)
+  dispatch({ type: k.FEED_MODAL, load: { modalName: 'logoutConfirm', callback } })
+  windowManager.openModal('generalActionModal')
+})
+
 internalEmitter.on(k.GET_CACHED_DID, async () => {
   const did = await afmManager.getCachedUserDid()
   dispatch({ type: k.GOT_CACHED_DID, load: { did } })

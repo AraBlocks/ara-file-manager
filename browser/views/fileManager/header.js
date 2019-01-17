@@ -41,7 +41,7 @@ class Header extends Nanocomponent {
   get hambyOpts() {
     const items = [
       { children: 'Account', onclick: () => windowManager.openWindow('accountInfo') },
-      { children: 'Logout', onclick: () => windowManagement.emit({ type: k.LOGOUT }) },
+      { children: 'Logout', onclick: () => windowManagement.emit({ event: k.LOGOUT }) },
       { children: 'Quit', onclick: () => app.quit() },
     ]
 
