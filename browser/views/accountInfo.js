@@ -5,8 +5,8 @@ const Button = require('../components/button')
 const { clipboard } = require('electron')
 const { emit } = require('../lib/tools/windowManagement')
 const DynamicTooltip = require('../components/dynamicTooltip')
-const TestnetBanner = require('../components/TestnetBanner')
-const UtilityButton = require('../components/UtilityButton')
+const TestnetBanner = require('../components/testnetBanner')
+const UtilityButton = require('../components/utilityButton')
 const styles = require('./styles/accountInfo')
 const { utils, windowManagement } = require('../lib/tools')
 const html = require('nanohtml')
@@ -36,15 +36,18 @@ class AccountInfo extends Nanocomponent {
         cssClass: { opts: { fontSize: '14', height: '3' } },
         onclick: () => windowManagement.openWindow('sendAra')
       }),
+
       araIDTooltip: new DynamicTooltip({
         children: this.props.userDID,
         onclick: () => clipboard.writeText(this.props.userDID)
       }),
+
       ethAddressTooltip: new DynamicTooltip({
         children: this.props.ethAddress,
         cssClass: { color: 'green' },
         onclick: () => clipboard.writeText(this.props.ethAddress)
       }),
+
       contactSupportTooltip: new DynamicTooltip({
         children: 'Contact Support',
         cssClass: {
@@ -52,10 +55,12 @@ class AccountInfo extends Nanocomponent {
           fontSize: 12,
           fontFamily: styles.fonts.regular
         },
+
         beforeTooltipText: 'Copy Email',
         onclick: () => clipboard.writeText('support@ara.one')
       })
     }
+    
     this.toggleAnalyticsPermission = this.toggleAnalyticsPermission.bind(this)
     this.rerender = this.rerender.bind(this)
   }
