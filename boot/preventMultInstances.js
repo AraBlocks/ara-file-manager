@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('afm:boot:preventMultInstances')
 const { app } = require('electron')
 const { openDeepLinking } = require('electron-window-manager')
 
