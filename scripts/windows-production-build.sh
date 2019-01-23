@@ -15,3 +15,5 @@ electron-packager . \
 --out=release-builds \
 
 sed -i.bak s/"const IS_PRODUCTION = "[[:print:]]*/"const IS_PRODUCTION = false"/ "$ANALYTICS_CONSTANTS"
+
+DEBUG=electron-windows-installer:main node ./winstaller.js
