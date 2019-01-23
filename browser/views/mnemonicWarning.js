@@ -88,14 +88,12 @@ class MnemonicWarning extends Nanocomponent {
           <div>${mnemonic.split(' ').slice(8).map(word => html`<b> ${word}</b>`)}</div>
         </div>
         <div class="${styles.copyItemContainer} modal-copyItemContainer" >
-            <div class="${styles.clipboard} modal-clipBoard">
-              ${children.copyMnemonicButton.render({})}
-              <span>Copied !</span>
-            </div>
+          <div class="${styles.clipboard} modal-clipBoard">
+            ${children.copyMnemonicButton.render({})}
+            <span>Copied !</span>
           </div>
-          <div>
-            ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
-          </div>
+          ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
+        </div>
       </div>
     `
   }

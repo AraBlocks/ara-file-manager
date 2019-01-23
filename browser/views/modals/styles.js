@@ -6,6 +6,16 @@ const { buttonSelector, colorSelector, fonts } = require('styleUtils')
 module.exports = {
   buttonSelector,
 
+  araID: css`
+    :host {
+      overflow: hidden;
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 98%;
+    }
+  `,
+
   araIDHolder: css`
     :host {
       align-items: center;
@@ -14,14 +24,12 @@ module.exports = {
       border-radius: 3px;
       display: flex;
       flex-direction: column;
-      font-size: 9.5px;
       font-weight: bold;
-      height: 3em;
       justify-content: center;
-      margin-top: 20px;
       margin-bottom: 10px;
       padding: 10px 2px;
-      word-wrap: break-word;
+      height: 15%;
+      width: 350px;
     }
   `,
 
@@ -79,9 +87,18 @@ module.exports = {
       display: flex;
       flex-direction: column;
       font-size: 12px;
-      height: 95%;
+      height: 100%;
       justify-content: space-around;
       width: 90%;
+    }
+  `,
+
+  contentHolder: css`
+    :host {
+      display: flex;
+      height: 65%;
+      flex-direction: column;
+      justify-content: space-between;
     }
   `,
 
@@ -141,9 +158,10 @@ module.exports = {
 
   copyItemContainer: css`
     :host {
-      padding-top: 8px;
-      justify-content: center !important;
       display: flex !important;
+      justify-content: space-between;
+      flex-direction: column;
+      height: 80px;
       width: 100%;
     }
   `,
