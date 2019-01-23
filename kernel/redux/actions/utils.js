@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('afm:kernel:lib:actions:util')
-const { networkKeys } = require('k')
+const { urls } = require('k')
 const afs = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
@@ -37,20 +37,20 @@ async function readFileMetadata(did) {
 async function requestAraFaucet(userDID) {
 	return await request.post({
 		method: 'POST',
-		uri: networkKeys.ARA_FAUCET_URI,
+		uri: urls.ARA_FAUCET,
 		body: { to: userDID },
 		json: true
 	})
 }
 
 async function requestEthFaucet(ethAddress) {
-	return await request(networkKeys.ETH_FAUCET_URI + ethAddress)
+	return await request(urls.ETH_FAUCET + ethAddress)
 }
 
 async function requestFallbackEthFaucet(ethAddress) {
 	return await request.post({
 		method: 'POST',
-		uri: networkKeys.FALLBACK_ETH_FAUCET_URI,
+		uri: urls.FALLBACK_ETH_FAUCET,
 		body: { toWhom: ethAddress },
 		json: true
 	})

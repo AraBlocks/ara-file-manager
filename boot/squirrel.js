@@ -2,12 +2,11 @@
 
 const { autoUpdater, dialog } = require('electron')
 const { version } = require('../package.json')
+const { urls } = require('k')
 const isDev = require('electron-is-dev')
 
-if (isDev === false) {
-  const updateFeed = process.platform == 'win32'
-    ? 'http://localhost:3000/updates/latest'
-    : 'http://localhost:3000/updates/latest'
+if (isDev === false && process.platform === 'darwin') {
+  const updateFeed = urls.SQUIRREL_MAC
 
   autoUpdater.setFeedURL(updateFeed + '?v=' + version)
 
