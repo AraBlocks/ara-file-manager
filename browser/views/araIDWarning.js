@@ -60,24 +60,26 @@ class AraIDWarning extends Nanocomponent {
         <div class="${styles.logo} modals-logo">
           <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
-        <div>
+        <div style="align-self: baseline;">
           <div class="${styles.title} modals-title">
-            Registration
+            Save your identity
           </div>
         </div>
-        <div class="">
+        <div class="${styles.contentHolder} modal-contentHolder">
           <div class="${styles.smallMessage({})} modal-smallMessage">
             The following string of characters is your <b>Ara ID</b>. Please <b>copy it and keep it in a safe place</b>.
           </div>
-          <div class="${styles.araIDHolder} modal-araIDHolder">${props.userDID.slice(-64)}</div>
+          <div class="${styles.araIDHolder} modal-araIDHolder">
+            <div class="${styles.araID} modal-araID">${props.userDID.slice(-64)}</div>
+          </div>
           <div class="${styles.copyItemContainer} modal-copyItemContainer" >
-            <div class="${styles.clipboard}">
+            <div class="${styles.clipboard} modal-clipboard">
               ${children.copyIDButton.render({})}
               <span>Copied !</span>
             </div>
+            ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
           </div>
         </div>
-        ${children.confirmButton.render({ cssClass: state.copied ? 'standard' : 'thinBorder' })}
       </div>
     `
   }
