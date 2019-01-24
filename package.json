@@ -6,7 +6,7 @@
   "main": "boot",
   "network": "test",
   "scripts": {
-    "start-dev": "electron boot",
+    "start-dev": "./node_modules/.bin/electron boot",
     "test": "electron test/main.js",
     "postinstall": "sh ./scripts/postinstall.sh && install-app-deps",
     "pack": "build --dir",
@@ -35,7 +35,7 @@
     "ara-contracts": "github:arablocks/ara-contracts#semver:0.20.x",
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.23.x",
     "ara-identity": "github:arablocks/ara-identity#semver:0.47.x",
-    "ara-reward-dcdn": "github:littlstar/ara-reward-dcdn#semver:0.14.x",
+    "ara-reward-dcdn": "github:arablocks/ara-reward-dcdn#semver:0.14.x",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
     "ara-util": "github:arablocks/ara-util#semver:1.3.x",
     "css": "file:browser/lib/cssTool",

@@ -13,35 +13,32 @@ module.exports = {
 
 	container({
 		checked,
+		disabled,
 		opts: {
-			colorChecked = colors.araRed,
+			colorChecked = 'green',
 			colorUnchecked = 'grey'
 		}
 	}) {
 		return css`
 			:host {
-				width: 30px;
-				height: 30px;
 				background-color: white;
-				border: 2px solid ${
-					checked
-						? colorSelector(colorChecked)
-						: colorSelector(colorUnchecked)
-				};
-				cursor: pointer;
+				border: 2px solid ${colorSelector( checked ? colorChecked : colorUnchecked)};
+				color: ${colorSelector(colorChecked)};
+				cursor: ${disabled ? 'not-allowed' : 'pointer'};
+				display: flex;
+				font-size: 35px;
+				height: 30px;
+				justify-content: center;
+				width: 30px;
 				-webkit-app-region: no-drag;
 			}
 		`
 	},
 
-	checkmark({
-		checked,
-		opts: { colorChecked = colors.araRed }
-	}) {
+	checkmark({ checked, opts: { colorChecked = 'green' }}) {
 		return css`
 			:host {
-				font-size: 30px;
-				color: ${colorChecked};
+
 				text-align: center;
 				display: ${checked ? "block" : "none"};
 			}
