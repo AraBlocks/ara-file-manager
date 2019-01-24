@@ -37,10 +37,11 @@ module.exports = {
     }
   `,
 
-  iconHolder: css`
+  iconHolder: (shouldBroadcast) => css`
     :host {
       margin-left: 5px;
       width: 11px;
+      ${!shouldBroadcast && 'opacity: .3;'}
     }
   `,
 
