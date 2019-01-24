@@ -41,7 +41,7 @@ module.exports = {
 				display: ${visible ? 'flex' : 'none'};
 				flex-direction: column;
 				justify-content: space-between;
-				min-width: 130px;
+				min-width: 100px;
 				position: absolute;
 				${direction === 'right' ? 'left' : 'right'}: 0;
 			}
