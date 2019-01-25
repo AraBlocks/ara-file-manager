@@ -82,6 +82,7 @@ internalEmitter.on(k.DOWNLOADED, async (load) => {
 internalEmitter.on(k.UPDATE_PEER_COUNT, (load) => {
 	dispatch({ type: k.UPDATE_PEER_COUNT, load })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+	windowManager.pingView({ view: 'purchaseEstimate', event: k.REFRESH, load: { peers: load.peers } })
 })
 
 function errorHandler(did) {
