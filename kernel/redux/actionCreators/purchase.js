@@ -1,15 +1,18 @@
 'use strict'
 
-const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
-const dispatch = require('../reducers/dispatch')
 const { acmManager, descriptorGeneration } = require('../actions')
 const { stateManagement: k } = require('k')
-const araUtil = require('ara-util')
-const { ipcMain } = require('electron')
-const isDev = require('electron-is-dev')
-const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
-const { account, files } = windowManager.sharedData.fetch('store')
+const windowManager = require('electron-window-manager')
+const { ipcMain } = require('electron')
+const dispatch = require('../reducers/dispatch')
+const araUtil = require('ara-util')
+const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
+const isDev = require('electron-is-dev')
+const { account,
+				farmer,
+				files
+			} = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
 	try {
@@ -28,6 +31,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		debug('%s heard', k.PROMPT_PURCHASE)
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
 		dispatch({ type: k.FEED_MODAL, load })
+		load.peers = 0
 
 		windowManager.openWindow('purchaseEstimate')
 		const library = await acmManager.getLibraryItems(account.userDID)
@@ -40,6 +44,9 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
+		// get peer count estimate
+		farmer.farm.dryRunJoin({ did: load.did })
+
 		const price = await acmManager.getAFSPrice({ did: load.did })
 		const fee = acmManager.getPurchaseFee(price)
 		const gasEstimate = Number(await acmManager.purchaseEstimate({
@@ -47,12 +54,12 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			password: account.password,
 			userDID: account.userDID,
 		}))
-
 		windowManager.pingView({
 			view: 'purchaseEstimate',
 			event: k.REFRESH,
 			load: {
 				fee,
+				peers: load.peers,
 				gasEstimate,
 				price: Number(price)
 			}

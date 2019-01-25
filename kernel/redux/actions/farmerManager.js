@@ -11,6 +11,7 @@ function createFarmer({ did: userId, password, queue }) {
 	debug('Creating Farmer')
 	const farmer = new farmDCDN({ userId, password, queue })
 	farmer.on('peer-update', (did, count) => {
+		debug('k.UPDATE_PEER_COUNT in farmerManager', did, count)
 		internalEmitter.emit(k.UPDATE_PEER_COUNT, {
 			did,
 			peers: count
