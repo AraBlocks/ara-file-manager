@@ -55,6 +55,7 @@ class PurchaseEstimate extends Nanocomponent {
               Eth
             <div style="font-size: 9px;">
               Gas fee
+            <div>peer count: ${props.peerCount}</div>
             </div>
           </div>
         </div>
