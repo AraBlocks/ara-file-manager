@@ -3,6 +3,9 @@ const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
 const araUtil = require('ara-util')
 const { internalEmitter } = require('electron-window-manager')
 const { ipcMain } = require('electron')
+const dispatch = require('../reducers/dispatch')
+const araUtil = require('ara-util')
+const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
 const isDev = require('electron-is-dev')
 const { stateManagement: k } = require('k')
 const windowManager = require('electron-window-manager')
@@ -32,6 +35,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		debug('%s heard', k.PROMPT_PURCHASE)
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
 		dispatch({ type: k.FEED_MODAL, load })
+		load.peers = 0
 
 		windowManager.openWindow('purchaseEstimate')
 		const library = await acmManager.getLibraryItems(account.userDID)
@@ -66,6 +70,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			event: k.REFRESH,
 			load: {
 				fee,
+				peers: load.peers,
 				gasEstimate,
 				price: Number(price)
 			}
