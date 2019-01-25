@@ -28,6 +28,9 @@ module.exports = (state, { load = null, type }) => {
     case k.USE_UNCOMMITTED:
       state.publishFileData.contentDID = load.contentDID
       break
+    case k.UPDATE_PEER_COUNT:
+      state.data.peers = load.peers
+      break
     default:
       return state
   }
