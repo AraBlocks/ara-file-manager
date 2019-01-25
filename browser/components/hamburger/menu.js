@@ -19,10 +19,6 @@ class Menu extends Nanocomponent {
 		return items.map(item => new MenuItem(item))
 	}
 
-	update() {
-		return true
-	}
-
 	toggleMenu(e) {
 		const { state, props } = this
 
@@ -41,10 +37,18 @@ class Menu extends Nanocomponent {
 		])
 	}
 
+	update(newProps) {
+		if (newProps.items) {
+			newProps.items = this.makeButtons(newProps.items)
+		}
+		Object.assign(this.props, newProps)
+		return true
+	}
+
 	createElement() {
 		const { renderMenuItems, state, toggleMenu } = this
 
-		return html`
+		return (html`
 			<div class="${styles.container} Menu-container" onclick=${toggleMenu} onmouseleave=${toggleMenu}>
 				<img class="${styles.hamburger} Menu-hamburger" src="../assets/images/utilityButtons/Hamburger.svg" />
 				<div class="${styles.menu(state)} Menu-menu" >
@@ -53,7 +57,7 @@ class Menu extends Nanocomponent {
 					${renderMenuItems()}
 				</div>
 			</div>
-		`
+		`)
 	}
 }
 

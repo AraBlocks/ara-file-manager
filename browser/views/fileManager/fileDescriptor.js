@@ -1,6 +1,7 @@
 'use strict'
 
 const k = require('../../../lib/constants/stateManagement')
+const Hamburger = require('../../components/hamburger')
 const { hamburgerHelper } = require('./util')
 const styles = require('./styles/fileDescriptor')
 const filesize = require('filesize')
@@ -17,7 +18,7 @@ class FileDescriptor extends Nanocomponent {
     }
 
     this.children = {
-      hamburger: hamburgerHelper(opts)
+      hamburger: new Hamburger(hamburgerHelper(opts))
     }
 
     this.createSummary = this.createSummary.bind(this)
@@ -26,7 +27,7 @@ class FileDescriptor extends Nanocomponent {
   createSummary({ downloadPercent, shouldBroadcast, status}) {
     const { name } = this.props
     const awaitingStatus = status === k.AWAITING_STATUS
-    const nameDiv = html`
+    const nameDiv = (html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
           <div class="${styles.name(awaitingStatus)} ${awaitingStatus ? 'blinker' : ''} fileDescriptor-name">
             ${[k.OUT_OF_SYNC, k.UPDATE_AVAILABLE, k.UNCOMMITTED].includes(status)
@@ -34,7 +35,7 @@ class FileDescriptor extends Nanocomponent {
               : name}
           </div>
         </div>
-      `
+      `)
     const sizeDiv = this.styleSize({ status, downloadPercent, shouldBroadcast })
 
     return html`
@@ -96,24 +97,27 @@ class FileDescriptor extends Nanocomponent {
     `
   }
 
-  update() {
+  update(newProps) {
+    this.props.name = newProps.name || this.props.name
+    this.props.size = newProps.size || this.props.size
     return true
   }
 
-  createElement({ status, downloadPercent, shouldBroadcast }) {
+  createElement(file) {
     const { children, createSummary } = this
+    const { status, downloadPercent, shouldBroadcast } = file
 
     return html`
       <div class="${styles.container} fileDescriptor-container">
         <div class="${styles.hamburgerHolder(status === k.AWAITING_STATUS)} fileDescriptor-hamburgerHolder">
           <div class="${styles.hamburger} fileDescriptor-hamburger">
-            ${children.hamburger.render({})}
+            ${children.hamburger.render(hamburgerHelper(file))}
           </div>
         </div>
         ${createSummary({
-          status,
           downloadPercent,
-          shouldBroadcast
+          shouldBroadcast,
+          status,
         })}
       </div>
     `

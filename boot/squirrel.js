@@ -24,6 +24,7 @@ if (isDev === false && process.platform === 'darwin') {
 
   autoUpdater.addListener('update-downloaded', () => {
     debug('update-downloaded')
+
     const dialogOpts = {
       type: 'info',
       buttons: ['Restart', 'Later'],
