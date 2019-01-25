@@ -27,23 +27,28 @@ class ItemRow extends Nanocomponent {
   createElement(file) {
     const {
       downloadPercent,
+      name,
       status,
-      shouldBroadcast
+      shouldBroadcast,
     } = file
     const { children } = this
 
-    return html`
+    return (html`
       <div>
         <div class="${styles.container} ItemRow-container">
           <div class="${styles.fileDescriptorHolder} ItemRow-fileDescriptorHolder">
-            ${children.fileDescriptor.render({ downloadPercent, status, shouldBroadcast })}
+            ${children.fileDescriptor.render({ ...file })}
           </div>
           ${children.stats.render({ ...file })}
         </div>
         ${progressBar({ ...file })}
       </div>
-    `
+    `)
+  }
+
+  static generator(opts) {
+    return new ItemRow(opts)
   }
 }
 
-module.exports = ItemRow
+module.exports = ItemRow.generator

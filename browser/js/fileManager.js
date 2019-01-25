@@ -10,6 +10,4 @@ const fileManager = new FileManager(store)
 document.getElementById('container').appendChild(fileManager.render(store))
 
 const refreshListener = ipcRenderer.on(REFRESH, () => fileManager.render(store))
-window.onunload = () => {
-	ipcRenderer.removeListener(REFRESH, refreshListener)
-}
+window.onunload = () => ipcRenderer.removeListener(REFRESH, refreshListener)

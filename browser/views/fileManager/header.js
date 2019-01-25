@@ -108,7 +108,7 @@ class Header extends Nanocomponent {
             <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal.png" />
           </div>
           <div class="${styles.windowControlsHolder} header-windowControlsHolder">
-            ${children.hamby.render()}
+            ${children.hamby.render({})}
           </div>
         </div>
         <div class="${styles.subHeader} header-subheader" style="align-items: center;">
