@@ -100,5 +100,11 @@ module.exports = {
       justify-content: center;
       font-size: 4px;
     }
+  `,
+
+  padding: css`
+    :host {
+      padding-bottom: 8px;
+    }
   `
 }
