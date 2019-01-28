@@ -40,23 +40,37 @@ class PurchaseEstimate extends Nanocomponent {
       ? html`
         <div class="${styles.contentHolder} estimate-contentHolder" style="animation: fadein 1500ms;">
           <div>
-            <div>
+
+            <div class="${styles.padding}">
               <span class="${styles.bigBold} modals-bigBold">
                 ${props.price ? props.price + utils.roundDecimal(props.fee, 1000) : 0}
               </span>
-              Ara
+                Ara
+              <div style="font-size: 9px; ${props.price ? null : 'visibility: hidden;'}">
+                ${props.price + ' + ' + utils.roundDecimal(props.fee, 1000) + ' Network Fee'}
+              </div>
             </div>
-            <div style="font-size: 9px; ${props.price ? null : 'visibility: hidden;'}">
-              ${props.price + ' + ' + utils.roundDecimal(props.fee, 1000) + ' Network Fee'}
+
+            <div class="${styles.padding}">
+              <span class="${styles.bigBold} modals-bigBold">
+                ${utils.roundDecimal(props.gasEstimate, 1000)}
+              </span>
+                Eth
+              <div style="font-size: 9px;">
+                Gas fee
+              </div>
             </div>
-            <span class="${styles.bigBold} modals-bigBold">
-              ${utils.roundDecimal(props.gasEstimate, 1000)}
-            </span>
-              Eth
-            <div style="font-size: 9px;">
-              Gas fee
-            <div>peer count: ${props.peerCount}</div>
+
+            <div class="${styles.padding}">
+              <span class="${styles.bigBold} modals-bigBold">
+                ${props.peers}
+              </span>
+                Peer(s)
+              <div style="font-size: 9px;">
+                currently online
+              </div>
             </div>
+
           </div>
         </div>
       `
