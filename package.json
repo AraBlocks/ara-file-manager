@@ -1,8 +1,11 @@
 {
   "name": "ara-file-manager",
-  "productName": "Ara File Manager",
+  "productName": "Ara-File-Manager",
+  "description": "Ara file manager",
+  "author": {
+    "name": "ara blocks"
+  },
   "version": "0.4.1",
-  "description": "",
   "main": "boot",
   "network": "test",
   "scripts": {
@@ -24,7 +27,6 @@
     "url": "git+https://github.com/littlstar/ara-content-manager.git"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/littlstar/ara-content-manager/issues"
@@ -41,6 +43,7 @@
     "css": "file:browser/lib/cssTool",
     "did-uri": "^0.2.6",
     "domready": "^1.0.8",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-is-dev": "^0.3.0",
     "electron-tooltip": "^1.1.5",
     "electron-window-manager": "^1.0.6",
@@ -67,9 +70,9 @@
     "debug": "^3.1.0",
     "electron": "^2.0.5",
     "electron-builder": "^20.22.0",
+    "electron-installer-windows": "^1.1.0",
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
-    "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^2.7.0",
     "mocha": "^5.2.0"
   },

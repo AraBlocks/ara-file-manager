@@ -1,6 +1,6 @@
 'use strict'
 
-const { app, dialog } = require('electron')
+const { app } = require('electron')
 const windowManager = require('electron-window-manager')
 
 module.exports = {
