@@ -32,8 +32,8 @@
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
     "ara-context": "github:arablocks/ara-context#semver:0.5.x",
-    "ara-contracts": "github:arablocks/ara-contracts#semver:0.20.x",
-    "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.23.x",
+    "ara-contracts": "github:arablocks/ara-contracts#semver:0.21.x",
+    "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.24.x",
     "ara-identity": "github:arablocks/ara-identity#semver:0.47.x",
     "ara-reward-dcdn": "github:arablocks/ara-reward-dcdn#semver:0.14.x",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
@@ -59,7 +59,8 @@
     "truffle": "^4.1.14",
     "universal-analytics": "^0.4.20",
     "user-home": "^2.0.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "web3": "1.0.0-beta.37"
   },
   "devDependencies": {
     "ava": "^0.25.0",
