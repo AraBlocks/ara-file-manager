@@ -20,9 +20,7 @@ module.exports = ({
 	const cancelButton = new Button({
 		children: 'Cancel',
 		...styles.buttonSelector('cancel'),
-		onclick: () => {
-      closeModal('generalActionModal')
-    }
+		onclick: () => closeModal('generalActionModal')
 	})
 	const { title, description } = actionModalText(modalName)
 	return html`

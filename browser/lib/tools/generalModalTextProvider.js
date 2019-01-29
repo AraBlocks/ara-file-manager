@@ -148,6 +148,10 @@ function actionModalText(modalName) {
 	let description
 	let title
 	switch (modalName) {
+		case 'appUpdateAvailable':
+			title = 'Application Update available'
+			description = 'A new version of the app has been downloaded. Clicking OK will close the application and reopen it after a few moments'
+			break
 		case 'startDownload':
 			title = 'Purchased!'
 			description = 'Download package now?'
