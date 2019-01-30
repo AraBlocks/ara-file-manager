@@ -5,8 +5,8 @@ const { openDeepLinking } = require('electron-window-manager')
 
 const shouldQuit = app.makeSingleInstance((argv, workingDirectory) => {
   if (process.platform === 'win32') {
-    const deeplink = argv[1]
-    if (deeplink) { openDeepLinking(deeplink) }
+    const arg = argv[1]
+    if (arg && arg.includes('ara://')) { openDeepLinking(deeplink) }
   }
 })
 
