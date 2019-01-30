@@ -12,7 +12,7 @@ module.exports = {
 
   deeplinkWaiting() {
     if (process.platform == 'win32') { global.deepLinkingUrl = process.argv[1] }
-    if (global.deepLinkingUrl) {
+    if (global.deepLinkingUrl && global.deepLinkingUrl.includes('ara://')) {
       windowManager.openDeepLinking(global.deepLinkingUrl)
       return true
     }
