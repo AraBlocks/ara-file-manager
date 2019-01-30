@@ -14,6 +14,7 @@ module.exports = {
 			background-color: red;
 			position: absolute;
 			width: 5px;
+			-webkit-app-region: no-drag;
 		}
 
 		:host:before {
