@@ -10,10 +10,10 @@ electron-packager . \
 --overwrite \
 --platform=win32 \
 --arch=x64 \
---icon=./build/icons/windows/ara_dev.ico \
+--icon=./build/icons/windows/ara_prod.ico \
 --prune=true \
 --out=release-builds \
 
 sed -i.bak s/"const IS_PRODUCTION = "[[:print:]]*/"const IS_PRODUCTION = false"/ "$ANALYTICS_CONSTANTS"
 
-DEBUG=electron-windows-installer:main node ./winstaller.js
+DEBUG=electron-windows-installer:main node ./scripts/winstaller.js
