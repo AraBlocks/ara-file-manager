@@ -1,14 +1,28 @@
 'use strict'
 
-const ItemRow = require('./itemRow')
+const itemRow = require('./itemRow')
 const styles = require('./styles/section')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
+const box = require('component-box')
+
+box.use({ itemRow })
 
 class Section extends Nanocomponent {
   constructor({ type = '' }) {
     super()
     this.props = { typeRow: type }
+    this.makeRows = this.makeRows.bind(this)
+    this.box = box
+  }
+
+  makeRows(files) {
+    const { typeRow } = this.props
+    return files[typeRow].map((file, i) => {
+      const constructorArgs = [{ file, typeRow }]
+      return box('itemRow', { key: file.did, constructorArgs })
+        .render({ ...file, last: i === files.length - 1 })
+    })
   }
 
   update() {
@@ -16,20 +30,16 @@ class Section extends Nanocomponent {
   }
 
   createElement({ files }) {
-    const { props: { typeRow } } = this
-    const fileRows = files[typeRow].map(file => new ItemRow({ file, typeRow }))
-    return html`
+    const { props, makeRows } = this
+    return (html`
       <div class="${styles.container} section-container">
         <div class="${styles.header} section-header">
-          ${typeRow === 'purchased' ? 'Purchased Files' : 'Published Files'}
+          ${props.typeRow === 'purchased' ? 'Purchased Files' : 'Published Files'}
         </div>
         <div class="${styles.separator} section-separator"></div>
-        ${fileRows.map((file, i) => file.render({
-          ...files[typeRow][i],
-          last: i === fileRows.length - 1
-        }))}
+        ${makeRows(files)}
       </div>
-    `
+    `)
   }
 }
 

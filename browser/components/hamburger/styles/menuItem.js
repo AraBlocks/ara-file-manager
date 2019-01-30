@@ -11,7 +11,6 @@ module.exports = {
   container(clicked) {
      return css`
       :host {
-        align-items: center;
         background-color: white;
         border: 1px ${colors.araGrey} solid;
         border-width: 0px 1px;
@@ -22,7 +21,7 @@ module.exports = {
         line-height: 2em;
         overflow: hidden;
         padding: 0 5px;
-        text-align: center;
+        text-align: left;
         text-overflow: ellipsis;
         transition: font-weight 100ms;
         transition: color 500ms;
