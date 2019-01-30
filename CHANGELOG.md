@@ -1,3 +1,47 @@
+# [0.5.0](https://github.com/littlstar/ara-content-manager/compare/0.4.1...0.5.0) (2019-01-30)
+
+
+### Bug Fixes
+
+* added sign to prod build mac ([b5ed6e1](https://github.com/littlstar/ara-content-manager/commit/b5ed6e1))
+* changed casing of paths for linux ([193dc4d](https://github.com/littlstar/ara-content-manager/commit/193dc4d))
+* checks to see if argv[1] is deeplink ([f6d9b52](https://github.com/littlstar/ara-content-manager/commit/f6d9b52))
+* not overriding uncommited status upon login ([a1b7a61](https://github.com/littlstar/ara-content-manager/commit/a1b7a61))
+* **purchaseEstimate:** roundboi'd gas estimate ([e9a729b](https://github.com/littlstar/ara-content-manager/commit/e9a729b))
+* Null file sizes ([6eb9ae0](https://github.com/littlstar/ara-content-manager/commit/6eb9ae0))
+* prevents clicking export mult afs ([5bab8c2](https://github.com/littlstar/ara-content-manager/commit/5bab8c2))
+* **publish:** closes modal when not enough eth ([b78fcd9](https://github.com/littlstar/ara-content-manager/commit/b78fcd9))
+* prod windows build points to prod icon instead of dev ([9d6decd](https://github.com/littlstar/ara-content-manager/commit/9d6decd))
+* **purchaseEstimate:** increased rounding ([93484bb](https://github.com/littlstar/ara-content-manager/commit/93484bb))
+* reading metadata properly ([f748a60](https://github.com/littlstar/ara-content-manager/commit/f748a60))
+* reading metadata properly ([99a9a1a](https://github.com/littlstar/ara-content-manager/commit/99a9a1a))
+* removed return statement ([923edc1](https://github.com/littlstar/ara-content-manager/commit/923edc1))
+* Select file for windows ([71f74df](https://github.com/littlstar/ara-content-manager/commit/71f74df))
+* Size render issue ([476c21e](https://github.com/littlstar/ara-content-manager/commit/476c21e))
+* stops calling start_seed for uncommitted ([258a96b](https://github.com/littlstar/ara-content-manager/commit/258a96b))
+* working header hamby ([6f1fe29](https://github.com/littlstar/ara-content-manager/commit/6f1fe29))
+* working logout button on main hamby ([3f47958](https://github.com/littlstar/ara-content-manager/commit/3f47958))
+
+
+### Features
+
+* autopupdater logic for macos ([d5e00b7](https://github.com/littlstar/ara-content-manager/commit/d5e00b7))
+* backup eth faucy ([702e416](https://github.com/littlstar/ara-content-manager/commit/702e416))
+* Disallow logout while logging in ([#369](https://github.com/littlstar/ara-content-manager/issues/369)) ([c3da5b7](https://github.com/littlstar/ara-content-manager/commit/c3da5b7))
+* Fix file manager render issue after recover ([#371](https://github.com/littlstar/ara-content-manager/issues/371)) ([d046a5b](https://github.com/littlstar/ara-content-manager/commit/d046a5b))
+* hamby navigation on filemanager ([a8e7dbe](https://github.com/littlstar/ara-content-manager/commit/a8e7dbe))
+* Listener for dumping deeplink data ([1912587](https://github.com/littlstar/ara-content-manager/commit/1912587))
+* PE-792 Analytics Sanitization ([#374](https://github.com/littlstar/ara-content-manager/issues/374)) ([01582de](https://github.com/littlstar/ara-content-manager/commit/01582de))
+* Proper signing and fix windows analytics sanitization ([0b493ae](https://github.com/littlstar/ara-content-manager/commit/0b493ae))
+* Remove listener when window is closed ([#367](https://github.com/littlstar/ara-content-manager/issues/367)) ([d166223](https://github.com/littlstar/ara-content-manager/commit/d166223))
+* squirrel logic for windows ([f7277c1](https://github.com/littlstar/ara-content-manager/commit/f7277c1))
+* Update rewards dcdn ([2c81746](https://github.com/littlstar/ara-content-manager/commit/2c81746))
+* **itemRow:** caching compys :money_with_wings: ([bd50a66](https://github.com/littlstar/ara-content-manager/commit/bd50a66))
+* **manageFile:** fixed drag and drop issue ([cd7a85d](https://github.com/littlstar/ara-content-manager/commit/cd7a85d))
+* **publish:** adds name and size imm to ui ([56847f0](https://github.com/littlstar/ara-content-manager/commit/56847f0))
+
+
+
 ## [0.4.1](https://github.com/littlstar/ara-content-manager/compare/0.3.4...0.4.1) (2019-01-09)
 
 
