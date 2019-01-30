@@ -40,7 +40,7 @@ if (isDev === false && process.platform === 'darwin') {
   })
 
   autoUpdater.addListener('error', (error) => {
-    dialog.showMessageBox({ 'message': 'Auto updater error: ' + error })
+    debug('squirrel error: %o', error)
   })
 
   autoUpdater.checkForUpdates()
