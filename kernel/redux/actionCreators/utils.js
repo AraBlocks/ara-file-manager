@@ -8,7 +8,6 @@ const {
   afmManager,
   farmerManager
 } = require('../actions')
-const araFilesystem = require('ara-filesystem')
 const { ipcMain, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
@@ -20,19 +19,24 @@ internalEmitter.on(k.CLEAN_UI, () => {
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 })
 
-ipcMain.on(k.OPEN_AFS, async (event, load) => {
+ipcMain.on(k.OPEN_AFS, async (_, load) => {
+  debug('%s heard', k.OPEN_AFS)
+  const { farmer, files, application } = store
+  if (application.exportWindowOpen) { return }
   try {
-    debug('%s heard', k.OPEN_AFS)
-    const { farmer, files } = store
     const allFiles = files.published.concat(files.purchased)
     const file = allFiles.find(file => file.did === load.did)
-    const updateAvailable = file.status === k.UPDATE_AVAILABLE ? true : false
+
+    const updateAvailable = file.status === k.UPDATE_AVAILABLE
     dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] } })
+
     windowManager.openWindow('afsExplorerView')
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     const fileList = await afsManager.getFileList(load.did)
     dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable } })
+
     windowManager.pingView({ view: 'afsExplorerView', event: k.REFRESH })
   } catch (err) {
     debug("Error: %o", err)
@@ -41,13 +45,13 @@ ipcMain.on(k.OPEN_AFS, async (event, load) => {
 
 ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
   try {
-    const { farmer, files } = store
+    const { files } = store
     const fileList = files.published.concat(files.purchased)
     const file = fileList.find(file => file.did === load.did)
     dispatch({ type: k.CLOSE_AFS_EXPLORER, load })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     if (file.shouldBroadcast) {
-      internalEmitter.emit(k.START_SEEDING, load )
+      internalEmitter.emit(k.START_SEEDING, load)
     }
   } catch (err) {
     debug("Error: %o", err)
@@ -61,12 +65,12 @@ internalEmitter.on(k.CONFIRM_QUIT, () => {
 
 ipcMain.on(k.TOGGLE_ANALYTICS_PERMISSION, () => {
   const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userDID)
-  dispatch({ type: k.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission }})
+  dispatch({ type: k.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission } })
   windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 })
 
 internalEmitter.on(k.UPDATE_AVAILABLE, (load) => {
   debug('%s HEARD', k.UPDATE_AVAILABLE)
-  dispatch({ type: k.UPDATE_AVAILABLE, load: { did : load.did }})
+  dispatch({ type: k.UPDATE_AVAILABLE, load: { did: load.did } })
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 })
