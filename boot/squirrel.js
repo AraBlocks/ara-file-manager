@@ -1,5 +1,6 @@
 'use strict'
 
+const debug = require('debug')('afm:boot:squirrel')
 const { autoUpdater, dialog } = require('electron')
 const { version } = require('../package.json')
 const { urls } = require('k')
