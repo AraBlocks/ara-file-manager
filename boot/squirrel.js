@@ -1,10 +1,12 @@
 'use strict'
 
 const debug = require('debug')('afm:boot:squirrel')
-const { autoUpdater, dialog } = require('electron')
+const dispatch = require('../kernel/redux/reducers/dispatch')
 const { version } = require('../package.json')
-const { urls } = require('k')
+const { urls, stateManagement: k } = require('k')
+const { autoUpdater, dialog } = require('electron')
 const isDev = require('electron-is-dev')
+const windowManager = require('electron-window-manager')
 
 if (isDev === false && process.platform === 'darwin') {
   const updateFeed = urls.SQUIRREL_MAC
@@ -25,18 +27,11 @@ if (isDev === false && process.platform === 'darwin') {
 
   autoUpdater.addListener('update-downloaded', () => {
     debug('update-downloaded')
-
-    const dialogOpts = {
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: 'Application Update',
-      message: 'Update available',
-      detail: 'A new version has been downloaded. Restart the application and wait a few moments to apply the pupdates.'
-    }
-
-    dialog.showMessageBox(dialogOpts, (response) => {
-      if (response === 0) autoUpdater.quitAndInstall()
-    })
+    dispatch({ type: k.FEED_MODAL, load: {
+      modalName: 'updateApplication',
+      callback: () => autoUpdater.quitAndInstall()
+    }})
+    windowManager.openModal('generalActionModal')
   })
 
   autoUpdater.addListener('error', (error) => {
