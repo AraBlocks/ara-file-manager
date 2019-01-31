@@ -6,10 +6,7 @@ const { closeModal } = require('../../lib/tools/windowManagement')
 const html = require('nanohtml')
 const styles = require('./styles')
 
-module.exports = ({
-  modalName = 'quitConfirm',
-  callback = () => {}
-}) => {
+module.exports = ({ modalName = 'updateApplication', callback = () => {} }) => {
   const confirmButton = new Button({
 		children: 'Confirm',
 		onclick: () => {
@@ -20,12 +17,10 @@ module.exports = ({
 	const cancelButton = new Button({
 		children: 'Cancel',
 		...styles.buttonSelector('cancel'),
-		onclick: () => {
-      closeModal('generalActionModal')
-    }
+		onclick: () => closeModal('generalActionModal')
 	})
 	const { title, description } = actionModalText(modalName)
-	return html`
+	return (html`
     <div class="${styles.container({})} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
 				${title}
@@ -38,5 +33,5 @@ module.exports = ({
 				${cancelButton.render({})}
       </div>
     </div>
-  `
+  `)
 }

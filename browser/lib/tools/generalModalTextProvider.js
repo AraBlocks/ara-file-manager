@@ -160,6 +160,10 @@ function actionModalText(modalName) {
 			title = 'Quit File Manager?'
 			description = 'You will not be able to earn Ara Token rewards while File Manager is offline.'
 			break
+		case 'updateApplication':
+			title = 'Update Available!'
+			description = 'A new version has been downloaded. Confirm below to restart the application (this will take a few moments)'
+			break
 	}
 	return { title, description }
 }
