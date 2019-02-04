@@ -1,27 +1,20 @@
 'use strict'
 
-const k = require('../../../lib/constants/stateManagement')
-const Hamburger = require('../../components/hamburger')
-const { hamburgerHelper } = require('./util')
-const styles = require('./styles/fileDescriptor')
-const filesize = require('filesize')
-const html = require('nanohtml')
+const k = require('k')
 const Nanocomponent = require('nanocomponent')
+const filesize = require('filesize')
+const styles = require('./styles/fileDescriptor')
+const html = require('nanohtml')
 
 class FileDescriptor extends Nanocomponent {
   constructor(opts) {
     super()
-
     this.props = {
       name: opts.name || opts.did.slice(0,15) + '...',
       size: opts.size
     }
-
-    this.children = {
-      hamburger: new Hamburger(hamburgerHelper(opts))
-    }
-
     this.createSummary = this.createSummary.bind(this)
+    this.rerender = this.rerender.bind(this)
   }
 
   createSummary({ downloadPercent, shouldBroadcast, status}) {
@@ -37,12 +30,11 @@ class FileDescriptor extends Nanocomponent {
         </div>
       `)
     const sizeDiv = this.styleSize({ status, downloadPercent, shouldBroadcast })
-
-    return html`
+    return (html`
       <div class="${styles.summaryHolder} fileDescriptor-summaryHolder">
         ${[nameDiv, sizeDiv]}
       </div>
-    `
+    `)
   }
 
   styleSize({ status, downloadPercent, shouldBroadcast }) {
@@ -84,43 +76,42 @@ class FileDescriptor extends Nanocomponent {
     const [_size, unit] = filesize(size, { output: 'array' })
     const downloaded = Math.round(filesize(downloadPercent * size).slice(0, -2))
     const downloadedSpan = [k.DOWNLOADING, k.PAUSED].includes(status)
-      ? [html`<span style="color:var(--ara-${downloadedSpanColor});">${downloaded}</span>`, ' /']
+      ? [(html`<span style="color:var(--ara-${downloadedSpanColor});">${downloaded}</span>`), ' /']
       : null
-    const sizeSpan = html`<span style="color:var(--ara-${spanColor});"> ${_size}</span>`
-    const unitSpan = html`<span style="color:var(--ara-${unitColor});"> ${unit.toLocaleLowerCase()}</span>`
-    const msgSpan = msg ? html`<span style="color:var(--ara-${spanColor});"> ${msg}</span>` : null
+    const sizeSpan = (html`<span style="color:var(--ara-${spanColor});"> ${_size}</span>`)
+    const unitSpan = (html`<span style="color:var(--ara-${unitColor});"> ${unit.toLocaleLowerCase()}</span>`)
+    const msgSpan = msg ? (html`<span style="color:var(--ara-${spanColor});"> ${msg}</span>`) : null
 
-    return html`
+    return (html`
       <div class="${styles.sizeHolder} fileDescriptor-sizeHolder">
         ${[downloadedSpan, sizeSpan, unitSpan, msgSpan]}
       </div>
-    `
+    `)
   }
 
-  update(newProps) {
-    this.props.name = newProps.name || this.props.name
-    this.props.size = newProps.size || this.props.size
+  toggleMenu(e) {
+    const { state } = this
+    e.type === 'mouseleave'
+      ? state.visible = false
+      : state.visible = !state.visible
+    state.left = e.clientX - 10  + 'px'
+    this.rerender()
+  }
+
+  update() {
     return true
   }
 
   createElement(file) {
-    const { children, createSummary } = this
+    const { createSummary, fileClicked } = this
     const { status, downloadPercent, shouldBroadcast } = file
-
-    return html`
-      <div class="${styles.container} fileDescriptor-container">
-        <div class="${styles.hamburgerHolder(status === k.AWAITING_STATUS)} fileDescriptor-hamburgerHolder">
-          <div class="${styles.hamburger} fileDescriptor-hamburger">
-            ${children.hamburger.render(hamburgerHelper(file))}
-          </div>
+    return (html`
+      <div onclick=${fileClicked}>
+        <div class="${styles.clickable} fileDescriptor-clickable">
+          ${createSummary({ downloadPercent, shouldBroadcast, status })}
         </div>
-        ${createSummary({
-          downloadPercent,
-          shouldBroadcast,
-          status,
-        })}
       </div>
-    `
+    `)
   }
 }
 

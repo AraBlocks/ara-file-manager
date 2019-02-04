@@ -1,4 +1,4 @@
 module.exports = {
-  hamburgerHelper: require('./hamburgerHelper'),
+  menuHelper: require('./menuHelper'),
   renderEarnings: require('./renderEarnings')
 }

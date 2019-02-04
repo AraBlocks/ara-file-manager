@@ -19,7 +19,7 @@ class PublishedStats extends Nanocomponent {
     status,
     shouldBroadcast
   }) {
-    return html`
+    return (html`
       <div class="${styles.container(status, shouldBroadcast)} publishedStats-container">
         <div class="${styles.price} publishedStats-price">
           ${price}
@@ -38,7 +38,7 @@ class PublishedStats extends Nanocomponent {
           </div>
         </div>
       </div>
-    `
+    `)
   }
 }
 
