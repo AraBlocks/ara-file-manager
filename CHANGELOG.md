@@ -1,3 +1,17 @@
+## [0.5.1](https://github.com/littlstar/ara-content-manager/compare/0.5.0...0.5.1) (2019-02-04)
+
+
+### Bug Fixes
+
+* defined debug in squirrel ([08b0a95](https://github.com/littlstar/ara-content-manager/commit/08b0a95))
+* defined debug in squirrel ([ef2485c](https://github.com/littlstar/ara-content-manager/commit/ef2485c))
+* stringifies meta ([5f3387b](https://github.com/littlstar/ara-content-manager/commit/5f3387b))
+* stringifies meta ([e5ec34d](https://github.com/littlstar/ara-content-manager/commit/e5ec34d))
+* **squirrel:** removed dialog squirrel err ([61275f1](https://github.com/littlstar/ara-content-manager/commit/61275f1))
+* **squirrel:** removed dialog squirrel err ([6aa2620](https://github.com/littlstar/ara-content-manager/commit/6aa2620))
+
+
+
 # [0.5.0](https://github.com/littlstar/ara-content-manager/compare/0.4.1...0.5.0) (2019-01-30)
 
 
