@@ -26,14 +26,14 @@ class TabMenu extends Nanocomponent {
   createElement({ isActive }) {
     const { props } = this
 
-    return html`
+    return (html`
       <div
         class="${styles.tab(isActive)} tab-tab"
         onclick=${() => props.selectTab(props.index)}
       >
         ${props.children}
       </div>
-    `
+    `)
   }
 }
 

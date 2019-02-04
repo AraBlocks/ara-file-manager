@@ -10,7 +10,7 @@ module.exports = {
     :host {
       background-color: ${colorSelector('grey')};
       height: 1px;
-      margin-bottom: 20px;
+      // margin-bottom: 20px;
       width: 100%;
 
     }

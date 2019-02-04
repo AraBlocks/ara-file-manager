@@ -1,6 +1,6 @@
 'use strict'
 
-const k = require('../../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 const {
   colors,
   colorSelector,
@@ -23,10 +23,10 @@ module.exports = {
     return css`
       :host {
         align-items: flex-end;
+        color: ${colorSelector(color)};
         display: flex;
         flex-direction: column;
         width: 100%;
-        color: ${colorSelector(color)};
       }
     `
   },

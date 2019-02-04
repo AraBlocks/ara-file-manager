@@ -31,16 +31,16 @@ module.exports = ({
       color = packageOpened ? 'grey' : 'orange'
       break
     default:
-      return html`
+      return (html`
         <div class="${styles.holder} progressBar-holder" style="background-color: rgba(0,0,0,0);">
           <div class="ants"></div>
         </div>
-      `
+      `)
   }
 
-  return html`
-    <div style="${last ? 'margin-bottom: 40px;' : null}" "class="${styles.holder} progressBar-holder">
+  return (html`
+    <div class="${styles.holder} progressBar-holder" style="${last ? 'margin-bottom: 40px;' : null}" >
       <div style="background-color: ${styles.colorSelector(color)}; width:${(downloadPercent * 100) + '%'};"></div>
     </div>
-  `
+  `)
 }

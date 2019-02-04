@@ -1,12 +1,13 @@
 'use strict'
 
 const windowManagement = require('../lib/tools/windowManagement')
-const Button = require('../components/button')
-const Input = require('../components/input')
-const { LOGIN } = require('../../lib/constants/stateManagement')
-const styles = require('./styles/login')
-const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
+const { LOGIN } = require('../../lib/constants/stateManagement')
+const Button = require('../components/button')
+const styles = require('./styles/login')
+const Input = require('../components/input')
+const Link = require('../components/link')
+const html = require('nanohtml')
 
 class Login extends Nanocomponent {
   constructor({ userDID }) {
@@ -43,9 +44,11 @@ class Login extends Nanocomponent {
         }
       }),
 
-      registerButton: new Button({
+      registerLink: new Link({
         children: 'Create One',
-        cssClass: { name: 'smallInvisible' },
+        cssClass: {
+          name: 'createAidLink'
+        },
         onclick: () => {
           windowManagement.openWindow('registration')
           windowManagement.closeWindow('login')
@@ -99,8 +102,10 @@ class Login extends Nanocomponent {
           app to buy, sell, share, and earn rewards for files on
           the Ara Network across the web.
           <br><br>
-          To get started, log in with your <b>Ara ID</b>
+          To get started, log in with your <b>Ara ID</b> or
+          ${children.registerLink.render({})}
         </p>
+
         <form class="${styles.form} login-form" onsubmit=${login}>
           ${children.userDIDInput.render()}
           ${children.passwordInput.render()}
@@ -110,8 +115,6 @@ class Login extends Nanocomponent {
           <b>Need to recover your Ara ID?</b>
           ${children.recoverButton.render({})}
           <div style="height: 10px;"></div>
-          <b>Don't have an account?</b>
-          ${children.registerButton.render({})}
           ${children.cancelButton.render({})}
         </div>
       </div>
