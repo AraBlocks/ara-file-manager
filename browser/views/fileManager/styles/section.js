@@ -21,7 +21,7 @@ module.exports = {
     :host {
       background-color: ${colors.araGrey};
       height: 1px;
-      margin: 13px 0 18px 0;
+      margin: 5px 0 5px 0;
       width: 100%;
     }
   `

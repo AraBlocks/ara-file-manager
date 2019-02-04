@@ -21,7 +21,7 @@ class Section extends Nanocomponent {
     return files[typeRow].map((file, i) => {
       const constructorArgs = [{ file, typeRow }]
       return box('itemRow', { key: file.did, constructorArgs })
-        .render({ ...file, last: i === files.length - 1 })
+        .render({ ...file, index: i }, i === files[typeRow].length -1)
     })
   }
 

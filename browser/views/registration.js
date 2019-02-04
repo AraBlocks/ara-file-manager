@@ -112,8 +112,9 @@ class Registration extends Nanocomponent {
         </div>
         <div class="${styles.header}">Register</div>
         <p class="${styles.description}">
-          To use the <b>Ara File Manager</b>, you'll need to create an Ara ID. We will generate the ID
-          for you, but save your password somewhere safe, as <b>there is no way to recover it if lost</b>.
+          Welcome to the <b>Ara File Manager</b>. An <b>Ara ID</b> will be generated for
+          you once a password is chosen. Save your password somewhere safe, as <b>there
+          is no way to recover it if lost</b>.
         </p>
         <form class="${styles.registerForm}" onsubmit="${register}">
           ${children.passwordInput.render({ displayError: state.displayError.password })}

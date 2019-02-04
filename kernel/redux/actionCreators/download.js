@@ -13,10 +13,11 @@ const store = windowManager.sharedData.fetch('store')
 ipcMain.on(k.DOWNLOAD, download)
 internalEmitter.on(k.DOWNLOAD, (load) => download(null, load))
 
-async function download(event, load) {
+async function download(_, load) {
 	debug('%s heard', k.DOWNLOAD)
 	try {
-		const { jobId } = store.files.purchased.find(({ did }) => did === load.did)
+		const { jobId } = store.files.purchased.concat(store.files.published)
+			.find(({ did }) => did === load.did)
 
 		dispatch({ type: k.CONNECTING, load })
 		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })

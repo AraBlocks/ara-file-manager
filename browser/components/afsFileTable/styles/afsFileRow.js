@@ -40,20 +40,20 @@ module.exports = {
 
 	fileNameCell: css`
 		:host {
+			cursor: pointer;
 			height: 2em;
-			min-width: 350px;
-			max-width: 350px;
 			overflow: hidden;
     	text-overflow: ellipsis;
+			width: 350px;
     	white-space: nowrap;
 		}
 	`,
 
 	fileImage: css`
 		:host {
-			height:22px;
+			height: 22px;
+			width: 22px;
 			padding-right: 10px;
-			width:22px;
 		}
 	`,
 

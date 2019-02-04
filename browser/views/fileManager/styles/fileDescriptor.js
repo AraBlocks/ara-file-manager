@@ -1,10 +1,11 @@
 'use strict'
 
-const { AWAITING_DOWNLOAD, DOWNLOADING } = require('../../../../lib/constants/stateManagement')
 const { fonts, colorSelector } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
+  fonts,
+
   container: css`
     :host {
       display: flex;
@@ -15,24 +16,6 @@ module.exports = {
     :host {
       color: ${colorSelector('orange')};
       font-size: 17px;
-    }
-  `,
-
-  hamburgerHolder(loading) {
-    return css`
-      :host {
-        align-items: center;
-        display: flex;
-        opacity: ${loading ? 0.3 : 1};
-        pointer-events: ${loading ? 'none' : 'auto'};
-        width: 9%;
-      }`
-  },
-
-  hamburger: css`
-    :host {
-      height: 20px;
-      width: 100%;
     }
   `,
 
@@ -74,6 +57,11 @@ module.exports = {
     }
   `,
 
+  clickable: css`
+    :host {
+      width: 100%;
+    }
+  `,
 
   tooltipHolder: css`
     :host {
