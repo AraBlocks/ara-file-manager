@@ -50,6 +50,15 @@ module.exports = {
     }
   `,
 
+  beta: css`
+    :host {
+      font-size: 20px;
+      height: 35px;
+      float: right;
+      padding-left: 10px;
+    }
+  `,
+
   tabHolder: css`
     :host {
       display: flex;

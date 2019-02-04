@@ -1,10 +1,10 @@
 'use strict'
 
 const {
-  colors,
   colorSelector,
-  fonts,
-  fontSelector
+  fontSelector,
+  colors,
+  fonts
 } = require('styleUtils')
 const { css } = require('css')
 
@@ -35,18 +35,27 @@ module.exports = {
   smallInvisible({
     color  = 'green',
     fontSize = '14',
+    height = '36',
+    left = 'inherit',
+    padding = 'inherit',
+    position = 'inherit',
+    top = 'inherit',
     weight = 'bold',
-    height = '36'
+    width = '100%'
   }) {
     return css`
       :host {
-        background-color: white;
+        position: ${position};
+        padding: ${padding};
+        width: ${width};
+        left: ${left};
+        top: ${top};
+        background-color: rgba(1,1,1,0);
         color: ${colorSelector(color)};
         font-family: ${fontSelector(weight)};
         font-size: ${fontSize}px;
         height: ${height}px;
         transition: all 100ms;
-        width: 100%;
         -webkit-app-region: no-drag;
       }
 

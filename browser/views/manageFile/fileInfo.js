@@ -53,6 +53,8 @@ class FileInfo extends Nanocomponent {
 
 	update({ parentState }) {
 		this.props = { parentState }
+		// handles users who think `-0` is a funny price
+		parentState.price = Math.abs(parentState.price)
 		return true
 	}
 

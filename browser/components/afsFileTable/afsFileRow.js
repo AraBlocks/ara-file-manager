@@ -98,6 +98,7 @@ class AfsFileRow extends Nanocomponent {
 				})
 			})
 			.catch(() => {})
+		this.rerender()
 	}
 
 	fileIconSelector(isFile) {
@@ -111,11 +112,11 @@ class AfsFileRow extends Nanocomponent {
 		`
 	}
 
-	fileClicked() {
+	fileClicked(e) {
 		const { props } = this
 		return props.fileInfo.isFile === false
 			? props.fileRowClicked(props.fileInfo.subPath, props.fileInfo.items)
-			: null
+			: this.exportFile(e)
 	}
 
 	renderFileType() {
@@ -126,8 +127,8 @@ class AfsFileRow extends Nanocomponent {
 	renderContextMenu(e) {
 		const contextMenu = e.target.closest('tr').children[0]
 
-		contextMenu.style.left = e.clientX + 1 + 'px'
-		contextMenu.style.top = e.clientY + 1 + 'px'
+		contextMenu.style.left = e.clientX - 10 + 'px'
+		contextMenu.style.top = e.clientY - 10 + 'px'
 		contextMenu.style.display = 'block'
 
 		contextMenu.addEventListener('mouseout', function (event) {
@@ -140,7 +141,7 @@ class AfsFileRow extends Nanocomponent {
 		})
 	}
 
-	createElement(index) {
+	createElement() {
 		const {
 			fileClicked,
 			children,

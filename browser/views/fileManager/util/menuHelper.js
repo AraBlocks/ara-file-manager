@@ -1,10 +1,9 @@
 'use strict'
 
 const { stateManagement: k } = require('k')
-const Hamburger = require('../../../components/hamburger')
 const { deeplink, windowManagement } = require('../../../lib/tools')
 
-module.exports = (opts) => {
+module.exports = (opts, closeContextMenuCB = () => {}) => {
   const menuItems = [
     {
       children: 'Copy Link',
@@ -16,9 +15,14 @@ module.exports = (opts) => {
     }
   ]
   menuItems.addItem = function (children, event) {
-    this.push({ children, onclick: () => windowManagement.emit({ event, load: { did: opts.did, name: opts.name } }) })
+    this.push({
+      children, onclick: (e) => {
+        e.stopPropagation()
+        closeContextMenuCB()
+        windowManagement.emit({ event, load: { did: opts.did, name: opts.name } })
+      }
+    })
   }
-
   switch (opts.status) {
     case k.DOWNLOADED_PUBLISHED:
       if (opts.packageOpened) { break }
@@ -26,7 +30,7 @@ module.exports = (opts) => {
         ? menuItems.addItem('Stop Seeding', k.STOP_SEEDING)
         : menuItems.addItem('Seed', k.START_SEEDING)
       menuItems.addItem('Open Package', k.OPEN_AFS)
-      if (opts.owner) menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE)
+      if (opts.owner) { menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE) }
       break
     case k.AWAITING_DOWNLOAD:
       menuItems.addItem('Download Package', k.DOWNLOAD)
