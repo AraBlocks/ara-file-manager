@@ -12,7 +12,7 @@ if (isDev) { return }
 
 process.platform === 'darwin'
   ? autoUpdater.setFeedURL(urls.SQUIRREL_MAC + '?v=' + version)
-  : autoUpdater.setFeedURL(urls.SQUIRREL_WIN + '?v=' + version)
+  : autoUpdater.setFeedURL(urls.SQUIRREL_WIN)
 
 autoUpdater.addListener('checking-for-update', () => {
   debug('checking-for-updates 🐿')
