@@ -41,10 +41,13 @@ The metadata format the file manager is compatible with is the following:
 }
 ```
 
+## Building the application
+Documentation around building the application can be found [here](https://github.com/littlstar/ara-file-manager/blob/master/.github/BUILD.md)
+
 ## Contributing
-- [Commit message format](https://github.com/littlstar/ara-file-manager/blob/master/COMMIT_FORMAT.md)
-- [Commit message examples](https://github.com/littlstar/ara-file-manager/blob/master/COMMIT_FORMAT_EXAMPLES.md)
-- [How to contribute](https://github.com/littlstar/ara-file-manager/blob/master/CONTRIBUTING.md)
+- [Commit message format](https://github.com/littlstar/ara-file-manager/blob/master/.github/COMMIT_FORMAT.md)
+- [Commit message examples](https://github.com/littlstar/ara-file-manager/blob/master/.github/COMMIT_FORMAT_EXAMPLES.md)
+- [How to contribute](https://github.com/littlstar/ara-file-manager/blob/master/.github/CONTRIBUTING.md)
 
 ## See also
 - External [link](https://goo.gl/67cqTC)
