@@ -27,7 +27,11 @@ async function readFileMetadata(did) {
 	let fileInfo = {}
 	try {
 		const data = await afs.metadata.readFile({ did })
-		fileInfo = JSON.parse(data.fileInfo)
+		if (data.fileInfo) {
+			fileInfo = typeof data.fileInfo === 'string'
+				? JSON.parse(data.fileInfo)
+				: data.fileInfo
+		}
 	} catch (err) {
 		debug('No metadata for %s', did)
 	}
@@ -70,9 +74,8 @@ async function writeFileMetaData({
 			title,
 			timestamp: new Date
 		}
-		const fileDataString = JSON.stringify(fileData)
 		debug('Adding file metadata for %s', did)
-		await afs.metadata.writeKey({ did, key: 'fileInfo', value: fileDataString, password })
+		await afs.metadata.writeKey({ did, key: 'fileInfo', value: fileData, password })
 	} catch (e) {
 		debug(e)
 	}
