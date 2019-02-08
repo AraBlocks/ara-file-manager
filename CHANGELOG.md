@@ -1,4 +1,13 @@
-# [0.6.0](https://github.com/littlstar/ara-content-manager/compare/0.5.1...0.6.0) (2019-02-08)
+## [0.6.1](https://github.com/littlstar/ara-content-manager/compare/0.5.2...0.6.1) (2019-02-08)
+
+
+### Features
+
+* **constants/urls.js:** PUPDATER.ARA.ONE ([f385972](https://github.com/littlstar/ara-content-manager/commit/f385972))
+
+
+
+## [0.5.2](https://github.com/littlstar/ara-content-manager/compare/0.5.1...0.5.2) (2019-02-08)
 
 
 ### Bug Fixes
