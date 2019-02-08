@@ -47,7 +47,7 @@ class ItemRow extends Nanocomponent {
       case k.AWAITING_DOWNLOAD:
         windowManagement.emit({ event: k.DOWNLOAD, load })
         break
-      case k.DOWNLOADED:
+      case k.DOWNLOADED_PUBLISHED:
         windowManagement.emit({ event: k.OPEN_AFS, load: { did, name }})
         break
       case k.DOWNLOADING:
