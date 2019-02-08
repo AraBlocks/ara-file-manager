@@ -1,3 +1,17 @@
+## [0.5.2](https://github.com/littlstar/ara-content-manager/compare/0.5.1...0.5.2) (2019-02-08)
+
+
+### Bug Fixes
+
+* Stops double stringify, read accounts for sing and dbl stringify ([3497bc0](https://github.com/littlstar/ara-content-manager/commit/3497bc0))
+
+
+### Features
+
+* workig autoupdate windows ([398afaf](https://github.com/littlstar/ara-content-manager/commit/398afaf))
+
+
+
 ## [0.5.1](https://github.com/littlstar/ara-content-manager/compare/0.5.0...0.5.1) (2019-02-04)
 
 
