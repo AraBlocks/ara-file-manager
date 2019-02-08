@@ -1,3 +1,12 @@
+## [0.6.2](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.6.2) (2019-02-08)
+
+
+### Features
+
+* context-menu for main view ([e0bb664](https://github.com/littlstar/ara-content-manager/commit/e0bb664))
+
+
+
 ## [0.6.1](https://github.com/littlstar/ara-content-manager/compare/0.5.2...0.6.1) (2019-02-08)
 
 
