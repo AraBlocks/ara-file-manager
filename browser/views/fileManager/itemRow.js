@@ -79,7 +79,7 @@ class ItemRow extends Nanocomponent {
     } = this
     return (html`
       <div
-        class=${styles.mainContainer}
+        class="${styles.mainContainer} itemRow-mainContainer"
         style="margin-bottom:${last && '25px'}"
         onclick=${onClick}
         oncontextmenu=${toggleMenu}
