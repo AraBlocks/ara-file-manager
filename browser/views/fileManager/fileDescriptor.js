@@ -1,6 +1,6 @@
 'use strict'
 
-const k = require('k')
+const { stateManagement: k } = require('k')
 const Nanocomponent = require('nanocomponent')
 const filesize = require('filesize')
 const styles = require('./styles/fileDescriptor')
@@ -98,7 +98,9 @@ class FileDescriptor extends Nanocomponent {
     this.rerender()
   }
 
-  update() {
+  update(newProps) {
+    this.props.name = newProps.name || this.props.name
+    this.props.size = newProps.size || this.props.size
     return true
   }
 
