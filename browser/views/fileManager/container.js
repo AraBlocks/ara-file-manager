@@ -38,11 +38,11 @@ class Container extends Nanocomponent {
   }
 
   renderSpinnerBars() {
-    return html`
+    return (html`
       <div class="${styles.spinnerBarHolder} container-spinnerBarHolder">
         ${spinnerBar()}
       </div>
-    `
+    `)
   }
 
   renderSections(network) {
@@ -121,7 +121,7 @@ class Container extends Nanocomponent {
     } = this
     const { activeTab, loadingLibrary } = state
 
-    return html`
+    return (html`
       <div>
         ${utils.shouldShowBanner(network) ? TestnetBanner() : html`<div></div>`}
         <div class="${styles.container} container-container">
@@ -131,7 +131,7 @@ class Container extends Nanocomponent {
           </div>
         </div>
       </div>
-    `
+    `)
   }
 }
 
