@@ -9,6 +9,7 @@ module.exports = {
       display: flex;
       height: 44px;
       justify-content: space-between;
+      padding: 10px 2.5% 0 2.5%;
       -webkit-app-region: no-drag;
     }
 

@@ -65,7 +65,8 @@ class ItemRow extends Nanocomponent {
     this.rerender()
   }
 
-  update() {
+  update(newProps) {
+    Object.assign(this.props, newProps)
     return true
   }
 
