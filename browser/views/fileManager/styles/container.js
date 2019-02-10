@@ -12,7 +12,7 @@ module.exports = {
     }
 
     :host > div {
-      width: 95%;
+      width: 100%;
     }
 
     :host a {
