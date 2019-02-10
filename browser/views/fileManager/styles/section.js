@@ -10,6 +10,7 @@ module.exports = {
       font-family: ${fonts.black};
       font-size: 16px;
       height: 30px;
+      padding: 0 2.5%;
       position: sticky;
       pointer-events: none;
       top: 0px;
@@ -21,7 +22,7 @@ module.exports = {
     :host {
       background-color: ${colors.araGrey};
       height: 1px;
-      margin: 5px 0 5px 0;
+      margin-top: 5px;
       width: 100%;
     }
   `

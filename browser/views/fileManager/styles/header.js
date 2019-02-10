@@ -7,7 +7,7 @@ module.exports = {
   colors,
   fonts,
 
-  container(hambyToggled){ 
+  container(hambyToggled){
     return css`
       :host {
         display: flex;
@@ -16,6 +16,7 @@ module.exports = {
         height: 150px;
         justify-content: space-between;
         margin-bottom: 65px;
+        padding: 0 2.5%;
       }
 
       :host:before {
