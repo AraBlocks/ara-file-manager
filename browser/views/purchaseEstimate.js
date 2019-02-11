@@ -61,15 +61,20 @@ class PurchaseEstimate extends Nanocomponent {
               </div>
             </div>
 
-            <div class="${styles.padding}">
-              <span class="${styles.bigBold} modals-bigBold">
-                ${props.peers}
-              </span>
-                Peer(s)
-              <div style="font-size: 9px;">
-                currently online
-              </div>
-            </div>
+            ${props.peers
+            ?
+              (html`
+                <div class="${styles.padding}">
+                  <span class="${styles.bigBold} modals-bigBold">
+                    ${props.peers}
+                  </span>
+                    Peer(s)
+                  <div style="font-size: 9px;">
+                    currently online
+                  </div>
+                </div>`
+              )
+            : null}
 
           </div>
         </div>
