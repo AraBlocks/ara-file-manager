@@ -1,14 +1,13 @@
-'use strict'
+const { stateManagement: k } = require('k')
 
-const { emit } = require('../../lib/tools/windowManagement')
-const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
-const fileSystemManager = require('../../lib/tools/fileSystemManager')
-const fileListUtil = require('../../lib/tools/fileListUtil')
-const k = require('../../../lib/constants/stateManagement')
-const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
+
+const { emit } = require('../../lib/tools/windowManagement')
+const fileListUtil = require('../../lib/tools/fileListUtil')
+const fileSystemManager = require('../../lib/tools/fileSystemManager')
+const styles = require('./styles/afsFileRow')
 
 class AfsFileRow extends Nanocomponent {
 	constructor({
@@ -88,7 +87,7 @@ class AfsFileRow extends Nanocomponent {
 			.then(folderName => {
 				props.renderView({ spinner: true })
 				emit({
-					event: EXPORT_FILE,
+					event: k.EXPORT_FILE,
 					load: {
 						...props.fileInfo,
 						did: props.did,
