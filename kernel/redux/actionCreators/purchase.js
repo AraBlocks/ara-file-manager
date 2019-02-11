@@ -1,18 +1,19 @@
-'use strict'
+const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
+const { stateManagement: k } = require('k')
+
+const araUtil = require('ara-util')
+const { internalEmitter } = require('electron-window-manager')
+const { ipcMain } = require('electron')
+const isDev = require('electron-is-dev')
+const windowManager = require('electron-window-manager')
 
 const { acmManager, descriptorGeneration } = require('../actions')
-const { stateManagement: k } = require('k')
-const { internalEmitter } = require('electron-window-manager')
-const windowManager = require('electron-window-manager')
-const { ipcMain } = require('electron')
 const dispatch = require('../reducers/dispatch')
-const araUtil = require('ara-util')
-const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
-const isDev = require('electron-is-dev')
-const { account,
-				farmer,
-				files
-			} = windowManager.sharedData.fetch('store')
+const {
+	account,
+	farmer,
+	files
+} = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
 	try {
@@ -44,8 +45,9 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
-		// get peer count estimate
-		farmer.farm.dryRunJoin({ did: load.did })
+		// // get peer count estimate
+		// // TODO: finish this feat in rDCDN
+		// farmer.farm.dryRunJoin({ did: load.did })
 
 		const price = await acmManager.getAFSPrice({ did: load.did })
 		const fee = acmManager.getPurchaseFee(price)
