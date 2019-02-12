@@ -1,8 +1,15 @@
-## [0.6.5](https://github.com/littlstar/ara-content-manager/compare/0.6.4...0.6.5) (2019-02-12)
+# [0.7.0](https://github.com/littlstar/ara-content-manager/compare/0.6.4...0.7.0) (2019-02-12)
+
+
+### Bug Fixes
+
+* **~/purchase.js:** Comment out dryRunJoin until rDCDN supports ([8b5b71f](https://github.com/littlstar/ara-content-manager/commit/8b5b71f))
 
 
 ### Features
 
+* **browser/views/purchaseEstimate:** Add peer count ([15363f2](https://github.com/littlstar/ara-content-manager/commit/15363f2))
+* **kernel/*:** Add peer count to purchase estimate ([18191de](https://github.com/littlstar/ara-content-manager/commit/18191de))
 * **tray.js:** windows version of tray icon ([3ba0ee1](https://github.com/littlstar/ara-content-manager/commit/3ba0ee1))
 
 
