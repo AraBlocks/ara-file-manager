@@ -1,7 +1,5 @@
-'use strict'
-
-const { css } = require('css')
 const { buttonSelector, fonts } = require('styleUtils')
+const { css } = require('css')
 
 module.exports = {
   buttonSelector,
@@ -37,7 +35,6 @@ module.exports = {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      padding-top: 20px;
       text-align: center;
       width: 90%;
     }
@@ -63,7 +60,7 @@ module.exports = {
   for: css`
     :host {
       font-size: 12px;
-      margin-top: 7px;
+      margin-bottom: 10px;
     }
   `,
 
@@ -86,7 +83,7 @@ module.exports = {
   preheader: css`
     :host {
       font-size: 12px;
-      margin-bottom: 5px;
+      margin: 15px 0 5px 0;
     }
 
     :host > b {

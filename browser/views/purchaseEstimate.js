@@ -36,10 +36,9 @@ class PurchaseEstimate extends Nanocomponent {
     const { props } = this
 
 		return props.gasEstimate
-      ? html`
+      ? (html`
         <div class="${styles.contentHolder} estimate-contentHolder" style="animation: fadein 1500ms;">
           <div>
-
             <div class="${styles.padding}">
               <span class="${styles.bigBold} modals-bigBold">
                 ${props.price ? props.price + utils.roundDecimal(props.fee, 1000) : 0}
@@ -49,7 +48,6 @@ class PurchaseEstimate extends Nanocomponent {
                 ${props.price + ' + ' + utils.roundDecimal(props.fee, 1000) + ' Network Fee'}
               </div>
             </div>
-
             <div class="${styles.padding}">
               <span class="${styles.bigBold} modals-bigBold">
                 ${utils.roundDecimal(props.gasEstimate, 1000)}
@@ -59,30 +57,27 @@ class PurchaseEstimate extends Nanocomponent {
                 Gas fee
               </div>
             </div>
-
             ${props.peers
-            ?
-              (html`
-                <div class="${styles.padding}">
-                  <span class="${styles.bigBold} modals-bigBold">
-                    ${props.peers}
-                  </span>
-                    Peer(s)
-                  <div style="font-size: 9px;">
-                    currently online
-                  </div>
-                </div>`
-              )
-            : null}
-
+              ? (html`
+                  <div class="${styles.padding}">
+                    <span class="${styles.bigBold} modals-bigBold">
+                      ${props.peers}
+                    </span>
+                      Peer(s)
+                    <div style="font-size: 9px;">
+                      currently online
+                    </div>
+                  </div>`
+                )
+              : null}
           </div>
         </div>
-      `
-			: html `
+      `)
+			: (html `
 				<div class="${styles.contentHolder} estimate-contentHolder">
 					<div class="spinner-small-teal ${styles.spinner}"></div>
 				</div>
-			`
+			`)
   }
 
   update(newProps){
@@ -105,20 +100,18 @@ class PurchaseEstimate extends Nanocomponent {
             You're about to purchase
           </div>
           <div class="${styles.fileName} modal-fileName">
-            ${props.fileName || props.did.slice(0, 15) + '...'}
+            ${props.fileName || did.slice(0, 15) + '...'}
           </div>
           ${props.author
-          ?
-            (html`
+          ? (html`
               <div class="${styles.postheader} modal-postheader">
                 from ${props.author || 'Unnamed author'}
               </div>`
             )
           : null}
-            <div class="${styles.for} modal-for">
-          for
+          <div class="${styles.for} modal-for">
+            for
           </div>
-
         </div>
         ${renderEstimate()}
         <div class="${styles.buttonHolder} purchaseEstimate-buttonholder">
