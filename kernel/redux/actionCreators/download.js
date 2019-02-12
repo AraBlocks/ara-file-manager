@@ -74,7 +74,7 @@ internalEmitter.on(k.DOWNLOADING, (load) => {
 
 internalEmitter.on(k.DOWNLOADED, async (load) => {
 	debug('Dispatching %s', k.DOWNLOADED)
-	const fileInfo = await utils.readFileMetadata(load.did)
+	const fileInfo = await utils.readFileMetadata({ did: load.did })
 	dispatch({ type: k.DOWNLOADED, load: { did: load.did, name: fileInfo.title } })
 	windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 })

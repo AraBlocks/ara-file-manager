@@ -23,8 +23,14 @@ function makeAfsPath(did) {
 	return path.join(createAFSKeyPath(did), 'home', 'content')
 }
 
-async function readFileMetadata(did) {
+async function readFileMetadata(_did) {
 	let fileInfo = {}
+	let did
+	if ('object' === typeof _did) {
+		({ did } = _did)
+	} else {
+		did = _did
+	}
 	try {
 		const data = await afs.metadata.readFile({ did })
 		debug('readFileMetadata data:', data)
