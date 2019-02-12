@@ -1,11 +1,10 @@
-'use strict'
+const html = require('nanohtml')
+const { stateManagement: k } = require('k')
+const Nanocomponent = require('nanocomponent')
 
 const Button = require('../components/button')
 const { closeWindow, emit } = require('../lib/tools/windowManagement')
-const k = require('../../lib/constants/stateManagement')
 const styles = require('./styles/purchaseEstimate')
-const html = require('nanohtml')
-const Nanocomponent = require('nanocomponent')
 const { utils } = require('../lib/tools')
 
 class PurchaseEstimate extends Nanocomponent {
