@@ -1,9 +1,15 @@
-## [0.6.2](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.6.2) (2019-02-08)
+## [0.6.3](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.6.3) (2019-02-12)
+
+
+### Bug Fixes
+
+* hot reloading + filedescriptor updates ([170865c](https://github.com/littlstar/ara-content-manager/commit/170865c))
+* hot reloading + filedescriptor updates ([1df0cd2](https://github.com/littlstar/ara-content-manager/commit/1df0cd2))
 
 
 ### Features
 
-* context-menu for main view ([e0bb664](https://github.com/littlstar/ara-content-manager/commit/e0bb664))
+* context-menu for main view ([07172cc](https://github.com/littlstar/ara-content-manager/commit/07172cc))
 
 
 
