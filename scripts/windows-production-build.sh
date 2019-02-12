@@ -4,6 +4,13 @@ echo "${BASH_SOURCE[0]}"
 
 ANALYTICS_CONSTANTS=./lib/constants/analytics.js
 
+shopt -s extglob
+rm -rf node_modules/fd-lock/prebuilds/!(win32-x64)
+rm -rf node_modules/sodium-native/prebuilds/!(win32-x64)
+rm -rf node_modules/turbo-net/prebuilds/!(win32-x64)
+rm -rf node_modules/utp-native/prebuilds/!(win32-x64)
+rm -rf node_modules/utp-native/prebuilds/!(win32-x64)
+
 sed -i.bak s/"const IS_PRODUCTION = "[[:print:]]*/"const IS_PRODUCTION = true"/ "$ANALYTICS_CONSTANTS"
 
 electron-packager . \
