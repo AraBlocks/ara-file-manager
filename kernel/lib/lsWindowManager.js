@@ -199,7 +199,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
       return {
         did: linkElements[1],
         fileName: decodeURIComponent(linkElements[2]),
-        author: false
+        author: null
       }
     }
   }
