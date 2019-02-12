@@ -1,12 +1,10 @@
-'use strict'
-
 const debug = require('debug')('afm:boot:squirrel')
-const dispatch = require('../kernel/redux/reducers/dispatch')
-const { version } = require('../package.json')
-const { urls, stateManagement: k } = require('k')
+
 const { autoUpdater } = require('electron')
 const isDev = require('electron-is-dev')
-const windowManager = require('electron-window-manager')
+const { urls } = require('k')
+
+const { version } = require('../package.json')
 
 if (isDev) { return }
 
@@ -28,11 +26,6 @@ autoUpdater.addListener('update-not-available', () => {
 
 autoUpdater.addListener('update-downloaded', () => {
   debug('update-downloaded')
-  dispatch({ type: k.FEED_MODAL, load: {
-    modalName: 'updateApplication',
-    callback: () => autoUpdater.quitAndInstall()
-  }})
-  windowManager.openModal('generalActionModal')
 })
 
 autoUpdater.addListener('error', (error) => {
