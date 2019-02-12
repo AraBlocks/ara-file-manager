@@ -32,7 +32,6 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		debug('%s heard', k.PROMPT_PURCHASE)
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
 		dispatch({ type: k.FEED_MODAL, load })
-		load.peers = 0
 
 		windowManager.openWindow('purchaseEstimate')
 		const library = await acmManager.getLibraryItems(account.userDID)
@@ -45,9 +44,10 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
-		// // get peer count estimate
-		// // TODO: finish this feat in rDCDN
-		// farmer.farm.dryRunJoin({ did: load.did })
+		// get peer count estimate (if avail from rDCDN)
+		if (farmer.farm.dryRunJoin) {
+			farmer.farm.dryRunJoin({ did: load.did })
+		}
 
 		const price = await acmManager.getAFSPrice({ did: load.did })
 		const fee = acmManager.getPurchaseFee(price)
@@ -61,7 +61,6 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			event: k.REFRESH,
 			load: {
 				fee,
-				peers: load.peers,
 				gasEstimate,
 				price: Number(price)
 			}
