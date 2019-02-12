@@ -61,7 +61,12 @@ ipcMain.on(k.UPDATE_META, async (_, load) => {
   await pause(2000)
 
   try {
-    await actionsUtil.writeFileMetaData({ did, title: name, password: account.password })
+    await actionsUtil.writeFileMetaData({
+      did,
+      title: name,
+      author: false,
+      password: account.password
+    })
 
     dispatch({ type: k.UPDATE_META, load: { name, did } })
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'nameUpdated' } })
