@@ -1,3 +1,12 @@
+# [0.8.0](https://github.com/littlstar/ara-content-manager/compare/0.7.0...0.8.0) (2019-02-12)
+
+
+### Bug Fixes
+
+* **~/download.js:** Require order ([473e7ae](https://github.com/littlstar/ara-content-manager/commit/473e7ae))
+
+
+
 # [0.7.0](https://github.com/littlstar/ara-content-manager/compare/0.6.4...0.7.0) (2019-02-12)
 
 
