@@ -1,10 +1,11 @@
-## [0.6.3](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.6.3) (2019-02-12)
+## [0.6.4](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.6.4) (2019-02-12)
 
 
 ### Bug Fixes
 
 * hot reloading + filedescriptor updates ([170865c](https://github.com/littlstar/ara-content-manager/commit/170865c))
 * hot reloading + filedescriptor updates ([1df0cd2](https://github.com/littlstar/ara-content-manager/commit/1df0cd2))
+* **readFileMetadata:** Read and write afs metadata; TODO: figure out `author` ([ff404e8](https://github.com/littlstar/ara-content-manager/commit/ff404e8))
 
 
 ### Features
