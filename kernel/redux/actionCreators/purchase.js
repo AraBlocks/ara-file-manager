@@ -32,7 +32,6 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		debug('%s heard', k.PROMPT_PURCHASE)
 		dispatch({ type: k.DUMP_DEEPLINK_DATA })
 		dispatch({ type: k.FEED_MODAL, load })
-		load.peers = 0
 
 		windowManager.openWindow('purchaseEstimate')
 		const library = await acmManager.getLibraryItems(account.userDID)
@@ -67,7 +66,6 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			event: k.REFRESH,
 			load: {
 				fee,
-				peers: load.peers,
 				gasEstimate,
 				price: Number(price)
 			}
