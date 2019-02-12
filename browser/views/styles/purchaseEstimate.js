@@ -1,7 +1,5 @@
-'use strict'
-
-const { css } = require('css')
 const { buttonSelector, fonts } = require('styleUtils')
+const { css } = require('css')
 
 module.exports = {
   buttonSelector,
