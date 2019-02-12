@@ -1,41 +1,22 @@
-## [0.8.1](https://github.com/littlstar/ara-content-manager/compare/0.7.0...0.8.1) (2019-02-12)
+# [0.9.0](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.9.0) (2019-02-12)
 
 
 ### Bug Fixes
 
-* **~/download.js:** Require order ([473e7ae](https://github.com/littlstar/ara-content-manager/commit/473e7ae))
-
-
-
-# [0.7.0](https://github.com/littlstar/ara-content-manager/compare/0.6.4...0.7.0) (2019-02-12)
-
-
-### Bug Fixes
-
-* **~/purchase.js:** Comment out dryRunJoin until rDCDN supports ([8b5b71f](https://github.com/littlstar/ara-content-manager/commit/8b5b71f))
-
-
-### Features
-
-* **browser/views/purchaseEstimate:** Add peer count ([15363f2](https://github.com/littlstar/ara-content-manager/commit/15363f2))
-* **kernel/*:** Add peer count to purchase estimate ([18191de](https://github.com/littlstar/ara-content-manager/commit/18191de))
-* **tray.js:** windows version of tray icon ([3ba0ee1](https://github.com/littlstar/ara-content-manager/commit/3ba0ee1))
-
-
-
-## [0.6.4](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.6.4) (2019-02-12)
-
-
-### Bug Fixes
-
-* hot reloading + filedescriptor updates ([170865c](https://github.com/littlstar/ara-content-manager/commit/170865c))
-* hot reloading + filedescriptor updates ([1df0cd2](https://github.com/littlstar/ara-content-manager/commit/1df0cd2))
-* **readFileMetadata:** Read and write afs metadata; TODO: figure out `author` ([ff404e8](https://github.com/littlstar/ara-content-manager/commit/ff404e8))
+* **~/download.js:** Require order ([633df45](https://github.com/littlstar/ara-content-manager/commit/633df45))
+* **~/purchase.js:** Comment out dryRunJoin until rDCDN supports ([618f864](https://github.com/littlstar/ara-content-manager/commit/618f864))
+* **readFileMetadata:** Read and write afs metadata; TODO: figure out `author` ([9c9b36d](https://github.com/littlstar/ara-content-manager/commit/9c9b36d))
+* corrected sp ([47da088](https://github.com/littlstar/ara-content-manager/commit/47da088))
+* hot reloading + filedescriptor updates ([5ed6f17](https://github.com/littlstar/ara-content-manager/commit/5ed6f17))
+* hot reloading + filedescriptor updates ([239ec16](https://github.com/littlstar/ara-content-manager/commit/239ec16))
 
 
 ### Features
 
 * context-menu for main view ([07172cc](https://github.com/littlstar/ara-content-manager/commit/07172cc))
+* **browser/views/purchaseEstimate:** Add peer count ([eb93e56](https://github.com/littlstar/ara-content-manager/commit/eb93e56))
+* **kernel/*:** Add peer count to purchase estimate ([5f4b2cf](https://github.com/littlstar/ara-content-manager/commit/5f4b2cf))
+* **tray.js:** windows version of tray icon ([e8a1230](https://github.com/littlstar/ara-content-manager/commit/e8a1230))
 
 
 
