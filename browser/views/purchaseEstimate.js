@@ -88,12 +88,18 @@ class PurchaseEstimate extends Nanocomponent {
           <div class="${styles.fileName} modal-fileName">
             ${props.fileName || props.did.slice(0, 15) + '...'}
           </div>
-          <div class="${styles.postheader} modal-postheader">
-            from ${props.publisherName || 'Unnamed author'}
+          ${props.author
+          ?
+            (html`
+              <div class="${styles.postheader} modal-postheader">
+              from ${props.author || 'Unnamed author'}
+              </div>`
+            )
+          : null}
+            <div class="${styles.for} modal-for">
+          for
           </div>
-          <div class="${styles.for} modal-for">
-            for
-          </div>
+
         </div>
         ${renderEstimate()}
         <div class="${styles.buttonHolder} purchaseEstimate-buttonholder">
