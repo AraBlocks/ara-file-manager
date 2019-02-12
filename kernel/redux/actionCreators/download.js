@@ -6,11 +6,6 @@ const { ipcMain } = require('electron')
 const { stateManagement: k } = require('k')
 const windowManager = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
-const windowManager = require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
-
-const { farmerManager } = require('../actions')
-const utils = require('../actions/utils')
 
 const { farmerManager } = require('../actions')
 const utils = require('../actions/utils')
