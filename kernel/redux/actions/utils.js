@@ -23,10 +23,17 @@ function makeAfsPath(did) {
 	return path.join(createAFSKeyPath(did), 'home', 'content')
 }
 
-async function readFileMetadata(did) {
+async function readFileMetadata(_did) {
 	let fileInfo = {}
+	let did
+	if ('object' === typeof _did) {
+		({ did } = _did)
+	} else {
+		did = _did
+	}
 	try {
 		const data = await afs.metadata.readFile({ did })
+		debug('readFileMetadata data:', data)
 		if (data.fileInfo) {
 			fileInfo = typeof data.fileInfo === 'string'
 				? JSON.parse(data.fileInfo)
@@ -65,17 +72,18 @@ async function writeFileMetaData({
 	size = 0,
 	title = '',
 	userDID = '',
+	author = false,
 	password
 }) {
 	try {
 		const fileData = {
-			author: userDID,
+			author: author || userDID,
 			size,
 			title,
 			timestamp: new Date
 		}
 		debug('Adding file metadata for %s', did)
-		await afs.metadata.writeKey({ did, key: 'fileInfo', value: fileData, password })
+		await afs.metadata.writeKey({ did, key: 'fileInfo', value: JSON.stringify(fileData), password })
 	} catch (e) {
 		debug(e)
 	}
