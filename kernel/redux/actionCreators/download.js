@@ -1,14 +1,14 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actionCreators:download')
+
 const dispatch = require('../reducers/dispatch')
-const { farmerManager } = require('../actions')
-const k = require('../../../lib/constants/stateManagement')
-const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
-const utils = require('../actions/utils')
-const windowManager = require('electron-window-manager')
+const { ipcMain } = require('electron')
+const { stateManagement: k } = require('k')
 const store = windowManager.sharedData.fetch('store')
+const windowManager = require('electron-window-manager')
+
+const { farmerManager } = require('../actions')
+const utils = require('../actions/utils')
 
 ipcMain.on(k.DOWNLOAD, download)
 internalEmitter.on(k.DOWNLOAD, (load) => download(null, load))
