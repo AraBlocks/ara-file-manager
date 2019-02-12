@@ -1,18 +1,17 @@
-'use strict'
-
 const debug = require('debug')('afm:boot:tray')
+
 const isDev = require('electron-is-dev')
+const { closeWindow, internalEmitter, openWindow } = require('electron-window-manager')
+const { stateManagement: k } = require('k')
 const { Menu, Tray } = require('electron')
 const path = require('path')
-const { openWindow, closeWindow } = require('electron-window-manager')
-const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', 'IconTemplate.png')
-const { internalEmitter } = require('electron-window-manager')
-const k = require('../lib/constants/stateManagement')
 
 let tray
 let contextMenu
 const buildTray = () => {
   debug('Building tray')
+  const icon = process.platform === 'darwin' ? 'mac-tray-icon-Template.png' : 'windows-tray-icon.png'
+  const iconPath = path.resolve(__dirname, '..', 'browser', 'assets', 'images', icon)
   tray = new Tray(iconPath)
   tray.setToolTip('Ara File Manager')
 
@@ -37,13 +36,13 @@ const buildTray = () => {
       }
     },
     { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(k.LOGOUT) },
-    { label: 'Quit', type: 'normal', click: () => internalEmitter.emit(k.CONFIRM_QUIT)}
+    { label: 'Quit', type: 'normal', click: () => internalEmitter.emit(k.CONFIRM_QUIT) }
   ]
 
   //If dev mode, pushes developer option to tray
   isDev
-  && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer')})
-  && menuItems.push({ label: 'Clean UI', type: 'normal', click:() => internalEmitter.emit(k.CLEAN_UI)})
+    && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer') })
+    && menuItems.push({ label: 'Clean UI', type: 'normal', click: () => internalEmitter.emit(k.CLEAN_UI) })
 
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)
