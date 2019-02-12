@@ -1,3 +1,4 @@
+const { urls } = require('k')
 const winstaller = require('electron-winstaller')
 
 winstaller.createWindowsInstaller({
@@ -10,7 +11,8 @@ winstaller.createWindowsInstaller({
   loadingGif: './build/Ara-Installing.gif',
   setupExe: 'AFM Installer.exe',
   certificateFile: './build/certs/code_signing.cer',
-  certificatePassword: proccess.env.CODE_SIGNING_PW
+  certificatePassword: process.env.CODE_SIGNING_PW,
+  remoteReleases: k.SQUIRREL_WIN
 })
   .then(
     () => console.log("It worked!"), 
