@@ -1,13 +1,14 @@
-## [0.8.2](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.8.2) (2019-02-12)
+# [0.9.0](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.9.0) (2019-02-12)
 
 
 ### Bug Fixes
 
-* hot reloading + filedescriptor updates ([5ed6f17](https://github.com/littlstar/ara-content-manager/commit/5ed6f17))
-* hot reloading + filedescriptor updates ([239ec16](https://github.com/littlstar/ara-content-manager/commit/239ec16))
 * **~/download.js:** Require order ([633df45](https://github.com/littlstar/ara-content-manager/commit/633df45))
 * **~/purchase.js:** Comment out dryRunJoin until rDCDN supports ([618f864](https://github.com/littlstar/ara-content-manager/commit/618f864))
 * **readFileMetadata:** Read and write afs metadata; TODO: figure out `author` ([9c9b36d](https://github.com/littlstar/ara-content-manager/commit/9c9b36d))
+* corrected sp ([47da088](https://github.com/littlstar/ara-content-manager/commit/47da088))
+* hot reloading + filedescriptor updates ([5ed6f17](https://github.com/littlstar/ara-content-manager/commit/5ed6f17))
+* hot reloading + filedescriptor updates ([239ec16](https://github.com/littlstar/ara-content-manager/commit/239ec16))
 
 
 ### Features
