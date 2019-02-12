@@ -1,10 +1,10 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
-const { stateManagement: k } = require('k')
 
 const araUtil = require('ara-util')
 const { internalEmitter } = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
+const { stateManagement: k } = require('k')
 const windowManager = require('electron-window-manager')
 
 const { acmManager, descriptorGeneration } = require('../actions')
