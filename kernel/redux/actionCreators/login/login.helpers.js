@@ -138,7 +138,7 @@ async function _readMeta({ did }) {
   const AFSPath = utils.makeAfsPath(did)
   const AFSExists = fs.existsSync(AFSPath)
   if (AFSExists) {
-    const meta = await utils.readFileMetadata(did)
+    const meta = await utils.readFileMetadata({ did })
     dispatch({ type: k.GOT_META, load: { did, meta } })
   }
 }
