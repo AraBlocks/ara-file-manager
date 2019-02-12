@@ -64,7 +64,6 @@ ipcMain.on(k.UPDATE_META, async (_, load) => {
     await actionsUtil.writeFileMetaData({
       did,
       title: name,
-      author: false,
       password: account.password
     })
 
