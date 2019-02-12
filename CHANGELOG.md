@@ -1,3 +1,12 @@
+## [0.6.5](https://github.com/littlstar/ara-content-manager/compare/0.6.4...0.6.5) (2019-02-12)
+
+
+### Features
+
+* **tray.js:** windows version of tray icon ([3ba0ee1](https://github.com/littlstar/ara-content-manager/commit/3ba0ee1))
+
+
+
 ## [0.6.4](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.6.4) (2019-02-12)
 
 
