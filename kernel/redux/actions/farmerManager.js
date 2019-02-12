@@ -1,11 +1,11 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actions:farmerManager')
-const acmManager = require('./acmManager')
+
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
-const { internalEmitter } = require('electron-window-manager')
-const k = require('../../../lib/constants/stateManagement')
 const fs = require('fs')
+const { internalEmitter } = require('electron-window-manager')
+const { stateManagement: k } = require('k')
+
+const acmManager = require('./acmManager')
 
 function createFarmer({ did: userId, password, queue }) {
 	debug('Creating Farmer')
