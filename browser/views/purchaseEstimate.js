@@ -92,7 +92,7 @@ class PurchaseEstimate extends Nanocomponent {
           ?
             (html`
               <div class="${styles.postheader} modal-postheader">
-              from ${props.author || 'Unnamed author'}
+                from ${props.author || 'Unnamed author'}
               </div>`
             )
           : null}
