@@ -12,7 +12,7 @@ winstaller.createWindowsInstaller({
   setupExe: 'AFM Installer.exe',
   certificateFile: './build/certs/code_signing.cer',
   certificatePassword: process.env.CODE_SIGNING_PW,
-  remoteReleases: k.SQUIRREL_WIN
+  remoteReleases: urls.SQUIRREL_WIN
 })
   .then(
     () => console.log("It worked!"), 
