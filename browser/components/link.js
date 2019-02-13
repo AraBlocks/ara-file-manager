@@ -12,7 +12,6 @@ class Link extends Nanocomponent {
     type = ''
   }) {
     super()
-
     this.props = {
       children,
       onclick,
@@ -31,7 +30,7 @@ class Link extends Nanocomponent {
 
   createElement() {
     const { props } = this
-    return html`
+    return (html`
       <a
         class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
         onclick="${props.onclick}"
@@ -41,7 +40,7 @@ class Link extends Nanocomponent {
       >
         ${props.children}
       </a>
-    `
+    `)
   }
 }
 

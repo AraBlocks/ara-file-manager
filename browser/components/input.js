@@ -1,41 +1,39 @@
-const styles = require('./styles/input')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
+
+const styles = require('./styles/input')
 
 class Input extends Nanocomponent {
   constructor({
     araIcon = false,
     cssClass = {},
+    disabled = false,
     embeddedButton = {},
     field = '',
     parentState = {},
     placeholder = '',
-    readOnly = false,
     renderView = () => {},
     type = 'text',
     step
   }) {
     super()
-
     this.props = {
       araIcon,
       cssClass,
+      disabled,
       embeddedButton,
       field,
       parentState,
       placeholder,
-      readOnly,
       renderView,
       type,
       step
     }
-
     this.state = {
       requiredIndicator: false,
       selection: this.props.embeddedButton.optionList ? this.props.embeddedButton.optionList[0] : '',
       value: parentState[field]
     }
-
     this.oninput = this.oninput.bind(this)
   }
 
@@ -52,11 +50,13 @@ class Input extends Nanocomponent {
     props.parentState[props.embeddedButton.field] = state.selection
   }
 
-  update({ value = null, requiredIndicator = false }) {
-    this.state.value = value || this.state.value
-    this.state.requiredIndicator = this.state.requiredIndicator !== requiredIndicator
+  update({ disabled , requiredIndicator = false, value = null } = {}) {
+    const { state, props } = this
+    state.value = value || state.value
+    state.requiredIndicator = state.requiredIndicator !== requiredIndicator
      ? requiredIndicator
-     : this.state.requiredIndicator
+     : state.requiredIndicator
+    props.disabled = disabled !== undefined ? disabled : props.disabled
     return true
   }
 
@@ -67,12 +67,8 @@ class Input extends Nanocomponent {
       select,
       state
     } = this
-
-    return html`
-      <div class="
-        ${styles.container} input-container
-        ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator"
-      >
+    return (html`
+      <div class="${styles.container({ disabled: props.disabled, required: state.required })} input-container">
         <input class="
           ${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass
           ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
@@ -82,11 +78,11 @@ class Input extends Nanocomponent {
           value="${state.value}"
           type="${props.type}"
           step="${props.step}"
-          "${props.readOnly ? 'readonly' : ''}"
+          disabled="${props.disabled}"
         >
         ${generateButton()}
       </div>
-    `
+    `)
 
     function generateButton() {
       let button = html``
