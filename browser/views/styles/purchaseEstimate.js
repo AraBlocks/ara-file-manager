@@ -11,6 +11,13 @@ module.exports = {
     }
   `,
 
+  smallBold: css`
+    :host {
+      font-family: ${fonts.bold};
+      font-size: 12px;
+    }
+  `,
+
   buttonHolder: css`
     :host {
       width: 100%;
