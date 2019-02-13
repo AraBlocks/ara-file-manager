@@ -58,18 +58,18 @@ class PurchaseEstimate extends Nanocomponent {
               </div>
             </div>
             ${props.peers
-              ? (html`
-                  <div class="${styles.padding}">
-                    <span class="${styles.bigBold} modals-bigBold">
-                      ${props.peers}
-                    </span>
-                      Peer(s)
-                    <div style="font-size: 9px;">
-                      currently online
-                    </div>
-                  </div>`
-                )
-              : null}
+              ? null
+              : (html`
+                <div class="${styles.padding}">
+                  There are no peers online right now.
+                  <div style="padding-top: 3px">You can still purchase</div>
+                  <div class="${styles.smallBold}">
+                    ${props.fileName || did.slice(0, 15) + '...'}
+                  </div style="font-size: 12px">
+                  but may not be able to download immediately.
+                </div>`
+              )
+            }
           </div>
         </div>
       `)
