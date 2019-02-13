@@ -1,5 +1,3 @@
-'use strict'
-
 const { internalEmitter } = require('electron-window-manager')
 const { farmerManager } = require('../kernel/redux/actions')
 const { farmer: { farm } } = require('../kernel/redux/store')

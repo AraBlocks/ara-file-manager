@@ -1,5 +1,3 @@
-'use strict'
-
 const { emit } = require('../../browser/lib/tools/windowManagement')
 const { DUMP_MODAL_STATE } = require('../../lib/constants/stateManagement')
 const remote = require('electron').remote

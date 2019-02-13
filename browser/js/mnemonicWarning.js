@@ -1,5 +1,3 @@
-'use strict'
-
 const MnemonicWarning = require('../views/mnemonicWarning')
 const { remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')

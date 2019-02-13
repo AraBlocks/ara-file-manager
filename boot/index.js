@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:boot:main')
 
 const writeFiles = require('./writeFiles')

@@ -1,5 +1,3 @@
-'use strict'
-
 const k = require('../../../lib/constants/stateManagement')
 
 module.exports = async (state, { load = null, type }) => {

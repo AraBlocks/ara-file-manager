@@ -1,5 +1,3 @@
-'use strict'
-
 const AfsFileRow = require('./afsFileRow')
 const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')

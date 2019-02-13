@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:redux:reducers:dispatch')
 const application = require('./application')
 const account = require('./account')
@@ -42,5 +40,3 @@ module.exports = (action) => {
 }
 
 windowManager.sharedData.set('store', state)
-
-

@@ -1,5 +1,3 @@
-'use strict'
-
 const windowManagement = require('../lib/tools/windowManagement')
 const Button = require('../components/button')
 const styles = require('./modals/styles')

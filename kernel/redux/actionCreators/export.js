@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actionCreators:export')
 const { afsManager } = require('../actions')
 const { ipcMain } = require('electron')

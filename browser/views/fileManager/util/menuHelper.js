@@ -1,5 +1,3 @@
-'use strict'
-
 const { stateManagement: k } = require('k')
 const { deeplink, windowManagement } = require('../../../lib/tools')
 

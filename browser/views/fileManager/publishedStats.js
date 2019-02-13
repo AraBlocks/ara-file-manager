@@ -1,5 +1,3 @@
-'use strict'
-
 const { renderEarnings } = require('./util')
 const styles = require('./styles/publishedStats')
 const html = require('nanohtml')

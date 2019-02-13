@@ -1,5 +1,3 @@
-'use strict'
-
 const Checkbox = require('./checkbox')
 const optionsTitleProvider = require('../lib/tools/optionsTitleProvider')
 const styles = require('./styles/optionsCheckbox')

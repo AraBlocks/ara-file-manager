@@ -1,5 +1,3 @@
-'use strict'
-
 const Button = require('../../components/button')
 const { clipboard } = require('electron')
 const { fileSystemManager, windowManagement } = require('../../lib/tools')

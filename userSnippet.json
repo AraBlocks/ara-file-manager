@@ -1,7 +1,7 @@
 {
     "Add NanoComponent": {
         "prefix": "lsnano",
-        "body": ["'use strict'\n",
+        "body": ["\n",
             "const styles = require('./styles/tooltip')",
             "const html = require('nanohtml')",
             "const Nanocomponent = require('nanocomponent')\n",
@@ -25,7 +25,7 @@
     },
     "Add CSS Boiler Plate":{
         "prefix": "lscss",
-        "body": ["'use strict'\n",
+        "body": ["\n",
             "const { colors, fonts } = require('styleUtils')",
             "const { css } = require('css')\n",
             "module.exports = {",
@@ -46,7 +46,7 @@
     },
     "lstest": {
         "prefix": "lstest",
-        "body": ["'use strict'\n",
+        "body": ["\n",
             "const ${1:component} = require('${2|../../browser/components/,../browser/views/|}')",
             "describe('${3:description} Component', () => {",
                 "\tit('${4:test1}', () => {",
