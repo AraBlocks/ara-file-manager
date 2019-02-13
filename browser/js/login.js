@@ -1,5 +1,3 @@
-'use strict'
-
 const { REFRESH } = require('../../lib/constants/stateManagement')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')

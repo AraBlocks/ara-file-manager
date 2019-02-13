@@ -1,5 +1,3 @@
-'use strict'
-
 const AccountInfo = require('../views/accountInfo')
 const { ipcRenderer, remote } = require('electron')
 const k = require('../../lib/constants/stateManagement')

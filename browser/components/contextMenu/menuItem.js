@@ -1,5 +1,3 @@
-'use strict'
-
 const Nanocomponent = require('nanocomponent')
 const styles = require('./styles/menuItem')
 const html = require('nanohtml')

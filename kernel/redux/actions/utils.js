@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actions:util')
 const { urls } = require('k')
 const afs = require('ara-filesystem')

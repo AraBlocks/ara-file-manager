@@ -1,5 +1,3 @@
-'use strict'
-
 const path = require('path')
 const modals = path.resolve(__dirname, '..', 'views', 'modals')
 const views = path.resolve(__dirname , '..', 'views')

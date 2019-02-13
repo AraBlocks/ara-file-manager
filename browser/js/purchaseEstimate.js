@@ -1,5 +1,3 @@
-'use strict'
-
 const PurchaseEstimate = require('../views/purchaseEstimate')
 const { ipcRenderer, remote } = require('electron')
 const { REFRESH } = require('../../lib/constants/stateManagement')

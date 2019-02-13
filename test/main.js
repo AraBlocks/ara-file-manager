@@ -1,5 +1,3 @@
-'use strict'
-
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { app } = require('electron')
 const path = require('path')

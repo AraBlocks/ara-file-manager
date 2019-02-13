@@ -1,5 +1,3 @@
-'use strict'
-
 const Button = require('../../components/button')
 const { closeModal } = require('../../lib/tools/windowManagement')
 const { deeplink } = require('../../lib/tools/')

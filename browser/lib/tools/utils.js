@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = {
   roundDecimal(number, place) {
     return Math.ceil(number * place) / place

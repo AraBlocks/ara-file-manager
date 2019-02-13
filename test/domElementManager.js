@@ -1,5 +1,3 @@
-'use strict'
-
 const testComponentId = 'test'
 module.exports = {
 	mountElement(element) {

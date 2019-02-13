@@ -1,5 +1,3 @@
-'use strict'
-
 const Container = require('./mainManager/container')
 const { remote } = require('electron')
 const styles = require('./styles/mainManagerView')

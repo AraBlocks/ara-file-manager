@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actionCreators:publish')
 const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')

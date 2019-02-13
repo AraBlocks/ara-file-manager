@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actionCreators:login')
 const araUtil = require('ara-util')
 const aid = require('ara-identity')

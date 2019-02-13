@@ -1,5 +1,3 @@
-'use strict'
-
 const DynamicButton = require('../../browser/components/dynamicButton')
 
 describe('DynamicButton Component', () => {

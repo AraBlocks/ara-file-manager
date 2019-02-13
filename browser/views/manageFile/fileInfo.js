@@ -1,5 +1,3 @@
-'use strict'
-
 const FileSelector = require('../../components/fileSelector')
 const FileTable = require('../../components/afsFileTable/editableFileTable')
 const ErrorInput = require('../../components/errorInput')

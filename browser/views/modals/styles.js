@@ -1,5 +1,3 @@
-'use strict'
-
 const { css } = require('css')
 const { buttonSelector, colorSelector, fonts } = require('styleUtils')
 
@@ -243,8 +241,6 @@ module.exports = {
       justify-content: center;
     }
   `,
-
-
   title: css`
     :host {
       font-family: ${fonts.black};

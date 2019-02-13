@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('browser:lib:tools:windowManagement')
 const {
 	ipcRenderer,
