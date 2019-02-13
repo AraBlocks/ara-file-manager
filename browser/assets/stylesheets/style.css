@@ -50,6 +50,7 @@ input::-webkit-inner-spin-button,
   --ara-pink: #fbe6e6;
   --ara-red: #fc2636;
   --ara-teal: #50BABE;
+  --ara-text-blue: #78acda;
 }
 
 /* Classes */
@@ -162,18 +163,16 @@ input::-webkit-inner-spin-button,
 .bounce {
   font-size: 10px;
   height: 40px;
-  margin: 100px auto;
-  text-align: center;
   width: 50px;
 }
 
 .bounce > div {
   animation: bounce 1.2s infinite ease-in-out;
-  background-color: white;
+  background-color: var(--ara-text-blue);
   border-radius: 50%;
   display: inline-block;
   height: 4px;
-  margin-right: 1px;
+  margin-right: 3px;
   width: 4px;
 }
 

@@ -1,13 +1,8 @@
-const {
-  colorSelector,
-  fontSelector,
-  colors,
-  fonts
-} = require('styleUtils')
+const { colorSelector, fontSelector } = require('styleUtils')
 const { css } = require('css')
 
 module.exports = {
-  createAidLink({
+  standard({
     fontSize = '14',
     color  = 'green',
     weight = 'bold',
