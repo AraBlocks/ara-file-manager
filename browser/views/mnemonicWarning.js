@@ -1,20 +1,21 @@
-const windowManagement = require('../lib/tools/windowManagement')
-const Button = require('../components/button')
-const styles = require('./modals/styles')
+const { clipboard, remote } = require('electron')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
-const { clipboard, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
-const k = require('../../lib/constants/stateManagement')
+
+const Button = require('../components/button')
+const { stateManagement: k } = require('k')
+const styles = require('./modals/styles')
+const windowManagement = require('../lib/tools/windowManagement')
 
 class MnemonicWarning extends Nanocomponent {
-  constructor({ mnemonic = null, isAFS = false, contentDID = null }) {
+  constructor({ contentDID, isAFS = false, mnemonic }) {
     super()
     this.props = { mnemonic, isAFS }
     this.state = { copied: false }
 
     this.children = {
-    copyMnemonicButton: new Button({
+      copyMnemonicButton: new Button({
         children: "Copy mnemonic",
         cssClass: {
           opts: { color: 'green' }
@@ -28,7 +29,7 @@ class MnemonicWarning extends Nanocomponent {
         onclick: () => {
           if (!this.state.copied) { return }
           this.props.isAFS
-            ? windowManagement.emit({ event: k.FEED_MANAGE_FILE, load: { did: contentDID }})
+            ? windowManagement.emit({ event: k.FEED_MANAGE_FILE, load: { did: contentDID } })
             : windowManager.openWindow('filemanager')
           windowManagement.closeModal('mnemonicWarning')
         }
@@ -63,15 +64,12 @@ class MnemonicWarning extends Nanocomponent {
     const acctMsg = 'recover your account and login to your account on another computer.'
     const afsMsg = 'validate your ownership of this package.'
     return html`
-      <div class="${styles.container({ justifyContent: 'space-around', height: 95})} modals-container">
+      <div class="${styles.container({ justifyContent: 'space-around', height: 95 })} modals-container">
         <div class="${styles.logo} modals-logo">
-          <img src="../assets/images/ARA_logo_horizontal.png"/>
+          <img src="../assets/images/ARA_logo_horizontal.png" />
         </div>
         <div>
-          <div
-            class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin"
-            style="font-size: 20px; color: var(--ara-red);"
-          >
+          <div class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin" style="font-size: 20px; color: var(--ara-red);">
             DO NOT LOSE THIS MNEMONIC
           </div>
           <div class="${styles.smallMessage({})} modal-smallMessage">
@@ -85,7 +83,7 @@ class MnemonicWarning extends Nanocomponent {
           <div>${mnemonic.split(' ').slice(4, 8).map(word => html`<b> ${word}</b>`)}</div>
           <div>${mnemonic.split(' ').slice(8).map(word => html`<b> ${word}</b>`)}</div>
         </div>
-        <div class="${styles.copyItemContainer} modal-copyItemContainer" >
+        <div class="${styles.copyItemContainer} modal-copyItemContainer">
           <div class="${styles.clipboard} modal-clipBoard">
             ${children.copyMnemonicButton.render({})}
             <span>Copied !</span>
