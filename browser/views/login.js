@@ -1,5 +1,3 @@
-'use strict'
-
 const windowManagement = require('../lib/tools/windowManagement')
 const Nanocomponent = require('nanocomponent')
 const { LOGIN } = require('../../lib/constants/stateManagement')

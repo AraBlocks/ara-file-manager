@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actions:acmManager')
 const { abi: AFSabi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenABI } = require('ara-contracts/build/contracts/AraToken.json')

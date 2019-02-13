@@ -1,5 +1,3 @@
-'use strict'
-
 const { waitModalText } = require('../../lib/tools/generalModalTextProvider')
 const html = require('nanohtml')
 const styles = require('./styles')

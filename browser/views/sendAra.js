@@ -1,5 +1,3 @@
-'use strict'
-
 const Button = require('../components/button')
 const windowManagement = require('../lib/tools/windowManagement')
 const { emit } = require('../lib/tools/windowManagement')

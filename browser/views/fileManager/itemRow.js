@@ -1,5 +1,3 @@
-'use strict'
-
 const ContextMenu = require('../../components/contextMenu')
 const { stateManagement: k } = require('k')
 const { menuHelper } = require('./util')

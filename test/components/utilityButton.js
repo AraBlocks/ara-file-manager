@@ -1,5 +1,3 @@
-'use strict'
-
 const DomElementManager = require('../domElementManager')
 const UtilityButton = require('../../browser/components/utilityButton')
 

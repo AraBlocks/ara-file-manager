@@ -1,5 +1,3 @@
-'use strict'
-
 const Input = require('../components/input')
 const styles = require('./styles/errorInput')
 const html = require('nanohtml')

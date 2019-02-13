@@ -1,5 +1,3 @@
-'use strict'
-
 const windowManagement = require('../lib/tools/windowManagement')
 const Registration = require('../views/registration')
 const { ipcRenderer } = require('electron')

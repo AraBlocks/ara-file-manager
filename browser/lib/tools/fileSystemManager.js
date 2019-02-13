@@ -1,5 +1,3 @@
-'use strict'
-
 const remote = require('electron').remote
 const { dialog } = remote
 const fs = require('fs')

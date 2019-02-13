@@ -1,5 +1,3 @@
-'use strict'
-
 const Header = require('./header')
 const Section = require('./section')
 const spinnerBar = require('../../components/spinnerBar')

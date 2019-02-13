@@ -1,5 +1,3 @@
-'use strict'
-
 const { stateManagement: k } = require('k')
 
 module.exports = (state, { load = null, type }) => {

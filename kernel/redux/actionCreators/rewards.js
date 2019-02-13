@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actionCreators:rewards')
 const { stateManagement: k } = require('k')
 const dispatch = require('../reducers/dispatch')

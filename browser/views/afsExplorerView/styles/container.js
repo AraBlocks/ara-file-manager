@@ -1,5 +1,3 @@
-'use strict'
-
 const { colors, fonts, fontCSS } = require('styleUtils')
 const { css } = require('css')
 

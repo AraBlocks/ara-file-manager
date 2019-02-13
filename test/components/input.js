@@ -1,5 +1,3 @@
-'use strict'
-
 const Input = require('../../browser/components/input')
 
 describe('Input Component', () => {

@@ -1,5 +1,3 @@
-'use strict'
-
 const styles = require('./styles/button')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')

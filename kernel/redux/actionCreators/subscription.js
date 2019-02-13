@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actionCreators:wallet')
 const { acmManager, utils: actionUtils } = require('../actions')
 const dispatch = require('../reducers/dispatch')
@@ -38,8 +36,6 @@ ipcMain.on(k.LISTEN_FOR_FAUCET, async (event, load) => {
 
   windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
 })
-
-
 internalEmitter.on(k.CANCEL_SUBSCRIPTION, () => {
   try {
     debug('%s HEARD', k.CANCEL_SUBSCRIPTION)

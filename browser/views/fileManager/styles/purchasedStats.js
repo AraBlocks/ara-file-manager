@@ -1,5 +1,3 @@
-'use strict'
-
 const { DOWNLOADED_PUBLISHED } = require('../../../../lib/constants/stateManagement')
 const { colors, fonts } = require('styleUtils')
 const { css } = require('css')

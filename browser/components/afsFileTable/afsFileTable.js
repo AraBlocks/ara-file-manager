@@ -1,5 +1,3 @@
-'use strict'
-
 
 const AfsFileRow = require('./afsFileRow')
 const k = require('../../../lib/constants/stateManagement')

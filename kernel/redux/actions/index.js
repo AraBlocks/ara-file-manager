@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = {
   afmManager: require('./afmManager'),
   acmManager: require('./acmManager'),

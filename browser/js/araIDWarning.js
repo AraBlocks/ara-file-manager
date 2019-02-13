@@ -1,5 +1,3 @@
-'use strict'
-
 const ARAIDWarning = require('../views/araIDWarning')
 const { remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')

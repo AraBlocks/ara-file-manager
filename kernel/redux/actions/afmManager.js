@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actions:afmManager')
 const fs = require('fs')
 const path = require('path')

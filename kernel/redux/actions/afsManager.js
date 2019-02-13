@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actions:afsManager')
 const k = require('../../../lib/constants/stateManagement')
 const actionsUtil = require('./utils')

@@ -1,5 +1,3 @@
-'use strict'
-
 const Checkbox = require('../../browser/components/checkbox')
 const DomElementManager = require('../domElementManager')
 
@@ -18,5 +16,3 @@ describe('Checkbox Component', () => {
 		DomElementManager.removeAllElements()
 	})
 })
-
-

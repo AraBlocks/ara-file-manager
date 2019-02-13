@@ -1,5 +1,3 @@
-'use strict'
-
 const html = require('nanohtml')
 
 function generalModalText(modalName, load) {

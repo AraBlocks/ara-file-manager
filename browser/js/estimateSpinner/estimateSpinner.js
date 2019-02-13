@@ -1,5 +1,3 @@
-'use strict'
-
 const EstimateSpinner = require('../views/estimateSpinner')
 const { ipcRenderer, remote } = require('electron')
 const { stateManagement: k } = require('k')

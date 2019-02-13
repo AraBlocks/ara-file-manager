@@ -1,5 +1,3 @@
-'use strict'
-
 const itemRow = require('./itemRow')
 const styles = require('./styles/section')
 const html = require('nanohtml')

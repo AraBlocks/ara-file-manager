@@ -1,5 +1,3 @@
-'use strict'
-
 const { emit } = require('../../lib/tools/windowManagement')
 const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
