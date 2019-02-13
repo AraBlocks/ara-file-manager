@@ -54,7 +54,7 @@ windowManager.setSize = (view) => {
       break
     case 'purchaseEstimate':
       width = 340
-      height = 300
+      height = 350
       break
     case 'deleteConfirmModal':
       width = 340
