@@ -14,7 +14,7 @@ module.exports = (state, { load = null, type }) => {
     case k.FEED_CONTENT_VIEWER:
       state.contentViewerData = load
       break
-    case k.REGISTERED:
+    case k.CREATED_USER_DID:
       state.data.mnemonic = load.mnemonic
       state.data.freezeData = true
       break
