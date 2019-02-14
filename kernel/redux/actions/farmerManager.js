@@ -1,6 +1,6 @@
 const debug = require('debug')('afm:kernel:lib:actions:farmerManager')
 
-const farmDCDN = require('ara-reward-dcdn/src/dcdn')
+const farmDCDN = require('ara-base-dcdn/dcdn')
 const fs = require('fs')
 const { internalEmitter } = require('electron-window-manager')
 const { stateManagement: k } = require('k')
