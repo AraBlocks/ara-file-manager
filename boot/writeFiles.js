@@ -1,5 +1,5 @@
 const debug = require('debug')('afm:boot:writeFiles')
-const k = require('../lib/constants/networkKeys')
+const k = require('../constants/networkKeys')
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
