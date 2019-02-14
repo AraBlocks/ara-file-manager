@@ -34,15 +34,18 @@ function createFarmer({ did: userId, password, queue }) {
 	return farmer
 }
 
-async function joinBroadcast({ farmer, did }) {
+async function joinBroadcast({ farmer, did, id }) {
 	try {
+		console.log('doinBroadcast( did', did)
 		await farmer.join({
-			did,
+			id,
+			key: did,
 			download: false,
 			upload: true,
 		})
-		debug('Joining broadcast for %s', did)
+		debug('Joining broadcast for %s', did.toString('hex'))
 	} catch (err) {
+		console.log('did', did)
 		debug('Error joining broadcasting %O', err)
 	}
 }

@@ -48,30 +48,25 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
 
 ipcMain.on(k.UPDATE_META, async (_, load) => {
   debug('%s heard', k.UPDATE_META)
-  const { account } = store
+  console.log('k.UPDATE_META load', load)
+  const { account, farmer } = store
   const { name, did } = load
 
   const waitModalLoad = { load: { packageName: load.name }, modalName: 'updatingName' }
-  dispatch({ type: k.FEED_MODAL, load: waitModalLoad })
   windowManager.closeWindow('manageFileView')
-  windowManager.openModal('generalPleaseWaitModal')
-
-  await pause(2000)
-
+  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+  console.log('confirm ? load', load)
+console.log('farmer', farmer)
+  // create cfs
   try {
-    await actionsUtil.writeFileMetaData({
-      did,
-      title: name,
-      password: account.password
-    })
+    const { key } = await farmer.farm.fs.create({ id: load.name })
 
-    dispatch({ type: k.UPDATE_META, load: { name, did } })
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'nameUpdated' } })
-
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-    windowManager.closeWindow('generalPleaseWaitModal')
-    windowManager.openModal('generalMessageModal')
-  } catch (err) {
+    Object.assign(load, { did: key })
+    console.log('herrrrrrrrrrr')
+    console.log('load', load)
+    internalEmitter.emit(k.START_SEEDING, load)
+  } catch (e) {
+    console.log('e', e)
   }
 })
 

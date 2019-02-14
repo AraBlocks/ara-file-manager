@@ -58,6 +58,7 @@ class Container extends Nanocomponent {
 
 	closeWindow(){
 		if (this.state.uncommitted === false) {
+			console.log('close windown START_SEEDING')
 			windowManagement.emit({ event: k.START_SEEDING, load: { did: this.state.did } })
 		}
 		windowManagement.closeWindow('manageFileView')
@@ -120,6 +121,7 @@ class Container extends Nanocomponent {
 			allPaths,
 			removePaths
 		} = this.pathDiff
+		console.log('state', state)
 
 		const load = {
 			addPaths,
@@ -134,13 +136,14 @@ class Container extends Nanocomponent {
 			price: state.price || 0,
 			userDID: account.userDID
 		}
-		if (this.fileInfoChanged && state.uncommitted) {
-			windowManagement.emit({ event: k.PUBLISH, load })
-		} else if (this.fileInfoChanged) {
-			windowManagement.emit({ event: k.UPDATE_FILE, load })
-		} else if (this.nameChanged && state.uncommitted !== true) {
-			windowManagement.emit({ event: k.UPDATE_META, load: { did: load.did, name: load.name }})
-		}
+			windowManagement.emit({ event: k.PUBLISH, load: { did: load.did, name: load.name } })
+		// if (this.fileInfoChanged && state.uncommitted) {
+		// } else if (this.fileInfoChanged) {
+		// 	windowManagement.emit({ event: k.UPDATE_FILE, load })
+		// } else if (this.nameChanged && state.uncommitted !== true) {
+
+		// 	windowManagement.emit({ event: k.UPDATE_META, load: { did: load.did, name: load.name }})
+		// }
 	}
 
 	renderDescription() {

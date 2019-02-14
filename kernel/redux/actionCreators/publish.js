@@ -18,6 +18,22 @@ ipcMain.on(k.DEPLOY_PROXY, _deployProxy)
 
 internalEmitter.on(k.DEPLOY_PROXY, _deployProxy)
 
+ipcMain.on(k.DEPLOY_CFS, () => {
+  console.log("MAddie HY")
+
+  dispatch({
+    type: k.FEED_MANAGE_FILE,
+    load: {
+      type: 'free',
+      name: '',
+      fileList: []
+    }
+  })
+  windowManager.openWindow('manageFileView')
+
+  windowManager.pingView({ view: 'manageFileView', event: k.REFRESH })
+})
+
 async function _deployProxy() {
   debug('%s heard', k.DEPLOY_PROXY)
   const { account, files } = store
@@ -98,40 +114,58 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { password } = store.account
+  const { farmer } = store
   const did = load.did
   try {
-    let dispatchLoad = { load: { fileName: load.name } }
-    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-    windowManager.openModal('generalPleaseWaitModal')
-    windowManager.closeWindow('manageFileView')
 
-    await afsManager.removeAllFiles({ did, password })
-    await (await afs.add({ did, paths: load.paths, password })).close()
+    console.log('confirm ? load', load)
+    console.log('farmer', farmer)
+    // create cfs
+    try {
+      const cfs = await farmer.farm.fs.create({ id: load.name })
 
-    const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
+      await (await cfs.add({ did, paths: load.paths, password })).close()
 
-    await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
-    const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
 
-    const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
-    let setPriceEstimate = 0
-    if (load.price) {
-      setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
+      Object.assign(load, { did: cfs.key })
+      console.log('herrrrrrrrrrr')
+      console.log('load', load)
+      internalEmitter.emit(k.START_SEEDING, load)
+    } catch (e) {
+      console.log('e', e)
     }
-    const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
-    if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
+    // let dispatchLoad = { load: { fileName: load.name } }
+    // dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
+    // windowManager.openModal('generalPleaseWaitModal')
+    // windowManager.closeWindow('manageFileView')
 
-    dispatchLoad = {
-      did,
-      gasEstimate,
-      name: load.name,
-      paths: load.paths,
-      price: load.price ? load.price : 0,
-      size
-    }
-    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
+    // await afsManager.removeAllFiles({ did, password })
 
-    windowManager.closeModal('generalPleaseWaitModal')
+    // const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
+
+    // await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
+    // const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
+
+    // const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
+    // let setPriceEstimate = 0
+    // if (load.price) {
+    //   setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
+    // }
+    // const gasEstimate = 1
+    // if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
+
+//     dispatchLoad = {
+//       did,
+//       // gasEstimate,
+//       name: load.name,
+//       paths: load.paths,
+//       price: 0,
+//       size
+//     }
+// console.log('dispatchLoad', dispatchLoad)
+//     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
+
+    // windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('publishConfirmModal')
   } catch (err) {
     debug('Error publishing file %o:', err)
@@ -194,7 +228,9 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     const publishedSub = await acmManager.subscribePublished({ did: load.did })
     const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, accountAddress, userDID)
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
-
+    dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
+console.log('CONFIRM_PUBLISH')
+console.log('load', load)
     internalEmitter.emit(k.START_SEEDING, load)
   } catch (err) {
     debug('Error in committing: %o', err)

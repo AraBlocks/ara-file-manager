@@ -16,7 +16,10 @@ function _startSeeding(load) {
   debug
   const { farmer } = store
   try {
-    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
+    console.log('load.did', load.did)
+    console.log('load.name', load.name)
+
+    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did, id: load.name })
     dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
   } catch (err) {

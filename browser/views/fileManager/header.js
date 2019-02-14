@@ -22,7 +22,7 @@ class Header extends Nanocomponent {
       publishFilebutton: new Button({
         children: 'Publish New File',
         cssClass: { opts: { fontSize: 14 } },
-        onclick: () => !account.pendingPublish && windowManagement.emit({ event: k.DEPLOY_PROXY })
+        onclick: () => !account.pendingPublish && windowManagement.emit({ event: k.DEPLOY_CFS })
       }),
 
       copyDidTooltip: new DynamicTooltip({

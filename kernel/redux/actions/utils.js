@@ -67,18 +67,19 @@ async function writeFileMetaData({
 	author = null,
 	password
 }) {
-	try {
-		const fileData = {
-			author: author || userDID,
-			size,
-			title,
-			timestamp: new Date
-		}
-		debug('Adding file metadata for %s', did)
-		await afs.metadata.writeKey({ did, key: 'fileInfo', value: JSON.stringify(fileData), password })
-	} catch (e) {
-		debug(e)
-	}
+	console.log('TODOVIPMAC: writeFileMetaData')
+	// try {
+	// 	const fileData = {
+	// 		author: author || userDID,
+	// 		size,
+	// 		title,
+	// 		timestamp: new Date
+	// 	}
+	// 	debug('Adding file metadata for %s', did)
+	// 	await afs.metadata.writeKey({ did, key: 'fileInfo', value: JSON.stringify(fileData), password })
+	// } catch (e) {
+	// 	debug(e)
+	// }
 }
 
 module.exports = {

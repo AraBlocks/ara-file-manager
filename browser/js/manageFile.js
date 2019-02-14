@@ -10,7 +10,7 @@ const manageFileContainer = new ManageFileContainer({
 	...modal.manageFileData
 })
 
-document.getElementById('container').appendChild(manageFileContainer.render({ spinner: !modal.manageFileData.uncommitted }))
+document.getElementById('container').appendChild(manageFileContainer.render({ spinner: false }))
 
 const estimateListener = ipcRenderer.on(k.ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
 const refreshListener = ipcRenderer.on(k.REFRESH, () => manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList }))
