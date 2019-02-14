@@ -1,4 +1,4 @@
-const { CONFIRM_UPDATE_FILE } = require('../../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const { closeModal, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const { utils } = require('../../lib/tools')
@@ -9,7 +9,7 @@ module.exports = (load) => {
   const updateButton = new Button({
     children: 'Update',
     onclick: () => {
-      emit({ event: CONFIRM_UPDATE_FILE, load }),
+      emit({ event: k.CONFIRM_UPDATE_FILE, load }),
       closeModal()
     }
   })

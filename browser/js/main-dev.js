@@ -6,7 +6,7 @@ const fs = require('fs')
 const remote = require('electron').remote;
 const { argv } = remote.process
 const windowManager = remote.require('electron-window-manager')
-const { emit } = require('../../browser/lib/tools/windowManagement')
+const { emit } = require('../lib/tools/windowManagement')
 
 const exclude = [
   'afsExplorer',

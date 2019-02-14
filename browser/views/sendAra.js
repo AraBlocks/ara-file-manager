@@ -5,7 +5,7 @@ const Input = require('../components/input')
 const overlay = require('../components/overlay')
 const UtilityButton = require('../components/utilityButton')
 const styles = require('./styles/sendAra')
-const k = require('../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
