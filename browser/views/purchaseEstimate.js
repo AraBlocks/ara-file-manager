@@ -62,11 +62,9 @@ class PurchaseEstimate extends Nanocomponent {
               : (html`
                 <div class="${styles.padding}">
                   There are no peers online right now.
-                  <div style="padding-top: 3px">You can still purchase</div>
-                  <div class="${styles.smallBold}">
-                    ${props.fileName || did.slice(0, 15) + '...'}
-                  </div style="font-size: 12px">
-                  but may not be able to download immediately.
+                  <div style="padding-top: 3px">
+                    This may not download immediately.
+                  </div>
                 </div>`
               )
             }
