@@ -1,4 +1,4 @@
-# [0.9.0](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.9.0) (2019-02-12)
+## [0.9.1](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.9.1) (2019-02-14)
 
 
 ### Bug Fixes
@@ -6,7 +6,7 @@
 * **~/download.js:** Require order ([633df45](https://github.com/littlstar/ara-content-manager/commit/633df45))
 * **~/purchase.js:** Comment out dryRunJoin until rDCDN supports ([618f864](https://github.com/littlstar/ara-content-manager/commit/618f864))
 * **readFileMetadata:** Read and write afs metadata; TODO: figure out `author` ([9c9b36d](https://github.com/littlstar/ara-content-manager/commit/9c9b36d))
-* corrected sp ([47da088](https://github.com/littlstar/ara-content-manager/commit/47da088))
+* corrected sp & removed prebuilds ([#435](https://github.com/littlstar/ara-content-manager/issues/435)) ([03d1f55](https://github.com/littlstar/ara-content-manager/commit/03d1f55))
 * hot reloading + filedescriptor updates ([5ed6f17](https://github.com/littlstar/ara-content-manager/commit/5ed6f17))
 * hot reloading + filedescriptor updates ([239ec16](https://github.com/littlstar/ara-content-manager/commit/239ec16))
 
@@ -17,6 +17,7 @@
 * **browser/views/purchaseEstimate:** Add peer count ([eb93e56](https://github.com/littlstar/ara-content-manager/commit/eb93e56))
 * **kernel/*:** Add peer count to purchase estimate ([5f4b2cf](https://github.com/littlstar/ara-content-manager/commit/5f4b2cf))
 * **tray.js:** windows version of tray icon ([e8a1230](https://github.com/littlstar/ara-content-manager/commit/e8a1230))
+* creates aid immediately ([0589250](https://github.com/littlstar/ara-content-manager/commit/0589250))
 
 
 
