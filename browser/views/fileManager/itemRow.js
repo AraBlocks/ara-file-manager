@@ -1,5 +1,5 @@
 const ContextMenu = require('../../components/contextMenu')
-const { stateManagement: k } = require('k')
+const { events: k } = require('k')
 const { menuHelper } = require('./util')
 const { windowManagement } = require('../../lib/tools')
 const FileDescriptor = require('./fileDescriptor')
