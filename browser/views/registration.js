@@ -16,7 +16,7 @@ class Registration extends Nanocomponent {
       password: '',
       passwordConfirm: '',
     },
-    this.props = { userDID: null, inputDisabled: true, }
+    this.props = { inputDisabled: true, mnemonic: null, userDID: null, }
     this.children = {
       passwordInput: new ErrorInput({
         errorMessage: 'Must enter password',
@@ -45,7 +45,7 @@ class Registration extends Nanocomponent {
             weight: 'light'
           }
         },
-        onclick: closeWindow
+        onclick: () => closeWindow('registration')
       })
     }
     this.register = this.register.bind(this)
@@ -78,8 +78,9 @@ class Registration extends Nanocomponent {
   register(e) {
     e.preventDefault()
     const { password } = this.state
+    const { mnemonic, userDID } = this.props
     this.properInput
-      ? emit({ event: k.REGISTER, load: password })
+      ? emit({ event: k.REGISTER, load: { password, mnemonic, userDID } })
       : this.rerender()
   }
 

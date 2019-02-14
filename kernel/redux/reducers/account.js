@@ -24,9 +24,10 @@ module.exports = async (state, { load = null, type }) => {
     case k.IN_FAUCET_QUEUE:
       state.faucetStatus = k.IN_FAUCET_QUEUE
       break
+    case k.CREATED_USER_DID:
     case k.LOGIN:
-    case k.REGISTERED:
     case k.RECOVERED:
+    case k.REGISTERED:
       Object.assign(state, load)
       break
     case k.LOGOUT:

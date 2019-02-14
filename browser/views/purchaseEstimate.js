@@ -34,7 +34,6 @@ class PurchaseEstimate extends Nanocomponent {
 
 	renderEstimate() {
     const { props } = this
-
 		return props.gasEstimate
       ? (html`
         <div class="${styles.contentHolder} estimate-contentHolder" style="animation: fadein 1500ms;">
@@ -93,7 +92,7 @@ class PurchaseEstimate extends Nanocomponent {
       renderEstimate
     } = this
 
-    return html`
+    return (html`
       <div class="${styles.container} modals-container">
         <div class="${styles.headerHolder} estimate-headerHolder">
           <div class="${styles.preheader} modals-preheader">
@@ -122,7 +121,7 @@ class PurchaseEstimate extends Nanocomponent {
           ${children.cancelbutton.render({})}
         </div>
       </div>
-    `
+    `)
 	}
 }
 

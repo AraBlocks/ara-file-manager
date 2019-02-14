@@ -1,4 +1,4 @@
-const k = require('../../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 
 module.exports = async (state, { load = null, type }) => {
   switch (type) {
@@ -6,7 +6,7 @@ module.exports = async (state, { load = null, type }) => {
       state.exportWindowOpen = false
       break
     case k.GETTING_USER_DATA:
-    case k.REGISTERED:
+    case k.CREATED_USER_DID:
       state.network = load.network
       break
     case k.FEED_CONTENT_VIEWER:
