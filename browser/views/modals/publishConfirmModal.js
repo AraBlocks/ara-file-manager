@@ -1,5 +1,3 @@
-'use strict'
-
 const k = require('../../../lib/constants/stateManagement')
 const { closeModal, closeWindow, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')

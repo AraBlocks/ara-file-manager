@@ -1,5 +1,3 @@
-'use strict'
-
 const Button = require('../../components/button')
 const { clipboard, remote } = require('electron')
 const { app } = remote.require('electron')
@@ -78,8 +76,6 @@ class Header extends Nanocomponent {
       return [img, balance]
     }
   }
-
-
   get publishFileProps() {
     const { account } = this.props
     return {

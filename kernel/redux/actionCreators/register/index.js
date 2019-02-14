@@ -1,63 +1,77 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actionCreators:register')
-const { stateManagement: k } = require('k')
-const acmManager = require('../../actions/acmManager')
-const { AutoQueue } = require('../../../lib')
-const dispatch = require('../../reducers/dispatch')
+
 const {
-  identityManager,
+  application: applicationK,
+  stateManagement: k
+} = require('k')
+const araUtil = require('ara-util')
+const { ipcMain } = require('electron')
+const windowManager = require('electron-window-manager')
+
+const acmManager = require('../../actions/acmManager')
+const {
   afsManager,
   afmManager,
+  identityManager,
   farmerManager,
   utils: actionUtils
- } = require('../../actions')
+} = require('../../actions')
+const { AutoQueue } = require('../../../lib')
+const dispatch = require('../../reducers/dispatch')
 const helpers = require('./register.helpers')
 const menuHelper = require('../../../../boot/menuHelper')
-const araUtil = require('ara-util')
-const windowManager = require('electron-window-manager')
-const { ipcMain } = require('electron')
 
-ipcMain.on(k.REGISTER, async (_, password) => {
-  debug('%s heard. load: %s', k.REGISTER, password)
+ipcMain.on(k.CREATE_USER_DID, async () => {
+  debug('%s heard. load: %s', k.CREATE_USER_DID)
   try {
-    windowManager.pingView({ view: 'registration', event: k.REGISTERING })
-    const identity = await identityManager.create(password)
-    await identityManager.archive(identity)
+    // windowManager.pingView({ view: 'registration', event: k.REGISTERING })
+    const identity = await identityManager.create(applicationK.DEFAULT_PASSWORD)
+    identityManager.archive(identity)
 
     const { did: { did }, mnemonic } = identity
-    const accountAddress = await acmManager.getAccountAddress(did, password)
+    const accountAddress = await acmManager.getAccountAddress(did, applicationK.DEFAULT_PASSWORD)
 
     helpers.requestEther(accountAddress)
 
-    const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, password)
+    //need to move to update pw listener with updated pw
+    // const deployEstimateDid = await afsManager.createDeployEstimateAfs(did, applicationK.DEFAULT_PASSWORD)
 
     const network = await actionUtils.getNetwork()
-    const autoQueue = new AutoQueue
-    const farmer = farmerManager.createFarmer({ did, password, queue: autoQueue })
+    //need to move to update pw listener with updated pw
+    // const autoQueue = new AutoQueue
+    // const farmer = farmerManager.createFarmer({
+    //   did,
+    //   password: applicationK.DEFAULT_PASSWORD,
+    //   queue: autoQueue
+    // })
     const didIdentifier = araUtil.getIdentifier(did)
     afmManager.cacheUserDid(didIdentifier)
     const analyticsPermission = afmManager.getAnalyticsPermission(did)
 
-    debug('Dispatching %s', k.REGISTERED)
     dispatch({
-      type: k.REGISTERED,
+      type: k.CREATED_USER_DID,
       load: {
         accountAddress,
         analyticsPermission,
         araBalance: 0,
-        autoQueue,
-        deployEstimateDid,
+        // autoQueue,
+        // deployEstimateDid,
         ethBalance: 0,
-        farmer,
+        // farmer,
         mnemonic,
         network,
-        password,
+        password: applicationK.DEFAULT_PASSWORD,
         userDID: didIdentifier
       }
     })
-    menuHelper.switchLoginState(k.LOGIN)
-    windowManager.pingView({ view: 'registration', event: k.REGISTERED })
+    //move to updatePW
+    // menuHelper.switchLoginState(k.LOGIN)
+
+    windowManager.pingView({
+      view: 'registration',
+      event: k.CREATED_USER_DID,
+      load: { userDID: didIdentifier }
+    })
 
     const transfer = await acmManager.subscribeTransfer(accountAddress, did)
     const transferEth = await acmManager.subscribeEthBalance(accountAddress)
@@ -70,9 +84,10 @@ ipcMain.on(k.REGISTER, async (_, password) => {
       debug('Error requesting from ara faucet: %o', err)
     }
 
-    dispatch({ type: k.GOT_REGISTRATION_SUBS, load: subscriptionLoad })
 
-    farmer.start()
+    dispatch({ type: k.GOT_REGISTRATION_SUBS, load: subscriptionLoad })
+    //move to updatePW
+    // farmer.start()
   } catch (err) {
     debug('Error registering: %o', err)
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'registrationFailed' } })

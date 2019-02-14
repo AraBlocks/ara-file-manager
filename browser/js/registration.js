@@ -1,23 +1,23 @@
-'use strict'
-
-const windowManagement = require('../lib/tools/windowManagement')
-const Registration = require('../views/registration')
 const { ipcRenderer } = require('electron')
-const k = require('../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 
-const registration = new Registration({})
-document.getElementById('container').appendChild(registration.render({}))
+const Registration = require('../views/registration')
+const windowManagement = require('../lib/tools/windowManagement')
 
-const registeringListener = ipcRenderer.on(k.REGISTERING, () => {
-  registration.render({ pending: true })
-})
+const registration = new Registration()
+document.getElementById('container').appendChild(registration.render())
 
-const registeredListener = ipcRenderer.on(k.REGISTERED, () => {
-  windowManagement.openModal('araIDWarning')
-  windowManagement.closeWindow('registration')
+// const registeringListener = ipcRenderer.on(k.REGISTERING, () => {
+//   registration.render({ pending: true })
+// })
+
+const registeredListener = ipcRenderer.on(k.CREATED_USER_DID, (_, load) => {
+  // windowManagement.openModal('araIDWarning')
+  // windowManagement.closeWindow('registration')
+  registration.render({ ...load, inputDisabled: false })
 })
 
 window.onunload = () => {
-  ipcRenderer.removeListener(k.REGISTERING, registeringListener)
-  ipcRenderer.removeListener(k.REGISTERED, registeredListener)
+  // ipcRenderer.removeListener(k.REGISTERING, registeringListener)
+  ipcRenderer.removeListener(k.CREATED_USER_DID, registeredListener)
 }

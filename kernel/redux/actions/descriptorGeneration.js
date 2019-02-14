@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:actions:descriptorGeneration')
 const { stateManagement: k } = require('k')
 const acmManager = require('./acmManager')

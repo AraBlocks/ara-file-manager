@@ -1,5 +1,3 @@
-'use strict'
-
 const k = require('../../lib/constants/stateManagement')
 const RecoverMnemonic = require('../views/recover')
 const windowManagement = require('../lib/tools/windowManagement')

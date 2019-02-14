@@ -1,5 +1,3 @@
-'use strict'
-
 const k = require('../../lib/constants/stateManagement')
 const Button = require('../components/button')
 const ErrorInput = require('../components/errorInput')

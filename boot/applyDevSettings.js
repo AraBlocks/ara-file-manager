@@ -1,5 +1,3 @@
-'use strict'
-
 const { globalShortcut } = require('electron')
 const isDev = require('electron-is-dev')
 const path = require('path')

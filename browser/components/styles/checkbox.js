@@ -1,5 +1,3 @@
-'use strict'
-
 const {
 	colors,
 	colorSelector,

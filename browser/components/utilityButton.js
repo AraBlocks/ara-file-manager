@@ -1,5 +1,3 @@
-'use strict'
-
 const styles = require('./styles/utilityButton')
 const windowManagement = require('../lib/tools/windowManagement')
 const html = require('nanohtml')

@@ -1,5 +1,3 @@
-'use strict'
-
 const debug = require('debug')('afm:kernel:lib:lsWindowManager')
 const analytics = require('../redux/actions/analytics')
 const k = require('../../lib/constants/stateManagement')
@@ -56,7 +54,7 @@ windowManager.setSize = (view) => {
       break
     case 'purchaseEstimate':
       width = 340
-      height = 300
+      height = 350
       break
     case 'deleteConfirmModal':
       width = 340

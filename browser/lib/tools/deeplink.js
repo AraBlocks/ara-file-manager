@@ -1,5 +1,3 @@
-'use strict'
-
 const {	clipboard } = require('electron')
 
 function copyDeeplink(aid, fileName) {

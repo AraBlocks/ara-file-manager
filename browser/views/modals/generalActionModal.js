@@ -1,5 +1,3 @@
-'use strict'
-
 const Button = require('../../components/button')
 const { actionModalText } = require('../../lib/tools/generalModalTextProvider')
 const { closeModal } = require('../../lib/tools/windowManagement')

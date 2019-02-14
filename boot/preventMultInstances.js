@@ -1,5 +1,3 @@
-'use strict'
-
 const { app } = require('electron')
 const { openDeepLinking } = require('electron-window-manager')
 

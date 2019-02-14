@@ -1,5 +1,3 @@
-'use strict'
-
 const Button = require('../../components/button')
 const { DOWNLOAD } = require('../../../lib/constants/stateManagement')
 const windowManagement = require('../../lib/tools/windowManagement')

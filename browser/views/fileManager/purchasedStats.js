@@ -1,5 +1,3 @@
-'use strict'
-
 const k = require('../../../lib/constants/stateManagement')
 const { renderEarnings } = require('./util')
 const styles = require('./styles/purchasedStats')

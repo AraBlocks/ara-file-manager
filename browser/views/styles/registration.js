@@ -1,11 +1,35 @@
-'use strict'
-
-const { colorSelector, fonts } = require('styleUtils')
 const { css } = require('css')
+const { fonts } = require('styleUtils')
 
 module.exports = {
-  colorSelector,
-  fonts,
+  araID: css`
+    :host {
+      display: flex;
+      justify-content: center;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 98%;
+    }
+  `,
+
+  araIDHolder: css`
+    :host {
+      align-items: center;
+      background-color: aliceBlue;
+      border: 1px solid #97c7f0;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+      justify-content: center;
+      margin-bottom: 10px;
+      padding: 10px 2px;
+      height: 5%;
+      width: 355px;
+    }
+  `,
 
   header: css`
     :host {
@@ -21,6 +45,13 @@ module.exports = {
       font-family: ${fonts.light};
       font-size: 12px;
       width: 90%;
+    }
+  `,
+
+  generatingMessage: css`
+    :host {
+      font-size: 16px;
+      color: var(--ara-text-blue);
     }
   `,
 

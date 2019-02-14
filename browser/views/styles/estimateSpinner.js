@@ -1,6 +1,4 @@
 
-'use strict'
-
 const { css } = require('css')
 const { buttonSelector, colorSelector, fonts } = require('styleUtils')
 

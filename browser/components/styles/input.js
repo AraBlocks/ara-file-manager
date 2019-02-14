@@ -1,5 +1,3 @@
-'use strict'
-
 const { css } = require('css')
 const {
   colorSelector,
@@ -8,20 +6,21 @@ const {
 } = require('styleUtils')
 
 module.exports = {
-  colors,
-  fonts,
-
-  container: css`
-    :host {
-      align-items: center;
-      box-sizing: border-box;
-      border: 1px solid var(--ara-grey);
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      -webkit-app-region: no-drag;
-    }
-  `,
+  container({ disabled, requiredIndicator}) {
+    return css`
+      :host {
+        align-items: center;
+        ${requiredIndicator && 'background-color:' + colorSelector('pink')};
+        box-sizing: border-box;
+        border: 1px solid var(--ara-grey);
+        display: flex;
+        justify-content: space-between;
+        ${disabled && 'opacity: .4;'}
+        width: 100%;
+        -webkit-app-region: no-drag;
+      }
+    `
+  },
 
   button: css`
     :host {

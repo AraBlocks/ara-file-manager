@@ -1,50 +1,40 @@
-'use strict'
+const html = require('nanohtml')
+const { stateManagement: k } = require('k')
+const Nanocomponent = require('nanocomponent')
 
 const Button = require('../components/button')
-const windowManagement = require('../lib/tools/windowManagement')
-const { emit } = require('../lib/tools/windowManagement')
+const { closeWindow, emit } = require('../lib/tools/windowManagement')
 const ErrorInput = require('../components/errorInput')
 const overlay = require('../components/overlay')
 const styles = require('./styles/registration')
-const k = require('../../lib/constants/stateManagement')
-const html = require('nanohtml')
-const Nanocomponent = require('nanocomponent')
 
 class Registration extends Nanocomponent {
   constructor() {
     super()
-
     this.state = {
+      displayError: { password: false, passwordConfirm: false },
       password: '',
       passwordConfirm: '',
-      displayError: {
-        password: false,
-        passwordConfirm: false
-      }
-     }
-
+    },
+    this.props = { userDID: null, inputDisabled: true, }
     this.children = {
       passwordInput: new ErrorInput({
         errorMessage: 'Must enter password',
         placeholder: 'Password',
         parentState: this.state,
         field: 'password',
-        type: 'password'
+        type: 'password',
+        disabled: true
       }),
-
       passwordConfirmInput: new ErrorInput({
         errorMessage: 'Must confirm password',
         placeholder: 'Confirm password',
         parentState: this.state,
         field: 'passwordConfirm',
-        type: 'password'
+        type: 'password',
+        disabled: true
       }),
-
-      submitButton: new Button({
-        children: 'Register',
-        type: 'submit'
-      }),
-
+      submitButton: new Button({ children: 'Register', type: 'submit' }),
       cancelButton: new Button({
         children: 'Cancel',
         cssClass: {
@@ -55,10 +45,9 @@ class Registration extends Nanocomponent {
             weight: 'light'
           }
         },
-        onclick: () => windowManagement.closeWindow()
+        onclick: closeWindow
       })
     }
-
     this.register = this.register.bind(this)
     this.render = this.render.bind(this)
   }
@@ -69,7 +58,6 @@ class Registration extends Nanocomponent {
       passwordConfirm,
       displayError
     } = this.state
-
     let properInput = true
     if (password === '') {
       displayError.password = true
@@ -84,51 +72,78 @@ class Registration extends Nanocomponent {
       displayError.passwordConfirm = true
       properInput = false
     }
-
     return properInput
   }
 
   register(e) {
     e.preventDefault()
     const { password } = this.state
-
     this.properInput
       ? emit({ event: k.REGISTER, load: password })
-      : this.rerender({})
+      : this.rerender()
   }
 
-  update() {
+  update(newProps = {}) {
+    Object.assign(this.props, newProps)
     return true
   }
 
-  createElement({ pending = false }) {
-    const { children, register, state } = this
-
-    return html`
+  createElement({ pending = false } = {}) {
+    const {
+      children,
+      props,
+      register,
+      state
+    } = this
+    return (html`
       <div class="modal">
         ${overlay(pending)}
-        <div class="${styles.logo} login-logo">
+        <div class="${styles.logo} registration-logo">
           <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
-        <div class="${styles.header}">Register</div>
-        <p class="${styles.description}">
-          Welcome to the <b>Ara File Manager</b>. An <b>Ara ID</b> will be generated for
-          you once a password is chosen. Save your password somewhere safe, as <b>there
+        <div class="${styles.header} registration-header">Register</div>
+        <p class="${styles.description} registration-description">
+          Welcome to the Ara File Manager. <b>An Ara ID will be generated for
+          you</b>. Once it's generated, enter your desired password and save it somewhere safe, as <b>there
           is no way to recover it if lost</b>.
         </p>
+        <div class="${styles.araIDHolder} registration-araIDHolder">
+          <div class="${styles.araID} registration-araID">
+            ${props.userDID
+              ? (html`
+                  <div style="animation: fadein 1500ms; width: 100%;">
+                    ${props.userDID.slice(-64)}
+                  </div>
+                `)
+              : (html`
+                <div class="${styles.generatingMessage} registration-generatingMessage">
+                  Generating Ara Identity
+                  <span class="bounce">
+                    <div></div>
+                    <div class="dot2"></div>
+                    <div class="dot3"></div>
+                  </span>
+                </div>
+              `)}
+          </div>
+        </div>
         <form class="${styles.registerForm}" onsubmit="${register}">
-          ${children.passwordInput.render({ displayError: state.displayError.password })}
+          ${children.passwordInput.render({
+            disabled: props.inputDisabled,
+            displayError: state.displayError.password
+          })}
           ${children.passwordConfirmInput.render({
+            disabled: props.inputDisabled,
             displayError: state.displayError.passwordConfirm,
             errorMessage: state.passwordConfirm === ''
               ? 'Must confirm password'
               : "Passwords don't match"
           })}
-          ${children.submitButton.render({})}
+          ${children.submitButton.render()}
         </form>
-        ${children.cancelButton.render({})}
+        ${children.cancelButton.render()}
       </div>
-    `
+    `)
   }
 }
 

@@ -1,5 +1,3 @@
-'use strict'
-
 const { CONFIRM_UPDATE_FILE } = require('../../../lib/constants/stateManagement')
 const { closeModal, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')

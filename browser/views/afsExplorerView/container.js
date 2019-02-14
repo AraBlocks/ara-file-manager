@@ -1,5 +1,3 @@
-'use strict'
-
 const AfsFileTable = require('../../components/afsFileTable/afsFileTable')
 const Button = require('../../components/button')
 const { clipboard } = require('electron')

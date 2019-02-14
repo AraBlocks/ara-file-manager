@@ -1,5 +1,3 @@
-'use strict'
-
 const { css } = require('css')
 
 module.exports = {
@@ -123,8 +121,6 @@ module.exports = {
       }
       return selectedFont
   },
-
-
   fontCSS: {
     noeH1:  css`
       :host {

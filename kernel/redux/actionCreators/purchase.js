@@ -44,15 +44,8 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			return
 		}
 
-		// get peer count estimate (if avail from rDCDN)
-		if (farmer.farm.dryRunJoin) {
-			try {
-				await farmer.farm.dryRunJoin({ did: load.did })
-			} catch(err) {
-				debug(`error calling 'farmer.farm.dryRunJoin' with ${did}`)
-				return null
-			}
-		}
+		// get peer count estimate
+		farmer.farm.dryRunJoin({ did: load.did })
 
 		const price = await acmManager.getAFSPrice({ did: load.did })
 		const fee = acmManager.getPurchaseFee(price)

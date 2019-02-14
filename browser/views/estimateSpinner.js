@@ -1,5 +1,3 @@
-'use strict'
-
 const Button = require('../components/button')
 const { closeWindow, emit } = require('../lib/tools/windowManagement')
 const styles = require('./styles/estimateSpinner')

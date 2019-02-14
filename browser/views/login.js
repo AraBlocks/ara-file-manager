@@ -1,40 +1,27 @@
-'use strict'
-
-const windowManagement = require('../lib/tools/windowManagement')
+const { stateManagement: k } = require('k')
 const Nanocomponent = require('nanocomponent')
-const { LOGIN } = require('../../lib/constants/stateManagement')
+
 const Button = require('../components/button')
-const styles = require('./styles/login')
+const html = require('nanohtml')
 const Input = require('../components/input')
 const Link = require('../components/link')
-const html = require('nanohtml')
+const styles = require('./styles/login')
+const windowManagement = require('../lib/tools/windowManagement')
 
 class Login extends Nanocomponent {
   constructor({ userDID }) {
     super()
-
-    this.state = {
-      password: '',
-      userDID
-    }
-
+    this.state = { password: '', userDID }
     this.children = {
       cancelButton: new Button({
         children: 'Cancel',
         cssClass: {
           name: 'smallInvisible',
-          opts: {
-            color: 'orange',
-            weight: 'light'
-          }
+          opts: { color: 'orange', weight: 'light' }
         },
         onclick: () => windowManagement.closeWindow()
       }),
-
-      loginButton: new Button({
-        children: 'Log In'
-      }),
-
+      loginButton: new Button({ children: 'Log In' }),
       recoverButton: new Button({
         children: 'Recover',
         cssClass: { name: 'smallInvisible' },
@@ -43,32 +30,26 @@ class Login extends Nanocomponent {
           windowManagement.closeWindow('login')
         }
       }),
-
       registerLink: new Link({
         children: 'Create One',
-        cssClass: {
-          name: 'createAidLink'
-        },
         onclick: () => {
+          windowManagement.emit({ event: k.CREATE_USER_DID })
           windowManagement.openWindow('registration')
           windowManagement.closeWindow('login')
         }
       }),
-
       passwordInput: new Input({
         parentState: this.state,
         field: 'password',
         placeholder: 'Password',
         type: 'password'
       }),
-
       userDIDInput: new Input({
         parentState: this.state,
         field: 'userDID',
         placeholder: 'Ara ID'
       }),
     }
-
     this.login = this.login.bind(this)
   }
 
@@ -76,20 +57,18 @@ class Login extends Nanocomponent {
     e.preventDefault()
     const { userDID, password } = this.state
     const load = { password, userDID: userDID }
-    windowManagement.emit({ event: LOGIN, load })
+    windowManagement.emit({ event: k.LOGIN, load })
     windowManagement.closeWindow('login')
   }
 
-  update({ userDID }) {
-    if (userDID) {
-      this.state.userDID = userDID
-    }
+  update({ userDID } = {}) {
+    this.state.userDID = userDID || this.state.userDID
     return true
   }
 
   createElement() {
     const { children, login } = this
-    return html`
+    return (html`
       <div class="${styles.container} login-container">
         <div class="${styles.logo} login-logo">
           <img src="../assets/images/ARA_logo_horizontal.png" />
@@ -103,9 +82,8 @@ class Login extends Nanocomponent {
           the Ara Network across the web.
           <br><br>
           To get started, log in with your <b>Ara ID</b> or
-          ${children.registerLink.render({})}
+          ${children.registerLink.render()}
         </p>
-
         <form class="${styles.form} login-form" onsubmit=${login}>
           ${children.userDIDInput.render()}
           ${children.passwordInput.render()}
@@ -118,7 +96,7 @@ class Login extends Nanocomponent {
           ${children.cancelButton.render({})}
         </div>
       </div>
-    `
+    `)
   }
 }
 

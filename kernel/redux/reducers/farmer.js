@@ -1,5 +1,3 @@
-'use strict'
-
 const { LOGIN, REGISTERED } = require('../../../lib/constants/stateManagement')
 
 module.exports = (state, { load = null, type }) => {

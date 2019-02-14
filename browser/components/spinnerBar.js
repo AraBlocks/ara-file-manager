@@ -1,5 +1,3 @@
-'use strict'
-
 const styles = require('./styles/spinnerBar')
 const html = require('nanohtml')
 
