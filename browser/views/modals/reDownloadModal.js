@@ -1,5 +1,5 @@
 const Button = require('../../components/button')
-const { DOWNLOAD } = require('../../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('nanohtml')

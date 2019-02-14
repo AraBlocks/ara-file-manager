@@ -1,6 +1,6 @@
-const { stateManagement: k } = require('k')
 const Nanocomponent = require('nanocomponent')
 
+const { events: k } = require('k')
 const Button = require('../components/button')
 const html = require('nanohtml')
 const Input = require('../components/input')

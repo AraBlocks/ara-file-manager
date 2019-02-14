@@ -1,4 +1,4 @@
-const k = require('../../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const { closeModal, closeWindow, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const { utils } = require('../../lib/tools')
