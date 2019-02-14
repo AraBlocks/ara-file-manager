@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron')
-const { stateManagement: k } = require('k')
+const { events: k } = require('k')
 
 const Registration = require('../views/registration')
 const windowManagement = require('../lib/tools/windowManagement')

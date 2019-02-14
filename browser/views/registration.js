@@ -1,5 +1,4 @@
 const html = require('nanohtml')
-const { stateManagement: k } = require('k')
 const Nanocomponent = require('nanocomponent')
 
 const Button = require('../components/button')
@@ -7,6 +6,7 @@ const { closeWindow, emit } = require('../lib/tools/windowManagement')
 const ErrorInput = require('../components/errorInput')
 const overlay = require('../components/overlay')
 const styles = require('./styles/registration')
+const { events: k } = require('k')
 
 class Registration extends Nanocomponent {
   constructor() {
