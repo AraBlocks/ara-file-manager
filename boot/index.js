@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:boot:main')
+const debug = require('debug')('ara:fm:boot:index')
 
 const writeFiles = require('./writeFiles')
 //Writes .ara and keyrings if doesn't exist
@@ -6,11 +6,11 @@ writeFiles.updateAraRC()
 writeFiles.writeDotAra()
 
 const { app } = require('electron')
-const { application, stateManagement: k } = require('k')
-const windowManager = require('../kernel/lib/lsWindowManager')
+const { application, events: k } = require('k')
+const windowManager = require('../kernel/util/lsWindowManager')
 const { internalEmitter } = require('electron-window-manager')
-const analytics = require('../kernel/redux/actions/analytics')
-const { cleanOutdatedData } = require('../kernel/redux/actions/afmManager')
+const analytics = require('../kernel/daemons/analytics')
+const { cleanOutdatedData } = require('../kernel/daemons/afm')
 const cleanUp = require('./cleanUp')
 const { handleDeepLink, deeplinkWaiting } = require('./deepLink')
 
@@ -25,7 +25,7 @@ app.on('ready', () => {
   require('./squirrel')
   require('./tray').buildTray()
   require('./menu').buildMenu()
-  require('../kernel/redux/actionCreators')//TODO: create proper store creation function
+  require('../kernel/ipc')//TODO: create proper store creation function
   require('./applyDevSettings')
 
   internalEmitter.emit(k.GET_CACHED_DID)//Loads login screen input with last DID user logged in with

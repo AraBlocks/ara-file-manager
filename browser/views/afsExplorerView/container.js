@@ -3,7 +3,7 @@ const Button = require('../../components/button')
 const { clipboard } = require('electron')
 const DynamicTooltip = require('../../components/dynamicTooltip')
 const { emit } = require('../../lib/tools/windowManagement')
-const { EXPORT_FILE, CLOSE_AFS_EXPLORER, DOWNLOAD } = require('../../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const overlay = require('../../components/overlay')
 const UtilityButton = require('../../components/utilityButton')
@@ -51,7 +51,7 @@ class Container extends Nanocomponent {
 			}),
 			utilityButton: new UtilityButton({ onclick: () => {
 				emit({
-					event: CLOSE_AFS_EXPLORER,
+					event: k.CLOSE_AFS_EXPLORER,
 					load: { did }
 				})
 				windowManagement.closeWindow('afsExplorerView')
@@ -66,7 +66,7 @@ class Container extends Nanocomponent {
 		.then(folderName => {
 			this.render({ spinner: true })
 			emit({
-				event: EXPORT_FILE,
+				event: k.EXPORT_FILE,
 				load: {
 					subPath: "",
 					did: props.did,
@@ -80,7 +80,7 @@ class Container extends Nanocomponent {
 	downloadUpdate() {
 		const { props } = this
 		emit({
-			event: DOWNLOAD,
+			event: k.DOWNLOAD,
 			load: {
 				did: props.did,
 			}

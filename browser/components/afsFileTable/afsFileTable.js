@@ -1,6 +1,6 @@
 
 const AfsFileRow = require('./afsFileRow')
-const k = require('../../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/AfsFileTable')
