@@ -200,23 +200,23 @@ async function subscribeEthBalance(userAddress) {
 }
 
 async function subscribePublished({ did }) {
-	const { contract, ctx } = await getAFSContract(did)
+	// const { contract, ctx } = await getAFSContract(did)
 
-	let subscription
-	if (contract) {
-		try {
-			subscription = contract.events.Purchased()
-				.on('data', async ({ returnValues }) => {
-					const earning = Number(araContracts.token.constrainTokenValue(returnValues._price))
-					internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
-				})
-				.on('error', debug)
-		} catch (err) {
-			debug('Error: %o', err)
-		}
-	}
+	// let subscription
+	// if (contract) {
+	// 	try {
+	// 		subscription = contract.events.Purchased()
+	// 			.on('data', async ({ returnValues }) => {
+	// 				const earning = Number(araContracts.token.constrainTokenValue(returnValues._price))
+	// 				internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
+	// 			})
+	// 			.on('error', debug)
+	// 	} catch (err) {
+	// 		debug('Error: %o', err)
+	// 	}
+	// }
 
-	return { ctx, subscription }
+	// return { ctx, subscription }
 }
 
 async function sendAra(opts) {

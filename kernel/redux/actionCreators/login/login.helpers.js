@@ -46,12 +46,12 @@ async function getSubscriptions(purchasedAFS, allAFS, credentials) {
   const { userDID, accountAddress } = credentials
 
   const subscriptionsLoad = {}
-  subscriptionsLoad.transferSub = await acmManager.subscribeTransfer(accountAddress, userDID)
-  subscriptionsLoad.transferEthSub = await acmManager.subscribeEthBalance(accountAddress)
-  subscriptionsLoad.publishedSubs = await Promise.all(allAFS.map(acmManager.subscribePublished))
-  subscriptionsLoad.rewardsSubs = await Promise.all(allAFS
-    .map(({ did }) => acmManager.subscribeRewardsAllocated(did, accountAddress, userDID)))
-  subscriptionsLoad.updateSubs = await Promise.all(purchasedAFS.map(({ did }) => acmManager.subscribeAFSUpdates(did)))
+  // subscriptionsLoad.transferSub = await acmManager.subscribeTransfer(accountAddress, userDID)
+  // subscriptionsLoad.transferEthSub = await acmManager.subscribeEthBalance(accountAddress)
+  // subscriptionsLoad.publishedSubs = await Promise.all(allAFS.map(acmManager.subscribePublished))
+  // subscriptionsLoad.rewardsSubs = await Promise.all(allAFS
+  //   .map(({ did }) => acmManager.subscribeRewardsAllocated(did, accountAddress, userDID)))
+  // subscriptionsLoad.updateSubs = await Promise.all(purchasedAFS.map(({ did }) => acmManager.subscribeAFSUpdates(did)))
 
   dispatch({ type: k.GOT_SUBSCRIPTIONS, load: subscriptionsLoad })
 }
@@ -71,17 +71,17 @@ async function populateUI(publishedAFS, purchasedAFS, credentials) {
       windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
     })
 
-  await Promise.all(allAFS.map(_readMeta))
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+  // await Promise.all(allAFS.map(_readMeta))
+  // windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-  await Promise.all(allAFS.map(_getPrice))
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+  // await Promise.all(allAFS.map(_getPrice))
+  // windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-  await Promise.all(publishedAFS.map(_getPublishedEarnings))
-  await Promise.all(allAFS.map(({ did }) => _getSeedEarnings(did, accountAddress)))
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+  // await Promise.all(publishedAFS.map(_getPublishedEarnings))
+  // await Promise.all(allAFS.map(({ did }) => _getSeedEarnings(did, accountAddress)))
+  // windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-  await Promise.all(allAFS.map(({ did }) => _getAllocatedRewards(did, userDID, password)))
+  // await Promise.all(allAFS.map(({ did }) => _getAllocatedRewards(did, userDID, password)))
   windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 }
 

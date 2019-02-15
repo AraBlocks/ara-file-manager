@@ -37,8 +37,9 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.ERROR_PUBLISHING:
       file = state.published[state.published.length - 1]
+      console.log('file', file)
       // file.status = load.oldStatus
-      file.size = 0
+      // file.size = 0
       break
     case k.ERROR_PURCHASING:
       state.purchased = state.purchased.slice(0, state.purchased.length - 1)
@@ -97,8 +98,10 @@ module.exports = (state, { load = null, type }) => {
       file.status = k.PAUSED
       break
     case k.PUBLISHING:
-      file = findFile(load.did, state.published)
-      Object.assign(file, load)
+      console.log('load', load)
+      console.log('state', state)
+      // file = findFile(load.did, state.published)
+      // Object.assign(file, load)
       break
     case k.PUBLISHED:
       file = findFile(load.did, state.published)

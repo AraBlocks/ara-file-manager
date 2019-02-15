@@ -44,24 +44,27 @@ function makeDummyDescriptor(did, DCDNStore, owner = false) {
 
 async function makeDescriptor(did, opts = {}) {
 	try {
-		did = araUtil.getIdentifier(did)
-		const AFSPath = await makeAfsPath(did)
-		const AFSExists = fs.existsSync(AFSPath)
-		const meta = AFSExists ? await readFileMetadata(did) : {}
-		const { downloadPercent, status } = await afsManager.getAfsDownloadStatus(did, opts.shouldBroadcast)
+		// did = araUtil.getIdentifier(did)
+		// const AFSPath = await makeAfsPath(did)
+		// const AFSExists = fs.existsSync(AFSPath)
+		// const meta = AFSExists ? await readFileMetadata(did) : {}
+		const meta = {}
+		// const { downloadPercent, status } = await afsManager.getAfsDownloadStatus(did, opts.shouldBroadcast)
 
-		return Object.assign(new _Descriptor, {
+		const mkDescriptor = Object.assign(new _Descriptor, {
 			did,
-			downloadPercent,
-			datePublished: meta.timestamp,
+			// downloadPercent,
+			// datePublished: meta.timestamp,
 			name: meta.title,
-			path: AFSPath,
-			price: Number(await acmManager.getAFSPrice({ did })),
+			// path: AFSPath,
+			// price: Number(await acmManager.getAFSPrice({ did })),
 			size: meta.size || 0,
 			status
 		}, opts)
+		console.log('mkDescriptor', mkDescriptor)
+		return mkDescriptor
 	} catch (err) {
-		debug('makeDescriptor Error:, %o', err)
+		debug('mkDescriptor Error:, %o', err)
 	}
 }
 

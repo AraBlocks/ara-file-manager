@@ -133,7 +133,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
 
       Object.assign(load, { did: cfs.key })
 
-      // internalEmitter.emit(k.START_SEEDING, load)
+      internalEmitter.emit(k.START_SEEDING, load)
 
       windowManager.closeWindow('manageFileView')
     } catch (e) {
@@ -188,16 +188,14 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
       type: k.FEED_MODAL,
       load: { did: load.did, name: load.name }
     })
-    windowManager.openModal('publishSuccessModal')
+    // windowManager.openModal('publishSuccessModal')
 
     const publishedSub = await acmManager.subscribePublished({ did: load.did })
-    dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
-    dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
     console.log('CONFIRM_PUBLISH')
     console.log('load', load)
 
 
-    internalEmitter.emit(k.START_SEEDING, load)
+
 
 
   } catch (err) {

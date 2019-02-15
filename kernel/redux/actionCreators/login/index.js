@@ -104,6 +104,7 @@ async function login(_, load) {
     console.log('DCDNStore', DCDNStore)
 
     const { files } = dispatch({ type: k.GOT_LIBRARY, load: { published: [], purchased: [] } })
+    // const { files } = dispatch({ type: k.GOT_LIBRARY, load: { published: [DCDNStore], purchased: [] } })
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 

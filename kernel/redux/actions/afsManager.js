@@ -65,26 +65,26 @@ async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
 
 async function getAfsDownloadStatus(did, shouldBroadcast) {
 	let downloadPercent = 0
-	let status = k.AWAITING_DOWNLOAD
-	let newAfs
-	try {
-		({ afs: newAfs } = await araFilesystem.create({ did }))
-		const feed = newAfs.partitions.home.content
-		if (feed && feed.length) {
-			downloadPercent = feed.downloaded() / feed.length
-		}
-		if (downloadPercent === 1) {
-			status = k.DOWNLOADED_PUBLISHED
-		} else if (downloadPercent > 0) {
-			status = k.DOWNLOADING
-		} else if (downloadPercent === 0 && shouldBroadcast) {
-			status = k.CONNECTING
-		}
-	} catch (err) {
-		debug('Error getting download status %o', err)
-	}
+	// let status = k.AWAITING_DOWNLOAD
+	// let newAfs
+	// try {
+	// 	({ afs: newAfs } = await araFilesystem.create({ did }))
+	// 	const feed = newAfs.partitions.home.content
+	// 	if (feed && feed.length) {
+	// 		downloadPercent = feed.downloaded() / feed.length
+	// 	}
+	// 	if (downloadPercent === 1) {
+  //  } else if (downloadPercent > 0) {
+  //    status = k.DOWNLOADING
+  //  } else if (downloadPercent === 0 && shouldBroadcast) {
+  //    status = k.CONNECTING
+  //  }
+  // } catch (err) {
+  //  debug('Error getting download status %o', err)
+  // }
 
-  newAfs && await newAfs.close()
+			status = k.DOWNLOADED_PUBLISHED
+ //  newAfs && await newAfs.close()
 	return { downloadPercent, status }
 }
 
@@ -154,13 +154,13 @@ async function isCommitted(did) {
   const { registry, storage } = araContracts
 
   let published = true
-  try {
-    const address = await registry.getProxyAddress(did)
-    const buffer = await storage.read({ address, fileIndex: 0, offset: 0 })
-    published = Boolean(buffer)
-  } catch (err) {
-    debug('Err checking proxy: o%', err)
-  }
+  // try {
+  //   const address = await registry.getProxyAddress(did)
+  //   const buffer = await storage.read({ address, fileIndex: 0, offset: 0 })
+  //   published = Boolean(buffer)
+  // } catch (err) {
+  //   debug('Err checking proxy: o%', err)
+  // }
 
   return published
 }
