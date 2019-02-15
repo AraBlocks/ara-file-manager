@@ -135,7 +135,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
       Object.assign(load, { did: cfs.key })
       internalEmitter.emit(k.START_SEEDING, load)
     } catch (e) {
-      cdebug('k.PUBLISH error', e)
+      debug('k.PUBLISH error', e)
     }
     // let dispatchLoad = { load: { fileName: load.name } }
     // dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
