@@ -1,8 +1,10 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:publish')
 const afs = require('ara-filesystem')
+const cfsnet = require('cfsnet')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
+  afmManager,
   afsManager,
   acmManager,
   utils: actionsUtil,
@@ -117,18 +119,18 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   const { farmer } = store
   const did = load.did
   try {
-
     console.log('confirm ? load', load)
     console.log('farmer', farmer)
+    cfsnet.env.CFS_ROOT_DIR = afmManager.getCFSDir('temp')
     // create cfs
     try {
       const cfs = await farmer.farm.fs.create({ id: load.name })
 
-      await (await cfs.add({ did, paths: load.paths, password })).close()
+      cfsnet.env.CFS_ROOT_DIR = afmManager.renameCFSDir(cfs.key)
 
+      // await (await cfs.add({ did, paths: load.paths, password })).close()
 
       Object.assign(load, { did: cfs.key })
-      console.log('herrrrrrrrrrr')
       console.log('load', load)
       internalEmitter.emit(k.START_SEEDING, load)
     } catch (e) {

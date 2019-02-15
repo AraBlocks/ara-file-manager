@@ -31,6 +31,21 @@ function getAFMDirectory() {
 	return afmDirectory
 }
 
+function getCFSDir(discoveryKey) {
+	const cfsDirectory = path.resolve(userHome, '.ara', 'cfs', discoveryKey)
+	fs.existsSync(cfsDirectory) || fs.mkdirSync(cfsDirectory, { recursive: true })
+	return cfsDirectory
+}
+
+function renameCFSDir(discoveryKey) {
+	const oldCFSDirectory = path.resolve(userHome, '.ara', 'cfs', 'temp')
+	const newCFSDirectory = path.resolve(userHome, '.ara', 'cfs', discoveryKey)
+	fs.renameSync(oldCFSDirectory, newCFSDirectory, (error) => {
+		if (error) { throw new Error('Failed to create newCFSDirectory: ', newCFSDirectory)}
+		return newCFSDirectory
+	})
+}
+
 function cleanOutdatedData() {
 	const filePath = path.resolve(getAFMDirectory(), 'store.json')
 	const storeData = parseJSON(filePath)
