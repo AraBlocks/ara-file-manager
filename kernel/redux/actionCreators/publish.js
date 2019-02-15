@@ -136,38 +136,6 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     } catch (e) {
       debug('k.PUBLISH error', e)
     }
-    // let dispatchLoad = { load: { fileName: load.name } }
-    // dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-    // windowManager.openModal('generalPleaseWaitModal')
-    // windowManager.closeWindow('manageFileView')
-
-    // await afsManager.removeAllFiles({ did, password })
-
-    // const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
-
-    // await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
-    // const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
-
-    // const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
-    // let setPriceEstimate = 0
-    // if (load.price) {
-    //   setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
-    // }
-    // const gasEstimate = 1
-    // if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
-
-//     dispatchLoad = {
-//       did,
-//       // gasEstimate,
-//       name: load.name,
-//       paths: load.paths,
-//       price: 0,
-//       size
-//     }
-// console.log('dispatchLoad', dispatchLoad)
-//     dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
-
-    // windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('publishConfirmModal')
   } catch (err) {
     debug('Error publishing file %o:', err)

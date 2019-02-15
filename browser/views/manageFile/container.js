@@ -137,13 +137,6 @@ class Container extends Nanocomponent {
 			userDID: account.userDID
 		}
 			windowManagement.emit({ event: k.PUBLISH, load: { paths: allPaths, did: load.did, name: load.name } })
-		// if (this.fileInfoChanged && state.uncommitted) {
-		// } else if (this.fileInfoChanged) {
-		// 	windowManagement.emit({ event: k.UPDATE_FILE, load })
-		// } else if (this.nameChanged && state.uncommitted !== true) {
-
-		// 	windowManagement.emit({ event: k.UPDATE_META, load: { did: load.did, name: load.name }})
-		// }
 	}
 
 	renderDescription() {
