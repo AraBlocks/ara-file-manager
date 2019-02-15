@@ -15,6 +15,7 @@ const fs = require('fs')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
+const { resolve } = require('path')
 
 ipcMain.on(k.DEPLOY_PROXY, _deployProxy)
 

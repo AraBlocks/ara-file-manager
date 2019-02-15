@@ -7,9 +7,88 @@ const { stateManagement: k } = require('k')
 
 const acmManager = require('./acmManager')
 
+const mirror = require('mirror-folder')
+const isFile = require('is-file')
+const mkdirp = require('mkdirp')
+const { access } = require('fs')
+const pify = require('pify')
+
+const {
+  join,
+  basename,
+  resolve,
+  relative
+} = require('path')
+
+async function add({ key, id, paths }) {
+  const cfs = await this.create({ key, id })
+
+  await mirrorPaths(paths)
+
+  debug('full copy complete')
+  debug(await cfs.readdir(cfs.HOME))
+
+  return cfs
+
+  async function mirrorPaths(p) {
+    for (const path of p) {
+      try {
+        await pify(access)(resolve(path))
+        await mirrorPath(path)
+      } catch (err) {
+        debug('%s does not exist', path)
+      }
+    }
+  }
+
+  async function mirrorPath(path) {
+    debug(`copy start: ${path}`)
+    const name = join(cfs.HOME, basename(path))
+    // Check if file
+    if (!(await pify(isFile)(path)) && !ignore(path)) {
+      await pify(mkdirp)(name, { fs: cfs })
+    }
+    // Mirror and log
+    const progress = mirror({ name: path }, { name, fs: cfs }, { keepExisting: true, ignore })
+    progress.on('put', (src, dst) => {
+      debug(`adding path ${dst.name}`)
+    })
+    progress.on('skip', (src, dst) => {
+      debug(`skipping path ${dst.name}`)
+    })
+    progress.on('ignore', (src, dst) => {
+      debug(`ignoring path ${dst.name}. Use '--force' to force add file`)
+    })
+    progress.on('del', (dst) => {
+      debug(`deleting path ${dst.name}`)
+    })
+
+    // Await end or error
+    const error = await new Promise((accept, reject) => progress.once('end', accept).once('error', reject))
+
+    if (error) {
+      debug(`copy error: ${path}: ${error}`)
+    } else {
+      debug(`copy complete: ${path}`)
+    }
+  }
+
+  function ignore(path) {
+    path = relative('/', path)
+    if (ignored.ignores(path)) {
+      if (force) {
+        debug(`forcing add path ${path}`)
+        return false
+      }
+      return true
+    }
+    return false
+  }
+}
+
 function createFarmer({ did: userId, password, queue }) {
 	debug('Creating Farmer')
-	const farmer = new farmDCDN({ userId, password, queue })
+	const farmer = new farmDCDN({ fs: { add } })
 	farmer.on('peer-update', (did, count) => {
 		debug('k.UPDATE_PEER_COUNT in farmerManager', did, count)
 		internalEmitter.emit(k.UPDATE_PEER_COUNT, {
