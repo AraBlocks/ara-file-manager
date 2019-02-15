@@ -1,6 +1,8 @@
-# ara-file-manager
+# Ara File Manager
 
 The **Ara File Manager** is a simple desktop app that demonstrates the functionality of a complete local Ara network node and cryptocurrency wallet.
+Ara is truly decentralized; with the Ara File Manager, your machine is participating directly in peer distribution swarms and the blockchain.
+
 With the File Manager, you can sell your digital content using the Ara token, and distribute your content without centralized hosting costs.
 You can buy content, and earn Ara by seeding content in a swarm of nodes that have also purchased it.
 
@@ -35,7 +37,6 @@ and includes modules developed within [Ara Blocks](https://github.com/arablocks)
 the [Dat Project](https://datproject.org/) and
 [Ethereum](https://www.ethereum.org/).
 
-Ara is truly decentralized; with the Ara File Manager, your machine is participating directly in peer distribution swarms and the blockchain.
 Building the Ara File Manager includes building native modules, including [web3](https://www.npmjs.com/package/web3) and the _Ethereum Virtual Machine_.
 
 So, when installing Node, also install Node's _Tools for Native Modules_.
