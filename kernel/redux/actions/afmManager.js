@@ -31,19 +31,11 @@ function getAFMDirectory() {
 	return afmDirectory
 }
 
-function getCFSDir(discoveryKey) {
-	const cfsDirectory = path.resolve(userHome, '.ara', 'cfs', discoveryKey)
-	fs.existsSync(cfsDirectory) || fs.mkdirSync(cfsDirectory, { recursive: true })
+function getCFSDir() {
+	const cfsDirectory = path.resolve(userHome, '.ara', 'cfs')
+	fs.existsSync(cfsDirectory) || fs.mkdirSync(cfsDirectory)
+	debug('cfsDirectory', cfsDirectory)
 	return cfsDirectory
-}
-
-function renameCFSDir(discoveryKey) {
-	const oldCFSDirectory = path.resolve(userHome, '.ara', 'cfs', 'temp')
-	const newCFSDirectory = path.resolve(userHome, '.ara', 'cfs', discoveryKey)
-	fs.renameSync(oldCFSDirectory, newCFSDirectory, (error) => {
-		if (error) { throw new Error('Failed to create newCFSDirectory: ', newCFSDirectory)}
-		return newCFSDirectory
-	})
 }
 
 function cleanOutdatedData() {
@@ -135,12 +127,13 @@ function saveUserData( { userDID, userData }) {
 
 module.exports = {
 	cacheUserDid,
+	cleanOutdatedData,
 	getAFMPath,
 	getAnalyticsPermission,
-	getCachedUserDid,
 	getAppData,
+	getCachedUserDid,
+	getCFSDir,
 	getUserData,
 	saveUserData,
-	toggleAnalyticsPermission,
-	cleanOutdatedData
+	toggleAnalyticsPermission
 }

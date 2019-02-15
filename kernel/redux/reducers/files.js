@@ -37,7 +37,7 @@ module.exports = (state, { load = null, type }) => {
       break
     case k.ERROR_PUBLISHING:
       file = state.published[state.published.length - 1]
-      file.status = load.oldStatus
+      // file.status = load.oldStatus
       file.size = 0
       break
     case k.ERROR_PURCHASING:

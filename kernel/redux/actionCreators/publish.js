@@ -1,6 +1,6 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:publish')
 const afs = require('ara-filesystem')
-const cfsnet = require('cfsnet')
+const cfsnetenv = require('cfsnet/env')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const {
@@ -76,6 +76,12 @@ async function _deployProxy() {
   }
 }
 
+async function makeCFS(opts) {
+  cfsnetenv.CFS_ROOT_DIR = opts.cfsRootDir || afmManager.getCFSDir()
+  const cfs = await farmer.farm.fs.create(opts)
+  return cfs
+}
+
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY)
 
@@ -120,22 +126,16 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   const { farmer } = store
   const did = load.did
   try {
-    console.log('confirm ? load', load)
-    console.log('farmer', farmer)
-    cfsnet.env.CFS_ROOT_DIR = afmManager.getCFSDir('temp')
     // create cfs
     try {
-      const cfs = await farmer.farm.fs.create({ id: load.name })
+      const cfs = await makeCFS({ id: load.name })
 
-      cfsnet.env.CFS_ROOT_DIR = afmManager.renameCFSDir(cfs.key)
-
-      // await (await cfs.add({ did, paths: load.paths, password })).close()
+      // cfs add ...
 
       Object.assign(load, { did: cfs.key })
-      console.log('load', load)
       internalEmitter.emit(k.START_SEEDING, load)
     } catch (e) {
-      console.log('e', e)
+      cdebug('k.PUBLISH error', e)
     }
     // let dispatchLoad = { load: { fileName: load.name } }
     // dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
