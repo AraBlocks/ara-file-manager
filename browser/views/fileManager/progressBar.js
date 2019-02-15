@@ -30,14 +30,14 @@ module.exports = ({
       break
     default:
       return (html`
-        <div class="${styles.holder} progressBar-holder" style="background-color: rgba(0,0,0,0);">
+        <div class="${styles.holder(status)} progressBar-holder blinker" style="background-color: rgba(0,0,0,0);">
           <div class="ants"></div>
         </div>
       `)
   }
 
   return (html`
-    <div class="${styles.holder} progressBar-holder" style="${last ? 'margin-bottom: 40px;' : null}" >
+    <div class="${styles.holder()} progressBar-holder" style="${last ? 'margin-bottom: 40px;' : null}" >
       <div style="background-color: ${styles.colorSelector(color)}; width:${(downloadPercent * 100) + '%'};"></div>
     </div>
   `)
