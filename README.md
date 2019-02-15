@@ -1,5 +1,4 @@
-# ara-file-manager
-
+# Ara File Manager
 ## Status
 This project is in active developement. `dev` is stable branch.
 
