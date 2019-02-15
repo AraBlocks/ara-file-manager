@@ -76,7 +76,7 @@ async function _deployProxy() {
   }
 }
 
-async function makeCFS(opts) {
+async function makeCFS(farmer, opts) {
   cfsnetenv.CFS_ROOT_DIR = opts.cfsRootDir || afmManager.getCFSDir()
   const cfs = await farmer.farm.fs.create(opts)
   return cfs
@@ -122,13 +122,12 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
 
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
-  const { password } = store.account
   const { farmer } = store
   const did = load.did
   try {
     // create cfs
     try {
-      const cfs = await makeCFS({ id: load.name })
+      const cfs = await makeCFS(farmer, { id: load.name })
 
       // cfs add ...
 
