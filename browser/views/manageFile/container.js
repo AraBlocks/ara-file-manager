@@ -137,6 +137,8 @@ class Container extends Nanocomponent {
 			userDID: account.userDID
 		}
 			windowManagement.emit({ event: k.PUBLISH, load: { paths: allPaths, did: load.did, name: load.name } })
+			windowManagement.emit({ event: k.CONFIRM_PUBLISH, load: { paths: allPaths, did: load.did, name: load.name } })
+
 	}
 
 	renderDescription() {

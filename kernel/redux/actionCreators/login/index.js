@@ -101,6 +101,7 @@ async function login(_, load) {
   try {
     const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, load.password)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
+    console.log('DCDNStore', DCDNStore)
 
     const { files } = dispatch({ type: k.GOT_LIBRARY, load: { published: [], purchased: [] } })
 

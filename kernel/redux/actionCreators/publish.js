@@ -76,12 +76,6 @@ async function _deployProxy() {
   }
 }
 
-async function makeCFS(farmer, opts) {
-  cfsnetenv.CFS_ROOT_DIR = opts.cfsRootDir || afmManager.getCFSDir()
-  const cfs = await farmer.farm.fs.create(opts)
-  return cfs
-}
-
 ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   debug('%s heard', k.CONFIRM_DEPLOY_PROXY)
 
@@ -120,6 +114,12 @@ ipcMain.on(k.CONFIRM_DEPLOY_PROXY, async (event, load) => {
   }
 })
 
+async function makeCFS(farmer, opts) {
+  cfsnetenv.CFS_ROOT_DIR = opts.cfsRootDir || afmManager.getCFSDir()
+  const cfs = await farmer.farm.fs.create(opts)
+  return cfs
+}
+
 ipcMain.on(k.PUBLISH, async (event, load) => {
   debug('%s heard', k.PUBLISH)
   const { farmer } = store
@@ -132,16 +132,17 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
       // cfs add ...
 
       Object.assign(load, { did: cfs.key })
-      internalEmitter.emit(k.START_SEEDING, load)
+
+      // internalEmitter.emit(k.START_SEEDING, load)
+
+      windowManager.closeWindow('manageFileView')
     } catch (e) {
       debug('k.PUBLISH error', e)
     }
-    windowManager.openModal('publishConfirmModal')
   } catch (err) {
     debug('Error publishing file %o:', err)
 
     internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
-    windowManager.closeModal('generalPleaseWaitModal')
     errorHandling(err)
 
     return
@@ -159,15 +160,14 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
 
   let oldStatus
   try {
-    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
+    // internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, true)
 
-    oldStatus = store.files.published[store.files.published.length - 1].status
+    // oldStatus = store.files.published[store.files.published.length - 1].status
 
     const descriptorOpts = {
       datePublished: new Date,
       name: load.name,
       owner: true,
-      price: Number(load.price),
       size: load.size,
       status: k.PUBLISHING
     }
@@ -180,13 +180,8 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: k.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 
-    await autoQueue.push(() => afs.commit({ did: load.did, price: Number(load.price), password: password }))
-    const balance = await acmManager.getAraBalance(userDID)
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
-
     debug('Dispatching %s', k.PUBLISHED)
-    dispatch({ type: k.PUBLISHED, load: { balance, did: load.did } })
-    internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
+    dispatch({ type: k.PUBLISHED, load: { did: load.did } })
 
     debug('Dispatching %s', k.FEED_MODAL)
     dispatch({
@@ -196,12 +191,15 @@ ipcMain.on(k.CONFIRM_PUBLISH, async (event, load) => {
     windowManager.openModal('publishSuccessModal')
 
     const publishedSub = await acmManager.subscribePublished({ did: load.did })
-    const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, accountAddress, userDID)
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
     dispatch({ type: k.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
-console.log('CONFIRM_PUBLISH')
-console.log('load', load)
+    console.log('CONFIRM_PUBLISH')
+    console.log('load', load)
+
+
     internalEmitter.emit(k.START_SEEDING, load)
+
+
   } catch (err) {
     debug('Error in committing: %o', err)
     debug('Removing %s from .acm', load.did)
