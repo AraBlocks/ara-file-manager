@@ -30,7 +30,7 @@ class Section extends Nanocomponent {
   createElement({ files }) {
     const { props, makeRows } = this
     return (html`
-      <div>
+      <div style=${files.published.length === 0 && 'margin-bottom: 10px;'}>
         <div class="${styles.header} section-header">
           ${props.typeRow === 'purchased' ? 'Purchased Files' : 'Published Files'}
         </div>
