@@ -75,13 +75,13 @@ async function add({ key, id, paths }) {
 
   function ignore(path) {
     path = relative('/', path)
-    if (ignored.ignores(path)) {
-      if (force) {
-        debug(`forcing add path ${path}`)
-        return false
-      }
-      return true
-    }
+    // if (ignored.ignores(path)) {
+    //   if (force) {
+    //     debug(`forcing add path ${path}`)
+    //     return false
+    //   }
+    //   return true
+    // }
     return false
   }
 }
