@@ -101,10 +101,14 @@ async function login(_, load) {
   try {
     const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, load.password)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
-    console.log('DCDNStore', DCDNStore)
+    const purchasedDIDs = await acmManager.getLibraryItems(userDID)
+    //Returns objects representing various info around DIDs
+    // let purchased = purchasedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore))
+    let purchased = []
+    const publishedDIDs = (Object.keys(DCDNStore)).map(araUtil.getIdentifier)
+    let published = publishedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore, true))
 
-    const { files } = dispatch({ type: k.GOT_LIBRARY, load: { published: [], purchased: [] } })
-    // const { files } = dispatch({ type: k.GOT_LIBRARY, load: { published: [DCDNStore], purchased: [] } })
+    const { files } = dispatch({ type: k.GOT_LIBRARY, load: { published, purchased } })
 
     windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
 

@@ -3,6 +3,7 @@ const k = require('../../../lib/constants/stateManagement')
 const actionsUtil = require('./utils')
 const afmManager = require('./afmManager')
 const araContracts = require('ara-contracts')
+const cfsnetenv = require('cfsnet/env')
 const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
 const mirror = require('mirror-folder')
@@ -25,13 +26,24 @@ async function createDeployEstimateAfs(userDID, password) {
   }
 }
 
+async function makeCFS(farmer, opts) {
+  cfsnetenv.CFS_ROOT_DIR = opts.cfsRootDir || afmManager.getCFSDir()
+  const cfs = await farmer.farm.fs.create(opts)
+  return cfs
+}
+
 async function exportFile({ did, exportPath, filePath, completeHandler }) {
   debug('Exporting file %s to %s', filePath, exportPath)
   try {
-    const { afs } = await araFilesystem.create({ did })
-    const fullPath = path.join(afs.HOME, filePath)
-    const fileData = await afs.readFile(fullPath)
-    afs.close()
+    const cfs = await makeCFS(farmer, { id: load.name })
+    const fullPath = path.join(afmManager.getCFSDir(), filePath)
+    const fileData = cfs.readFile(fullPath)
+    cfs.close()
+
+    // const { afs } = await araFilesystem.create({ did })
+    // const fullPath = path.join(afs.HOME, filePath)
+    // const fileData = await afs.readFile(fullPath)
+    // afs.close()
     fs.writeFileSync(exportPath, fileData)
     shell.openItem(path.dirname(exportPath))
     completeHandler()

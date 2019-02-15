@@ -82,6 +82,7 @@ class AfsFileRow extends Nanocomponent {
 		e.stopPropagation()
 		e.target.parentNode.style.display = 'none'
 
+		console.log('exportfile props', props)
 		fileSystemManager.showSelectDirectoryDialog()
 			.then(folderName => {
 				props.renderView({ spinner: true })

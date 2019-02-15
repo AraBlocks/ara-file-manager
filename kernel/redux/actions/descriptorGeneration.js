@@ -31,13 +31,13 @@ class _Descriptor {
 
 function makeDummyDescriptor(did, DCDNStore, owner = false) {
 	did = araUtil.getIdentifier(did)
-	const AFSPath = makeAfsPath(did)
+	// const AFSPath = makeAfsPath(did)
 	return new _Descriptor({
-		AFSExists: fs.existsSync(AFSPath),
-		AFSPath,
+		// AFSExists: fs.existsSync(AFSPath),
+		// AFSPath,
 		did,
 		owner,
-		status: k.AWAITING_STATUS,
+		// status: k.AWAITING_STATUS,
 		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
 	})
 }
