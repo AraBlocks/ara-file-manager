@@ -70,7 +70,7 @@ module.exports = {
         selectedColor = !hoverState ? 'var(--ara-blue)' : '#005ed9'
         break
       case 'dark-grey':
-        selectedColor = '#7d7d7d'
+        selectedColor = 'var(--ara-dark-grey)'
         break
       case 'grey':
       case 'gray':
