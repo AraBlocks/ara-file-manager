@@ -8,7 +8,7 @@ const {
   identityManager,
 } = require('../../daemons')
 const {
-  fileDescriptor: descriptorGenerator
+  fileDescriptor: descriptorGeneration
 } = require('../../util')
 const dispatch = require('../../state/dispatch')
 const helpers = require('./login.helpers')
