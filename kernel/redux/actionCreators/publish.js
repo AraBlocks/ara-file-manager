@@ -129,7 +129,7 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
     try {
       const cfs = await makeCFS(farmer, { id: load.name })
 
-      // cfs add ...
+      await farmer.farm.fs.add({ id: load.name, key: cfs.key,  paths: load.paths })
 
       Object.assign(load, { did: cfs.key })
 
