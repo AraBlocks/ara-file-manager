@@ -1,0 +1,10 @@
+#!/bin/bash
+
+files=$(find . -name "*.js" ! -path "./node_modules/*")
+
+for f in ${files}; do
+  debug="ara:fm$(sed 's/\//\:/g' <<< $f | sed -r 's/\.(js)?//g')"
+
+  #echo $debug
+  sed -i -r "s/const debug = require\('debug'\)\('([A-Z]|[a-z]|\:)+'\)/const debug = require('debug')('${debug}')/g" $f
+done
