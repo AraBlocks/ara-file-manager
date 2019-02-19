@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:boot:tray')
+const debug = require('debug')('ara:fm:boot:tray')
 
 const isDev = require('electron-is-dev')
 const { closeWindow, internalEmitter, openWindow } = require('electron-window-manager')

@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:transaction')
+const debug = require('debug')('ara:fm:kernel:ipc:transaction')
 const dispatch = require('../state/dispatch')
 const { events: k } = require('k')
 const windowManager = require('electron-window-manager')

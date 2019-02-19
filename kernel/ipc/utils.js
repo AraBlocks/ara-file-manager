@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:utils')
+const debug = require('debug')('ara:fm:kernel:ipc:utils')
 const { events: k } = require('k')
 const dispatch = require('../state/dispatch')
 const {

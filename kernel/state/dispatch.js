@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:redux:reducers:dispatch')
+const debug = require('debug')('ara:fm:kernel:state:dispatch')
 const application = require('./application')
 const account = require('./account')
 const files = require('./files')

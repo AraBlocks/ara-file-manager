@@ -1,7 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:register')
-const { identityManager } = require('../../daemons')
-const dispatch = require('../../state/dispatch')
-
+const debug = require('debug')('ara:fm:kernel:ipc:register:index')
 const { events: k } = require('k')
 const { AutoQueue } = require('../../util')
 const dispatch = require('../../state/dispatch')

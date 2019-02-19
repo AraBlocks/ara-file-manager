@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:seed')
+const debug = require('debug')('ara:fm:kernel:ipc:seed')
 const { farmerManager } = require('../daemons')
 const dispatch = require('../state/dispatch')
 const { events: k } = require('k')

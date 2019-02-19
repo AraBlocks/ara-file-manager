@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actions:farmerManager')
+const debug = require('debug')('ara:fm:kernel:daemons:dcdn')
 
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
 const fs = require('fs')
