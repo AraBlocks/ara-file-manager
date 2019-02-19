@@ -35,6 +35,7 @@ module.exports = {
       font-weight: bold;
       font-size: 16px;
       margin-bottom: 2px;
+      width: 100%;
     }
   `,
 
