@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:wallet')
+const debug = require('debug')('ara:fm:kernel:ipc:subscription')
 const { acmManager, utils: actionUtils } = require('../daemons')
 const dispatch = require('../state/dispatch')
 const { events: k } = require('k')

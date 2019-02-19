@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:download')
+const debug = require('debug')('ara:fm:kernel:ipc:download')
 
 const dispatch = require('../state/dispatch')
 const { internalEmitter } = require('electron-window-manager')

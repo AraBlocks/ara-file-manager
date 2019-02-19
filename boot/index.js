@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:boot:main')
+const debug = require('debug')('ara:fm:boot:index')
 
 const writeFiles = require('./writeFiles')
 //Writes .ara and keyrings if doesn't exist

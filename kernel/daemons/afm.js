@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actions:afmManager')
+const debug = require('debug')('ara:fm:kernel:daemons:afm')
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')

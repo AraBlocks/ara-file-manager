@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:rewards')
+const debug = require('debug')('ara:fm:kernel:ipc:rewards')
 const { events: k } = require('k')
 const dispatch = require('../state/dispatch')
 const { rewards } = require('ara-contracts')

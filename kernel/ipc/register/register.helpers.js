@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:register')
+const debug = require('debug')('ara:fm:kernel:ipc:register:registerhelpers')
 const { utils } = require('../../daemons')
 
 const {

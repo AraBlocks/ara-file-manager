@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actions:afsManager')
+const debug = require('debug')('ara:fm:kernel:daemons:fs')
 const { events: k } = require('k')
 const actionsUtil = require('./utils')
 const afmManager = require('./afm')

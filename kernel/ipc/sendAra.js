@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:download')
+const debug = require('debug')('ara:fm:kernel:ipc:sendAra')
 const { acmManager, identityManager } = require('../daemons')
 const araUtil = require('ara-util')
 const dispatch = require('../state/dispatch')

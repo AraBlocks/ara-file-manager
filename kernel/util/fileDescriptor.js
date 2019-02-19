@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actions:descriptorGeneration')
+const debug = require('debug')('ara:fm:kernel:util:fileDescriptor')
 const { events: k } = require('k')
 const acmManager = require('../daemons/acm')
 const afsManager = require('../daemons/fs')

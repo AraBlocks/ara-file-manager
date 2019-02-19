@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:export')
+const debug = require('debug')('ara:fm:kernel:ipc:export')
 const { fs: afsManager } = require('../daemons')
 const { ipcMain } = require('electron')
 const { events: k } = require('k')

@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:wallet')
+const debug = require('debug')('ara:fm:kernel:ipc:wallet')
 const dispatch = require('../state/dispatch')
 const { events: k } = require('k')
 const windowManager = require('electron-window-manager')

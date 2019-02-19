@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:login')
+const debug = require('debug')('ara:fm:kernel:ipc:login:index')
 const araUtil = require('ara-util')
 const aid = require('ara-identity')
 const {

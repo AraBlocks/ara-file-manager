@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:update')
+const debug = require('debug')('ara:fm:kernel:ipc:update')
 const afs = require('ara-filesystem')
 const dispatch = require('../state/dispatch')
 const { ipcMain } = require('electron')
