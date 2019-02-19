@@ -1,5 +1,5 @@
 const html = require('nanohtml')
-const { stateManagement: k } = require('k')
+const { events: k } = require('k')
 const Nanocomponent = require('nanocomponent')
 
 const Button = require('../components/button')

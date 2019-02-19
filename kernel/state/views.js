@@ -1,4 +1,4 @@
-const { stateManagement: k } = require('k')
+const { events: k } = require('k')
 
 module.exports = (state, { load = null, type }) => {
   switch (type) {

@@ -1,4 +1,4 @@
-const { stateManagement: k } = require('k')
+const { events: k } = require('k')
 const Nanocomponent = require('nanocomponent')
 const filesize = require('filesize')
 const styles = require('./styles/fileDescriptor')

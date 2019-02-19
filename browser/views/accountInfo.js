@@ -1,4 +1,4 @@
-const k = require('../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
 const { emit } = require('../lib/tools/windowManagement')
