@@ -35,7 +35,7 @@ module.exports = {
           display: flex;
           justify-content: center;
           font-size: 14px;
-          color: ${colorSelector('grey')};
+          color: ${colorSelector('dark-grey')};
         }`
       }
     `
