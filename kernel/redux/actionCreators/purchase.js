@@ -59,6 +59,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 			event: k.REFRESH,
 			load: {
 				fee,
+				peers: 1,
 				gasEstimate,
 				price: Number(price)
 			}
