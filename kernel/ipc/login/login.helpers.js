@@ -3,10 +3,10 @@ const menuHelper = require('../../../boot/menuHelper')
 const { AutoQueue } = require('../../util')
 const dispatch = require('../../state/dispatch')
 const {
-  acm,
-  afs,
-  afm,
-  dcdn,
+  acmManager,
+  afsManager,
+  afmManager,
+  farmerManager,
   utils
 } = require('../../daemons')
 const fs = require('fs')

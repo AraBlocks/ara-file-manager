@@ -7,7 +7,7 @@ const {
   acm: acmManager,
   utils: actionsUtil,
 } = require('../daemons')
-const { fileDescriptor: descriptorGenerator } = require('../util')
+const { fileDescriptor: descriptorGeneration } = require('../util')
 const { events: k } = require('k')
 const fs = require('fs')
 const windowManager = require('electron-window-manager')

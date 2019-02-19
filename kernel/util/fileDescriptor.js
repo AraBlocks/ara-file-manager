@@ -5,7 +5,7 @@ const afsManager = require('../daemons/fs')
 const farmerManager = require('../daemons/dcdn')
 const araUtil = require('ara-util')
 const fs = require('fs')
-const { makeAfsPath, readFileMetadata } = require('./')
+const { makeAfsPath, readFileMetadata } = require('../daemons/utils')
 
 class _Descriptor {
 	constructor(opts = {}) {
