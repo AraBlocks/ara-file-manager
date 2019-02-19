@@ -1,13 +1,10 @@
 const debug = require('debug')('ara:fm:kernel:ipc:register:registerhelpers')
-const { utils } = require('../../daemons')
-
 const {
   application: applicationK,
-  stateManagement: k
+  events: k
 } = require('k')
 const araUtil = require('ara-util')
-
-const { AutoQueue } = require('../../../lib')
+const { AutoQueue } = require('../../util')
 const {
   acmManager,
   afsManager,
@@ -16,8 +13,8 @@ const {
   identityManager,
   farmerManager,
   utils
-} = require('../../actions')
-const menuHelper = require('../../../../boot/menuHelper')
+} = require('../../daemons')
+const menuHelper = require('../../../boot/menuHelper')
 
 async function createIdentity() {
   const identity = await identityManager.create(applicationK.TEMP_PASSWORD)
@@ -84,5 +81,4 @@ module.exports = {
   createIdentity,
   getAccountsProps,
   getSubscriptions
-  requestEther
 }
