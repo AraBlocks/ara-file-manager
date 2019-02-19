@@ -1,4 +1,4 @@
-const { emit } = require('..//lib/tools/windowManagement')
+const { emit } = require('../lib/tools/windowManagement')
 const { events: k } = require('k')
 const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
