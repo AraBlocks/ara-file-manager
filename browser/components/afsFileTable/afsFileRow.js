@@ -1,8 +1,7 @@
 const { emit } = require('../../lib/tools/windowManagement')
-const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const fileListUtil = require('../../lib/tools/fileListUtil')
-const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
 const html = require('nanohtml')
@@ -86,7 +85,7 @@ class AfsFileRow extends Nanocomponent {
 			.then(folderName => {
 				props.renderView({ spinner: true })
 				emit({
-					event: EXPORT_FILE,
+					event: k.EXPORT_FILE,
 					load: {
 						...props.fileInfo,
 						did: props.did,

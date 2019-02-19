@@ -1,5 +1,5 @@
-const { emit } = require('../../browser/lib/tools/windowManagement')
-const { DUMP_MODAL_STATE } = require('../../lib/constants/stateManagement')
+const { emit } = require('..//lib/tools/windowManagement')
+const { events: k } = require('k')
 const remote = require('electron').remote
 const windowManager = remote.require('electron-window-manager')
 const isDev = require('electron-is-dev')
@@ -25,7 +25,7 @@ document.getElementById('container').appendChild(
 window.onunload = () => {
   windowManager.modalIsOpen = false
   if (data.freezeData == false) {
-    emit({ event: DUMP_MODAL_STATE })
+    emit({ event: k.DUMP_MODAL_STATE })
   }
 }
 

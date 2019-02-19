@@ -1,5 +1,5 @@
 const ManageFileContainer = require('../views/manageFile/container')
-const k = require('../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { account, modal } = windowManager.sharedData.fetch('store')
