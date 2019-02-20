@@ -85,6 +85,12 @@ class Header extends Nanocomponent {
     }
   }
 
+  lookUpURL(e) {
+    const url = e.currentTarget.value
+
+    windowManagement.openDeepLinking(url)
+  }
+
   update() {
     return true
   }
@@ -118,6 +124,9 @@ class Header extends Nanocomponent {
               ${balanceElements}
             </div>
           </div>
+        </div>
+        <div>
+          <input type="text" name="download" placeholder="URL" onchange=${this.lookUpURL}/>
         </div>
         <div class="${styles.tabHolder} header-tabHolder">
           ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index }))}

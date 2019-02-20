@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
-    "ara-base-dcdn": "github:arablocks/ara-base-dcdn#mac-improvements",
+    "ara-base-dcdn": "github:arablocks/ara-base-dcdn#semver:1.3.x",
     "ara-context": "github:arablocks/ara-context#semver:0.5.x",
     "ara-contracts": "github:arablocks/ara-contracts#semver:0.21.x",
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.24.x",
