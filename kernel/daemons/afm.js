@@ -6,7 +6,7 @@ const { app } = require('electron')
 const araUtil = require('ara-util')
 const toilet = require('toiletdb')
 const pify = require('pify')
-const { application } = require('../../constants')
+const { application } = require('k')
 const { version } = require('../../package.json')
 const rimraf = require('rimraf')
 

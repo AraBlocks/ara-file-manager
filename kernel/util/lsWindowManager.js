@@ -1,6 +1,6 @@
 const debug = require('debug')('ara:fm:kernel:util:lsWindowManager')
 const analytics = require('../daemons/analytics')
-const k = require('../../constants/events')
+const { events: k } = require('k')
 const EventEmitter = require('events')
 const path = require('path')
 const windowManager = require('electron-window-manager')
