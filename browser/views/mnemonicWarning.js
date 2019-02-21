@@ -73,7 +73,7 @@ class MnemonicWarning extends Nanocomponent {
             DO NOT LOSE THIS MNEMONIC
           </div>
           <div class="${styles.smallMessage({})} modal-smallMessage">
-            This 12 word phrase is the ONLY way to recover or edit access to this package.
+            This 12 word phrase is the ONLY way to ${props.isAFS ? afsMsg : acctMsg}
             Please write this phrase down and keep it in a secure place.
             You will never be shown this mnemonic again.
           </div>
