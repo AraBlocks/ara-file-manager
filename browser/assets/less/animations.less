@@ -1,0 +1,173 @@
+.spinner, .spinner:after, .spinner-small-blue, .spinner-small-teal, .spinner-tiny-teal, .spinner:after {
+  border-radius: 50%;
+  width: 6em;
+  height: 6em;
+}
+
+.spinner {
+  margin: 60px auto;
+  font-size: 6px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: .5em solid rgba(255, 255, 255, 0.2);
+  border-right: .5em solid #ffffff;
+  border-bottom: .5em solid #ffffff;
+  border-left: .5em solid #ffffff;
+  transform: translateZ(0);
+  animation: spin 800ms infinite linear;
+}
+
+.spinner-small-blue {
+  font-size: 2px;
+  position: relative;
+  text-indent: -9999em;
+  border: .5em solid var(--ara-blue);
+  border-top: .5em solid rgba(255, 255, 255, 0.2);
+  transform: translateZ(0);
+  animation: spin 800ms infinite linear;
+}
+
+.spinner-small-teal {
+  font-size: 2px;
+  position: relative;
+  text-indent: -9999em;
+  border: .5em solid var(--ara-teal);
+  border-top: .5em solid rgba(255, 255, 255, 0.2);
+  transform: translateZ(0);
+  animation: spin 800ms infinite linear;
+}
+
+.spinner-tiny-teal {
+  font-size: 1px;
+  position: relative;
+  text-indent: -9999em;
+  border: .5em solid var(--ara-teal);
+  border-top: .5em solid rgba(255, 255, 255, 0.2);
+  transform: translateZ(0);
+  animation: spin 800ms infinite linear;
+}
+
+.fadeInUp {
+  animation: fadeInUp;
+  transition: all ease-in-out;
+}
+
+.expand {
+  animation: expand;
+  transition: all ease;
+}
+
+.ants {
+  animation: border-dance 24s linear infinite;
+  background-image: linear-gradient(
+    to right,
+    silver 50%,
+    transparent 0%
+  );
+  background-size: 8px 4px;
+  background-repeat: repeat-x;
+  background-position: 0% bottom;
+  height:1px;
+}
+
+.bounce {
+  font-size: 10px;
+  height: 40px;
+  width: 50px;
+}
+
+.bounce > div {
+  animation: bounce 1.2s infinite ease-in-out;
+  background-color: var(--ara-text-blue);
+  border-radius: 50%;
+  display: inline-block;
+  height: 4px;
+  margin-right: 3px;
+  width: 4px;
+}
+
+.bounce .dot2 {
+  animation-delay: -1.1s;
+}
+
+.bounce .dot3 {
+  animation-delay: -1.0s;
+}
+
+.blinker {
+  animation: blinker 2s infinite ease-in-out;
+}
+
+/* animations */
+
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(0, -35px);
+    opacity: .7;
+  }
+}
+
+@keyframes expand {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% { transform: scaleY(0.4); }
+  20% { transform: scaleY(1.0); }
+}
+
+@keyframes bounce {
+  0%, 40%, 100% {
+    transform: translate3d(0,0,0);
+  }  20% {
+    transform: translate3d(0,-5px,0);
+  }
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes border-dance {
+  from {
+    background-position: 0% bottom;
+  }
+  to {
+    background-position: 100% bottom;
+  }
+}
+
+@keyframes banner
+{
+  from { top:-10%; }
+  to { top:0; }
+}
+
