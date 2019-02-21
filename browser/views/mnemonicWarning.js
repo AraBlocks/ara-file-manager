@@ -4,9 +4,9 @@ const Nanocomponent = require('nanocomponent')
 const windowManager = remote.require('electron-window-manager')
 
 const Button = require('../components/button')
+const { stateManagement: k } = require('k')
 const styles = require('./modals/styles')
 const windowManagement = require('../lib/tools/windowManagement')
-const { events: k } = require('k')
 
 class MnemonicWarning extends Nanocomponent {
   constructor({ contentDID, isAFS = false, mnemonic }) {
