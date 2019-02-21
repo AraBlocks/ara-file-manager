@@ -1,4 +1,4 @@
-const { events: k } = require('k')
+const k = require('../../lib/constants/stateManagement')
 const Button = require('../components/button')
 const ErrorInput = require('../components/errorInput')
 const overlay = require('../components/overlay')

@@ -1,4 +1,4 @@
-const { events: k } = require('k')
+const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/progressBar')
 const html = require('nanohtml')
 
