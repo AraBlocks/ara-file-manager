@@ -1,7 +1,7 @@
 const Button = require('../../components/button')
 const { clipboard, remote } = require('electron')
 const { app } = remote.require('electron')
-const { events: k } = require('k')
+const { stateManagement: k } = require('k')
 const DynamicTooltip = require('../../components/dynamicTooltip')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')

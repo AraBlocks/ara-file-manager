@@ -1,6 +1,6 @@
 const AFSExlorer = require('../views/afsExplorerView/container')
 const { ipcRenderer, remote } = require('electron')
-const { events: k } = require('k')
+const { REFRESH } = require('../../lib/constants/stateManagement')
 const windowManager = remote.require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 const isDev = require('electron-is-dev')
