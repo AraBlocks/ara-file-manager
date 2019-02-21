@@ -3,8 +3,8 @@ const afs = require('ara-filesystem')
 const dispatch = require('../state/dispatch')
 const { ipcMain } = require('electron')
 const {
-  fs: afsManager,
-  acm: acmManager,
+  afsManager,
+  acmManager,
   utils: actionsUtil,
 } = require('../daemons')
 const { fileDescriptor: descriptorGeneration } = require('../util')
