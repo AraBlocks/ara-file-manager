@@ -1,4 +1,4 @@
-const k = require('../../lib/constants/stateManagement')
+const { events: k } = require('k')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
 const { emit } = require('../lib/tools/windowManagement')
@@ -58,7 +58,7 @@ class AccountInfo extends Nanocomponent {
         onclick: () => clipboard.writeText('support@ara.one')
       })
     }
-    
+
     this.toggleAnalyticsPermission = this.toggleAnalyticsPermission.bind(this)
     this.rerender = this.rerender.bind(this)
   }
@@ -99,13 +99,13 @@ class AccountInfo extends Nanocomponent {
     return buttonOpts
   }
 
-  openTerms() {
-    shell.openExternal("https://ara.one/terms")
-  }
-
   toggleAnalyticsPermission() {
     emit({ event: k.TOGGLE_ANALYTICS_PERMISSION })
     this.render({})
+  }
+
+  araOneLink() {
+    shell.openExternal("https://ara.one")
   }
 
   update(props = {}) {
@@ -117,8 +117,8 @@ class AccountInfo extends Nanocomponent {
     const {
       children,
       faucetButtonOpts,
-      openTerms,
       toggleAnalyticsPermission,
+      araOneLink,
       props,
     } = this
 
@@ -157,7 +157,6 @@ class AccountInfo extends Nanocomponent {
           <div class="${styles.interactiveSection} accountInfo-interactiveSection">
             <div class="request-container">
               <b>Request test tokens:</b>
-              <div>Note: these tokens are for testing purposes only, and will only work on testnet</div>
               ${children.requestTokensButton.render(faucetButtonOpts)}
             </div>
             <div class="send-container">
@@ -167,20 +166,15 @@ class AccountInfo extends Nanocomponent {
           </div>
         </div>
         <div class="${styles.appInfo} accountInfo-appInfo">
-          <div>
+            <div>Note: Tokens will only work on testnet.</div>
+          <div class="link-holder">
             <a onclick=${toggleAnalyticsPermission}>
               ${props.analyticsPermission ? 'Disable Analytics' : 'Enable Analytics' }
             </a>
-          </div>
-          <div class="link-holder">
-            <a onclick="${openTerms}">Terms of Service</a>
             <b>|</b>
-            ${children.contactSupportTooltip.render()}
-          </div>
-          <div>
-            Copyright 2018, Ara Blocks LLC.
-            <br>
-            All rights reserved.
+            <a onclick=${araOneLink}>
+              ara.one
+            </a>
           </div>
         </div>
         <div style="height:${utils.shouldShowBanner(props.network) ? 50  : 0}px;"></div>
