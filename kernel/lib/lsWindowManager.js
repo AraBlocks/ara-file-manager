@@ -40,7 +40,7 @@ windowManager.setSize = (view) => {
       break
     case 'accountInfo':
       width = 325
-      height = 690
+      height = 630
       break
     case 'developer':
       width = 300
@@ -88,7 +88,7 @@ windowManager.setSize = (view) => {
     case 'estimateSpinner':
     case 'publishConfirmModal':
       width = 360
-      height = 225
+      height = 185
       break
     case 'publishSuccessModal':
       width = 340
