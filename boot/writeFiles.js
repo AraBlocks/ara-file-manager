@@ -1,5 +1,5 @@
-const debug = require('debug')('ara:fm:boot:writeFiles')
-const { events: k } = require('k')
+const debug = require('debug')('afm:boot:writeFiles')
+const k = require('../lib/constants/networkKeys')
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')

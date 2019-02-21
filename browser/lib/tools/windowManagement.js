@@ -1,4 +1,4 @@
-const debug = require('debug')('ara:fm:browser:lib:tools:windowManagement')
+const debug = require('debug')('browser:lib:tools:windowManagement')
 const {
 	ipcRenderer,
 	remote,
