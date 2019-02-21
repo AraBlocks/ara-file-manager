@@ -7,7 +7,7 @@ module.exports = {
       bottom: 0;
       background-color: var(--ara-orange);
       font-size: 11px;
-      height: 52px;
+      height: 45px;
       left: 0;
       justify-content: center;
       position: absolute;
@@ -23,7 +23,7 @@ module.exports = {
     @media only screen and (max-width: 350px) {
       :host {
         font-size: 10px;
-        height: 55px;
+        height: 48px;
       }
   }
   `,
