@@ -1,4 +1,4 @@
-const debug = require('debug')('ara:fm:boot:squirrel')
+const debug = require('debug')('afm:boot:squirrel')
 
 const { autoUpdater } = require('electron')
 const isDev = require('electron-is-dev')

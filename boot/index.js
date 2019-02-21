@@ -1,4 +1,4 @@
-const debug = require('debug')('ara:fm:boot:index')
+const debug = require('debug')('afm:boot:main')
 
 const writeFiles = require('./writeFiles')
 //Writes .ara and keyrings if doesn't exist
@@ -6,11 +6,11 @@ writeFiles.updateAraRC()
 writeFiles.writeDotAra()
 
 const { app } = require('electron')
-const { application, events: k } = require('k')
-const windowManager = require('../kernel/util/lsWindowManager')
+const { application, stateManagement: k } = require('k')
+const windowManager = require('../kernel/lib/lsWindowManager')
 const { internalEmitter } = require('electron-window-manager')
-const analytics = require('../kernel/daemons/analytics')
-const { cleanOutdatedData } = require('../kernel/daemons/afm')
+const analytics = require('../kernel/redux/actions/analytics')
+const { cleanOutdatedData } = require('../kernel/redux/actions/afmManager')
 const cleanUp = require('./cleanUp')
 const { handleDeepLink, deeplinkWaiting } = require('./deepLink')
 

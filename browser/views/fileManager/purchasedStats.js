@@ -1,4 +1,4 @@
-const { events: k } = require('k')
+const k = require('../../../lib/constants/stateManagement')
 const { renderEarnings } = require('./util')
 const styles = require('./styles/purchasedStats')
 const html = require('nanohtml')
