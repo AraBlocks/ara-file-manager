@@ -30,7 +30,7 @@ module.exports = (load) => {
           <div class="${styles.smallMessage({})} modal-smallMessage">
             This update will be pushed to all users connected to<br>
             the network.<br><br>
-            Publishing this file will cost:
+            This will cost:
           </div>
           <span class="${styles.postheader} modals-postheader">
             ${utils.roundDecimal(load.gasEstimate, 1000)} eth
