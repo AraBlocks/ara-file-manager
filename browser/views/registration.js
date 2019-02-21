@@ -34,7 +34,7 @@ class Registration extends Nanocomponent {
         type: 'password',
         disabled: true
       }),
-      submitButton: new Button({ children: 'Register', type: 'submit' }),
+      submitButton: new Button({ children: 'OK', type: 'submit' }),
       cancelButton: new Button({
         children: 'Cancel',
         cssClass: {
@@ -102,7 +102,7 @@ class Registration extends Nanocomponent {
         <div class="${styles.logo} registration-logo">
           <img src="../assets/images/ARA_logo_horizontal.png"/>
         </div>
-        <div class="${styles.header} registration-header">Register</div>
+        <div class="${styles.header} registration-header">Ara ID</div>
         <p class="${styles.description} registration-description">
           Welcome to the Ara File Manager. <b>An Ara ID will be generated for
           you</b>. Once it's generated, enter your desired password and save it somewhere safe, as <b>there

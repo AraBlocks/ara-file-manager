@@ -28,13 +28,7 @@ module.exports = (load) => {
           Publish Now?
         </div>
         <div class="${styles.verticalContainer} modal-verticalContainer">
-          <div class="${styles.smallMessage({})} modal-smallMessage">
-            By publishing this file, you certify that you have the
-            <div class="${styles.smallMessage({ color: 'orange' })} modal-smallMessage">
-              legal right to publish and distribute this content.
-            </div>
-            <br>Publishing this file will cost:
-          </div>
+          This will cost:
           <span class="${styles.postheader} modals-postheader">
             ${utils.roundDecimal(load.gasEstimate, 1000)} eth
           </span>
