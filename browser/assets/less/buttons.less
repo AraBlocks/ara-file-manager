@@ -1,18 +1,46 @@
 @import (less) "tachyons.css";
 @import "constants";
 
+.destructive(@type) {
+  @{type}: @red-200;
+}
+
+.unemp(@type) {
+  @{type}: @black-500;
+}
+
 button {
-  .br-pill();
-  .pa3();
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+  .br2();
+  .pa2();
+  .b--white();
+  .b--none();
 
-  background-color: @blue-300;
-  color: @black-100;
+  background-color: @green-300;
+  color: @white-absolute;
 
-  .destructive {
-    background-color: @red-200;
+  &.destructive {
+    .destructive(background-color);
   }
 
-  .unemp {
-    background-color: @black-500;
+  &.unemp {
+    .unemp(background-color);
+  }
+}
+
+a {
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+  .no-underline();
+  .pl1();
+
+  color: @green-400;
+  &.unemp {
+    .unemp(color);
+  }
+
+  &.destructive {
+    .destructive(color);
   }
 }
