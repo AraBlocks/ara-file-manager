@@ -62,7 +62,7 @@ class MnemonicWarning extends Nanocomponent {
     const { mnemonic } = props
 
     const acctMsg = 'recover your account and login to your account on another computer.'
-    const afsMsg = 'validate your ownership of this package.'
+    const afsMsg = 'recover or edit access to this package.'
     return html`
       <div class="${styles.container({ justifyContent: 'space-around', height: 95 })} modals-container">
         <div class="${styles.logo} modals-logo">
@@ -73,7 +73,7 @@ class MnemonicWarning extends Nanocomponent {
             DO NOT LOSE THIS MNEMONIC
           </div>
           <div class="${styles.smallMessage({})} modal-smallMessage">
-            This 12 word phrase is the ONLY way to recover or edit access to this package.
+            This 12 word phrase is the ONLY way to ${props.isAFS ? afsMsg : acctMsg}
             Please write this phrase down and keep it in a secure place.
             You will never be shown this mnemonic again.
           </div>
