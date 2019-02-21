@@ -45,9 +45,9 @@ class Login extends Nanocomponent {
 
   createElement() {
     return html`
-      <div class="flex flex-column">
-        <div class="w2 h2">
-          <img src="../assets/images/ARA_logo_horizontal.png" />
+      <div class="flex flex-column pa3">
+        <div class="flex justify-center">
+          <img class="w3 h1" src="../assets/images/ARA_logo_horizontal.png" />
         </div>
         <div class="f2">
           Log In
