@@ -28,7 +28,7 @@ module.exports = (load) => {
           Publish Now?
         </div>
         <div class="${styles.verticalContainer} modal-verticalContainer">
-          This will cost:
+          <span style="margin-bottom: 15px">This will cost:</span>
           <span class="${styles.postheader} modals-postheader">
             ${utils.roundDecimal(load.gasEstimate, 1000)} eth
           </span>
