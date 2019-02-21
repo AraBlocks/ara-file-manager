@@ -1,3 +1,12 @@
+## [0.9.5](https://github.com/littlstar/ara-content-manager/compare/0.9.4...0.9.5) (2019-02-21)
+
+
+### Bug Fixes
+
+* **update.js:** renders package name in modal ([b83c674](https://github.com/littlstar/ara-content-manager/commit/b83c674))
+
+
+
 ## [0.9.4](https://github.com/littlstar/ara-content-manager/compare/0.9.3...0.9.4) (2019-02-21)
 
 
@@ -11,17 +20,7 @@
 
 
 
-## [0.9.2](https://github.com/littlstar/ara-content-manager/compare/0.9.1...0.9.2) (2019-02-19)
-
-
-### Features
-
-* recover implemented to change password (closes [#432](https://github.com/littlstar/ara-content-manager/issues/432)) ([1f5518c](https://github.com/littlstar/ara-content-manager/commit/1f5518c))
-* **progressBar:** added message to :ant: ([24370cc](https://github.com/littlstar/ara-content-manager/commit/24370cc))
-
-
-
-## [0.9.1](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.9.1) (2019-02-14)
+## [0.9.2](https://github.com/littlstar/ara-content-manager/compare/0.6.1...0.9.2) (2019-02-19)
 
 
 ### Bug Fixes
@@ -39,8 +38,10 @@
 * context-menu for main view ([07172cc](https://github.com/littlstar/ara-content-manager/commit/07172cc))
 * **browser/views/purchaseEstimate:** Add peer count ([eb93e56](https://github.com/littlstar/ara-content-manager/commit/eb93e56))
 * **kernel/*:** Add peer count to purchase estimate ([5f4b2cf](https://github.com/littlstar/ara-content-manager/commit/5f4b2cf))
-* **tray.js:** windows version of tray icon ([e8a1230](https://github.com/littlstar/ara-content-manager/commit/e8a1230))
 * creates aid immediately ([0589250](https://github.com/littlstar/ara-content-manager/commit/0589250))
+* recover implemented to change password (closes [#432](https://github.com/littlstar/ara-content-manager/issues/432)) ([1f5518c](https://github.com/littlstar/ara-content-manager/commit/1f5518c))
+* **progressBar:** added message to :ant: ([24370cc](https://github.com/littlstar/ara-content-manager/commit/24370cc))
+* **tray.js:** windows version of tray icon ([e8a1230](https://github.com/littlstar/ara-content-manager/commit/e8a1230))
 
 
 
