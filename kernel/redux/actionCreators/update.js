@@ -161,7 +161,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (_, load) => {
 
     internalEmitter.emit(k.START_SEEDING, load)
 
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { packageName: load.name } } })
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
     windowManager.openModal('generalMessageModal')
   } catch (err) {
     debug('Error: %O', err)
