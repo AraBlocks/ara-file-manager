@@ -1,6 +1,6 @@
 const AccountInfo = require('../views/accountInfo')
 const { ipcRenderer, remote } = require('electron')
-const { events: k } = require('k')
+const k = require('../../lib/constants/stateManagement')
 const windowManager = remote.require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 const isDev = require('electron-is-dev')

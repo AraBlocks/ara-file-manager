@@ -1,6 +1,6 @@
 const EstimateSpinner = require('../views/estimateSpinner')
 const { ipcRenderer, remote } = require('electron')
-const { events: k } = require('k')
+const { stateManagement: k } = require('k')
 const windowManager = remote.require('electron-window-manager')
 const { views } = windowManager.sharedData.fetch('store')
 const initProps = require('../js/estimateSpinner/initProps')
