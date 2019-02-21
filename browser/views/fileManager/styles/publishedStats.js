@@ -3,7 +3,7 @@ const {
   colors,
   colorSelector,
   fonts
-} = require('styleUtils')
+} = require('css-constants')
 const { css } = require('css')
 
 module.exports = {

@@ -14,12 +14,10 @@ class Login extends Nanocomponent {
   }
 
   login(e) {
-    console.log("LOGIN")
     e.preventDefault()
 
     const load = getFormData(e.currentTarget)
 
-    console.log("LOAD:", load)
     windowManagement.emit({ event: k.LOGIN, load })
     windowManagement.closeWindow('login')
   }

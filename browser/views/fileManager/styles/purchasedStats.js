@@ -1,5 +1,5 @@
 const { DOWNLOADED_PUBLISHED } = require('../../../../lib/constants/stateManagement')
-const { colors, fonts } = require('styleUtils')
+const { colors, fonts } = require('css-constants')
 const { css } = require('css')
 
 module.exports = {

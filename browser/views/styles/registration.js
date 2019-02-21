@@ -1,5 +1,5 @@
 const { css } = require('css')
-const { fonts } = require('styleUtils')
+const { fonts } = require('css-constants')
 
 module.exports = {
   araID: css`

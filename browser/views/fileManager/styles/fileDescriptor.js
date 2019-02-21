@@ -1,4 +1,4 @@
-const { fonts, colorSelector } = require('styleUtils')
+const { fonts, colorSelector } = require('css-constants')
 const { css } = require('css')
 
 module.exports = {

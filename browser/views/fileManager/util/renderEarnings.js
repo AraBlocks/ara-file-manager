@@ -1,6 +1,6 @@
 const html = require('nanohtml')
 const { utils } = require('../../../lib/tools')
-const { colors } = require('styleUtils')
+const { colors } = require('css-constants')
 
 module.exports = (reedming, earnings, allocatedRewards) =>{
   const roundedEarnings = utils.roundDecimal(earnings, 100)

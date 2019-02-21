@@ -1,4 +1,4 @@
-const { colorSelector } = require('styleUtils')
+const { colorSelector } = require('css-constants')
 const { css } = require('css')
 const { stateManagement: k } = require('k')
 

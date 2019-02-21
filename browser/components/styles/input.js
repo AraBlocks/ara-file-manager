@@ -3,7 +3,7 @@ const {
   colorSelector,
   colors,
   fonts,
-} = require('styleUtils')
+} = require('css-constants')
 
 module.exports = {
   container({ disabled, requiredIndicator}) {

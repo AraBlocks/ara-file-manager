@@ -1,4 +1,4 @@
-const { buttonSelector, fonts } = require('styleUtils')
+const { buttonSelector, fonts } = require('css-constants')
 const { css } = require('css')
 
 module.exports = {
