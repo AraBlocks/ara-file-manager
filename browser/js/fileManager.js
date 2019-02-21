@@ -1,4 +1,4 @@
-const { events: k } = require('k')
+const { stateManagement: k } = require('k')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
