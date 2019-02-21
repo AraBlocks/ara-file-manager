@@ -1,7 +1,7 @@
 const FileSelector = require('../../components/fileSelector')
 const FileTable = require('../../components/afsFileTable/editableFileTable')
 const ErrorInput = require('../../components/errorInput')
-const { events: k } = require('k')
+const k = require('../../../lib/constants/stateManagement')
 const styles = require('./styles/fileInfo')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')

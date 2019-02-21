@@ -1,4 +1,4 @@
-const { events: k } = require('k')
+const { stateManagement: k } = require('k')
 
 module.exports = {
   redeem: {
