@@ -8,7 +8,7 @@ module.exports = {
       align-items: center;
       display: flex;
       flex-direction: column;
-      height: 88px;
+      height: 45px;
       justify-content: space-around;
       line-height: 15px;
       text-align: center;
@@ -17,7 +17,7 @@ module.exports = {
     :host .link-holder {
       display: flex;
       justify-content: space-between;
-      width: 63%;
+      width: 50%;
     }
 
     :host a:hover {
@@ -116,7 +116,7 @@ module.exports = {
     :host {
       display: flex;
       flex-direction: column;
-      height: 170px;
+      height: 145px;
       justify-content: space-between;
       padding: 12px 0 20px 0;
     }
@@ -124,7 +124,7 @@ module.exports = {
     :host .request-container {
       display: flex;
       flex-direction: column;
-      height: 90px;
+      height: 60px;
       justify-content: space-between;
     }
 
