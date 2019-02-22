@@ -192,7 +192,7 @@ class Container extends Nanocomponent {
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} ManageFileContainer-horizontalContainer,title">
 					${state.uncommitted ? 'Publish Package' : 'Manage Package'}
-					${children.utilityButton.render({ children: 'close' })}
+					${children.utilityButton.render({ children: 'Close' })}
 				</div>
 				<div class="${styles.content} ManageFileContainer-content">
 					${this.renderDescription()}

@@ -25,14 +25,15 @@ class UtilityButton extends Nanocomponent {
     const { state } = this
     let iconName = ''
     let yTransform = 1
-    switch (state.children) {
+    console.log("CHILD:", state.children.toLowerCase())
+    switch (state.children.toLowerCase()) {
       case 'close':
         iconName ='Close'
         break
-      case 'upArrow':
+      case 'uparrow':
         iconName = 'Arrow'
         break
-      case 'downArrow':
+      case 'downarrow':
         iconName = 'Arrow'
         yTransform = -1
         break
