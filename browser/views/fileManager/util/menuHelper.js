@@ -1,4 +1,4 @@
-const { stateManagement: k } = require('k')
+const { events: k } = require('k')
 const { deeplink, windowManagement } = require('../../../lib/tools')
 
 module.exports = (opts, closeContextMenuCB = () => {}) => {

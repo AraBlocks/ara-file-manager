@@ -1,7 +1,7 @@
 const { Menu, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
-const k = require('../lib/constants/stateManagement')
+const { events: k } = require('k')
 
 let contextMenu
 function buildMenu() {
