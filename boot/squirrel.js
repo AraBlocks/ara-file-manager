@@ -7,8 +7,7 @@ const windowManager = require('electron-window-manager')
 
 const dispatch = require('../kernel/redux/reducers/dispatch')
 const { version } = require('../package.json')
-dispatch({ type: k.FEED_MODAL, load: { modalName: 'updatedContracts' } })
-setTimeout(windowManager.openModal, 1500, 'generalMessageModal')
+
 if (isDev) { return }
 
 process.platform === 'darwin'
@@ -24,8 +23,7 @@ autoUpdater.addListener('update-available', () => {
   const [, minor, patch] = version.split('.')
   if (minor === '9' && patch === '6') {
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'updatedContracts' } })
-    setTimeout(windowManager.openModal, 1500, 'generalMessageModal')
-  }
+    setTimeout(windowManager.openModal, 1500, 'generalMessageModal')  }
 })
 
 autoUpdater.addListener('update-not-available', () => {

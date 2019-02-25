@@ -103,9 +103,14 @@ function generalModalText(modalName, load) {
 			title = 'Application Updates'
 			description = (html`
 				<div style="text-align:left">
-					We've made some improvements, so upon restarting the app, your Ara balance is back to 1,000 and
-					the Ara File Manager will not know about your previously purchased and published files but they are still on your
-					machine. Please reach out to us on <a href="https://t.me/arablocks" target="_blank">telegram</a> if you have any questions.
+					<div style="margin-bottom: .5em;">
+						Upon restarting the app, your Ara balance is back to 1,000 and the app won't know about your
+						previously purchased and published files but they are still on your machine.
+					</div>
+					<div>
+						Please reach out to us on <a href="https://t.me/arablocks" target="_blank">telegram</a> if you have any questions.
+					</div>
+				</div>
 				</div>
 			`)
 			break
