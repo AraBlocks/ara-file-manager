@@ -40,6 +40,7 @@ class Header extends Nanocomponent {
     const items = [
       { children: 'Account', onclick: () => windowManager.openWindow('accountInfo') },
       { children: 'Logout', onclick: () => windowManagement.emit({ event: k.LOGOUT }) },
+      { children: 'Close', onclick: () => windowManagement.closeWindow() },
       { children: 'Quit', onclick: () => app.quit() },
     ]
 
