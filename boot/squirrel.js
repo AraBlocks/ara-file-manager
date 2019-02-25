@@ -2,10 +2,13 @@ const debug = require('debug')('afm:boot:squirrel')
 
 const { autoUpdater } = require('electron')
 const isDev = require('electron-is-dev')
-const { urls } = require('k')
+const { stateManagement: k, urls } = require('k')
+const windowManager = require('electron-window-manager')
 
+const dispatch = require('../kernel/redux/reducers/dispatch')
 const { version } = require('../package.json')
-
+dispatch({ type: k.FEED_MODAL, load: { modalName: 'updatedContracts' } })
+setTimeout(windowManager.openModal, 1500, 'generalMessageModal')
 if (isDev) { return }
 
 process.platform === 'darwin'
@@ -18,6 +21,11 @@ autoUpdater.addListener('checking-for-update', () => {
 
 autoUpdater.addListener('update-available', () => {
   debug('update-available')
+  const [, minor, patch] = version.split('.')
+  if (minor === '9' && patch === '6') {
+    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updatedContracts' } })
+    setTimeout(windowManager.openModal, 1500, 'generalMessageModal')
+  }
 })
 
 autoUpdater.addListener('update-not-available', () => {
