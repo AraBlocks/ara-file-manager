@@ -22,10 +22,10 @@ app.on('ready', () => {
   debug('App initialzed')
   windowManager.init()
 
-  require('./squirrel')
   require('./tray').buildTray()
   require('./menu').buildMenu()
   require('../kernel/redux/actionCreators')//TODO: create proper store creation function
+  require('./squirrel')
   require('./applyDevSettings')
 
   internalEmitter.emit(k.GET_CACHED_DID)//Loads login screen input with last DID user logged in with
