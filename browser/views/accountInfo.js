@@ -44,18 +44,6 @@ class AccountInfo extends Nanocomponent {
         children: this.props.ethAddress,
         cssClass: { color: 'green' },
         onclick: () => clipboard.writeText(this.props.ethAddress)
-      }),
-
-      contactSupportTooltip: new DynamicTooltip({
-        children: 'Contact Support',
-        cssClass: {
-          color: 'orange',
-          fontSize: 12,
-          fontFamily: styles.fonts.regular
-        },
-
-        beforeTooltipText: 'Copy Email',
-        onclick: () => clipboard.writeText('support@ara.one')
       })
     }
 
