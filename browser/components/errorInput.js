@@ -7,14 +7,11 @@ const styles = require('./styles/errorInput')
 class ErrorInput extends Nanocomponent {
 	constructor(opts) {
 		super()
-		this.state = {
-			displayError: false,
-			errorMessage: opts.errorMessage
-		}
 		this.props = {
+			displayError: false,
 			disabled: false,
+			errorMessage: opts.errorMessage,
 			field: opts.field,
-			parentState: opts.parentState
 		}
 		this.children = { input: new Input(opts) }
 	}
@@ -25,15 +22,15 @@ class ErrorInput extends Nanocomponent {
 	}
 
 	createElement() {
-		const { children, props, state } = this
+		const { children, props } = this
 		return (html`
 			<div class="${styles.container} ErrorInput-container">
 				${children.input.render({
 					disabled: props.disabled,
-					requiredIndicator: state.displayError
+					requiredIndicator: props.displayError
 				})}
 				<div class="${styles.errorMsg} ErrorInput-errorMsg">
-					${state.displayError ? state.errorMessage : ""}
+					${props.displayError ? props.errorMessage : ""}
 				</div>
 			</div>
 		`)
