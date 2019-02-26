@@ -1,3 +1,13 @@
+# [0.10.0](https://github.com/littlstar/ara-content-manager/compare/0.9.7...0.10.0) (2019-02-26)
+
+
+### Bug Fixes
+
+* **errorInput:** referenced props instead of defunct state ([c27f75c](https://github.com/littlstar/ara-content-manager/commit/c27f75c))
+* **tray:** created proper flow for register via tray ([d15559e](https://github.com/littlstar/ara-content-manager/commit/d15559e))
+
+
+
 ## [0.9.7](https://github.com/littlstar/ara-content-manager/compare/0.9.6...0.9.7) (2019-02-26)
 
 
