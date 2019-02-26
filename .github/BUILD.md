@@ -6,7 +6,7 @@ We use [electron-builder](https://github.com/electron-userland/electron-builder)
 TODO
 ### Development
 ```
-$ npm run build-mac-dev
+$ npm run build-dev-mac
 ```
 >This will create an `Ara File Manager.app`. The script that builds the `.app` includes a codesign at the bottom of it. If you don't want to or can't codesign the application, you can comment the last line in the script. Codesigning prevents the "untrusted developer" popup from rendering, as well as allowing for autopupdates.
 >
@@ -21,7 +21,7 @@ $ npm run debug-mac
 
 ### Production
 ```
-$ npm run build-mac-prod
+$ npm run build-prod-mac
 ```
 Like the dev build, this will create a codesigned `.app`, but also wrap it in a `.dmg` file. When booting the `Ara File Manager.dmg`, it will render a screen that prompts you to drag the `.app` into the `Applications` directory. The script will set flags that will enable google analytics in the application.
 
