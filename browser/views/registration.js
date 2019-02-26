@@ -50,7 +50,6 @@ class Registration extends Nanocomponent {
     }
     this.register = this.register.bind(this)
     this.render = this.render.bind(this)
-    window.state = this.state
   }
 
   get properInput() {
