@@ -16,12 +16,11 @@ class Registration extends Nanocomponent {
       password: '',
       passwordConfirm: '',
     },
-    this.props = { inputDisabled: false, mnemonic: null, userDID: null, }
+    this.props = { inputDisabled: !true, mnemonic: null, userDID: null, }
     this.children = {
       passwordInput: new ErrorInput({
         errorMessage: 'Must enter password',
         placeholder: 'Password',
-        parentState: this.state,
         field: 'password',
         type: 'password',
         disabled: this.props.inputDisabled
@@ -29,7 +28,6 @@ class Registration extends Nanocomponent {
       passwordConfirmInput: new ErrorInput({
         errorMessage: 'Must confirm password',
         placeholder: 'Confirm password',
-        parentState: this.state,
         field: 'passwordConfirm',
         type: 'password',
         disabled: this.props.inputDisabled
@@ -60,6 +58,7 @@ class Registration extends Nanocomponent {
       displayError
     } = this.state
     let properInput = true
+    console.log(this.state)
     if (password === '') {
       displayError.password = true
       displayError.passwordConfirm = false
