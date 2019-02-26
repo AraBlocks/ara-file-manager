@@ -20,8 +20,8 @@ autoUpdater.addListener('checking-for-update', () => {
 
 autoUpdater.addListener('update-available', () => {
   debug('update-available')
-  const [, minor, patch] = version.split('.')
-  if (minor === '9' && patch === '6') {
+  const [, minor] = version.split('.')
+  if (+minor <= '9') {
     dispatch({ type: k.FEED_MODAL, load: { modalName: 'updatedContracts' } })
     setTimeout(windowManager.openModal, 1500, 'generalMessageModal')  }
 })
