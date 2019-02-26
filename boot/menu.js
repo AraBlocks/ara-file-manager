@@ -16,6 +16,7 @@ function buildMenu() {
       {
         label: 'Register',
         click: () => {
+          internalEmitter.emit(k.CREATE_USER_DID)
           windowManager.openWindow('registration')
           windowManager.closeWindow('login')
         }
