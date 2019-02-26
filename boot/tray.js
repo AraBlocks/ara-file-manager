@@ -23,6 +23,7 @@ const buildTray = () => {
       label: 'Register',
       type: 'normal',
       click: () => {
+        internalEmitter.emit(k.CREATE_USER_DID)
         openWindow('registration')
         closeWindow('login')
       }
