@@ -34,7 +34,11 @@ class Registration extends Nanocomponent {
         placeholder: 'Confirm password',
         type: 'password'
       }),
-      submitButton: new Button({ children: 'OK', type: 'submit' }),
+      submitButton: new Button({
+        children: 'OK',
+        cssClass: { name: 'thinBorder' },
+        type: 'submit'
+      }),
       cancelButton: new Button({
         children: 'Cancel',
         cssClass: {
@@ -140,7 +144,7 @@ class Registration extends Nanocomponent {
               ? 'Must confirm password'
               : "Passwords don't match"
           })}
-          ${children.submitButton.render()}
+          ${children.submitButton.render({ cssClass: props.inputDisabled ? 'thinBorder' : 'standard'})}
         </form>
         ${children.cancelButton.render()}
       </div>
