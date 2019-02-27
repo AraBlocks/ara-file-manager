@@ -1,3 +1,12 @@
+## [0.10.2](https://github.com/littlstar/ara-content-manager/compare/0.10.1...0.10.2) (2019-02-27)
+
+
+### Bug Fixes
+
+* faucet port changed; faucet onclick fixed ([cd948b2](https://github.com/littlstar/ara-content-manager/commit/cd948b2))
+
+
+
 ## [0.10.1](https://github.com/littlstar/ara-content-manager/compare/0.9.6...0.10.1) (2019-02-27)
 
 
