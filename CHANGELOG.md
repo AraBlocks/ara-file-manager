@@ -1,19 +1,17 @@
-# [0.10.0](https://github.com/littlstar/ara-content-manager/compare/0.9.7...0.10.0) (2019-02-26)
+## [0.10.1](https://github.com/littlstar/ara-content-manager/compare/0.9.6...0.10.1) (2019-02-27)
 
 
 ### Bug Fixes
 
-* **errorInput:** referenced props instead of defunct state ([c27f75c](https://github.com/littlstar/ara-content-manager/commit/c27f75c))
-* **tray:** created proper flow for register via tray ([d15559e](https://github.com/littlstar/ara-content-manager/commit/d15559e))
-
-
-
-## [0.9.7](https://github.com/littlstar/ara-content-manager/compare/0.9.6...0.9.7) (2019-02-26)
+* **boot/index.js:** added electron sqrl startup to top ([6c8b61c](https://github.com/littlstar/ara-content-manager/commit/6c8b61c))
+* **errorInput:** referenced props instead of defunct state ([e3db554](https://github.com/littlstar/ara-content-manager/commit/e3db554))
+* **errorInput:** referenced props instead of defunct state ([8d9a6a8](https://github.com/littlstar/ara-content-manager/commit/8d9a6a8))
+* **tray:** created proper flow for register via tray ([05171e9](https://github.com/littlstar/ara-content-manager/commit/05171e9))
 
 
 ### Features
 
-* **header.js:** Add `Close` to main window menu ([02a1557](https://github.com/littlstar/ara-content-manager/commit/02a1557))
+* **header.js:** Add `Close` to main window menu ([2054832](https://github.com/littlstar/ara-content-manager/commit/2054832))
 
 
 
@@ -44,11 +42,11 @@
 ## [0.9.4](https://github.com/littlstar/ara-content-manager/compare/0.9.3...0.9.4) (2019-02-21)
 
 
+
+## [0.9.3](https://github.com/littlstar/ara-content-manager/compare/0.9.2...0.9.3) (2019-02-19)
+
+
 ### Bug Fixes
-
-* **update.js:** renders package name in modal ([b83c674](https://github.com/littlstar/ara-content-manager/commit/b83c674))
-
-
 
 * **~/purchase.js:** Temp fake peer count for now ([fc9e5a9](https://github.com/littlstar/ara-content-manager/commit/fc9e5a9))
 
