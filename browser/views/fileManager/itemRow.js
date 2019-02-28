@@ -57,8 +57,8 @@ class ItemRow extends Nanocomponent {
   toggleMenu(e) {
     e.stopPropagation()
     const { state } = this
-    state.contextMenuLeft = e.layerX + 3 + 'px'
-    state.contextMenuTop = e.layerY + 3 + 'px'
+    state.contextMenuLeft = e.offsetX + e.target.offsetLeft + 3 + 'px'
+    state.contextMenuTop = e.offsetY + e.target.offsetTop + 3 + 'px'
     state.contextMenuVisible = true
     this.rerender()
   }
