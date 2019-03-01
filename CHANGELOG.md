@@ -1,4 +1,13 @@
-## [0.10.3](https://github.com/littlstar/ara-content-manager/compare/0.10.2...0.10.3) (2019-02-28)
+## [0.10.4](https://github.com/littlstar/ara-content-manager/compare/0.10.2...0.10.4) (2019-03-01)
+
+
+### Features
+
+* **browser/js/:** Send PAGE_VIEW events ([72c14f6](https://github.com/littlstar/ara-content-manager/commit/72c14f6))
+* **browser/js/modal.js:** Track "subviews" of modals ([c0efe13](https://github.com/littlstar/ara-content-manager/commit/c0efe13))
+* **generalModalTextProvider|publish:** Add `publishEstimate` modalName ([fc46447](https://github.com/littlstar/ara-content-manager/commit/fc46447))
+* **stateManagement.js:** Add PAGE_VIEW state ([a1f6952](https://github.com/littlstar/ara-content-manager/commit/a1f6952))
+* **windowManagement|modal:** Trigger PAGE_VIEW and modal listens for ([e77fb5b](https://github.com/littlstar/ara-content-manager/commit/e77fb5b))
 
 
 
