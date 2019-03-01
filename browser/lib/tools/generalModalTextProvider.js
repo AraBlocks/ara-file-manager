@@ -142,6 +142,7 @@ function waitModalText(modalName, load = {}) {
 		case 'deployingProxy':
 			description = html`<div>Creating a package for you</div>`
 			break
+		case 'publishEstimate':
 		default:
 			description = load.fileName
 				? html`<div>Getting publish estimate for <b>${load.packageName}</b></div>`
