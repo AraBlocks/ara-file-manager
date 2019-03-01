@@ -10,6 +10,7 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const Hamburger = require('../../components/hamburger')
+const windowManager = remote.require('electron-window-manager')
 
 class Header extends Nanocomponent {
   constructor({ selectTab, account }) {
@@ -86,6 +87,13 @@ class Header extends Nanocomponent {
     }
   }
 
+  openDeepLink(e) {
+    const url = e.currentTarget.value
+
+    global.deepLinkingUrl = url
+    windowManager.openDeepLinking(url)
+  }
+
   update() {
     return true
   }
@@ -119,6 +127,9 @@ class Header extends Nanocomponent {
               ${balanceElements}
             </div>
           </div>
+        </div>
+        <div>
+          <input type="text" class="${styles.downloadBox}" placeholder="Download URL" onchange=${this.openDeepLink}/>
         </div>
         <div class="${styles.tabHolder} header-tabHolder">
           ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index }))}
