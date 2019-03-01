@@ -38,6 +38,23 @@ module.exports = {
     }
   `,
 
+  downloadBox: css`
+    :host {
+      font-size: 14px;
+      text-indent: 10px;
+      align-items: center;
+      box-sizing: border-box;
+      border: 1px solid var(--ara-grey);
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      height: 35px;
+      margin-top: 0.75em;
+      margin-bottom: 0.75em;
+      -webkit-app-region: no-drag;
+    }
+  `,
+
   subHeader: css`
     :host {
       display: flex;
