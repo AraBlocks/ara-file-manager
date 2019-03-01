@@ -101,7 +101,10 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
   const did = load.did
   try {
     let dispatchLoad = { load: { fileName: load.name } }
-    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
+    dispatch({
+      type: k.FEED_MODAL,
+      load: { modalName: 'publishEstimate', ...dispatchLoad }
+    })
     windowManager.openModal('generalPleaseWaitModal')
     windowManager.closeWindow('manageFileView')
 
@@ -129,7 +132,10 @@ ipcMain.on(k.PUBLISH, async (event, load) => {
       price: load.price ? load.price : 0,
       size
     }
-    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
+    dispatch({
+      type: k.FEED_MODAL,
+      load: { modalName: 'publishNow', ...dispatchLoad }
+    })
 
     windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('publishConfirmModal')
