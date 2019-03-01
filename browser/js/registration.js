@@ -2,6 +2,7 @@ const { ipcRenderer } = require('electron')
 const { stateManagement: k } = require('k')
 
 const Registration = require('../views/registration')
+const { PAGE_VIEW } = require('../../lib/constants/stateManagement')
 const windowManagement = require('../lib/tools/windowManagement')
 
 const registration = new Registration()
@@ -24,4 +25,9 @@ window.onunload = () => {
   ipcRenderer.removeListener(k.CREATED_USER_DID, createdIDListener)
   ipcRenderer.removeListener(k.REGISTERING, registeringListener)
   ipcRenderer.removeListener(k.REGISTERED, registeredListener)
+
+}
+
+window.onload = () => {
+  ipcRenderer.send(PAGE_VIEW, { view: 'araIdCreate' })
 }
