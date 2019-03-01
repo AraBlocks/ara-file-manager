@@ -4,7 +4,7 @@ const remote = require('electron').remote
 const { ipcRenderer } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const isDev = require('electron-is-dev')
-const { PAGE_VIEW } = require('../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 
 const current = windowManager.sharedData.fetch('current')
 const store = windowManager.sharedData.fetch('store')
@@ -17,7 +17,7 @@ try {
 } catch (e) {
   functionalComponent = require('../views/modals/' + current)
   const subview = Object.keys(data || {}).includes('modalName') ? `/${data.modalName}` : ''
-  ipcRenderer.send(PAGE_VIEW, {
+  ipcRenderer.send(k.PAGE_VIEW, {
     view: `${current}` + `${subview}`
   })
 }

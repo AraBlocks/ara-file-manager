@@ -1,8 +1,7 @@
 const { ipcRenderer } = require('electron')
-const { stateManagement: k } = require('k')
 
 const Registration = require('../views/registration')
-const { PAGE_VIEW } = require('../../lib/constants/stateManagement')
+const { stateManagement: k } = require('k')
 const windowManagement = require('../lib/tools/windowManagement')
 
 const registration = new Registration()
@@ -29,5 +28,5 @@ window.onunload = () => {
 }
 
 window.onload = () => {
-  ipcRenderer.send(PAGE_VIEW, { view: 'araIdCreate' })
+  ipcRenderer.send(k.PAGE_VIEW, { view: 'araIdCreate' })
 }
