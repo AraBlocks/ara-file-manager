@@ -46,7 +46,7 @@ internalEmitter.on(events.PROMPT_PURCHASE, async (load) => {
 		}
 
 		// get peer count estimate
-		farmer.farm.dryRunJoin({ did: load.did })
+		//farmer.farm.dryRunJoin({ did: load.did })
 
 		const price = await act.getAFSPrice({ did: load.did })
 		const fee = act.getPurchaseFee(price)
