@@ -104,6 +104,13 @@ class Header extends Nanocomponent {
     }
   }
 
+  openDeepLink(e) {
+    const url = e.currentTarget.value
+
+    global.deepLinkingUrl = url
+    windowManager.openDeepLinking(url)
+  }
+
   update() {
     return true
   }
