@@ -1,15 +1,18 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:update')
-const afs = require('ara-filesystem')
-const dispatch = require('../reducers/dispatch')
+
+const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
-const { afsManager, farmerManager, utils: actionsUtil } = require('../actions')
 const { events } = require('k')
-const { pause } = require('../../lib')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
+
+const { afs, rewardsDCDN, utils: actionsUtil } = require('../../daemons')
+const dispatch = require('../reducers/dispatch')
+const { pause } = require('../../lib')
+
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(events.FEED_MANAGE_FILE, async (event, load) => {
+ipcMain.on(events.FEED_MANAGE_FILE, async (_, load) => {
   debug('%s heard', events.FEED_MANAGE_FILE)
   const { files, farmer } = store
   try {
@@ -28,7 +31,7 @@ ipcMain.on(events.FEED_MANAGE_FILE, async (event, load) => {
 
     if (file.status === events.UNCOMMITTED) { return }
     dispatch({ type: events.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
-    await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
+    await rewardsDCDN.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
 
     dispatch({
       type: events.FEED_MANAGE_FILE,
@@ -36,7 +39,7 @@ ipcMain.on(events.FEED_MANAGE_FILE, async (event, load) => {
         did: load.did,
         price: file.price,
         name: load.name,
-        fileList: await afsManager.getFileList(load.did),
+        fileList: await afs.getFileList(load.did),
         uncommitted: false
       }
     })
@@ -93,20 +96,20 @@ ipcMain.on(events.UPDATE_FILE, async (_, load) => {
     let estimate
     if (load.shouldUpdatePrice && !load.shouldCommit) {
       debug('Estimating gas for set price')
-      estimate = await afs.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
+      estimate = await araFilesystem.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
     } else {
       if (load.addPaths.length != 0) {
-        await (await afs.add({ did: load.did, paths: load.addPaths, password: account.password })).close()
+        await (await araFilesystem.add({ did: load.did, paths: load.addPaths, password: account.password })).close()
       }
       if (load.removePaths.length != 0) {
-        await (await afs.remove({ did: load.did, paths: load.removePaths, password: account.password })).close()
+        await (await araFilesystem.remove({ did: load.did, paths: load.removePaths, password: account.password })).close()
       }
       if (load.shouldUpdatePrice) {
         debug('Estimate gas for commit and set price')
-        estimate = await afs.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
+        estimate = await araFilesystem.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
       } else {
         debug('Estimating gas for commit only')
-        estimate = await afs.commit({ did: load.did, password: account.password, estimate: true })
+        estimate = await araFilesystem.commit({ did: load.did, password: account.password, estimate: true })
       }
     }
 
@@ -148,13 +151,13 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
 
     if (load.shouldUpdatePrice && !load.shouldCommit) {
       debug('Updating price only')
-      await afs.setPrice({ did: load.did, password: account.password, price: Number(load.price) })
+      await araFilesystem.setPrice({ did: load.did, password: account.password, price: Number(load.price) })
     } else if (!load.shouldUpdatePrice && load.shouldCommit) {
       debug('Updating Files')
-      await afs.commit({ did: load.did, password: account.password })
+      await araFilesystem.commit({ did: load.did, password: account.password })
     } else {
       debug('Updating Files and Price')
-      await afs.commit({ did: load.did, password: account.password, price: Number(load.price) })
+      await araFilesystem.commit({ did: load.did, password: account.password, price: Number(load.price) })
     }
 
     dispatch({ type: events.UPDATED_FILE, load })

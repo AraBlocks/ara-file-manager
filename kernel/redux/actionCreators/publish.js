@@ -1,17 +1,20 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:publish')
-const afs = require('ara-filesystem')
-const dispatch = require('../reducers/dispatch')
+
+const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
-const {
-  afsManager,
-  acmManager,
-  utils: actionsUtil,
-  descriptorGeneration
-} = require('../actions')
 const { events } = require('k')
 const fs = require('fs')
 const windowManager = require('electron-window-manager')
-const { internalEmitter } = require('electron-window-manager')
+
+const {
+  afs,
+  act,
+  utils: actionsUtil,
+  descriptorGeneration
+} = require('../../daemons')
+const dispatch = require('../reducers/dispatch')
+
+const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(events.DEPLOY_PROXY, _deployProxy)
@@ -40,11 +43,11 @@ async function _deployProxy() {
       return
     }
 
-    dispatch({ type: events.FEED_ESTIMATE_SPINNER, load: { type: 'deploy' }})
+    dispatch({ type: events.FEED_ESTIMATE_SPINNER, load: { type: 'deploy' } })
     windowManager.openWindow('estimateSpinner')
 
-    const estimate = await afs.deploy({ password: account.password, did: account.deployEstimateDid, estimate: true })
-    const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
+    const estimate = await araFilesystem.deploy({ password: account.password, did: account.deployEstimateDid, estimate: true })
+    const ethAmount = await act.getEtherBalance(store.account.accountAddress)
 
     if (ethAmount < estimate) { throw new Error('Not enough eth') }
 
@@ -57,7 +60,7 @@ async function _deployProxy() {
   }
 }
 
-ipcMain.on(events.CONFIRM_DEPLOY_PROXY, async (event, load) => {
+ipcMain.on(events.CONFIRM_DEPLOY_PROXY, async () => {
   debug('%s heard', events.CONFIRM_DEPLOY_PROXY)
 
   const { autoQueue, password, userDID } = store.account
@@ -67,10 +70,10 @@ ipcMain.on(events.CONFIRM_DEPLOY_PROXY, async (event, load) => {
     dispatch({ type: events.FEED_MODAL, load: { modalName: 'deployingProxy' } })
     windowManager.openModal('generalPleaseWaitModal')
 
-    let { afs: newAfs, afs: { did }, mnemonic } = await afs.create({ owner: userDID, password })
+    let { afs: newAfs, afs: { did }, mnemonic } = await araFilesystem.create({ owner: userDID, password })
     await newAfs.close()
 
-    await autoQueue.push(() => afs.deploy({ password, did }))
+    await autoQueue.push(() => araFilesystem.deploy({ password, did }))
 
     const descriptor = await descriptorGeneration.makeDescriptor(did, { owner: true, status: events.UNCOMMITTED })
 
@@ -108,18 +111,18 @@ ipcMain.on(events.PUBLISH, async (event, load) => {
     windowManager.openModal('generalPleaseWaitModal')
     windowManager.closeWindow('manageFileView')
 
-    await afsManager.removeAllFiles({ did, password })
-    await (await afs.add({ did, paths: load.paths, password })).close()
+    await afs.removeAllFiles({ did, password })
+    await (await araFilesystem.add({ did, paths: load.paths, password })).close()
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
 
     await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
-    const ethAmount = await acmManager.getEtherBalance(store.account.accountAddress)
+    const ethAmount = await act.getEtherBalance(store.account.accountAddress)
 
-    const commitEstimate = await afs.commit({ did, password, price: Number(load.price), estimate: true })
+    const commitEstimate = await araFilesystem.commit({ did, password, price: Number(load.price), estimate: true })
     let setPriceEstimate = 0
     if (load.price) {
-      setPriceEstimate = await afs.setPrice({ did, password, price: Number(load.price), estimate: true })
+      setPriceEstimate = await araFilesystem.setPrice({ did, password, price: Number(load.price), estimate: true })
     }
     const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
     if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
@@ -182,8 +185,8 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: events.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    await autoQueue.push(() => afs.commit({ did: load.did, price: Number(load.price), password: password }))
-    const balance = await acmManager.getAraBalance(userDID)
+    await autoQueue.push(() => araFilesystem.commit({ did: load.did, price: Number(load.price), password: password }))
+    const balance = await act.getAraBalance(userDID)
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
     debug('Dispatching %s', events.PUBLISHED)
@@ -197,14 +200,14 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (event, load) => {
     })
     windowManager.openModal('publishSuccessModal')
 
-    const publishedSub = await acmManager.subscribePublished({ did: load.did })
-    const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, accountAddress, userDID)
+    const publishedSub = await act.subscribePublished({ did: load.did })
+    const rewardsSub = await act.subscribeRewardsAllocated(load.did, accountAddress, userDID)
     dispatch({ type: events.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
     internalEmitter.emit(events.START_SEEDING, load)
   } catch (err) {
     debug('Error in committing: %o', err)
-    debug('Removing %s from .acm', load.did)
+    debug('Removing %s from .act', load.did)
 
     dispatch({ type: events.ERROR_PUBLISHING, load: { oldStatus } })
 

@@ -1,5 +1,5 @@
 const debug = require('debug')('afm:kernel:lib:lsWindowManager')
-const analytics = require('../redux/actions/analytics')
+const analytics = require('../daemons/analytics')
 const { events } = require('k')
 const EventEmitter = require('events')
 const path = require('path')
@@ -187,7 +187,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
     const fileInfo = parseLink()
     windowManager.internalEmitter.emit(events.OPEN_DEEPLINK, fileInfo)
     return
-  } catch(err) {
+  } catch (err) {
     debug('Deeplink error: %O', err)
   }
 
@@ -223,24 +223,24 @@ windowManager.closeWindow = (name) => {
 
 windowManager.openWindow = (view) => {
   analytics.trackScreenView(view)
-	windowManager.get(view)
-		? windowManager.get(view).focus()
-		: windowManager.open(
-				view,
-				view,
-				windowManager.loadURL(view),
-				false,
-				{
-					backgroundColor: 'white',
-					frame: false,
-          ...windowManager.setSize(view)
-				}
-			)
+  windowManager.get(view)
+    ? windowManager.get(view).focus()
+    : windowManager.open(
+      view,
+      view,
+      windowManager.loadURL(view),
+      false,
+      {
+        backgroundColor: 'white',
+        frame: false,
+        ...windowManager.setSize(view)
+      }
+    )
 }
 
 Object.defineProperty(windowManager, 'modalIsOpen', {
-  get: function() { return this.modalOpenStatus },
-  set: function(bool) { this.modalOpenStatus = bool }
+  get: function () { return this.modalOpenStatus },
+  set: function (bool) { this.modalOpenStatus = bool }
 })
 
 module.exports = windowManager

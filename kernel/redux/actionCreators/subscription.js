@@ -1,9 +1,12 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:wallet')
-const { acmManager, utils: actionUtils } = require('../actions')
-const dispatch = require('../reducers/dispatch')
+
 const { events } = require('k')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
+
+const { act, utils: actionUtils } = require('../../daemons')
+const dispatch = require('../reducers/dispatch')
+
 const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
 
@@ -18,7 +21,7 @@ ipcMain.on(events.LISTEN_FOR_FAUCET, async (event, load) => {
     let dispatchLoad
     if (response.status === 'Queued') {
       debug('IN FAUCET QUEUE')
-      const faucetSub = await acmManager.subscribeFaucet(store.account.accountAddress)
+      const faucetSub = await act.subscribeFaucet(store.account.accountAddress)
       dispatchLoad = { type: events.GOT_FAUCET_SUB, load: { faucetSub } }
     } else if (response.error.includes('greylisted')) {
       debug('GREY LISTED FROM FAUCET 🙀')

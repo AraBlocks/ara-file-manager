@@ -1,14 +1,17 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:utils')
+
 const { events } = require('k')
-const dispatch = require('../reducers/dispatch')
-const {
-  afsManager,
-  afmManager,
-  farmerManager
-} = require('../actions')
 const { ipcMain, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
+
+const {
+  afs,
+  afm,
+  rewardsDCDN
+} = require('../../daemons')
+const dispatch = require('../reducers/dispatch')
+
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(events.CLEAN_UI, () => {
@@ -31,8 +34,8 @@ ipcMain.on(events.OPEN_AFS, async (_, load) => {
     windowManager.openWindow('afsExplorerView')
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
-    const fileList = await afsManager.getFileList(load.did)
+    await rewardsDCDN.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
+    const fileList = await afs.getFileList(load.did)
     dispatch({ type: events.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable } })
 
     windowManager.pingView({ view: 'afsExplorerView', event: events.REFRESH })
@@ -62,7 +65,7 @@ internalEmitter.on(events.CONFIRM_QUIT, () => {
 })
 
 ipcMain.on(events.TOGGLE_ANALYTICS_PERMISSION, () => {
-  const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userDID)
+  const analyticsPermission = afm.toggleAnalyticsPermission(store.account.userDID)
   dispatch({ type: events.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission } })
   windowManager.pingView({ view: 'accountInfo', event: events.REFRESH })
 })

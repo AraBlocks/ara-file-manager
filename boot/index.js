@@ -2,6 +2,7 @@ const debug = require('debug')('afm:boot:main')
 if (require('electron-squirrel-startup')) return
 const writeFiles = require('./writeFiles')
 //Writes .ara and keyrings if doesn't exist
+
 writeFiles.updateAraRC()
 writeFiles.writeDotAra()
 
@@ -9,13 +10,13 @@ const { app } = require('electron')
 const { application, events } = require('k')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { internalEmitter } = require('electron-window-manager')
-const analytics = require('../kernel/redux/actions/analytics')
-const { cleanOutdatedData } = require('../kernel/redux/actions/afmManager')
+const analytics = require('../kernel/daemons/analytics')
+const afm = require('../kernel/daemons/afm')
 const cleanUp = require('./cleanUp')
 const { handleDeepLink, deeplinkWaiting } = require('./deepLink')
 
 require('./preventMultInstances')//Prevent windows from making multiple instances of app
-cleanOutdatedData() //!!! Very Dangerous code !!!
+afm.cleanOutdatedData() //!!! Very Dangerous code !!!
 
 app.setName(application.APP_NAME)
 app.on('ready', () => {

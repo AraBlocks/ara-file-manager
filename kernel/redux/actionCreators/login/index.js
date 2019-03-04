@@ -1,21 +1,24 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:login')
+
 const araUtil = require('ara-util')
-const aid = require('ara-identity')
-const {
-  afmManager,
-  acmManager,
-  farmerManager,
-  identityManager,
-  descriptorGeneration
-} = require('../../actions')
-const dispatch = require('../../reducers/dispatch')
-const helpers = require('./login.helpers')
+const araIdentity = require('ara-identity')
 const { events } = require('k')
 const { internalEmitter } = require('electron-window-manager')
-const menuHelper = require('../../../../boot/menuHelper')
-const { pause } = require('../../../lib')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
+
+const {
+  afm,
+  act,
+  aid,
+  descriptorGeneration,
+  rewardsDCDN
+} = require('../../../daemons')
+const dispatch = require('../../reducers/dispatch')
+const helpers = require('./login.helpers')
+const menuHelper = require('../../../../boot/menuHelper')
+const { pause } = require('../../../lib')
+
 const store = windowManager.sharedData.fetch('store')
 
 internalEmitter.on(events.LOGOUT, () => {
@@ -35,7 +38,7 @@ ipcMain.on(events.LOGOUT, () => {
 })
 
 internalEmitter.on(events.GET_CACHED_DID, async () => {
-  const did = await afmManager.getCachedUserDid()
+  const did = await afm.getCachedUserDid()
   dispatch({ type: events.GOT_CACHED_DID, load: { did } })
   windowManager.pingView({ view: 'login', event: events.REFRESH })
 })
@@ -43,7 +46,7 @@ internalEmitter.on(events.GET_CACHED_DID, async () => {
 internalEmitter.on(events.CONFIRM_LOGOUT, async () => {
   debug('%s heard', events.CONFIRM_LOGOUT)
   try {
-    await farmerManager.stopAllBroadcast(store.farmer.farm)
+    await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
     dispatch({ type: events.LOGOUT })
     internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
 
@@ -63,8 +66,8 @@ ipcMain.on(events.RECOVER, async (_, load) => {
   try {
     windowManager.pingView({ view: 'recover', event: events.RECOVERING })
 
-    const identity = await identityManager.recover(load)
-    await identityManager.archive(identity)
+    const identity = await aid.recover(load)
+    await aid.archive(identity)
 
     const { did } = identity.did
     const userDID = araUtil.getIdentifier(did)
@@ -85,7 +88,7 @@ ipcMain.on(events.RECOVER, async (_, load) => {
 async function login(_, load) {
   debug('%s heard', events.LOGIN)
   try {
-    const ddo = await aid.resolve(load.userDID)
+    const ddo = await araIdentity.resolve(load.userDID)
     const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password }))
     if (incorrectPW) { throw 'IncorrectPW' }
   } catch (err) {
@@ -96,15 +99,15 @@ async function login(_, load) {
   }
   const userDID = araUtil.getIdentifier(load.userDID)
   //writes did signed in with to disk to autofill input next time app booted
-  afmManager.cacheUserDid(userDID)
+  afm.cacheUserDid(userDID)
 
   try {
     const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, load.password)
-    const DCDNStore = farmerManager.loadDCDNStore(farmer)
-    const purchasedDIDs = await acmManager.getLibraryItems(userDID)
+    const DCDNStore = rewardsDCDN.loadDCDNStore(farmer)
+    const purchasedDIDs = await act.getLibraryItems(userDID)
     //Returns objects representing various info around DIDs
     let purchased = purchasedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore))
-    const publishedDIDs = (await acmManager.getDeployedProxies(accountAddress)).map(araUtil.getIdentifier)
+    const publishedDIDs = (await act.getDeployedProxies(accountAddress)).map(araUtil.getIdentifier)
     let published = publishedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore, true))
 
     const { files } = dispatch({ type: events.GOT_LIBRARY, load: { published, purchased } })
