@@ -11,6 +11,10 @@ const { getAppData } = require('./afm')
 const { version } = require('../../package.json')
 
 const store = windowManager.sharedData.fetch('store')
+const {
+  analytics: a,
+  application
+} = require('k')
 
 async function getSession() {
   if (global.session) return global.session
@@ -24,8 +28,8 @@ async function getSession() {
     await pify(appData.write)(application.DEVICE_ID, deviceId)
   }
 
-  const session = ua(analytics.UA_ACCOUNT_CURRENT, deviceId)
-  session.set(analytics.VERSION, version)
+  const session = ua(a.UA_ACCOUNT_CURRENT, deviceId)
+  session.set(a.VERSION, version)
   session.firstSession = firstSession
   global.session = session
   return session
@@ -33,14 +37,19 @@ async function getSession() {
 
 async function trackAppOpen() {
   const session = await getSession()
-  return trackEvent(analytics.CATEGORY.APPLICATION, (session.firstSession) ? analytics.ACTION.FIRST_OPEN : analytics.ACTION.OPEN)
+  return trackEvent(a.CATEGORY.APPLICATION, (session.firstSession) ? a.ACTION.FIRST_OPEN : a.ACTION.OPEN)
 }
 
 async function trackScreenView(screen) {
   debug('trackScreenView:', screen)
   if(!hasAnalyticsPermission()) { return }
   const session = await getSession()
-  session.pageview(screen, analytics.APP_NAME, screen).send()
+  session.pageview(screen, a.APP_NAME, screen).send()
+}
+
+async function trackDownloadFinish(label, value) {
+  if(!hasAnalyticsPermission()) { return }
+  return trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, value)
 }
 
 async function trackEvent(category, action, label, value) {
@@ -51,6 +60,8 @@ async function trackEvent(category, action, label, value) {
     ea: action,
     el: label,
     ev: value,
+    av: version,
+    an: a.APP_NAME
   }).send()
 }
 
