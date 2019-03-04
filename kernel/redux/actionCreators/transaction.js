@@ -1,9 +1,11 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:transaction')
-const dispatch = require('../reducers/dispatch')
+
 const { events } = require('k')
-const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
+const windowManager = require('electron-window-manager')
+
+const dispatch = require('../reducers/dispatch')
 const menuHelper = require('../../../boot/menuHelper')
 
 internalEmitter.on(events.CHANGE_PENDING_PUBLISH_STATE, load => changePendingTXState(null, load))

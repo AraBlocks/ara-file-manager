@@ -7,8 +7,9 @@ const isDev = require('electron-is-dev')
 const { events } = require('k')
 const windowManager = require('electron-window-manager')
 
-const { acmManager, descriptorGeneration } = require('../actions')
+const { act, descriptorGeneration } = require('../../daemons')
 const dispatch = require('../reducers/dispatch')
+
 const {
 	account,
 	farmer,
@@ -34,7 +35,7 @@ internalEmitter.on(events.PROMPT_PURCHASE, async (load) => {
 		dispatch({ type: events.FEED_MODAL, load })
 
 		windowManager.openWindow('purchaseEstimate')
-		const library = await acmManager.getLibraryItems(account.userDID)
+		const library = await act.getLibraryItems(account.userDID)
 		const isOwner = !isDev && files.published.find(({ did }) => did === load.did)
 		if (library.includes('0x' + araUtil.getIdentifier(load.did)) || isOwner) {
 			debug('already own item')
@@ -47,9 +48,9 @@ internalEmitter.on(events.PROMPT_PURCHASE, async (load) => {
 		// get peer count estimate
 		farmer.farm.dryRunJoin({ did: load.did })
 
-		const price = await acmManager.getAFSPrice({ did: load.did })
-		const fee = acmManager.getPurchaseFee(price)
-		const gasEstimate = Number(await acmManager.purchaseEstimate({
+		const price = await act.getAFSPrice({ did: load.did })
+		const fee = act.getPurchaseFee(price)
+		const gasEstimate = Number(await act.purchaseEstimate({
 			contentDID: load.did,
 			password: account.password,
 			userDID: account.userDID,
@@ -91,9 +92,9 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (event, load) => {
 
 		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userDID }
 
-		const jobId = await autoQueue.push(() => acmManager.purchaseItem(itemLoad))
+		const jobId = await autoQueue.push(() => act.purchaseItem(itemLoad))
 
-		const araBalance = await acmManager.getAraBalance(account.userDID)
+		const araBalance = await act.getAraBalance(account.userDID)
 		dispatch({ type: events.PURCHASED, load: { araBalance, jobId, did: load.did } })
 		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
@@ -106,8 +107,8 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (event, load) => {
 		})
 		windowManager.openModal('generalActionModal')
 
-		const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
-		const updateSub = await acmManager.subscribeAFSUpdates(load.did)
+		const rewardsSub = await act.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
+		const updateSub = await act.subscribeAFSUpdates(load.did)
 
 		dispatch({ type: events.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
 	} catch (err) {

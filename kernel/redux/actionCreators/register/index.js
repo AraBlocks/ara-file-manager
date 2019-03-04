@@ -4,7 +4,7 @@ const { events } = require('k')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
-const { identityManager } = require('../../actions')
+const { aid } = require('../../../daemons')
 const dispatch = require('../../reducers/dispatch')
 const helpers = require('./register.helpers')
 
@@ -16,9 +16,9 @@ ipcMain.on(events.REGISTER, async (_, { mnemonic, password, userDID }) => {
   debug('%s heard', events.REGISTER)
   try {
     windowManager.pingView({ view: 'registration', event: events.REGISTERING })
-    const identity = await identityManager.recover({ mnemonic, password })
+    const identity = await aid.recover({ mnemonic, password })
     windowManager.pingView({ view: 'registration', event: events.REGISTERED })
-    await identityManager.archive(identity)
+    await aid.archive(identity)
     const accountProps = await helpers.getAccountsProps({ password, userDID })
     dispatch({
       type: events.REGISTERED,

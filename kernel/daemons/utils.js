@@ -1,10 +1,11 @@
 const debug = require('debug')('afm:kernel:lib:actions:util')
-const { urls } = require('k')
-const afs = require('ara-filesystem')
+
+const araFilesystem = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
-const path = require('path')
 const createContext = require('ara-context')
+const path = require('path')
 const request = require('request-promise')
+const { urls } = require('k')
 
 async function getNetwork() {
 	const ctx = createContext()
@@ -24,8 +25,7 @@ function makeAfsPath(did) {
 async function readFileMetadata(did) {
 	let fileInfo = {}
 	try {
-		const data = await afs.metadata.readFile({ did })
-		debug('readFileMetadata data:', data)
+		const data = await araFilesystem.metadata.readFile({ did })
 		if (data.fileInfo) {
 			fileInfo = typeof data.fileInfo === 'string'
 				? JSON.parse(data.fileInfo)
@@ -75,7 +75,7 @@ async function writeFileMetaData({
 			timestamp: new Date
 		}
 		debug('Adding file metadata for %s', did)
-		await afs.metadata.writeKey({ did, key: 'fileInfo', value: JSON.stringify(fileData), password })
+		await araFilesystem.metadata.writeKey({ did, key: 'fileInfo', value: JSON.stringify(fileData), password })
 	} catch (e) {
 		debug(e)
 	}
