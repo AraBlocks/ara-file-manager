@@ -77,6 +77,7 @@ internalEmitter.on(events.DOWNLOADED, async (load) => {
 	const fileInfo = await utils.readFileMetadata(load.did)
 	dispatch({ type: events.DOWNLOADED, load: { did: load.did, name: fileInfo.title } })
 	windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
+	analytics.trackEvent(category, action, label, value)
 })
 
 internalEmitter.on(events.UPDATE_PEER_COUNT, (load) => {
