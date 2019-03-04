@@ -1,8 +1,7 @@
 const { emit } = require('../../lib/tools/windowManagement')
-const { EXPORT_FILE } = require('../../../lib/constants/stateManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const fileListUtil = require('../../lib/tools/fileListUtil')
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('events')
 const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
 const html = require('nanohtml')
@@ -45,14 +44,14 @@ class AfsFileRow extends Nanocomponent {
 
 		let menu
 		switch (props.rowType) {
-			case k.PUBLISH:
+			case events.PUBLISH:
 				menu = html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
 						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
 					</div>
 				`
 				break
-			case k.UPDATE_FILE:
+			case events.UPDATE_FILE:
 				menu = html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
 						<div class="${styles.menuItem}" style="border-bottom: none;" onclick=${this.exportFile.bind(this)}>Export</div>
@@ -86,7 +85,7 @@ class AfsFileRow extends Nanocomponent {
 			.then(folderName => {
 				props.renderView({ spinner: true })
 				emit({
-					event: EXPORT_FILE,
+					event: events.EXPORT_FILE,
 					load: {
 						...props.fileInfo,
 						did: props.did,

@@ -1,6 +1,6 @@
 const debug = require('debug')('afm:kernel:lib:lsWindowManager')
 const analytics = require('../redux/actions/analytics')
-const k = require('../../lib/constants/stateManagement')
+const { events } = require('k')
 const EventEmitter = require('events')
 const path = require('path')
 const windowManager = require('electron-window-manager')
@@ -8,7 +8,7 @@ const windowManager = require('electron-window-manager')
 windowManager.internalEmitter = new EventEmitter
 
 windowManager.openModal = (modalName) => {
-  debug('%s heard', k.OPEN_MODAL)
+  debug('%s heard', events.OPEN_MODAL)
   if (windowManager.get(modalName).object != null) { return }
   windowManager.sharedData.set('current', modalName)
   windowManager.createNew(
@@ -185,7 +185,7 @@ windowManager.openDeepLinking = async (deepLinkingUrl) => {
   debug('Opening deeplink')
   try {
     const fileInfo = parseLink()
-    windowManager.internalEmitter.emit(k.OPEN_DEEPLINK, fileInfo)
+    windowManager.internalEmitter.emit(events.OPEN_DEEPLINK, fileInfo)
     return
   } catch(err) {
     debug('Deeplink error: %O', err)

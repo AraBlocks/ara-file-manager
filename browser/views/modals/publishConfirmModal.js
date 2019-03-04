@@ -1,5 +1,5 @@
-const k = require('../../../lib/constants/stateManagement')
-const { closeModal, closeWindow, emit } = require('../../lib/tools/windowManagement')
+const { events } = require('k')
+const { closeModal, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles')
@@ -9,14 +9,14 @@ module.exports = (load) => {
   const publishButton = new Button({
     children: 'Publish',
     onclick: () => {
-      emit({ event: k.CONFIRM_PUBLISH, load: { ...load } }),
+      emit({ event: events.CONFIRM_PUBLISH, load: { ...load } }),
       closeModal()
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
     onclick: () => {
-      emit({ event: k.CANCEL_TRANSACTION })
+      emit({ event: events.CANCEL_TRANSACTION })
       closeModal()
     }
   })

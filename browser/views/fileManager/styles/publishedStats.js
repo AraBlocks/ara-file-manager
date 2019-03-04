@@ -1,4 +1,4 @@
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const {
   colors,
   colorSelector,
@@ -17,7 +17,7 @@ module.exports = {
   `,
 
   container(status, shouldBroadcast) {
-    const color = status === k.DOWNLOADED_PUBLISHED && shouldBroadcast ? 'black' : 'grey'
+    const color = status === events.DOWNLOADED_PUBLISHED && shouldBroadcast ? 'black' : 'grey'
     return css`
       :host {
         align-items: flex-end;

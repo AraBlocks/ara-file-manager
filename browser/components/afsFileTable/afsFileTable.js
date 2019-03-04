@@ -1,6 +1,6 @@
 
 const AfsFileRow = require('./afsFileRow')
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')
 const styles = require('./styles/AfsFileTable')
@@ -112,7 +112,7 @@ class AfsFileTable extends Nanocomponent {
 			fileInfo,
 			fileRowClicked: this.fileRowClicked.bind(this),
 			parentDirectory: state.parentDirectory,
-			rowType: k.DOWNLOADED,
+			rowType: events.DOWNLOADED,
 			renderView: props.renderView
 		}))
 	}

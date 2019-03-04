@@ -1,12 +1,12 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:export')
 const { afsManager } = require('../actions')
 const { ipcMain } = require('electron')
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
-ipcMain.on(k.EXPORT_FILE, async (event, load) => {
-	debug('%s heard', k.EXPORT_FILE)
+ipcMain.on(events.EXPORT_FILE, async (event, load) => {
+	debug('%s heard', events.EXPORT_FILE)
 	try {
 		const fileDirectory = path.join(...load.parentDirectory)
 		const filePath = path.join(fileDirectory, load.subPath)
@@ -32,5 +32,5 @@ ipcMain.on(k.EXPORT_FILE, async (event, load) => {
 })
 
 function completeHandler() {
-	windowManager.pingView({ view: 'afsExplorerView', event: k.REFRESH })
+	windowManager.pingView({ view: 'afsExplorerView', event: events.REFRESH })
 }

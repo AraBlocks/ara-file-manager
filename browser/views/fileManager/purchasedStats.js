@@ -1,4 +1,4 @@
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const { renderEarnings } = require('./util')
 const styles = require('./styles/purchasedStats')
 const html = require('nanohtml')
@@ -19,7 +19,7 @@ class PurchasedStats extends Nanocomponent {
     return html`
       <div class="${styles.container} purchasedStats-container">
         <div class="${styles.stats} purchasedStats-stats">
-          ${[k.DOWNLOADING, k.DOWNLOADED_PUBLISHED].includes(status)
+          ${[events.DOWNLOADING, events.DOWNLOADED_PUBLISHED].includes(status)
             ? [
               html`
                 <div class="${styles.peers} purchasedStats-peers">

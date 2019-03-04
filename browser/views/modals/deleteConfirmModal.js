@@ -1,4 +1,4 @@
-const { closeModal, emit } = require('../../lib/tools/windowManagement')
+const { closeModal } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const styles = require('./styles')
 const html = require('nanohtml')

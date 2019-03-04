@@ -2,7 +2,7 @@ const debug = require('debug')('afm:boot:squirrel')
 
 const { autoUpdater } = require('electron')
 const isDev = require('electron-is-dev')
-const { stateManagement: k, urls } = require('k')
+const { events, urls } = require('k')
 const windowManager = require('electron-window-manager')
 
 const dispatch = require('../kernel/redux/reducers/dispatch')
@@ -22,7 +22,7 @@ autoUpdater.addListener('update-available', () => {
   debug('update-available')
   const [, minor] = version.split('.')
   if (+minor <= '9') {
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updatedContracts' } })
+    dispatch({ type: events.FEED_MODAL, load: { modalName: 'updatedContracts' } })
     setTimeout(windowManager.openModal, 1500, 'generalMessageModal')  }
 })
 
