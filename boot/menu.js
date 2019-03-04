@@ -1,7 +1,7 @@
 const { Menu, app } = require('electron')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
-const k = require('../lib/constants/stateManagement')
+const { events } = require('k')
 
 let contextMenu
 function buildMenu() {
@@ -11,12 +11,12 @@ function buildMenu() {
       { label: "About", selector: "orderFrontStandardAboutPanel:" },
       { type: 'separator' },
       { label: 'File Manager', click: () => windowManager.openWindow('filemanager') },
-      { label: 'Publish File', click: () => internalEmitter.emit(k.DEPLOY_PROXY) },
+      { label: 'Publish File', click: () => internalEmitter.emit(events.DEPLOY_PROXY) },
       { label: 'Account', click: () => windowManager.openWindow('accountInfo') },
       {
         label: 'Register',
         click: () => {
-          internalEmitter.emit(k.CREATE_USER_DID)
+          internalEmitter.emit(events.CREATE_USER_DID)
           windowManager.openWindow('registration')
           windowManager.closeWindow('login')
         }
@@ -28,7 +28,7 @@ function buildMenu() {
           windowManager.closeWindow('registration')
         }
       },
-      { label: 'Log Out', click: () => internalEmitter.emit(k.LOGOUT) },
+      { label: 'Log Out', click: () => internalEmitter.emit(events.LOGOUT) },
       { type: "separator" },
       { label: "Quit",
         accelerator: "Command+Q",
@@ -104,8 +104,8 @@ function buildMenu() {
 
 function switchMenuLoginState(state) {
   const applicationMenu = contextMenu.items[0].submenu.items
-  const loggedIn = state === k.LOGIN
-  const loading = state === k.LOADING_LIBRARY
+  const loggedIn = state === events.LOGIN
+  const loading = state === events.LOADING_LIBRARY
 
   applicationMenu[2].visible = loggedIn //FileManager
   applicationMenu[3].visible = loggedIn //PublishFile

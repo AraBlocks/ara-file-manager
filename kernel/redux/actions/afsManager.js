@@ -1,5 +1,5 @@
 const debug = require('debug')('afm:kernel:lib:actions:afsManager')
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const actionsUtil = require('./utils')
 const afmManager = require('./afmManager')
 const araContracts = require('ara-contracts')
@@ -65,7 +65,7 @@ async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
 
 async function getAfsDownloadStatus(did, shouldBroadcast) {
 	let downloadPercent = 0
-	let status = k.AWAITING_DOWNLOAD
+	let status = events.AWAITING_DOWNLOAD
 	let newAfs
 	try {
 		({ afs: newAfs } = await araFilesystem.create({ did }))
@@ -74,11 +74,11 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
 			downloadPercent = feed.downloaded() / feed.length
 		}
 		if (downloadPercent === 1) {
-			status = k.DOWNLOADED_PUBLISHED
+			status = events.DOWNLOADED_PUBLISHED
 		} else if (downloadPercent > 0) {
-			status = k.DOWNLOADING
+			status = events.DOWNLOADING
 		} else if (downloadPercent === 0 && shouldBroadcast) {
-			status = k.CONNECTING
+			status = events.CONNECTING
 		}
 	} catch (err) {
 		debug('Error getting download status %o', err)

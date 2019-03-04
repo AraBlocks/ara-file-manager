@@ -6,7 +6,7 @@ writeFiles.updateAraRC()
 writeFiles.writeDotAra()
 
 const { app } = require('electron')
-const { application, stateManagement: k } = require('k')
+const { application, events } = require('k')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { internalEmitter } = require('electron-window-manager')
 const analytics = require('../kernel/redux/actions/analytics')
@@ -28,7 +28,7 @@ app.on('ready', () => {
   require('./squirrel')
   require('./applyDevSettings')
 
-  internalEmitter.emit(k.GET_CACHED_DID)//Loads login screen input with last DID user logged in with
+  internalEmitter.emit(events.GET_CACHED_DID)//Loads login screen input with last DID user logged in with
   analytics.trackAppOpen()
 
   //Opens login view if app not started with loggedin mode on and app not opened with deeplink

@@ -4,7 +4,7 @@ const Nanocomponent = require('nanocomponent')
 const windowManager = remote.require('electron-window-manager')
 
 const Button = require('../components/button')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const styles = require('./modals/styles')
 const windowManagement = require('../lib/tools/windowManagement')
 
@@ -29,7 +29,7 @@ class MnemonicWarning extends Nanocomponent {
         onclick: () => {
           if (!this.state.copied) { return }
           this.props.isAFS
-            ? windowManagement.emit({ event: k.FEED_MANAGE_FILE, load: { did: contentDID } })
+            ? windowManagement.emit({ event: events.FEED_MANAGE_FILE, load: { did: contentDID } })
             : windowManager.openWindow('filemanager')
           windowManagement.closeModal('mnemonicWarning')
         }

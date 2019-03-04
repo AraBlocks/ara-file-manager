@@ -1,5 +1,5 @@
 const html = require('nanohtml')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const Nanocomponent = require('nanocomponent')
 
 const Button = require('../components/button')
@@ -28,7 +28,7 @@ class PurchaseEstimate extends Nanocomponent {
 
   purchase() {
     const { props } = this
-    emit({ event: k.CONFIRM_PURCHASE, load: props })
+    emit({ event: events.CONFIRM_PURCHASE, load: props })
     closeWindow('purchaseEstimate')
   }
 

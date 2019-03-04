@@ -1,22 +1,22 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:transaction')
 const dispatch = require('../reducers/dispatch')
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const windowManager = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
 const menuHelper = require('../../../boot/menuHelper')
 
-internalEmitter.on(k.CHANGE_PENDING_PUBLISH_STATE, load => changePendingTXState(null, load))
-ipcMain.on(k.CHANGE_PENDING_PUBLISH_STATE, changePendingTXState)
+internalEmitter.on(events.CHANGE_PENDING_PUBLISH_STATE, load => changePendingTXState(null, load))
+ipcMain.on(events.CHANGE_PENDING_PUBLISH_STATE, changePendingTXState)
 
-ipcMain.on(k.CANCEL_TRANSACTION, () => {
-  debug('%s heard', k.CANCEL_TRANSACTION)
-	internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
+ipcMain.on(events.CANCEL_TRANSACTION, () => {
+  debug('%s heard', events.CANCEL_TRANSACTION)
+	internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
 })
 
 function changePendingTXState(_, load) {
-  debug('%s heard', k.CHANGE_PENDING_PUBLISH_STATE)
-  dispatch({ type: k.CHANGE_PENDING_PUBLISH_STATE, load: { pendingPublish: load } })
-  windowManager.pingAll({ event: k.REFRESH })
+  debug('%s heard', events.CHANGE_PENDING_PUBLISH_STATE)
+  dispatch({ type: events.CHANGE_PENDING_PUBLISH_STATE, load: { pendingPublish: load } })
+  windowManager.pingAll({ event: events.REFRESH })
   menuHelper.switchPublishState(load)
 }
