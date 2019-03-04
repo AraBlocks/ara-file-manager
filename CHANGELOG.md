@@ -1,4 +1,8 @@
-## [0.10.4](https://github.com/littlstar/ara-content-manager/compare/0.10.2...0.10.4) (2019-03-01)
+## [0.10.5](https://github.com/littlstar/ara-content-manager/compare/0.10.4...0.10.5) (2019-03-04)
+
+
+
+## [0.10.4](https://github.com/littlstar/ara-content-manager/compare/0.10.3...0.10.4) (2019-03-01)
 
 
 ### Features
@@ -8,6 +12,10 @@
 * **generalModalTextProvider|publish:** Add `publishEstimate` modalName ([fc46447](https://github.com/littlstar/ara-content-manager/commit/fc46447))
 * **stateManagement.js:** Add PAGE_VIEW state ([a1f6952](https://github.com/littlstar/ara-content-manager/commit/a1f6952))
 * **windowManagement|modal:** Trigger PAGE_VIEW and modal listens for ([e77fb5b](https://github.com/littlstar/ara-content-manager/commit/e77fb5b))
+
+
+
+## [0.10.3](https://github.com/littlstar/ara-content-manager/compare/0.10.2...0.10.3) (2019-02-28)
 
 
 
