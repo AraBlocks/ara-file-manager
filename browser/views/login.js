@@ -1,4 +1,4 @@
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const Nanocomponent = require('nanocomponent')
 
 const Button = require('../components/button')
@@ -33,7 +33,7 @@ class Login extends Nanocomponent {
       registerLink: new Link({
         children: 'Create One',
         onclick: () => {
-          windowManagement.emit({ event: k.CREATE_USER_DID })
+          windowManagement.emit({ event: events.CREATE_USER_DID })
           windowManagement.openWindow('registration')
           windowManagement.closeWindow('login')
         }
@@ -57,7 +57,7 @@ class Login extends Nanocomponent {
     e.preventDefault()
     const { userDID, password } = this.state
     const load = { password, userDID: userDID }
-    windowManagement.emit({ event: k.LOGIN, load })
+    windowManagement.emit({ event: events.LOGIN, load })
     windowManagement.closeWindow('login')
   }
 

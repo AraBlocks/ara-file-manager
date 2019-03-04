@@ -1,5 +1,5 @@
 const debug = require('debug')('afm:kernel:lib:actions:descriptorGeneration')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const acmManager = require('./acmManager')
 const afsManager = require('./afsManager')
 const farmerManager = require('./farmerManager')
@@ -37,7 +37,7 @@ function makeDummyDescriptor(did, DCDNStore, owner = false) {
 		AFSPath,
 		did,
 		owner,
-		status: k.AWAITING_STATUS,
+		status: events.AWAITING_STATUS,
 		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
 	})
 }

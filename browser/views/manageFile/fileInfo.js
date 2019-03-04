@@ -1,7 +1,7 @@
 const FileSelector = require('../../components/fileSelector')
 const FileTable = require('../../components/afsFileTable/editableFileTable')
 const ErrorInput = require('../../components/errorInput')
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const styles = require('./styles/fileInfo')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
@@ -24,7 +24,7 @@ class FileInfo extends Nanocomponent {
 				did,
 				parentState,
 				field: 'fileList',
-				tableType: k.UPDATE_FILE,
+				tableType: events.UPDATE_FILE,
 				renderView
 			}),
 			fileNameInput: new ErrorInput({

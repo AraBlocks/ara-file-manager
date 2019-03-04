@@ -1,48 +1,48 @@
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const { account: INITIAL_STATE } = require('../store')
 
 module.exports = async (state, { load = null, type }) => {
   switch (type) {
-    case k.CHANGE_PENDING_PUBLISH_STATE:
+    case events.CHANGE_PENDING_PUBLISH_STATE:
       state.pendingPublish = load.pendingPublish
       break
-    case k.FAUCET_ARA_RECEIVED:
+    case events.FAUCET_ARA_RECEIVED:
       state.faucetStatus = null
       break
-    case k.FAUCET_ERROR:
-      state.faucetStatus = k.FAUCET_ERROR
+    case events.FAUCET_ERROR:
+      state.faucetStatus = events.FAUCET_ERROR
       break
-    case k.FAUCET_LIMIT_HIT:
-      state.faucetStatus = k.FAUCET_LIMIT_HIT
+    case events.FAUCET_LIMIT_HIT:
+      state.faucetStatus = events.FAUCET_LIMIT_HIT
       break
-    case k.GETTING_USER_DATA:
+    case events.GETTING_USER_DATA:
       state.userDID = load.userDID
       break
-    case k.GREYLISTED_FROM_FAUCET:
-      state.faucetStatus = k.GREYLISTED_FROM_FAUCET
+    case events.GREYLISTED_FROM_FAUCET:
+      state.faucetStatus = events.GREYLISTED_FROM_FAUCET
       break
-    case k.IN_FAUCET_QUEUE:
-      state.faucetStatus = k.IN_FAUCET_QUEUE
+    case events.IN_FAUCET_QUEUE:
+      state.faucetStatus = events.IN_FAUCET_QUEUE
       break
-    case k.CREATED_USER_DID:
-    case k.LOGIN:
-    case k.RECOVERED:
-    case k.REGISTERED:
+    case events.CREATED_USER_DID:
+    case events.LOGIN:
+    case events.RECOVERED:
+    case events.REGISTERED:
       Object.assign(state, load)
       break
-    case k.LOGOUT:
+    case events.LOGOUT:
       state = INITIAL_STATE
       break
-    case k.PUBLISHED:
+    case events.PUBLISHED:
       state.userBalance = load.balance
       break
-    case k.UPDATE_ARA_BALANCE:
-    case k.UPDATE_ETH_BALANCE:
-    case k.PURCHASED:
+    case events.UPDATE_ARA_BALANCE:
+    case events.UPDATE_ETH_BALANCE:
+    case events.PURCHASED:
       state.araBalance = load.araBalance || state.araBalance
       state.ethBalance = load.ethBalance || state.ethBalance
       break
-    case k.TOGGLE_ANALYTICS_PERMISSION:
+    case events.TOGGLE_ANALYTICS_PERMISSION:
       state.analyticsPermission = load.analyticsPermission
       break
     default:

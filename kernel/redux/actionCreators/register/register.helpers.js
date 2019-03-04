@@ -1,9 +1,6 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:register')
 
-const {
-  application: applicationK,
-  stateManagement: k
-} = require('k')
+const { application, events } = require('k')
 const araUtil = require('ara-util')
 const windowManager = require('electron-window-manager')
 
@@ -21,10 +18,10 @@ const dispatch = require('../../reducers/dispatch')
 const menuHelper = require('../../../../boot/menuHelper')
 
 async function _createIdentity() {
-  const identity = await identityManager.create(applicationK.TEMP_PASSWORD)
+  const identity = await identityManager.create(application.TEMP_PASSWORD)
   const { did: { did }, mnemonic } = identity
   await identityManager.archive(identity)
-  const accountAddress = await acmManager.getAccountAddress(did, applicationK.TEMP_PASSWORD)
+  const accountAddress = await acmManager.getAccountAddress(did, application.TEMP_PASSWORD)
   const network = await actionUtils.getNetwork()
   const userDID = araUtil.getIdentifier(did)
   const analyticsPermission = afmManager.getAnalyticsPermission(did)
@@ -36,7 +33,7 @@ async function _createIdentity() {
     userDID,
     mnemonic,
     network,
-    password: applicationK.TEMP_PASSWORD
+    password: application.TEMP_PASSWORD
   }
 }
 
@@ -49,7 +46,7 @@ async function getAccountsProps({ password, userDID }) {
     queue: autoQueue
   })
   farmer.start()
-  menuHelper.switchLoginState(k.LOGIN)
+  menuHelper.switchLoginState(events.LOGIN)
   return { autoQueue, deployEstimateDid, farmer }
 }
 
@@ -82,11 +79,11 @@ async function _requestEther(ethAddress) {
 }
 
 async function pushAID(){
-  debug('%s heard', k.CREATE_USER_DID)
+  debug('%s heard', events.CREATE_USER_DID)
   try {
     const identityProps = await _createIdentity()
     dispatch({
-      type: k.CREATED_USER_DID,
+      type: events.CREATED_USER_DID,
       load: {
         ...identityProps,
         araBalance: 0,
@@ -95,17 +92,17 @@ async function pushAID(){
     })
     windowManager.pingView({
       view: 'registration',
-      event: k.CREATED_USER_DID,
+      event: events.CREATED_USER_DID,
       load: {
         userDID: identityProps.userDID,
         mnemonic: identityProps.mnemonic
       }
     })
     const subscriptions = await _getSubscriptions(identityProps)
-    dispatch({ type: k.GOT_REGISTRATION_SUBS, load: subscriptions })
+    dispatch({ type: events.GOT_REGISTRATION_SUBS, load: subscriptions })
   } catch (err) {
     debug('Error creating identity: %o', err)
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'registrationFailed' } })
+    dispatch({ type: events.FEED_MODAL, load: { modalName: 'registrationFailed' } })
     windowManager.openModal('generalMessageModal')
     windowManager.closeWindow('registration')
   }

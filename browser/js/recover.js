@@ -1,4 +1,4 @@
-const k = require('../../lib/constants/stateManagement')
+const { events } = require('k')
 const RecoverMnemonic = require('../views/recover')
 const windowManagement = require('../lib/tools/windowManagement')
 const { remote } = require('electron')
@@ -8,15 +8,15 @@ const { ipcRenderer } = require('electron')
 const recoverMnemonic = new RecoverMnemonic()
 document.getElementById('container').appendChild(recoverMnemonic.render({}))
 
-const recoveringListener = ipcRenderer.on(k.RECOVERING, () => recoverMnemonic.render({ pending: true }))
-const recoveredListener = ipcRenderer.on(k.RECOVERED, () => {
+const recoveringListener = ipcRenderer.on(events.RECOVERING, () => recoverMnemonic.render({ pending: true }))
+const recoveredListener = ipcRenderer.on(events.RECOVERED, () => {
   windowManager.openWindow('filemanager')
   windowManagement.closeWindow('recover')
 })
-const recoverFailedListener = ipcRenderer.on(k.RECOVER_FAILED, () => recoverMnemonic.render({}))
+const recoverFailedListener = ipcRenderer.on(events.RECOVER_FAILED, () => recoverMnemonic.render({}))
 
 window.onunload = () => {
-  ipcRenderer.removeListener(k.RECOVERING, recoveringListener)
-  ipcRenderer.removeListener(k.RECOVERED, recoveredListener)
-  ipcRenderer.removeListener(k.RECOVER_FAILED, recoverFailedListener)
+  ipcRenderer.removeListener(events.RECOVERING, recoveringListener)
+  ipcRenderer.removeListener(events.RECOVERED, recoveredListener)
+  ipcRenderer.removeListener(events.RECOVER_FAILED, recoverFailedListener)
 }

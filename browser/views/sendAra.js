@@ -5,7 +5,7 @@ const Input = require('../components/input')
 const overlay = require('../components/overlay')
 const UtilityButton = require('../components/utilityButton')
 const styles = require('./styles/sendAra')
-const k = require('../../lib/constants/stateManagement')
+const { events } = require('k')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
@@ -45,7 +45,7 @@ class SendAra extends Nanocomponent {
 
   sendAra(e) {
 		e.preventDefault()
-		emit({ event: k.SEND_ARA, load: this.state })
+		emit({ event: events.SEND_ARA, load: this.state })
 		windowManagement.closeWindow('sendAra')
   }
 

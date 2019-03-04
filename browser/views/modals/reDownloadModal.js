@@ -1,5 +1,5 @@
 const Button = require('../../components/button')
-const { DOWNLOAD } = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('nanohtml')
@@ -9,7 +9,7 @@ module.exports = ({ aid, fileName, price }) => {
     children: 'Download',
     onclick: () => {
       windowManagement.openWindow('filemanager')
-      windowManagement.emit({ event: DOWNLOAD, load: { aid, fileName, price } })
+      windowManagement.emit({ event: events.DOWNLOAD, load: { aid, fileName, price } })
       windowManagement.closeModal('reDownloadModal')
     }
   })

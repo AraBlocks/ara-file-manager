@@ -1,5 +1,5 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:utils')
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const dispatch = require('../reducers/dispatch')
 const {
   afsManager,
@@ -11,64 +11,64 @@ const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
-internalEmitter.on(k.CLEAN_UI, () => {
-  debug('%s heard', k.CLEAN_UI)
-  dispatch({ type: k.CLEAN_UI })
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+internalEmitter.on(events.CLEAN_UI, () => {
+  debug('%s heard', events.CLEAN_UI)
+  dispatch({ type: events.CLEAN_UI })
+  windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 })
 
-ipcMain.on(k.OPEN_AFS, async (_, load) => {
-  debug('%s heard', k.OPEN_AFS)
+ipcMain.on(events.OPEN_AFS, async (_, load) => {
+  debug('%s heard', events.OPEN_AFS)
   const { farmer, files, application } = store
   if (application.exportWindowOpen) { return }
   try {
     const allFiles = files.published.concat(files.purchased)
     const file = allFiles.find(file => file.did === load.did)
 
-    const updateAvailable = file.status === k.UPDATE_AVAILABLE
-    dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] } })
+    const updateAvailable = file.status === events.UPDATE_AVAILABLE
+    dispatch({ type: events.FEED_CONTENT_VIEWER, load: { ...load, fileList: [] } })
 
     windowManager.openWindow('afsExplorerView')
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
     const fileList = await afsManager.getFileList(load.did)
-    dispatch({ type: k.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable } })
+    dispatch({ type: events.FEED_CONTENT_VIEWER, load: { ...load, fileList, updateAvailable } })
 
-    windowManager.pingView({ view: 'afsExplorerView', event: k.REFRESH })
+    windowManager.pingView({ view: 'afsExplorerView', event: events.REFRESH })
   } catch (err) {
     debug("Error: %o", err)
   }
 })
 
-ipcMain.on(k.CLOSE_AFS_EXPLORER, async (event, load) => {
+ipcMain.on(events.CLOSE_AFS_EXPLORER, async (event, load) => {
   try {
     const { files } = store
     const fileList = files.published.concat(files.purchased)
     const file = fileList.find(file => file.did === load.did)
-    dispatch({ type: k.CLOSE_AFS_EXPLORER, load })
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    dispatch({ type: events.CLOSE_AFS_EXPLORER, load })
+    windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
     if (file.shouldBroadcast) {
-      internalEmitter.emit(k.START_SEEDING, load)
+      internalEmitter.emit(events.START_SEEDING, load)
     }
   } catch (err) {
     debug("Error: %o", err)
   }
 })
 
-internalEmitter.on(k.CONFIRM_QUIT, () => {
-  dispatch({ type: k.FEED_MODAL, load: { modalName: 'quitConfirm', callback: () => app.quit() } })
+internalEmitter.on(events.CONFIRM_QUIT, () => {
+  dispatch({ type: events.FEED_MODAL, load: { modalName: 'quitConfirm', callback: () => app.quit() } })
   windowManager.openModal('generalActionModal')
 })
 
-ipcMain.on(k.TOGGLE_ANALYTICS_PERMISSION, () => {
+ipcMain.on(events.TOGGLE_ANALYTICS_PERMISSION, () => {
   const analyticsPermission = afmManager.toggleAnalyticsPermission(store.account.userDID)
-  dispatch({ type: k.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission } })
-  windowManager.pingView({ view: 'accountInfo', event: k.REFRESH })
+  dispatch({ type: events.TOGGLE_ANALYTICS_PERMISSION, load: { analyticsPermission } })
+  windowManager.pingView({ view: 'accountInfo', event: events.REFRESH })
 })
 
-internalEmitter.on(k.UPDATE_AVAILABLE, (load) => {
-  debug('%s HEARD', k.UPDATE_AVAILABLE)
-  dispatch({ type: k.UPDATE_AVAILABLE, load: { did: load.did } })
-  windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+internalEmitter.on(events.UPDATE_AVAILABLE, (load) => {
+  debug('%s HEARD', events.UPDATE_AVAILABLE)
+  dispatch({ type: events.UPDATE_AVAILABLE, load: { did: load.did } })
+  windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 })
