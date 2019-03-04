@@ -1,14 +1,16 @@
 const debug = require('debug')('afm:kernel:lib:actions:afmManager')
+
+const { app } = require('electron')
+const { application } = require('k')
+const araUtil = require('ara-util')
 const fs = require('fs')
 const path = require('path')
-const userHome = require('user-home')
-const { app } = require('electron')
-const araUtil = require('ara-util')
-const toilet = require('toiletdb')
 const pify = require('pify')
-const { application } = require('../../../lib/constants/index')
-const { version } = require('../../../package.json')
 const rimraf = require('rimraf')
+const toilet = require('toiletdb')
+const userHome = require('user-home')
+
+const { version } = require('../../package.json')
 
 async function getAppData() {
 	if (global.appData) return global.appData

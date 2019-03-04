@@ -1,10 +1,13 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:seed')
-const { farmerManager } = require('../actions')
-const dispatch = require('../reducers/dispatch')
+
 const { events } = require('k')
-const { ipcMain } = require('electron')
 const { internalEmitter } = require('electron-window-manager')
+const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
+
+const { rewardsDCDN } = require('../../daemons')
+const dispatch = require('../reducers/dispatch')
+
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(events.START_SEEDING, (_, load) => _startSeeding(load))
@@ -16,7 +19,7 @@ function _startSeeding(load) {
   debug
   const { farmer } = store
   try {
-    farmerManager.joinBroadcast({ farmer: farmer.farm, did: load.did })
+    rewardsDCDN.joinBroadcast({ farmer: farmer.farm, did: load.did })
     dispatch({ type: events.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: true } })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
   } catch (err) {
@@ -28,7 +31,7 @@ ipcMain.on(events.STOP_SEEDING, (event, load) => {
   debug('%s HEARD', events.STOP_SEEDING)
   const { farmer } = store
   try {
-    farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did})
+    rewardsDCDN.unjoinBroadcast({ farmer: farmer.farm, did: load.did})
     dispatch({ type: events.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
   } catch (err) {
