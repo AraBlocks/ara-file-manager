@@ -1,11 +1,14 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:download')
-const { acmManager, identityManager } = require('../actions')
+
 const araUtil = require('ara-util')
-const dispatch = require('../reducers/dispatch')
 const { events } = require('k')
 const { ipcMain } = require('electron')
-const windowManager = require('electron-window-manager')
 const { web3 } = require('ara-util')
+const windowManager = require('electron-window-manager')
+
+const dispatch = require('../reducers/dispatch')
+const { act, aid } = require('../../daemons')
+
 const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(events.SEND_ARA, (_, load) => {
@@ -13,7 +16,7 @@ ipcMain.on(events.SEND_ARA, (_, load) => {
 	try {
 		debug('%s heard', events.SEND_ARA)
 		const isValidEthAddress = web3.isAddress(load.receiver)
-		const isValidDid = identityManager.isValidDid(load.receiver)
+		const isValidDid = aid.isValidDid(load.receiver)
 		if (!isValidDid && !isValidEthAddress) {
 			load.receiver.length >= 64
 				? modalName = 'invalidDid'
@@ -53,7 +56,7 @@ ipcMain.on(events.CONFIRM_SEND_ARA, async (event, load) => {
 			did: account.userDID,
 			to: walletAddress,
 		}
-		await autoQueue.push(() => acmManager.sendAra(sendAraLoad))
+		await autoQueue.push(() => act.sendAra(sendAraLoad))
 
 		dispatch({
 			type: events.FEED_MODAL, load: {

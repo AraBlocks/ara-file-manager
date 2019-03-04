@@ -1,11 +1,14 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:rewards')
+
 const { events } = require('k')
-const dispatch = require('../reducers/dispatch')
 const { rewards } = require('ara-contracts')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
-const { internalEmitter } = windowManager
+
+const dispatch = require('../reducers/dispatch')
+
 const store = windowManager.sharedData.fetch('store')
+const { internalEmitter } = windowManager
 
 ipcMain.on(events.REDEEM_REWARDS, async (_, load) => {
   debug('%s HEARD', events.REDEEM_REWARDS)

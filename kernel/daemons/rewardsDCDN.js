@@ -1,9 +1,9 @@
 const debug = require('debug')('afm:kernel:lib:actions:farmerManager')
 
+const { events } = require('k')
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
 const fs = require('fs')
 const { internalEmitter } = require('electron-window-manager')
-const { events } = require('k')
 
 function createFarmer({ did: userId, password, queue }) {
 	debug('Creating Farmer')

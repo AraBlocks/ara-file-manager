@@ -6,27 +6,26 @@ const windowManager = require('electron-window-manager')
 
 const { AutoQueue } = require('../../../lib')
 const {
-  acmManager,
-  afsManager,
+  act,
+  afs,
   utils: actionUtils,
-  afmManager,
-  identityManager,
-  farmerManager,
-  utils
-} = require('../../actions')
+  afm,
+  aid,
+  rewardsDCDN,
+} = require('../../../daemons')
 const dispatch = require('../../reducers/dispatch')
 const menuHelper = require('../../../../boot/menuHelper')
 
 async function _createIdentity() {
-  const identity = await identityManager.create(application.TEMP_PASSWORD)
+  const identity = await aid.create(application.TEMP_PASSWORD)
   const { did: { did }, mnemonic } = identity
-  await identityManager.archive(identity)
-  const accountAddress = await acmManager.getAccountAddress(did, application.TEMP_PASSWORD)
+  await aid.archive(identity)
+  const accountAddress = await act.getAccountAddress(did, application.TEMP_PASSWORD)
   const network = await actionUtils.getNetwork()
   const userDID = araUtil.getIdentifier(did)
-  const analyticsPermission = afmManager.getAnalyticsPermission(did)
+  const analyticsPermission = afm.getAnalyticsPermission(did)
   _requestEther(accountAddress)
-  afmManager.cacheUserDid(userDID)
+  afm.cacheUserDid(userDID)
   return {
     accountAddress,
     analyticsPermission,
@@ -38,9 +37,9 @@ async function _createIdentity() {
 }
 
 async function getAccountsProps({ password, userDID }) {
-  const deployEstimateDid = await afsManager.createDeployEstimateAfs(userDID, password)
+  const deployEstimateDid = await afs.createDeployEstimateAfs(userDID, password)
   const autoQueue = new AutoQueue
-  const farmer = farmerManager.createFarmer({
+  const farmer = rewardsDCDN.createFarmer({
     did: userDID,
     password,
     queue: autoQueue
@@ -51,12 +50,12 @@ async function getAccountsProps({ password, userDID }) {
 }
 
 async function _getSubscriptions({ accountAddress, userDID }) {
-  const transfer = await acmManager.subscribeTransfer(accountAddress, userDID)
-  const transferEth = await acmManager.subscribeEthBalance(accountAddress)
+  const transfer = await act.subscribeTransfer(accountAddress, userDID)
+  const transferEth = await act.subscribeEthBalance(accountAddress)
   let faucet = {}
   try {
     await actionUtils.requestAraFaucet(userDID)
-    faucet = await acmManager.subscribeFaucet(accountAddress)
+    faucet = await act.subscribeFaucet(accountAddress)
   } catch (err) {
     debug('Error requesting from ara faucet: %o', err)
   }
@@ -66,12 +65,12 @@ async function _getSubscriptions({ accountAddress, userDID }) {
 async function _requestEther(ethAddress) {
   try {
     debug('Requesting from main eth faucet')
-    await utils.requestEthFaucet(ethAddress)
+    await actionUtils.requestEthFaucet(ethAddress)
   } catch (err) {
     debug('Error requesting from main eth faucet: %s', err.message)
     try {
       debug('Requesting from fallback eth faucet')
-      await utils.requestFallbackEthFaucet(ethAddress)
+      await actionUtils.requestFallbackEthFaucet(ethAddress)
     } catch (err) {
       debug('Error requesting from fallback eth faucet: %s', err.message)
     }

@@ -1,7 +1,9 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:wallet')
+
 const dispatch = require('../reducers/dispatch')
 const { events } = require('k')
 const windowManager = require('electron-window-manager')
+
 const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
 
