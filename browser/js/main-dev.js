@@ -44,7 +44,7 @@ function createElement(view, isModal = false) {
 }
 
 if (argv.includes('loggedin')) {
-  const { LOGIN } = require('../../lib/constants/stateManagement')
+  const { events: { LOGIN } } = require('k')
   emit({ event: LOGIN, load: {
       password: argv[argv.length - 1],
       userDID: argv[argv.length - 2]

@@ -4,7 +4,7 @@ const araUtil = require('ara-util')
 const { internalEmitter } = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const windowManager = require('electron-window-manager')
 
 const { acmManager, descriptorGeneration } = require('../actions')
@@ -15,30 +15,30 @@ const {
 	files
 } = windowManager.sharedData.fetch('store')
 
-internalEmitter.on(k.OPEN_DEEPLINK, async (load) => {
+internalEmitter.on(events.OPEN_DEEPLINK, async (load) => {
 	try {
-		debug('%s heard', k.OPEN_DEEPLINK)
-		dispatch({ type: k.OPEN_DEEPLINK, load })
+		debug('%s heard', events.OPEN_DEEPLINK)
+		dispatch({ type: events.OPEN_DEEPLINK, load })
 		if (account.userDID == null) { throw new Error('Not logged in') }
 		if (load == null ) { throw new Error('Broken link') }
-		internalEmitter.emit(k.PROMPT_PURCHASE, load)
+		internalEmitter.emit(events.PROMPT_PURCHASE, load)
 	} catch(err) {
 		errorHandler(err)
 	}
 })
 
-internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
+internalEmitter.on(events.PROMPT_PURCHASE, async (load) => {
 	try {
-		debug('%s heard', k.PROMPT_PURCHASE)
-		dispatch({ type: k.DUMP_DEEPLINK_DATA })
-		dispatch({ type: k.FEED_MODAL, load })
+		debug('%s heard', events.PROMPT_PURCHASE)
+		dispatch({ type: events.DUMP_DEEPLINK_DATA })
+		dispatch({ type: events.FEED_MODAL, load })
 
 		windowManager.openWindow('purchaseEstimate')
 		const library = await acmManager.getLibraryItems(account.userDID)
 		const isOwner = !isDev && files.published.find(({ did }) => did === load.did)
 		if (library.includes('0x' + araUtil.getIdentifier(load.did)) || isOwner) {
 			debug('already own item')
-			dispatch({ type: k.FEED_MODAL, load: { modalName: isOwner ? 'packageOwner' : 'alreadyOwn' } })
+			dispatch({ type: events.FEED_MODAL, load: { modalName: isOwner ? 'packageOwner' : 'alreadyOwn' } })
 			windowManager.openModal('generalMessageModal')
 			windowManager.close('purchaseEstimate')
 			return
@@ -56,7 +56,7 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 		}))
 		windowManager.pingView({
 			view: 'purchaseEstimate',
-			event: k.REFRESH,
+			event: events.REFRESH,
 			load: {
 				fee,
 				peers: 1,
@@ -70,9 +70,9 @@ internalEmitter.on(k.PROMPT_PURCHASE, async (load) => {
 	}
 })
 
-ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
+ipcMain.on(events.CONFIRM_PURCHASE, async (event, load) => {
 	const { autoQueue } = account
-	debug('%s heard: %s', k.CONFIRM_PURCHASE, load.did)
+	debug('%s heard: %s', events.CONFIRM_PURCHASE, load.did)
 	try {
 		if (account.ethBalance < load.gasEstimate) {
 			throw new Error('Not enough eth')
@@ -83,24 +83,24 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 		const descriptorOpts = {
 			peers: 1,
 			name: load.fileName,
-			status: k.PURCHASING,
+			status: events.PURCHASING,
 		}
 		const descriptor = await descriptorGeneration.makeDescriptor(load.did, descriptorOpts)
-		dispatch({ type: k.PURCHASING, load: descriptor })
-		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+		dispatch({ type: events.PURCHASING, load: descriptor })
+		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
 		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userDID }
 
 		const jobId = await autoQueue.push(() => acmManager.purchaseItem(itemLoad))
 
 		const araBalance = await acmManager.getAraBalance(account.userDID)
-		dispatch({ type: k.PURCHASED, load: { araBalance, jobId, did: load.did } })
-		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+		dispatch({ type: events.PURCHASED, load: { araBalance, jobId, did: load.did } })
+		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-		dispatch({ type: k.FEED_MODAL, load: {
+		dispatch({ type: events.FEED_MODAL, load: {
 				modalName: 'startDownload',
 				callback: () => {
-					internalEmitter.emit(k.DOWNLOAD, load)
+					internalEmitter.emit(events.DOWNLOAD, load)
 				}
 			}
 		})
@@ -109,11 +109,11 @@ ipcMain.on(k.CONFIRM_PURCHASE, async (event, load) => {
 		const rewardsSub = await acmManager.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
 		const updateSub = await acmManager.subscribeAFSUpdates(load.did)
 
-		dispatch({ type: k.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
+		dispatch({ type: events.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
 	} catch (err) {
 		errorHandler(err)
-		dispatch({ type: k.ERROR_PURCHASING, load: { did: load.did } })
-		windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+		dispatch({ type: events.ERROR_PURCHASING, load: { did: load.did } })
+		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 	}
 })
 
@@ -139,7 +139,7 @@ function errorHandler(err) {
 			modalName = 'purchaseFailed'
 			break
 	}
-	dispatch({ type: k.FEED_MODAL, load: { modalName, callback } })
+	dispatch({ type: events.FEED_MODAL, load: { modalName, callback } })
 	windowManager.openModal('generalMessageModal')
-	internalEmitter.emit(k.CHANGE_PENDING_PUBLISH_STATE, false)
+	internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
 }

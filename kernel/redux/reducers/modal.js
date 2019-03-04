@@ -1,29 +1,29 @@
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 
 module.exports = (state, { load = null, type }) => {
   switch(type) {
-    case k.DUMP_MODAL_STATE:
-    case k.LOGOUT:
+    case events.DUMP_MODAL_STATE:
+    case events.LOGOUT:
       state.data = {}
       break
-    case k.FEED_MODAL:
+    case events.FEED_MODAL:
       state.data = load
       break
-    case k.FEED_MANAGE_FILE:
+    case events.FEED_MANAGE_FILE:
       state.manageFileData = load
-    case k.FEED_CONTENT_VIEWER:
+    case events.FEED_CONTENT_VIEWER:
       state.contentViewerData = load
       break
-    case k.CREATED_USER_DID:
+    case events.CREATED_USER_DID:
       state.data.mnemonic = load.mnemonic
       state.data.freezeData = true
       break
-    case k.PROXY_DEPLOYED:
+    case events.PROXY_DEPLOYED:
       state.data.mnemonic = load.mnemonic
       state.data.isAFS = load.isAFS
       state.data.contentDID = load.contentDID
       state.data.freezeData = true
-    case k.USE_UNCOMMITTED:
+    case events.USE_UNCOMMITTED:
       state.publishFileData.contentDID = load.contentDID
       break
     default:

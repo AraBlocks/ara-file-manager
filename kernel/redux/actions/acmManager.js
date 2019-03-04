@@ -3,7 +3,7 @@ const { abi: AFSabi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenABI } = require('ara-contracts/build/contracts/AraToken.json')
 const { abi: registryABI } = require('ara-contracts/build/contracts/Registry.json')
 const araFilesystem = require('ara-filesystem')
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const { FAUCET_OWNER } = require('../../../lib/constants/networkKeys')
 const { ARA_TOKEN_ADDRESS, REGISTRY_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
@@ -198,7 +198,7 @@ async function subscribeEthBalance(userAddress) {
 				debug("Error: %o", err)
 			} else {
 				const ethBalance = await getEtherBalance(userAddress)
-				internalEmitter.emit(k.UPDATE_ETH_BALANCE, { ethBalance })
+				internalEmitter.emit(events.UPDATE_ETH_BALANCE, { ethBalance })
 			}
 		})
 	} catch (err) {
@@ -216,7 +216,7 @@ async function subscribePublished({ did }) {
 			subscription = contract.events.Purchased()
 				.on('data', async ({ returnValues }) => {
 					const earning = Number(araContracts.token.constrainTokenValue(returnValues._price))
-					internalEmitter.emit(k.UPDATE_EARNING, { did, earning })
+					internalEmitter.emit(events.UPDATE_EARNING, { did, earning })
 				})
 				.on('error', debug)
 		} catch (err) {
@@ -237,7 +237,7 @@ async function subscribeFaucet(userAddress) {
 	let subscription
 	try {
 		subscription = contract.events.Transfer({ filter: { to: userAddress, from: FAUCET_OWNER } })
-			.on('data', () => internalEmitter.emit(k.FAUCET_ARA_RECEIVED))
+			.on('data', () => internalEmitter.emit(events.FAUCET_ARA_RECEIVED))
 			.on('error', debug)
 	} catch (err) {
 		debug('Error %o', err)
@@ -257,7 +257,7 @@ async function subscribeRewardsAllocated(contentDID, ethereumAddress, userDID) {
 				.on('data', async ({ returnValues }) => {
 					if (returnValues._farmer !== ethereumAddress) { return }
 					const rewardsBalance = await rewards.getRewardsBalance({ contentDid: contentDID, farmerDid: userDID })
-					internalEmitter.emit(k.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
+					internalEmitter.emit(events.REWARDS_ALLOCATED, { did: contentDID, rewardsBalance })
 				})
 				.on('error', debug)
 		} catch (err) {
@@ -290,7 +290,7 @@ async function subscribeTransfer(userAddress, userDID) {
 
 	async function updateBalance() {
 		const newBalance = await getAraBalance(userDID)
-		internalEmitter.emit(k.UPDATE_ARA_BALANCE, { araBalance: newBalance })
+		internalEmitter.emit(events.UPDATE_ARA_BALANCE, { araBalance: newBalance })
 	}
 }
 
@@ -322,7 +322,7 @@ async function subscribeAFSUpdates(contentDID) {
 			subscription = contract.events.Commit()
 				.on('data', async () => {
 					const updateAvailable = await araFilesystem.isUpdateAvailable({ did: contentDID })
-					updateAvailable && internalEmitter.emit(k.UPDATE_AVAILABLE, { did: contentDID })
+					updateAvailable && internalEmitter.emit(events.UPDATE_AVAILABLE, { did: contentDID })
 				})
 				.on('error', debug)
 		} catch (err) {

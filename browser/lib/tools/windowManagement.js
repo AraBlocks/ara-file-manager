@@ -5,7 +5,7 @@ const {
 	shell
 } = require('electron')
 const windowManager = remote.require('electron-window-manager')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 
 function changeMainManagerSize(expand) {
 	const window = windowManager.getCurrent().object
@@ -66,7 +66,7 @@ function transitionModal(view) {
 }
 
 function openWindow(view) {
-	ipcRenderer.send(k.PAGE_VIEW, { view })
+	ipcRenderer.send(events.PAGE_VIEW, { view })
 	windowManager.get(view)
 		? windowManager.get(view).focus()
 		: windowManager.open(

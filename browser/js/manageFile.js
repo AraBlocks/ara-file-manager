@@ -1,5 +1,5 @@
 const ManageFileContainer = require('../views/manageFile/container')
-const k = require('../../lib/constants/stateManagement')
+const { events } = require('k')
 const { ipcRenderer, remote } = require('electron')
 const windowManager = remote.require('electron-window-manager')
 const { account, modal } = windowManager.sharedData.fetch('store')
@@ -12,11 +12,11 @@ const manageFileContainer = new ManageFileContainer({
 
 document.getElementById('container').appendChild(manageFileContainer.render({ spinner: !modal.manageFileData.uncommitted }))
 
-const estimateListener = ipcRenderer.on(k.ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
-const refreshListener = ipcRenderer.on(k.REFRESH, () => manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList }))
+const estimateListener = ipcRenderer.on(events.ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
+const refreshListener = ipcRenderer.on(events.REFRESH, () => manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList }))
 window.onunload = () => {
-	ipcRenderer.removeListener(k.REFRESH, refreshListener)
-	ipcRenderer.removeListener(k.ESTIMATING_COST, estimateListener)
+	ipcRenderer.removeListener(events.REFRESH, refreshListener)
+	ipcRenderer.removeListener(events.ESTIMATING_COST, estimateListener)
 }
 
 ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {

@@ -1,6 +1,6 @@
 const { colorSelector } = require('styleUtils')
 const { css } = require('css')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 
 module.exports = {
   colorSelector,
@@ -22,9 +22,9 @@ module.exports = {
       ${status &&
       `:host::before {
           content: "${(
-            status === k.PURCHASING
+            status === events.PURCHASING
               ? 'Purchasing'
-              : status === k.PUBLISHING
+              : status === events.PUBLISHING
                 ? 'Publishing'
                 : 'Connecting'
           )}";

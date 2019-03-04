@@ -1,9 +1,9 @@
-const { LOGIN, REGISTERED } = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 
 module.exports = (state, { load = null, type }) => {
 	switch (type) {
-		case LOGIN:
-		case REGISTERED:
+		case events.LOGIN:
+		case events.REGISTERED:
 			state.farm = load.farmer
 			break
 		default:

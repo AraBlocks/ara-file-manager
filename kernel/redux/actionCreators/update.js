@@ -3,35 +3,35 @@ const afs = require('ara-filesystem')
 const dispatch = require('../reducers/dispatch')
 const { ipcMain } = require('electron')
 const { afsManager, farmerManager, utils: actionsUtil } = require('../actions')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const { pause } = require('../../lib')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
-  debug('%s heard', k.FEED_MANAGE_FILE)
+ipcMain.on(events.FEED_MANAGE_FILE, async (event, load) => {
+  debug('%s heard', events.FEED_MANAGE_FILE)
   const { files, farmer } = store
   try {
     const file = files.published.find(({ did }) => did === load.did)
     dispatch({
-      type: k.FEED_MANAGE_FILE,
+      type: events.FEED_MANAGE_FILE,
       load: {
         did: load.did,
         price: file.price,
         name: load.name || '',
         fileList: [],
-        uncommitted: file.status === k.UNCOMMITTED
+        uncommitted: file.status === events.UNCOMMITTED
       }
     })
     windowManager.openWindow('manageFileView')
 
-    if (file.status === k.UNCOMMITTED) { return }
-    dispatch({ type: k.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
+    if (file.status === events.UNCOMMITTED) { return }
+    dispatch({ type: events.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
     await farmerManager.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
 
     dispatch({
-      type: k.FEED_MANAGE_FILE,
+      type: events.FEED_MANAGE_FILE,
       load: {
         did: load.did,
         price: file.price,
@@ -40,19 +40,19 @@ ipcMain.on(k.FEED_MANAGE_FILE, async (event, load) => {
         uncommitted: false
       }
     })
-    windowManager.pingView({ view: 'manageFileView', event: k.REFRESH })
+    windowManager.pingView({ view: 'manageFileView', event: events.REFRESH })
   } catch (err) {
     debug('Error: %o', err)
   }
 })
 
-ipcMain.on(k.UPDATE_META, async (_, load) => {
-  debug('%s heard', k.UPDATE_META)
+ipcMain.on(events.UPDATE_META, async (_, load) => {
+  debug('%s heard', events.UPDATE_META)
   const { account } = store
   const { name, did } = load
 
   const waitModalLoad = { load: { packageName: load.name }, modalName: 'updatingName' }
-  dispatch({ type: k.FEED_MODAL, load: waitModalLoad })
+  dispatch({ type: events.FEED_MODAL, load: waitModalLoad })
   windowManager.closeWindow('manageFileView')
   windowManager.openModal('generalPleaseWaitModal')
 
@@ -65,21 +65,21 @@ ipcMain.on(k.UPDATE_META, async (_, load) => {
       password: account.password
     })
 
-    dispatch({ type: k.UPDATE_META, load: { name, did } })
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'nameUpdated' } })
+    dispatch({ type: events.UPDATE_META, load: { name, did } })
+    dispatch({ type: events.FEED_MODAL, load: { modalName: 'nameUpdated' } })
 
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
     windowManager.closeWindow('generalPleaseWaitModal')
     windowManager.openModal('generalMessageModal')
   } catch (err) {
   }
 })
 
-ipcMain.on(k.UPDATE_FILE, async (_, load) => {
-  debug('%s heard', k.UPDATE_FILE)
+ipcMain.on(events.UPDATE_FILE, async (_, load) => {
+  debug('%s heard', events.UPDATE_FILE)
   const { account } = store
   try {
-    dispatch({ type: k.FEED_MODAL, load: { load: { fileName: load.name } } })
+    dispatch({ type: events.FEED_MODAL, load: { load: { fileName: load.name } } })
     windowManager.openModal('generalPleaseWaitModal')
     windowManager.closeWindow('manageFileView')
 
@@ -120,8 +120,8 @@ ipcMain.on(k.UPDATE_FILE, async (_, load) => {
       shouldCommit: load.shouldCommit
     }
 
-    debug('Dispatching %s . Load: %O', k.FEED_MODAL, dispatchLoad)
-    dispatch({ type: k.FEED_MODAL, load: dispatchLoad })
+    debug('Dispatching %s . Load: %O', events.FEED_MODAL, dispatchLoad)
+    dispatch({ type: events.FEED_MODAL, load: dispatchLoad })
     windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('updateConfirmModal')
   } catch (err) {
@@ -129,12 +129,12 @@ ipcMain.on(k.UPDATE_FILE, async (_, load) => {
   }
 })
 
-ipcMain.on(k.CONFIRM_UPDATE_FILE, async (_, load) => {
-  debug('%s heard', k.CONFIRM_UPDATE_FILE)
+ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
+  debug('%s heard', events.CONFIRM_UPDATE_FILE)
   const { account } = store
   try {
     dispatch({
-      type: k.UPDATING_FILE,
+      type: events.UPDATING_FILE,
       load: {
         did: load.did,
         name: load.name,
@@ -143,7 +143,7 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (_, load) => {
       }
     })
 
-    windowManager.pingView({ view: 'filemanager', event: k.REFRESH })
+    windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
     windowManager.closeWindow('manageFileView')
 
     if (load.shouldUpdatePrice && !load.shouldCommit) {
@@ -157,11 +157,11 @@ ipcMain.on(k.CONFIRM_UPDATE_FILE, async (_, load) => {
       await afs.commit({ did: load.did, password: account.password, price: Number(load.price) })
     }
 
-    dispatch({ type: k.UPDATED_FILE, load })
+    dispatch({ type: events.UPDATED_FILE, load })
 
-    internalEmitter.emit(k.START_SEEDING, load)
+    internalEmitter.emit(events.START_SEEDING, load)
 
-    dispatch({ type: k.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
+    dispatch({ type: events.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
     windowManager.openModal('generalMessageModal')
   } catch (err) {
     debug('Error: %O', err)

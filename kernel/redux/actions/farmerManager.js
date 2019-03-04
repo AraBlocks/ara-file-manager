@@ -3,22 +3,20 @@ const debug = require('debug')('afm:kernel:lib:actions:farmerManager')
 const farmDCDN = require('ara-reward-dcdn/src/dcdn')
 const fs = require('fs')
 const { internalEmitter } = require('electron-window-manager')
-const { stateManagement: k } = require('k')
-
-const acmManager = require('./acmManager')
+const { events } = require('k')
 
 function createFarmer({ did: userId, password, queue }) {
 	debug('Creating Farmer')
 	const farmer = new farmDCDN({ userId, password, queue })
 	farmer.on('peer-update', (did, count) => {
-		debug('k.UPDATE_PEER_COUNT in farmerManager', did, count)
-		internalEmitter.emit(k.UPDATE_PEER_COUNT, {
+		debug('events.UPDATE_PEER_COUNT in farmerManager', did, count)
+		internalEmitter.emit(events.UPDATE_PEER_COUNT, {
 			did,
 			peers: count
 		})
 	})
 	farmer.on('download-progress', (did, value, total) => {
-		internalEmitter.emit(k.DOWNLOADING, {
+		internalEmitter.emit(events.DOWNLOADING, {
 			did,
 			currentBlock: value,
 			totalBlocks: total
@@ -26,7 +24,7 @@ function createFarmer({ did: userId, password, queue }) {
 	})
 	farmer.on('download-complete', (did) => {
 		debug('Download complete!')
-		internalEmitter.emit(k.DOWNLOADED, { did })
+		internalEmitter.emit(events.DOWNLOADED, { did })
 	})
 	farmer.on('request-complete', (did) => {
 		debug('Rewards allocated')

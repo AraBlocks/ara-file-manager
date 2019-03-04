@@ -1,7 +1,7 @@
 const Button = require('../../components/button')
 const { clipboard, remote } = require('electron')
 const { app } = remote.require('electron')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const DynamicTooltip = require('../../components/dynamicTooltip')
 const { utils } = require('../../lib/tools')
 const styles = require('./styles/header')
@@ -22,7 +22,7 @@ class Header extends Nanocomponent {
       publishFilebutton: new Button({
         children: 'Publish New File',
         cssClass: { opts: { fontSize: 14 } },
-        onclick: () => !account.pendingPublish && windowManagement.emit({ event: k.DEPLOY_PROXY })
+        onclick: () => !account.pendingPublish && windowManagement.emit({ event: events.DEPLOY_PROXY })
       }),
 
       copyDidTooltip: new DynamicTooltip({
@@ -39,7 +39,7 @@ class Header extends Nanocomponent {
   get hambyOpts() {
     const items = [
       { children: 'Account', onclick: () => windowManager.openWindow('accountInfo') },
-      { children: 'Logout', onclick: () => windowManagement.emit({ event: k.LOGOUT }) },
+      { children: 'Logout', onclick: () => windowManagement.emit({ event: events.LOGOUT }) },
       { children: 'Close', onclick: () => windowManagement.closeWindow() },
       { children: 'Quit', onclick: () => app.quit() },
     ]
