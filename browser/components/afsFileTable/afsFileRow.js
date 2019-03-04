@@ -1,7 +1,7 @@
 const { emit } = require('../../lib/tools/windowManagement')
 const fileSystemManager = require('../../lib/tools/fileSystemManager')
 const fileListUtil = require('../../lib/tools/fileListUtil')
-const { events } = require('events')
+const { events } = require('k')
 const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
 const html = require('nanohtml')
@@ -54,7 +54,13 @@ class AfsFileRow extends Nanocomponent {
 			case events.UPDATE_FILE:
 				menu = html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
-						<div class="${styles.menuItem}" style="border-bottom: none;" onclick=${this.exportFile.bind(this)}>Export</div>
+						<div
+							class="${styles.menuItem}"
+							style="border-bottom: none;"
+							onclick=${this.exportFile.bind(this)}
+						>
+							Export
+						</div>
 						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
 					</div>
 				`
@@ -118,11 +124,14 @@ class AfsFileRow extends Nanocomponent {
 
 	renderFileType() {
 		const { props } = this
-		return fileListUtil.getFileType({ isFile: props.fileInfo.isFile, subPath: props.fileInfo.subPath })
+		return fileListUtil.getFileType({
+			isFile: props.fileInfo.isFile,
+			subPath: props.fileInfo.subPath
+		})
 	}
 
 	renderContextMenu(e) {
-		const contextMenu = e.target.closest('tr').children[0]
+		const [contextMenu] = e.target.closest('tr').children
 
 		contextMenu.style.left = e.clientX - 10 + 'px'
 		contextMenu.style.top = e.clientY - 10 + 'px'
@@ -146,7 +155,7 @@ class AfsFileRow extends Nanocomponent {
 			renderContextMenu
 		} = this
 
-		return html`
+		return (html`
 			<tr
 				class="item afsFileRow-item"
 				onclick="${fileClicked}"
@@ -160,7 +169,7 @@ class AfsFileRow extends Nanocomponent {
 				<td style="width: 100px;">${this.renderFileType()}</td>
 				<td>${filesize(props.fileInfo.size)}</td>
 			</tr>
-		`
+		`)
 	}
 }
 
