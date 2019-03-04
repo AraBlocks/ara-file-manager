@@ -1,22 +1,24 @@
 const debug = require('debug')('afm:kernel:lib:actions:afsManager')
-const { events } = require('k')
-const actionsUtil = require('./utils')
-const afmManager = require('./afmManager')
+
 const araContracts = require('ara-contracts')
-const fs = require('fs')
 const araFilesystem = require('ara-filesystem')
+const { events } = require('k')
+const fs = require('fs')
 const mirror = require('mirror-folder')
 const path = require('path')
 const { shell } = require('electron')
 
+const actionsUtil = require('./utils')
+const afm = require('./afm')
+
 async function createDeployEstimateAfs(userDID, password) {
   try {
-    const userData = afmManager.getUserData(userDID)
+    const userData = afm.getUserData(userDID)
     if (userData.deployEstimateDid == null) {
       let { afs, afs: { did } } = await araFilesystem.create({ owner: userDID, password })
       await afs.close();
       userData.deployEstimateDid = did
-      afmManager.saveUserData({ userDID, userData })
+      afm.saveUserData({ userDID, userData })
       return did
     }
     return userData.deployEstimateDid

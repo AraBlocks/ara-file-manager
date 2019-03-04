@@ -1,14 +1,14 @@
 const debug = require('debug')('afm:kernel:lib:actionCreators:download')
 
-const dispatch = require('../reducers/dispatch')
+const { events } = require('k')
 const { internalEmitter } = require('electron-window-manager')
 const { ipcMain } = require('electron')
-const { events } = require('k')
 const windowManager = require('electron-window-manager')
-const store = windowManager.sharedData.fetch('store')
 
-const { farmerManager } = require('../actions')
-const utils = require('../actions/utils')
+const dispatch = require('../reducers/dispatch')
+const { rewardsDCDN, utils } = require('../../daemons')
+
+const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(events.DOWNLOAD, download)
 internalEmitter.on(events.DOWNLOAD, (load) => download(null, load))
@@ -22,7 +22,7 @@ async function download(_, load) {
 		dispatch({ type: events.CONNECTING, load })
 		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-		farmerManager.download({
+		rewardsDCDN.download({
 			did: load.did,
 			jobId,
 			farmer: store.farmer.farm,
@@ -40,7 +40,7 @@ ipcMain.on(events.PAUSE_DOWNLOAD, async (event, load) => {
 		dispatch({ type: events.PAUSED, load })
 		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-		farmerManager.unjoinBroadcast({
+		rewardsDCDN.unjoinBroadcast({
 			did: load.did,
 			farmer: store.farmer.farm,
 		})

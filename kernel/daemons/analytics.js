@@ -1,12 +1,15 @@
 const debug = require('debug')('afm:kernel:redux:actions:analytics')
-const ua = require('universal-analytics')
-const pify = require('pify')
-const uuid = require('uuid/v4')
-const { version } = require('../../../package.json')
-const { getAppData } = require('./afmManager')
+
 const { analytics, application } = require('k')
 const isDev = require('electron-is-dev')
+const pify = require('pify')
+const uuid = require('uuid/v4')
+const ua = require('universal-analytics')
 const windowManager = require('electron-window-manager')
+
+const { getAppData } = require('./afm')
+const { version } = require('../../package.json')
+
 const store = windowManager.sharedData.fetch('store')
 
 async function getSession() {

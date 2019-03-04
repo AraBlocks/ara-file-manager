@@ -1,10 +1,12 @@
 const debug = require('debug')('afm:kernel:lib:actions:descriptorGeneration')
+
 const { events } = require('k')
-const acmManager = require('./acmManager')
-const afsManager = require('./afsManager')
-const farmerManager = require('./farmerManager')
 const araUtil = require('ara-util')
 const fs = require('fs')
+
+const act = require('./act')
+const afs = require('./afs')
+const rewardsDCDN = require('./rewardsDCDN')
 const { makeAfsPath, readFileMetadata } = require('./utils')
 
 class _Descriptor {
@@ -38,7 +40,7 @@ function makeDummyDescriptor(did, DCDNStore, owner = false) {
 		did,
 		owner,
 		status: events.AWAITING_STATUS,
-		shouldBroadcast: farmerManager.getBroadcastingState({ did, DCDNStore }),
+		shouldBroadcast: rewardsDCDN.getBroadcastingState({ did, DCDNStore }),
 	})
 }
 
@@ -48,7 +50,7 @@ async function makeDescriptor(did, opts = {}) {
 		const AFSPath = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(AFSPath)
 		const meta = AFSExists ? await readFileMetadata(did) : {}
-		const { downloadPercent, status } = await afsManager.getAfsDownloadStatus(did, opts.shouldBroadcast)
+		const { downloadPercent, status } = await afs.getAfsDownloadStatus(did, opts.shouldBroadcast)
 
 		return Object.assign(new _Descriptor, {
 			did,
@@ -56,7 +58,7 @@ async function makeDescriptor(did, opts = {}) {
 			datePublished: meta.timestamp,
 			name: meta.title,
 			path: AFSPath,
-			price: Number(await acmManager.getAFSPrice({ did })),
+			price: Number(await act.getAFSPrice({ did })),
 			size: meta.size || 0,
 			status
 		}, opts)

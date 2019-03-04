@@ -1,15 +1,15 @@
 const debug = require('debug')('afm:kernel:lib:actions:acmManager')
+
+const { ARA_TOKEN_ADDRESS, REGISTRY_ADDRESS } = require('ara-contracts/constants')
 const { abi: AFSabi } = require('ara-contracts/build/contracts/AFS.json')
 const { abi: tokenABI } = require('ara-contracts/build/contracts/AraToken.json')
 const { abi: registryABI } = require('ara-contracts/build/contracts/Registry.json')
-const araFilesystem = require('ara-filesystem')
-const { events } = require('k')
-const { FAUCET_OWNER } = require('../../../lib/constants/networkKeys')
-const { ARA_TOKEN_ADDRESS, REGISTRY_ADDRESS } = require('ara-contracts/constants')
 const araContracts = require('ara-contracts')
+const araFilesystem = require('ara-filesystem')
+const createContext = require('ara-context')
+const { events, networkKeys } = require('k')
 const { DEFAULT_REWARD_PERCENTAGE } = require('ara-reward-dcdn/src/constants')
 const { internalEmitter } = require('electron-window-manager')
-const createContext = require('ara-context')
 const {
 	web3: {
 		account: araAccount,
@@ -193,7 +193,7 @@ async function subscribeEthBalance(userAddress) {
 	await ctx.ready()
 	const { web3 } = ctx
 	try {
-		subscription = web3.eth.subscribe('newBlockHeaders', async (err, ret) => {
+		subscription = web3.eth.subscribe('newBlockHeaders', async (err) => {
 			if (err) {
 				debug("Error: %o", err)
 			} else {
@@ -236,7 +236,7 @@ async function subscribeFaucet(userAddress) {
 
 	let subscription
 	try {
-		subscription = contract.events.Transfer({ filter: { to: userAddress, from: FAUCET_OWNER } })
+		subscription = contract.events.Transfer({ filter: { to: userAddress, from: networkKeys.FAUCET_OWNER } })
 			.on('data', () => internalEmitter.emit(events.FAUCET_ARA_RECEIVED))
 			.on('error', debug)
 	} catch (err) {
