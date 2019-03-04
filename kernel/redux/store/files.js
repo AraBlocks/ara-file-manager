@@ -1,4 +1,4 @@
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 
 module.exports = {
   loadingLibrary: false,
@@ -18,7 +18,7 @@ function mockFiles() {
       name: 'Adobe Photoshop',
       shouldBroadcast: false,
       size: 10000043 * 100,
-      status: k.AWAITING_DOWNLOAD,
+      status: events.AWAITING_DOWNLOAD,
       allocatedRewards: 20
     },
     {
@@ -31,7 +31,7 @@ function mockFiles() {
       name: 'Microsoft Word',
       shouldBroadcast: true,
       size: 12030043 * 100,
-      status: k.DOWNLOADED_PUBLISHED,
+      status: events.DOWNLOADED_PUBLISHED,
       allocatedRewards: 20
     },
     {
@@ -44,7 +44,7 @@ function mockFiles() {
       name: 'Spirited Away',
       shouldBroadcast: false,
       size: 12030043 * 100,
-      status: k.DOWNLOADED_PUBLISHED,
+      status: events.DOWNLOADED_PUBLISHED,
       allocatedRewards: 0
     },
     {
@@ -57,7 +57,7 @@ function mockFiles() {
       name: 'Microsoft PowerPoint',
       shouldBroadcast: false,
       size: 19033043 * 100,
-      status: k.AWAITING_DOWNLOAD,
+      status: events.AWAITING_DOWNLOAD,
       allocatedRewards: 499
     },
     {
@@ -70,7 +70,7 @@ function mockFiles() {
       name: 'Adobe Photoshop',
       shouldBroadcast: false,
       size: 10000043 * 100,
-      status: k.DOWNLOADING,
+      status: events.DOWNLOADING,
     },
     {
       downloadPercent: 1,
@@ -82,7 +82,7 @@ function mockFiles() {
       name: 'Microsoft Word',
       shouldBroadcast: false,
       size: 12030043 * 100,
-      status: k.OUT_OF_SYNC,
+      status: events.OUT_OF_SYNC,
       allocatedRewards: 14
     },
     {
@@ -95,7 +95,7 @@ function mockFiles() {
       name: 'Movie Film',
       shouldBroadcast: false,
       size: 10000043 * 100,
-      status: k.PAUSED,
+      status: events.PAUSED,
       allocatedRewards: 0
     },
     {
@@ -108,7 +108,7 @@ function mockFiles() {
       name: 'Microsoft Word',
       shouldBroadcast: false,
       size: 12030043 * 100,
-      status: k.UPDATE_AVAILABLE,
+      status: events.UPDATE_AVAILABLE,
       allocatedRewards: 0
     }
   ]

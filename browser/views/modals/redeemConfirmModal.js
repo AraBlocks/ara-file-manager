@@ -1,5 +1,5 @@
 const Button = require('../../components/button')
-const { CONFIRM_REDEEM } = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('nanohtml')
@@ -8,7 +8,7 @@ module.exports = ({ estimate, did }) => {
   const downloadButton = new Button({
     children: 'Confirm',
     onclick: () => {
-      windowManagement.emit({ event: CONFIRM_REDEEM, load: { did } })
+      windowManagement.emit({ event: events.CONFIRM_REDEEM, load: { did } })
       windowManagement.closeModal('redeemConfirmModal')
     }
   })

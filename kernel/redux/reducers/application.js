@@ -1,25 +1,25 @@
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 
 module.exports = async (state, { load = null, type }) => {
   switch (type) {
-    case k.CLOSE_AFS_EXPLORER:
+    case events.CLOSE_AFS_EXPLORER:
       state.exportWindowOpen = false
       break
-    case k.GETTING_USER_DATA:
-    case k.CREATED_USER_DID:
+    case events.GETTING_USER_DATA:
+    case events.CREATED_USER_DID:
       state.network = load.network
       break
-    case k.FEED_CONTENT_VIEWER:
+    case events.FEED_CONTENT_VIEWER:
       state.exportWindowOpen = true
       break
-    case k.GOT_CACHED_DID:
+    case events.GOT_CACHED_DID:
       state.cachedUserDid = load.did
       break
-    case k.OPEN_DEEPLINK:
+    case events.OPEN_DEEPLINK:
       state.deepLinkData = load
       break
-    case k.DUMP_DEEPLINK_DATA:
-    case k.LOGOUT:
+    case events.DUMP_DEEPLINK_DATA:
+    case events.LOGOUT:
       state.deepLinkData = null
       break
   }

@@ -1,4 +1,4 @@
-const k = require('../../../lib/constants/stateManagement')
+const { events } = require('k')
 const styles = require('./styles/progressBar')
 const html = require('nanohtml')
 
@@ -11,21 +11,21 @@ module.exports = ({
 }) => {
   let color
   switch (status) {
-    case k.DOWNLOADED_PUBLISHED:
+    case events.DOWNLOADED_PUBLISHED:
       color = packageOpened
         ? 'grey'
         : shouldBroadcast ? 'teal' : 'black'
       break
-    case k.PAUSED:
-    case k.UNCOMMITTED:
+    case events.PAUSED:
+    case events.UNCOMMITTED:
       color = 'black'
       break
-    case k.AWAITING_DOWNLOAD:
-    case k.AWAITING_STATUS:
+    case events.AWAITING_DOWNLOAD:
+    case events.AWAITING_STATUS:
       color = 'grey'
       break
-    case k.DOWNLOADING:
-    case k.UPDATE_AVAILABLE:
+    case events.DOWNLOADING:
+    case events.UPDATE_AVAILABLE:
       color = packageOpened ? 'grey' : 'orange'
       break
     default:

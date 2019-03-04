@@ -1,6 +1,6 @@
 const AFSExlorer = require('../views/afsExplorerView/container')
 const { ipcRenderer, remote } = require('electron')
-const { REFRESH } = require('../../lib/constants/stateManagement')
+const { events } = require('k')
 const windowManager = remote.require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 const isDev = require('electron-is-dev')
@@ -14,9 +14,9 @@ const afsExplorer = new AFSExlorer({
 })
 document.getElementById('container').appendChild(afsExplorer.render({ spinner: modal.contentViewerData.fileList.length === 0 }))
 
-const refreshListener = ipcRenderer.on(REFRESH, () => afsExplorer.render({ spinner: false, fileList: modal.contentViewerData.fileList }))
+const refreshListener = ipcRenderer.on(events.REFRESH, () => afsExplorer.render({ spinner: false, fileList: modal.contentViewerData.fileList }))
 window.onunload = () => {
-	ipcRenderer.removeListener(REFRESH, refreshListener)
+	ipcRenderer.removeListener(events.REFRESH, refreshListener)
 }
 
 if (isDev) { window.store = store }

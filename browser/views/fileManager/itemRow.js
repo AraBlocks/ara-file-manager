@@ -1,5 +1,5 @@
 const ContextMenu = require('../../components/contextMenu')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const { menuHelper } = require('./util')
 const { windowManagement } = require('../../lib/tools')
 const FileDescriptor = require('./fileDescriptor')
@@ -42,14 +42,14 @@ class ItemRow extends Nanocomponent {
     const { did, name, status } = this.props
     const load = { did, name }
     switch (status) {
-      case k.AWAITING_DOWNLOAD:
-        windowManagement.emit({ event: k.DOWNLOAD, load })
+      case events.AWAITING_DOWNLOAD:
+        windowManagement.emit({ event: events.DOWNLOAD, load })
         break
-      case k.DOWNLOADED_PUBLISHED:
-        windowManagement.emit({ event: k.OPEN_AFS, load: { did, name }})
+      case events.DOWNLOADED_PUBLISHED:
+        windowManagement.emit({ event: events.OPEN_AFS, load: { did, name }})
         break
-      case k.DOWNLOADING:
-        windowManagement.emit({ event: k.STOP_SEEDING, load: { did, name }})
+      case events.DOWNLOADING:
+        windowManagement.emit({ event: events.STOP_SEEDING, load: { did, name }})
         break
     }
   }

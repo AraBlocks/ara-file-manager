@@ -1,6 +1,6 @@
 const PurchaseEstimate = require('../views/purchaseEstimate')
 const { ipcRenderer, remote } = require('electron')
-const { REFRESH } = require('../../lib/constants/stateManagement')
+const { events } = require('k')
 const windowManager = remote.require('electron-window-manager')
 const store = windowManager.sharedData.fetch('store')
 
@@ -8,7 +8,7 @@ const { modal } = store
 const purchaseEstimate = new PurchaseEstimate(modal.data)
 document.getElementById('container').appendChild(purchaseEstimate.render({}))
 
-const refreshListener = ipcRenderer.on(REFRESH, (event, load) => { purchaseEstimate.render(load)} )
+const refreshListener = ipcRenderer.on(events.REFRESH, (_, load) => { purchaseEstimate.render(load)} )
 window.onunload = () => {
-	ipcRenderer.removeListener(REFRESH, refreshListener)
+	ipcRenderer.removeListener(events.REFRESH, refreshListener)
 }

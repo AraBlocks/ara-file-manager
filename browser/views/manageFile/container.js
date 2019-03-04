@@ -4,7 +4,7 @@ const { fileSystemManager, windowManagement } = require('../../lib/tools')
 const DynamicTooltip = require('../../components/dynamicTooltip')
 const FileInfo = require('./fileInfo')
 const overlay = require('../../components/overlay')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const styles = require('./styles/container')
 const UtilityButton = require('../../components/utilityButton')
 const filesize = require('filesize')
@@ -58,10 +58,10 @@ class Container extends Nanocomponent {
 
 	closeWindow(){
 		if (this.state.uncommitted === false) {
-			windowManagement.emit({ event: k.START_SEEDING, load: { did: this.state.did } })
+			windowManagement.emit({ event: events.START_SEEDING, load: { did: this.state.did } })
 		}
 		windowManagement.closeWindow('manageFileView')
-		windowManagement.emit({ event: k.CHANGE_PENDING_PUBLISH_STATE, load: false })
+		windowManagement.emit({ event: events.CHANGE_PENDING_PUBLISH_STATE, load: false })
 	}
 
 	get fileInfoChanged() {
@@ -135,11 +135,11 @@ class Container extends Nanocomponent {
 			userDID: account.userDID
 		}
 		if (this.fileInfoChanged && state.uncommitted) {
-			windowManagement.emit({ event: k.PUBLISH, load })
+			windowManagement.emit({ event: events.PUBLISH, load })
 		} else if (this.fileInfoChanged) {
-			windowManagement.emit({ event: k.UPDATE_FILE, load })
+			windowManagement.emit({ event: events.UPDATE_FILE, load })
 		} else if (this.nameChanged && state.uncommitted !== true) {
-			windowManagement.emit({ event: k.UPDATE_META, load: { did: load.did, name: load.name }})
+			windowManagement.emit({ event: events.UPDATE_META, load: { did: load.did, name: load.name }})
 		}
 	}
 

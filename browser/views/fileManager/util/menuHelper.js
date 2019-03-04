@@ -1,4 +1,4 @@
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const { deeplink, windowManagement } = require('../../../lib/tools')
 
 module.exports = (opts, closeContextMenuCB = () => {}) => {
@@ -22,43 +22,43 @@ module.exports = (opts, closeContextMenuCB = () => {}) => {
     })
   }
   switch (opts.status) {
-    case k.DOWNLOADED_PUBLISHED:
+    case events.DOWNLOADED_PUBLISHED:
       if (opts.packageOpened) { break }
       opts.shouldBroadcast
-        ? menuItems.addItem('Stop Seeding', k.STOP_SEEDING)
-        : menuItems.addItem('Seed', k.START_SEEDING)
-      menuItems.addItem('Open Package', k.OPEN_AFS)
-      if (opts.owner) { menuItems.addItem('Manage Package', k.FEED_MANAGE_FILE) }
+        ? menuItems.addItem('Stop Seeding', events.STOP_SEEDING)
+        : menuItems.addItem('Seed', events.START_SEEDING)
+      menuItems.addItem('Open Package', events.OPEN_AFS)
+      if (opts.owner) { menuItems.addItem('Manage Package', events.FEED_MANAGE_FILE) }
       break
-    case k.AWAITING_DOWNLOAD:
-      menuItems.addItem('Download Package', k.DOWNLOAD)
+    case events.AWAITING_DOWNLOAD:
+      menuItems.addItem('Download Package', events.DOWNLOAD)
       break
-    case k.UPDATE_AVAILABLE:
-      menuItems.addItem('Open Package', k.OPEN_AFS)
-      menuItems.addItem('Update Package', k.DOWNLOAD)
+    case events.UPDATE_AVAILABLE:
+      menuItems.addItem('Open Package', events.OPEN_AFS)
+      menuItems.addItem('Update Package', events.DOWNLOAD)
       break
-    case k.PAUSED:
-      menuItems.addItem('Continue Download', k.DOWNLOAD)
+    case events.PAUSED:
+      menuItems.addItem('Continue Download', events.DOWNLOAD)
       break
-    case k.DOWNLOADING:
-      menuItems.addItem('Pause Download', k.PAUSE_DOWNLOAD)
+    case events.DOWNLOADING:
+      menuItems.addItem('Pause Download', events.PAUSE_DOWNLOAD)
       break
-    case k.OUT_OF_SYNC:
+    case events.OUT_OF_SYNC:
       //TODO: this event is not correct
-      menuItems.addItem('Sync Package', k.UPDATE_FILE)
+      menuItems.addItem('Sync Package', events.UPDATE_FILE)
       break
-    case k.UNCOMMITTED:
+    case events.UNCOMMITTED:
       //Listener for DEPLOY_PROXY will check for unpublished AFS, find it, and open publishView. No proxy will be deployed
       menuItems.pop()
-      menuItems.addItem('Publish Package', k.DEPLOY_PROXY)
+      menuItems.addItem('Publish Package', events.DEPLOY_PROXY)
       break
-    case k.CONNECTING:
-      menuItems.addItem('Stop Connecting', k.STOP_SEEDING)
+    case events.CONNECTING:
+      menuItems.addItem('Stop Connecting', events.STOP_SEEDING)
       break
   }
 
   if (opts.allocatedRewards && opts.redeeming === false) {
-    menuItems.addItem('Redeem Rewards', k.REDEEM_REWARDS)
+    menuItems.addItem('Redeem Rewards', events.REDEEM_REWARDS)
   }
   return { items: menuItems }
 }

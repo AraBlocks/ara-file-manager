@@ -2,7 +2,7 @@ const debug = require('debug')('afm:boot:tray')
 
 const isDev = require('electron-is-dev')
 const { closeWindow, internalEmitter, openWindow } = require('electron-window-manager')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const { Menu, Tray } = require('electron')
 const path = require('path')
 
@@ -17,13 +17,13 @@ const buildTray = () => {
 
   const menuItems = [
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
-    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(k.DEPLOY_PROXY) },
+    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(events.DEPLOY_PROXY) },
     { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
     {
       label: 'Register',
       type: 'normal',
       click: () => {
-        internalEmitter.emit(k.CREATE_USER_DID)
+        internalEmitter.emit(events.CREATE_USER_DID)
         openWindow('registration')
         closeWindow('login')
       }
@@ -36,14 +36,14 @@ const buildTray = () => {
         closeWindow('registration')
       }
     },
-    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(k.LOGOUT) },
-    { label: 'Quit', type: 'normal', click: () => internalEmitter.emit(k.CONFIRM_QUIT) }
+    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(events.LOGOUT) },
+    { label: 'Quit', type: 'normal', click: () => internalEmitter.emit(events.CONFIRM_QUIT) }
   ]
 
   //If dev mode, pushes developer option to tray
   isDev
     && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer') })
-    && menuItems.push({ label: 'Clean UI', type: 'normal', click: () => internalEmitter.emit(k.CLEAN_UI) })
+    && menuItems.push({ label: 'Clean UI', type: 'normal', click: () => internalEmitter.emit(events.CLEAN_UI) })
 
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)
@@ -53,8 +53,8 @@ const buildTray = () => {
 
 function switchTrayLoginState(state) {
   const menuItems = contextMenu.items
-  const loggedIn = state === k.LOGIN
-  const loading = state === k.LOADING_LIBRARY
+  const loggedIn = state === events.LOGIN
+  const loading = state === events.LOADING_LIBRARY
   menuItems[0].visible = loggedIn //FileManager
   menuItems[1].visible = loggedIn //Publish File View
   menuItems[2].visible = loading || loggedIn //Account Info

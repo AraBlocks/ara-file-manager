@@ -1,4 +1,4 @@
-const k = require('../../lib/constants/stateManagement')
+const { events } = require('k')
 const Button = require('../components/button')
 const ErrorInput = require('../components/errorInput')
 const overlay = require('../components/overlay')
@@ -69,7 +69,7 @@ class Recover extends Nanocomponent {
     const flagConfirmPWField = confirmPassword === '' || password !==  confirmPassword
     flagMnemonicField || flagPWField || flagConfirmPWField
       ? this.render({ flagMnemonicField, flagPWField, flagConfirmPWField })
-      : windowManagement.emit({ event: k.RECOVER, load: { password, mnemonic } })
+      : windowManagement.emit({ event: events.RECOVER, load: { password, mnemonic } })
   }
 
   update() {

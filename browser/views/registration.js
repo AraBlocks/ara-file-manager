@@ -1,5 +1,5 @@
 const html = require('nanohtml')
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const Nanocomponent = require('nanocomponent')
 
 const Button = require('../components/button')
@@ -84,7 +84,7 @@ class Registration extends Nanocomponent {
     const { password } = this.state
     const { mnemonic, userDID } = this.props
     this.properInput
-      ? emit({ event: k.REGISTER, load: { password, mnemonic, userDID } })
+      ? emit({ event: events.REGISTER, load: { password, mnemonic, userDID } })
       : this.rerender()
   }
 

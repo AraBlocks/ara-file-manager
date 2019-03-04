@@ -1,4 +1,4 @@
-const { stateManagement: k } = require('k')
+const { events } = require('k')
 const Button = require('../components/button')
 const { clipboard } = require('electron')
 const { emit } = require('../lib/tools/windowManagement')
@@ -69,15 +69,15 @@ class AccountInfo extends Nanocomponent {
         buttonOpts.children = 'Request Tokens'
         buttonOpts.cssClass.opts.color = 'green'
         buttonOpts.cssClass.name = ''
-        buttonOpts.onclick = () => windowManagement.emit({ event: k.LISTEN_FOR_FAUCET })
+        buttonOpts.onclick = () => windowManagement.emit({ event: events.LISTEN_FOR_FAUCET })
         break
-      case k.IN_FAUCET_QUEUE:
+      case events.IN_FAUCET_QUEUE:
         buttonOpts.children = 'Faucet is sending tokens...'
         break
-      case k.GREYLISTED_FROM_FAUCET:
+      case events.GREYLISTED_FROM_FAUCET:
         buttonOpts.children = 'Greylisted for 24 hours!'
         break
-      case k.FAUCET_LIMIT_HIT:
+      case events.FAUCET_LIMIT_HIT:
         buttonOpts.children = '1000 Tokens is Faucet limit!'
         break
       default:
@@ -88,7 +88,7 @@ class AccountInfo extends Nanocomponent {
   }
 
   toggleAnalyticsPermission() {
-    emit({ event: k.TOGGLE_ANALYTICS_PERMISSION })
+    emit({ event: events.TOGGLE_ANALYTICS_PERMISSION })
     this.render({})
   }
 
