@@ -17,7 +17,7 @@ function createFarmer({ did: userId, password, queue }) {
 	})
 	farmer.on('download-progress', (did, value, total) => {
 		internalEmitter.emit(events.DOWNLOADING, {
-			did,
+      did: did.toString('hex'),
 			currentBlock: value,
 			totalBlocks: total
 		})
@@ -92,10 +92,10 @@ async function download({
 	debug('Downloading through DCDN: %s', did)
 	try {
 		await farmer.join({
-			did,
+      did: did.toString('hex'),
 			download: true,
 			jobId,
-			upload: true,
+			upload: false,
 		})
 	} catch (err) {
 		debug('Error downloading: %O', err)
