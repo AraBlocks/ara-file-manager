@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:download')
+const debug = require('debug')('ara:fm:kernel:ipc:download')
 
 const { events } = require('k')
 const { internalEmitter } = require('electron-window-manager')

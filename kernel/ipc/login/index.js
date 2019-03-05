@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:login')
+const debug = require('debug')('ara:fm:kernel:ipc:login')
 
 const araUtil = require('ara-util')
 const araIdentity = require('ara-identity')

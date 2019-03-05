@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:wallet')
+const debug = require('debug')('ara:fm:kernel:ipc:wallet')
 
 const { events } = require('k')
 const { ipcMain } = require('electron')

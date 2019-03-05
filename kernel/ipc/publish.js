@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:publish')
+const debug = require('debug')('ara:fm:kernel:ipc:publish')
 
 const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')

@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:boot:writeFiles')
+const debug = require('debug')('ara:fm:boot:writeFiles')
 const fs = require('fs')
 const path = require('path')
 const userHome = require('user-home')
