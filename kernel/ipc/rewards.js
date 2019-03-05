@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:rewards')
+const debug = require('debug')('ara:fm:kernel:ipc:rewards')
 
 const { events } = require('k')
 const { rewards } = require('ara-contracts')

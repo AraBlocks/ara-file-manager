@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:daemons:afsManager')
+const debug = require('debug')('ara:fm:kernel:daemons:afsManager')
 
 const araContracts = require('ara-contracts')
 const araFilesystem = require('ara-filesystem')
