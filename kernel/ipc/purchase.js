@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:purchase')
+const debug = require('debug')('ara:fm:kernel:ipc:purchase')
 
 const araUtil = require('ara-util')
 const { internalEmitter } = require('electron-window-manager')

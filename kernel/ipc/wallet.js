@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:wallet')
+const debug = require('debug')('ara:fm:kernel:ipc:wallet')
 
 const dispatch = require('../redux/reducers/dispatch')
 const { events } = require('k')

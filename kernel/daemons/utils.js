@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:daemons:util')
+const debug = require('debug')('ara:fm:kernel:daemons:util')
 
 const araFilesystem = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')

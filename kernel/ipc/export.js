@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:export')
+const debug = require('debug')('ara:fm:kernel:ipc:export')
 
 const { events } = require('k')
 const { ipcMain } = require('electron')
