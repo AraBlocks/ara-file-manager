@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actions:afsManager')
+const debug = require('debug')('afm:kernel:daemons:afsManager')
 
 const araContracts = require('ara-contracts')
 const araFilesystem = require('ara-filesystem')
@@ -8,7 +8,7 @@ const mirror = require('mirror-folder')
 const path = require('path')
 const { shell } = require('electron')
 
-const actionsUtil = require('./utils')
+const daemonsUtil = require('./utils')
 const afm = require('./afm')
 
 async function createDeployEstimateAfs(userDID, password) {
@@ -189,7 +189,7 @@ async function removeAllFiles({ did, password }) {
 function unarchiveAFS({ did }) {
   debug('Unarchiving %s', did)
   try {
-    araFilesystem.unarchive({ did, path: actionsUtil.makeAfsPath(did) })
+    araFilesystem.unarchive({ did, path: daemonsUtil.makeAfsPath(did) })
   } catch (err) {
     debug('Error unarchiving: %o', err)
   }

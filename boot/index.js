@@ -25,7 +25,7 @@ app.on('ready', () => {
 
   require('./tray').buildTray()
   require('./menu').buildMenu()
-  require('../kernel/redux/actionCreators')//TODO: create proper store creation function
+  require('../kernel/ipc')//TODO: create proper store creation function
   require('./squirrel')
   require('./applyDevSettings')
 

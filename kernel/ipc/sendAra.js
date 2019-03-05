@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:download')
+const debug = require('debug')('afm:kernel:ipc:download')
 
 const araUtil = require('ara-util')
 const { events } = require('k')
@@ -6,8 +6,8 @@ const { ipcMain } = require('electron')
 const { web3 } = require('ara-util')
 const windowManager = require('electron-window-manager')
 
-const dispatch = require('../reducers/dispatch')
-const { act, aid } = require('../../daemons')
+const { act, aid } = require('../daemons')
+const dispatch = require('../redux/reducers/dispatch')
 
 const store = windowManager.sharedData.fetch('store')
 

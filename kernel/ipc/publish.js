@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:publish')
+const debug = require('debug')('afm:kernel:ipc:publish')
 
 const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
@@ -9,10 +9,10 @@ const windowManager = require('electron-window-manager')
 const {
   afs,
   act,
-  utils: actionsUtil,
+  utils: daemonsUtil,
   descriptorGeneration
-} = require('../../daemons')
-const dispatch = require('../reducers/dispatch')
+} = require('../daemons')
+const dispatch = require('../redux/reducers/dispatch')
 
 const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
@@ -116,7 +116,7 @@ ipcMain.on(events.PUBLISH, async (event, load) => {
 
     const size = load.paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
 
-    await actionsUtil.writeFileMetaData({ did, size, title: load.name, password })
+    await daemonsUtil.writeFileMetaData({ did, size, title: load.name, password })
     const ethAmount = await act.getEtherBalance(store.account.accountAddress)
 
     const commitEstimate = await araFilesystem.commit({ did, password, price: Number(load.price), estimate: true })

@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:redux:actions:analytics')
+const debug = require('debug')('afm:kernel:daemons:analytics')
 
 const { analytics, application } = require('k')
 const isDev = require('electron-is-dev')
