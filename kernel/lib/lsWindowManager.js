@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:lsWindowManager')
+const debug = require('debug')('ara:fm:kernel:lib:lsWindowManager')
 const analytics = require('../daemons/analytics')
 const { events } = require('k')
 const EventEmitter = require('events')
