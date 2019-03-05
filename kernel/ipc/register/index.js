@@ -1,11 +1,11 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:register')
+const debug = require('debug')('afm:kernel:ipc:register')
 
 const { events } = require('k')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
-const { aid } = require('../../../daemons')
-const dispatch = require('../../reducers/dispatch')
+const { aid } = require('../../daemons')
+const dispatch = require('../../redux/reducers/dispatch')
 const helpers = require('./register.helpers')
 
 ipcMain.on(events.CREATE_USER_DID, helpers.pushAID)

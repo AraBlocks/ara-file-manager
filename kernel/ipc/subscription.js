@@ -1,16 +1,16 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:wallet')
+const debug = require('debug')('afm:kernel:ipc:wallet')
 
 const { events } = require('k')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
-const { act, utils: actionUtils } = require('../../daemons')
-const dispatch = require('../reducers/dispatch')
+const { act, utils: actionUtils } = require('../daemons')
+const dispatch = require('../redux/reducers/dispatch')
 
 const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(events.LISTEN_FOR_FAUCET, async (event, load) => {
+ipcMain.on(events.LISTEN_FOR_FAUCET, async () => {
   debug('%s HEARD', events.LISTEN_FOR_FAUCET)
   try {
     dispatch({ type: events.IN_FAUCET_QUEUE })

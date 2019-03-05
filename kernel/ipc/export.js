@@ -1,11 +1,11 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:export')
+const debug = require('debug')('afm:kernel:ipc:export')
 
 const { events } = require('k')
 const { ipcMain } = require('electron')
 const path = require('path')
 const windowManager = require('electron-window-manager')
 
-const { afs } = require('../../daemons')
+const { afs } = require('../daemons')
 
 ipcMain.on(events.EXPORT_FILE, async (_, load) => {
 	debug('%s heard', events.EXPORT_FILE)

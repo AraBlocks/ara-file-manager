@@ -1,12 +1,12 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:download')
+const debug = require('debug')('afm:kernel:ipc:download')
 
 const { events } = require('k')
 const { internalEmitter } = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
-const dispatch = require('../reducers/dispatch')
-const { rewardsDCDN, utils } = require('../../daemons')
+const dispatch = require('../redux/reducers/dispatch')
+const { rewardsDCDN, utils } = require('../daemons')
 
 const store = windowManager.sharedData.fetch('store')
 

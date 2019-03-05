@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:purchase')
+const debug = require('debug')('afm:kernel:ipc:purchase')
 
 const araUtil = require('ara-util')
 const { internalEmitter } = require('electron-window-manager')
@@ -7,8 +7,8 @@ const isDev = require('electron-is-dev')
 const { events } = require('k')
 const windowManager = require('electron-window-manager')
 
-const { act, descriptorGeneration } = require('../../daemons')
-const dispatch = require('../reducers/dispatch')
+const { act, descriptorGeneration } = require('../daemons')
+const dispatch = require('../redux/reducers/dispatch')
 
 const {
 	account,
