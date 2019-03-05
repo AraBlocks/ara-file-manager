@@ -101,6 +101,7 @@ async function login(_, load) {
   try {
     const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, load.password)
     const DCDNStore = farmerManager.loadDCDNStore(farmer)
+
     const purchasedDIDs = await acmManager.getLibraryItems(userDID)
     //Returns objects representing various info around DIDs
     let purchased = purchasedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore))

@@ -17,6 +17,11 @@ async function getNetwork() {
 	return networkType
 }
 
+function homepartition(path, home) {
+  console.log(path, home)
+  return path.replace(/^\//, home)
+}
+
 function makeAfsPath(did) {
 	return path.join(createAFSKeyPath(did), 'home', 'content')
 }
@@ -84,6 +89,7 @@ async function writeFileMetaData({
 module.exports = {
 	getNetwork,
 	makeAfsPath,
+  homepartition,
 	readFileMetadata,
 	requestAraFaucet,
 	requestEthFaucet,
