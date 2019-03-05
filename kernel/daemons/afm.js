@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:daemons:afmManager')
+const debug = require('debug')('ara:fm:kernel:daemons:afmManager')
 
 const { app } = require('electron')
 const { application } = require('k')

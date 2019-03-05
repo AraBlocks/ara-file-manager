@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:daemons:descriptorGeneration')
+const debug = require('debug')('ara:fm:kernel:daemons:descriptorGeneration')
 
 const { events } = require('k')
 const araUtil = require('ara-util')

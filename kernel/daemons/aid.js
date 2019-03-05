@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:daemons:register')
+const debug = require('debug')('ara:fm:kernel:daemons:register')
 
 const aid = require('ara-identity')
 const { DID } = require('did-uri')

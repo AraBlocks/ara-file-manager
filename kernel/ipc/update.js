@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:ipc:update')
+const debug = require('debug')('ara:fm:kernel:ipc:update')
 
 const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
