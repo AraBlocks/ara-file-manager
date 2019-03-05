@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actions:acmManager')
+const debug = require('debug')('afm:kernel:daemons:acmManager')
 
 const { ARA_TOKEN_ADDRESS, REGISTRY_ADDRESS } = require('ara-contracts/constants')
 const { abi: AFSabi } = require('ara-contracts/build/contracts/AFS.json')

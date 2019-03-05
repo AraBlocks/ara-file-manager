@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:login')
+const debug = require('debug')('afm:kernel:ipc:login')
 
 const araUtil = require('ara-util')
 const araIdentity = require('ara-identity')
@@ -13,11 +13,11 @@ const {
   aid,
   descriptorGeneration,
   rewardsDCDN
-} = require('../../../daemons')
-const dispatch = require('../../reducers/dispatch')
+} = require('../../daemons')
+const dispatch = require('../../redux/reducers/dispatch')
 const helpers = require('./login.helpers')
-const menuHelper = require('../../../../boot/menuHelper')
-const { pause } = require('../../../lib')
+const menuHelper = require('../../../boot/menuHelper')
+const { pause } = require('../../lib')
 
 const store = windowManager.sharedData.fetch('store')
 

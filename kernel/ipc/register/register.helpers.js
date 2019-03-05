@@ -1,10 +1,10 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:register')
+const debug = require('debug')('afm:kernel:ipc:register')
 
 const { application, events } = require('k')
 const araUtil = require('ara-util')
 const windowManager = require('electron-window-manager')
 
-const { AutoQueue } = require('../../../lib')
+const { AutoQueue } = require('../../lib')
 const {
   act,
   afs,
@@ -12,9 +12,9 @@ const {
   afm,
   aid,
   rewardsDCDN,
-} = require('../../../daemons')
-const dispatch = require('../../reducers/dispatch')
-const menuHelper = require('../../../../boot/menuHelper')
+} = require('../../daemons')
+const dispatch = require('../../redux/reducers/dispatch')
+const menuHelper = require('../../../boot/menuHelper')
 
 async function _createIdentity() {
   const identity = await aid.create(application.TEMP_PASSWORD)
