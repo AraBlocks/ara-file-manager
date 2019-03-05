@@ -125,7 +125,7 @@ async function login(_, load) {
       internalEmitter.emit(events.PROMPT_PURCHASE, store.application.deepLinkData)
     }
 
-    farmer.start()
+    await farmer.start()
 
     menuHelper.switchLoginState(events.LOGIN)
 
