@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:update')
+const debug = require('debug')('afm:kernel:ipc:update')
 
 const araFilesystem = require('ara-filesystem')
 const { ipcMain } = require('electron')
@@ -6,9 +6,9 @@ const { events } = require('k')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 
-const { afs, rewardsDCDN, utils: actionsUtil } = require('../../daemons')
-const dispatch = require('../reducers/dispatch')
-const { pause } = require('../../lib')
+const { afs, rewardsDCDN, utils: daemonsUtil } = require('../daemons')
+const dispatch = require('../redux/reducers/dispatch')
+const { pause } = require('../lib')
 
 const store = windowManager.sharedData.fetch('store')
 
@@ -62,7 +62,7 @@ ipcMain.on(events.UPDATE_META, async (_, load) => {
   await pause(2000)
 
   try {
-    await actionsUtil.writeFileMetaData({
+    await daemonsUtil.writeFileMetaData({
       did,
       title: name,
       password: account.password
@@ -86,7 +86,7 @@ ipcMain.on(events.UPDATE_FILE, async (_, load) => {
     windowManager.openModal('generalPleaseWaitModal')
     windowManager.closeWindow('manageFileView')
 
-    await actionsUtil.writeFileMetaData({
+    await daemonsUtil.writeFileMetaData({
       did: load.did,
       size: load.size,
       title: load.name,

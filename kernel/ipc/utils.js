@@ -1,4 +1,4 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:utils')
+const debug = require('debug')('afm:kernel:ipc:utils')
 
 const { events } = require('k')
 const { ipcMain, app } = require('electron')
@@ -9,8 +9,8 @@ const {
   afs,
   afm,
   rewardsDCDN
-} = require('../../daemons')
-const dispatch = require('../reducers/dispatch')
+} = require('../daemons')
+const dispatch = require('../redux/reducers/dispatch')
 
 const store = windowManager.sharedData.fetch('store')
 

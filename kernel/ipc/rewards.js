@@ -1,11 +1,11 @@
-const debug = require('debug')('afm:kernel:lib:actionCreators:rewards')
+const debug = require('debug')('afm:kernel:ipc:rewards')
 
 const { events } = require('k')
 const { rewards } = require('ara-contracts')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
-const dispatch = require('../reducers/dispatch')
+const dispatch = require('../redux/reducers/dispatch')
 
 const store = windowManager.sharedData.fetch('store')
 const { internalEmitter } = windowManager

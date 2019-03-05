@@ -2,16 +2,16 @@ const { events } = require('k')
 const fs = require('fs')
 const windowManager = require('electron-window-manager')
 
-const menuHelper = require('../../../../boot/menuHelper')
-const { AutoQueue } = require('../../../lib')
-const dispatch = require('../../reducers/dispatch')
+const menuHelper = require('../../../boot/menuHelper')
+const { AutoQueue } = require('../../lib')
+const dispatch = require('../../redux/reducers/dispatch')
 const {
   act,
   afs,
   afm,
   rewardsDCDN,
   utils
-} = require('../../../daemons')
+} = require('../../daemons')
 
 const store = windowManager.sharedData.fetch('store')
 
