@@ -3,7 +3,7 @@ const AfsFileRow = require('./afsFileRow')
 const { events } = require('k')
 const fileListSorter = require('../../lib/tools/fileListUtil')
 const UtilityButton = require('../../components/utilityButton')
-const styles = require('./styles/AfsFileTable')
+const styles = require('./styles/afsFileTable')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
