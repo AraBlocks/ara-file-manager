@@ -1,6 +1,6 @@
 const debug = require('debug')('ara:fm:kernel:daemons:analytics')
 
-const { analytics, application } = require('k')
+const { analytics: a, application } = require('k')
 const isDev = require('electron-is-dev')
 const pify = require('pify')
 const uuid = require('uuid/v4')
@@ -11,10 +11,6 @@ const { getAppData } = require('./afm')
 const { version } = require('../../package.json')
 
 const store = windowManager.sharedData.fetch('store')
-const {
-  analytics: a,
-  application
-} = require('k')
 
 async function getSession() {
   if (global.session) return global.session
@@ -35,6 +31,8 @@ async function getSession() {
   return session
 }
 
+const _makeTimeStamp = () => Date(Date.now())
+
 async function trackAppOpen() {
   const session = await getSession()
   return trackEvent(a.CATEGORY.APPLICATION, (session.firstSession) ? a.ACTION.FIRST_OPEN : a.ACTION.OPEN)
@@ -42,18 +40,34 @@ async function trackAppOpen() {
 
 async function trackScreenView(screen) {
   debug('trackScreenView:', screen)
-  if(!hasAnalyticsPermission()) { return }
+  if (!hasAnalyticsPermission()) { return }
   const session = await getSession()
   session.pageview(screen, a.APP_NAME, screen).send()
 }
 
-async function trackDownloadFinish(label, value) {
-  if(!hasAnalyticsPermission()) { return }
-  return trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, value)
+
+function trackDownloadFinish() {
+  trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+}
+
+function trackDownloadStart() {
+  trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+}
+
+function trackPublishFinish() {
+  trackEvent(a.CATEGORY.PUBLISH, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+}
+
+function trackPublishStart() {
+  trackEvent(a.CATEGORY.PUBLISH, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+}
+
+function trackPurchase() {
+  trackEvent(a.CATEGORY.PURCHASE, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
 async function trackEvent(category, action, label, value) {
-  if(!hasAnalyticsPermission()) { return }
+  if (!hasAnalyticsPermission()) { return }
   const session = await getSession()
   session.event({
     ec: category,
@@ -62,42 +76,61 @@ async function trackEvent(category, action, label, value) {
     ev: value,
     av: version,
     an: a.APP_NAME
-  }).send()
-}
+  }, logErr).send()
 
-function hasAnalyticsPermission() {
-  if (store == null) { return true }
-  return store.account.analyticsPermission
-}
-
-async function trackError(err) {
-  if(!hasAnalyticsPermission()) { return }
-  const session = await getSession()
-  const sanitizedError = sanitizeErrorMessage(err)
-  session.exception(sanitizedError, () => {}).send()
-}
-
-function sanitizeErrorMessage(err) {
-  let devReg
-  let buildReg
-  switch (process.platform) {
-    case 'win32':
-      devReg = new RegExp('.:\\\\.*?ara-file-manager\\\\', 'ig')
-      buildReg = new RegExp('.:\\\\.*?resources\\\\app\\\\', 'ig')
-      break
-    default:
-      devReg = new RegExp('\/.*?\/ara-file-manager\/', 'ig') // Mac
-      buildReg = new RegExp('\/.*?Resources\/app\/', 'ig')
-  //TODO: Linux ?
+  function logErr(err) {
+    if (err) {
+      debug('GA error for event: %o', {
+        ec: category,
+        ea: action,
+        el: label,
+        ev: value,
+        av: version,
+        an: a.APP_NAME
+      })
+      debug('%o', err)
+    }
   }
-  return isDev
+}
+
+  function hasAnalyticsPermission() {
+    if (store == null) { return true }
+    return store.account.analyticsPermission
+  }
+
+  async function trackError(err) {
+    if (!hasAnalyticsPermission()) { return }
+    const session = await getSession()
+    const sanitizedError = sanitizeErrorMessage(err)
+    session.exception(sanitizedError, () => { }).send()
+  }
+
+  function sanitizeErrorMessage(err) {
+    let devReg
+    let buildReg
+    switch (process.platform) {
+      case 'win32':
+        devReg = new RegExp('.:\\\\.*?ara-file-manager\\\\', 'ig')
+        buildReg = new RegExp('.:\\\\.*?resources\\\\app\\\\', 'ig')
+        break
+      default:
+        devReg = new RegExp('\/.*?\/ara-file-manager\/', 'ig') // Mac
+        buildReg = new RegExp('\/.*?Resources\/app\/', 'ig')
+      //TODO: Linux ?
+    }
+    return isDev
       ? err.replace(devReg, '')
       : err.replace(buildReg, '')
-}
+  }
 
-module.exports = {
-  trackAppOpen,
-  trackEvent,
-  trackError,
-  trackScreenView
-}
+  module.exports = {
+    trackAppOpen,
+    trackDownloadFinish,
+    trackDownloadStart,
+    trackPublishFinish,
+    trackPublishStart,
+    trackPurchase,
+    trackEvent,
+    trackError,
+    trackScreenView
+  }
