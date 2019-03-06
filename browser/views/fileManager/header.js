@@ -1,4 +1,5 @@
 const Button = require('../../components/button')
+const Input = require('../../components/input')
 const { clipboard, remote } = require('electron')
 const { app } = remote.require('electron')
 const { events } = require('k')
@@ -30,6 +31,22 @@ class Header extends Nanocomponent {
         children: "ID: " + this.props.userDID.slice(0, 8) + "...",
         onclick: () => clipboard.writeText(this.props.userDID),
         cssClass: { color: 'black' }
+      }),
+
+      deepLink: new Input({
+        placeholder: 'Deep Link URL',
+        field: 'deepLink',
+        parentState: this.state,
+        renderView: () => {
+          const { deepLink } = this.state
+
+          if (!deepLink || deepLink.length === 0) {
+            return
+          }
+
+          global.deepLinkingUrl = deepLink
+          windowManager.openDeepLinking(deepLink)
+        }
       }),
 
       tabs: this.makeTabs(selectTab),
@@ -87,13 +104,6 @@ class Header extends Nanocomponent {
     }
   }
 
-  openDeepLink(e) {
-    const url = e.currentTarget.value
-
-    global.deepLinkingUrl = url
-    windowManager.openDeepLinking(url)
-  }
-
   update() {
     return true
   }
@@ -129,7 +139,7 @@ class Header extends Nanocomponent {
           </div>
         </div>
         <div>
-          <input type="text" class="${styles.downloadBox}" placeholder="Download URL" onchange=${this.openDeepLink}/>
+          ${children.deepLink.render()}
         </div>
         <div class="${styles.tabHolder} header-tabHolder">
           ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index }))}
