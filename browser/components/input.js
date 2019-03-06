@@ -10,6 +10,7 @@ class Input extends Nanocomponent {
     disabled = false,
     embeddedButton = {},
     field = '',
+    onchange = () => {},
     parentState = {},
     placeholder = '',
     renderView = () => {},
@@ -23,6 +24,7 @@ class Input extends Nanocomponent {
       disabled,
       embeddedButton,
       field,
+      onchange,
       parentState,
       placeholder,
       renderView,
@@ -52,7 +54,7 @@ class Input extends Nanocomponent {
 
   update({ disabled , requiredIndicator = false, value = null } = {}) {
     const { state, props } = this
-    state.value = value || state.value
+    state.value = value === null ? state.value : value
     state.requiredIndicator = state.requiredIndicator !== requiredIndicator
      ? requiredIndicator
      : state.requiredIndicator
@@ -73,6 +75,7 @@ class Input extends Nanocomponent {
           ${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})} input-dynamicClass
           ${state.requiredIndicator ? styles.requiredIndicator : null} input-requiredIndicator
           ${props.araIcon ? styles.icon + ' input-icon' : null}"
+          onchange="${props.onchange}"
           oninput="${oninput}"
           placeholder="${props.placeholder}"
           value="${state.value}"

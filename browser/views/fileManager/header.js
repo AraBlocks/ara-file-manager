@@ -17,8 +17,14 @@ class Header extends Nanocomponent {
   constructor({ selectTab, account }) {
     super()
 
-    this.props = { account, userDID: account.userDID }
-    this.state = { hambyToggled: false }
+    this.props = {
+      account,
+      userDID: account.userDID,
+    }
+    this.state = {
+      deepLink: '',
+      hambyToggled: false
+    }
 
     this.children = {
       publishFilebutton: new Button({
@@ -28,24 +34,22 @@ class Header extends Nanocomponent {
       }),
 
       copyDidTooltip: new DynamicTooltip({
-        children: "ID: " + this.props.userDID.slice(0, 8) + "...",
+        children: 'ID: ' + this.props.userDID.slice(0, 8) + '...',
         onclick: () => clipboard.writeText(this.props.userDID),
         cssClass: { color: 'black' }
       }),
 
       deepLink: new Input({
-        placeholder: 'Deep Link URL',
+        cssClass: { opts: { fontSize: '14px', height: '2em' } },
         field: 'deepLink',
         parentState: this.state,
-        renderView: () => {
+        placeholder: 'Deep Link URL',
+        onchange: () => {
           const { deepLink } = this.state
-
-          if (!deepLink || deepLink.length === 0) {
-            return
-          }
-
-          global.deepLinkingUrl = deepLink
+          if (!deepLink || deepLink.length === 0) { return }
           windowManager.openDeepLinking(deepLink)
+          this.state.deepLink = ''
+          this.rerender()
         }
       }),
 
@@ -116,7 +120,7 @@ class Header extends Nanocomponent {
       state
     } = this
 
-    return html`
+    return (html`
       <div class="${styles.container(state.hambyToggled)} header-container">
         <div class="${styles.subHeader} header-subheader">
           <div>
@@ -139,7 +143,7 @@ class Header extends Nanocomponent {
           </div>
         </div>
         <div>
-          ${children.deepLink.render()}
+          ${children.deepLink.render({ value: state.deepLink })}
         </div>
         <div class="${styles.tabHolder} header-tabHolder">
           ${children.tabs.map((tab, index) => tab.render({ isActive: activeTab === index }))}
@@ -148,7 +152,7 @@ class Header extends Nanocomponent {
           ${children.publishFilebutton.render(publishFileProps)}
         </div>
       </div>
-    `
+    `)
   }
 }
 
