@@ -95,6 +95,7 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
           fuse.mount(
             mntPath,
             {
+              force: true,
               displayFolder: true,
               open: (path, flags, cb) => {
                 path = actionsUtil.homepartition(path, newAfs.HOME)
@@ -104,9 +105,14 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
               },
               read: (path, fd, buf, len, pos, cb) => {
                 path = actionsUtil.homepartition(path, newAfs.HOME)
-                console.log('read(%s, %d, %d, %d)', path, fd, len, pos)
+                console.log('\t\t\t\t\t\t\t\t\t\t\t\tread(%s, %d, %d, %d)', path, fd, len, pos)
 
+                // newAfs.partitions.home.open(path, cb)
                 newAfs.read(fd, buf, 0, len, pos, cb)
+                newAfs.read(fd, buf, 0, len, pos, console.log)
+                // newAfs.readFile(path, { start: pos, end: pos + len }, cb)
+                // newAfs.readFile(path, { start: pos, end: pos + len }, console.log)
+                // newAfs.readFile(path, { length: len }, cb)
               },
               access: (path, mode, cb) => {
                 path = actionsUtil.homepartition(path, newAfs.HOME)
@@ -120,6 +126,12 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
 
                 newAfs.readdir(path, cb)
                 newAfs.readdir(path, console.log)
+              },
+              statfs: (path, cb) => {
+                path = actionsUtil.homepartition(path, newAfs.HOME)
+                console.log('statfs(%s)', path)
+
+                newAfs.stat(path, cb)
               },
               getattr: (path, cb) => {
                 path = actionsUtil.homepartition(path, newAfs.HOME)
@@ -135,7 +147,7 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
               }
             },
             (error) => {
-              if(error) console.error(' failed to mount:', error)
+              if (error) console.error(' failed to mount:', error)
             }
           )
           console.log('mounted.')

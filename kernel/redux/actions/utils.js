@@ -3,6 +3,7 @@ const { urls } = require('k')
 const afs = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const path = require('path')
+const { join } = require('path')
 const createContext = require('ara-context')
 const request = require('request-promise')
 
@@ -18,8 +19,8 @@ async function getNetwork() {
 }
 
 function homepartition(path, home) {
-  console.log(path, home)
-  return path.replace(/^\//, home)
+  // return path.replace(/^\//, home)
+  return join(home, path)
 }
 
 function makeAfsPath(did) {
