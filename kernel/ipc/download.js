@@ -5,8 +5,8 @@ const { internalEmitter } = require('electron-window-manager')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
+const { analytics, rewardsDCDN, utils } = require('../daemons')
 const dispatch = require('../redux/reducers/dispatch')
-const { rewardsDCDN, utils } = require('../daemons')
 
 const store = windowManager.sharedData.fetch('store')
 
@@ -28,12 +28,14 @@ async function download(_, load) {
 			farmer: store.farmer.farm,
 			errorHandler
 		})
+
+		analytics.trackDownloadStart()
 	} catch (err) {
 		debug('Error: %O', err)
 	}
 }
 
-ipcMain.on(events.PAUSE_DOWNLOAD, async (event, load) => {
+ipcMain.on(events.PAUSE_DOWNLOAD, async (_, load) => {
 	debug('%s heard', events.PAUSE_DOWNLOAD)
 	try {
 		debug('Dispatching %s', events.PAUSED)
@@ -77,7 +79,7 @@ internalEmitter.on(events.DOWNLOADED, async (load) => {
 	const fileInfo = await utils.readFileMetadata(load.did)
 	dispatch({ type: events.DOWNLOADED, load: { did: load.did, name: fileInfo.title } })
 	windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
-	analytics.trackEvent(category, action, label, value)
+	analytics.trackDownloadFinish()
 })
 
 internalEmitter.on(events.UPDATE_PEER_COUNT, (load) => {

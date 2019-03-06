@@ -46,7 +46,7 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
       password: account.password,
       contentDid: load.did
     }
-    const value = await autoQueue.push(() => rewards.redeem(redeemLoad))
+    const [value] = await autoQueue.push(() => rewards.redeem(redeemLoad))
 
     debug('DISPATCHING %s', events.REWARDS_REDEEMED)
     dispatch({ type: events.REWARDS_REDEEMED, load: { did: load.did, value } })
