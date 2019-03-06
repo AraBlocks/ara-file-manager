@@ -7,7 +7,7 @@ const isDev = require('electron-is-dev')
 const { events } = require('k')
 const windowManager = require('electron-window-manager')
 
-const { act, descriptorGeneration } = require('../daemons')
+const { act, analytics, descriptorGeneration } = require('../daemons')
 const dispatch = require('../redux/reducers/dispatch')
 
 const {
@@ -21,9 +21,9 @@ internalEmitter.on(events.OPEN_DEEPLINK, async (load) => {
 		debug('%s heard', events.OPEN_DEEPLINK)
 		dispatch({ type: events.OPEN_DEEPLINK, load })
 		if (account.userDID == null) { throw new Error('Not logged in') }
-		if (load == null ) { throw new Error('Broken link') }
+		if (load == null) { throw new Error('Broken link') }
 		internalEmitter.emit(events.PROMPT_PURCHASE, load)
-	} catch(err) {
+	} catch (err) {
 		errorHandler(err)
 	}
 })
@@ -71,7 +71,7 @@ internalEmitter.on(events.PROMPT_PURCHASE, async (load) => {
 	}
 })
 
-ipcMain.on(events.CONFIRM_PURCHASE, async (event, load) => {
+ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
 	const { autoQueue } = account
 	debug('%s heard: %s', events.CONFIRM_PURCHASE, load.did)
 	try {
@@ -92,13 +92,17 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (event, load) => {
 
 		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userDID }
 
-		const jobId = await autoQueue.push(() => act.purchaseItem(itemLoad))
+		const [jobId] = await autoQueue.push(
+			() => act.purchaseItem(itemLoad),
+			analytics.trackPurchase
+		)
 
 		const araBalance = await act.getAraBalance(account.userDID)
 		dispatch({ type: events.PURCHASED, load: { araBalance, jobId, did: load.did } })
 		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-		dispatch({ type: events.FEED_MODAL, load: {
+		dispatch({
+			type: events.FEED_MODAL, load: {
 				modalName: 'startDownload',
 				callback: () => {
 					internalEmitter.emit(events.DOWNLOAD, load)
@@ -121,8 +125,8 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (event, load) => {
 function errorHandler(err) {
 	debug(err)
 	let modalName
-	let callback = () => {}
-	switch(err.message) {
+	let callback = () => { }
+	switch (err.message) {
 		case 'Not enough eth':
 			modalName = 'notEnoughEth'
 			break

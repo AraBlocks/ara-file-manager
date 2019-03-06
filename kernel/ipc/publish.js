@@ -9,6 +9,7 @@ const windowManager = require('electron-window-manager')
 const {
   afs,
   act,
+  analytics,
   utils: daemonsUtil,
   descriptorGeneration
 } = require('../daemons')
@@ -73,7 +74,10 @@ ipcMain.on(events.CONFIRM_DEPLOY_PROXY, async () => {
     let { afs: newAfs, afs: { did }, mnemonic } = await araFilesystem.create({ owner: userDID, password })
     await newAfs.close()
 
-    await autoQueue.push(() => araFilesystem.deploy({ password, did }))
+    await autoQueue.push(
+      () => araFilesystem.deploy({ password, did }),
+      analytics.trackPublishStart
+    )
 
     const descriptor = await descriptorGeneration.makeDescriptor(did, { owner: true, status: events.UNCOMMITTED })
 
@@ -98,7 +102,7 @@ ipcMain.on(events.CONFIRM_DEPLOY_PROXY, async () => {
   }
 })
 
-ipcMain.on(events.PUBLISH, async (event, load) => {
+ipcMain.on(events.PUBLISH, async (_, load) => {
   debug('%s heard', events.PUBLISH)
   const { password } = store.account
   const did = load.did
@@ -153,7 +157,7 @@ ipcMain.on(events.PUBLISH, async (event, load) => {
   }
 })
 
-ipcMain.on(events.CONFIRM_PUBLISH, async (event, load) => {
+ipcMain.on(events.CONFIRM_PUBLISH, async (_, load) => {
   debug('%s heard', events.CONFIRM_PUBLISH)
   const {
     accountAddress,
@@ -185,7 +189,11 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (event, load) => {
     dispatch({ type: events.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    await autoQueue.push(() => araFilesystem.commit({ did: load.did, price: Number(load.price), password: password }))
+    await autoQueue.push(
+      () => araFilesystem.commit({ did: load.did, price: Number(load.price), password: password }),
+      analytics.trackPublishFinish
+    )
+
     const balance = await act.getAraBalance(userDID)
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 

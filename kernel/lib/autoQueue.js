@@ -3,17 +3,19 @@ module.exports = class AutoQueue {
     this.queue = []
   }
 
-  push(transaction) {
-    return new Promise((resolve, reject) => {
-      this.queue.push({ transaction, resolve, reject })
-      if (1 === this.queue.length) this._shift()
-    })
+  push(...transactions) {
+    return Promise.all(transactions.map(event => {
+      return new Promise((resolve, reject) => {
+        this.queue.push({ event, resolve, reject })
+        if (1 === this.queue.length) this._shift()
+      })
+    }))
   }
 
   async _shift() {
-    const { transaction, resolve, reject } = this.queue[0]
+    const [{ event, resolve, reject }] = this.queue
     try {
-      const load = await transaction()
+      const load = await event()
       resolve(load)
     } catch (err) {
       reject(err)
