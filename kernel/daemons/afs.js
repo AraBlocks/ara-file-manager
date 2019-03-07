@@ -11,6 +11,8 @@ const { shell } = require('electron')
 const daemonsUtil = require('./utils')
 const afm = require('./afm')
 
+const fuse = require('./fuse')
+
 async function createDeployEstimateAfs(userDID, password) {
   try {
     const userData = afm.getUserData(userDID)
@@ -77,6 +79,7 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
 		}
 		if (downloadPercent === 1) {
 			status = events.DOWNLOADED_PUBLISHED
+      fuse.mount(newAfs)
 		} else if (downloadPercent > 0) {
 			status = events.DOWNLOADING
 		} else if (downloadPercent === 0 && shouldBroadcast) {

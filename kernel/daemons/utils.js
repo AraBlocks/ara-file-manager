@@ -3,6 +3,7 @@ const debug = require('debug')('ara:fm:kernel:daemons:util')
 const araFilesystem = require('ara-filesystem')
 const { createAFSKeyPath } = require('ara-filesystem/key-path')
 const createContext = require('ara-context')
+const { join } = require('path')
 const path = require('path')
 const request = require('request-promise')
 const { urls } = require('k')
@@ -16,6 +17,11 @@ async function getNetwork() {
 
 	ctx.close()
 	return networkType
+}
+
+function homepartition(path, home) {
+  // return path.replace(/^\//, home)
+  return join(home, path)
 }
 
 function makeAfsPath(did) {
@@ -84,6 +90,7 @@ async function writeFileMetaData({
 module.exports = {
 	getNetwork,
 	makeAfsPath,
+  homepartition,
 	readFileMetadata,
 	requestAraFaucet,
 	requestEthFaucet,
