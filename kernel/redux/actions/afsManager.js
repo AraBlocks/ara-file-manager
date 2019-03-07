@@ -9,14 +9,7 @@ const mirror = require('mirror-folder')
 const path = require('path')
 const { join, resolve } = require('path')
 const { shell } = require('electron')
-
-const mkdirp = require('mkdirp')
-const rimraf = require('rimraf')
-const pify = require('pify')
-const { createAFSKeyPath } = require('ara-filesystem/key-path')
-
-const fuse = require('fuse-bindings')
-const fsFuse = require('fs-fuse')
+const fuseManager = require('./fuseManager')
 
 async function createDeployEstimateAfs(userDID, password) {
   try {
@@ -85,74 +78,7 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
 		}
 		if (downloadPercent === 1) {
 			status = k.DOWNLOADED_PUBLISHED
-      let contentFeed = actionsUtil.makeAfsPath(did)
-      let mntPath = path.resolve(createAFSKeyPath(did).split(path.sep).pop())
-      // fuse.unmount('/Users/ericjiang/Littlstar/ara-file-manager/52fc54a89d367d21f217f02735b56f31a0f373117959b5ab78368e682dd9ed40')
-
-      fuse.unmount(mntPath, () => {
-        mkdirp(mntPath, () => {
-          console.log(`mounting at ${mntPath}...`)
-          fuse.mount(
-            mntPath,
-            {
-              force: true,
-              displayFolder: true,
-              open: (path, flags, cb) => {
-                path = actionsUtil.homepartition(path, newAfs.HOME)
-                console.log('open(%s, %d)', path, flags)
-
-                newAfs.open(path, flags, cb)
-              },
-              read: (path, fd, buf, len, pos, cb) => {
-                path = actionsUtil.homepartition(path, newAfs.HOME)
-                console.log('\t\t\t\t\t\t\t\t\t\t\t\tread(%s, %d, %d, %d)', path, fd, len, pos)
-
-                // newAfs.partitions.home.open(path, cb)
-                newAfs.read(fd, buf, 0, len, pos, cb)
-                newAfs.read(fd, buf, 0, len, pos, console.log)
-                // newAfs.readFile(path, { start: pos, end: pos + len }, cb)
-                // newAfs.readFile(path, { start: pos, end: pos + len }, console.log)
-                // newAfs.readFile(path, { length: len }, cb)
-              },
-              access: (path, mode, cb) => {
-                path = actionsUtil.homepartition(path, newAfs.HOME)
-                console.log('access(%s)', path)
-
-                newAfs.access(path, mode, cb)
-              },
-              readdir: (path, cb) => {
-                path = actionsUtil.homepartition(path, newAfs.HOME)
-                console.log('readdir(%s)', path)
-
-                newAfs.readdir(path, cb)
-                newAfs.readdir(path, console.log)
-              },
-              statfs: (path, cb) => {
-                path = actionsUtil.homepartition(path, newAfs.HOME)
-                console.log('statfs(%s)', path)
-
-                newAfs.stat(path, cb)
-              },
-              getattr: (path, cb) => {
-                path = actionsUtil.homepartition(path, newAfs.HOME)
-                console.log('getattr(%s)', path)
-
-                newAfs.stat(path, cb)
-              },
-              release: (path, fd, cb) => {
-                path = actionsUtil.homepartition(path, newAfs.HOME)
-                console.log('release(%s, %d)', path, fd)
-
-                newAfs.close(fd, cb)
-              }
-            },
-            (error) => {
-              if (error) console.error(' failed to mount:', error)
-            }
-          )
-          console.log('mounted.')
-        })
-      })
+      fuseManager.mount(newAfs)
 		} else if (downloadPercent > 0) {
 			status = k.DOWNLOADING
 		} else if (downloadPercent === 0 && shouldBroadcast) {
