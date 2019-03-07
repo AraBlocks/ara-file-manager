@@ -11,12 +11,10 @@ const { application, events } = require('k')
 const windowManager = require('../kernel/lib/lsWindowManager')
 const { internalEmitter } = require('electron-window-manager')
 const analytics = require('../kernel/daemons/analytics')
-const afm = require('../kernel/daemons/afm')
 const cleanUp = require('./cleanUp')
 const { handleDeepLink, deeplinkWaiting } = require('./deepLink')
 
 require('./preventMultInstances')//Prevent windows from making multiple instances of app
-afm.cleanOutdatedData() //!!! Very Dangerous code !!!
 
 app.setName(application.APP_NAME)
 app.on('ready', () => {
