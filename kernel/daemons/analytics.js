@@ -45,24 +45,28 @@ async function trackScreenView(screen) {
   session.pageview(screen, a.APP_NAME, screen).send()
 }
 
-
 function trackDownloadFinish() {
+  debug('GA: trackDownloadFinish')
   trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
 function trackDownloadStart() {
+  debug('GA: trackDownloadStart')
   trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
 function trackPublishFinish() {
+  debug('GA: trackPublishFinish')
   trackEvent(a.CATEGORY.PUBLISH, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
 function trackPublishStart() {
+  debug('GA: trackPublishStart')
   trackEvent(a.CATEGORY.PUBLISH, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
 function trackPurchase() {
+  debug('GA: trackPurchase')
   trackEvent(a.CATEGORY.PURCHASE, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
