@@ -38,7 +38,7 @@
     "ara-contracts": "github:arablocks/ara-contracts#semver:0.23.x",
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.25.x",
     "ara-identity": "github:arablocks/ara-identity#semver:0.47.x",
-    "ara-reward-dcdn": "github:arablocks/ara-reward-dcdn#semver:0.18.x",
+    "ara-reward-dcdn": "github:arablocks/ara-reward-dcdn#semver:0.19.x",
     "ara-runtime-configuration": "github:arablocks/ara-runtime-configuration#semver:1.1.x",
     "ara-util": "github:arablocks/ara-util#semver:1.3.x",
     "component-box": "github:MarkGeeRomano/component-box#mgr-constructor-args",
