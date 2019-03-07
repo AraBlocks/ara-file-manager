@@ -33,25 +33,6 @@ function getAFMDirectory() {
 	return afmDirectory
 }
 
-function cleanOutdatedData() {
-	const filePath = path.resolve(getAFMDirectory(), 'store.json')
-	const storeData = parseJSON(filePath)
-	const compatible = storeData.version === version
-	if (compatible) {
-		debug('Version is compatible')
-		return
-	}
-	const afmDirectory = path.resolve(userHome, '.ara', 'afm')
-	const dcdnDirectory = path.resolve(userHome, '.ara', 'dcdn')
-	fs.existsSync(afmDirectory) && rimraf(afmDirectory, () => {
-		debug('remove afm')
-		storeData.version = version
-		const storePath = path.resolve(getAFMDirectory(), 'store.json')
-		fs.writeFileSync(storePath, JSON.stringify(storeData))
-	})
-	fs.existsSync(dcdnDirectory) && rimraf(dcdnDirectory, () => { debug('remove dcdn')})
-}
-
 function getUserData(userDID) {
 	const filePath = getAFMPath(userDID)
 	return parseJSON(filePath)
@@ -128,6 +109,5 @@ module.exports = {
 	getAppData,
 	getUserData,
 	saveUserData,
-	toggleAnalyticsPermission,
-	cleanOutdatedData
+	toggleAnalyticsPermission
 }
