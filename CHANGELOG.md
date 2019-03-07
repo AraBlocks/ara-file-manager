@@ -1,3 +1,18 @@
+# [0.11.0](https://github.com/littlstar/ara-content-manager/compare/0.10.8...0.11.0) (2019-03-07)
+
+
+### Bug Fixes
+
+* Fix file add for Linux ([5af6c0b](https://github.com/littlstar/ara-content-manager/commit/5af6c0b))
+
+
+### Features
+
+* Add download url box ([589cd19](https://github.com/littlstar/ara-content-manager/commit/589cd19))
+* **kernel:** Fix integration with new DCDN ([8977130](https://github.com/littlstar/ara-content-manager/commit/8977130))
+
+
+
 ## [0.10.8](https://github.com/littlstar/ara-content-manager/compare/0.10.7...0.10.8) (2019-03-07)
 
 
