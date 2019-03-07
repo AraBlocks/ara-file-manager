@@ -157,7 +157,12 @@ ipcMain.on(events.PUBLISH, async (_, load) => {
   }
 })
 
-ipcMain.on(events.CONFIRM_PUBLISH, async (_, load) => {
+ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
+  did,
+  name,
+  price,
+  size
+}) => {
   debug('%s heard', events.CONFIRM_PUBLISH)
   const {
     accountAddress,
@@ -174,23 +179,23 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, load) => {
 
     const descriptorOpts = {
       datePublished: new Date,
-      name: load.name,
+      name: name,
       owner: true,
-      price: Number(load.price),
-      size: load.size,
+      price: Number(price),
+      size: size,
       status: events.PUBLISHING
     }
 
     //makeDescriptor takes a little time and causes lag. Dispatch this first to indicate response in UI
-    dispatch({ type: events.PUBLISHING, load: { did: load.did, ...descriptorOpts } })
+    dispatch({ type: events.PUBLISHING, load: { did, ...descriptorOpts } })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    const descriptor = await descriptorGeneration.makeDescriptor(load.did, descriptorOpts)
+    const descriptor = await descriptorGeneration.makeDescriptor(did, descriptorOpts)
     dispatch({ type: events.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
     await autoQueue.push(
-      () => araFilesystem.commit({ did: load.did, price: Number(load.price), password: password }),
+      () => araFilesystem.commit({ did, price: Number(price), password: password }),
       analytics.trackPublishFinish
     )
 
@@ -198,24 +203,21 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, load) => {
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
     debug('Dispatching %s', events.PUBLISHED)
-    dispatch({ type: events.PUBLISHED, load: { balance, did: load.did } })
+    dispatch({ type: events.PUBLISHED, load: { balance, did } })
     internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
 
     debug('Dispatching %s', events.FEED_MODAL)
-    dispatch({
-      type: events.FEED_MODAL,
-      load: { did: load.did, name: load.name }
-    })
+    dispatch({ type: events.FEED_MODAL, load: { did, name } })
     windowManager.openModal('publishSuccessModal')
 
-    const publishedSub = await act.subscribePublished({ did: load.did })
-    const rewardsSub = await act.subscribeRewardsAllocated(load.did, accountAddress, userDID)
+    const publishedSub = await act.subscribePublished({ did })
+    const rewardsSub = await act.subscribeRewardsAllocated(did, accountAddress, userDID)
     dispatch({ type: events.ADD_PUBLISHED_SUB, load: { publishedSub, rewardsSub } })
 
-    internalEmitter.emit(events.START_SEEDING, load)
+    internalEmitter.emit(events.START_SEEDING, { did })
   } catch (err) {
     debug('Error in committing: %o', err)
-    debug('Removing %s from .act', load.did)
+    debug('Removing %s from .act', did)
 
     dispatch({ type: events.ERROR_PUBLISHING, load: { oldStatus } })
 
