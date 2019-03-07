@@ -89,7 +89,6 @@ class PurchaseEstimate extends Nanocomponent {
       props,
       renderEstimate
     } = this
-
     return (html`
       <div class="${styles.container} modals-container">
         <div class="${styles.headerHolder} estimate-headerHolder">
@@ -97,7 +96,7 @@ class PurchaseEstimate extends Nanocomponent {
             You're about to purchase
           </div>
           <div class="${styles.fileName} modal-fileName">
-            ${props.fileName || did.slice(0, 15) + '...'}
+            ${props.fileName || props.did.slice(0, 15) + '...'}
           </div>
           ${props.author
           ? (html`
