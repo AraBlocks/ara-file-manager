@@ -74,6 +74,7 @@ internalEmitter.on(events.PROMPT_PURCHASE, async (load) => {
 ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
 	const { autoQueue } = account
 	debug('%s heard: %s', events.CONFIRM_PURCHASE, load.did)
+	analytics.trackPurchaseStart()
 	try {
 		if (account.ethBalance < load.gasEstimate) {
 			throw new Error('Not enough eth')
@@ -94,7 +95,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
 
 		const [jobId] = await autoQueue.push(
 			() => act.purchaseItem(itemLoad),
-			analytics.trackPurchase
+			analytics.trackPurchaseFinish
 		)
 
 		const araBalance = await act.getAraBalance(account.userDID)
