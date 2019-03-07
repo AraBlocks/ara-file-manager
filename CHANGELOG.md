@@ -1,3 +1,12 @@
+## [0.10.8](https://github.com/littlstar/ara-content-manager/compare/0.10.7...0.10.8) (2019-03-07)
+
+
+### Bug Fixes
+
+* **purchaseEstimate.js:** referenced `did` properly ([0d37af6](https://github.com/littlstar/ara-content-manager/commit/0d37af6))
+
+
+
 ## [0.10.7](https://github.com/littlstar/ara-content-manager/compare/0.10.6...0.10.7) (2019-03-05)
 
 
