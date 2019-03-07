@@ -4,7 +4,7 @@ const { events } = require('k')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
-const { aid } = require('../../daemons')
+const { aid, afm } = require('../../daemons')
 const dispatch = require('../../redux/reducers/dispatch')
 const helpers = require('./register.helpers')
 
@@ -28,6 +28,7 @@ ipcMain.on(events.REGISTER, async (_, { mnemonic, password, userDID }) => {
         userDID
       }
     })
+    afm.cacheUserDid(userDID)
   } catch (err) {
     debug('Error creating identity: %o', err)
     dispatch({ type: events.FEED_MODAL, load: { modalName: 'registrationFailed' } })

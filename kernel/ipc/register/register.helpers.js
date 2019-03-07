@@ -25,7 +25,6 @@ async function _createIdentity() {
   const userDID = araUtil.getIdentifier(did)
   const analyticsPermission = afm.getAnalyticsPermission(did)
   _requestEther(accountAddress)
-  afm.cacheUserDid(userDID)
   return {
     accountAddress,
     analyticsPermission,
