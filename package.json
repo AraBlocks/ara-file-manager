@@ -13,7 +13,7 @@
     "test": "electron test/main.js",
     "postinstall": "sh ./scripts/postinstall.sh && install-app-deps",
     "pack": "build --dir",
-    "mac-installer": "./node_modules/.bin/electron-installer-dmg ./release-builds/Ara\\ File\\ Manager-darwin-x64/Ara\\ File\\ Manager.app Ara\\ File\\ Manager --out ./release-builds/Ara\\ File\\ Manager-darwin-x64  --icon=build/icons/mac/ara_DMG.icns",
+    "mac-installer": "sh ./scripts/mac-installer.sh",
     "build-dev-mac": "sh ./scripts/mac-dev-build.sh",
     "build-dev-windows": "sh ./scripts/windows-dev-build.sh",
     "build-prod-mac": "sh ./scripts/mac-production-build.sh",
