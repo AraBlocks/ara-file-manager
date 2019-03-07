@@ -65,9 +65,14 @@ function trackPublishStart() {
   trackEvent(a.CATEGORY.PUBLISH, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
-function trackPurchase() {
+function trackPurchaseFinish() {
   debug('GA: trackPurchase')
   trackEvent(a.CATEGORY.PURCHASE, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+}
+
+function trackPurchaseStart() {
+  debug('GA: trackPurchase')
+  trackEvent(a.CATEGORY.PURCHASE, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
 async function trackEvent(category, action, label, value) {
@@ -97,44 +102,45 @@ async function trackEvent(category, action, label, value) {
   }
 }
 
-  function hasAnalyticsPermission() {
-    if (store == null) { return true }
-    return store.account.analyticsPermission
-  }
+function hasAnalyticsPermission() {
+  if (store == null) { return true }
+  return store.account.analyticsPermission
+}
 
-  async function trackError(err) {
-    if (!hasAnalyticsPermission()) { return }
-    const session = await getSession()
-    const sanitizedError = sanitizeErrorMessage(err)
-    session.exception(sanitizedError, () => { }).send()
-  }
+async function trackError(err) {
+  if (!hasAnalyticsPermission()) { return }
+  const session = await getSession()
+  const sanitizedError = sanitizeErrorMessage(err)
+  session.exception(sanitizedError, () => { }).send()
+}
 
-  function sanitizeErrorMessage(err) {
-    let devReg
-    let buildReg
-    switch (process.platform) {
-      case 'win32':
-        devReg = new RegExp('.:\\\\.*?ara-file-manager\\\\', 'ig')
-        buildReg = new RegExp('.:\\\\.*?resources\\\\app\\\\', 'ig')
-        break
-      default:
-        devReg = new RegExp('\/.*?\/ara-file-manager\/', 'ig') // Mac
-        buildReg = new RegExp('\/.*?Resources\/app\/', 'ig')
-      //TODO: Linux ?
-    }
-    return isDev
-      ? err.replace(devReg, '')
-      : err.replace(buildReg, '')
+function sanitizeErrorMessage(err) {
+  let devReg
+  let buildReg
+  switch (process.platform) {
+    case 'win32':
+      devReg = new RegExp('.:\\\\.*?ara-file-manager\\\\', 'ig')
+      buildReg = new RegExp('.:\\\\.*?resources\\\\app\\\\', 'ig')
+      break
+    default:
+      devReg = new RegExp('\/.*?\/ara-file-manager\/', 'ig') // Mac
+      buildReg = new RegExp('\/.*?Resources\/app\/', 'ig')
+    //TODO: Linux ?
   }
+  return isDev
+    ? err.replace(devReg, '')
+    : err.replace(buildReg, '')
+}
 
-  module.exports = {
-    trackAppOpen,
-    trackDownloadFinish,
-    trackDownloadStart,
-    trackPublishFinish,
-    trackPublishStart,
-    trackPurchase,
-    trackEvent,
-    trackError,
-    trackScreenView
-  }
+module.exports = {
+  trackAppOpen,
+  trackDownloadFinish,
+  trackDownloadStart,
+  trackPublishFinish,
+  trackPublishStart,
+  trackPurchaseFinish,
+  trackPurchaseStart,
+  trackEvent,
+  trackError,
+  trackScreenView
+}
