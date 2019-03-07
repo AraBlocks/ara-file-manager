@@ -1,11 +1,13 @@
 const { urls } = require('k')
 const winstaller = require('electron-winstaller')
 
+const { version } = require('../package.json')
+
 winstaller.createWindowsInstaller({
   appDirectory: './release-builds/Ara File Manager-win32-x64/',
   outputDirectory: './release-builds/winstalled',
   authors: 'Ara blocks',
-  exe: 'Ara File Manager.exe',
+  exe: `AFM-${version}.exe`,
   iconUrl: 'https://s3.amazonaws.com/ara-prod-media/file-manager/ara_prod.ico',
   setupIcon: './build/icons/windows/ara_prod.ico',
   loadingGif: './build/Ara-Installing.gif',
@@ -15,6 +17,6 @@ winstaller.createWindowsInstaller({
   remoteReleases: urls.SQUIRREL_WIN
 })
   .then(
-    () => console.log("It worked!"), 
+    () => console.log('¡WE BUILDED IT!'),
     (e) => console.log(`Fatal Error (if error is about failing to produce .wix, dont worry, we only need the .exe): ${e.message}`)
   )
