@@ -208,7 +208,6 @@ async function subscribeEthBalance(userAddress) {
 }
 
 async function subscribePublished({ did }) {
-	console.log('subscribePublished', did)
 	const { contract, ctx } = await getAFSContract(did)
 
 	let subscription
