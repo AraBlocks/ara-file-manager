@@ -66,12 +66,12 @@ function trackPublishStart() {
 }
 
 function trackPurchaseFinish() {
-  debug('GA: trackPurchase')
+  debug('GA: trackPurchaseFinsish')
   trackEvent(a.CATEGORY.PURCHASE, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
 function trackPurchaseStart() {
-  debug('GA: trackPurchase')
+  debug('GA: trackPurchaseStart')
   trackEvent(a.CATEGORY.PURCHASE, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
