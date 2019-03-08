@@ -4,7 +4,7 @@ const winstaller = require('electron-winstaller')
 const { version } = require('../package.json')
 
 winstaller.createWindowsInstaller({
-  appDirectory: './release-builds/Ara File Manager-win32-x64/',
+  appDirectory: './release-builds/ara-file-manager-win32-x64/',
   outputDirectory: './release-builds/winstalled',
   authors: 'Ara blocks',
   exe: `Ara File Manager.exe`,
