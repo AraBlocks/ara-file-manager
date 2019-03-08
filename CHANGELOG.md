@@ -1,3 +1,12 @@
+## [0.11.4](https://github.com/littlstar/ara-content-manager/compare/0.11.3...0.11.4) (2019-03-08)
+
+
+### Features
+
+* Add download url box ([9453a50](https://github.com/littlstar/ara-content-manager/commit/9453a50))
+
+
+
 ## [0.11.3](https://github.com/littlstar/ara-content-manager/compare/0.11.2...0.11.3) (2019-03-08)
 
 
