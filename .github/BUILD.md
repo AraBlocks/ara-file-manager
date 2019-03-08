@@ -1,6 +1,11 @@
 # Build Instructions
 We use [electron-builder](https://github.com/electron-userland/electron-builder) to compile our builds for both mac and windows.
 
+## Prerequisites
+[`jq`](https://stedolan.github.io/jq/) (for macos builds)
+```
+$ brew update && brew install jq
+```
 ## Mac
 ### A note about macos certificates
 TODO
