@@ -1,3 +1,12 @@
+## [0.11.2](https://github.com/littlstar/ara-content-manager/compare/0.11.1...0.11.2) (2019-03-08)
+
+
+### Bug Fixes
+
+* **afm.js | cleaOutdatedData:** removed (Deprecated) ([da3834d](https://github.com/littlstar/ara-content-manager/commit/da3834d))
+
+
+
 ## [0.11.1](https://github.com/littlstar/ara-content-manager/compare/0.11.0...0.11.1) (2019-03-08)
 
 
