@@ -103,7 +103,7 @@ function _getDownloadPercAndStatus(files) {
   return files.map(async (file) => {
     const load = file.status === events.UNCOMMITTED
       ? file
-      : await afs.getAfsDownloadStatus(file.did, file.shouldBroadcast)
+      : await afs.getAfsDownloadStatus(file.did, file.shouldBroadcast, file.password)
     dispatch({ type: events.GOT_DL_PERC_AND_STATUS, load: { did: file.did, ...load } })
   })
 }

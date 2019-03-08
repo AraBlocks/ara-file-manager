@@ -108,7 +108,7 @@ async function login(_, load) {
     //Returns objects representing various info around DIDs
     let purchased = purchasedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore))
     const publishedDIDs = (await act.getDeployedProxies(accountAddress)).map(araUtil.getIdentifier)
-    let published = publishedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore, true))
+    let published = publishedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore, true, load.password))
 
     const { files } = dispatch({ type: events.GOT_LIBRARY, load: { published, purchased } })
 

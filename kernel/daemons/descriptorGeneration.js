@@ -31,7 +31,7 @@ class _Descriptor {
 	}
 }
 
-function makeDummyDescriptor(did, DCDNStore, owner = false) {
+function makeDummyDescriptor(did, DCDNStore, owner = false, password = null) {
 	did = araUtil.getIdentifier(did)
 	const AFSPath = makeAfsPath(did)
 	return new _Descriptor({
@@ -39,6 +39,7 @@ function makeDummyDescriptor(did, DCDNStore, owner = false) {
 		AFSPath,
 		did,
 		owner,
+    password,
 		status: events.AWAITING_STATUS,
 		shouldBroadcast: rewardsDCDN.getBroadcastingState({ did, DCDNStore }),
 	})
@@ -47,10 +48,11 @@ function makeDummyDescriptor(did, DCDNStore, owner = false) {
 async function makeDescriptor(did, opts = {}) {
 	try {
 		did = araUtil.getIdentifier(did)
+    const { password = null } = opts
 		const AFSPath = await makeAfsPath(did)
 		const AFSExists = fs.existsSync(AFSPath)
 		const meta = AFSExists ? await readFileMetadata(did) : {}
-		const { downloadPercent, status } = await afs.getAfsDownloadStatus(did, opts.shouldBroadcast)
+		const { downloadPercent, status } = await afs.getAfsDownloadStatus(did, opts.shouldBroadcast, password)
 
 		return Object.assign(new _Descriptor, {
 			did,

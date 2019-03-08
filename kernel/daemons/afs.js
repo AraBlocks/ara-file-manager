@@ -2,6 +2,7 @@ const debug = require('debug')('ara:fm:kernel:daemons:afsManager')
 
 const araContracts = require('ara-contracts')
 const araFilesystem = require('ara-filesystem')
+const onExit = require('async-exit-hook')
 const { events } = require('k')
 const fs = require('fs')
 const mirror = require('mirror-folder')
@@ -67,19 +68,19 @@ async function exportFolder({ did, exportPath, folderPath, completeHandler }) {
   }
 }
 
-async function getAfsDownloadStatus(did, shouldBroadcast) {
+async function getAfsDownloadStatus(did, shouldBroadcast, password = null) {
 	let downloadPercent = 0
 	let status = events.AWAITING_DOWNLOAD
 	let newAfs
 	try {
-		({ afs: newAfs } = await araFilesystem.create({ did }))
+		({ afs: newAfs } = await araFilesystem.create({ did, password }))
 		const feed = newAfs.partitions.home.content
 		if (feed && feed.length) {
 			downloadPercent = feed.downloaded() / feed.length
 		}
 		if (downloadPercent === 1) {
 			status = events.DOWNLOADED_PUBLISHED
-      fuse.mount(newAfs)
+      await fuse.mount(newAfs)
 		} else if (downloadPercent > 0) {
 			status = events.DOWNLOADING
 		} else if (downloadPercent === 0 && shouldBroadcast) {
@@ -89,7 +90,9 @@ async function getAfsDownloadStatus(did, shouldBroadcast) {
 		debug('Error getting download status %o', err)
 	}
 
-  newAfs && await newAfs.close()
+  onExit(async (done) => {
+    newAfs && await newAfs.close()
+  })
 	return { downloadPercent, status }
 }
 
