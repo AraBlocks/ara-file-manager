@@ -43,7 +43,7 @@ class Header extends Nanocomponent {
         cssClass: { opts: { fontSize: '14px', height: '2em' } },
         field: 'deepLink',
         parentState: this.state,
-        placeholder: 'Deep Link URL',
+        placeholder: 'paste "ara://..." link here',
         onchange: () => {
           const { deepLink } = this.state
           if (!deepLink || deepLink.length === 0) { return }
