@@ -1,7 +1,7 @@
 {
   "name": "ara-file-manager",
-  "productName": "Ara File Manager",
-  "description": "Ara file manager",
+  "productName": "ara-file-manager",
+  "description": "File Manager for the Ara ecosystem",
   "author": {
     "name": "ara blocks"
   },
@@ -15,6 +15,7 @@
     "pack": "build --dir",
     "mac-installer": "sh ./scripts/mac-installer.sh",
     "build-dev-mac": "sh ./scripts/mac-dev-build.sh",
+    "build-prod-linux": "./scripts/linux-production-build.sh",
     "build-dev-windows": "sh ./scripts/windows-dev-build.sh",
     "build-prod-mac": "sh ./scripts/mac-production-build.sh",
     "build-prod-windows": "sh ./scripts/windows-production-build.sh",
@@ -72,7 +73,9 @@
     "debug": "^3.1.0",
     "electron": "^2.0.5",
     "electron-builder": "^20.22.0",
+    "electron-installer-debian": "^1.1.1",
     "electron-installer-dmg": "^2.0.0",
+    "electron-installer-snap": "^3.1.1",
     "electron-installer-windows": "^1.1.0",
     "electron-osx-sign": "^0.4.11",
     "electron-packager": "^13.1.1",
