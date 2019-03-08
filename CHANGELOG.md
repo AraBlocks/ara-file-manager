@@ -1,3 +1,14 @@
+## [0.11.1](https://github.com/littlstar/ara-content-manager/compare/0.11.0...0.11.1) (2019-03-08)
+
+
+### Features
+
+* extended tracking ([7d45ce7](https://github.com/littlstar/ara-content-manager/commit/7d45ce7))
+* **analytics:** added purchase start and end trackers ([50c419d](https://github.com/littlstar/ara-content-manager/commit/50c419d))
+* **scripts/:** programatically append version to .app and .exe ([219e301](https://github.com/littlstar/ara-content-manager/commit/219e301))
+
+
+
 # [0.11.0](https://github.com/littlstar/ara-content-manager/compare/0.10.8...0.11.0) (2019-03-07)
 
 
