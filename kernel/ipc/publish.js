@@ -195,7 +195,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
     await autoQueue.push(
-      () => araFilesystem.commit({ did, price: Number(price), password: password }),
+      () => araFilesystem.commit({ did, password, price: Number(price) }),
       analytics.trackPublishFinish
     )
 
