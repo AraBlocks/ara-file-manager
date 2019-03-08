@@ -113,7 +113,7 @@ Documentation around building the application can be found [here](https://github
 
 ## Contributing
 
-Our flow for merging commits into `master` is a bit different. Instead of cutting branches and makings PRs to `master`, do this from `dev` instead. Weekly, `dev` will be merged into `master`, at which point we build and deploy the pupdated apps.
+Our flow for merging commits into `master` is a bit different. Instead of cutting branches from, and makings PRs to `master`, do this from `dev` instead. Weekly, `dev` will be merged into `master`, at which point we build and deploy the pupdated apps.
 
 When you do get puproved to merge into `dev`, either bump the minor or patch of the `dev` branch and then push the tags and `CHANGELOG`. We typically bump minor when the latest version of the app wouldn't be compatible with older versions - which usually means we're using a new, non-backwards compatible `ara-contracts` module. Patching is for everything else.
 
