@@ -75,6 +75,8 @@
     "electron-builder": "^20.22.0",
     "electron-installer-debian": "^1.1.1",
     "electron-installer-dmg": "^2.0.0",
+    "electron-installer-flatpak": "^0.8.0",
+    "electron-installer-redhat": "^1.0.1",
     "electron-installer-snap": "^3.1.1",
     "electron-installer-windows": "^1.1.0",
     "electron-osx-sign": "^0.4.11",
