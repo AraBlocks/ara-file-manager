@@ -1,3 +1,12 @@
+## [0.11.3](https://github.com/littlstar/ara-content-manager/compare/0.11.2...0.11.3) (2019-03-08)
+
+
+### Bug Fixes
+
+* **register.js:** moved cacheUserDid to registration confirmation ([a386c30](https://github.com/littlstar/ara-content-manager/commit/a386c30))
+
+
+
 ## [0.11.2](https://github.com/littlstar/ara-content-manager/compare/0.11.1...0.11.2) (2019-03-08)
 
 
