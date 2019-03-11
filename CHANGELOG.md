@@ -1,3 +1,7 @@
+## [0.11.5](https://github.com/littlstar/ara-content-manager/compare/0.11.4...0.11.5) (2019-03-11)
+
+
+
 ## [0.11.4](https://github.com/littlstar/ara-content-manager/compare/0.11.3...0.11.4) (2019-03-08)
 
 
