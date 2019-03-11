@@ -1,3 +1,12 @@
+## [0.11.6](https://github.com/littlstar/ara-content-manager/compare/0.11.5...0.11.6) (2019-03-11)
+
+
+### Bug Fixes
+
+* **publish.js:** removed extra estimate ([7bd9801](https://github.com/littlstar/ara-content-manager/commit/7bd9801))
+
+
+
 ## [0.11.5](https://github.com/littlstar/ara-content-manager/compare/0.11.4...0.11.5) (2019-03-11)
 
 
