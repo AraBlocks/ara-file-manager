@@ -123,12 +123,8 @@ ipcMain.on(events.PUBLISH, async (_, load) => {
     await daemonsUtil.writeFileMetaData({ did, size, title: load.name, password })
     const ethAmount = await act.getEtherBalance(store.account.accountAddress)
 
-    const commitEstimate = await araFilesystem.commit({ did, password, price: Number(load.price), estimate: true })
-    let setPriceEstimate = 0
-    if (load.price) {
-      setPriceEstimate = await araFilesystem.setPrice({ did, password, price: Number(load.price), estimate: true })
-    }
-    const gasEstimate = Number(commitEstimate) + Number(setPriceEstimate)
+    const gasEstimate = Number(await araFilesystem.commit({ did, password, price: Number(load.price), estimate: true }))
+
     if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
 
     dispatchLoad = {
