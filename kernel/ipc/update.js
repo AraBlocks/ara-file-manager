@@ -123,7 +123,6 @@ ipcMain.on(events.UPDATE_FILE, async (_, load) => {
       shouldCommit: load.shouldCommit
     }
 
-    debug('Dispatching %s . Load: %O', events.FEED_MODAL, dispatchLoad)
     dispatch({ type: events.FEED_MODAL, load: dispatchLoad })
     windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('updateConfirmModal')
