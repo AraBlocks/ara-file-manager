@@ -17,8 +17,8 @@
     "build-dev-mac": "sh ./scripts/mac-dev-build.sh",
     "build-dev-windows": "sh ./scripts/windows-dev-build.sh",
     "build-prod-mac": "sh ./scripts/mac-production-build.sh",
-    "build-prod-windows": "sh ./scripts/windows-production-build.sh",
-    "debug-mac": "DEBUG=afm*,arp*,ard* release-builds/ara-file-manager-darwin-x64/ara-file-manager.app/Contents/MacOS/ara-file-manager",
+    "build-prod-windows": "./scripts/windows-production-build.sh",
+    "debug-mac": "DEBUG=afm*,arp*,ard* release-builds/ara-file-manager-darwin-x64/Ara\\ File\\ Manager.app/Contents/MacOS/ara-file-manager",
     "debug-windows": "DEBUG=afm*,arp*,ard* release-builds/ara-file-manager-win32-x64/ara-file-manager.exe",
     "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
     "version": "npm run changelog && git add CHANGELOG.md"

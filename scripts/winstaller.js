@@ -5,9 +5,9 @@ const { version } = require('../package.json')
 
 winstaller.createWindowsInstaller({
   appDirectory: './release-builds/ara-file-manager-win32-x64/',
-  outputDirectory: './release-builds/winstalled',
-  authors: 'Ara blocks',
-  exe: `Ara File Manager.exe`,
+  outputDirectory: './release-builds',
+  authors: 'Ara Blocks',
+  exe: `ara-file-manager.exe`,
   iconUrl: 'https://s3.amazonaws.com/ara-prod-media/file-manager/ara_prod.ico',
   setupIcon: './build/icons/windows/ara_prod.ico',
   loadingGif: './build/Ara-Installing.gif',
