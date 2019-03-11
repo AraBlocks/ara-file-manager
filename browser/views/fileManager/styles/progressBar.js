@@ -6,6 +6,18 @@ module.exports = {
   colorSelector,
 
   holder(status = null) {
+    let text = ''
+    switch (status) {
+      case events.PURCHASING:
+        text = 'Purchasing'
+        break
+      case events.PUBLISHING:
+        text = 'Publishing'
+        break
+      case events.UPDATING_FILE:
+        text = 'Updating'
+        break
+    }
     return css`
       :host {
         background-color: ${colorSelector('grey')};
@@ -21,13 +33,7 @@ module.exports = {
 
       ${status &&
       `:host::before {
-          content: "${(
-            status === events.PURCHASING
-              ? 'Purchasing'
-              : status === events.PUBLISHING
-                ? 'Publishing'
-                : 'Connecting'
-          )}";
+          content: "${text}";
           position: absolute;
           width: 100%;
           top: -18px;
