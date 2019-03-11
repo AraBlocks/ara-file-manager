@@ -9,7 +9,7 @@
   "main": "boot",
   "network": "test",
   "scripts": {
-    "start-dev": "./node_modules/.bin/electron boot",
+    "start-dev": "IS_PROD=false ./node_modules/.bin/electron boot",
     "test": "electron test/main.js",
     "postinstall": "sh ./scripts/postinstall.sh && install-app-deps",
     "pack": "build --dir",
