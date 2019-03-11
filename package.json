@@ -5,7 +5,7 @@
   "author": {
     "name": "ara blocks"
   },
-  "version": "0.11.9",
+  "version": "0.11.10",
   "main": "boot",
   "network": "test",
   "scripts": {
