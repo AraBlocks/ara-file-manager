@@ -1,3 +1,12 @@
+## [0.11.8](https://github.com/littlstar/ara-content-manager/compare/0.11.7...0.11.8) (2019-03-11)
+
+
+### Bug Fixes
+
+* **winstaller.js:** changed exe and setupExe props ([541b094](https://github.com/littlstar/ara-content-manager/commit/541b094))
+
+
+
 ## [0.11.7](https://github.com/littlstar/ara-content-manager/compare/0.11.6...0.11.7) (2019-03-11)
 
 
