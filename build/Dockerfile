@@ -1,3 +1,5 @@
+# Used for building snap files from a clean container
+
 FROM snapcore/snapcraft
 
 LABEL maintainer="artificerpi@outlook.com"

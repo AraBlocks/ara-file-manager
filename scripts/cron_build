@@ -1,0 +1,12 @@
+#!/bin/bash
+
+LATEST_VERSION=$(git describe --abbrev=0 --tags)
+
+cd ~/ara-file-manager
+
+git pull $LATEST_VERSION
+npm install
+
+npm run build-prod-linux
+
+reprepro -b build-releases/ includedeb trusty ara-file-manager_${LATEST_VERSION}_amd64.deb

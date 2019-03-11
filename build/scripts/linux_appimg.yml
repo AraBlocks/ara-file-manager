@@ -5,5 +5,5 @@ ingredients:
   sources:
     - deb http://us.archive.ubuntu.com/ubuntu/ xenial main universe
   debs:
-    - /home/maddie/code/littlstar/ara-file-manager/release-builds/ara-file-manager_0.11.0_amd64.deb
+    - /home/maddie/code/littlstar/ara-file-manager/release-builds/ara-file-manager_0.*.*_amd64.deb
 

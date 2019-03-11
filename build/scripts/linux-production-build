@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "${BASH_SOURCE[0]}"
+
+echo "Packaging production build"
+
+electron-packager . \
+--overwrite \
+--platform=linux \
+--arch=x64 \
+--icon=./build/icons/mac/ara.icns \
+--prune=true \
+--out=./release-builds
+
+echo "Creating flatpak file"
+electron-installer-flatpak --src $(pwd)/release-builds/ara-file-manager-linux-x64 --dest $(pwd)/release-builds --arch amd64
+echo "Creating rpm file"
+electron-installer-redhat --src $(pwd)/release-builds/ara-file-manager-linux-x64 --dest $(pwd)/release-builds --arch amd64
+echo "Creating deb file"
+electron-installer-debian --src $(pwd)/release-builds/ara-file-manager-linux-x64 --dest $(pwd)/release-builds --arch amd64
+echo "Creating snap file"
+sudo docker build . -t afm
+sudo docker run -it --rm -v $(pwd)/release-builds/ara-file-manager-linux-amd64:/snap/app afm --src=.
+
+mv $(pwd)/release-builds/ara-file-manager-linux-amd64/*.snap $(pwd)/release-builds
+
+echo "Generating app image"
+ARCH=x86_64 bash -ex $(pwd)/build/scripts/pkg2appimage $(pwd)/build/scripts/linux_appimg.yml
+
+mv $(pwd)/out/*.AppImage $(pwd)/release-builds/ara-file-manager.AppImage
