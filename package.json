@@ -74,6 +74,7 @@
     "electron-builder": "^20.22.0",
     "electron-installer-dmg": "^2.0.0",
     "electron-installer-windows": "^1.1.0",
+    "electron-osx-sign": "^0.4.11",
     "electron-packager": "^13.1.1",
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
