@@ -14,7 +14,6 @@ const Nanocomponent = require('nanocomponent')
 class Container extends Nanocomponent {
   constructor(opts) {
     super()
-
     this.props = { account: opts.account }
     this.state = {
       afsContents: opts.fileList,
@@ -23,30 +22,28 @@ class Container extends Nanocomponent {
       fileList: opts.fileList,
       oldName: opts.name,
       oldPrice: opts.price,
-      price: opts.price,
+      price: opts.price || '',
       uncommitted: opts.uncommitted
     }
 
     this.children = {
+      utilityButton: new UtilityButton({ onclick: this.closeWindow.bind(this) }),
       fileInfo: new FileInfo({
         addItems: this.addItems.bind(this),
         did: opts.did,
         parentState: this.state,
-        renderView: this.renderView.bind(this)
+        renderView: this.renderView.bind(this),
+        oninput: this.oninput.bind(this)
       }),
-
-      publishButton: new Button({
-        children: 'Publish Update',
-        cssClass: { name: 'thinBorder' },
-        onclick: this.updateFile.bind(this)
-      }),
-
       packageIDTooltip: new DynamicTooltip({
         children: "Package ID: " + opts.did,
         onclick: () => clipboard.writeText(opts.did)
       }),
-
-      utilityButton: new UtilityButton({ onclick: this.closeWindow.bind(this) })
+      publishButton: new Button({
+        children: 'Publish Update',
+        cssClass: { name: 'thinBorder' },
+        onclick: this.updateFile.bind(this)
+      })
     }
   }
 
@@ -56,7 +53,7 @@ class Container extends Nanocomponent {
     this.rerender()
   }
 
-  closeWindow(){
+  closeWindow() {
     if (this.state.uncommitted === false) {
       windowManagement.emit({ event: events.START_SEEDING, load: { did: this.state.did } })
     }
@@ -79,6 +76,13 @@ class Container extends Nanocomponent {
     return this.state.oldName !== this.state.name
   }
 
+  oninput(key) {
+    return (value) => {
+      this.state[key] = value
+      this.rerender()
+    }
+  }
+
   get somethingChanged() {
     return this.nameChanged && !this.state.uncommitted || this.fileInfoChanged
   }
@@ -87,7 +91,7 @@ class Container extends Nanocomponent {
     this.render({})
   }
 
-  update({ fileList }){
+  update({ fileList }) {
     const { state } = this
     if (fileList != null && state.afsContents.length == 0) {
       state.fileList = fileList
@@ -139,7 +143,7 @@ class Container extends Nanocomponent {
     } else if (this.fileInfoChanged) {
       windowManagement.emit({ event: events.UPDATE_FILE, load })
     } else if (this.nameChanged && state.uncommitted !== true) {
-      windowManagement.emit({ event: events.UPDATE_META, load: { did: load.did, name: load.name }})
+      windowManagement.emit({ event: events.UPDATE_META, load: { did: load.did, name: load.name } })
     }
   }
 
@@ -148,21 +152,25 @@ class Container extends Nanocomponent {
     const manageFileText = html`
       <div class="${styles.descriptionHolder} manageFileContainer-descriptionHolder">
         <div>
-          This package has been published to the Ara Network. You can edit and update the package here. The changes will be pushed to all users on the network.
+          This package has been published to the Ara Network. You can edit and update the package here. The changes will be
+          pushed to all users on the network.
         </div>
         <div>
-          <b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
+          <b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for
+          users
           to be able to download it.
         </div>
       </div>`
     const publishFileText = html`
       <div class="${styles.descriptionHolder} manageFileContainer-descriptionHolder">
         <div>
-          Publish your package for distribution on the Ara Network. You can publish a single file or an entire directory as a single
+          Publish your package for distribution on the Ara Network. You can publish a single file or an entire directory as a
+          single
           asset. Once published, use the provided distribution link to allow users to purchase your package.
         </div>
         <div>
-          <b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for users
+          <b>Note:</b> Ara is a decentralized network. at least one computer must be connected and hosting this file for
+          users
           to be able to download it.
         </div>
       </div>`
@@ -176,10 +184,10 @@ class Container extends Nanocomponent {
     if (this.fileInfoChanged) {
       const span = html`
         <span style="font-family: ProximaNova-light;">
-          (${ filesize(this.state.fileList.reduce((sum, file) => sum += file.size, 0)) })
+          (${ filesize(this.state.fileList.reduce((sum, file) => sum += file.size, 0))})
         </span>
       `
-      attributes.children = [ 'Publish', span ]
+      attributes.children = ['Publish', span]
     }
 
     return attributes

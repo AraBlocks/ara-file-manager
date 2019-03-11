@@ -39,26 +39,33 @@ class Login extends Nanocomponent {
         }
       }),
       passwordInput: new Input({
-        parentState: this.state,
-        field: 'password',
+        oninput: this.oninput('password'),
         placeholder: 'Password',
-        type: 'password'
+        type: 'password',
+        value: this.state.password
       }),
-      userDIDInput: new Input({
-        parentState: this.state,
-        field: 'userDID',
-        placeholder: 'Ara ID'
+      userDidInput: new Input({
+        oninput: this.oninput('userDID'),
+        placeholder: 'Ara ID',
+        value: this.state.userDID
       }),
     }
     this.login = this.login.bind(this)
+    this.rerender = this.rerender.bind(this)
   }
 
   login(e) {
     e.preventDefault()
     const { userDID, password } = this.state
-    const load = { password, userDID: userDID }
-    windowManagement.emit({ event: events.LOGIN, load })
+    windowManagement.emit({ event: events.LOGIN, load: { password, userDID } })
     windowManagement.closeWindow('login')
+  }
+
+  oninput(key) {
+    return (value) => {
+      this.state[key] = value
+      this.rerender()
+    }
   }
 
   update({ userDID } = {}) {
@@ -67,7 +74,7 @@ class Login extends Nanocomponent {
   }
 
   createElement() {
-    const { children, login } = this
+    const { children, login, state } = this
     return (html`
       <div class="${styles.container} login-container">
         <div class="${styles.logo} login-logo">
@@ -85,8 +92,8 @@ class Login extends Nanocomponent {
           ${children.registerLink.render()}
         </p>
         <form class="${styles.form} login-form" onsubmit=${login}>
-          ${children.userDIDInput.render()}
-          ${children.passwordInput.render()}
+          ${children.userDidInput.render({ value: state.userDID })}
+          ${children.passwordInput.render({ value: state.password })}
           ${children.loginButton.render({})}
         </form>
         <div class="${styles.buttonHolder} login-buttonHolder">

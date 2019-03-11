@@ -62,12 +62,12 @@ module.exports = {
     }
   `,
 
-  standard({ fontSize = '18px', height = '45px'}) {
+  standard({ fontSize = '18px' } = {}) {
     return css`
       :host {
         font-size: ${fontSize};
         font-family: ${fonts.light};
-        height: ${height};
+        height: 2em;
         text-indent: 10px;
         width: 100%;
       }

@@ -11,10 +11,16 @@ class Recover extends Nanocomponent {
   constructor() {
     super()
     this.state = {
+      pwConfirmation: '',
+      errorMessages: {
+        pwConfirmation: '',
+        mnemonic: '',
+        password: ''
+      },
       mnemonic: '',
       password: '',
-      confirmPassword: ''
     }
+    this.props = { pending: false }
 
     this.children = {
       cancelButton: new Button({
@@ -30,27 +36,24 @@ class Recover extends Nanocomponent {
       }),
 
       mnemonicInput: new ErrorInput({
-        errorMessage: 'Mnemonic must be 12 words with spaces in between',
+        oninput: this.oninput('mnemonic'),
         placeholder: 'Mnemonic',
-        parentState: this.state,
-        field: 'mnemonic',
-        type: 'password'
+        type: 'password',
+        value: this.state.mnemonic
       }),
 
       passwordInput: new ErrorInput({
-        errorMessage: 'Password must not be left blank',
+        oninput: this.oninput('password'),
         placeholder: 'Password',
-        parentState: this.state,
-        field: 'password',
-        type: 'password'
+        type: 'password',
+        value: this.state.value
       }),
 
-      confirmPasswordInput: new ErrorInput({
-        errorMessage: 'Must Confirm Password',
+      pwConfirmationInput: new ErrorInput({
+        oninput: this.oninput('pwConfirmation'),
         placeholder: 'Confirm Password',
-        parentState: this.state,
-        field: 'confirmPassword',
-        type: 'password'
+        type: 'password',
+        value: this.state.pwConfirmation
       }),
 
       submitButton: new Button({
@@ -60,34 +63,69 @@ class Recover extends Nanocomponent {
     }
   }
 
-  recover(e) {
-    e.preventDefault()
-    const { password, mnemonic, confirmPassword } = this.state
-
-    const flagMnemonicField = mnemonic.split(' ').length !== 12
-    const flagPWField = password === ''
-    const flagConfirmPWField = confirmPassword === '' || password !==  confirmPassword
-    flagMnemonicField || flagPWField || flagConfirmPWField
-      ? this.render({ flagMnemonicField, flagPWField, flagConfirmPWField })
-      : windowManagement.emit({ event: events.RECOVER, load: { password, mnemonic } })
+  oninput(key) {
+    return (value) => {
+      this.state[key] = value
+      this.rerender()
+    }
   }
 
-  update() {
+  recover(e) {
+    e.preventDefault()
+    const { password, mnemonic } = this.state
+
+    if (this.validInput) {
+      windowManagement.emit({ event: events.RECOVER, load: { password, mnemonic } })
+    }
+    this.rerender()
+  }
+
+  get validInput() {
+    const {
+      pwConfirmation,
+      errorMessages,
+      mnemonic,
+      password
+    } = this.state
+
+    errorMessages.mnemonic = ''
+    errorMessages.pwConfirmation = ''
+    errorMessages.password = ''
+    let validInput = true
+    if (mnemonic.split(' ').length !== 12) {
+      errorMessages.mnemonic = 'Mnemonic must be 12 words separated by a space'
+      validInput = false
+    if (!password) {
+      errorMessages.password = 'Password must not be left blank'
+      validInput = false
+    } else if (!pwConfirmation) {
+      errorMessages.pwConfirmation = 'Must confirm password'
+      validInput = false
+    } else if (pwConfirmation !== password) {
+      errorMessages.pwConfirmation = "Passwords don't match"
+      validInput = false
+    }
+
+    return validInput
+  }
+
+  update(newProps = {}) {
+    Object.assign(this.props, newProps)
     return true
   }
 
-  createElement(opts) {
-    const { children, state } = this
+  createElement() {
+    const { children, props } = this
     const {
-      flagMnemonicField = false,
-      flagPWField = false,
-      flagConfirmPWField = false,
-      pending = false
-    } = opts
+      errorMessages,
+      mnemonic,
+      password,
+      pwConfirmation
+    } = this.state
 
-    return html`
+    return (html`
       <div class="${styles.container} recover-container">
-        ${overlay(pending)}
+        ${overlay(props.pending)}
         <div class="${styles.logo} login-logo">
           <img src="../assets/images/ARA_logo_horizontal.png" />
         </div>
@@ -96,14 +134,12 @@ class Recover extends Nanocomponent {
         </div>
         <form class="${styles.recoverForm} recover-recoverForm" onsubmit="${this.recover}">
           <div>To recover your Ara ID, please input your unique <b>mnemonic</b> code.</div>
-          ${children.mnemonicInput.render({ displayError: flagMnemonicField })}
+          ${children.mnemonicInput.render({ errorMessage: errorMessages.mnemonic, value: mnemonic })}
           <div>Please create a new <b>password</b> for your Ara ID</div>
-          ${children.passwordInput.render({ displayError: flagPWField })}
-          ${children.confirmPasswordInput.render({
-            displayError: flagConfirmPWField,
-            errorMessage: state.confirmPassword === ''
-              ? 'Must confirm password'
-              : "Passwords don't match"
+          ${children.passwordInput.render({ errorMessage: errorMessages.password, value: password })}
+          ${children.pwConfirmationInput.render({
+            errorMessage: errorMessages.pwConfirmation,
+            value: pwConfirmation
           })}
           <div>
             ${children.submitButton.render({})}
@@ -111,7 +147,7 @@ class Recover extends Nanocomponent {
           </div>
         </form>
       </div>
-    `
+    `)
   }
 }
 

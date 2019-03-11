@@ -1,24 +1,29 @@
-const FileSelector = require('../../components/fileSelector')
-const FileTable = require('../../components/afsFileTable/editableFileTable')
-const ErrorInput = require('../../components/errorInput')
 const { events } = require('k')
-const styles = require('./styles/fileInfo')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
-class FileInfo extends Nanocomponent {
-  constructor(props) {
-    const {
-      addItems,
-      did,
-      parentState,
-      renderView
-    } = props
+const Input = require('../../components/input')
+const FileTable = require('../../components/afsFileTable/editableFileTable')
+const styles = require('./styles/fileInfo')
 
+class FileInfo extends Nanocomponent {
+  constructor({
+    addItems,
+    did,
+    oninput,
+    parentState,
+    renderView
+  }) {
     super()
 
     this.props = { did, parentState, renderView }
+
     this.children = {
+      fileNameInput: new Input({
+        oninput: oninput('name'),
+        placeholder: 'File Name',
+        value: this.props.parentState.name
+      }),
       fileTable: new FileTable({
         addItems,
         did,
@@ -27,24 +32,12 @@ class FileInfo extends Nanocomponent {
         tableType: events.UPDATE_FILE,
         renderView
       }),
-      fileNameInput: new ErrorInput({
-        field: 'name',
-        placeholder: 'File Name',
-        parentState,
-        renderView
-      }),
-      fileSelector: new FileSelector({
-        field: 'filePath',
-        parentState
-      }),
-      priceInput: new ErrorInput({
+      priceInput: new Input({
         araIcon: true,
-        errorMessage: 'Price cannot be negative',
-        field: 'price',
-        parentState,
         placeholder: 'Price',
         type: 'number',
-        renderView
+        oninput: oninput('price'),
+        value: this.props.parentState.price
       })
     }
   }
@@ -52,7 +45,7 @@ class FileInfo extends Nanocomponent {
   update({ parentState }) {
     this.props = { parentState }
     // handles users who think `-0` is a funny price
-    parentState.price = Math.abs(parentState.price)
+    parentState.price = Math.abs(parentState.price) || ''
     return true
   }
 
@@ -71,7 +64,7 @@ class FileInfo extends Nanocomponent {
             </div>
           </div>
           <div class=${styles.infoTipHolder}>
-            ${children.priceInput.render({ value: parentState.price, displayError: parentState.price < 0 })}
+            ${children.priceInput.render({ value: parentState.price })}
             <div class=${styles.infoTip}>
               Leave blank if you do not want to charge for this file.
             </div>

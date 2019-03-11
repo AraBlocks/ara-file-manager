@@ -115,7 +115,7 @@ class EditableFileTable extends Nanocomponent {
         <div class="${styles.dragDropMsg} editableFileTable-dragDropMsg">
           Drop files here
           <div>
-            Or
+            Or 
             <span class="${styles.add()} editableFileTable-add" onclick="${getFiles}">
               add files
             </span>
