@@ -71,16 +71,17 @@ ipcMain.on(events.RECOVER, async (_, load) => {
 
     const { did } = identity.did
     const userDID = araUtil.getIdentifier(did)
-    dispatch({ type: events.RECOVERED, load: { userDID, password: load.password }})
+    dispatch({ type: events.RECOVERED, load: { userDID, password: load.password } })
     login(null, { userDID, password: load.password })
 
     windowManager.pingView({ view: 'recover', event: events.RECOVERED })
   } catch (err) {
-    const dispatchLoad = {
-      modalName: 'recoveryFailure',
-      callback: () => windowManager.pingView({ view: 'recover', event: events.RECOVER_FAILED })
-    }
-    dispatch({ type: events.FEED_MODAL, load: dispatchLoad })
+    windowManager.pingView({ view: 'recover', event: events.RECOVER_FAILED })
+    dispatch({
+      type: events.FEED_MODAL, load: {
+        modalName: 'recoveryFailure',
+      }
+    })
     windowManager.openModal('generalMessageModal')
   }
 })

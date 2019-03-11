@@ -27,34 +27,33 @@ class Header extends Nanocomponent {
     }
 
     this.children = {
+      hamby: new Hamburger(this.hambyOpts),
+      tabs: this.makeTabs(selectTab),
       publishFilebutton: new Button({
         children: 'Publish New File',
         cssClass: { opts: { fontSize: 14 } },
         onclick: () => !account.pendingPublish && windowManagement.emit({ event: events.DEPLOY_PROXY })
       }),
-
       copyDidTooltip: new DynamicTooltip({
         children: 'ID: ' + this.props.userDID.slice(0, 8) + '...',
         onclick: () => clipboard.writeText(this.props.userDID),
         cssClass: { color: 'black' }
       }),
-
       deepLink: new Input({
-        cssClass: { opts: { fontSize: '14px', height: '2em' } },
-        field: 'deepLink',
-        parentState: this.state,
+        cssClass: { opts: { fontSize: '14px' } },
         placeholder: 'paste "ara://..." link here',
         onchange: () => {
           const { deepLink } = this.state
-          if (!deepLink || deepLink.length === 0) { return }
+          if (!deepLink) { return }
           windowManager.openDeepLinking(deepLink)
           this.state.deepLink = ''
           this.rerender()
+        },
+        oninput: (value) => {
+          this.state.deepLink = value
+          this.rerender()
         }
-      }),
-
-      tabs: this.makeTabs(selectTab),
-      hamby: new Hamburger(this.hambyOpts)
+      })
     }
   }
 

@@ -12,27 +12,25 @@ class Registration extends Nanocomponent {
   constructor() {
     super()
     this.state = {
-      displayError: { password: false, passwordConfirm: false },
+      errorMessages: { password: '', pwConfirmation: '' },
       password: '',
-      passwordConfirm: '',
+      pwConfirmation: '',
     },
     this.props = { inputDisabled: true, mnemonic: null, userDID: null, }
     this.children = {
       passwordInput: new ErrorInput({
         disabled: this.props.inputDisabled,
-        errorMessage: 'Must enter password',
-        field: 'password',
-        parentState: this.state,
+        oninput: this.oninput('password'),
         placeholder: 'Password',
-        type: 'password'
+        type: 'password',
+        value: this.state.password
       }),
-      passwordConfirmInput: new ErrorInput({
+      pwConfirmationInput: new ErrorInput({
         disabled: this.props.inputDisabled,
-        errorMessage: 'Must confirm password',
-        field: 'passwordConfirm',
-        parentState: this.state,
+        oninput: this.oninput('pwConfirmation'),
         placeholder: 'Confirm password',
-        type: 'password'
+        type: 'password',
+        value: this.state.pwConfirmation
       }),
       submitButton: new Button({
         children: 'OK',
@@ -56,34 +54,41 @@ class Registration extends Nanocomponent {
     this.render = this.render.bind(this)
   }
 
-  get properInput() {
+  get validInput() {
     const {
       password,
-      passwordConfirm,
-      displayError
+      pwConfirmation,
+      errorMessages
     } = this.state
-    let properInput = true
+
+    errorMessages.pwConfirmation = ''
+    errorMessages.password = ''
+    let validInput = true
     if (password === '') {
-      displayError.password = true
-      displayError.passwordConfirm = false
-      properInput = false
-    } else if (passwordConfirm === '') {
-      displayError.password = false
-      displayError.passwordConfirm = true
-      properInput = false
-    } else if (password !== passwordConfirm) {
-      displayError.password = false
-      displayError.passwordConfirm = true
-      properInput = false
+      errorMessages.password = 'Must enter a password'
+      validInput = false
+    } else if (pwConfirmation === '') {
+      errorMessages.pwConfirmation = 'Must confirm password'
+      validInput = false
+    } else if (password !== pwConfirmation) {
+      errorMessages.pwConfirmation = "Passwords don't match"
+      validInput = false
     }
-    return properInput
+    return validInput
+  }
+
+  oninput(key) {
+    return (value) => {
+      this.state[key] = value
+      this.rerender()
+    }
   }
 
   register(e) {
     e.preventDefault()
     const { password } = this.state
     const { mnemonic, userDID } = this.props
-    this.properInput
+    this.validInput
       ? emit({ event: events.REGISTER, load: { password, mnemonic, userDID } })
       : this.rerender()
   }
@@ -135,14 +140,13 @@ class Registration extends Nanocomponent {
         <form class="${styles.registerForm}" onsubmit="${register}">
           ${children.passwordInput.render({
             disabled: props.inputDisabled,
-            displayError: state.displayError.password
+            errorMessage: state.errorMessages.password,
+            value: this.state.password
           })}
-          ${children.passwordConfirmInput.render({
+          ${children.pwConfirmationInput.render({
             disabled: props.inputDisabled,
-            displayError: state.displayError.passwordConfirm,
-            errorMessage: state.passwordConfirm === ''
-              ? 'Must confirm password'
-              : "Passwords don't match"
+            errorMessage: state.errorMessages.pwConfirmation,
+            value: this.state.pwConfirmation
           })}
           ${children.submitButton.render({ cssClass: props.inputDisabled ? 'thinBorder' : 'standard'})}
         </form>

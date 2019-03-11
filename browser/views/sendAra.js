@@ -13,34 +13,35 @@ class SendAra extends Nanocomponent {
   constructor() {
     super()
 
-    this.state = { receiver : '', amount: null }
+    this.state = { receiver : '', amount: '' }
 
     this.children = {
-			closeButton: new UtilityButton({ children: 'close' }),
-
-      receiverInput: new Input({
-        placeholder: 'Wallet Address or Ara ID',
-        parentState: this.state,
-        field: 'receiver'
-			}),
-
-			amountInput: new Input({
+      closeButton: new UtilityButton({ children: 'close' }),
+      sendButton: new Button({ children: 'Send Tokens', type: 'submit' }),
+      amountInput: new Input({
         araIcon: true,
+        oninput: this.oninput('amount'),
         placeholder: '0.0',
-        parentState: this.state,
-				field: 'amount',
         type: 'number',
-        step: 'any'
+        step: 'any',
+        value: this.state.amount
       }),
-
-      sendButton: new Button({
-        children: 'Send Tokens',
-        type: 'submit'
-      })
+      receiverInput: new Input({
+        oninput: this.oninput('receiver'),
+        placeholder: 'Wallet Address or Ara ID',
+        value: this.state.receiver
+			}),
     }
 
     this.sendAra = this.sendAra.bind(this)
     this.render = this.render.bind(this)
+  }
+
+  oninput(key) {
+    return (value) => {
+      this.state[key] = value
+      this.rerender()
+    }
   }
 
   sendAra(e) {
@@ -54,8 +55,8 @@ class SendAra extends Nanocomponent {
   }
 
   createElement() {
-    const { children, sendAra } = this
-    return html`
+    const { children, sendAra, state } = this
+    return (html`
       <div class="modal">
 				${overlay(false)}
 				<div class=${styles.header}>
@@ -67,12 +68,12 @@ class SendAra extends Nanocomponent {
 				</p>
 				<div class=${styles.divider}></div>
         <form class=${styles.sendAraForm} onsubmit=${sendAra}>
-					${children.receiverInput.render({})}
-					${children.amountInput.render({})}
+					${children.receiverInput.render({ value: state.receiver })}
+					${children.amountInput.render({ value: state.amount })}
           ${children.sendButton.render({})}
         </form>
       </div>
-    `
+    `)
   }
 }
 

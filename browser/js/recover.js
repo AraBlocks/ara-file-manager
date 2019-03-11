@@ -6,14 +6,19 @@ const windowManager = remote.require('electron-window-manager')
 const { ipcRenderer } = require('electron')
 
 const recoverMnemonic = new RecoverMnemonic()
-document.getElementById('container').appendChild(recoverMnemonic.render({}))
+document.getElementById('container').appendChild(recoverMnemonic.render())
 
-const recoveringListener = ipcRenderer.on(events.RECOVERING, () => recoverMnemonic.render({ pending: true }))
+const recoveringListener = ipcRenderer.on(events.RECOVERING, () =>{
+  recoverMnemonic.render({ pending: true })
+})
+
 const recoveredListener = ipcRenderer.on(events.RECOVERED, () => {
   windowManager.openWindow('filemanager')
   windowManagement.closeWindow('recover')
 })
-const recoverFailedListener = ipcRenderer.on(events.RECOVER_FAILED, () => recoverMnemonic.render({}))
+const recoverFailedListener = ipcRenderer.on(events.RECOVER_FAILED, () => {
+  recoverMnemonic.render({ pending: false })
+})
 
 window.onunload = () => {
   ipcRenderer.removeListener(events.RECOVERING, recoveringListener)

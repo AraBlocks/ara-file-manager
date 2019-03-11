@@ -1,7 +1,8 @@
-const fileSystemManager = require('../lib/tools/fileSystemManager')
-const Input = require('../components/input')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
+
+const fileSystemManager = require('../lib/tools/fileSystemManager')
+const Input = require('../components/input')
 
 class FileSelector extends Nanocomponent {
   constructor({ field, parentState }) {
