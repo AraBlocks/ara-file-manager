@@ -113,16 +113,12 @@ Documentation around building the application can be found [here](https://github
 
 ## Contributing
 
-Our flow for merging commits into `master` is a *bit* different 😸.
-* Cut branches from `dev` (*not* master)
-* Make PRs to `dev`
-* After merging into `dev`, bump either minor or patch
+* Cut from and make PRs to `master`
+* After getting approval and merging into `master`, bump either minor or patch
   - Minor when latest version of app not compatible with older versions (ie `ara-contracts` has changed)
   - Patch for everything else
 * Push tags
 * Push `CHANGELOG`
-
-On a weekly basis, `dev` will be merged into `master`, at which point we build and deploy the pupdated apps.
 
 - [Commit message format](https://github.com/littlstar/ara-file-manager/blob/master/.github/COMMIT_FORMAT.md)
 - [Commit message examples](https://github.com/littlstar/ara-file-manager/blob/master/.github/COMMIT_FORMAT_EXAMPLES.md)
