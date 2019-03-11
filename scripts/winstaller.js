@@ -7,11 +7,11 @@ winstaller.createWindowsInstaller({
   appDirectory: './release-builds/Ara File Manager-win32-x64/',
   outputDirectory: './release-builds/winstalled',
   authors: 'Ara blocks',
-  exe: `AFM-${version}.exe`,
+  exe: `Ara File Manager.exe`,
   iconUrl: 'https://s3.amazonaws.com/ara-prod-media/file-manager/ara_prod.ico',
   setupIcon: './build/icons/windows/ara_prod.ico',
   loadingGif: './build/Ara-Installing.gif',
-  setupExe: 'AFM Installer.exe',
+  setupExe: `AFM-${version}.exe`,
   certificateFile: './build/certs/code_signing.cer',
   certificatePassword: process.env.CODE_SIGNING_PW,
   remoteReleases: urls.SQUIRREL_WIN
