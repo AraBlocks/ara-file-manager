@@ -1,100 +1,24 @@
-## [0.11.8](https://github.com/littlstar/ara-content-manager/compare/0.11.7...0.11.8) (2019-03-11)
+## [0.11.9](https://github.com/littlstar/ara-content-manager/compare/0.10.4...0.11.9) (2019-03-11)
 
 
 ### Bug Fixes
 
-* **winstaller.js:** changed exe and setupExe props ([541b094](https://github.com/littlstar/ara-content-manager/commit/541b094))
-
-
-
-## [0.11.7](https://github.com/littlstar/ara-content-manager/compare/0.11.6...0.11.7) (2019-03-11)
-
-
-
-## [0.11.6](https://github.com/littlstar/ara-content-manager/compare/0.11.5...0.11.6) (2019-03-11)
-
-
-### Bug Fixes
-
-* **publish.js:** removed extra estimate ([7bd9801](https://github.com/littlstar/ara-content-manager/commit/7bd9801))
-
-
-
-## [0.11.5](https://github.com/littlstar/ara-content-manager/compare/0.11.4...0.11.5) (2019-03-11)
-
-
-
-## [0.11.4](https://github.com/littlstar/ara-content-manager/compare/0.11.3...0.11.4) (2019-03-08)
+* Fix file add for Linux ([fe98544](https://github.com/littlstar/ara-content-manager/commit/fe98544))
+* **afm.js | cleaOutdatedData:** removed (Deprecated) ([373422d](https://github.com/littlstar/ara-content-manager/commit/373422d))
+* **publish.js:** removed extra estimate ([85b7f46](https://github.com/littlstar/ara-content-manager/commit/85b7f46))
+* **purchaseEstimate.js:** referenced `did` properly ([2563933](https://github.com/littlstar/ara-content-manager/commit/2563933))
+* **register.js:** moved cacheUserDid to registration confirmation ([a238134](https://github.com/littlstar/ara-content-manager/commit/a238134))
+* **winstaller.js:** changed exe and setupExe props ([3d53eea](https://github.com/littlstar/ara-content-manager/commit/3d53eea))
 
 
 ### Features
 
-* Add download url box ([9453a50](https://github.com/littlstar/ara-content-manager/commit/9453a50))
-
-
-
-## [0.11.3](https://github.com/littlstar/ara-content-manager/compare/0.11.2...0.11.3) (2019-03-08)
-
-
-### Bug Fixes
-
-* **register.js:** moved cacheUserDid to registration confirmation ([a386c30](https://github.com/littlstar/ara-content-manager/commit/a386c30))
-
-
-
-## [0.11.2](https://github.com/littlstar/ara-content-manager/compare/0.11.1...0.11.2) (2019-03-08)
-
-
-### Bug Fixes
-
-* **afm.js | cleaOutdatedData:** removed (Deprecated) ([da3834d](https://github.com/littlstar/ara-content-manager/commit/da3834d))
-
-
-
-## [0.11.1](https://github.com/littlstar/ara-content-manager/compare/0.11.0...0.11.1) (2019-03-08)
-
-
-### Features
-
-* extended tracking ([7d45ce7](https://github.com/littlstar/ara-content-manager/commit/7d45ce7))
-* **analytics:** added purchase start and end trackers ([50c419d](https://github.com/littlstar/ara-content-manager/commit/50c419d))
-* **scripts/:** programatically append version to .app and .exe ([219e301](https://github.com/littlstar/ara-content-manager/commit/219e301))
-
-
-
-# [0.11.0](https://github.com/littlstar/ara-content-manager/compare/0.10.8...0.11.0) (2019-03-07)
-
-
-### Bug Fixes
-
-* Fix file add for Linux ([5af6c0b](https://github.com/littlstar/ara-content-manager/commit/5af6c0b))
-
-
-### Features
-
-* Add download url box ([589cd19](https://github.com/littlstar/ara-content-manager/commit/589cd19))
-* **kernel:** Fix integration with new DCDN ([8977130](https://github.com/littlstar/ara-content-manager/commit/8977130))
-
-
-
-## [0.10.8](https://github.com/littlstar/ara-content-manager/compare/0.10.7...0.10.8) (2019-03-07)
-
-
-### Bug Fixes
-
-* **purchaseEstimate.js:** referenced `did` properly ([0d37af6](https://github.com/littlstar/ara-content-manager/commit/0d37af6))
-
-
-
-## [0.10.7](https://github.com/littlstar/ara-content-manager/compare/0.10.6...0.10.7) (2019-03-05)
-
-
-
-## [0.10.6](https://github.com/littlstar/ara-content-manager/compare/0.10.5...0.10.6) (2019-03-05)
-
-
-
-## [0.10.5](https://github.com/littlstar/ara-content-manager/compare/0.10.4...0.10.5) (2019-03-04)
+* **analytics:** added purchase start and end trackers ([3356300](https://github.com/littlstar/ara-content-manager/commit/3356300))
+* **kernel:** Fix integration with new DCDN ([f796bb8](https://github.com/littlstar/ara-content-manager/commit/f796bb8))
+* **scripts/:** programatically append version to .app and .exe ([9f36594](https://github.com/littlstar/ara-content-manager/commit/9f36594))
+* Add download url box ([badde84](https://github.com/littlstar/ara-content-manager/commit/badde84))
+* Add download url box ([7c57738](https://github.com/littlstar/ara-content-manager/commit/7c57738))
+* extended tracking ([3c445f3](https://github.com/littlstar/ara-content-manager/commit/3c445f3))
 
 
 
