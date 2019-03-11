@@ -1,4 +1,4 @@
-const { events } = require('events')
+const { events } = require('k')
 const { closeModal, emit } = require('../../lib/tools/windowManagement')
 const Button = require('../../components/button')
 const { utils } = require('../../lib/tools')
@@ -9,18 +9,16 @@ module.exports = (load) => {
   const updateButton = new Button({
     children: 'Update',
     onclick: () => {
-      emit({ event: events, load }),
+      emit({ event: events.CONFIRM_UPDATE_FILE, load })
       closeModal()
     }
   })
   const cancelbutton = new Button({
     ...styles.buttonSelector('cancel'),
-    onclick: () => {
-      closeModal()
-    }
+    onclick: () => closeModal()
   })
 
-  return html`
+  return (html`
     <div class="${styles.container({})} modals-container">
       <div>
         <div class="${styles.messageBold} ${styles.bottomMargin} modal-messageBold/bottomMargin">
@@ -42,5 +40,5 @@ module.exports = (load) => {
         ${cancelbutton.render({})}
       </div>
     </div>
-  `
+  `)
 }
