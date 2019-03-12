@@ -2,7 +2,6 @@ const debug = require('debug')('ara:fm:kernel:daemons:afsManager')
 
 const araContracts = require('ara-contracts')
 const araFilesystem = require('ara-filesystem')
-const onExit = require('async-exit-hook')
 const { events } = require('k')
 const fs = require('fs')
 const mirror = require('mirror-folder')
@@ -90,9 +89,6 @@ async function getAfsDownloadStatus(did, shouldBroadcast, password = null) {
 		debug('Error getting download status %o', err)
 	}
 
-  onExit(async (done) => {
-    newAfs && await newAfs.close()
-  })
 	return { downloadPercent, status }
 }
 
