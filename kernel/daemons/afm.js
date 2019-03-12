@@ -104,6 +104,7 @@ function saveUserData( { userDID, userData }) {
 module.exports = {
 	cacheUserDid,
 	getAFMPath,
+  getAFMDirectory,
 	getAnalyticsPermission,
 	getCachedUserDid,
 	getAppData,
