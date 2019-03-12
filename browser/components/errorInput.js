@@ -42,7 +42,7 @@ class ErrorInput extends Nanocomponent {
 			<div class="${styles.container} ErrorInput-container">
 				${children.input.render({
 					disabled,
-					requiredIndicator: !!errorMessage,
+					requiredIndicator: Boolean(errorMessage),
 					value
 				})}
 				<div class="${styles.errorMsg} ErrorInput-errorMsg">
