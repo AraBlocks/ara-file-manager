@@ -82,7 +82,8 @@ async function getAfsDownloadStatus(did, shouldBroadcast, password = null) {
 			status = events.DOWNLOADED_PUBLISHED
       const mntDir = path.resolve(path.join(afm.getAFMDirectory(), MNT_PATH))
       const title = (await daemonsUtil.readFileMetadata(did)).title || createAFSKeyPath(did).split(path.sep).pop()
-      await fuse.mount(newAfs, mntDir, title)
+      const context = { afs: newAfs, afsdir: mntDir, title }
+      await fuse.mount(context)
 		} else if (downloadPercent > 0) {
 			status = events.DOWNLOADING
 		} else if (downloadPercent === 0 && shouldBroadcast) {
