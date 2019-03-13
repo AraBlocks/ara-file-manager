@@ -1,17 +1,18 @@
 const debug = require('debug')('ara:fm:kernel:daemons:afsManager')
 
-const araContracts = require('ara-contracts')
+const { MNT_PATH } = require('../../lib/constants/application')
 const araFilesystem = require('ara-filesystem')
-const { events } = require('k')
-const fs = require('fs')
+const araContracts = require('ara-contracts')
 const mirror = require('mirror-folder')
-const path = require('path')
 const { shell } = require('electron')
+const { events } = require('k')
+const path = require('path')
+const fs = require('fs')
 
 const daemonsUtil = require('./utils')
 const afm = require('./afm')
 
-const fuse = require('./fuse')
+const fuse = require('afm-fuse-plugin')
 
 async function createDeployEstimateAfs(userDID, password) {
   try {
@@ -79,7 +80,9 @@ async function getAfsDownloadStatus(did, shouldBroadcast, password = null) {
 		}
 		if (downloadPercent === 1) {
 			status = events.DOWNLOADED_PUBLISHED
-      await fuse.mount(newAfs)
+      const mntDir = path.resolve(path.join(afm.getAFMDirectory(), MNT_PATH))
+      const title = (await daemonsUtil.readFileMetadata(did)).title || createAFSKeyPath(did).split(path.sep).pop()
+      await fuse.mount(newAfs, mntDir, title)
 		} else if (downloadPercent > 0) {
 			status = events.DOWNLOADING
 		} else if (downloadPercent === 0 && shouldBroadcast) {
