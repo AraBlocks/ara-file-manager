@@ -62,8 +62,6 @@ async function populateUI(publishedAFS, purchasedAFS, credentials) {
   const { userDID, accountAddress, password } = credentials
   const allAFS = publishedAFS.concat(purchasedAFS)
 
-  await Promise.all(publishedAFS.map(_getCommitStatus))
-  windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
   Promise.all(_getDownloadPercAndStatus(store.files.published.concat(store.files.purchased)))
     .then(async () => {
       windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
@@ -92,18 +90,11 @@ async function _getAllocatedRewards(did, userDID, password) {
   dispatch({ type: events.GOT_REWARDS, load: { did, allocatedRewards } })
 }
 
-//Check if published AFS are committed
-async function _getCommitStatus({ did, status }) {
-  status = await afs.isCommitted(did) ? status : events.UNCOMMITTED
-  dispatch({ type: events.GOT_COMMIT_STATUS, load: { did, status } })
-}
 
 //Gets the download percent and descriptor status of each AFS
 function _getDownloadPercAndStatus(files) {
   return files.map(async (file) => {
-    const load = file.status === events.UNCOMMITTED
-      ? file
-      : await afs.getAfsDownloadStatus(file.did, file.shouldBroadcast)
+    const load = await afs.getAfsDownloadStatus(file.did, file.shouldBroadcast)
     dispatch({ type: events.GOT_DL_PERC_AND_STATUS, load: { did: file.did, ...load } })
   })
 }

@@ -17,7 +17,6 @@ module.exports = ({
         : shouldBroadcast ? 'teal' : 'black'
       break
     case events.PAUSED:
-    case events.UNCOMMITTED:
       color = 'black'
       break
     case events.AWAITING_DOWNLOAD:

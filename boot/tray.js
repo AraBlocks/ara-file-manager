@@ -17,7 +17,7 @@ const buildTray = () => {
 
   const menuItems = [
     { label: 'File Manager', type: 'normal', visible: false, click: () => openWindow('filemanager') },
-    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(events.DEPLOY_PROXY) },
+    { label: 'Publish File', type: 'normal', visible: false, click: () => internalEmitter.emit(events.OPEN_MANAGE_FILE_VIEW) },
     { label: 'Account', type: 'normal', visible: false, click: () => openWindow('accountInfo') },
     {
       label: 'Register',

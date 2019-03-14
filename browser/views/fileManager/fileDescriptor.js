@@ -21,7 +21,7 @@ class FileDescriptor extends Nanocomponent {
     const nameDiv = (html`
         <div class="${styles.nameHolder} fileDescriptor-nameHolder">
           <div class="${styles.name(awaitingStatus)} ${awaitingStatus ? 'blinker' : ''} fileDescriptor-name">
-            ${[events.OUT_OF_SYNC, events.UPDATE_AVAILABLE, events.UNCOMMITTED].includes(status)
+            ${[events.OUT_OF_SYNC, events.UPDATE_AVAILABLE].includes(status)
               ? [html`<span class="${styles.exclamation} fileDescriptor-exclamation">!</span> `, ' ' + name]
               : name}
           </div>
@@ -66,9 +66,6 @@ class FileDescriptor extends Nanocomponent {
         spanColor = 'orange'
         msg = '(Update Available)'
         break
-      case events.UNCOMMITTED:
-        spanColor = 'orange'
-        msg = '(Not Published)'
     }
 
     const [_size, unit] = filesize(size, { output: 'array' })

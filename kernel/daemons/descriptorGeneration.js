@@ -58,7 +58,7 @@ async function makeDescriptor(did, opts = {}) {
 			datePublished: meta.timestamp,
 			name: meta.title,
 			path: AFSPath,
-			price: Number(await act.getAFSPrice({ did })),
+			price: Number(await act.getAFSPrice({ did, showDebug: false })),
 			size: meta.size || 0,
 			status
 		}, opts)

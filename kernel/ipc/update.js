@@ -6,40 +6,43 @@ const { events } = require('k')
 const windowManager = require('electron-window-manager')
 const { internalEmitter } = require('electron-window-manager')
 
-const { afs, rewardsDCDN, utils: daemonsUtil } = require('../daemons')
+const {
+  act,
+  afs,
+  rewardsDCDN,
+  utils: daemonsUtil
+} = require('../daemons')
 const dispatch = require('../redux/reducers/dispatch')
 const { pause } = require('../lib')
 
 const store = windowManager.sharedData.fetch('store')
 
-ipcMain.on(events.FEED_MANAGE_FILE, async (_, load) => {
-  debug('%s heard', events.FEED_MANAGE_FILE)
-  const { files, farmer } = store
+ipcMain.on(events.LOAD_MANAGE_FILE_UPDATE, async (_, { did, name }) => {
+  debug('%s heard', events.LOAD_MANAGE_FILE_UPDATE)
+  const { farmer } = store
   try {
-    const file = files.published.find(({ did }) => did === load.did)
     dispatch({
-      type: events.FEED_MANAGE_FILE,
+      type: events.LOAD_MANAGE_FILE_UPDATE,
       load: {
-        did: load.did,
-        price: file.price,
-        name: load.name || '',
+        did,
+        price: 0,
+        name: name || '',
         fileList: [],
-        uncommitted: file.status === events.UNCOMMITTED
+        uncommitted: false
       }
     })
     windowManager.openWindow('manageFileView')
 
-    if (file.status === events.UNCOMMITTED) { return }
-    dispatch({ type: events.CHANGE_BROADCASTING_STATE, load: { did: load.did, shouldBroadcast: false } })
-    await rewardsDCDN.unjoinBroadcast({ farmer: farmer.farm, did: load.did })
+    dispatch({ type: events.CHANGE_BROADCASTING_STATE, load: { did, shouldBroadcast: false } })
+    await rewardsDCDN.unjoinBroadcast({ farmer: farmer.farm, did })
 
     dispatch({
-      type: events.FEED_MANAGE_FILE,
+      type: events.LOAD_MANAGE_FILE_UPDATE,
       load: {
-        did: load.did,
-        price: file.price,
-        name: load.name,
-        fileList: await afs.getFileList(load.did),
+        did,
+        fileList: await afs.getFileList(did),
+        name,
+        price: await act.getAFSPrice({ did }),
         uncommitted: false
       }
     })
@@ -75,6 +78,9 @@ ipcMain.on(events.UPDATE_META, async (_, load) => {
     windowManager.closeWindow('generalPleaseWaitModal')
     windowManager.openModal('generalMessageModal')
   } catch (err) {
+    debug('Error in %s: %o', events.UPDATE_META, err)
+    dispatch({ type: events.FEED_MODAL, load: { modalName: 'failureModal2' } })
+    windowManager.openModal('generalMessageModal')
   }
 })
 
