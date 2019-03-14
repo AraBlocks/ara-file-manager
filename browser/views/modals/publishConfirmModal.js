@@ -9,7 +9,7 @@ module.exports = (load) => {
   const publishButton = new Button({
     children: 'Publish',
     onclick: () => {
-      emit({ event: events.CONFIRM_PUBLISH, load: { ...load } }),
+      emit({ event: events.CONFIRM_PUBLISH, load: { ...load } })
       closeModal()
     }
   })

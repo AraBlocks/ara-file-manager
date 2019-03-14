@@ -51,10 +51,6 @@ module.exports = (state, { load = null, type }) => {
       state.published = load.published
       state.purchased = load.purchased
       break
-    case events.GOT_COMMIT_STATUS:
-      file = findFile(load.did, state.published)
-      file.status = load.status === events.UNCOMMITTED ? events.UNCOMMITTED : file.status
-      break
     case events.GOT_DL_PERC_AND_STATUS:
       file = findFile(load.did, state.published.concat(state.purchased))
       file.status = load.status
@@ -97,8 +93,7 @@ module.exports = (state, { load = null, type }) => {
       file.status = events.PAUSED
       break
     case events.PUBLISHING:
-      file = findFile(load.did, state.published)
-      Object.assign(file, load)
+      state.published.push(load)
       break
     case events.PUBLISHED:
       file = findFile(load.did, state.published)

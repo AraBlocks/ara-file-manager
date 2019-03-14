@@ -28,12 +28,12 @@ async function getAccountAddress(owner, password) {
 	}
 }
 
-async function getAFSPrice({ did }) {
+async function getAFSPrice({ did, showDebug = true }) {
 	let result = 0
 	try {
 		result = await araFilesystem.getPrice({ did })
 	} catch (err) {
-		debug('Error getting price: %o', err)
+		showDebug && debug('Error getting price: %o', err)
 	}
 	return result
 }

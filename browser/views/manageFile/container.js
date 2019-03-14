@@ -25,7 +25,6 @@ class Container extends Nanocomponent {
       price: opts.price || '',
       uncommitted: opts.uncommitted
     }
-
     this.children = {
       utilityButton: new UtilityButton({ onclick: this.closeWindow.bind(this) }),
       fileInfo: new FileInfo({
@@ -40,7 +39,7 @@ class Container extends Nanocomponent {
         onclick: () => clipboard.writeText(opts.did)
       }),
       publishButton: new Button({
-        children: 'Publish Update',
+        children: this.state.uncommitted ? 'Publish' : 'Publish Update',
         cssClass: { name: 'thinBorder' },
         onclick: this.updateFile.bind(this)
       })
@@ -91,15 +90,6 @@ class Container extends Nanocomponent {
     this.render({})
   }
 
-  update({ fileList }) {
-    const { state } = this
-    if (fileList != null && state.afsContents.length == 0) {
-      state.fileList = fileList
-      state.afsContents = fileList
-    }
-    return true
-  }
-
   get pathDiff() {
     const { state } = this
     const subPaths = state.fileList.map(file => file.subPath)
@@ -142,14 +132,14 @@ class Container extends Nanocomponent {
       windowManagement.emit({ event: events.PUBLISH, load })
     } else if (this.fileInfoChanged) {
       windowManagement.emit({ event: events.UPDATE_FILE, load })
-    } else if (this.nameChanged && state.uncommitted !== true) {
+    } else if (this.nameChanged && !state.uncommitted) {
       windowManagement.emit({ event: events.UPDATE_META, load: { did: load.did, name: load.name } })
     }
   }
 
   renderDescription() {
     const { state } = this
-    const manageFileText = html`
+    const manageFileText = (html`
       <div class="${styles.descriptionHolder} manageFileContainer-descriptionHolder">
         <div>
           This package has been published to the Ara Network. You can edit and update the package here. The changes will be
@@ -160,8 +150,9 @@ class Container extends Nanocomponent {
           users
           to be able to download it.
         </div>
-      </div>`
-    const publishFileText = html`
+      </div>
+    `)
+    const publishFileText = (html`
       <div class="${styles.descriptionHolder} manageFileContainer-descriptionHolder">
         <div>
           Publish your package for distribution on the Ara Network. You can publish a single file or an entire directory as a
@@ -173,7 +164,8 @@ class Container extends Nanocomponent {
           users
           to be able to download it.
         </div>
-      </div>`
+      </div>
+    `)
     return state.uncommitted ? publishFileText : manageFileText
   }
 
@@ -182,15 +174,27 @@ class Container extends Nanocomponent {
     attributes.cssClass = this.somethingChanged ? { name: 'standard' } : { name: 'thinBorder' }
 
     if (this.fileInfoChanged) {
-      const span = html`
+      const span = (html`
         <span style="font-family: ProximaNova-light;">
           (${ filesize(this.state.fileList.reduce((sum, file) => sum += file.size, 0))})
         </span>
-      `
+      `)
       attributes.children = ['Publish', span]
     }
-
     return attributes
+  }
+
+  update({ fileList, price }) {
+    const { state } = this
+    if (fileList != null && state.afsContents.length == 0) {
+      state.fileList = fileList
+      state.afsContents = fileList
+    }
+    if (price) {
+      state.oldPrice = price
+      state.price = price
+    }
+    return true
   }
 
   createElement({ spinner = false }) {
@@ -205,7 +209,7 @@ class Container extends Nanocomponent {
         <div class="${styles.content} ManageFileContainer-content">
           ${this.renderDescription()}
         </div>
-        ${children.packageIDTooltip.render()}
+        ${state.uncommitted ? null : children.packageIDTooltip.render()}
         <div class="${styles.divider} ManageFileContainer-divider"></div>
         ${children.fileInfo.render({ parentState: state })}
         ${children.publishButton.render(publishBtnAttributes)}

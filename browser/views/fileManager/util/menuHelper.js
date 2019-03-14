@@ -28,7 +28,7 @@ module.exports = (opts, closeContextMenuCB = () => {}) => {
         ? menuItems.addItem('Stop Seeding', events.STOP_SEEDING)
         : menuItems.addItem('Seed', events.START_SEEDING)
       menuItems.addItem('Open Package', events.OPEN_AFS)
-      if (opts.owner) { menuItems.addItem('Manage Package', events.FEED_MANAGE_FILE) }
+      if (opts.owner) { menuItems.addItem('Manage Package', events.LOAD_MANAGE_FILE_UPDATE) }
       break
     case events.AWAITING_DOWNLOAD:
       menuItems.addItem('Download Package', events.DOWNLOAD)
@@ -46,11 +46,6 @@ module.exports = (opts, closeContextMenuCB = () => {}) => {
     case events.OUT_OF_SYNC:
       //TODO: this event is not correct
       menuItems.addItem('Sync Package', events.UPDATE_FILE)
-      break
-    case events.UNCOMMITTED:
-      //Listener for DEPLOY_PROXY will check for unpublished AFS, find it, and open publishView. No proxy will be deployed
-      menuItems.pop()
-      menuItems.addItem('Publish Package', events.DEPLOY_PROXY)
       break
     case events.CONNECTING:
       menuItems.addItem('Stop Connecting', events.STOP_SEEDING)

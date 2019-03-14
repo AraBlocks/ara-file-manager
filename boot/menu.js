@@ -12,7 +12,7 @@ function buildMenu() {
       { label: "About", selector: "orderFrontStandardAboutPanel:" },
       { type: 'separator' },
       { label: 'File Manager', click: () => windowManager.openWindow('filemanager') },
-      { label: 'Publish File', click: () => internalEmitter.emit(events.DEPLOY_PROXY) },
+      { label: 'Publish File', click: () => internalEmitter.emit(events.OPEN_MANAGE_FILE_VIEW) },
       { label: 'Account', click: () => windowManager.openWindow('accountInfo') },
       {
         label: 'Register',

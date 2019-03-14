@@ -1,15 +1,15 @@
 const { clipboard, remote } = require('electron')
+const { events } = require('k')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 const windowManager = remote.require('electron-window-manager')
 
 const Button = require('../components/button')
-const { events } = require('k')
 const styles = require('./modals/styles')
 const windowManagement = require('../lib/tools/windowManagement')
 
 class MnemonicWarning extends Nanocomponent {
-  constructor({ contentDID, isAFS = false, mnemonic }) {
+  constructor({ isAFS = false, mnemonic }) {
     super()
     this.props = { mnemonic, isAFS }
     this.state = { copied: false }
@@ -29,7 +29,7 @@ class MnemonicWarning extends Nanocomponent {
         onclick: () => {
           if (!this.state.copied) { return }
           this.props.isAFS
-            ? windowManagement.emit({ event: events.FEED_MANAGE_FILE, load: { did: contentDID } })
+            ? windowManagement.transitionModal('publishSuccessModal')
             : windowManager.openWindow('filemanager')
           windowManagement.closeModal('mnemonicWarning')
         }

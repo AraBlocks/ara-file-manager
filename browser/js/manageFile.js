@@ -10,10 +10,21 @@ const manageFileContainer = new ManageFileContainer({
 	...modal.manageFileData
 })
 
-document.getElementById('container').appendChild(manageFileContainer.render({ spinner: !modal.manageFileData.uncommitted }))
+document.getElementById('container')
+	.appendChild(manageFileContainer.render({ spinner: !modal.manageFileData.uncommitted }))
 
-const estimateListener = ipcRenderer.on(events.ESTIMATING_COST, () => manageFileContainer.render({ spinner: true }))
-const refreshListener = ipcRenderer.on(events.REFRESH, () => manageFileContainer.render({ spinner: false, fileList: modal.manageFileData.fileList }))
+const estimateListener = ipcRenderer.on(events.ESTIMATING_COST, () =>
+	manageFileContainer.render({ spinner: true })
+)
+
+const refreshListener = ipcRenderer.on(events.REFRESH, () =>
+	manageFileContainer.render({
+		fileList: modal.manageFileData.fileList,
+		spinner: false,
+		price: modal.manageFileData.price
+	})
+)
+
 window.onunload = () => {
 	ipcRenderer.removeListener(events.REFRESH, refreshListener)
 	ipcRenderer.removeListener(events.ESTIMATING_COST, estimateListener)
