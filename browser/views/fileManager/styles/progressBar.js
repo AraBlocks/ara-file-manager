@@ -17,6 +17,8 @@ module.exports = {
       case events.UPDATING_FILE:
         text = 'Updating'
         break
+      default:
+        text = 'Connecting'
     }
     return css`
       :host {
