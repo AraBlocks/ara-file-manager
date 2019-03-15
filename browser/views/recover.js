@@ -95,6 +95,8 @@ class Recover extends Nanocomponent {
     if (mnemonic.split(' ').length !== 12) {
       errorMessages.mnemonic = 'Mnemonic must be 12 words separated by a space'
       validInput = false
+    }
+
     if (!password) {
       errorMessages.password = 'Password must not be left blank'
       validInput = false
