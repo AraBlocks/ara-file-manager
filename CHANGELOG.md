@@ -1,3 +1,12 @@
+## [0.11.12](https://github.com/littlstar/ara-content-manager/compare/0.11.11...0.11.12) (2019-03-15)
+
+
+### Bug Fixes
+
+* **recover.js:** derp ([57e9e8b](https://github.com/littlstar/ara-content-manager/commit/57e9e8b))
+
+
+
 ## [0.11.11](https://github.com/littlstar/ara-content-manager/compare/0.11.10...0.11.11) (2019-03-12)
 
 
