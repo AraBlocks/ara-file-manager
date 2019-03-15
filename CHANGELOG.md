@@ -1,3 +1,12 @@
+## [0.11.13](https://github.com/littlstar/ara-content-manager/compare/0.11.12...0.11.13) (2019-03-15)
+
+
+### Bug Fixes
+
+* **confirmSendModal.js:** added back event ([0d1c780](https://github.com/littlstar/ara-content-manager/commit/0d1c780))
+
+
+
 ## [0.11.12](https://github.com/littlstar/ara-content-manager/compare/0.11.11...0.11.12) (2019-03-15)
 
 
