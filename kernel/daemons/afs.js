@@ -12,7 +12,11 @@ const fs = require('fs')
 const daemonsUtil = require('./utils')
 const afm = require('./afm')
 
-const fuse = require('afm-fuse-plugin')
+// const fuse = require('afm-fuse-plugin')
+const plugins = require('electron-plugins')
+const dlnacasts2 = require('dlnacasts2')()
+const { NodeMediaServer } = require('node-media-server')
+const pify = require('pify')
 
 async function createDeployEstimateAfs(userDID, password) {
   try {
@@ -82,8 +86,37 @@ async function getAfsDownloadStatus(did, shouldBroadcast, password = null) {
 			status = events.DOWNLOADED_PUBLISHED
       const mntDir = path.resolve(path.join(afm.getAFMDirectory(), MNT_PATH))
       const title = (await daemonsUtil.readFileMetadata(did)).title || createAFSKeyPath(did).split(path.sep).pop()
-      const context = { afs: newAfs, afsdir: mntDir, title }
-      await fuse.mount(context)
+      const context = { afs: newAfs, afmdir: mntDir, title }
+      // await fuse.mount(context)
+
+      const player = dlnacasts2.players.find(player => player.name === 'Littlstar VR Cinema') // Littlstar VR Cinema
+      debug('player', player)
+
+      plugins.load(context, async (err, loaded) => {
+        if(err) {
+          debug(err)
+        } else {
+          const mntPath = path.resolve(path.join(mntDir, title))
+          const contents = await pify(fs.readdir)(mntPath)
+          const filePath = path.resolve(path.join(mntPath, contents[0]))
+          debug('mntPath', mntPath)
+          debug('filePath', filePath)
+
+          const config = {
+            http: {
+              port: 8000,
+              mediaroot: mntPath,
+              allow_origin: '*'
+            }
+          }
+          // const nms = new NodeMediaServer(config)
+          // nms.run()
+          debug('playing at', `http://10.0.0.38:8000/${contents[0]}`)
+          player.play(`http://10.0.0.38:8000/${contents[0]}`, { title: contents[0], type: 'video/mp4' })
+          debug('Successfully loaded plugin')
+        }
+      })
+      // debug('players', dlnacasts2.players)
 		} else if (downloadPercent > 0) {
 			status = events.DOWNLOADING
 		} else if (downloadPercent === 0 && shouldBroadcast) {

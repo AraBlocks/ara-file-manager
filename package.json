@@ -34,7 +34,6 @@
   },
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
-    "afm-fuse-plugin": "github:littlstar/afm-fuse-plugin",
     "ara-context": "github:arablocks/ara-context#semver:0.5.x",
     "ara-contracts": "github:arablocks/ara-contracts#semver:0.23.x",
     "ara-filesystem": "github:arablocks/ara-filesystem#semver:0.25.x",
@@ -45,8 +44,10 @@
     "component-box": "github:MarkGeeRomano/component-box#mgr-constructor-args",
     "css": "file:browser/lib/cssTool",
     "did-uri": "^0.2.6",
+    "dlnacasts2": "^0.1.2",
     "domready": "^1.0.8",
     "electron-is-dev": "^0.3.0",
+    "electron-plugins": "^0.0.x",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-manager": "^1.0.6",
     "filesize": "^3.6.1",
@@ -55,6 +56,7 @@
     "mirror-folder": "^3.0.0",
     "nanocomponent": "^6.5.2",
     "nanohtml": "^1.4.0",
+    "node-media-server": "^1.4.12",
     "pify": "^4.0.1",
     "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
@@ -89,5 +91,8 @@
     "sources": [
       "src/*.{js}"
     ]
+  },
+  "plugins": {
+    "afm-fuse-plugin": "0.0.1"
   }
 }
