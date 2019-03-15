@@ -12,7 +12,7 @@ module.exports = ({
     children: 'Confirm',
     onclick: () => {
       emit({
-        event: events,
+        event: events.CONFIRM_SEND_ARA,
         load: {
 					amount,
 					receiver
