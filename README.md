@@ -20,11 +20,12 @@ This project is in active developement. `dev` is stable branch.
 ## Development
 
 ```shell
-$ npm install --verbose
+$ npm install --verbose --no-optional
 $ npm run start-dev [loggedin] [<DID>] [<password>]
 ```
 
 Use the `--verbose` flag to get more granular feedback from npm.
+The `--no-optional` flag will prevent unnecessary and heavy packages from being installed.
 `npm install` downloads a large number of modules, compiles native code, and takes a minute or two to do all this.
 
 You can follow the `start-dev` with an optional string: "`loggedin`". If you add this, you'll need to follow it with the DID you'd like to log in with, and the corresponding password to that DID. It will boot the app with you logged in already, for speedier development.
