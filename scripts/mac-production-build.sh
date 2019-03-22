@@ -19,7 +19,7 @@ echo 'Packaging production build'
 
 ./node_modules/.bin/electron-osx-sign ./release-builds/Ara\ File\ Manager-darwin-x64/Ara\ File\ Manager.app/ --identity='Developer ID Application: Little Star Media, Inc. (HXEASF63SW)'
 
-zip -r release-builds/Ara\ File\ Manager-darwin-x64/Ara\ File\ Manager.zip release-builds/Ara\ File\ Manager-darwin-x64/Ara\ File\ Manager.app
+zip -r -q release-builds/Ara\ File\ Manager-darwin-x64/Ara\ File\ Manager.zip release-builds/Ara\ File\ Manager-darwin-x64/Ara\ File\ Manager.app
 
 sed -i.bak s/"const IS_PRODUCTION = "[[:print:]]*/"const IS_PRODUCTION = false"/ "$ANALYTICS_CONSTANTS"
 
