@@ -11,7 +11,7 @@ enabling your users to buy, sell, own, upload, and download content, all in the 
 
 ## Status
 
-This project is in active developement. `dev` is stable branch.
+This project is in active developement.
 
 ## Dependencies
 
