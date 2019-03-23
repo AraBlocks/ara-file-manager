@@ -64,9 +64,9 @@ class Container extends Nanocomponent {
     const { state } = this
     const { addPaths, removePaths } = this.pathDiff
 
-    const priceChanged = state.oldPrice != state.price
-    const shouldCommit = !(addPaths.length == 0 && removePaths.length == 0)
-    const notEmpty = state.fileList.length != 0
+    const priceChanged = state.oldPrice !== state.price
+    const shouldCommit = !(addPaths.length === 0 && removePaths.length === 0)
+    const notEmpty = state.fileList.length !== 0
 
     return (priceChanged || shouldCommit) && notEmpty && state.price >= 0
   }
@@ -94,7 +94,7 @@ class Container extends Nanocomponent {
     const { state } = this
     const subPaths = state.fileList.map(file => file.subPath)
     const removePaths = state.afsContents.filter(file =>
-      !subPaths.includes(file.subPath) && file.fullPath == null
+      !subPaths.includes(file.subPath) && file.fullPath === null
     ).map(file => file.subPath)
     const addPaths = state.fileList.filter(file =>
       file.fullPath != null
@@ -123,7 +123,7 @@ class Container extends Nanocomponent {
       password: account.password,
       removePaths,
       size: state.fileList.reduce((sum, file) => sum += file.size, 0),
-      shouldCommit: !(addPaths.length == 0 && removePaths.length == 0),
+      shouldCommit: !(addPaths.length === 0 && removePaths.length === 0),
       shouldUpdatePrice: state.oldPrice != state.price,
       price: state.price || 0,
       userDID: account.userDID
@@ -186,7 +186,7 @@ class Container extends Nanocomponent {
 
   update({ fileList, price }) {
     const { state } = this
-    if (fileList != null && state.afsContents.length == 0) {
+    if (fileList != null && state.afsContents.length === 0) {
       state.fileList = fileList
       state.afsContents = fileList
     }
@@ -199,7 +199,7 @@ class Container extends Nanocomponent {
 
   createElement({ spinner = false }) {
     const { children, state, publishBtnAttributes } = this
-    return html`
+    return (html`
       <div class="${styles.container} ManageFileContainer-container">
         ${overlay(spinner)}
         <div class="${styles.horizontalContainer} ${styles.title} ManageFileContainer-horizontalContainer,title">
@@ -214,7 +214,7 @@ class Container extends Nanocomponent {
         ${children.fileInfo.render({ parentState: state })}
         ${children.publishButton.render(publishBtnAttributes)}
       </div>
-    `
+    `)
   }
 }
 
