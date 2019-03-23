@@ -32,7 +32,11 @@ class Header extends Nanocomponent {
       publishFilebutton: new Button({
         children: 'Publish New File',
         cssClass: { opts: { fontSize: 14 } },
-        onclick: () => windowManagement.emit({ event: events.OPEN_MANAGE_FILE_VIEW})
+        onclick: () => {
+          if (!account.pendingPublish) {
+            windowManagement.emit({ event: events.OPEN_MANAGE_FILE_VIEW})
+          }
+        }
       }),
       copyDidTooltip: new DynamicTooltip({
         children: 'ID: ' + this.props.userDID.slice(0, 8) + '...',
