@@ -24,10 +24,10 @@ provider[]=http://127.0.0.1:8545
 provider[]=ws://127.0.0.1:8546
 
 [web3.testnet]
-provider[]=wss://ropsten.infura.io/ws
+provider[]=infuraRopsten
 
 [web3.mainnet]
-provider[]=wss://mainnet.infura.io/ws
+provider[]=infura
 
 ;; Identity network
 [network.identity]
