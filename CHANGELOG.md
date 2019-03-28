@@ -1,3 +1,12 @@
+# [0.12.0](https://github.com/littlstar/ara-content-manager/compare/0.11.15...0.12.0) (2019-03-28)
+
+
+### Bug Fixes
+
+* **boot/writeFiles.js:** Update infura in ararc ([1d5def0](https://github.com/littlstar/ara-content-manager/commit/1d5def0))
+
+
+
 ## [0.11.15](https://github.com/littlstar/ara-content-manager/compare/0.11.14...0.11.15) (2019-03-23)
 
 
