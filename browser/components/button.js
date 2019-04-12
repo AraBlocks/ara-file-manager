@@ -10,7 +10,7 @@ class Button extends Nanocomponent {
     onmouseout = () => {},
     onmouseover = () => {},
     type = ''
-  }) {
+  } = {}) {
     super()
 
     this.props = {
@@ -23,7 +23,7 @@ class Button extends Nanocomponent {
     }
   }
 
-  update(newProps) {
+  update(newProps = {}) {
     const { props } = this
     Object.assign(props, newProps)
     return true
@@ -31,7 +31,7 @@ class Button extends Nanocomponent {
 
   createElement() {
     const { props } = this
-    return html`
+    return (html`
       <button
         class="${styles[props.cssClass.name || 'standard'](props.cssClass.opts || {})}"
         onclick="${props.onclick}"
@@ -41,7 +41,7 @@ class Button extends Nanocomponent {
       >
         ${props.children}
       </button>
-    `
+    `)
   }
 }
 
