@@ -5,7 +5,7 @@ const { window } = new JSDOM(`<!DOCTYPE html><div id="root"></div>`)
 global.window = window
 global.document = window.document
 
-const Button = require('../../browser/components/button')
+const Button = require('../../../browser/components/button')
 
 let button
 let counter
