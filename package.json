@@ -10,7 +10,7 @@
   "network": "test",
   "scripts": {
     "start-dev": "./node_modules/.bin/electron boot",
-    "test": "ava test/renderer/index.js",
+    "test": "ava test/renderer",
     "postinstall": "sh ./scripts/postinstall.sh && install-app-deps",
     "pack": "build --dir",
     "mac-installer": "sh ./scripts/mac-installer.sh",
