@@ -11,11 +11,12 @@ class Input extends Nanocomponent {
     onchange = () => {},
     oninput = () => {},
     placeholder = '',
+    requiredIndicator = null,
     renderView = () => {},
     type = 'text',
     step,
     value = ''
-  }) {
+  } = {}) {
     super()
     this.props = {
       araIcon,
@@ -25,6 +26,7 @@ class Input extends Nanocomponent {
       oninput,
       placeholder,
       renderView,
+      requiredIndicator,
       type,
       step,
       value
