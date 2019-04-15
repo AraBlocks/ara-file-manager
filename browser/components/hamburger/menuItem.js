@@ -4,13 +4,12 @@ const Nanocomponent = require('nanocomponent')
 
 class MenuItem extends Nanocomponent {
   constructor({
-    children = "",
+    children = '',
     onclick = () => { },
-    onclickText = ""
+    onclickText = ''
   }) {
     super()
     this.state = { children, clicked: false }
-
     this.props = {
       onclick,
       onclickText,
@@ -22,13 +21,8 @@ class MenuItem extends Nanocomponent {
 
   itemClicked(e) {
     const { props } = this
-
     props.onclick(e)
-
-    if (props.onclickText) {
-      this.renderNewText(e)
-    }
-
+    if (props.onclickText) {this.renderNewText(e) }
     this.rerender()
   }
 
@@ -58,12 +52,11 @@ class MenuItem extends Nanocomponent {
 
   createElement() {
     const { itemClicked, state } = this
-
-    return html`
+    return (html`
       <div class="${styles.container(state.clicked)} MenuItem-container" onclick=${itemClicked}>
         ${state.children}
       </div>
-    `
+    `)
   }
 }
 

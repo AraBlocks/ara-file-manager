@@ -17,9 +17,7 @@ test.beforeEach(t => {
 })
 
 test.afterEach(t => {
-  root
-    .removeChild(root
-    .getElementsByTagName('button')[0])
+  root.removeChild(root.firstChild)
 })
 
 test('Should render children properly', t => {

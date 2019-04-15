@@ -3,16 +3,22 @@ const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class DynamicTooltip extends Nanocomponent {
-	constructor(opts) {
+	constructor({
+		afterTooltipText = 'Copied!',
+		beforeTooltipText = 'Copy to Clipboard',
+		children,
+		cssClass = {},
+		itemClicked = () => {}
+	} = {}) {
 		super()
 		this.props = {
-			beforeTooltipText: opts.beforeTooltipText || 'Copy to Clipboard',
-			afterTooltipText: opts.afterTooltipText || 'Copied!',
-			itemClicked: opts.onclick,
-			cssClass: opts.cssClass || {}
+			afterTooltipText,
+			beforeTooltipText,
+			cssClass,
+			itemClicked
 		}
 		this.state = { clicked: false }
-		this.children = opts.children
+		this.children = children
 	}
 
 	update(){
@@ -21,7 +27,7 @@ class DynamicTooltip extends Nanocomponent {
 
 	createElement() {
 		const { props, children, state} = this
-		return html`
+		return (html`
 			<div class=${styles.tooltip}
 				onclick="${() => {
 					props.itemClicked()
@@ -40,7 +46,7 @@ class DynamicTooltip extends Nanocomponent {
 					${state.clicked ? props.afterTooltipText : props.beforeTooltipText}
 				</div>
 			</div>
-		`
+		`)
 	}
 }
 

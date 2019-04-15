@@ -1,13 +1,14 @@
-const Nanocomponent = require('nanocomponent')
-const styles = require('./styles/menuItem')
 const html = require('nanohtml')
+const Nanocomponent = require('nanocomponent')
+
+const styles = require('./styles/menuItem')
 
 class MenuItem extends Nanocomponent {
   constructor({
-    children = "",
+    children = '',
     onclick = () => { },
-    onclickText = ""
-  }) {
+    onclickText = ''
+  } = {}) {
     super()
     this.state = { children, clicked: false }
     this.props = {
@@ -48,7 +49,6 @@ class MenuItem extends Nanocomponent {
 
   createElement() {
     const { itemClicked, state } = this
-
     return (html`
       <div class="${styles.container(state.clicked)} MenuItem-container" onclick=${itemClicked}>
         ${state.children}
