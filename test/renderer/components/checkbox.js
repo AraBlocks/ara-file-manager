@@ -21,7 +21,7 @@ test.afterEach(t => {
 })
 
 test('Should render checked properly', t => {
-  checkbox = new Checkbox()
+  checkbox = new Checkbox
   root.appendChild(checkbox.render())
   t.true(root.firstChild.textContent.trim() === '')
   checkbox.render({ checked: true })

@@ -4,12 +4,11 @@ const Nanocomponent = require('nanocomponent')
 
 class TabMenu extends Nanocomponent {
   constructor({
-    children,
-    index,
-    selectTab
+    children = '',
+    index = 0,
+    selectTab = () => {}
   }) {
     super()
-
     this.props = {
       children,
       index,
@@ -21,9 +20,8 @@ class TabMenu extends Nanocomponent {
     return true
   }
 
-  createElement({ isActive }) {
+  createElement({ isActive } = {}) {
     const { props } = this
-
     return (html`
       <div
         class="${styles.tab(isActive)} tab-tab"

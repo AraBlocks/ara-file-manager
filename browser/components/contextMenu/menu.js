@@ -8,7 +8,7 @@ class ContextMenu extends Nanocomponent {
 		items = [],
 		direction = 'right',
 		closeContextMenu = () => { }
-	}) {
+	} = {}) {
 		super()
 		this.props = {
 			closeContextMenu,
@@ -32,7 +32,7 @@ class ContextMenu extends Nanocomponent {
 		])
 	}
 
-	update(newProps) {
+	update(newProps = {}) {
 		if (newProps.items) {
 			newProps.items = this.makeButtons(newProps.items)
 		}
@@ -47,10 +47,7 @@ class ContextMenu extends Nanocomponent {
 			props: { closeContextMenu }
 		} = this
 		return (html`
-			<div
-				class="${styles.container({ ...props })} ContextMenu-container"
-				onmouseleave=${closeContextMenu}
-			>
+			<div class="${styles.container({ ...props })} ContextMenu-container" onmouseleave=${closeContextMenu}>
 				<div class="${styles.menu(props)} ContextMenu-menu">
 					<div class="${styles.divider} ContextMenu-divider"></div>
 					${renderMenuItems()}
