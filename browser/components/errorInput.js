@@ -8,16 +8,18 @@ class ErrorInput extends Nanocomponent {
 	constructor({
 		disabled = false,
 		errorMessage = '',
+		onchange = () => {},
 		oninput = () => {},
 		placeholder = '',
 		type,
 		value = ''
-	}) {
+	} = {}) {
 		super()
 		this.props = { disabled, errorMessage, value }
 		this.children = {
 			input: new Input({
 				disabled,
+				onchange,
 				oninput,
 				placeholder,
 				value,
@@ -26,7 +28,7 @@ class ErrorInput extends Nanocomponent {
 		}
 	}
 
-	update(newProps){
+	update(newProps = {}){
 		Object.assign(this.props, newProps)
 		return true
 	}

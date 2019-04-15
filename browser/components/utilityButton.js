@@ -1,19 +1,19 @@
+const Nanocomponent = require('nanocomponent')
+const html = require('nanohtml')
+
 const styles = require('./styles/utilityButton')
 const windowManagement = require('../lib/tools/windowManagement')
-const html = require('nanohtml')
-const Nanocomponent = require('nanocomponent')
 
 const DEFAULT_CALLBACK = () => windowManagement.closeWindow()
 
 class UtilityButton extends Nanocomponent {
-  constructor({ children = 'close', onclick = DEFAULT_CALLBACK }) {
+  constructor({ children = 'close', onclick = DEFAULT_CALLBACK } = {}) {
     super()
-
     this.props = { onclick }
     this.state = { children }
   }
 
-  update({ children }) {
+  update({ children } = {}) {
     let sameState = this.state.children === children
     if (!sameState) {
       this.state.children = children
@@ -52,11 +52,11 @@ class UtilityButton extends Nanocomponent {
   createElement() {
     const { props } = this
 
-    return html`
+    return (html`
       <div onclick=${props.onclick} class=${styles.standard}>
         ${this.renderButtonIcon()}
       </div>
-    `
+    `)
   }
 }
 

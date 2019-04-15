@@ -5,7 +5,10 @@ const fileSystemManager = require('../lib/tools/fileSystemManager')
 const Input = require('../components/input')
 
 class FileSelector extends Nanocomponent {
-  constructor({ field, parentState }) {
+  constructor({
+    field = '',
+    parentState = {},
+  }) {
     super()
 
     this.props = { field, parentState }

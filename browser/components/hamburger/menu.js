@@ -4,11 +4,14 @@ const styles = require('./styles/menu')
 const Nanocomponent = require('nanocomponent')
 
 class Menu extends Nanocomponent {
-	constructor({items = [], direction = 'right',  toggleCB=()=>{} }) {
+	constructor({
+		items = [],
+		direction = 'right',
+		toggleCB = () => { }
+	} = {}) {
 		super()
 		this.props = { items: this.makeButtons(items), toggleCB }
 		this.state = { visible: false, direction }
-
 		this.toggleMenu = this.toggleMenu.bind(this)
 		this.renderMenuItems = this.renderMenuItems.bind(this)
 	}
@@ -35,7 +38,7 @@ class Menu extends Nanocomponent {
 		])
 	}
 
-	update(newProps) {
+	update(newProps = {}) {
 		if (newProps.items) {
 			newProps.items = this.makeButtons(newProps.items)
 		}
@@ -45,11 +48,10 @@ class Menu extends Nanocomponent {
 
 	createElement() {
 		const { renderMenuItems, state, toggleMenu } = this
-
 		return (html`
 			<div class="${styles.container} Menu-container" onclick=${toggleMenu} onmouseleave=${toggleMenu}>
 				<img class="${styles.hamburger} Menu-hamburger" src="../assets/images/utilityButtons/Hamburger.svg" />
-				<div class="${styles.menu(state)} Menu-menu" >
+				<div class="${styles.menu(state)} Menu-menu">
 					<div class="${styles.invisibleItem} Menu-invisibleItem"></div>
 					<div class="${styles.divider} Menu-divider"></div>
 					${renderMenuItems()}
