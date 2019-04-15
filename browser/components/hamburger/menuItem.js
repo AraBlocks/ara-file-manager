@@ -1,6 +1,7 @@
 const html = require('nanohtml')
-const styles = require('./styles/menuItem')
 const Nanocomponent = require('nanocomponent')
+
+const styles = require('./styles/menuItem')
 
 class MenuItem extends Nanocomponent {
   constructor({
