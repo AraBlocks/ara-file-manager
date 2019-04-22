@@ -1,22 +1,24 @@
-const { emit } = require('../../lib/tools/windowManagement')
-const fileSystemManager = require('../../lib/tools/fileSystemManager')
-const fileListUtil = require('../../lib/tools/fileListUtil')
 const { events } = require('k')
-const styles = require('./styles/afsFileRow')
 const filesize = require('filesize')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
+const path = require('path')
+
+const { emit } = require('../../lib/tools/windowManagement')
+const fileListUtil = require('../../lib/tools/fileListUtil')
+const fileSystemManager = require('../../lib/tools/fileSystemManager')
+const styles = require('./styles/afsFileRow')
 
 class AfsFileRow extends Nanocomponent {
 	constructor({
 		did,
 		fileInfo,
-		fileRowClicked = () => {},
-		deleteFile,
+		fileRowClicked = () => { },
+		deleteFile = () => { },
 		parentDirectory = [],
 		rowType,
 		renderView
-	}) {
+	} = {}) {
 		super()
 		this.props = {
 			did,
@@ -28,15 +30,9 @@ class AfsFileRow extends Nanocomponent {
 			renderView
 		}
 
-		this.children = {
-			menuItem: this.makeMenu()
-		}
+		this.children = { menuItem: this.makeMenu() }
 		this.fileClicked = this.fileClicked.bind(this)
 		this.exportFile = this.exportFile.bind(this)
-	}
-
-	update() {
-		return true
 	}
 
 	makeMenu() {
@@ -45,38 +41,38 @@ class AfsFileRow extends Nanocomponent {
 		let menu
 		switch (props.rowType) {
 			case events.PUBLISH:
-				menu = html`
+				menu = (html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
 						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
 					</div>
-				`
+				`)
 				break
 			case events.UPDATE_FILE:
-				menu = html`
+				menu = (html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
-						<div
-							class="${styles.menuItem}"
-							style="border-bottom: none;"
-							onclick=${this.exportFile.bind(this)}
-						>
+						<div class="${styles.menuItem}" style="border-bottom: none;" onclick=${this.exportFile.bind(this)}>
 							Export
 						</div>
-						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
+						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>
+							Delete
+						</div>
 					</div>
-				`
+				`)
 				break
 			default:
-				menu = html`
+				menu = (html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
-						<div class="${styles.menuItem}" onclick=${this.exportFile.bind(this)}>Export</div>
+						<div class="${styles.menuItem}" onclick=${this.exportFile.bind(this)}>
+							Export
+						</div>
 					</div>
-				`
+				`)
 				break
 		}
 		return menu
 	}
 
-	deleteFile(e) {
+	deleteFile() {
 		const { props } = this
 		props.deleteFile(props.fileInfo)
 	}
@@ -100,7 +96,7 @@ class AfsFileRow extends Nanocomponent {
 					}
 				})
 			})
-			.catch(() => {})
+			.catch(() => { })
 		this.rerender()
 	}
 
@@ -108,9 +104,8 @@ class AfsFileRow extends Nanocomponent {
 		return html`
 			<img
 				align="center"
-				src="../assets/images/${isFile ? 'file.png' : 'folder.png'}"
-				alt="fileIcon"
-				class=${styles.fileImage}
+				src="${path.resolve(__dirname, '..', '..', 'assets', 'images', isFile ? 'file.png' : 'folder.png')}"
+				alt="fileIcon" class=${styles.fileImage}
 			>
 		`
 	}
@@ -143,8 +138,12 @@ class AfsFileRow extends Nanocomponent {
 				e.parentNode == this || e == this
 					? null
 					: contextMenu.style.display = 'none'
-			} catch (e) {}
+			} catch (e) { }
 		})
+	}
+
+	update() {
+		return true
 	}
 
 	createElement() {
@@ -156,13 +155,9 @@ class AfsFileRow extends Nanocomponent {
 		} = this
 
 		return (html`
-			<tr
-				class="item afsFileRow-item"
-				onclick="${fileClicked}"
-				oncontextmenu="${renderContextMenu}"
-			>
+			<tr class="item afsFileRow-item" onclick="${fileClicked}" oncontextmenu="${renderContextMenu}">
 				${children.menuItem}
-				<td class="${styles.fileNameCell} afsFileRow-fileNameCell" >
+				<td class="${styles.fileNameCell} afsFileRow-fileNameCell">
 					${this.fileIconSelector(props.fileInfo.isFile)}
 					${props.fileInfo.subPath}
 				</td>

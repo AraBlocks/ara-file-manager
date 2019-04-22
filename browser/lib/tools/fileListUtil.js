@@ -44,9 +44,9 @@ module.exports = {
 	getFileType({ isFile, subPath }) {
 		if (!isFile) { return 'Folder' }
 		let fileType = path.extname(subPath)
-		fileType !== ""
+		fileType !== ''
 			? fileType = `${(fileType.slice(1)).toUpperCase()} File`
-			: fileType = "Unknown"
+			: fileType = 'Unknown'
 		return fileType
 	}
 }

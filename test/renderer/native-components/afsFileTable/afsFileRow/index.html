@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+
+<head>
+  <meta charset="UTF-8">
+  <title>afsFileRow test</title>
+</head>
+
+<body>
+  <div id="root" style="height: 100%;">
+    <div id="counter">0</div>
+  </div>
+</body>
+<script>
+  const { events } = require('k')
+  const AfsFileRow = require('../../../../../browser/components/afsFileTable/afsFileRow')
+  const afsFileRow = new AfsFileRow({
+    fileInfo: {
+      isFile: true,
+      items: [],
+      size: 3000,
+      subPath: 'foo.jpeg',
+    },
+    deleteFile: () => { },
+    parentDirectory: [],
+    rowType: events.PUBLISH,
+    renderView: () => { },
+    fileRowClicked: increment,
+  })
+  const afsFileRow2 = new AfsFileRow({
+    fileInfo: {
+      isFile: false,
+      items: [],
+      size: 30000,
+      subPath: 'bar',
+    },
+    fileRowClicked: increment,
+    rowType: events.PUBLISH,
+  })
+  document.getElementById('root').appendChild(afsFileRow.render())
+  document.getElementById('root').appendChild(afsFileRow2.render())
+  const btn = document.createElement('button')
+  btn.onclick = console.log
+  document.getElementById('root').appendChild(btn)
+  function increment() {
+    ++document.getElementById('counter').textContent
+  }
+</script>
+
+</html>

@@ -7,7 +7,7 @@ global.document = window.document
 
 const Button = require('../../../browser/components/button')
 
-let root = document.getElementById('root')
+const root = document.getElementById('root')
 
 let button
 let counter
