@@ -1,4 +1,4 @@
-# Ara File Manager
+# Ara File Manager!
 
 [![Build Status](https://travis-ci.com/AraBlocks/ara-file-manager.svg?token=6WjTyCg41y8MBmCzro5x&branch=master)](https://travis-ci.com/AraBlocks/ara-file-manager)
 
