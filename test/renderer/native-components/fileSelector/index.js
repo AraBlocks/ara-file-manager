@@ -13,6 +13,7 @@ test.beforeEach(async (t) => {
 })
 
 test.afterEach(async (t) => {
+  await new Promise(_ => setTimeout(_, 10000))
   return await t.context.app.stop()
 })
 
