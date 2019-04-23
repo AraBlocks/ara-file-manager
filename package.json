@@ -67,7 +67,6 @@
   },
   "devDependencies": {
     "ava": "^0.25.0",
-    "chai": "^4.1.2",
     "conventional-changelog-cli": "^2.0.11",
     "debug": "^3.1.0",
     "electron": "^2.0.5",
@@ -79,8 +78,7 @@
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
     "electron-winstaller": "^2.7.0",
-    "jsdom": "^14.0.0",
-    "mocha": "^5.2.0"
+    "jsdom": "^14.0.0"
   },
   "ava": {
     "files": [
