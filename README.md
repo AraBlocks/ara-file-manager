@@ -1,5 +1,7 @@
 # Ara File Manager
 
+[![Build Status](https://travis-ci.com/AraBlocks/ara-file-manager.svg?token=6WjTyCg41y8MBmCzro5x&branch=master)](https://travis-ci.com/AraBlocks/ara-file-manager)
+
 The **Ara File Manager** is a simple desktop app that demonstrates the functionality of a complete local Ara network node and cryptocurrency wallet.
 Ara is truly decentralized; with the Ara File Manager, your machine is participating directly in peer distribution swarms and the blockchain.
 
