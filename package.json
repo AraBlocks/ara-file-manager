@@ -10,7 +10,7 @@
   "network": "test",
   "scripts": {
     "start-dev": "./node_modules/.bin/electron boot",
-    "test": "ava test/renderer",
+    "test": "ava",
     "postinstall": "sh ./scripts/postinstall.sh && install-app-deps",
     "pack": "build --dir",
     "mac-installer": "sh ./scripts/mac-installer.sh",
@@ -80,11 +80,12 @@
     "electron-reload": "^1.2.3",
     "electron-winstaller": "^2.7.0",
     "jsdom": "^14.0.0",
-    "mocha": "^5.2.0"
+    "spectron": "^4.0.0"
   },
   "ava": {
     "files": [
-      "test/*.js"
+      "test/renderer/components/*.js",
+      "test/renderer/native-components/**/index.js"
     ],
     "sources": [
       "src/*.{js}"

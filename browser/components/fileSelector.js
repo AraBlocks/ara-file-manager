@@ -8,7 +8,7 @@ class FileSelector extends Nanocomponent {
   constructor({
     field = '',
     parentState = {},
-  }) {
+  } = {}) {
     super()
 
     this.props = { field, parentState }
@@ -38,7 +38,7 @@ class FileSelector extends Nanocomponent {
       })
   }
 
-  update({ filePath }) {
+  update({ filePath } = {}) {
     const { state } = this
     const samePath = state.filePath === filePath
     if (!samePath) {
@@ -47,13 +47,13 @@ class FileSelector extends Nanocomponent {
     return true
   }
 
-  createElement({ requiredIndicator = false}) {
+  createElement({ requiredIndicator = false} = {}) {
     const { state, children } = this
-    return html`
+    return (html`
       <div>
         ${children.input.render({ value: state.filePath, requiredIndicator })}
       </div>
-    `
+    `)
   }
 }
 

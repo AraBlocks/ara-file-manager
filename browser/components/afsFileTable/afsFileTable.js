@@ -8,7 +8,7 @@ const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
 
 class AfsFileTable extends Nanocomponent {
-	constructor({ did, fileList, renderView, }) {
+	constructor({ did, fileList, renderView } = {}) {
 		super()
 
 		this.children = {
