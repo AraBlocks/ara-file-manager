@@ -1,3 +1,13 @@
 language: node_js
+node_js:
+  - "8"
+install:
+  - npm install
 script:
-  - echo 'hello world'
+  - npm run test
+  - npm run lint
+after_failure:
+  - cat /home/travis/.npm/_logs/*-debug.log
+cache:
+  directories:
+- "node_modules"
