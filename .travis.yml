@@ -3,3 +3,8 @@ node_js:
   - "8"
 install:
 - npm i --no-optional
+script:
+- npm run test
+cache:
+  directories:
+- "node_modules"
