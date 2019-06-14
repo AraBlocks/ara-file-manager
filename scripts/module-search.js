@@ -64,47 +64,64 @@ tara-token
 testnet-faucet
 `;
 
+var searched; // Count how many package.json files we open on a single search
+var cantParse = new Set(); // List paths to package.json files that JSON.parse couldn't
+
 if (!process.argv[2]) { // Search the whole list above, one after another
-	let a = everything.split(/\r?\n/);
-	a.forEach(line => {
-		if (line.trim().length) {
-			search(line);
-			console.log();
-		}
-	});
+  let a = everything.split(/\r?\n/);
+  a.forEach(line => {
+    if (line.trim().length) {
+      search(line);
+      console.log();
+    }
+  });
 } else { // Just search the one module name the user typed
-	search(process.argv[2]);
+  search(process.argv[2]);
 }
 
-let searched; // Count how many package.json files we open on a single search
 function search(searchTerm) {
-	console.log(`Searching for ${searchTerm}...\r\n`);
-	searched = 0;
-	recursiveSpelunker(".", searchTerm);
+  console.log(`Searching for ${searchTerm}...\r\n`);
+  searched = 0;
+  recursiveSpelunker(".", searchTerm);
 }
 console.log(`\r\nSearched ${searched} package.json files`); // Say how many at the very end
+if (cantParse.size) {
+  console.log(`\r\nUnable to search:\r\n${listArray(cantParse)}`)
+}
+
+// Return a string with each line of the given array on a new line
+function listArray(a) {
+  let s = "";
+  a.forEach(p => { s += p + "\r\n" });
+  return s;
+}
 
 // Search the given folder to find and count files and subfolders
 function recursiveSpelunker(folderPath, searchTerm) {
-	fs.readdirSync(folderPath, {withFileTypes: true}).forEach(foundItem => {
-		let foundPath = path.join(folderPath, foundItem.name);
-		countItem(folderPath, foundPath, foundItem, searchTerm);
-		if (foundItem.isDirectory()) {
-			recursiveSpelunker(foundPath, searchTerm);
-		}
-	});
+  fs.readdirSync(folderPath, {withFileTypes: true}).forEach(foundItem => {
+    let foundPath = path.join(folderPath, foundItem.name);
+    countItem(folderPath, foundPath, foundItem, searchTerm);
+    if (foundItem.isDirectory()) {
+      recursiveSpelunker(foundPath, searchTerm);
+    }
+  });
 }
 
 // Each time we find a file or folder, examine it here
 function countItem(folderPath, foundPath, foundItem, searchTerm) {
-	if (foundItem.isFile() && foundItem.name == "package.json") {
-		searched++;
-		let p = JSON.parse(fs.readFileSync(foundPath, 'utf8'));
-		if (p.name == searchTerm) {
-			console.log(`is    "${p.name}" version "${p.version}" in ${foundPath} `);
-		}
-		for (let i in p.dependencies) {
-			if (i == searchTerm) console.log(`needs "${i}" version "${p.dependencies[i]}" in ${foundPath} `);
-		}
-	}
+  if (foundItem.isFile() && foundItem.name == "package.json") {
+    searched++;
+    let p;
+    try {
+      p = JSON.parse(fs.readFileSync(foundPath, 'utf8'));
+    } catch (e) { cantParse.add(foundPath); }
+    if (p) {
+      if (p.name == searchTerm) {
+        console.log(`is    "${p.name}" version "${p.version}" in ${foundPath} `);
+      }
+      for (let i in p.dependencies) {
+        if (i == searchTerm) console.log(`needs "${i}" version "${p.dependencies[i]}" in ${foundPath} `);
+      }
+    }
+  }
 }
