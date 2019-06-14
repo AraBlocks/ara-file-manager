@@ -1,6 +1,6 @@
+
 const { urls } = require('k')
 const winstaller = require('electron-winstaller')
-
 const { version } = require('../package.json')
 
 winstaller.createWindowsInstaller({
