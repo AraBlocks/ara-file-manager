@@ -115,6 +115,7 @@ async function trackError(err) {
 }
 
 function sanitizeErrorMessage(err) {
+  if (!err) err = 'undefined error'
   let devReg
   let buildReg
   switch (process.platform) {
