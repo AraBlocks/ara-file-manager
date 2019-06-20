@@ -7,10 +7,11 @@ network_id=testnet
 provider[]=http://127.0.0.1:8545
 provider[]=ws://127.0.0.1:8546
 
+;; https://github.com/floating/eth-provider/blob/master/presets/index.js#L6
 [web3.testnet]
-provider[]=infuraRopsten
+provider[]= infuraRopsten
 provider[]= wss://ropsten.infura.io/ws
-provider[]= https://ropsten.infura.io/v3/2414d6ca4e2c40228aa432bbd32d432c
+provider[]= https://ropsten.infura.io/v3/5bc6948934ca4637be1cc2bfcf0a98e8
 
 [web3.mainnet]
 provider[]=infura
