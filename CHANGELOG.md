@@ -1,4 +1,18 @@
-## [0.12.2](https://github.com/littlstar/ara-content-manager/compare/0.12.1...0.12.2) (2019-04-16)
+## [0.12.3](https://github.com/littlstar/ara-content-manager/compare/0.12.1...0.12.3) (2019-06-20)
+
+
+### Bug Fixes
+
+* **..analytics:** handle sanitize undefined errors ([adea887](https://github.com/littlstar/ara-content-manager/commit/adea887))
+* **.ararc:** Add testnet providers ([6e10496](https://github.com/littlstar/ara-content-manager/commit/6e10496))
+
+
+### Features
+
+* testing :rocket: ([b018fef](https://github.com/littlstar/ara-content-manager/commit/b018fef))
+* **.ararc:** moved to project root - no longer writes to HOME ([2bd82f4](https://github.com/littlstar/ara-content-manager/commit/2bd82f4))
+* travis.yaml added ([0572ccd](https://github.com/littlstar/ara-content-manager/commit/0572ccd))
+* **scripts/:** search for long paths and module version dependencies ([d3df64e](https://github.com/littlstar/ara-content-manager/commit/d3df64e))
 
 
 
