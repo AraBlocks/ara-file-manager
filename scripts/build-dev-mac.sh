@@ -10,6 +10,7 @@ echo 'Using electron-packager, should take around 1 minute...'
 --arch=x64 \
 --icon=./build/icons/mac/ara_dev.icns \
 --prune=true \
+--asar \
 --out=release-builds \
 --app-bundle-id=\"com.ara.one.araFileManager\"
 echo '...done. Now release-builds has a darwin folder with a .app folder inside'
