@@ -10,6 +10,7 @@ echo 'Using electron-packager, may take around 5 minutes...'
 --arch=x64 \
 --icon=./build/icons/windows/ara_dev.ico \
 --prune=true \
+--asar \
 --out=release-builds \
 --protocol=ara
 echo '...done. Now release-builds has a win32 folder with .exe and .dll files inside'

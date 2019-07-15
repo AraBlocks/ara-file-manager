@@ -22,6 +22,7 @@ echo 'Using electron-packager, may take around 5 minutes...'
 --arch=x64 \
 --icon=./build/icons/windows/ara_prod.ico \
 --prune=true \
+--asar \
 --out=release-builds
 echo '...done. Now release-builds has a win32 folder with .exe and .dll files inside'
 echo ''
@@ -30,7 +31,7 @@ echo ''
 sed -i.bak s/"const IS_PRODUCTION = "[[:print:]]*/"const IS_PRODUCTION = false"/ "$ANALYTICS_CONSTANTS"
 
 # Installer
-echo 'Using electron-winstaller, we have seen this take around 90 minutes...'
+echo 'Using electron-winstaller, may take around 5 minutes...'
 # There's no progress output, but open Task Manager to watch NuGet and then 7zip heavily use the CPU
 # Run our script that uses electron-winstaller, telling it to output some debug messages
 DEBUG=electron-windows-installer:main node ./scripts/build-prod-winstaller.js
