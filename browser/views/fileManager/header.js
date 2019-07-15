@@ -135,7 +135,7 @@ class Header extends Nanocomponent {
         </div>
         <div class="${styles.subHeader} header-subheader" style="align-items: center;">
           <div class="${styles.titleHolder} header-titleHolder">
-            File Manager
+            File Manager <span class="${styles.beta} header-beta">beta</span>
           </div>
 
           <div class="${styles.userHolder} header-userHolder">
