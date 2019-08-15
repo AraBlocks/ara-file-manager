@@ -35,7 +35,7 @@
   "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
     "ara-context": "^0.6.4",
-    "ara-contracts": "^0.25.1",
+    "ara-contracts": "github:arablocks/ara-contracts#ej_fix_rewards",
     "ara-filesystem": "^0.27.1",
     "ara-identity": "^0.62.1",
     "ara-reward-dcdn": "github:arablocks/ara-reward-dcdn#ej_update_deps",
