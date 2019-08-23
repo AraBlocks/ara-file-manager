@@ -1,4 +1,4 @@
-## [0.12.4](https://github.com/littlstar/ara-content-manager/compare/0.12.3...0.12.4) (2019-08-19)
+## [0.12.5](https://github.com/littlstar/ara-content-manager/compare/0.12.3...0.12.5) (2019-08-23)
 
 
 ### Bug Fixes
