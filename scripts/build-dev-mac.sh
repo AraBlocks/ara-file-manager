@@ -17,8 +17,8 @@ echo '...done. Now release-builds has a darwin folder with a .app folder inside'
 echo ''
 
 # Sign
-# If you've got a code signing certificate in your keychain, uncomment the line below to sign the .app folder
 echo 'Skipping electron-osx-sign step'
+# If you've got a code signing certificate in your keychain, uncomment the line below to sign the .app folder
 #./node_modules/.bin/electron-osx-sign ./release-builds/Ara\ File\ Manager-darwin-x64/Ara\ File\ Manager.app/ --identity='Developer ID Application: Little Star Media, Inc. (HXEASF63SW)'
 echo ''
 
