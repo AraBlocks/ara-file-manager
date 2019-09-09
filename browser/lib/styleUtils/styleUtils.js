@@ -91,6 +91,9 @@ module.exports = {
       case 'teal':
         selectedColor = !hoverState ? 'var(--ara-teal)' : '#3c999c'
         break
+      case 'darkteal':
+        selectedColor = !hoverState ? 'var(--ara-darkteal)' : '#3d9094'
+        break
       case 'pink':
         selectedColor = '#fbe6e6'
         break

@@ -17,6 +17,7 @@ module.exports = {
         justify-content: space-between;
         ${disabled && 'opacity: .4;'}
         width: 100%;
+        margin-top: 8px;
         -webkit-app-region: no-drag;
       }
     `
