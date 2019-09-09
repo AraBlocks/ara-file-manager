@@ -13,8 +13,8 @@ module.exports = {
         font-family: ${fonts.light};
         height: 150px;
         justify-content: space-between;
-        margin-bottom: 65px;
-        padding: 0 2.5%;
+        margin-bottom: 5px;
+        padding: 2.5% 2.5%;
       }
 
       :host:before {
@@ -32,8 +32,8 @@ module.exports = {
 
   iconHolder: css`
     :host {
-      margin-right: 3px;
-      width: 15px;
+      margin-right: 6px;
+      width: 20px;
       vertical-align: top;
     }
   `,
@@ -58,11 +58,21 @@ module.exports = {
   subHeader: css`
     :host {
       display: flex;
-      font-size: 14px;
+      font-size: 20px;
       justify-content: space-between;
       height: 35px;
       display: flex;
       align-items: baseline;
+    }
+  `,
+
+  logoContainer: css`
+    :host {
+      position: absolute;
+      top: 6%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%)
     }
   `,
 
@@ -88,35 +98,25 @@ module.exports = {
 
   titleHolder: css`
     :host {
-      font-size: 40px;
+      font-size: 36px;
       font-family: ${fonts.black};
-      margin-top: 3px;
+      padding-bottom: 20px;
+      padding-top: 40px;
     }
   `,
 
   userHolder: css`
     :host {
-      align-items: flex-end;
+      align-items: flex-start;
       display: flex;
       flex-direction: column;
       font-size: 16px;
+      padding-top: 5px;
+      padding-bottom: 20px;
     }
 
     :host b {
       font-family: ${fonts.bold};
-    }
-  `,
-
-  publishFilebuttonHolder: css`
-    :host {
-      width: 100%;
-      left: 0;
-      position: absolute;
-      top: 24%;
-    }
-
-    :host button {
-      width: 100%;
     }
   `,
 

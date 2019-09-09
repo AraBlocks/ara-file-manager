@@ -232,7 +232,9 @@ windowManager.openWindow = (view) => {
       false,
       {
         backgroundColor: 'white',
-        frame: false,
+        frame: true,
+        titleBarStyle: 'hidden',
+        'showDevTools': true,
         ...windowManager.setSize(view)
       }
     )
