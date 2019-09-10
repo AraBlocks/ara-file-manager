@@ -1,13 +1,43 @@
 # Ara File Manager
 
-The **Ara File Manager** is a simple desktop app that demonstrates the functionality of a complete local Ara network node and cryptocurrency wallet.
+The **Ara File Manager** is a simple desktop app that demonstrates the functionality of a complete local Ara network node and crypto token wallet.
 Ara is truly decentralized; with the Ara File Manager, your machine is participating directly in peer distribution swarms and the blockchain.
 
-The File Manager lets you sell your digital content using the Ara token, and distribute your content without centralized hosting costs.
+The File Manager lets you sell your digital content using the ARA token, and distribute your content without hosting costs.
 You can buy content, and earn Ara by seeding content in a swarm of nodes that have also purchased it.
 
 With the _code_ of the Ara File Manager, you can see how to integrate Ara into your own app or site,
-enabling your users to buy, sell, own, upload, and download content, all in the secure and decentralized Ara system.
+enabling your users to buy, sell, own, upload, and download content, all with the secure and decentralized Ara tools.
+
+## TL:DR;
+
+Get the code for the Ara File Mananager, build it, and run it with commands like these:
+
+```shell
+$ git clone https://github.com/littlstar/ara-file-manager
+$ cd ara-file-manager
+$ npm install
+$ npm run start-dev
+```
+
+Didn't work? Head over to the [detailed instructions](https://github.com/arablocks/ara-file-manager/blob/master/.github/INSTALL.md).
+
+Package your code for development and production on macOS and Windows:
+
+```shell
+$ npm run build-dev-mac
+$ npm run build-dev-win
+$ npm run build-prod-mac
+$ npm run build-prod-win
+```
+
+Make a branch, code some changes, and send us a pull request:
+
+```shell
+$ git checkout -b your-branch-name
+$ git commit -a -n -m "tasktype(file.ext): note about what you did"
+$ git push origin your-branch-name
+```
 
 ## Status
 
@@ -30,56 +60,11 @@ The `--no-optional` flag will prevent unnecessary and heavy packages from being 
 
 You can follow the `start-dev` with an optional string: "`loggedin`". If you add this, you'll need to follow it with the DID you'd like to log in with, and the corresponding password to that DID. It will boot the app with you logged in already, for speedier development.
 
-## Building Native Modules
-
-The Ara File Manager is built with
-[Node](https://nodejs.org/) and [Electron](https://electronjs.org/)
-and includes modules developed within [Ara Blocks](https://github.com/arablocks),
-the [Dat Project](https://datproject.org/) and
-[Ethereum](https://www.ethereum.org/).
-
-Building the Ara File Manager includes building native modules, including [web3](https://www.npmjs.com/package/web3) and the _Ethereum Virtual Machine_.
-
-So, when installing Node, also install Node's _Tools for Native Modules_.
-(On Windows, this involves installing
-[Chocolatey](https://chocolatey.org/),
-[Python 2](https://www.python.org/download/releases/2.0/), and the
-_Visual Studio Build Tools_.)
-There are a variety of ways to accomplish this, specific to your platform.
-The [node-gyp README](https://github.com/nodejs/node-gyp) contains a good guide.
-
-Running the code for the first time, you may encounter an error like this:
-
-```shell
-$ npm run start-dev
-
-> ara-file-manager@0.9.0 start-dev /Users/Name/ara-file-manager
-> electron boot
-
-App threw an error during load
-Error: The module '/Users/Name/ara-file-manager/node_modules/utp-native/build/Release/utp.node' was
-compiled against a different Node.js version using NODE_MODULE_VERSION 67. This version of Node.js
-requires NODE_MODULE_VERSION 57. Please try re-compiling or re-installing the module (for instance,
-using `npm rebuild` or `npm install`).
-```
-
-This happens when the versions of V8 in Node and Electron don't match.
-`npm install` built the native modules using Node, but now `start-dev` ran Electron, and Electron's newer V8 doesn't like them.
-
-To remedy this, use [electron-rebuild](https://github.com/electron/electron-rebuild) to [rebuild the native modules for Electron](https://electronjs.org/docs/tutorial/using-native-node-modules#installing-modules-and-rebuilding-for-electron).
-After every `npm install` (which will build the native modules for Node), rebuild them for Electron with a command like this:
-
-```shell
-$ ./node_modules/.bin/electron-rebuild
-```
-
-Alternatively, install an [older version of Node](https://nodejs.org/en/download/releases/) to match the `NODE_MODULE_VERSION` that Electron expects.
-
 ## Packaging App
 
 ```shell
 $ npm i electron-packager -g
-$ electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icons/mac/ara.icns --prune=true --out=release-builds --app-bundle-id=“com.littlstar.araFileManager”
+$ electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icons/mac/ara.icns --prune=true --out=release-builds --app-bundle-id=“com.ara.one.araFileManager”
 ```
 
 This will write a mac compatible compiled application to a folder in your project root called `release-builds`
@@ -110,7 +95,7 @@ The metadata format the file manager is compatible with is the following:
 
 ## Building the application
 
-Documentation around building the application can be found [here](https://github.com/littlstar/ara-file-manager/blob/master/.github/BUILD.md)
+Documentation around building the application can be found [here](https://github.com/arablocks/ara-file-manager/blob/master/.github/BUILD.md)
 
 ## Contributing
 
@@ -121,9 +106,9 @@ Documentation around building the application can be found [here](https://github
 * Push tags
 * Push `CHANGELOG`
 
-- [Commit message format](https://github.com/littlstar/ara-file-manager/blob/master/.github/COMMIT_FORMAT.md)
-- [Commit message examples](https://github.com/littlstar/ara-file-manager/blob/master/.github/COMMIT_FORMAT_EXAMPLES.md)
-- [How to contribute](https://github.com/littlstar/ara-file-manager/blob/master/.github/CONTRIBUTING.md)
+- [Commit message format](https://github.com/arablocks/ara-file-manager/blob/master/.github/COMMIT_FORMAT.md)
+- [Commit message examples](https://github.com/arablocks/ara-file-manager/blob/master/.github/COMMIT_FORMAT_EXAMPLES.md)
+- [How to contribute](https://github.com/arablocks/ara-file-manager/blob/master/.github/CONTRIBUTING.md)
 
 ## See also
 
