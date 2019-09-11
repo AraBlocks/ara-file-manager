@@ -2,5 +2,6 @@ module.exports = {
   network: null,
   cachedUserDid: null,
   deepLinkData: null,
-  exportWindowOpen: false
+  exportWindowOpen: false,
+  accounts: []
 }

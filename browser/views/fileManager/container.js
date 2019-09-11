@@ -11,7 +11,7 @@ const Nanocomponent = require('nanocomponent')
 const { shell } = require('electron')
 
 class Container extends Nanocomponent {
-  constructor({ account, files }) {
+  constructor({ account, files, application }) {
     super()
 
     this.state = {
@@ -24,7 +24,8 @@ class Container extends Nanocomponent {
 
     this.children = {
       sidebar: new Sidebar({
-        account
+        account,
+        accounts: application.accounts
       }),
       header: new Header({
         account,

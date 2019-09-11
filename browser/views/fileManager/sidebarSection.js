@@ -14,25 +14,27 @@ class SidebarSection extends Nanocomponent {
     this.box = box
   }
 
-  makeRows(account) {
+  makeRows(accounts) {
     const { typeRow } = this.props
-    const constructorArgs = [{ account, typeRow }]
-    return box('account', { key: account, constructorArgs })
-      .render()
+    return accounts.map((account, i) => {
+      const constructorArgs = [{ account }]
+      return box('account', { key: account, constructorArgs })
+        .render()
+    })
   }
 
   update() {
     return true
   }
 
-  createElement({ account }) {
+  createElement({ account, accounts }) {
     const { props, makeRows, } = this
     return (html`
       <div >
         <div class="${styles.header} section-header">
           ${props.typeRow === 'accounts' ? 'Accounts' : props.typeRow === 'addAccount' ? '+ Add Account' : '+ Add Tokens'}
         </div>
-        ${props.typeRow === 'accounts' ? makeRows(account) : html`<div></div>`}
+        ${props.typeRow === 'accounts' ? makeRows(accounts) : html`<div></div>`}
       </div>
     `)
   }
