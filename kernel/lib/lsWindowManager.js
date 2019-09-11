@@ -61,8 +61,8 @@ windowManager.setSize = (view) => {
       height = 485
       break
     case 'filemanager':
-      width = 490
-      height = 690
+      width = 866
+      height = 950
       break
     case 'generalPleaseWaitModal':
     case 'generalActionModal':

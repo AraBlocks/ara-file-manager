@@ -66,16 +66,6 @@ module.exports = {
     }
   `,
 
-  logoContainer: css`
-    :host {
-      position: absolute;
-      top: 6%;
-      left: 50%;
-      margin-right: -50%;
-      transform: translate(-50%, -50%)
-    }
-  `,
-
   beta: css`
     :host {
       font-size: 20px;

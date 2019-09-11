@@ -15,7 +15,7 @@ module.exports = {
         padding: 2.5% 2.5%;
         position: fixed;
         bottom: 0;
-        width: 95%;
+        width: 75%;
         height: 130px;
         background-color: #ffffff;
         border: 1px solid var(--ara-grey);
@@ -39,7 +39,7 @@ module.exports = {
       width: 100%;
       left: 0;
       position: absolute;
-      bottom: 27%;
+      bottom: 24%;
     }
 
     :host button {
