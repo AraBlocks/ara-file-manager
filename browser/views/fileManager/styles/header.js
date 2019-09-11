@@ -11,7 +11,7 @@ module.exports = {
         display: flex;
         flex-direction: column;
         font-family: ${fonts.light};
-        height: 150px;
+        height: 110px;
         justify-content: space-between;
         margin-bottom: 5px;
         padding: 2.5% 2.5%;

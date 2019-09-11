@@ -9,7 +9,7 @@ module.exports = {
       color: white;
       font-size: 12px;
       height: 30px;
-      padding: 0 10%;
+      padding: 8% 10% 0 10%;
       position: sticky;
       pointer-events: none;
       top: 0px;

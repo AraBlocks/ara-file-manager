@@ -23,7 +23,7 @@ class Account extends Nanocomponent {
     const { props: { account } } = this
     return (html`
       <div class="${styles.mainContainer}" style="color: white;">
-        HERE
+        ${account.userDID.slice(0, 8) + '...'}
       </div>
     `)
   }

@@ -28,7 +28,7 @@ class Footer extends Nanocomponent {
     this.children = {
       downloadButton: new Button({
         children: 'Download Ara Link',
-        cssClass: { opts: { fontSize: 14 } },
+        cssClass: { opts: { height: 3, fontSize: 14, color: 'teal' } },
         onclick: () => {
           if (!account.pendingPublish) {
             windowManagement.emit({ event: events.OPEN_MANAGE_FILE_VIEW})
@@ -37,7 +37,7 @@ class Footer extends Nanocomponent {
       }),
       publishFilebutton: new Button({
         children: 'Publish New File',
-        cssClass: { opts: { fontSize: 14, color: 'darkteal' } },
+        cssClass: { opts: { height: 3, fontSize: 14, color: 'darkteal' } },
         onclick: () => {
           if (!account.pendingPublish) {
             windowManagement.emit({ event: events.OPEN_MANAGE_FILE_VIEW})
@@ -88,7 +88,7 @@ class Footer extends Nanocomponent {
           ${children.deepLink.render({ value: state.deepLink })}
         </div>
         <div class="${styles.downloadButtonHolder} header-downloadButtonHolder">
-          ${children.downloadButton.render(publishFileProps)}
+          ${children.downloadButton.render()}
         </div>
         <div class="${styles.publishFilebuttonHolder} header-publishFilebuttonHolder">
           ${children.publishFilebutton.render(publishFileProps)}

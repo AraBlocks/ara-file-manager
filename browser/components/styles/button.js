@@ -66,7 +66,7 @@ module.exports = {
     color  = 'teal',
     fontSize = '18',
     weight = 'bold',
-    height = '3'
+    height = '2'
   }) {
     return css`
       :host {
