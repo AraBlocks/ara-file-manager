@@ -38,7 +38,7 @@ ipcMain.on(events.LOGOUT, () => {
 })
 
 internalEmitter.on(events.GET_CACHED_DID, async () => {
-  const did = await afm.getCachedUserDid()
+  const did = await afm.getCachedUserDids()
   dispatch({ type: events.GOT_CACHED_DID, load: { did } })
   windowManager.pingView({ view: 'login', event: events.REFRESH })
 })

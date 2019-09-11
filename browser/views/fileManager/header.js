@@ -91,12 +91,7 @@ class Header extends Nanocomponent {
 
     return (html`
       <div class="${styles.container(state.hambyToggled)} header-container">
-        <div class="${styles.subHeader} header-subheader">
-          <div class="${styles.windowControlsHolder} header-windowControlsHolder">
-            ${children.hamby.render({})}
-          </div>
-        </div>
-        <div class="${styles.subHeader} header-subheader" style="align-items: center;">
+        <div class="${styles.subHeader} header-subheader" style="margin-top: 4%; align-items: center;">
           <div class="${styles.titleHolder} header-titleHolder">
             Account 1
             <div class="${styles.userHolder} header-userHolder">

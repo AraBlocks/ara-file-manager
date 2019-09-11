@@ -47,17 +47,29 @@ function getPublishedItems(userDID) {
 async function cacheUserDid(did) {
 	try {
 		const appData = await getAppData()
-		await pify(appData.write)(application.CACHED_USER_DID, did)
+    const dids = await pify(appData.read)(application.CACHED_USER_DID)
+    if (Array.isArray(dids)) {
+      if (dids.includes(did)) {
+        dids.splice(dids.indexOf(did), 1)
+      }
+      dids.unshift(did)
+      await pify(appData.write)(application.CACHED_USER_DID, dids)
+    } else {
+      await pify(appData.write)(application.CACHED_USER_DID, [ did, dids ])
+    }
 	} catch(e) {
 		debug(err)
 	}
 }
 
-async function getCachedUserDid() {
+async function getCachedUserDids() {
 	let did
 	try {
 		const appData = await getAppData()
 		did = await pify(appData.read)(application.CACHED_USER_DID)
+    if (Array.isArray(did)) {
+      did = did[0]
+    }
 		return did || ''
 	} catch(e) {
 		debug(err)
@@ -105,7 +117,7 @@ module.exports = {
 	cacheUserDid,
 	getAFMPath,
 	getAnalyticsPermission,
-	getCachedUserDid,
+	getCachedUserDids,
 	getAppData,
 	getUserData,
 	saveUserData,

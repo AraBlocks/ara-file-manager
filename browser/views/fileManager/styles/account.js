@@ -26,12 +26,10 @@ module.exports = {
   mainContainer: css`
     :host {
       position: relative;
-      height: 55px;
-      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding-top: 10px;
+      padding: 15px 0 15px 40px;
     }
 
     :host:hover {
