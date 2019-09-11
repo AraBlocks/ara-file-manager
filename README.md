@@ -9,7 +9,7 @@ You can buy content, and earn Ara by seeding content in a swarm of nodes that ha
 With the _code_ of the Ara File Manager, you can see how to integrate Ara into your own app or site,
 enabling your users to buy, sell, own, upload, and download content, all with the secure and decentralized Ara tools.
 
-## TL:DR;
+## Quick guide
 
 Get the code for the Ara File Mananager, build it, and run it with commands like these:
 
