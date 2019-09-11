@@ -44,6 +44,7 @@ module.exports = {
 
     :host button {
       width: 100%;
+      height: 3em;
     }
   `,
 
@@ -57,6 +58,7 @@ module.exports = {
 
     :host button {
       width: 100%;
+      height: 3em;
     }
   `,
 }

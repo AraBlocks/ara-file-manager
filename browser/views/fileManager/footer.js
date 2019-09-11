@@ -67,7 +67,7 @@ class Footer extends Nanocomponent {
     return {
       cssClass: account.pendingPublish
         ? { name: 'thinBorder', opts: { fontSize: 14 } }
-        : { opts: { fontSize: 14 } }
+        : { opts: { height: 3, fontSize: 14, color: 'darkteal' } }
     }
   }
 

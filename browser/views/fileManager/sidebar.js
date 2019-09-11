@@ -15,12 +15,12 @@ const Hamburger = require('../../components/hamburger')
 const windowManager = remote.require('electron-window-manager')
 
 class Sidebar extends Nanocomponent {
-  constructor({ account }) {
+  constructor({ account, accounts }) {
     super()
 
     this.props = {
       account,
-      userDID: account.userDID,
+      accounts
     }
     this.state = {
       deepLink: ''
@@ -29,7 +29,7 @@ class Sidebar extends Nanocomponent {
     // get accounts cache
 
     this.children = {
-      accountsSection: new sidebarSection({ account, type: 'accounts'}),
+      accountsSection: new sidebarSection({ accounts, type: 'accounts'}),
       addAccountSection: new sidebarSection({ type: 'addAccount' }),
       addTokensSection: new sidebarSection({ type: 'addTokens' })
     }
@@ -38,13 +38,13 @@ class Sidebar extends Nanocomponent {
   }
 
   renderAccounts() {
-    const { children, props: { account } } = this
+    const { children, props: { account, accounts } } = this
 
     let sections = [ children.accountsSection, children.addAccountSection, children.addTokensSection ]
 
     return html`
       <div class="${styles.sectionContainer} sidebarContainer-sectionContainer">
-        ${sections.map(section => section.render({ account }))}
+        ${sections.map(section => section.render({ account, accounts }))}
       </div>
     `
   }

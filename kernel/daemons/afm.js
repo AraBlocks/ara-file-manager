@@ -67,10 +67,10 @@ async function getCachedUserDids() {
 	try {
 		const appData = await getAppData()
 		did = await pify(appData.read)(application.CACHED_USER_DID)
-    if (Array.isArray(did)) {
-      did = did[0]
+    if (!Array.isArray(did)) {
+      did = [ did ]
     }
-		return did || ''
+		return did || [ '' ]
 	} catch(e) {
 		debug(err)
 		return ''

@@ -8,7 +8,7 @@ const styles = require('./styles/account')
 const html = require('nanohtml')
 
 class Account extends Nanocomponent {
-  constructor({ account, typeRow }) {
+  constructor({ account, typeRow, accounts }) {
     super()
 
     this.props = { typeRow, account }
@@ -21,9 +21,10 @@ class Account extends Nanocomponent {
 
   createElement() {
     const { props: { account } } = this
+
     return (html`
       <div class="${styles.mainContainer}" style="color: white;">
-        ${account.userDID.slice(0, 8) + '...'}
+        ${account.slice(0, 8) + '...'}
       </div>
     `)
   }
