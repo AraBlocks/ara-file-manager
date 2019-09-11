@@ -78,30 +78,7 @@ module.exports = {
         transition: all 100ms;
         width: 100%;
         -webkit-app-region: no-drag;
-      }
-
-      :host:hover {
-        background-color: ${colorSelector(color, true)};
-      }
-    `
-  } ,
-
-  dark({
-    color  = 'darkteal',
-    fontSize = '18',
-    weight = 'bold',
-    height = '3'
-  }) {
-    return css`
-      :host {
-        background-color: ${colorSelector(color)};
-        color: white;
-        font-family: ${fontSelector(weight)};
-        font-size: ${fontSize}px;
-        height: ${height}em;
-        transition: all 100ms;
-        width: 100%;
-        -webkit-app-region: no-drag;
+        text-align: center;
       }
 
       :host:hover {

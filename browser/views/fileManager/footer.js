@@ -14,7 +14,7 @@ const Hamburger = require('../../components/hamburger')
 const windowManager = remote.require('electron-window-manager')
 
 class Footer extends Nanocomponent {
-  constructor({ selectTab, account }) {
+  constructor({ account }) {
     super()
 
     this.props = {
@@ -37,7 +37,7 @@ class Footer extends Nanocomponent {
       }),
       publishFilebutton: new Button({
         children: 'Publish New File',
-        cssClass: { name: "dark", opts: { fontSize: 14 } },
+        cssClass: { opts: { fontSize: 14, color: 'darkteal' } },
         onclick: () => {
           if (!account.pendingPublish) {
             windowManagement.emit({ event: events.OPEN_MANAGE_FILE_VIEW})
@@ -75,7 +75,7 @@ class Footer extends Nanocomponent {
     return true
   }
 
-  createElement({ activeTab }) {
+  createElement() {
     const {
       children,
       publishFileProps,

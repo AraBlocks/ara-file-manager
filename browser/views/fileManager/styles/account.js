@@ -27,6 +27,7 @@ module.exports = {
     :host {
       position: relative;
       height: 55px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -34,7 +35,7 @@ module.exports = {
     }
 
     :host:hover {
-      background-color: #eeeeee;
+      background-color: var(--ara-teal);
     }
   `
 }

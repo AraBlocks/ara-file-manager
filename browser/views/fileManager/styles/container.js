@@ -4,12 +4,8 @@ const { css } = require('css')
 module.exports = {
   container: css`
     :host {
-      padding-top: 10px;
       display: flex;
-      justify-content: center;
-    }
-
-    :host > div {
+      height: 950px;
       width: 100%;
     }
 
@@ -25,12 +21,14 @@ module.exports = {
       flex-direction: column;
       justify-content: space-between;
       height: 40%;
+      width: 100%;
       text-align: center;
     }
 
     :host div {
       font-family: ${fonts.black};
       font-size: 30px;
+      width: 100%;
     }
 
     :host p {
@@ -50,11 +48,18 @@ module.exports = {
     }
   `,
 
+  sidebar: css `
+    :host {
+      width: 33%;
+      background-color: #1c1c1c;
+    }
+  `,
+
   sectionContainer(isTestnet) {
     return css`
       :host {
         animation: fadein 1500ms;
-        height: ${isTestnet ? '430px' : '450px'};
+
         overflow-y: scroll;
       }
     `

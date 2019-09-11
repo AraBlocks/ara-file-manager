@@ -1,6 +1,7 @@
 const Header = require('./header')
 const Section = require('./section')
 const Footer = require('./footer')
+const Sidebar = require('./sidebar')
 const spinnerBar = require('../../components/spinnerBar')
 const styles = require('./styles/container')
 const TestnetBanner = require('../../components/testnetBanner')
@@ -22,6 +23,9 @@ class Container extends Nanocomponent {
     }
 
     this.children = {
+      sidebar: new Sidebar({
+        account
+      }),
       header: new Header({
         account,
         selectTab: this.selectTab.bind(this)
@@ -29,8 +33,7 @@ class Container extends Nanocomponent {
       publishedSection: new Section({ files, type: 'published' }),
       purchasedSection: new Section({ files, type: 'purchased' }),
       footer: new Footer({
-        account,
-        selectTab: this.selectTab.bind(this)
+        account
       }),
     }
 
@@ -126,12 +129,14 @@ class Container extends Nanocomponent {
 
     return (html`
       <div>
-        ${html`<div></div>`}
         <div class="${styles.container} container-container">
-          <div>
+          <div class="${styles.sidebar}">
+            ${children.sidebar.render()}
+          </div>
+          <div style="width: 100%;">
             ${children.header.render({ activeTab })}
             ${loadingLibrary ? renderSpinnerBars() : renderSections(network)}
-            ${children.footer.render({ activeTab })}
+            ${children.footer.render()}
           </div>
         </div>
       </div>
