@@ -14,13 +14,13 @@ enabling your users to buy, sell, own, upload, and download content, all with th
 Get the code for the Ara File Mananager, build it, and run it with commands like these:
 
 ```shell
-$ git clone https://github.com/littlstar/ara-file-manager
+$ git clone https://github.com/arablocks/ara-file-manager
 $ cd ara-file-manager
 $ npm install
 $ npm run start-dev
 ```
 
-Didn't work? Head over to the [detailed instructions](https://github.com/arablocks/ara-file-manager/blob/master/.github/INSTALL.md).
+Didn't work? Head over to the [detailed guide](https://github.com/arablocks/ara-file-manager/blob/master/.github/INSTALL.md).
 
 Package your code for development and production on macOS and Windows:
 
