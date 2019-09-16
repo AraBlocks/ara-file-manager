@@ -28,6 +28,7 @@ module.exports = {
         z-index: 9999;
         ${clicked && 'font-weight: bold;'}
         ${clicked && 'color: var(--ara-orange);'}
+        color: black;
       }
 
       :host:hover {

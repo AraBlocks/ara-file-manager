@@ -103,6 +103,10 @@ async function login(_, load) {
   afm.cacheUserDid(userDID)
 
   try {
+    const accounts = await afm.getCachedUserDids()
+    dispatch({ type: events.GOT_ACCOUNTS, load: { accounts } })
+    windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
+
     const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, load.password)
     const DCDNStore = rewardsDCDN.loadDCDNStore(farmer)
     const purchasedDIDs = await act.getLibraryItems(userDID)
@@ -110,8 +114,7 @@ async function login(_, load) {
     let purchased = purchasedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore))
     const publishedDIDs = (await act.getDeployedProxies(accountAddress)).map(araUtil.getIdentifier)
     let published = publishedDIDs.map(did => descriptorGeneration.makeDummyDescriptor(did, DCDNStore, true))
-    const accounts = await afm.getCachedUserDids()
-    dispatch({ type: events.GOT_ACCOUNTS, load: { accounts } })
+
     const { files } = dispatch({ type: events.GOT_LIBRARY, load: { published, purchased } })
 
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })

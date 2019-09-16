@@ -26,11 +26,19 @@ module.exports = {
 		}
 	`,
 
-	hamburger: css`
-		:host {
-			height: 50%;
-		}
-	`,
+	hamburger(show) {
+    return css`
+  		:host {
+        display: ${show ? 'inherit' : 'none' };
+        height: 3px;
+        padding: 3px;
+      }
+
+      img:hover {
+        transform: scale(1.2);
+      }
+  	`
+  },
 
 	menu({ visible, direction = 'right' }) {
 		return css`
