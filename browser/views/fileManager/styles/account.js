@@ -1,39 +1,47 @@
 const { css }  = require('css')
 
 module.exports = {
+  mainContainer(current) {
+    return css`
+      :host {
+        cursor: pointer;
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 15px 40px 15px 40px;
+        background-color: ${current ? `var(--ara-teal)` : '' }
+      }
+
+      :host:hover {
+        background-color: ${current ? `var(--ara-darkteal)` : `var(--ara-grey)`};
+      }
+    `
+  },
+
   container: css`
     :host {
       cursor: pointer;
       display: flex;
-      height: 44px;
-      width: 95%;
-      justify-content: space-between;
-      padding: 10px 2.5% 0 2.5%;
-      -webkit-app-region: no-drag;
-    }
-
-    :host:hover {
-      background-color: #eeeeee;
+      position: absolute;
+      right: 10%;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 3px;
     }
   `,
 
-  fileDescriptorHolder: css`
-    :host {
-      min-width: 220px;
-    }
-  `,
+  ellipses(show) {
+    return css`
+      :host {
+        display: ${show ? 'inherit' : 'none' };
+        height: 3px;
+        padding: 3px;
+      }
 
-  mainContainer: css`
-    :host {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 15px 0 15px 40px;
-    }
-
-    :host:hover {
-      background-color: var(--ara-teal);
-    }
-  `
+      img:hover {
+        transform: scale(1.2);
+      }
+    `
+  }
 }

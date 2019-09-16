@@ -26,8 +26,6 @@ class Sidebar extends Nanocomponent {
       deepLink: ''
     }
 
-    // get accounts cache
-
     this.children = {
       accountsSection: new sidebarSection({ accounts, type: 'accounts'}),
       addAccountSection: new sidebarSection({ type: 'addAccount' }),

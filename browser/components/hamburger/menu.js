@@ -46,11 +46,11 @@ class Menu extends Nanocomponent {
 		return true
 	}
 
-	createElement() {
+	createElement({ current }) {
 		const { renderMenuItems, state, toggleMenu } = this
 		return (html`
-			<div class="${styles.container} Menu-container" onclick=${toggleMenu} onmouseleave=${toggleMenu}>
-				<img class="${styles.hamburger} Menu-hamburger" src="../assets/images/utilityButtons/Hamburger.svg" />
+			<div class="${styles.container} Menu-container" onclick=${toggleMenu} >
+				<img class="${styles.hamburger(current)} Menu-hamburger" src="../assets/images/utilityButtons/ellipses.png" />
 				<div class="${styles.menu(state)} Menu-menu">
 					<div class="${styles.invisibleItem} Menu-invisibleItem"></div>
 					<div class="${styles.divider} Menu-divider"></div>
