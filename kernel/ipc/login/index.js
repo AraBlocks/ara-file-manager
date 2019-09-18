@@ -37,6 +37,30 @@ ipcMain.on(events.LOGOUT, () => {
   windowManager.openModal('generalActionModal')
 })
 
+internalEmitter.on(events.CHANGE_ACCOUNT, (_, account) => {
+  debug('%s HEARD', events.CHANGE_ACCOUNT)
+  //Callback must use internal emitter. We will never know why
+  const callback = async () => {
+    await afm.cacheUserDid(account)
+    internalEmitter.emit(events.GET_CACHED_DID)
+    internalEmitter.emit(events.CONFIRM_LOGOUT)
+  }
+  dispatch({ type: events.FEED_MODAL, load: { modalName: 'logoutConfirm', callback } })
+  windowManager.openModal('generalActionModal')
+})
+
+ipcMain.on(events.CHANGE_ACCOUNT, (_, account) => {
+  debug('%s HEARD', events.CHANGE_ACCOUNT)
+  //Callback must use internal emitter. We will never know why
+  const callback = async () => {
+    await afm.cacheUserDid(account)
+    internalEmitter.emit(events.GET_CACHED_DID)
+    internalEmitter.emit(events.CONFIRM_LOGOUT)
+  }
+  dispatch({ type: events.FEED_MODAL, load: { modalName: 'logoutConfirm', callback } })
+  windowManager.openModal('generalActionModal')
+})
+
 internalEmitter.on(events.GET_CACHED_DID, async () => {
   const did = (await afm.getCachedUserDids())[0]
   dispatch({ type: events.GOT_CACHED_DID, load: { did } })
