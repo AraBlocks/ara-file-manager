@@ -10,7 +10,6 @@ const TabItem = require('../../components/tabItem')
 const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
-const Hamburger = require('../../components/hamburger')
 const windowManager = remote.require('electron-window-manager')
 
 class Footer extends Nanocomponent {
