@@ -40,7 +40,9 @@ class Account extends Nanocomponent {
   }
 
   onClick() {
-    console.log('click')
+    if (!this.props.current) {
+      windowManagement.emit({ event: events.CHANGE_ACCOUNT, load: this.props.account })
+    }
   }
 
   update() {
