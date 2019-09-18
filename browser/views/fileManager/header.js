@@ -28,6 +28,9 @@ class Header extends Nanocomponent {
         cssClass: { color: 'black' }
       })
     }
+
+    this.onClick = this.onClick.bind(this)
+    this.checkCharCount = this.checkCharCount.bind(this)
   }
 
   makeTabs(selectTab) {
@@ -54,12 +57,42 @@ class Header extends Nanocomponent {
     }
   }
 
+  onClick() {
+    const input = document.getElementById('accountName')
+    input.setAttribute('class', `${styles.input} header-name`)
+    input.setAttribute('contenteditable', true)
+  }
+
+  checkCharCount(e) {
+    const input = document.getElementById('accountName')
+    this.cachedAccountName = this.cachedAccountName || input.innerText
+
+    switch (e.which) {
+      case 27:
+        input.innerText = this.cachedAccountName
+      case 13:
+        this.cachedAccountName = null
+        input.removeAttribute('class')
+        input.removeAttribute('contenteditable')
+        break;
+      default:
+        if (e.which !== 8 && !isArrowKey(e.which) && input.innerText.length > 20) e.preventDefault()
+        break;
+    }
+
+    function isArrowKey(val) {
+      return val > 36 && val < 41
+    }
+  }
+
   update() {
     return true
   }
 
   createElement({ activeTab }) {
     const {
+      onClick,
+      checkCharCount,
       balanceElements,
       children,
       publishFileProps
@@ -69,7 +102,9 @@ class Header extends Nanocomponent {
       <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader" style="margin-top: 4%; align-items: center;">
           <div class="${styles.titleHolder} header-titleHolder">
-            Account 1
+            <div id="accountName" onclick=${onClick} onkeydown=${checkCharCount}>
+              Account 1
+            </div>
             <div class="${styles.userHolder} header-userHolder">
               ${children.copyDidTooltip.render()}
             </div>
