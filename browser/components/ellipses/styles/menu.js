@@ -22,11 +22,10 @@ module.exports = {
 			background-color: ${colors.araGrey};
 			height: 1px;
 			width: 100%;
-			z-index: 9999;
 		}
 	`,
 
-	hamburger(show) {
+	ellipses(show) {
     return css`
   		:host {
         display: ${show ? 'inherit' : 'none' };

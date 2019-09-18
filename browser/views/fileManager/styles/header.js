@@ -5,30 +5,28 @@ module.exports = {
   colors,
   fonts,
 
-  container(hambyToggled){
-    return css`
-      :host {
-        display: flex;
-        flex-direction: column;
-        font-family: ${fonts.light};
-        height: 110px;
-        justify-content: space-between;
-        margin-bottom: 5px;
-        padding: 2.5% 2.5%;
-      }
+  container: css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      font-family: ${fonts.light};
+      height: 110px;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      padding: 2.5% 2.5%;
+    }
 
-      :host:before {
-        content: "";
-        height: 160px;
-        left: 0;
-        position: absolute;
-        top: 0;
-        width: 93%;
-        -webkit-app-region: ${hambyToggled ? 'no-drag' : 'drag'};
-        z-index: -1;
-      }
-    `
-  },
+    :host:before {
+      content: "";
+      height: 160px;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 93%;
+      -webkit-app-region: drag;
+      z-index: -1;
+    }
+  `,
 
   iconHolder: css`
     :host {

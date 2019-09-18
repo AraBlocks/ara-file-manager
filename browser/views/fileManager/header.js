@@ -9,7 +9,6 @@ const TabItem = require('../../components/tabItem')
 const windowManagement = require('../../lib/tools/windowManagement')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
-const Hamburger = require('../../components/hamburger')
 const windowManager = remote.require('electron-window-manager')
 
 class Header extends Nanocomponent {
@@ -20,12 +19,8 @@ class Header extends Nanocomponent {
       account,
       userDID: account.userDID,
     }
-    this.state = {
-      hambyToggled: false
-    }
 
     this.children = {
-      hamby: new Hamburger(this.hambyOpts),
       tabs: this.makeTabs(selectTab),
       copyDidTooltip: new DynamicTooltip({
         children: 'ID: ' + this.props.userDID.slice(0, 8) + '...',
@@ -33,24 +28,6 @@ class Header extends Nanocomponent {
         cssClass: { color: 'black' }
       })
     }
-  }
-
-  get hambyOpts() {
-    const items = [
-      { children: 'Account', onclick: () => windowManager.openWindow('accountInfo') },
-      { children: 'Logout', onclick: () => windowManagement.emit({ event: events.LOGOUT }) },
-      { children: 'Close', onclick: () => windowManagement.closeWindow() },
-      { children: 'Quit', onclick: () => app.quit() },
-    ]
-
-    const toggleCB = (type) => {
-      type === 'mouseleave'
-        ? this.state.hambyToggled = false
-        : this.state.hambyToggled = !this.state.hambyToggled
-      this.rerender()
-    }
-
-    return { items, toggleCB, direction: 'left' }
   }
 
   makeTabs(selectTab) {
@@ -85,12 +62,11 @@ class Header extends Nanocomponent {
     const {
       balanceElements,
       children,
-      publishFileProps,
-      state
+      publishFileProps
     } = this
 
     return (html`
-      <div class="${styles.container(state.hambyToggled)} header-container">
+      <div class="${styles.container} header-container">
         <div class="${styles.subHeader} header-subheader" style="margin-top: 4%; align-items: center;">
           <div class="${styles.titleHolder} header-titleHolder">
             Account 1

@@ -6,7 +6,7 @@ const Nanocomponent = require('nanocomponent')
 const progressBar = require('./progressBar')
 const styles = require('./styles/account')
 const html = require('nanohtml')
-const Hamburger = require('../../components/hamburger')
+const Ellipses = require('../../components/ellipses')
 
 class Account extends Nanocomponent {
   constructor({ account, current }) {
@@ -14,16 +14,16 @@ class Account extends Nanocomponent {
 
     this.props = { account, current }
     this.state = {
-      hambyToggled: false
+      ellipsesToggled: false
     }
     this.children = {
-      hamby: new Hamburger(this.hambyOpts)
+      ellipses: new Ellipses(this.ellipsesOpts)
     }
 
     this.onClick = this.onClick.bind(this)
   }
 
-  get hambyOpts() {
+  get ellipsesOpts() {
     const items = [
       { children: 'Account', onclick: () => windowManager.openWindow('accountInfo') },
       { children: 'Logout', onclick: () => windowManagement.emit({ event: events.LOGOUT }) },
@@ -31,8 +31,8 @@ class Account extends Nanocomponent {
 
     const toggleCB = (type) => {
       type === 'mouseleave'
-        ? this.state.hambyToggled = false
-        : this.state.hambyToggled = !this.state.hambyToggled
+        ? this.state.ellipsesToggled = false
+        : this.state.ellipsesToggled = !this.state.ellipsesToggled
       this.rerender()
     }
 
@@ -62,7 +62,7 @@ class Account extends Nanocomponent {
       >
         ${account.slice(0, 8) + '...'}
         <div class="${styles.container}">
-          ${children.hamby.render({ current })}
+          ${children.ellipses.render({ current })}
         </div>
       </div>
     `)
