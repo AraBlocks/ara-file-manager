@@ -90,6 +90,22 @@ module.exports = {
       font-family: ${fonts.black};
       padding-bottom: 20px;
       padding-top: 40px;
+      z-index: 500;
+    }
+  `,
+
+  input: css`
+    :host {
+      -moz-appearance: textfield;
+      -webkit-appearance: textfield;
+      background-color: white;
+      background-color: -moz-field;
+      border: 1px solid darkgray;
+      box-shadow: 1px 1px 1px 0 lightgray inset;
+      margin-top: 5px;
+      padding: 2px 3px;
+      width: 398px;
+      -webkit-app-region: no-drag;
     }
   `,
 
