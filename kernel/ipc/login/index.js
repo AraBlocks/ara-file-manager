@@ -62,7 +62,7 @@ ipcMain.on(events.CHANGE_ACCOUNT, (_, account) => {
 })
 
 internalEmitter.on(events.GET_CACHED_DID, async () => {
-  const did = (await afm.getCachedUserDids())[0]
+  const did = (await afm.getCachedUserDids()).last
   dispatch({ type: events.GOT_CACHED_DID, load: { did } })
   windowManager.pingView({ view: 'login', event: events.REFRESH })
 })
@@ -124,14 +124,14 @@ async function login(_, load) {
   }
   const userDID = araUtil.getIdentifier(load.userDID)
   //writes did signed in with to disk to autofill input next time app booted
-  afm.cacheUserDid(userDID)
+  await afm.cacheUserDid(userDID)
 
   try {
     const accounts = await afm.getCachedUserDids()
     dispatch({ type: events.GOT_ACCOUNTS, load: { accounts } })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, load.password)
+    const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, accounts[accounts.last], load.password)
     const DCDNStore = rewardsDCDN.loadDCDNStore(farmer)
     const purchasedDIDs = await act.getLibraryItems(userDID)
     //Returns objects representing various info around DIDs
@@ -145,7 +145,6 @@ async function login(_, load) {
 
     //Need to throttle to allow UI to updated. Main thread gets flooded and laggy if you dont
     await pause(250)
-
     const credentials = { userDID, accountAddress, password: load.password }
     await helpers.populateUI(files.published, files.purchased, credentials)
     helpers.getSubscriptions(files.purchased, files.purchased.concat(files.published), credentials)

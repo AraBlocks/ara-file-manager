@@ -15,7 +15,7 @@ const {
 
 const store = windowManager.sharedData.fetch('store')
 
-async function getInitialAccountState(userDID, password) {
+async function getInitialAccountState(userDID, username, password) {
   const network = await utils.getNetwork()
   dispatch({ type: events.GETTING_USER_DATA, load: { userDID, network } })
   windowManager.openWindow('filemanager')
@@ -29,6 +29,7 @@ async function getInitialAccountState(userDID, password) {
       accountAddress,
       autoQueue,
       userDID,
+      username,
       farmer,
       password,
       analyticsPermission: afm.getAnalyticsPermission(userDID),

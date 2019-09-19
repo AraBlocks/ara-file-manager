@@ -14,7 +14,6 @@ const windowManager = remote.require('electron-window-manager')
 class Header extends Nanocomponent {
   constructor({ selectTab, account }) {
     super()
-
     this.props = {
       account,
       userDID: account.userDID,
@@ -91,6 +90,7 @@ class Header extends Nanocomponent {
 
   createElement({ activeTab }) {
     const {
+      props,
       onClick,
       checkCharCount,
       balanceElements,
@@ -103,7 +103,7 @@ class Header extends Nanocomponent {
         <div class="${styles.subHeader} header-subheader" style="margin-top: 4%; align-items: center;">
           <div class="${styles.titleHolder} header-titleHolder">
             <div id="accountName" onclick=${onClick} onkeydown=${checkCharCount}>
-              Account 1
+              ${props.account.username}
             </div>
             <div class="${styles.userHolder} header-userHolder">
               ${children.copyDidTooltip.render()}
