@@ -9,10 +9,10 @@ const html = require('nanohtml')
 const Ellipses = require('../../components/ellipses')
 
 class Account extends Nanocomponent {
-  constructor({ account, current }) {
+  constructor({ account, name, current }) {
     super()
 
-    this.props = { account, current }
+    this.props = { account, name, current }
     this.state = {
       ellipsesToggled: false
     }
@@ -53,7 +53,7 @@ class Account extends Nanocomponent {
     const {
       onClick,
       children,
-      props: { account, current }
+      props: { account, name, current }
     } = this
 
     return (html`
@@ -62,7 +62,7 @@ class Account extends Nanocomponent {
         style="color: white;"
         onclick=${onClick}
       >
-        ${account.slice(0, 8) + '...'}
+        ${name.slice(0, 11) + '...'}
         <div class="${styles.container}">
           ${children.ellipses.render({ current })}
         </div>
