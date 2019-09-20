@@ -45,7 +45,8 @@ class Account extends Nanocomponent {
     }
   }
 
-  update() {
+  update(props) {
+    this.props = { ...this.props, name: props.name }
     return true
   }
 
