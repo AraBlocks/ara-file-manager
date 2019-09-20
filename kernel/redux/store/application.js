@@ -3,5 +3,5 @@ module.exports = {
   cachedUserDid: null,
   deepLinkData: null,
   exportWindowOpen: false,
-  accounts: []
+  accounts: {}
 }

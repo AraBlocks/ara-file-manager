@@ -30,6 +30,9 @@ module.exports = async (state, { load = null, type }) => {
     case events.REGISTERED:
       Object.assign(state, load)
       break
+    case events.CHANGED_NAME:
+      state.username = load.username
+      break;
     case events.LOGOUT:
       state = INITIAL_STATE
       break

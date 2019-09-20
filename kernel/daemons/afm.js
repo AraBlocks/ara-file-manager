@@ -79,6 +79,16 @@ async function getCachedUserDids() {
   }
 }
 
+async function updateAccountName(did, name) {
+  try {
+    const appData = await getAppData()
+    const dids = await pify(appData.read)(application.CACHED_USER_DIDS)
+    await pify(appData.write)(application.CACHED_USER_DIDS, Object.assign(dids, { [did]: name }))
+  } catch(err) {
+    debug(err)
+  }
+}
+
 function getAnalyticsPermission(userDID) {
   const userData = getUserData(userDID)
   if (userData.analyticsPermission == null) {
@@ -116,12 +126,13 @@ function saveUserData( { userDID, userData }) {
 }
 
 module.exports = {
-  cacheUserDid,
   getAFMPath,
-  getAnalyticsPermission,
-  getCachedUserDids,
   getAppData,
   getUserData,
+  cacheUserDid,
   saveUserData,
+  getCachedUserDids,
+  updateAccountName,
+  getAnalyticsPermission,
   toggleAnalyticsPermission
 }

@@ -69,10 +69,15 @@ class Header extends Nanocomponent {
     switch (e.which) {
       case 27:
         input.innerText = this.cachedAccountName
+        this.cachedAccountName = null
+        input.removeAttribute('class')
+        input.removeAttribute('contenteditable')
+        break;
       case 13:
         this.cachedAccountName = null
         input.removeAttribute('class')
         input.removeAttribute('contenteditable')
+        windowManagement.emit({ event: events.CHANGE_NAME, load: { did: this.props.userDID, name: input.innerText } })
         break;
       default:
         if (e.which !== 8 && !isArrowKey(e.which) && input.innerText.length > 20) e.preventDefault()

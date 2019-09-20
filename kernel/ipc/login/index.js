@@ -83,6 +83,32 @@ internalEmitter.on(events.CONFIRM_LOGOUT, async () => {
   }
 })
 
+internalEmitter.on(events.CHANGE_NAME, async (_, load) => {
+  debug('%s heard', events.CHANGE_NAME)
+  const { did, name } = load
+  try {
+    await afm.updateAccountName(did, name)
+    const accounts = await afm.getCachedUserDids()
+    dispatch({ type: events.CHANGED_NAME, load: { username: name, accounts }})
+    windowManager.pingAll({ event: events.REFRESH })
+  } catch (err) {
+    debug('Error updating account name', err)
+  }
+})
+
+ipcMain.on(events.CHANGE_NAME, async (_, load) => {
+  debug('%s heard', events.CHANGE_NAME)
+  const { did, name } = load
+  try {
+    await afm.updateAccountName(did, name)
+    const accounts = await afm.getCachedUserDids()
+    dispatch({ type: events.CHANGED_NAME, load: { username: name, accounts }})
+    windowManager.pingAll({ event: events.REFRESH })
+  } catch (err) {
+    debug('Error updating account name', err)
+  }
+})
+
 ipcMain.on(events.LOGIN, login)
 
 ipcMain.on(events.RECOVER, async (_, load) => {
