@@ -1,10 +1,11 @@
-## [0.12.5](https://github.com/littlstar/ara-content-manager/compare/0.12.3...0.12.5) (2019-08-23)
+## [0.12.6](https://github.com/littlstar/ara-content-manager/compare/0.12.3...0.12.6) (2019-09-20)
 
 
 ### Bug Fixes
 
 * asar smaller faster and avoids windows long path bug ([ca79dc2](https://github.com/littlstar/ara-content-manager/commit/ca79dc2))
 * **.ararc:** steer clear of older utp-native ([3c88c20](https://github.com/littlstar/ara-content-manager/commit/3c88c20))
+* **INSTALL.md:** documentation images and some wording ([1fdbe3e](https://github.com/littlstar/ara-content-manager/commit/1fdbe3e))
 
 
 
