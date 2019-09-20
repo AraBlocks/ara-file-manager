@@ -16,6 +16,7 @@ module.exports = async (state, { load = null, type }) => {
       state.cachedUserDid = load.did
       break
     case events.GOT_ACCOUNTS:
+    case events.CHANGED_NAME:
       state.accounts = load.accounts
       break
     case events.OPEN_DEEPLINK:
