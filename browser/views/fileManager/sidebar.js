@@ -26,7 +26,7 @@ class Sidebar extends Nanocomponent {
     }
 
     this.children = {
-      accountsSection: new sidebarSection({ accounts, type: 'accounts'}),
+      accountsSection: new sidebarSection({ account, accounts, type: 'accounts'}),
       addAccountSection: new sidebarSection({ type: 'addAccount' }),
       addTokensSection: new sidebarSection({ type: 'addTokens' })
     }
@@ -34,8 +34,8 @@ class Sidebar extends Nanocomponent {
     this.renderAccounts = this.renderAccounts.bind(this)
   }
 
-  renderAccounts() {
-    const { children, props: { account, accounts } } = this
+  renderAccounts({ account, accounts }) {
+    const { children } = this
 
     let sections = [ children.accountsSection, children.addAccountSection, children.addTokensSection ]
 
@@ -46,12 +46,14 @@ class Sidebar extends Nanocomponent {
     `
   }
 
-  update() {
+  update(props) {
+    this.props = { ...this.props, accounts: props.accounts}
     return true
   }
 
   createElement() {
     const {
+      props,
       renderAccounts,
       children,
       state
@@ -62,7 +64,7 @@ class Sidebar extends Nanocomponent {
         <div class="${styles.logoContainer} logo-container">
           <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal_white.png" />
         </div>
-        ${renderAccounts()}
+        ${renderAccounts(props)}
       </div>
     `)
   }

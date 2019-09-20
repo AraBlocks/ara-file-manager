@@ -14,6 +14,10 @@ class Container extends Nanocomponent {
   constructor({ account, files, application }) {
     super()
 
+    this.props = {
+      accounts: application.accounts
+    }
+
     this.state = {
       activeTab: 0,
       araBalance: account.araBalance,
@@ -25,7 +29,7 @@ class Container extends Nanocomponent {
     this.children = {
       sidebar: new Sidebar({
         account,
-        accounts: application.accounts
+        accounts: this.props.accounts
       }),
       header: new Header({
         account,
@@ -113,14 +117,16 @@ class Container extends Nanocomponent {
     rerender()
   }
 
-  update({ account, files }) {
+  update({ account, files, application }) {
     this.state.araBalance = account.araBalance
     this.state.loadingLibrary = files.loadingLibrary
+    this.props.accounts = application.accounts
     return true
   }
 
   createElement({ application: { network } }) {
     const {
+      props,
       children,
       renderSections,
       renderSpinnerBars,
@@ -132,7 +138,7 @@ class Container extends Nanocomponent {
       <div>
         <div class="${styles.container} container-container">
           <div class="${styles.sidebar}">
-            ${children.sidebar.render()}
+            ${children.sidebar.render(props)}
           </div>
           <div style="width: 100%;">
             ${children.header.render({ activeTab })}

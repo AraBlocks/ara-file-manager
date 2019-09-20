@@ -7,9 +7,9 @@ const box = require('component-box')
 box.use({ account })
 
 class SidebarSection extends Nanocomponent {
-  constructor({ type = '' }) {
+  constructor({ account = null, accounts = null, type = '' }) {
     super()
-    this.props = { typeRow: type }
+    this.props = { account, accounts, typeRow: type }
     this.makeRows = this.makeRows.bind(this)
     this.box = box
   }
@@ -20,23 +20,24 @@ class SidebarSection extends Nanocomponent {
       if (account !== 'last') {
         const constructorArgs = [{ account, name: accounts[account], current: currAccount.userDID === account }]
         return box('account', { key: account, constructorArgs })
-          .render()
+          .render({ name: accounts[account] })
       }
     })
   }
 
-  update() {
+  update(props) {
+    this.props = { ...this.props, accounts: props.accounts}
     return true
   }
 
-  createElement({ account, accounts }) {
-    const { props, makeRows, } = this
+  createElement() {
+    const { props, makeRows } = this
     return (html`
       <div >
         <div class="${styles.header} section-header">
           ${props.typeRow === 'accounts' ? 'Accounts' : props.typeRow === 'addAccount' ? '+ Add Account' : '+ Add Tokens'}
         </div>
-        ${props.typeRow === 'accounts' ? makeRows(account, accounts) : html`<div></div>`}
+        ${props.typeRow === 'accounts' ? makeRows(props.account, props.accounts) : html`<div></div>`}
       </div>
     `)
   }
