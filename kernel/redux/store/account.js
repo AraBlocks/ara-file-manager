@@ -6,6 +6,6 @@ module.exports = {
   deployEstimateDid: null ,
   ethBalance: null,
   faucetStatus: null,
-  username: null,
+  username: '',
   pendingPublish: false
 }

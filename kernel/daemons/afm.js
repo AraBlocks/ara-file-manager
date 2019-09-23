@@ -12,8 +12,6 @@ const userHome = require('user-home')
 
 const { version } = require('../../package.json')
 
-const DEFAULT_ACCOUNT_NAME = 'Account 1'
-
 async function getAppData() {
   if (global.appData) return global.appData
   const appData = toilet(path.resolve(app.getPath('userData'), application.APP_DATA))
@@ -52,12 +50,12 @@ async function cacheUserDid(did) {
     const dids = await pify(appData.read)(application.CACHED_USER_DIDS)
     if (typeof dids === 'object') {
       if (!Object.keys(dids).includes(did)) {
-        await pify(appData.write)(application.CACHED_USER_DIDS, Object.assign(dids, { [did]: `Account ${Object.keys(dids).length}`, last: did }))
+        await pify(appData.write)(application.CACHED_USER_DIDS, Object.assign(dids, { [did]: did.slice(0, 8), last: did }))
       } else {
         await pify(appData.write)(application.CACHED_USER_DIDS, Object.assign(dids, { last: did }))
       }
     } else {
-      await pify(appData.write)(application.CACHED_USER_DIDS, { [did]: DEFAULT_ACCOUNT_NAME, last: did })
+      await pify(appData.write)(application.CACHED_USER_DIDS, { [did]: did.slice(0, 8), last: did })
     }
   } catch(err) {
     debug(err)
@@ -70,7 +68,7 @@ async function getCachedUserDids() {
     const appData = await getAppData()
     did = await pify(appData.read)(application.CACHED_USER_DIDS)
     if (typeof did === 'string') {
-      did = { [did]: DEFAULT_ACCOUNT_NAME }
+      did = { [did]: did }
     }
     return did || { }
   } catch(err) {

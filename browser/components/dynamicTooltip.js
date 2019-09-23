@@ -21,12 +21,13 @@ class DynamicTooltip extends Nanocomponent {
 		this.children = children
 	}
 
-	update(){
+	update(props){
+    this.props = { ...this.props, children: props.children }
 		return true
 	}
 
-	createElement() {
-		const { props, children, state} = this
+	createElement({ children }) {
+		const { props, state} = this
 		return (html`
 			<div class=${styles.tooltip}
 				onclick="${() => {

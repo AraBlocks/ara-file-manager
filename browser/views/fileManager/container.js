@@ -14,31 +14,29 @@ class Container extends Nanocomponent {
   constructor({ account, files, application }) {
     super()
 
-    this.props = {
-      accounts: application.accounts
-    }
-
     this.state = {
       activeTab: 0,
       araBalance: account.araBalance,
       bannerToggled: true,
       files,
-      loadingLibrary: files.loadingLibrary
+      loadingLibrary: files.loadingLibrary,
+      account,
+      accounts: application.accounts
     }
 
     this.children = {
       sidebar: new Sidebar({
-        account,
-        accounts: this.props.accounts
+        account: this.state.account,
+        accounts: this.state.accounts
       }),
       header: new Header({
-        account,
+        account: this.state.account,
         selectTab: this.selectTab.bind(this)
       }),
       publishedSection: new Section({ files, type: 'published' }),
       purchasedSection: new Section({ files, type: 'purchased' }),
       footer: new Footer({
-        account
+        account: this.state.account
       }),
     }
 
@@ -120,13 +118,13 @@ class Container extends Nanocomponent {
   update({ account, files, application }) {
     this.state.araBalance = account.araBalance
     this.state.loadingLibrary = files.loadingLibrary
-    this.props.accounts = application.accounts
+    this.state.account = account
+    this.state.accounts = application.accounts
     return true
   }
 
   createElement({ application: { network } }) {
     const {
-      props,
       children,
       renderSections,
       renderSpinnerBars,
@@ -138,10 +136,10 @@ class Container extends Nanocomponent {
       <div>
         <div class="${styles.container} container-container">
           <div class="${styles.sidebar}">
-            ${children.sidebar.render(props)}
+            ${children.sidebar.render(state)}
           </div>
           <div style="width: 100%;">
-            ${children.header.render({ activeTab })}
+            ${children.header.render({ activeTab, account: state.account })}
             ${loadingLibrary ? renderSpinnerBars() : renderSections(network)}
             ${children.footer.render()}
           </div>

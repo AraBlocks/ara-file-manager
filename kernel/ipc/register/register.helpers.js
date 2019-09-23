@@ -15,6 +15,9 @@ const {
 } = require('../../daemons')
 const dispatch = require('../../redux/reducers/dispatch')
 const menuHelper = require('../../../boot/menuHelper')
+const { internalEmitter } = require('electron-window-manager')
+
+const store = windowManager.sharedData.fetch('store')
 
 async function _createIdentity() {
   const identity = await aid.create(application.TEMP_PASSWORD)
@@ -76,9 +79,18 @@ async function _requestEther(ethAddress) {
   }
 }
 
-async function pushAID(){
+async function pushAID(_, load) {
   debug('%s heard', events.CREATE_USER_DID)
+  const { logout } = load
   try {
+    if (logout) {
+      await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
+      dispatch({ type: events.LOGOUT })
+      internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
+
+      menuHelper.switchLoginState(events.LOGOUT)
+    }
+
     const identityProps = await _createIdentity()
     dispatch({
       type: events.CREATED_USER_DID,

@@ -26,9 +26,8 @@ class Sidebar extends Nanocomponent {
     }
 
     this.children = {
-      accountsSection: new sidebarSection({ account, accounts, type: 'accounts'}),
-      addAccountSection: new sidebarSection({ type: 'addAccount' }),
-      addTokensSection: new sidebarSection({ type: 'addTokens' })
+      accountsSection: new sidebarSection({ account, accounts, type: 'Accounts'}),
+      addAccountSection: new sidebarSection({ type: '+ Add Account' })
     }
 
     this.renderAccounts = this.renderAccounts.bind(this)
@@ -37,7 +36,7 @@ class Sidebar extends Nanocomponent {
   renderAccounts({ account, accounts }) {
     const { children } = this
 
-    let sections = [ children.accountsSection, children.addAccountSection, children.addTokensSection ]
+    let sections = [ children.accountsSection, children.addAccountSection ]
 
     return html`
       <div class="${styles.sectionContainer} sidebarContainer-sectionContainer">
@@ -47,7 +46,7 @@ class Sidebar extends Nanocomponent {
   }
 
   update(props) {
-    this.props = { ...this.props, accounts: props.accounts}
+    this.props = { ...this.props, account: props.account, accounts: props.accounts}
     return true
   }
 
