@@ -42,11 +42,13 @@ class Account extends Nanocomponent {
   onClick() {
     if (!this.props.current) {
       windowManagement.emit({ event: events.CHANGE_ACCOUNT, load: this.props.account })
+    } else {
+      windowManager.openWindow('accountInfo')
     }
   }
 
   update(props) {
-    this.props = { ...this.props, name: props.name }
+    this.props = { ...this.props, current: props.current, name: props.name }
     return true
   }
 
@@ -63,7 +65,7 @@ class Account extends Nanocomponent {
         style="color: white;"
         onclick=${onClick}
       >
-        ${name.slice(0, 11) + '...'}
+        ${name.length > 11 ? name.slice(0, 11) + '...' : name}
         <div class="${styles.container}">
           ${children.ellipses.render({ current })}
         </div>

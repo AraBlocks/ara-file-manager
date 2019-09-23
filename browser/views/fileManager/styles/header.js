@@ -90,7 +90,6 @@ module.exports = {
       font-family: ${fonts.black};
       padding-bottom: 20px;
       padding-top: 40px;
-      z-index: 500;
     }
   `,
 

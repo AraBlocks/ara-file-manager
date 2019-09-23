@@ -17,12 +17,12 @@ class Header extends Nanocomponent {
     this.props = {
       account,
       userDID: account.userDID,
+      editing: false
     }
 
     this.children = {
       tabs: this.makeTabs(selectTab),
       copyDidTooltip: new DynamicTooltip({
-        children: 'ID: ' + this.props.userDID.slice(0, 8) + '...',
         itemClicked: () => clipboard.writeText(this.props.userDID),
         cssClass: { color: 'black' }
       })
@@ -60,6 +60,8 @@ class Header extends Nanocomponent {
     const input = document.getElementById('accountName')
     input.setAttribute('class', `${styles.input} header-name`)
     input.setAttribute('contenteditable', true)
+    if (input.innerText.endsWith('...')) input.innerText = input.innerText.slice(0, input.innerText.length - 3)
+    this.editing = true
   }
 
   checkCharCount(e) {
@@ -72,15 +74,20 @@ class Header extends Nanocomponent {
         this.cachedAccountName = null
         input.removeAttribute('class')
         input.removeAttribute('contenteditable')
+        this.editing = false
         break;
       case 13:
+        if (!input.innerText) {
+          input.innerText = this.cachedAccountName
+        }
         this.cachedAccountName = null
         input.removeAttribute('class')
         input.removeAttribute('contenteditable')
+        this.editing = false
         windowManagement.emit({ event: events.CHANGE_NAME, load: { did: this.props.userDID, name: input.innerText } })
         break;
       default:
-        if (e.which !== 8 && !isArrowKey(e.which) && input.innerText.length > 20) e.preventDefault()
+        if (e.which !== 8 && !isArrowKey(e.which) && input.innerText.length > 19) e.preventDefault()
         break;
     }
 
@@ -89,11 +96,12 @@ class Header extends Nanocomponent {
     }
   }
 
-  update() {
-    return true
+  update(props) {
+    this.props = { ...this.props, userDID: props.account.userDID }
+    return !this.editing
   }
 
-  createElement({ activeTab }) {
+  createElement({ activeTab, account }) {
     const {
       props,
       onClick,
@@ -108,10 +116,10 @@ class Header extends Nanocomponent {
         <div class="${styles.subHeader} header-subheader" style="margin-top: 4%; align-items: center;">
           <div class="${styles.titleHolder} header-titleHolder">
             <div id="accountName" onclick=${onClick} onkeydown=${checkCharCount}>
-              ${props.account.username}
+              ${account.username.length > 20 ? account.username.slice(0, 20) + '...' : account.username}
             </div>
             <div class="${styles.userHolder} header-userHolder">
-              ${children.copyDidTooltip.render()}
+              ${children.copyDidTooltip.render({ children: 'ID: ' + props.userDID.slice(0, 8) + '...' })}
             </div>
           </div>
 

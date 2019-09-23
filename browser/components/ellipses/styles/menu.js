@@ -33,7 +33,7 @@ module.exports = {
         padding: 3px;
       }
 
-      img:hover {
+      :host:hover {
         transform: scale(1.2);
       }
   	`
