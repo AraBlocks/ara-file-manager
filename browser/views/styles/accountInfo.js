@@ -63,7 +63,7 @@ module.exports = {
     :host {
       font-family:${fonts.black};
       font-size: 21px;
-      margin: 15px 0;
+      margin: 25px 0 15px 0;
     }
   `,
 
@@ -76,14 +76,6 @@ module.exports = {
       justify-content: space-around;
       padding: 0 15px;
       word-wrap: break-word;
-    }
-  `,
-
-  closeBtnHolder: css`
-    :host {
-      left: 90%;
-      position: absolute;
-      top: 3%;
     }
   `,
 

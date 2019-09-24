@@ -33,11 +33,11 @@ class DynamicTooltip extends Nanocomponent {
 				onclick="${() => {
 					props.itemClicked()
 					state.clicked = true
-					this.render()
+					this.render({ children })
 				}}"
 				onmouseleave="${() => {
 					state.clicked = false
-					this.render()
+					this.render({ children })
 				}}"
 			>
 				<div class="${styles.clickableText(props.cssClass)} dynamicTooltip-clickableText">

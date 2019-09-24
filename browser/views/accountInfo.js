@@ -27,7 +27,6 @@ class AccountInfo extends Nanocomponent {
     }
 
     this.children = {
-      closeButton: new UtilityButton({ children: 'close' }),
       requestTokensButton: new Button(this.faucetButtonOpts),
       sendTokensButton: new Button({
         children: 'Send Tokens',
@@ -36,12 +35,10 @@ class AccountInfo extends Nanocomponent {
       }),
 
       araIDTooltip: new DynamicTooltip({
-        children: this.props.userDID,
         itemClicked: () => clipboard.writeText(this.props.userDID)
       }),
 
       ethAddressTooltip: new DynamicTooltip({
-        children: this.props.ethAddress,
         cssClass: { color: 'green' },
         itemClicked: () => clipboard.writeText(this.props.ethAddress)
       })
@@ -113,7 +110,6 @@ class AccountInfo extends Nanocomponent {
     return html`
       <div class="${styles.container} accountInfo-container">
         ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html`<div></div>`}
-        <div class="${styles.closeBtnHolder} accountInfo-closeBtnHolder">${children.closeButton.render({ children: 'close' })}</div>
         <div class="${styles.accountOverview} accountInfo-accountOverview">
           <div class="${styles.banner} accountInfo-banner">Account</div>
             <div class="${styles.descriptionSection} accountInfo-descriptionSection">
@@ -137,9 +133,9 @@ class AccountInfo extends Nanocomponent {
           <div class="${styles.idHolder} accountInfo-idHolder">
             <div class="container">
                 <div>Your <b>Ara ID is:</b></div>
-                ${children.araIDTooltip.render()}
+                ${children.araIDTooltip.render({ children: props.userDID })}
                 <div>Your <b>Wallet Address</b> is:</div>
-                ${children.ethAddressTooltip.render()}
+                ${children.ethAddressTooltip.render({ children: props.ethAddress })}
             </div>
           </div>
           <div class="${styles.interactiveSection} accountInfo-interactiveSection">

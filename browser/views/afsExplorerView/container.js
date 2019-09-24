@@ -36,7 +36,6 @@ class Container extends Nanocomponent {
 				renderView: this.renderView.bind(this)
 			}),
 			araIdTooltip: new DynamicTooltip({
-				children: "Package ID: " + did.slice(0,50) + "...",
 				onclick: () => clipboard.writeText(did)
 			}),
 			downloadUpdateButton: new Button({
@@ -109,7 +108,7 @@ class Container extends Nanocomponent {
 					${props.afsName || 'Unnamed Package'}
 					${children.utilityButton.render({ children: 'close' })}
 				</div>
-				${children.araIdTooltip.render()}
+				${children.araIdTooltip.render({ children: "Package ID: " + did.slice(0,50) + "..." })}
 				<div class="${styles.content} AfsExplorerViewContainer-content">
 					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export individual files to your hard drive by right-clicking them
 					, or by clicking “export all”.
