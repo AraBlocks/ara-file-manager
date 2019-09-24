@@ -37,28 +37,34 @@ ipcMain.on(events.LOGOUT, () => {
   windowManager.openModal('generalActionModal')
 })
 
-internalEmitter.on(events.CHANGE_ACCOUNT, (_, account) => {
+internalEmitter.on(events.CHANGE_ACCOUNT, async (_, account) => {
   debug('%s HEARD', events.CHANGE_ACCOUNT)
   //Callback must use internal emitter. We will never know why
-  const callback = async () => {
-    await afm.cacheUserDid(account)
-    internalEmitter.emit(events.GET_CACHED_DID)
-    internalEmitter.emit(events.CONFIRM_LOGOUT)
-  }
-  dispatch({ type: events.FEED_MODAL, load: { modalName: 'logoutConfirm', callback } })
-  windowManager.openModal('generalActionModal')
+  await afm.cacheUserDid(account)
+  internalEmitter.emit(events.GET_CACHED_DID)
+  await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
+  dispatch({ type: events.LOGOUT })
+  internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
+
+  menuHelper.switchLoginState(events.LOGOUT)
+  windowManager.closeWindow('accountInfo')
+  windowManager.openWindow('login')
+  windowManager.pingView({ view: 'login', event: events.REFRESH, load: { userDID: account } })
 })
 
-ipcMain.on(events.CHANGE_ACCOUNT, (_, account) => {
+ipcMain.on(events.CHANGE_ACCOUNT, async (_, account) => {
   debug('%s HEARD', events.CHANGE_ACCOUNT)
   //Callback must use internal emitter. We will never know why
-  const callback = async () => {
-    await afm.cacheUserDid(account)
-    internalEmitter.emit(events.GET_CACHED_DID)
-    internalEmitter.emit(events.CONFIRM_LOGOUT)
-  }
-  dispatch({ type: events.FEED_MODAL, load: { modalName: 'logoutConfirm', callback } })
-  windowManager.openModal('generalActionModal')
+  await afm.cacheUserDid(account)
+  internalEmitter.emit(events.GET_CACHED_DID)
+  await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
+  dispatch({ type: events.LOGOUT })
+  internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
+
+  menuHelper.switchLoginState(events.LOGOUT)
+  windowManager.closeWindow('accountInfo')
+  windowManager.openWindow('login')
+  windowManager.pingView({ view: 'login', event: events.REFRESH, load: { userDID: account } })
 })
 
 internalEmitter.on(events.GET_CACHED_DID, async () => {
@@ -178,6 +184,8 @@ async function login(_, load) {
     if (store.application.deepLinkData !== null) {
       internalEmitter.emit(events.PROMPT_PURCHASE, store.application.deepLinkData)
     }
+
+    windowManager.pingAll({ event: events.REFRESH })
 
     await farmer.start()
 

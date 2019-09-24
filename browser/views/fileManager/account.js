@@ -39,11 +39,13 @@ class Account extends Nanocomponent {
     return { items, toggleCB, direction: 'left' }
   }
 
-  onClick() {
-    if (!this.props.current) {
-      windowManagement.emit({ event: events.CHANGE_ACCOUNT, load: this.props.account })
-    } else {
-      windowManager.openWindow('accountInfo')
+  onClick(e) {
+    if (e.target.tagName.toLowerCase() !== 'img') {
+      if (!this.props.current) {
+        windowManagement.emit({ event: events.CHANGE_ACCOUNT, load: this.props.account })
+      } else {
+        windowManager.openWindow('accountInfo')
+      }
     }
   }
 

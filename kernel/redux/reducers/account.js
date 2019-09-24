@@ -29,6 +29,7 @@ module.exports = async (state, { load = null, type }) => {
     case events.RECOVERED:
     case events.REGISTERED:
       Object.assign(state, load)
+      state.faucetStatus = null
       break
     case events.CHANGED_NAME:
       state.username = load.username

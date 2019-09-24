@@ -22,7 +22,7 @@ module.exports = {
   logoContainer: css`
     :host {
       position: absolute;
-      top: 3%;
+      top: 15px;
       left: 17%;
       transform: scale(1.5, 1.5);
     }

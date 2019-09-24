@@ -108,6 +108,7 @@ async function pushAID(_, load) {
         mnemonic: identityProps.mnemonic
       }
     })
+    windowManager.pingAll({ event: events.REFRESH })
     const subscriptions = await _getSubscriptions(identityProps)
     dispatch({ type: events.GOT_REGISTRATION_SUBS, load: subscriptions })
   } catch (err) {
