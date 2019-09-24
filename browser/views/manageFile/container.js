@@ -26,7 +26,6 @@ class Container extends Nanocomponent {
       uncommitted: opts.uncommitted
     }
     this.children = {
-      utilityButton: new UtilityButton({ onclick: this.closeWindow.bind(this) }),
       fileInfo: new FileInfo({
         addItems: this.addItems.bind(this),
         did: opts.did,
@@ -35,7 +34,6 @@ class Container extends Nanocomponent {
         oninput: this.oninput.bind(this)
       }),
       packageIDTooltip: new DynamicTooltip({
-        children: "Package ID: " + opts.did,
         onclick: () => clipboard.writeText(opts.did)
       }),
       publishButton: new Button({
@@ -204,12 +202,11 @@ class Container extends Nanocomponent {
         ${overlay(spinner)}
         <div class="${styles.horizontalContainer} ${styles.title} ManageFileContainer-horizontalContainer,title">
           ${state.uncommitted ? 'Publish Package' : 'Manage Package'}
-          ${children.utilityButton.render({ children: 'close' })}
         </div>
         <div class="${styles.content} ManageFileContainer-content">
           ${this.renderDescription()}
         </div>
-        ${state.uncommitted ? null : children.packageIDTooltip.render()}
+        ${state.uncommitted ? null : children.packageIDTooltip.render({ children: "Package ID: " + state.did })}
         <div class="${styles.divider} ManageFileContainer-divider"></div>
         ${children.fileInfo.render({ parentState: state })}
         ${children.publishButton.render(publishBtnAttributes)}
