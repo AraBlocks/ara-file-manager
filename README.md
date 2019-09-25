@@ -1,3 +1,5 @@
+![](.github/ara-cardboard-box.png)
+
 # Ara File Manager
 
 The **Ara File Manager** is a simple desktop app that demonstrates the functionality of a complete local Ara network node and crypto token wallet.

@@ -1,4 +1,3 @@
-
 # Building Ara
 
 The Ara File Manager includes Node modules developed within
