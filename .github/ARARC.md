@@ -1,6 +1,6 @@
 # Inside .ararc
 
-(draft, this doc not yet linked)
+(draft, this doc not yet linked, pushing to see formatting)
 
 TODO
 * switching between testnet and mainnet
