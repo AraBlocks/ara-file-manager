@@ -91,7 +91,23 @@ async function purchaseItem(opts) {
 			contentDid,
 			password,
 			requesterDid,
-			estimate: false
+			estimate: false,
+      gasPrice: 0,
+      onhash: hash => {
+        console.log('ON HASH', hash)
+      },
+      onreceipt: receipt => {
+        console.log('ON RECEIPT', receipt)
+      },
+      onconfirmation: (confNumber, receipt) => {
+        console.log('ON CONFIRMATION', confNumber, receipt)
+      },
+      onerror: error => {
+        console.log('ON ERROR', error)
+      },
+      onmined: receipt => {
+        console.log('ON MINED', receipt)
+      }
 		})
 
 		return jobId
