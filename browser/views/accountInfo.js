@@ -37,13 +37,13 @@ class AccountInfo extends Nanocomponent {
 
       araIDTooltip: new DynamicTooltip({
         children: this.props.userDID,
-        onclick: () => clipboard.writeText(this.props.userDID)
+        itemClicked: () => clipboard.writeText(this.props.userDID)
       }),
 
       ethAddressTooltip: new DynamicTooltip({
         children: this.props.ethAddress,
         cssClass: { color: 'green' },
-        onclick: () => clipboard.writeText(this.props.ethAddress)
+        itemClicked: () => clipboard.writeText(this.props.ethAddress)
       })
     }
 

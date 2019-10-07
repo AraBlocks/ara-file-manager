@@ -40,7 +40,7 @@ class Header extends Nanocomponent {
       }),
       copyDidTooltip: new DynamicTooltip({
         children: 'ID: ' + this.props.userDID.slice(0, 8) + '...',
-        onclick: () => clipboard.writeText(this.props.userDID),
+        itemClicked: () => clipboard.writeText(this.props.userDID),
         cssClass: { color: 'black' }
       }),
       deepLink: new Input({
