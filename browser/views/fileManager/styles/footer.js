@@ -15,7 +15,7 @@ module.exports = {
         padding: 2.5% 2.5%;
         position: fixed;
         bottom: 0;
-        width: 75%;
+        width: 70%;
         height: 130px;
         background-color: #ffffff;
         border: 1px solid var(--ara-grey);
