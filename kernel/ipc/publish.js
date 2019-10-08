@@ -102,7 +102,15 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     await autoQueue.push(
       analytics.trackPublishStart,
-      () => araFilesystem.deploy({ password, did })
+      () => araFilesystem.deploy({
+        password,
+        did,
+        onhash: hash => { console.log('onhash', hash) },
+        onreceipt: receipt => { console.log('onreceipt', receipt) },
+        onconfirmation: (confNumber, receipt) => { console.log('onconfirmation', confNumber, receipt) },
+        onerror: error => { console.log('onerror', error) },
+        onmined: receipt => { console.log('onmined', receipt) }
+      })
     )
 
     await autoQueue.push(

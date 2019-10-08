@@ -81,7 +81,7 @@ async function _requestEther(ethAddress) {
 
 async function pushAID(_, load) {
   debug('%s heard', events.CREATE_USER_DID)
-  const { logout } = load
+  const logout = load ? load.logout : false
   try {
     if (logout) {
       await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
