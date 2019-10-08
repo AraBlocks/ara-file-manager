@@ -1,11 +1,12 @@
-## [0.12.6](https://github.com/littlstar/ara-content-manager/compare/0.12.3...0.12.6) (2019-09-20)
+## [0.12.7](https://github.com/littlstar/ara-content-manager/compare/0.12.3...0.12.7) (2019-10-08)
 
 
 ### Bug Fixes
 
-* asar smaller faster and avoids windows long path bug ([ca79dc2](https://github.com/littlstar/ara-content-manager/commit/ca79dc2))
-* **.ararc:** steer clear of older utp-native ([3c88c20](https://github.com/littlstar/ara-content-manager/commit/3c88c20))
-* **INSTALL.md:** documentation images and some wording ([1fdbe3e](https://github.com/littlstar/ara-content-manager/commit/1fdbe3e))
+* asar smaller faster and avoids windows long path bug ([a8f36ac](https://github.com/littlstar/ara-content-manager/commit/a8f36ac))
+* **.ararc:** steer clear of older utp-native ([ce79a34](https://github.com/littlstar/ara-content-manager/commit/ce79a34))
+* **INSTALL.md:** documentation images and some wording ([549f4e2](https://github.com/littlstar/ara-content-manager/commit/549f4e2))
+* copy tooltips ([10136f6](https://github.com/littlstar/ara-content-manager/commit/10136f6))
 
 
 
@@ -14,16 +15,16 @@
 
 ### Bug Fixes
 
-* **..analytics:** handle sanitize undefined errors ([adea887](https://github.com/littlstar/ara-content-manager/commit/adea887))
-* **.ararc:** Add testnet providers ([6e10496](https://github.com/littlstar/ara-content-manager/commit/6e10496))
+* **..analytics:** handle sanitize undefined errors ([ed305ae](https://github.com/littlstar/ara-content-manager/commit/ed305ae))
+* **.ararc:** Add testnet providers ([21f1486](https://github.com/littlstar/ara-content-manager/commit/21f1486))
 
 
 ### Features
 
-* testing :rocket: ([b018fef](https://github.com/littlstar/ara-content-manager/commit/b018fef))
-* **.ararc:** moved to project root - no longer writes to HOME ([2bd82f4](https://github.com/littlstar/ara-content-manager/commit/2bd82f4))
-* travis.yaml added ([0572ccd](https://github.com/littlstar/ara-content-manager/commit/0572ccd))
-* **scripts/:** search for long paths and module version dependencies ([d3df64e](https://github.com/littlstar/ara-content-manager/commit/d3df64e))
+* testing :rocket: ([a70a0cb](https://github.com/littlstar/ara-content-manager/commit/a70a0cb))
+* **.ararc:** moved to project root - no longer writes to HOME ([b6820bd](https://github.com/littlstar/ara-content-manager/commit/b6820bd))
+* travis.yaml added ([b0b72ac](https://github.com/littlstar/ara-content-manager/commit/b0b72ac))
+* **scripts/:** search for long paths and module version dependencies ([5d1a9da](https://github.com/littlstar/ara-content-manager/commit/5d1a9da))
 
 
 
@@ -36,7 +37,7 @@
 
 ### Bug Fixes
 
-* **boot/writeFiles.js:** Update infura in ararc ([1d5def0](https://github.com/littlstar/ara-content-manager/commit/1d5def0))
+* **boot/writeFiles.js:** Update infura in ararc ([73d6d99](https://github.com/littlstar/ara-content-manager/commit/73d6d99))
 
 
 
@@ -53,7 +54,7 @@
 
 ### Bug Fixes
 
-* **confirmSendModal.js:** added back event ([0d1c780](https://github.com/littlstar/ara-content-manager/commit/0d1c780))
+* **confirmSendModal.js:** added back event ([c813859](https://github.com/littlstar/ara-content-manager/commit/c813859))
 
 
 
@@ -62,7 +63,7 @@
 
 ### Bug Fixes
 
-* **recover.js:** derp ([57e9e8b](https://github.com/littlstar/ara-content-manager/commit/57e9e8b))
+* **recover.js:** derp ([d31a938](https://github.com/littlstar/ara-content-manager/commit/d31a938))
 
 
 
@@ -79,22 +80,22 @@
 
 ### Bug Fixes
 
-* Fix file add for Linux ([fe98544](https://github.com/littlstar/ara-content-manager/commit/fe98544))
-* **afm.js | cleaOutdatedData:** removed (Deprecated) ([373422d](https://github.com/littlstar/ara-content-manager/commit/373422d))
-* **publish.js:** removed extra estimate ([85b7f46](https://github.com/littlstar/ara-content-manager/commit/85b7f46))
-* **purchaseEstimate.js:** referenced `did` properly ([2563933](https://github.com/littlstar/ara-content-manager/commit/2563933))
-* **register.js:** moved cacheUserDid to registration confirmation ([a238134](https://github.com/littlstar/ara-content-manager/commit/a238134))
-* **winstaller.js:** changed exe and setupExe props ([3d53eea](https://github.com/littlstar/ara-content-manager/commit/3d53eea))
+* Fix file add for Linux ([93d7ab4](https://github.com/littlstar/ara-content-manager/commit/93d7ab4))
+* **afm.js | cleaOutdatedData:** removed (Deprecated) ([a24d212](https://github.com/littlstar/ara-content-manager/commit/a24d212))
+* **publish.js:** removed extra estimate ([a20353a](https://github.com/littlstar/ara-content-manager/commit/a20353a))
+* **purchaseEstimate.js:** referenced `did` properly ([6a380cb](https://github.com/littlstar/ara-content-manager/commit/6a380cb))
+* **register.js:** moved cacheUserDid to registration confirmation ([8d7b6e3](https://github.com/littlstar/ara-content-manager/commit/8d7b6e3))
+* **winstaller.js:** changed exe and setupExe props ([220f88f](https://github.com/littlstar/ara-content-manager/commit/220f88f))
 
 
 ### Features
 
-* **analytics:** added purchase start and end trackers ([3356300](https://github.com/littlstar/ara-content-manager/commit/3356300))
-* **kernel:** Fix integration with new DCDN ([f796bb8](https://github.com/littlstar/ara-content-manager/commit/f796bb8))
-* **scripts/:** programatically append version to .app and .exe ([9f36594](https://github.com/littlstar/ara-content-manager/commit/9f36594))
-* Add download url box ([badde84](https://github.com/littlstar/ara-content-manager/commit/badde84))
-* Add download url box ([7c57738](https://github.com/littlstar/ara-content-manager/commit/7c57738))
-* extended tracking ([3c445f3](https://github.com/littlstar/ara-content-manager/commit/3c445f3))
+* **analytics:** added purchase start and end trackers ([2c98e95](https://github.com/littlstar/ara-content-manager/commit/2c98e95))
+* **kernel:** Fix integration with new DCDN ([942536d](https://github.com/littlstar/ara-content-manager/commit/942536d))
+* **scripts/:** programatically append version to .app and .exe ([3ae1e93](https://github.com/littlstar/ara-content-manager/commit/3ae1e93))
+* Add download url box ([fde3de2](https://github.com/littlstar/ara-content-manager/commit/fde3de2))
+* Add download url box ([aaabc15](https://github.com/littlstar/ara-content-manager/commit/aaabc15))
+* extended tracking ([0d19769](https://github.com/littlstar/ara-content-manager/commit/0d19769))
 
 
 
@@ -103,11 +104,11 @@
 
 ### Features
 
-* **browser/js/:** Send PAGE_VIEW events ([72c14f6](https://github.com/littlstar/ara-content-manager/commit/72c14f6))
-* **browser/js/modal.js:** Track "subviews" of modals ([c0efe13](https://github.com/littlstar/ara-content-manager/commit/c0efe13))
-* **generalModalTextProvider|publish:** Add `publishEstimate` modalName ([fc46447](https://github.com/littlstar/ara-content-manager/commit/fc46447))
-* **stateManagement.js:** Add PAGE_VIEW state ([a1f6952](https://github.com/littlstar/ara-content-manager/commit/a1f6952))
-* **windowManagement|modal:** Trigger PAGE_VIEW and modal listens for ([e77fb5b](https://github.com/littlstar/ara-content-manager/commit/e77fb5b))
+* **browser/js/:** Send PAGE_VIEW events ([77a817a](https://github.com/littlstar/ara-content-manager/commit/77a817a))
+* **browser/js/modal.js:** Track "subviews" of modals ([bfc08ef](https://github.com/littlstar/ara-content-manager/commit/bfc08ef))
+* **generalModalTextProvider|publish:** Add `publishEstimate` modalName ([ac05623](https://github.com/littlstar/ara-content-manager/commit/ac05623))
+* **stateManagement.js:** Add PAGE_VIEW state ([7654f3b](https://github.com/littlstar/ara-content-manager/commit/7654f3b))
+* **windowManagement|modal:** Trigger PAGE_VIEW and modal listens for ([64d6732](https://github.com/littlstar/ara-content-manager/commit/64d6732))
 
 
 
@@ -120,7 +121,7 @@
 
 ### Bug Fixes
 
-* faucet port changed; faucet onclick fixed ([cd948b2](https://github.com/littlstar/ara-content-manager/commit/cd948b2))
+* faucet port changed; faucet onclick fixed ([38f0976](https://github.com/littlstar/ara-content-manager/commit/38f0976))
 
 
 
@@ -129,15 +130,15 @@
 
 ### Bug Fixes
 
-* **boot/index.js:** added electron sqrl startup to top ([6c8b61c](https://github.com/littlstar/ara-content-manager/commit/6c8b61c))
-* **errorInput:** referenced props instead of defunct state ([e3db554](https://github.com/littlstar/ara-content-manager/commit/e3db554))
-* **errorInput:** referenced props instead of defunct state ([8d9a6a8](https://github.com/littlstar/ara-content-manager/commit/8d9a6a8))
-* **tray:** created proper flow for register via tray ([05171e9](https://github.com/littlstar/ara-content-manager/commit/05171e9))
+* **boot/index.js:** added electron sqrl startup to top ([5afa569](https://github.com/littlstar/ara-content-manager/commit/5afa569))
+* **errorInput:** referenced props instead of defunct state ([54eb714](https://github.com/littlstar/ara-content-manager/commit/54eb714))
+* **errorInput:** referenced props instead of defunct state ([c7e6341](https://github.com/littlstar/ara-content-manager/commit/c7e6341))
+* **tray:** created proper flow for register via tray ([9866fb2](https://github.com/littlstar/ara-content-manager/commit/9866fb2))
 
 
 ### Features
 
-* **header.js:** Add `Close` to main window menu ([2054832](https://github.com/littlstar/ara-content-manager/commit/2054832))
+* **header.js:** Add `Close` to main window menu ([4bd2c60](https://github.com/littlstar/ara-content-manager/commit/4bd2c60))
 
 
 
@@ -146,13 +147,13 @@
 
 ### Bug Fixes
 
-* **squirrel:** fixed version check ([6992e90](https://github.com/littlstar/ara-content-manager/commit/6992e90))
-* **update.js:** renders package name in modal ([bb18c60](https://github.com/littlstar/ara-content-manager/commit/bb18c60))
+* **squirrel:** fixed version check ([2367bcb](https://github.com/littlstar/ara-content-manager/commit/2367bcb))
+* **update.js:** renders package name in modal ([9103c9b](https://github.com/littlstar/ara-content-manager/commit/9103c9b))
 
 
 ### Features
 
-* modal for tabula rasa ([9420d70](https://github.com/littlstar/ara-content-manager/commit/9420d70))
+* modal for tabula rasa ([e935032](https://github.com/littlstar/ara-content-manager/commit/e935032))
 
 
 
@@ -161,7 +162,7 @@
 
 ### Bug Fixes
 
-* **update.js:** renders package name in modal ([b83c674](https://github.com/littlstar/ara-content-manager/commit/b83c674))
+* **update.js:** renders package name in modal ([d30847a](https://github.com/littlstar/ara-content-manager/commit/d30847a))
 
 
 
@@ -174,7 +175,7 @@
 
 ### Bug Fixes
 
-* **~/purchase.js:** Temp fake peer count for now ([fc9e5a9](https://github.com/littlstar/ara-content-manager/commit/fc9e5a9))
+* **~/purchase.js:** Temp fake peer count for now ([15ac2ef](https://github.com/littlstar/ara-content-manager/commit/15ac2ef))
 
 
 
@@ -183,8 +184,8 @@
 
 ### Features
 
-* recover implemented to change password (closes [#432](https://github.com/littlstar/ara-content-manager/issues/432)) ([1f5518c](https://github.com/littlstar/ara-content-manager/commit/1f5518c))
-* **progressBar:** added message to :ant: ([24370cc](https://github.com/littlstar/ara-content-manager/commit/24370cc))
+* recover implemented to change password (closes [#432](https://github.com/littlstar/ara-content-manager/issues/432)) ([2490113](https://github.com/littlstar/ara-content-manager/commit/2490113))
+* **progressBar:** added message to :ant: ([04f5728](https://github.com/littlstar/ara-content-manager/commit/04f5728))
 
 
 
@@ -193,21 +194,21 @@
 
 ### Bug Fixes
 
-* **~/download.js:** Require order ([633df45](https://github.com/littlstar/ara-content-manager/commit/633df45))
-* **~/purchase.js:** Comment out dryRunJoin until rDCDN supports ([618f864](https://github.com/littlstar/ara-content-manager/commit/618f864))
-* **readFileMetadata:** Read and write afs metadata; TODO: figure out `author` ([9c9b36d](https://github.com/littlstar/ara-content-manager/commit/9c9b36d))
-* corrected sp & removed prebuilds ([#435](https://github.com/littlstar/ara-content-manager/issues/435)) ([03d1f55](https://github.com/littlstar/ara-content-manager/commit/03d1f55))
-* hot reloading + filedescriptor updates ([5ed6f17](https://github.com/littlstar/ara-content-manager/commit/5ed6f17))
-* hot reloading + filedescriptor updates ([239ec16](https://github.com/littlstar/ara-content-manager/commit/239ec16))
+* **~/download.js:** Require order ([f361e52](https://github.com/littlstar/ara-content-manager/commit/f361e52))
+* **~/purchase.js:** Comment out dryRunJoin until rDCDN supports ([d8cb793](https://github.com/littlstar/ara-content-manager/commit/d8cb793))
+* **readFileMetadata:** Read and write afs metadata; TODO: figure out `author` ([21ad896](https://github.com/littlstar/ara-content-manager/commit/21ad896))
+* corrected sp & removed prebuilds ([#435](https://github.com/littlstar/ara-content-manager/issues/435)) ([e170ceb](https://github.com/littlstar/ara-content-manager/commit/e170ceb))
+* hot reloading + filedescriptor updates ([be986a7](https://github.com/littlstar/ara-content-manager/commit/be986a7))
+* hot reloading + filedescriptor updates ([faf39fc](https://github.com/littlstar/ara-content-manager/commit/faf39fc))
 
 
 ### Features
 
-* context-menu for main view ([07172cc](https://github.com/littlstar/ara-content-manager/commit/07172cc))
-* **browser/views/purchaseEstimate:** Add peer count ([eb93e56](https://github.com/littlstar/ara-content-manager/commit/eb93e56))
-* **kernel/*:** Add peer count to purchase estimate ([5f4b2cf](https://github.com/littlstar/ara-content-manager/commit/5f4b2cf))
-* **tray.js:** windows version of tray icon ([e8a1230](https://github.com/littlstar/ara-content-manager/commit/e8a1230))
-* creates aid immediately ([0589250](https://github.com/littlstar/ara-content-manager/commit/0589250))
+* context-menu for main view ([f61f307](https://github.com/littlstar/ara-content-manager/commit/f61f307))
+* **browser/views/purchaseEstimate:** Add peer count ([9f19c3f](https://github.com/littlstar/ara-content-manager/commit/9f19c3f))
+* **kernel/*:** Add peer count to purchase estimate ([413d4d7](https://github.com/littlstar/ara-content-manager/commit/413d4d7))
+* **tray.js:** windows version of tray icon ([bccec4f](https://github.com/littlstar/ara-content-manager/commit/bccec4f))
+* creates aid immediately ([3640cfc](https://github.com/littlstar/ara-content-manager/commit/3640cfc))
 
 
 
@@ -216,7 +217,7 @@
 
 ### Features
 
-* **constants/urls.js:** PUPDATER.ARA.ONE ([f385972](https://github.com/littlstar/ara-content-manager/commit/f385972))
+* **constants/urls.js:** PUPDATER.ARA.ONE ([1868f47](https://github.com/littlstar/ara-content-manager/commit/1868f47))
 
 
 
@@ -225,12 +226,12 @@
 
 ### Bug Fixes
 
-* Stops double stringify, read accounts for sing and dbl stringify ([3497bc0](https://github.com/littlstar/ara-content-manager/commit/3497bc0))
+* Stops double stringify, read accounts for sing and dbl stringify ([c3853a5](https://github.com/littlstar/ara-content-manager/commit/c3853a5))
 
 
 ### Features
 
-* workig autoupdate windows ([398afaf](https://github.com/littlstar/ara-content-manager/commit/398afaf))
+* workig autoupdate windows ([8aaba3f](https://github.com/littlstar/ara-content-manager/commit/8aaba3f))
 
 
 
@@ -239,12 +240,12 @@
 
 ### Bug Fixes
 
-* defined debug in squirrel ([08b0a95](https://github.com/littlstar/ara-content-manager/commit/08b0a95))
-* defined debug in squirrel ([ef2485c](https://github.com/littlstar/ara-content-manager/commit/ef2485c))
-* stringifies meta ([5f3387b](https://github.com/littlstar/ara-content-manager/commit/5f3387b))
-* stringifies meta ([e5ec34d](https://github.com/littlstar/ara-content-manager/commit/e5ec34d))
-* **squirrel:** removed dialog squirrel err ([61275f1](https://github.com/littlstar/ara-content-manager/commit/61275f1))
-* **squirrel:** removed dialog squirrel err ([6aa2620](https://github.com/littlstar/ara-content-manager/commit/6aa2620))
+* defined debug in squirrel ([a66d5d6](https://github.com/littlstar/ara-content-manager/commit/a66d5d6))
+* defined debug in squirrel ([e23f260](https://github.com/littlstar/ara-content-manager/commit/e23f260))
+* stringifies meta ([c476709](https://github.com/littlstar/ara-content-manager/commit/c476709))
+* stringifies meta ([1244999](https://github.com/littlstar/ara-content-manager/commit/1244999))
+* **squirrel:** removed dialog squirrel err ([7468aaf](https://github.com/littlstar/ara-content-manager/commit/7468aaf))
+* **squirrel:** removed dialog squirrel err ([a125eff](https://github.com/littlstar/ara-content-manager/commit/a125eff))
 
 
 
@@ -253,42 +254,42 @@
 
 ### Bug Fixes
 
-* added sign to prod build mac ([b5ed6e1](https://github.com/littlstar/ara-content-manager/commit/b5ed6e1))
-* changed casing of paths for linux ([193dc4d](https://github.com/littlstar/ara-content-manager/commit/193dc4d))
-* checks to see if argv[1] is deeplink ([f6d9b52](https://github.com/littlstar/ara-content-manager/commit/f6d9b52))
-* not overriding uncommited status upon login ([a1b7a61](https://github.com/littlstar/ara-content-manager/commit/a1b7a61))
-* **purchaseEstimate:** roundboi'd gas estimate ([e9a729b](https://github.com/littlstar/ara-content-manager/commit/e9a729b))
-* Null file sizes ([6eb9ae0](https://github.com/littlstar/ara-content-manager/commit/6eb9ae0))
-* prevents clicking export mult afs ([5bab8c2](https://github.com/littlstar/ara-content-manager/commit/5bab8c2))
-* **publish:** closes modal when not enough eth ([b78fcd9](https://github.com/littlstar/ara-content-manager/commit/b78fcd9))
-* prod windows build points to prod icon instead of dev ([9d6decd](https://github.com/littlstar/ara-content-manager/commit/9d6decd))
-* **purchaseEstimate:** increased rounding ([93484bb](https://github.com/littlstar/ara-content-manager/commit/93484bb))
-* reading metadata properly ([f748a60](https://github.com/littlstar/ara-content-manager/commit/f748a60))
-* reading metadata properly ([99a9a1a](https://github.com/littlstar/ara-content-manager/commit/99a9a1a))
-* removed return statement ([923edc1](https://github.com/littlstar/ara-content-manager/commit/923edc1))
-* Select file for windows ([71f74df](https://github.com/littlstar/ara-content-manager/commit/71f74df))
-* Size render issue ([476c21e](https://github.com/littlstar/ara-content-manager/commit/476c21e))
-* stops calling start_seed for uncommitted ([258a96b](https://github.com/littlstar/ara-content-manager/commit/258a96b))
-* working header hamby ([6f1fe29](https://github.com/littlstar/ara-content-manager/commit/6f1fe29))
-* working logout button on main hamby ([3f47958](https://github.com/littlstar/ara-content-manager/commit/3f47958))
+* added sign to prod build mac ([29ec340](https://github.com/littlstar/ara-content-manager/commit/29ec340))
+* changed casing of paths for linux ([dd7ad6e](https://github.com/littlstar/ara-content-manager/commit/dd7ad6e))
+* checks to see if argv[1] is deeplink ([4a511a6](https://github.com/littlstar/ara-content-manager/commit/4a511a6))
+* not overriding uncommited status upon login ([9d8f818](https://github.com/littlstar/ara-content-manager/commit/9d8f818))
+* **purchaseEstimate:** roundboi'd gas estimate ([45ed6a5](https://github.com/littlstar/ara-content-manager/commit/45ed6a5))
+* Null file sizes ([2d2c3e3](https://github.com/littlstar/ara-content-manager/commit/2d2c3e3))
+* prevents clicking export mult afs ([b6bc5bc](https://github.com/littlstar/ara-content-manager/commit/b6bc5bc))
+* **publish:** closes modal when not enough eth ([57e5010](https://github.com/littlstar/ara-content-manager/commit/57e5010))
+* prod windows build points to prod icon instead of dev ([f52e8c7](https://github.com/littlstar/ara-content-manager/commit/f52e8c7))
+* **purchaseEstimate:** increased rounding ([7601f7a](https://github.com/littlstar/ara-content-manager/commit/7601f7a))
+* reading metadata properly ([aa1c146](https://github.com/littlstar/ara-content-manager/commit/aa1c146))
+* reading metadata properly ([0c90f22](https://github.com/littlstar/ara-content-manager/commit/0c90f22))
+* removed return statement ([ead7a5b](https://github.com/littlstar/ara-content-manager/commit/ead7a5b))
+* Select file for windows ([f0574c0](https://github.com/littlstar/ara-content-manager/commit/f0574c0))
+* Size render issue ([7d21342](https://github.com/littlstar/ara-content-manager/commit/7d21342))
+* stops calling start_seed for uncommitted ([6b7db00](https://github.com/littlstar/ara-content-manager/commit/6b7db00))
+* working header hamby ([7f52a3f](https://github.com/littlstar/ara-content-manager/commit/7f52a3f))
+* working logout button on main hamby ([f620f8f](https://github.com/littlstar/ara-content-manager/commit/f620f8f))
 
 
 ### Features
 
-* autopupdater logic for macos ([d5e00b7](https://github.com/littlstar/ara-content-manager/commit/d5e00b7))
-* backup eth faucy ([702e416](https://github.com/littlstar/ara-content-manager/commit/702e416))
-* Disallow logout while logging in ([#369](https://github.com/littlstar/ara-content-manager/issues/369)) ([c3da5b7](https://github.com/littlstar/ara-content-manager/commit/c3da5b7))
-* Fix file manager render issue after recover ([#371](https://github.com/littlstar/ara-content-manager/issues/371)) ([d046a5b](https://github.com/littlstar/ara-content-manager/commit/d046a5b))
-* hamby navigation on filemanager ([a8e7dbe](https://github.com/littlstar/ara-content-manager/commit/a8e7dbe))
-* Listener for dumping deeplink data ([1912587](https://github.com/littlstar/ara-content-manager/commit/1912587))
-* PE-792 Analytics Sanitization ([#374](https://github.com/littlstar/ara-content-manager/issues/374)) ([01582de](https://github.com/littlstar/ara-content-manager/commit/01582de))
-* Proper signing and fix windows analytics sanitization ([0b493ae](https://github.com/littlstar/ara-content-manager/commit/0b493ae))
-* Remove listener when window is closed ([#367](https://github.com/littlstar/ara-content-manager/issues/367)) ([d166223](https://github.com/littlstar/ara-content-manager/commit/d166223))
-* squirrel logic for windows ([f7277c1](https://github.com/littlstar/ara-content-manager/commit/f7277c1))
-* Update rewards dcdn ([2c81746](https://github.com/littlstar/ara-content-manager/commit/2c81746))
-* **itemRow:** caching compys :money_with_wings: ([bd50a66](https://github.com/littlstar/ara-content-manager/commit/bd50a66))
-* **manageFile:** fixed drag and drop issue ([cd7a85d](https://github.com/littlstar/ara-content-manager/commit/cd7a85d))
-* **publish:** adds name and size imm to ui ([56847f0](https://github.com/littlstar/ara-content-manager/commit/56847f0))
+* autopupdater logic for macos ([0f098c5](https://github.com/littlstar/ara-content-manager/commit/0f098c5))
+* backup eth faucy ([4fa6fe5](https://github.com/littlstar/ara-content-manager/commit/4fa6fe5))
+* Disallow logout while logging in ([#369](https://github.com/littlstar/ara-content-manager/issues/369)) ([b0271b2](https://github.com/littlstar/ara-content-manager/commit/b0271b2))
+* Fix file manager render issue after recover ([#371](https://github.com/littlstar/ara-content-manager/issues/371)) ([edc5fd2](https://github.com/littlstar/ara-content-manager/commit/edc5fd2))
+* hamby navigation on filemanager ([4919da2](https://github.com/littlstar/ara-content-manager/commit/4919da2))
+* Listener for dumping deeplink data ([0349b4b](https://github.com/littlstar/ara-content-manager/commit/0349b4b))
+* PE-792 Analytics Sanitization ([#374](https://github.com/littlstar/ara-content-manager/issues/374)) ([a4dee2b](https://github.com/littlstar/ara-content-manager/commit/a4dee2b))
+* Proper signing and fix windows analytics sanitization ([56cb2c7](https://github.com/littlstar/ara-content-manager/commit/56cb2c7))
+* Remove listener when window is closed ([#367](https://github.com/littlstar/ara-content-manager/issues/367)) ([5ab4696](https://github.com/littlstar/ara-content-manager/commit/5ab4696))
+* squirrel logic for windows ([a1b5233](https://github.com/littlstar/ara-content-manager/commit/a1b5233))
+* Update rewards dcdn ([aa6bdae](https://github.com/littlstar/ara-content-manager/commit/aa6bdae))
+* **itemRow:** caching compys :money_with_wings: ([690b184](https://github.com/littlstar/ara-content-manager/commit/690b184))
+* **manageFile:** fixed drag and drop issue ([ab8da2a](https://github.com/littlstar/ara-content-manager/commit/ab8da2a))
+* **publish:** adds name and size imm to ui ([d1434b8](https://github.com/littlstar/ara-content-manager/commit/d1434b8))
 
 
 
@@ -297,38 +298,37 @@
 
 ### Bug Fixes
 
-* **deeplink:** renders did instead of null ([9f2fa8e](https://github.com/littlstar/ara-content-manager/commit/9f2fa8e))
-* **generalModalTextProvider:** added case ([e5c0c88](https://github.com/littlstar/ara-content-manager/commit/e5c0c88))
-* Close Afs proper after removing files ([57443d0](https://github.com/littlstar/ara-content-manager/commit/57443d0))
-* Error messages for purchase flow ([#352](https://github.com/littlstar/ara-content-manager/issues/352)) ([55d8d4a](https://github.com/littlstar/ara-content-manager/commit/55d8d4a))
-* null DID after log out ([732aee8](https://github.com/littlstar/ara-content-manager/commit/732aee8))
-* remove old code ([c354e17](https://github.com/littlstar/ara-content-manager/commit/c354e17))
-* **publish:** doesnt remove afs from ui if error while publishing ([e0e9d6e](https://github.com/littlstar/ara-content-manager/commit/e0e9d6e))
+* **deeplink:** renders did instead of null ([6c417b2](https://github.com/littlstar/ara-content-manager/commit/6c417b2))
+* **generalModalTextProvider:** added case ([853b13b](https://github.com/littlstar/ara-content-manager/commit/853b13b))
+* Close Afs proper after removing files ([d65dcc5](https://github.com/littlstar/ara-content-manager/commit/d65dcc5))
+* Error messages for purchase flow ([#352](https://github.com/littlstar/ara-content-manager/issues/352)) ([8ba623f](https://github.com/littlstar/ara-content-manager/commit/8ba623f))
+* null DID after log out ([ad4b7ea](https://github.com/littlstar/ara-content-manager/commit/ad4b7ea))
+* remove old code ([494378b](https://github.com/littlstar/ara-content-manager/commit/494378b))
+* **publish:** doesnt remove afs from ui if error while publishing ([08248ba](https://github.com/littlstar/ara-content-manager/commit/08248ba))
 
 
 ### Features
 
-* Add blinking animation for loading ([#365](https://github.com/littlstar/ara-content-manager/issues/365)) ([c30814b](https://github.com/littlstar/ara-content-manager/commit/c30814b))
-* Disable interaction with AFS when afs explorer is open ([#358](https://github.com/littlstar/ara-content-manager/issues/358)) ([766908f](https://github.com/littlstar/ara-content-manager/commit/766908f))
-* dummy descriptor ([1b422bc](https://github.com/littlstar/ara-content-manager/commit/1b422bc))
-* estimate modal with spinner for redeem ([631c1e5](https://github.com/littlstar/ara-content-manager/commit/631c1e5))
-* Fix issues when closing out publish flow ([#360](https://github.com/littlstar/ara-content-manager/issues/360)) ([ad3b20c](https://github.com/littlstar/ara-content-manager/commit/ad3b20c))
-* Handling broken links ([#362](https://github.com/littlstar/ara-content-manager/issues/362)) ([7480479](https://github.com/littlstar/ara-content-manager/commit/7480479))
-* loading style for progress bar ([b04835b](https://github.com/littlstar/ara-content-manager/commit/b04835b))
-* PE-774 Round purchase fee with more precision ([#350](https://github.com/littlstar/ara-content-manager/issues/350)) ([5276a8e](https://github.com/littlstar/ara-content-manager/commit/5276a8e))
-* promise based meta read for login ([#345](https://github.com/littlstar/ara-content-manager/issues/345)) ([025a76a](https://github.com/littlstar/ara-content-manager/commit/025a76a))
-* promise based published earnings fetch ([f20d8e7](https://github.com/littlstar/ara-content-manager/commit/f20d8e7))
-* Read File Name from Meta after downloading ([5f41aed](https://github.com/littlstar/ara-content-manager/commit/5f41aed))
-* Remove electron tooltip ([#346](https://github.com/littlstar/ara-content-manager/issues/346)) ([ad96ff9](https://github.com/littlstar/ara-content-manager/commit/ad96ff9))
-* rest of login process promise based ([26b3203](https://github.com/littlstar/ara-content-manager/commit/26b3203))
-* Show error modal for failed registration ([002cc82](https://github.com/littlstar/ara-content-manager/commit/002cc82))
-* window's windows are clickable ([53eeaa7](https://github.com/littlstar/ara-content-manager/commit/53eeaa7))
-* working 🍔 ([c622965](https://github.com/littlstar/ara-content-manager/commit/c622965))
-* working deeplink for windows ([2a4b787](https://github.com/littlstar/ara-content-manager/commit/2a4b787))
-* **dispatch:** type check added ([d2ba9c5](https://github.com/littlstar/ara-content-manager/commit/d2ba9c5))
-* **estimateSpinner:** reusable estimate compoonent! ([d59ea9e](https://github.com/littlstar/ara-content-manager/commit/d59ea9e))
-* **mangeFile:** allows for name pupdate only ([8de58c2](https://github.com/littlstar/ara-content-manager/commit/8de58c2))
-* **roundDecimal.js:** changed to ceil ([9edd0ab](https://github.com/littlstar/ara-content-manager/commit/9edd0ab))
+* Add blinking animation for loading ([#365](https://github.com/littlstar/ara-content-manager/issues/365)) ([69de243](https://github.com/littlstar/ara-content-manager/commit/69de243))
+* Disable interaction with AFS when afs explorer is open ([#358](https://github.com/littlstar/ara-content-manager/issues/358)) ([02fa889](https://github.com/littlstar/ara-content-manager/commit/02fa889))
+* dummy descriptor ([7fc695b](https://github.com/littlstar/ara-content-manager/commit/7fc695b))
+* estimate modal with spinner for redeem ([661ebf0](https://github.com/littlstar/ara-content-manager/commit/661ebf0))
+* Fix issues when closing out publish flow ([#360](https://github.com/littlstar/ara-content-manager/issues/360)) ([0044b40](https://github.com/littlstar/ara-content-manager/commit/0044b40))
+* Handling broken links ([#362](https://github.com/littlstar/ara-content-manager/issues/362)) ([c75a6bd](https://github.com/littlstar/ara-content-manager/commit/c75a6bd))
+* loading style for progress bar ([159eaaa](https://github.com/littlstar/ara-content-manager/commit/159eaaa))
+* PE-774 Round purchase fee with more precision ([#350](https://github.com/littlstar/ara-content-manager/issues/350)) ([a4c49f3](https://github.com/littlstar/ara-content-manager/commit/a4c49f3))
+* promise based meta read for login ([#345](https://github.com/littlstar/ara-content-manager/issues/345)) ([cc04467](https://github.com/littlstar/ara-content-manager/commit/cc04467))
+* promise based published earnings fetch ([de93b6c](https://github.com/littlstar/ara-content-manager/commit/de93b6c))
+* Read File Name from Meta after downloading ([cc9b162](https://github.com/littlstar/ara-content-manager/commit/cc9b162))
+* Remove electron tooltip ([#346](https://github.com/littlstar/ara-content-manager/issues/346)) ([015b4fa](https://github.com/littlstar/ara-content-manager/commit/015b4fa))
+* rest of login process promise based ([e0d0514](https://github.com/littlstar/ara-content-manager/commit/e0d0514))
+* Show error modal for failed registration ([b8c9cf5](https://github.com/littlstar/ara-content-manager/commit/b8c9cf5))
+* working 🍔 ([11175a7](https://github.com/littlstar/ara-content-manager/commit/11175a7))
+* working deeplink for windows ([3c4f53c](https://github.com/littlstar/ara-content-manager/commit/3c4f53c))
+* **dispatch:** type check added ([a8e26d7](https://github.com/littlstar/ara-content-manager/commit/a8e26d7))
+* **estimateSpinner:** reusable estimate compoonent! ([9940941](https://github.com/littlstar/ara-content-manager/commit/9940941))
+* **mangeFile:** allows for name pupdate only ([343d0d9](https://github.com/littlstar/ara-content-manager/commit/343d0d9))
+* **roundDecimal.js:** changed to ceil ([45b42df](https://github.com/littlstar/ara-content-manager/commit/45b42df))
 
 
 
@@ -337,15 +337,15 @@
 
 ### Bug Fixes
 
-* Stop People from publishing empty afs ([8b5527d](https://github.com/littlstar/ara-content-manager/commit/8b5527d))
+* Stop People from publishing empty afs ([952d382](https://github.com/littlstar/ara-content-manager/commit/952d382))
 
 
 ### Features
 
-* get published via proxy ([b0a7c77](https://github.com/littlstar/ara-content-manager/commit/b0a7c77))
-* **accountInfo:** Greys out faucet btn if >= 1000 ([d1637eb](https://github.com/littlstar/ara-content-manager/commit/d1637eb))
-* Pass Auto q into farmer ([a84efe7](https://github.com/littlstar/ara-content-manager/commit/a84efe7))
-* seeds eth on registration ([4d8aa26](https://github.com/littlstar/ara-content-manager/commit/4d8aa26))
+* get published via proxy ([221b259](https://github.com/littlstar/ara-content-manager/commit/221b259))
+* **accountInfo:** Greys out faucet btn if >= 1000 ([98c802f](https://github.com/littlstar/ara-content-manager/commit/98c802f))
+* Pass Auto q into farmer ([a2b445b](https://github.com/littlstar/ara-content-manager/commit/a2b445b))
+* seeds eth on registration ([d0b2179](https://github.com/littlstar/ara-content-manager/commit/d0b2179))
 
 
 
@@ -354,26 +354,26 @@
 
 ### Bug Fixes
 
-* **.gitignore:** add analytics.js.bak file ([c38315b](https://github.com/littlstar/ara-content-manager/commit/c38315b))
-* Empty manage file view ([0d4707d](https://github.com/littlstar/ara-content-manager/commit/0d4707d))
-* Empty manage file view ([d39c460](https://github.com/littlstar/ara-content-manager/commit/d39c460))
-* Manage and Publish Flow ([#331](https://github.com/littlstar/ara-content-manager/issues/331)) ([9136f54](https://github.com/littlstar/ara-content-manager/commit/9136f54))
-* **login.js:** not render did:ara: anymoar ([5d5bbe2](https://github.com/littlstar/ara-content-manager/commit/5d5bbe2))
-* **package.json:** removed find&replace err ([26c6d0f](https://github.com/littlstar/ara-content-manager/commit/26c6d0f))
-* **package.json:** Rename build-dist to dist ([5b837f3](https://github.com/littlstar/ara-content-manager/commit/5b837f3))
-* **publish.js:** fixed autoq rebase issue ([c5dea08](https://github.com/littlstar/ara-content-manager/commit/c5dea08))
-* **scripts:** added script to allow windows builds ([#333](https://github.com/littlstar/ara-content-manager/issues/333)) ([200292c](https://github.com/littlstar/ara-content-manager/commit/200292c))
+* **.gitignore:** add analytics.js.bak file ([82bc67a](https://github.com/littlstar/ara-content-manager/commit/82bc67a))
+* Empty manage file view ([be16eea](https://github.com/littlstar/ara-content-manager/commit/be16eea))
+* Empty manage file view ([01b8faa](https://github.com/littlstar/ara-content-manager/commit/01b8faa))
+* Manage and Publish Flow ([#331](https://github.com/littlstar/ara-content-manager/issues/331)) ([cd2b277](https://github.com/littlstar/ara-content-manager/commit/cd2b277))
+* **login.js:** not render did:ara: anymoar ([86b3fbf](https://github.com/littlstar/ara-content-manager/commit/86b3fbf))
+* **package.json:** removed find&replace err ([20a694d](https://github.com/littlstar/ara-content-manager/commit/20a694d))
+* **package.json:** Rename build-dist to dist ([caf5462](https://github.com/littlstar/ara-content-manager/commit/caf5462))
+* **publish.js:** fixed autoq rebase issue ([11ba1d1](https://github.com/littlstar/ara-content-manager/commit/11ba1d1))
+* **scripts:** added script to allow windows builds ([#333](https://github.com/littlstar/ara-content-manager/issues/333)) ([3682508](https://github.com/littlstar/ara-content-manager/commit/3682508))
 
 
 ### Features
 
-* Add build script for dev and production ([ef208cc](https://github.com/littlstar/ara-content-manager/commit/ef208cc))
-* **autoQueue.js:** enqueues transactions! ([d69494d](https://github.com/littlstar/ara-content-manager/commit/d69494d))
-* Clean out outdated ara folders ([#335](https://github.com/littlstar/ara-content-manager/issues/335)) ([08fa275](https://github.com/littlstar/ara-content-manager/commit/08fa275))
-* Copy contact support email ([12c9aba](https://github.com/littlstar/ara-content-manager/commit/12c9aba))
-* Dynamic Tooltip Component ([ca02253](https://github.com/littlstar/ara-content-manager/commit/ca02253))
-* Merge Manage File and Publish File ([da130a7](https://github.com/littlstar/ara-content-manager/commit/da130a7))
-* PE-753 Google Analytics for pageviews and crash logs ([4bcb135](https://github.com/littlstar/ara-content-manager/commit/4bcb135))
+* Add build script for dev and production ([0df4098](https://github.com/littlstar/ara-content-manager/commit/0df4098))
+* **autoQueue.js:** enqueues transactions! ([cf98a3a](https://github.com/littlstar/ara-content-manager/commit/cf98a3a))
+* Clean out outdated ara folders ([#335](https://github.com/littlstar/ara-content-manager/issues/335)) ([25accfd](https://github.com/littlstar/ara-content-manager/commit/25accfd))
+* Copy contact support email ([2a23031](https://github.com/littlstar/ara-content-manager/commit/2a23031))
+* Dynamic Tooltip Component ([736a3cf](https://github.com/littlstar/ara-content-manager/commit/736a3cf))
+* Merge Manage File and Publish File ([fcf8654](https://github.com/littlstar/ara-content-manager/commit/fcf8654))
+* PE-753 Google Analytics for pageviews and crash logs ([6ef3144](https://github.com/littlstar/ara-content-manager/commit/6ef3144))
 
 
 
@@ -382,12 +382,12 @@
 
 ### Bug Fixes
 
-* Fixed blank login issue ([3876cef](https://github.com/littlstar/ara-content-manager/commit/3876cef))
+* Fixed blank login issue ([79b2d0a](https://github.com/littlstar/ara-content-manager/commit/79b2d0a))
 
 
 ### Features
 
-* Add ara dmg icon ([c5ca146](https://github.com/littlstar/ara-content-manager/commit/c5ca146))
+* Add ara dmg icon ([43c1e7c](https://github.com/littlstar/ara-content-manager/commit/43c1e7c))
 
 
 
@@ -396,7 +396,7 @@
 
 ### Bug Fixes
 
-* Register subscriptions ([416dcda](https://github.com/littlstar/ara-content-manager/commit/416dcda))
+* Register subscriptions ([fd34ed6](https://github.com/littlstar/ara-content-manager/commit/fd34ed6))
 
 
 
@@ -405,18 +405,18 @@
 
 ### Bug Fixes
 
-* **afmManager.js:** Imported file directly ([408e210](https://github.com/littlstar/ara-content-manager/commit/408e210))
-* **afsManager:** fixed unpublished status ([26da4e5](https://github.com/littlstar/ara-content-manager/commit/26da4e5))
-* **Button.js:** assigns all new props to old ([9096d1f](https://github.com/littlstar/ara-content-manager/commit/9096d1f))
+* **afmManager.js:** Imported file directly ([769e17c](https://github.com/littlstar/ara-content-manager/commit/769e17c))
+* **afsManager:** fixed unpublished status ([26f28bb](https://github.com/littlstar/ara-content-manager/commit/26f28bb))
+* **Button.js:** assigns all new props to old ([b808df2](https://github.com/littlstar/ara-content-manager/commit/b808df2))
 
 
 ### Features
 
-* **networkKeys.js:** Update network keys ([b9bd7c6](https://github.com/littlstar/ara-content-manager/commit/b9bd7c6))
-* PE-726 Peer count live update([#323](https://github.com/littlstar/ara-content-manager/issues/323)) ([4bc87af](https://github.com/littlstar/ara-content-manager/commit/4bc87af))
-* Renders gas price for purchase ([22f0142](https://github.com/littlstar/ara-content-manager/commit/22f0142))
-* Write Ara rc before all require statement happens ([5649ffa](https://github.com/littlstar/ara-content-manager/commit/5649ffa))
-* **register.js:** seeds upon creation ([ef7819f](https://github.com/littlstar/ara-content-manager/commit/ef7819f))
+* **networkKeys.js:** Update network keys ([4286dc0](https://github.com/littlstar/ara-content-manager/commit/4286dc0))
+* PE-726 Peer count live update([#323](https://github.com/littlstar/ara-content-manager/issues/323)) ([21ac93a](https://github.com/littlstar/ara-content-manager/commit/21ac93a))
+* Renders gas price for purchase ([cde0ecf](https://github.com/littlstar/ara-content-manager/commit/cde0ecf))
+* Write Ara rc before all require statement happens ([7d0b082](https://github.com/littlstar/ara-content-manager/commit/7d0b082))
+* **register.js:** seeds upon creation ([b0c7003](https://github.com/littlstar/ara-content-manager/commit/b0c7003))
 
 
 
@@ -425,16 +425,16 @@
 
 ### Bug Fixes
 
-* **afsManager:** Fixed surfaceAFS - uncommitted issue ([6e26566](https://github.com/littlstar/ara-content-manager/commit/6e26566))
+* **afsManager:** Fixed surfaceAFS - uncommitted issue ([9a4ab71](https://github.com/littlstar/ara-content-manager/commit/9a4ab71))
 
 
 ### Features
 
-* **analytics:** add version ([ae6275e](https://github.com/littlstar/ara-content-manager/commit/ae6275e))
-* **main.js:** listeners for uncaught stuff ([b9c0f80](https://github.com/littlstar/ara-content-manager/commit/b9c0f80))
-* Add Support Email ([cc4f1e8](https://github.com/littlstar/ara-content-manager/commit/cc4f1e8))
-* PE-702 Handle Deeplink after prompting user to log in ([#314](https://github.com/littlstar/ara-content-manager/issues/314)) ([6fd5505](https://github.com/littlstar/ara-content-manager/commit/6fd5505))
-* PE-715-Eth transfer subscriptions ([#317](https://github.com/littlstar/ara-content-manager/issues/317)) ([3e1316d](https://github.com/littlstar/ara-content-manager/commit/3e1316d))
+* **analytics:** add version ([e38ec53](https://github.com/littlstar/ara-content-manager/commit/e38ec53))
+* **main.js:** listeners for uncaught stuff ([07f1236](https://github.com/littlstar/ara-content-manager/commit/07f1236))
+* Add Support Email ([4a3e7c0](https://github.com/littlstar/ara-content-manager/commit/4a3e7c0))
+* PE-702 Handle Deeplink after prompting user to log in ([#314](https://github.com/littlstar/ara-content-manager/issues/314)) ([a87783d](https://github.com/littlstar/ara-content-manager/commit/a87783d))
+* PE-715-Eth transfer subscriptions ([#317](https://github.com/littlstar/ara-content-manager/issues/317)) ([1317b31](https://github.com/littlstar/ara-content-manager/commit/1317b31))
 
 
 
@@ -443,28 +443,28 @@
 
 ### Bug Fixes
 
-* **afsExplorer/container.js:** greyed out update btn ([840062a](https://github.com/littlstar/ara-content-manager/commit/840062a))
-* proper deeplink for unnamed afs ([80ceebf](https://github.com/littlstar/ara-content-manager/commit/80ceebf))
-* **araContractManager:** Fixed listener ([368f0ce](https://github.com/littlstar/ara-content-manager/commit/368f0ce))
-* **publishFile/container.js:** can pass in 0 as price now ([20b915e](https://github.com/littlstar/ara-content-manager/commit/20b915e))
+* **afsExplorer/container.js:** greyed out update btn ([dec1f3e](https://github.com/littlstar/ara-content-manager/commit/dec1f3e))
+* proper deeplink for unnamed afs ([cb87139](https://github.com/littlstar/ara-content-manager/commit/cb87139))
+* **araContractManager:** Fixed listener ([bff9ba2](https://github.com/littlstar/ara-content-manager/commit/bff9ba2))
+* **publishFile/container.js:** can pass in 0 as price now ([e7f64dd](https://github.com/littlstar/ara-content-manager/commit/e7f64dd))
 
 
 ### Features
 
-* Comma delimited numbers ([8b30b0d](https://github.com/littlstar/ara-content-manager/commit/8b30b0d))
-* File Manager UI Fix ([#311](https://github.com/littlstar/ara-content-manager/issues/311)) ([9992a1a](https://github.com/littlstar/ara-content-manager/commit/9992a1a))
-* **registration.js:** enter pw twice + input err ([652d830](https://github.com/littlstar/ara-content-manager/commit/652d830))
-* integrated faucet ([3bebe7b](https://github.com/littlstar/ara-content-manager/commit/3bebe7b))
-* PE-642 Reject negative price for manage and publish file ([#303](https://github.com/littlstar/ara-content-manager/issues/303)) ([6a89117](https://github.com/littlstar/ara-content-manager/commit/6a89117))
-* **analytics:** added analytics for app-open ([ad00084](https://github.com/littlstar/ara-content-manager/commit/ad00084))
-* **recovery:** error catching for recovery ([#295](https://github.com/littlstar/ara-content-manager/issues/295)) ([8ffa2da](https://github.com/littlstar/ara-content-manager/commit/8ffa2da))
-* PE-647 Save Afs size after updating file ([#305](https://github.com/littlstar/ara-content-manager/issues/305)) ([0203822](https://github.com/littlstar/ara-content-manager/commit/0203822))
-* PE-684 Application context menu and tray refactor([#293](https://github.com/littlstar/ara-content-manager/issues/293)) ([27579e8](https://github.com/littlstar/ara-content-manager/commit/27579e8))
-* PE-691 Registration Flow Refactor ([#298](https://github.com/littlstar/ara-content-manager/issues/298)) ([33f4b9f](https://github.com/littlstar/ara-content-manager/commit/33f4b9f))
-* PE-694 Pause Download ([#296](https://github.com/littlstar/ara-content-manager/issues/296)) ([9a9e6f9](https://github.com/littlstar/ara-content-manager/commit/9a9e6f9))
-* PE-695 Error Handling for Purchasing ([#301](https://github.com/littlstar/ara-content-manager/issues/301)) ([b3d08aa](https://github.com/littlstar/ara-content-manager/commit/b3d08aa))
-* PE-698 Error input component([#310](https://github.com/littlstar/ara-content-manager/issues/310)) ([9846a9b](https://github.com/littlstar/ara-content-manager/commit/9846a9b))
-* use uncommitted afs before deploys ([ad63ced](https://github.com/littlstar/ara-content-manager/commit/ad63ced))
+* Comma delimited numbers ([f3c5ac6](https://github.com/littlstar/ara-content-manager/commit/f3c5ac6))
+* File Manager UI Fix ([#311](https://github.com/littlstar/ara-content-manager/issues/311)) ([ffda2b9](https://github.com/littlstar/ara-content-manager/commit/ffda2b9))
+* **registration.js:** enter pw twice + input err ([6087ce3](https://github.com/littlstar/ara-content-manager/commit/6087ce3))
+* integrated faucet ([1d1b9cc](https://github.com/littlstar/ara-content-manager/commit/1d1b9cc))
+* PE-642 Reject negative price for manage and publish file ([#303](https://github.com/littlstar/ara-content-manager/issues/303)) ([3cb945d](https://github.com/littlstar/ara-content-manager/commit/3cb945d))
+* **analytics:** added analytics for app-open ([3ded735](https://github.com/littlstar/ara-content-manager/commit/3ded735))
+* **recovery:** error catching for recovery ([#295](https://github.com/littlstar/ara-content-manager/issues/295)) ([1ffd465](https://github.com/littlstar/ara-content-manager/commit/1ffd465))
+* PE-647 Save Afs size after updating file ([#305](https://github.com/littlstar/ara-content-manager/issues/305)) ([ca53a62](https://github.com/littlstar/ara-content-manager/commit/ca53a62))
+* PE-684 Application context menu and tray refactor([#293](https://github.com/littlstar/ara-content-manager/issues/293)) ([a2603f5](https://github.com/littlstar/ara-content-manager/commit/a2603f5))
+* PE-691 Registration Flow Refactor ([#298](https://github.com/littlstar/ara-content-manager/issues/298)) ([ae303b6](https://github.com/littlstar/ara-content-manager/commit/ae303b6))
+* PE-694 Pause Download ([#296](https://github.com/littlstar/ara-content-manager/issues/296)) ([cca4c5a](https://github.com/littlstar/ara-content-manager/commit/cca4c5a))
+* PE-695 Error Handling for Purchasing ([#301](https://github.com/littlstar/ara-content-manager/issues/301)) ([fbb83d7](https://github.com/littlstar/ara-content-manager/commit/fbb83d7))
+* PE-698 Error input component([#310](https://github.com/littlstar/ara-content-manager/issues/310)) ([58be873](https://github.com/littlstar/ara-content-manager/commit/58be873))
+* use uncommitted afs before deploys ([06eaa66](https://github.com/littlstar/ara-content-manager/commit/06eaa66))
 
 
 
@@ -473,16 +473,16 @@
 
 ### Bug Fixes
 
-* **araIDWarning.js:** fixed button ([#283](https://github.com/littlstar/ara-content-manager/issues/283)) ([7ef86ce](https://github.com/littlstar/ara-content-manager/commit/7ef86ce))
-* **register.js:** assigned value of 0 to eth balance ([#285](https://github.com/littlstar/ara-content-manager/issues/285)) ([9816f14](https://github.com/littlstar/ara-content-manager/commit/9816f14))
-* changed to Ara ID" ([#286](https://github.com/littlstar/ara-content-manager/issues/286)) ([484a966](https://github.com/littlstar/ara-content-manager/commit/484a966))
+* **araIDWarning.js:** fixed button ([#283](https://github.com/littlstar/ara-content-manager/issues/283)) ([ac6bf2c](https://github.com/littlstar/ara-content-manager/commit/ac6bf2c))
+* **register.js:** assigned value of 0 to eth balance ([#285](https://github.com/littlstar/ara-content-manager/issues/285)) ([265a5e9](https://github.com/littlstar/ara-content-manager/commit/265a5e9))
+* changed to Ara ID" ([#286](https://github.com/littlstar/ara-content-manager/issues/286)) ([360b81b](https://github.com/littlstar/ara-content-manager/commit/360b81b))
 
 
 ### Features
 
-* **afmManager:** moved afm to .ara ([#282](https://github.com/littlstar/ara-content-manager/issues/282)) ([10f1267](https://github.com/littlstar/ara-content-manager/commit/10f1267))
-* PE-679 PE-680 General Action Modal ([#284](https://github.com/littlstar/ara-content-manager/issues/284)) ([edf9921](https://github.com/littlstar/ara-content-manager/commit/edf9921))
-* PE-682 Redeem Rewards Confirm Modal ([#288](https://github.com/littlstar/ara-content-manager/issues/288)) ([2a564ff](https://github.com/littlstar/ara-content-manager/commit/2a564ff))
+* **afmManager:** moved afm to .ara ([#282](https://github.com/littlstar/ara-content-manager/issues/282)) ([b97ae7e](https://github.com/littlstar/ara-content-manager/commit/b97ae7e))
+* PE-679 PE-680 General Action Modal ([#284](https://github.com/littlstar/ara-content-manager/issues/284)) ([d479e01](https://github.com/littlstar/ara-content-manager/commit/d479e01))
+* PE-682 Redeem Rewards Confirm Modal ([#288](https://github.com/littlstar/ara-content-manager/issues/288)) ([b0ff94f](https://github.com/littlstar/ara-content-manager/commit/b0ff94f))
 
 
 
@@ -491,23 +491,23 @@
 
 ### Bug Fixes
 
-* Small merge issue ([e248d28](https://github.com/littlstar/ara-content-manager/commit/e248d28))
-* **manageFile:** additems through finder working ([a30e4e7](https://github.com/littlstar/ara-content-manager/commit/a30e4e7))
+* Small merge issue ([0ba8190](https://github.com/littlstar/ara-content-manager/commit/0ba8190))
+* **manageFile:** additems through finder working ([0ddd407](https://github.com/littlstar/ara-content-manager/commit/0ddd407))
 
 
 ### Features
 
-* Add tray support ([994ed25](https://github.com/littlstar/ara-content-manager/commit/994ed25))
-* Deploy Estimate View ([fd171b9](https://github.com/littlstar/ara-content-manager/commit/fd171b9))
-* **mnemonicWarning.js:** Flexible component now ([16524da](https://github.com/littlstar/ara-content-manager/commit/16524da))
-* Display modal for not enough Eth ([#262](https://github.com/littlstar/ara-content-manager/issues/262)) ([9acab83](https://github.com/littlstar/ara-content-manager/commit/9acab83))
-* PE-596 Cache user did for login ([#268](https://github.com/littlstar/ara-content-manager/issues/268)) ([a09f9c4](https://github.com/littlstar/ara-content-manager/commit/a09f9c4))
-* PE-656 Create dummy Afs for deploy proxy ([#279](https://github.com/littlstar/ara-content-manager/issues/279)) ([bb7ea99](https://github.com/littlstar/ara-content-manager/commit/bb7ea99))
-* Reseed Afs after opening ([#272](https://github.com/littlstar/ara-content-manager/issues/272)) ([d4c2b91](https://github.com/littlstar/ara-content-manager/commit/d4c2b91))
-* Send ara to wallet address or did ([#263](https://github.com/littlstar/ara-content-manager/issues/263)) ([df6b2b4](https://github.com/littlstar/ara-content-manager/commit/df6b2b4))
-* Small UI Changes ([#265](https://github.com/littlstar/ara-content-manager/issues/265)) ([c9323ee](https://github.com/littlstar/ara-content-manager/commit/c9323ee))
-* Update ara amount when balance is updated ([faaee12](https://github.com/littlstar/ara-content-manager/commit/faaee12))
-* Update farmer to 0.5.x ([#280](https://github.com/littlstar/ara-content-manager/issues/280)) ([b60f3b5](https://github.com/littlstar/ara-content-manager/commit/b60f3b5))
+* Add tray support ([8fe9aa4](https://github.com/littlstar/ara-content-manager/commit/8fe9aa4))
+* Deploy Estimate View ([a4bad0c](https://github.com/littlstar/ara-content-manager/commit/a4bad0c))
+* **mnemonicWarning.js:** Flexible component now ([4c9ee73](https://github.com/littlstar/ara-content-manager/commit/4c9ee73))
+* Display modal for not enough Eth ([#262](https://github.com/littlstar/ara-content-manager/issues/262)) ([ec18acd](https://github.com/littlstar/ara-content-manager/commit/ec18acd))
+* PE-596 Cache user did for login ([#268](https://github.com/littlstar/ara-content-manager/issues/268)) ([f645d69](https://github.com/littlstar/ara-content-manager/commit/f645d69))
+* PE-656 Create dummy Afs for deploy proxy ([#279](https://github.com/littlstar/ara-content-manager/issues/279)) ([eb00c5a](https://github.com/littlstar/ara-content-manager/commit/eb00c5a))
+* Reseed Afs after opening ([#272](https://github.com/littlstar/ara-content-manager/issues/272)) ([dc59287](https://github.com/littlstar/ara-content-manager/commit/dc59287))
+* Send ara to wallet address or did ([#263](https://github.com/littlstar/ara-content-manager/issues/263)) ([f58b52d](https://github.com/littlstar/ara-content-manager/commit/f58b52d))
+* Small UI Changes ([#265](https://github.com/littlstar/ara-content-manager/issues/265)) ([e714638](https://github.com/littlstar/ara-content-manager/commit/e714638))
+* Update ara amount when balance is updated ([f8ed806](https://github.com/littlstar/ara-content-manager/commit/f8ed806))
+* Update farmer to 0.5.x ([#280](https://github.com/littlstar/ara-content-manager/issues/280)) ([f62004f](https://github.com/littlstar/ara-content-manager/commit/f62004f))
 
 
 
@@ -516,8 +516,8 @@
 
 ### Features
 
-* **utilityButton.js:** replace button icon with svg ([#237](https://github.com/littlstar/ara-content-manager/issues/237)) ([e1d6bb2](https://github.com/littlstar/ara-content-manager/commit/e1d6bb2))
-* update modals and afs explorer([#238](https://github.com/littlstar/ara-content-manager/issues/238)) ([82163a8](https://github.com/littlstar/ara-content-manager/commit/82163a8))
+* **utilityButton.js:** replace button icon with svg ([#237](https://github.com/littlstar/ara-content-manager/issues/237)) ([303c9cb](https://github.com/littlstar/ara-content-manager/commit/303c9cb))
+* update modals and afs explorer([#238](https://github.com/littlstar/ara-content-manager/issues/238)) ([3d3e09c](https://github.com/littlstar/ara-content-manager/commit/3d3e09c))
 
 
 
@@ -526,8 +526,8 @@
 
 ### Features
 
-* Ping all views for pending transaction state([#236](https://github.com/littlstar/ara-content-manager/issues/236)) ([c0ef472](https://github.com/littlstar/ara-content-manager/commit/c0ef472))
-* Restyled fileManager ([2daa53e](https://github.com/littlstar/ara-content-manager/commit/2daa53e))
+* Ping all views for pending transaction state([#236](https://github.com/littlstar/ara-content-manager/issues/236)) ([41acebc](https://github.com/littlstar/ara-content-manager/commit/41acebc))
+* Restyled fileManager ([987e2df](https://github.com/littlstar/ara-content-manager/commit/987e2df))
 
 
 
@@ -536,41 +536,41 @@
 
 ### Bug Fixes
 
-* **afsFileRow.js:** added :before element for better ux ([9039b89](https://github.com/littlstar/ara-content-manager/commit/9039b89))
-* package.json ([e9518d7](https://github.com/littlstar/ara-content-manager/commit/e9518d7))
+* **afsFileRow.js:** added :before element for better ux ([5db1cdf](https://github.com/littlstar/ara-content-manager/commit/5db1cdf))
+* package.json ([818cb60](https://github.com/littlstar/ara-content-manager/commit/818cb60))
 
 
 ### Features
 
-* PE-578 Handle pending transactions ([#227](https://github.com/littlstar/ara-content-manager/issues/227)) ([caf1903](https://github.com/littlstar/ara-content-manager/commit/caf1903))
-* PE-578 Handle pending transactions ([#231](https://github.com/littlstar/ara-content-manager/issues/231)) ([972ad18](https://github.com/littlstar/ara-content-manager/commit/972ad18))
+* PE-578 Handle pending transactions ([#227](https://github.com/littlstar/ara-content-manager/issues/227)) ([d3c4971](https://github.com/littlstar/ara-content-manager/commit/d3c4971))
+* PE-578 Handle pending transactions ([#231](https://github.com/littlstar/ara-content-manager/issues/231)) ([f618caa](https://github.com/littlstar/ara-content-manager/commit/f618caa))
 
 
 
-# [0.1.0](https://github.com/littlstar/ara-content-manager/compare/cb5314e...0.1.0) (2018-11-13)
+# [0.1.0](https://github.com/littlstar/ara-content-manager/compare/058165a...0.1.0) (2018-11-13)
 
 
 ### Bug Fixes
 
-* add manage to hamb when pubbed ([1a9b2b6](https://github.com/littlstar/ara-content-manager/commit/1a9b2b6))
-* await metadata write ([54c54c9](https://github.com/littlstar/ara-content-manager/commit/54c54c9))
-* awaiting joinbroadcast ([8ecbf0e](https://github.com/littlstar/ara-content-manager/commit/8ecbf0e))
-* changed e to err ([d2f2a37](https://github.com/littlstar/ara-content-manager/commit/d2f2a37))
-* joins after managefile view closed ([5ed2d70](https://github.com/littlstar/ara-content-manager/commit/5ed2d70))
-* no moar bad ([094430d](https://github.com/littlstar/ara-content-manager/commit/094430d))
-* passed in unclaimed to hamhelper ([74fbc7c](https://github.com/littlstar/ara-content-manager/commit/74fbc7c))
-* rerenders x in pubfile ([3aa0e2b](https://github.com/littlstar/ara-content-manager/commit/3aa0e2b))
-* sets shouldBroadcast to true on publish ([857e3eb](https://github.com/littlstar/ara-content-manager/commit/857e3eb))
+* add manage to hamb when pubbed ([9798145](https://github.com/littlstar/ara-content-manager/commit/9798145))
+* await metadata write ([8cad1e7](https://github.com/littlstar/ara-content-manager/commit/8cad1e7))
+* awaiting joinbroadcast ([0e40340](https://github.com/littlstar/ara-content-manager/commit/0e40340))
+* changed e to err ([4ae21b2](https://github.com/littlstar/ara-content-manager/commit/4ae21b2))
+* joins after managefile view closed ([5f20e50](https://github.com/littlstar/ara-content-manager/commit/5f20e50))
+* no moar bad ([faa3190](https://github.com/littlstar/ara-content-manager/commit/faa3190))
+* passed in unclaimed to hamhelper ([b83a9a9](https://github.com/littlstar/ara-content-manager/commit/b83a9a9))
+* rerenders x in pubfile ([47ba5d3](https://github.com/littlstar/ara-content-manager/commit/47ba5d3))
+* sets shouldBroadcast to true on publish ([e193ced](https://github.com/littlstar/ara-content-manager/commit/e193ced))
 
 
 ### Features
 
 * **test/public/araButtonGenerator.js:** add araButtonGenerator and test server ([df5270f](https://github.com/littlstar/ara-content-manager/commit/df5270f))
 * **test/public/araButtonGenerator.js:** add araButtonGenerator and test server ([8f0576b](https://github.com/littlstar/ara-content-manager/commit/8f0576b))
-* **test/public/araButtonGenerator.js:** add araButtonGenerator and test server ([cb5314e](https://github.com/littlstar/ara-content-manager/commit/cb5314e))
+* **test/public/araButtonGenerator.js:** add araButtonGenerator and test server ([058165a](https://github.com/littlstar/ara-content-manager/commit/058165a))
 * **test/public/araButtonGenerator.js:** allow changing button style ([53ec9f8](https://github.com/littlstar/ara-content-manager/commit/53ec9f8))
 * **test/public/araButtonGenerator.js:** allow changing button style ([d4cca2a](https://github.com/littlstar/ara-content-manager/commit/d4cca2a))
-* **test/public/araButtonGenerator.js:** allow changing button style ([5d26248](https://github.com/littlstar/ara-content-manager/commit/5d26248))
+* **test/public/araButtonGenerator.js:** allow changing button style ([fdfa282](https://github.com/littlstar/ara-content-manager/commit/fdfa282))
 
 
 
