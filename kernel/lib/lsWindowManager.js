@@ -19,6 +19,7 @@ windowManager.openModal = (modalName) => {
     {
       backgroundColor: 'white',
       frame: false,
+      'showDevTools': true,
       ...windowManager.setSize(modalName),
     }
   ).open()
@@ -27,7 +28,7 @@ windowManager.openModal = (modalName) => {
 windowManager.closeModal = (modalName) => {
   windowManager.get(modalName).object
     ? windowManager.get(modalName).object.close()
-    : null
+    : windowManager.getCurrent().object.close()
 }
 
 windowManager.setSize = (view) => {
@@ -92,6 +93,10 @@ windowManager.setSize = (view) => {
       break
     case 'publishSuccessModal':
       width = 340
+      height = 300
+      break
+    case 'publishProgressModal':
+      width = 500
       height = 300
       break
     case 'registration':

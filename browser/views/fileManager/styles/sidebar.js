@@ -32,6 +32,8 @@ module.exports = {
     :host {
       margin-top: 50px;
       animation: fadein 1500ms;
+      overflow-y: scroll;
+      height: 825px;
     }
   `,
 }

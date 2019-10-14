@@ -44,7 +44,7 @@ module.exports = {
     }
   `,
 
-  container({ justifyContent = 'space-between', height = 90 }) {
+  container({ justifyContent = 'space-between', height = 90, width = 90 }) {
     return css`
       :host {
         align-items: center;
@@ -54,11 +54,11 @@ module.exports = {
         justify-content: ${justifyContent};
         overflow-wrap: break-word;
         text-align: center;
-        width: 90%;
+        width: ${width}%;
       }
 
       :host > div {
-        width: 95%;
+        width: ${width}%;
       }
     `
   },
@@ -140,6 +140,13 @@ module.exports = {
     }
   `,
 
+  publishingContainer: css`
+    :host {
+      display: flex;
+      height: 70%;
+    }
+  `,
+
   link: css`
     :host {
       overflow: hidden;
@@ -151,6 +158,14 @@ module.exports = {
     :host {
       font-family: ${fonts.bold};
       font-size: 25px;
+    }
+  `,
+
+  boldLabel: css`
+    :host {
+      font-family: ${fonts.bold};
+      margin: 10px;
+      font-size: 16px;
     }
   `,
 
@@ -241,6 +256,31 @@ module.exports = {
       justify-content: center;
     }
   `,
+
+  progressHolder: css`
+    :host {
+      display: flex;
+      height: 70px;
+      font-size: 4px;
+      justify-content: center;
+    }
+  `,
+
+  circle({ color = 'grey' }) {
+    return css`
+      :host {
+        background: ${colorSelector(color)};
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        justify-content: center;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(125%);
+      }
+    `
+  },
+
   title: css`
     :host {
       font-family: ${fonts.black};
@@ -266,6 +306,24 @@ module.exports = {
 
     :host > b {
       font-family: ${fonts.bold}
+    }
+  `,
+
+  creating: css`
+    :host {
+      width: 25%;
+    }
+  `,
+
+  writing: css`
+    :host {
+      width: 50%;
+    }
+  `,
+
+  finalizing: css`
+    :host {
+      width: 25%;
     }
   `
 }

@@ -11,7 +11,7 @@ const styles = require('./styles/itemRow')
 const html = require('nanohtml')
 
 class ItemRow extends Nanocomponent {
-  constructor({ file, typeRow }) {
+  constructor({ file, typeRow } = {}) {
     super()
     this.props = { typeRow, ...file }
     this.state = {

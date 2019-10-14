@@ -39,7 +39,7 @@ class Sidebar extends Nanocomponent {
 
     return html`
       <div class="${styles.sectionContainer} sidebarContainer-sectionContainer">
-        ${sections.map(section => section.render({ account, accounts }))}
+        ${children.accountsSection.render({ account, accounts })}
       </div>
     `
   }
@@ -63,6 +63,9 @@ class Sidebar extends Nanocomponent {
           <img style="height: 12px;" src="../assets/images/ARA_logo_horizontal_white.png" />
         </div>
         ${renderAccounts(props)}
+        <div>
+          ${children.addAccountSection.render({ account: props.account, accounts: props.accounts })}
+        </div>
       </div>
     `)
   }

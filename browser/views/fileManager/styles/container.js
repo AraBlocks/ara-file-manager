@@ -59,7 +59,7 @@ module.exports = {
     return css`
       :host {
         animation: fadein 1500ms;
-
+        height: 66%;
         overflow-y: scroll;
       }
     `

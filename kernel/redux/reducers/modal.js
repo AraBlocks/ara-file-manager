@@ -25,6 +25,11 @@ module.exports = (state, { load = null, type }) => {
       state.data.name = load.name
       state.data.isAFS = true
       state.data.freezeData = true
+    case events.PUBLISH_PROGRESS:
+      state.data.step = load.step
+      state.data.hash = load.hash
+      state.data.receipt = load.receipt
+      break
     default:
       return state
   }

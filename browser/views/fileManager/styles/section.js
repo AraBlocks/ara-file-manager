@@ -12,7 +12,7 @@ module.exports = {
       position: sticky;
       pointer-events: none;
       top: 0px;
-      z-index: 99;
+      z-index: 500;
     }
   `,
 

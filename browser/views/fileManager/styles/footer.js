@@ -19,6 +19,7 @@ module.exports = {
         height: 130px;
         background-color: #ffffff;
         border: 1px solid var(--ara-grey);
+        z-index: 500;
       }
     `
   },

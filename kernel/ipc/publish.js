@@ -105,16 +105,77 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
       () => araFilesystem.deploy({
         password,
         did,
-        onhash: hash => { console.log('onhash', hash) },
-        onreceipt: receipt => { console.log('onreceipt', receipt) },
-        onconfirmation: (confNumber, receipt) => { console.log('onconfirmation', confNumber, receipt) },
-        onerror: error => { console.log('onerror', error) },
-        onmined: receipt => { console.log('onmined', receipt) }
+        onhash: hash => {
+          console.log('deploy onhash', hash)
+          dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deploy', hash } })
+          windowManager.openModal('publishProgressModal')
+        },
+        onreceipt: receipt => {
+          console.log('deploy onreceipt')
+        },
+        onconfirmation: (confNumber, receipt) => {
+          console.log('deploy onconfirmation')
+        },
+        onerror: error => {
+          console.log('deploy onerror', error)
+          dispatch({ type: events.PUBLISH_PROGRESS, load: { error } })
+        },
+        onmined: receipt => {
+          console.log('deploy onmined')
+          dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deployMined', receipt } })
+          // windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'deploy', receipt } })
+        }
       })
     )
 
     await autoQueue.push(
-      () => araFilesystem.commit({ did, password, price: Number(price) }),
+      () => araFilesystem.commit({
+        did,
+        password,
+        price: Number(price),
+        writeCallbacks: {
+          onhash: hash => {
+            console.log('write onhash', hash)
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'write', hash } })
+            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, step: { type: 'write', hash } })
+          },
+          onreceipt: receipt => {
+            console.log('write onreceipt')
+          },
+          onconfirmation: (confNumber, receipt) => {
+            console.log('write onconfirmation')
+          },
+          onerror: error => {
+            console.log('write onerror', error)
+          },
+          onmined: receipt => {
+            console.log('write onmined')
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'writeMined', receipt } })
+            // windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'write', receipt } })
+          }
+        },
+        priceCallbacks: {
+          onhash: hash => {
+            console.log('price onhash', hash)
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', hash } })
+            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'price', hash } })
+          },
+          onreceipt: receipt => {
+            console.log('price onreceipt')
+          },
+          onconfirmation: (confNumber, receipt) => {
+            console.log('price onconfirmation')
+          },
+          onerror: error => {
+            console.log('price onerror', error)
+          },
+          onmined: receipt => {
+            console.log('price onmined')
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
+            // windowManager.closeModal({ view: 'publishProgressModal' })
+          }
+        }
+      }),
       analytics.trackPublishFinish
     )
 
