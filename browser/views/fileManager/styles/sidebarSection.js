@@ -13,6 +13,7 @@ module.exports = {
         padding: 8% 10% 0 10%;
         position: sticky;
         top: 0px;
+        z-index: 50;
       }
 
       ${clickable &&

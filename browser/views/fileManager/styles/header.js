@@ -14,6 +14,10 @@ module.exports = {
       justify-content: space-between;
       margin-bottom: 5px;
       padding: 2.5% 2.5%;
+      top: 0;
+      position: sticky;
+      z-index: 500;
+      background-color: white;
     }
 
     :host:before {
@@ -61,6 +65,7 @@ module.exports = {
       height: 35px;
       display: flex;
       align-items: baseline;
+      z-index: 500;
     }
   `,
 
@@ -76,6 +81,7 @@ module.exports = {
   tabHolder: css`
     :host {
       display: flex;
+      z-index: 500;
     }
 
     :host div {
