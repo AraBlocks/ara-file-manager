@@ -47,14 +47,7 @@ class Container extends Nanocomponent {
 				children: 'Export All',
 				cssClass: { opts: { color: 'green' } },
 				onclick: this.exportAll.bind(this)
-			}),
-			utilityButton: new UtilityButton({ onclick: () => {
-				emit({
-					event: events.CLOSE_AFS_EXPLORER,
-					load: { did }
-				})
-				windowManagement.closeWindow('afsExplorerView')
-			}})
+			})
 		}
 	}
 
@@ -106,9 +99,8 @@ class Container extends Nanocomponent {
 				${overlay(spinner)}
 				<div class="${styles.horizontalContainer} ${styles.title} AfsExplorerViewContainer-horizontalContainer,title">
 					${props.afsName || 'Unnamed Package'}
-					${children.utilityButton.render({ children: 'close' })}
 				</div>
-				${children.araIdTooltip.render({ children: "Package ID: " + did.slice(0,50) + "..." })}
+				${children.araIdTooltip.render({ children: "Package ID: " + props.did.slice(0,50) + "..." })}
 				<div class="${styles.content} AfsExplorerViewContainer-content">
 					You’re currently viewing the contents of <b>${props.afsName}</b>. You can export individual files to your hard drive by right-clicking them
 					, or by clicking “export all”.
