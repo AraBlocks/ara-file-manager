@@ -228,7 +228,7 @@ windowManager.closeWindow = (name) => {
 
 windowManager.openWindow = (view) => {
   analytics.trackScreenView(view)
-  windowManager.get(view)
+  return windowManager.get(view)
     ? windowManager.get(view).focus()
     : windowManager.open(
       view,
@@ -237,7 +237,7 @@ windowManager.openWindow = (view) => {
       false,
       {
         backgroundColor: 'white',
-        frame: true,
+        frame: false,
         titleBarStyle: 'hidden',
         'showDevTools': true,
         ...windowManager.setSize(view)

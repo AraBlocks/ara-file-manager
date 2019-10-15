@@ -172,6 +172,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
           onmined: receipt => {
             console.log('price onmined')
             dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
+            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
             // windowManager.closeModal({ view: 'publishProgressModal' })
           }
         }

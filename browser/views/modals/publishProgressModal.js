@@ -21,7 +21,7 @@ module.exports = ({ load, modalName, hash, receipt, step }) => {
     onclick: () => closeModal('publishProgressModal')
   })
   return html`
-    <div class="${styles.container({ justifyContent: 'space-around', height: 95 })} modals-container">
+    <div class="${styles.container({ justifyContent: 'space-around', height: 95, width: 100 })} modals-container">
       <div class="${styles.messageBold} modal-messageBold">
         Publishing...
       </div>
@@ -39,7 +39,7 @@ module.exports = ({ load, modalName, hash, receipt, step }) => {
         </div>
         <div class="${styles.writing}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${'write' === step ? spinnerBar() : html`<div class="${styles.circle({ color: 'price' === step ? 'green' : 'grey' })}"></div>`}
+            ${'write' === step ? spinnerBar() : html`<div class="${styles.circle({ color: step && step.includes('price') ? 'green' : 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
             Writing
@@ -50,7 +50,7 @@ module.exports = ({ load, modalName, hash, receipt, step }) => {
         </div>
         <div class="${styles.finalizing}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${'price' === step ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
+            ${'price' === step ? spinnerBar() : html`<div class="${styles.circle({ color: 'priceMined' === step ? 'green' : 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
             Finalizing
