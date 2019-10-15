@@ -44,7 +44,7 @@ module.exports = {
     }
   `,
 
-  container({ justifyContent = 'space-between', height = 90, width = 90 }) {
+  container({ justifyContent = 'space-between', height = 90 }) {
     return css`
       :host {
         align-items: center;
@@ -54,11 +54,11 @@ module.exports = {
         justify-content: ${justifyContent};
         overflow-wrap: break-word;
         text-align: center;
-        width: ${width}%;
+        width: 90%;
       }
 
       :host > div {
-        width: ${width}%;
+        width: 95%;
       }
     `
   },
@@ -137,15 +137,6 @@ module.exports = {
     :host {
       display: flex;
       justify-content: center;
-    }
-  `,
-
-  publishingContainer: css`
-    :host {
-      display: flex;
-      height: 70%;
-      width: 100%;
-      margin-top: 5%;
     }
   `,
 
@@ -259,29 +250,14 @@ module.exports = {
     }
   `,
 
-  progressHolder: css`
+  circle: css`
     :host {
-      display: flex;
-      height: 70px;
-      font-size: 4px;
-      justify-content: center;
+      background: #f00;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
     }
   `,
-
-  circle({ color = 'grey' }) {
-    return css`
-      :host {
-        background: ${colorSelector(color)};
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        justify-content: center;
-        top: 50%;
-        -ms-transform: translateY(-50%);
-        transform: translateY(125%);
-      }
-    `
-  },
 
   title: css`
     :host {
@@ -314,8 +290,8 @@ module.exports = {
   creating: css`
     :host {
       width: 25%;
-      margin-left: 10%;
     }
+
   `,
 
   writing: css`
@@ -327,7 +303,6 @@ module.exports = {
   finalizing: css`
     :host {
       width: 25%;
-      margin-right: 10%;
     }
   `
 }
