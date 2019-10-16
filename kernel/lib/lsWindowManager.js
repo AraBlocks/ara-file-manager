@@ -240,7 +240,8 @@ windowManager.openWindow = (view) => {
         frame: false,
         titleBarStyle: 'hidden',
         'showDevTools': true,
-        ...windowManager.setSize(view)
+        ...windowManager.setSize(view),
+        menu: null
       }
     )
 }
