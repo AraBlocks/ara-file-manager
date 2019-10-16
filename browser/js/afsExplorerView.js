@@ -12,6 +12,14 @@ const afsExplorer = new AFSExlorer({
   fileList: modal.contentViewerData.fileList,
   updateAvailable: modal.contentViewerData.updateAvailable
 })
+const customTitlebar = require('custom-electron-titlebar')
+new customTitlebar.Titlebar({
+    backgroundColor: customTitlebar.Color.WHITE,
+    shadow: false,
+    menu: null,
+    titleHorizontalAlignment: process.platform === 'win32' ? 'left' : 'center',
+    maximizable: false,
+}).updateTitle(' ')
 document.getElementById('container').appendChild(afsExplorer.render({ spinner: modal.contentViewerData.fileList.length === 0 }))
 
 const refreshListener = ipcRenderer.on(events.REFRESH, () => afsExplorer.render({ spinner: false, fileList: modal.contentViewerData.fileList }))

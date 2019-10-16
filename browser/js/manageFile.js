@@ -10,6 +10,15 @@ const manageFileContainer = new ManageFileContainer({
 	...modal.manageFileData
 })
 
+const customTitlebar = require('custom-electron-titlebar')
+new customTitlebar.Titlebar({
+    backgroundColor: customTitlebar.Color.WHITE,
+    shadow: false,
+    menu: null,
+    titleHorizontalAlignment: process.platform === 'win32' ? 'left' : 'center',
+    maximizable: false,
+}).updateTitle(' ')
+
 document.getElementById('container')
 	.appendChild(manageFileContainer.render({ spinner: !modal.manageFileData.uncommitted }))
 
