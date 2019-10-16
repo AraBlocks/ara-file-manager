@@ -241,7 +241,8 @@ windowManager.openWindow = (view) => {
         titleBarStyle: 'hidden',
         'showDevTools': true,
         ...windowManager.setSize(view),
-        menu: null
+        menu: null,
+        maximizable: false
       }
     )
 }

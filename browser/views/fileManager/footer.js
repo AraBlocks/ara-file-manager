@@ -28,9 +28,7 @@ class Footer extends Nanocomponent {
         children: 'Download Ara Link',
         cssClass: { opts: { height: 3, fontSize: 14, color: 'teal' } },
         onclick: () => {
-          if (!account.pendingPublish) {
-            windowManagement.emit({ event: events.OPEN_MANAGE_FILE_VIEW})
-          }
+          this.rerender()
         }
       }),
       publishFilebutton: new Button({

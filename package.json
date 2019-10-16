@@ -81,6 +81,7 @@
     "ara-util": "github:arablocks/ara-util#ej_events",
     "component-box": "github:MarkGeeRomano/component-box#mgr-constructor-args",
     "css": "file:browser/lib/cssTool",
+    "custom-electron-titlebar": "^3.1.0",
     "did-uri": "^0.2.6",
     "domready": "^1.0.8",
     "electron-is-dev": "^0.3.0",
