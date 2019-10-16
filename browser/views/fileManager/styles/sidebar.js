@@ -11,11 +11,10 @@ module.exports = {
         display: flex;
         flex-direction: column;
         font-family: ${fonts.light};
-        justify-content: space-between;
         position: fixed;
         width: 24.8%;
         background-color: #1c1c1c;
-
+        height: 100%;
       }
     `,
 
@@ -33,7 +32,7 @@ module.exports = {
       margin-top: 50px;
       animation: fadein 1500ms;
       overflow-y: scroll;
-      height: 825px;
+      height: 86%;
     }
   `,
 }
