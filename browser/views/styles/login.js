@@ -55,6 +55,7 @@ module.exports = {
 
   logo: css`
     :host {
+      margin-top: 15px;
       align-content: center;
       display: flex;
       justify-content: center;
