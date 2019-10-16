@@ -7,7 +7,7 @@ module.exports = {
 
   container: css`
       :host {
-        margin-top: 30px;
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
         font-family: ${fonts.light};

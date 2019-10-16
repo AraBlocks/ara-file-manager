@@ -113,7 +113,7 @@ class Header extends Nanocomponent {
 
     return (html`
       <div class="${styles.container} header-container">
-        <div class="${styles.subHeader} header-subheader" style="margin-top: 4%; align-items: center;">
+        <div class="${styles.subHeader} header-subheader" style="margin-top: 1%; align-items: center;">
           <div class="${styles.titleHolder} header-titleHolder">
             <div id="accountName" onclick=${onClick} onkeydown=${checkCharCount}>
               ${account.username.length > 20 ? account.username.slice(0, 20) + '...' : account.username}
