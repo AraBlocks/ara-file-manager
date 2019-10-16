@@ -10,8 +10,8 @@ new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex('#1c1c1c'),
     shadow: false,
     menu: null,
-    titleHorizontalAlignment: 'center',
-    maximizable: false
+    titleHorizontalAlignment: process.platform === 'win32' ? 'left' : 'center',
+    maximizable: false,
 })
 document.getElementById('container').appendChild(fileManager.render(store))
 
