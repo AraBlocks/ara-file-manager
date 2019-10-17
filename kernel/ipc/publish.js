@@ -25,42 +25,49 @@ ipcMain.on(events.PUBLISH, async (_, { name, paths, price }) => {
   debug('%s heard', events.PUBLISH)
   const { password, userDID } = store.account
   try {
-    windowManager.openModal('generalPleaseWaitModal')
+    // windowManager.openModal('generalPleaseWaitModal')
 
-    let { afs, afs: { did }, mnemonic } = await araFilesystem.create({ owner: userDID, password })
-    await (await araFilesystem.add({ did, paths, password })).close()
-    await afs.close()
+    // let { afs, afs: { did }, mnemonic } = await araFilesystem.create({ owner: userDID, password })
+    // await (await araFilesystem.add({ did, paths, password })).close()
+    // await afs.close()
 
-    const size = paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
-    await daemonsUtil.writeFileMetaData({ did, size, title: name, password })
+    // const size = paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
+    // await daemonsUtil.writeFileMetaData({ did, size, title: name, password })
 
-    const gasEstimate = Number(await araFilesystem.commit({
-      did,
-      estimate: true,
-      estimateDid: networkKeys.ESTIMATE_PROXY_DID,
-      password,
-      price: Number(price)
-    }))
-    const ethAmount = await act.getEtherBalance(store.account.accountAddress)
-    if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
+    const gasPrice = await daemonsUtil.requestGasPrice()
+    const { average, fast, fastest } = gasPrice
+    console.log('GAS PRICE', average, fast, fastest)
+    dispatch({ type: events.GAS_PRICE, load: { average, fast, fastest } })
+    // windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.openModal('setGasModal')
 
-    dispatchLoad = {
-      did,
-      gasEstimate,
-      mnemonic,
-      name,
-      paths,
-      price: price || 0,
-      size
-    }
+    // const gasEstimate = Number(await araFilesystem.commit({
+    //   did,
+    //   estimate: true,
+    //   estimateDid: networkKeys.ESTIMATE_PROXY_DID,
+    //   password,
+    //   price: Number(price)
+    // }))
+    // const ethAmount = await act.getEtherBalance(store.account.accountAddress)
+    // if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
 
-    dispatch({
-      type: events.FEED_MODAL,
-      load: { modalName: 'publishNow', ...dispatchLoad }
-    })
+    // dispatchLoad = {
+    //   did,
+    //   gasEstimate,
+    //   mnemonic,
+    //   name,
+    //   paths,
+    //   price: price || 0,
+    //   size
+    // }
 
-    windowManager.closeModal('generalPleaseWaitModal')
-    windowManager.openModal('publishConfirmModal')
+    // dispatch({
+    //   type: events.FEED_MODAL,
+    //   load: { modalName: 'publishNow', ...dispatchLoad }
+    // })
+
+    // windowManager.closeModal('generalPleaseWaitModal')
+    // windowManager.openModal('publishConfirmModal')
   } catch (err) {
     debug('Error for %s: %o', 'newestimate', err)
     internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
