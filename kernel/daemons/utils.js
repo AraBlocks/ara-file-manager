@@ -59,6 +59,10 @@ async function requestFallbackEthFaucet(ethAddress) {
 	})
 }
 
+async function requestGasPrice() {
+  return JSON.parse(await request.get(urls.GASPRICE))
+}
+
 async function writeFileMetaData({
 	did,
 	size = 0,
@@ -84,6 +88,7 @@ async function writeFileMetaData({
 module.exports = {
 	getNetwork,
 	makeAfsPath,
+  requestGasPrice,
 	readFileMetadata,
 	requestAraFaucet,
 	requestEthFaucet,

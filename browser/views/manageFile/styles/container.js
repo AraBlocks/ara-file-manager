@@ -14,7 +14,7 @@ module.exports = {
 			height: 710px;
 			justify-content: space-between;
 			margin: 20px;
-			margin-top: 5px;
+			margin-top: -15px;
 		}
 
 		:host b {

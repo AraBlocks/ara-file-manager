@@ -28,7 +28,7 @@ windowManager.openModal = (modalName) => {
 windowManager.closeModal = (modalName) => {
   windowManager.get(modalName).object
     ? windowManager.get(modalName).object.close()
-    : windowManager.getCurrent().object.close()
+    : null
 }
 
 windowManager.setSize = (view) => {
@@ -104,6 +104,7 @@ windowManager.setSize = (view) => {
       height = 350
       break
     case 'recover':
+    case 'setGasModal':
       width = 400
       height = 390
       break
@@ -237,7 +238,7 @@ windowManager.openWindow = (view) => {
       false,
       {
         backgroundColor: 'white',
-        frame: true,
+        frame: false,
         titleBarStyle: 'hidden',
         'showDevTools': true,
         ...windowManager.setSize(view),

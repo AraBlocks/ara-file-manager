@@ -58,7 +58,7 @@ module.exports = {
       }
 
       :host > div {
-        width: ${width}%;
+        width: 95%;
       }
     `
   },
@@ -329,5 +329,39 @@ module.exports = {
       width: 25%;
       margin-right: 10%;
     }
-  `
+  `,
+
+  gasPrice: css`
+    :host {
+      margin-top: 20px;
+    }
+  `,
+
+  gasPriceHolder({ color = 'green' }) {
+    return css`
+      :host {
+        background-color: ${colorSelector(color)};
+        font-family: ${fonts.bold};
+        font-size: 18px;
+        color: white;
+        height: 20%;
+        text-align: start;
+        line-height: 42px;
+        box-sizing: border-box;
+        padding: 10px;
+        justify-content: space-between;
+        flex-direction: column;
+      }
+    `
+  },
+
+  gasPrice({ float = '', bold = true }) {
+    return css`
+      :host {
+        display: inline-block;
+        float: ${float};
+        font-family: ${bold ? fonts.bold : fonts.light}
+      }
+    `
+  }
 }
