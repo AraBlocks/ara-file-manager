@@ -126,7 +126,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
         gasPrice,
         onhash: hash => {
           console.log('deploy onhash', hash)
-          dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deploy', hash } })
+          dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deploy', deployHash: hash } })
           windowManager.openModal('publishProgressModal')
         },
         onreceipt: receipt => {
@@ -156,7 +156,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
         writeCallbacks: {
           onhash: hash => {
             console.log('write onhash', hash)
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'write', hash } })
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'write', writeHash: hash } })
             windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, step: { type: 'write', hash } })
           },
           onreceipt: receipt => {
@@ -177,7 +177,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
         priceCallbacks: {
           onhash: hash => {
             console.log('price onhash', hash)
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', hash } })
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', priceHash: hash } })
             windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'price', hash } })
           },
           onreceipt: receipt => {

@@ -27,7 +27,9 @@ module.exports = (state, { load = null, type }) => {
       state.data.freezeData = true
     case events.PUBLISH_PROGRESS:
       state.data.step = load.step
-      state.data.hash = load.hash
+      state.data.deployHash = load.deployHash || state.data.deployHash
+      state.data.writeHash = load.writeHash || state.data.writeHash
+      state.data.priceHash = load.priceHash || state.data.priceHash
       state.data.receipt = load.receipt
       break
     case events.SET_GAS_PRICE:
