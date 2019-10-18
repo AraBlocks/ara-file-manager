@@ -91,7 +91,8 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
   mnemonic,
   name,
   price,
-  size
+  size,
+  gasPrice
 }) => {
   debug('%s heard', events.CONFIRM_PUBLISH)
   const {
@@ -122,6 +123,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
       () => araFilesystem.deploy({
         password,
         did,
+        gasPrice,
         onhash: hash => {
           console.log('deploy onhash', hash)
           dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deploy', hash } })
@@ -150,6 +152,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
         did,
         password,
         price: Number(price),
+        gasPrice,
         writeCallbacks: {
           onhash: hash => {
             console.log('write onhash', hash)
