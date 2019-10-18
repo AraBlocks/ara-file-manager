@@ -104,9 +104,12 @@ windowManager.setSize = (view) => {
       height = 350
       break
     case 'recover':
-    case 'setGasModal':
       width = 400
       height = 390
+      break
+    case 'setGasModal':
+      width = 390
+      height = 420
       break
     case 'testing':
       width = 550

@@ -15,7 +15,8 @@ class Input extends Nanocomponent {
     renderView = () => {},
     type = 'text',
     step,
-    value = ''
+    value = '',
+    color = 'white'
   } = {}) {
     super()
     this.props = {
@@ -29,7 +30,8 @@ class Input extends Nanocomponent {
       requiredIndicator,
       type,
       step,
-      value
+      value,
+      color
     }
 
     this.oninput = this.oninput.bind(this)
@@ -49,7 +51,7 @@ class Input extends Nanocomponent {
   createElement() {
     const { oninput, props } = this
     return (html`
-      <div class="${styles.container({ disabled: props.disabled, required: props.required })} input-container">
+      <div class="${styles.container({ disabled: props.disabled, required: props.required, color: props.color })} input-container">
         <input class="
           ${styles[props.cssClass.name || 'standard'](props.cssClass.opts)} input-dynamicClass
           ${props.requiredIndicator && styles.requiredIndicator} input-requiredIndicator

@@ -1,8 +1,9 @@
 const { css } = require('css')
-const { buttonSelector, colorSelector, fonts } = require('styleUtils')
+const { buttonSelector, colorSelector, fonts, fontCSS } = require('styleUtils')
 
 module.exports = {
   buttonSelector,
+  title: fontCSS.noeH1,
 
   araID: css`
     :host {
@@ -55,6 +56,7 @@ module.exports = {
         overflow-wrap: break-word;
         text-align: center;
         width: ${width}%;
+        position: relative;
       }
 
       :host > div {
@@ -168,6 +170,14 @@ module.exports = {
       font-family: ${fonts.bold};
       margin: 10px;
       font-size: 16px;
+    }
+  `,
+
+  lightLabel: css`
+    :host {
+      color: ${colorSelector('dark-grey')};
+      font-family: ${fonts.regular};
+      font-size: 18px;
     }
   `,
 
@@ -351,6 +361,12 @@ module.exports = {
         padding: 10px;
         justify-content: space-between;
         flex-direction: column;
+        cursor: pointer;
+      }
+
+      :host:hover {
+        transform: scale(1.02);
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       }
     `
   },
@@ -363,5 +379,16 @@ module.exports = {
         font-family: ${bold ? fonts.bold : fonts.light}
       }
     `
-  }
+  },
+
+  separator: css`
+    :host {
+      background-color: ${colorSelector('grey')};
+      height: 1px;
+      margin-top: 3%;
+      width: 100%;
+    }
+  `
+
+
 }

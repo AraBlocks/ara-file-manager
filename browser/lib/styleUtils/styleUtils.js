@@ -14,6 +14,7 @@ module.exports = {
     araBlue: '#1e7dfa',
     araGreen: 'var(--ara-green)',
     araGrey: '#cbcbcb',
+    araLightGrey: '#f0f0f0',
     araLightBlack: '#444444',
     araRed: '#fc2636',
     araPink: '#fbe6e6',
@@ -76,6 +77,9 @@ module.exports = {
       case 'gray':
         selectedColor = 'var(--ara-grey)'
         break
+      case 'light-grey':
+        selectedColor = 'var(--ara-light-grey)'
+        break
       case 'green':
         selectedColor = !hoverState ? 'var(--ara-green)' : '#66923c'
         break
@@ -96,6 +100,9 @@ module.exports = {
         break
       case 'pink':
         selectedColor = '#fbe6e6'
+        break
+      case 'white':
+        selectedColor = '#ffffff'
         break
       default:
         selectedColor = !hoverState ? 'var(--ara-red)' : 'green'

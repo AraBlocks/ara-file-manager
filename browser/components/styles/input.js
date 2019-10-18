@@ -6,7 +6,7 @@ const {
 } = require('styleUtils')
 
 module.exports = {
-  container({ disabled, requiredIndicator}) {
+  container({ disabled, requiredIndicator, color = 'white' }) {
     return css`
       :host {
         align-items: center;
@@ -19,6 +19,7 @@ module.exports = {
         width: 100%;
         margin-top: 8px;
         -webkit-app-region: no-drag;
+        background-color: ${colorSelector(color)};
       }
     `
   },
@@ -76,6 +77,21 @@ module.exports = {
       :host::placeholder {
         color: var(--ara-grey);
         text-indent: 10px;
+      }
+    `
+  },
+
+  customGasPrice() {
+    return css`
+      :host {
+        background-color: ${colorSelector('light-grey')};
+        height: 12%;
+        color: ${colorSelector('dark-grey')};
+        text-align: end;
+        font-size: 18px;
+        width: 81%;
+        padding: 10px;
+        line-height: 30px;
       }
     `
   }

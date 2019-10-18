@@ -25,49 +25,59 @@ ipcMain.on(events.PUBLISH, async (_, { name, paths, price }) => {
   debug('%s heard', events.PUBLISH)
   const { password, userDID } = store.account
   try {
-    // windowManager.openModal('generalPleaseWaitModal')
-
-    // let { afs, afs: { did }, mnemonic } = await araFilesystem.create({ owner: userDID, password })
-    // await (await araFilesystem.add({ did, paths, password })).close()
-    // await afs.close()
-
-    // const size = paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
-    // await daemonsUtil.writeFileMetaData({ did, size, title: name, password })
-
     const gasPrice = await daemonsUtil.requestGasPrice()
     const { average, fast, fastest } = gasPrice
-    console.log('GAS PRICE', average, fast, fastest)
-    dispatch({ type: events.GAS_PRICE, load: { average, fast, fastest } })
-    // windowManager.closeModal('generalPleaseWaitModal')
+    dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, name, paths, price } })
     windowManager.openModal('setGasModal')
+  } catch (err) {
+    debug('Error for %s: %o', 'newestimate', err)
+    internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
+    windowManager.closeModal('setGasModal')
+    errorHandling(err)
+  }
+})
 
-    // const gasEstimate = Number(await araFilesystem.commit({
-    //   did,
-    //   estimate: true,
-    //   estimateDid: networkKeys.ESTIMATE_PROXY_DID,
-    //   password,
-    //   price: Number(price)
-    // }))
-    // const ethAmount = await act.getEtherBalance(store.account.accountAddress)
-    // if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
+ipcMain.on(events.GAS_PRICE, async(_, { gasPrice, name, paths, price }) => {
+  const { password, userDID } = store.account
+  try {
+    windowManager.openModal('generalPleaseWaitModal')
 
-    // dispatchLoad = {
-    //   did,
-    //   gasEstimate,
-    //   mnemonic,
-    //   name,
-    //   paths,
-    //   price: price || 0,
-    //   size
-    // }
+    let { afs, afs: { did }, mnemonic } = await araFilesystem.create({ owner: userDID, password })
+    await (await araFilesystem.add({ did, paths, password })).close()
+    await afs.close()
 
-    // dispatch({
-    //   type: events.FEED_MODAL,
-    //   load: { modalName: 'publishNow', ...dispatchLoad }
-    // })
+    const size = paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
+    await daemonsUtil.writeFileMetaData({ did, size, title: name, password })
 
-    // windowManager.closeModal('generalPleaseWaitModal')
-    // windowManager.openModal('publishConfirmModal')
+    const gasEstimate = Number(await araFilesystem.commit({
+      did,
+      estimate: true,
+      estimateDid: networkKeys.ESTIMATE_PROXY_DID,
+      password,
+      gasPrice,
+      price: Number(price)
+    }))
+    const ethAmount = await act.getEtherBalance(store.account.accountAddress)
+    if (ethAmount < gasEstimate) { throw new Error('Not enough eth') }
+
+    dispatchLoad = {
+      did,
+      gasEstimate,
+      mnemonic,
+      name,
+      paths,
+      price: price || 0,
+      size,
+      gasPrice
+    }
+
+    dispatch({
+      type: events.FEED_MODAL,
+      load: { modalName: 'publishNow', ...dispatchLoad }
+    })
+
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.openModal('publishConfirmModal')
   } catch (err) {
     debug('Error for %s: %o', 'newestimate', err)
     internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
