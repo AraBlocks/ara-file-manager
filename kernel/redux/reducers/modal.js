@@ -30,10 +30,13 @@ module.exports = (state, { load = null, type }) => {
       state.data.hash = load.hash
       state.data.receipt = load.receipt
       break
-    case events.GAS_PRICE:
+    case events.SET_GAS_PRICE:
       state.data.average = load.average
       state.data.fast = load.fast
       state.data.fastest = load.fastest
+      state.data.name = load.name
+      state.data.paths = load.paths
+      state.data.price = load.price
       break
     default:
       return state
