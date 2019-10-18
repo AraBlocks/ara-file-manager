@@ -7,12 +7,30 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, hash, receipt, step }) => {
+module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, step }) => {
   const { description, waitTime } = waitModalText(modalName, load)
-  const link = new Link({
+  const deployLink = new Link({
     children: `Etherscan`,
     onclick: () => {
-      shell.openExternal(`https://ropsten.etherscan.io/tx/${hash}`)
+      deployHash ?
+        shell.openExternal(`https://ropsten.etherscan.io/tx/${deployHash}`) :
+        null
+    }
+  })
+  const writeLink = new Link({
+    children: `Etherscan`,
+    onclick: () => {
+      writeHash ?
+        shell.openExternal(`https://ropsten.etherscan.io/tx/${writeHash}`) :
+        null
+    }
+  })
+  const priceLink = new Link({
+    children: `Etherscan`,
+    onclick: () => {
+      priceHash ?
+        shell.openExternal(`https://ropsten.etherscan.io/tx/${priceHash}`) :
+        null
     }
   })
   const exit = new Button({
@@ -34,7 +52,7 @@ module.exports = ({ load, modalName, hash, receipt, step }) => {
             Creating
           </div>
           <div>
-            ${link.render()}
+            ${deployLink.render()}
           </div>
         </div>
         <div class="${styles.writing}">
@@ -45,7 +63,7 @@ module.exports = ({ load, modalName, hash, receipt, step }) => {
             Writing
           </div>
           <div>
-            ${link.render()}
+            ${writeHash ? writeLink.render() : null}
           </div>
         </div>
         <div class="${styles.finalizing}">
@@ -56,7 +74,7 @@ module.exports = ({ load, modalName, hash, receipt, step }) => {
             Finalizing
           </div>
           <div>
-            ${link.render()}
+            ${priceHash ? priceLink.render() : null}
           </div>
         </div>
       </div>
