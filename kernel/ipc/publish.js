@@ -25,29 +25,53 @@ ipcMain.on(events.PUBLISH, async (_, { name, paths, price }) => {
   debug('%s heard', events.PUBLISH)
   const { password, userDID } = store.account
   try {
-    const gasPrice = await daemonsUtil.requestGasPrice()
-    const { average, fast, fastest } = gasPrice
-    dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, name, paths, price } })
-    windowManager.openModal('setGasModal')
-  } catch (err) {
-    debug('Error for %s: %o', 'newestimate', err)
-    internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
-    windowManager.closeModal('setGasModal')
-    errorHandling(err)
-  }
-})
-
-ipcMain.on(events.GAS_PRICE, async(_, { gasPrice, name, paths, price }) => {
-  const { password, userDID } = store.account
-  try {
+    dispatch({ type: events.FEED_MODAL, load: { modalName: 'suggestingGasPrices' } })
     windowManager.openModal('generalPleaseWaitModal')
-
     let { afs, afs: { did }, mnemonic } = await araFilesystem.create({ owner: userDID, password })
     await (await araFilesystem.add({ did, paths, password })).close()
     await afs.close()
 
     const size = paths.reduce((sum, file) => sum += fs.statSync(file).size, 0)
     await daemonsUtil.writeFileMetaData({ did, size, title: name, password })
+
+    const gasPrice = await daemonsUtil.requestGasPrice()
+    const { average, fast, fastest } = gasPrice
+    dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, name, paths, price, did, mnemonic, size } })
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.openModal('setGasModal')
+  } catch (err) {
+    debug('Error for %s: %o', 'newestimate', err)
+    internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.closeModal('setGasModal')
+    errorHandling(err)
+  }
+})
+
+internalEmitter.on(events.NEW_GAS, async (_, { step }) => {
+  debug('%s heard', events.NEW_GAS)
+  const gasPrice = await daemonsUtil.requestGasPrice()
+  const { average, fast, fastest } = gasPrice
+  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
+  windowManager.openModal('setGasModal')
+})
+
+ipcMain.on(events.NEW_GAS, async (_, { step }) => {
+  debug('%s heard', events.NEW_GAS)
+  const gasPrice = await daemonsUtil.requestGasPrice()
+  const { average, fast, fastest } = gasPrice
+  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
+  windowManager.openModal('setGasModal')
+})
+
+ipcMain.on(events.GAS_PRICE, async(_, { gasPrice, step }) => {
+  debug('%s heard', events.GAS_PRICE)
+
+  const { name, paths, price, did, mnemonic, size } = store.modal.publishFileData
+  const { password, userDID } = store.account
+  try {
+    dispatch({ type: events.FEED_MODAL, load: { modalName: 'publishEstimate' } })
+    windowManager.openModal('generalPleaseWaitModal')
 
     const gasEstimate = Number(await araFilesystem.commit({
       did,
@@ -68,7 +92,8 @@ ipcMain.on(events.GAS_PRICE, async(_, { gasPrice, name, paths, price }) => {
       paths,
       price: price || 0,
       size,
-      gasPrice
+      gasPrice,
+      step
     }
 
     dispatch({
@@ -92,7 +117,8 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
   name,
   price,
   size,
-  gasPrice
+  gasPrice,
+  step
 }) => {
   debug('%s heard', events.CONFIRM_PUBLISH)
   const {
@@ -118,87 +144,200 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
     dispatch({ type: events.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    await autoQueue.push(
-      analytics.trackPublishStart,
-      () => araFilesystem.deploy({
-        password,
-        did,
-        gasPrice,
-        onhash: hash => {
-          console.log('deploy onhash', hash)
-          dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deploy', deployHash: hash } })
-          windowManager.openModal('publishProgressModal')
-        },
-        onreceipt: receipt => {
-          console.log('deploy onreceipt')
-        },
-        onconfirmation: (confNumber, receipt) => {
-          console.log('deploy onconfirmation')
-        },
-        onerror: error => {
-          console.log('deploy onerror', error)
-          dispatch({ type: events.PUBLISH_PROGRESS, load: { error } })
-        },
-        onmined: receipt => {
-          console.log('deploy onmined')
-          dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deployMined', receipt } })
-          // windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'deploy', receipt } })
-        }
-      })
-    )
-
-    await autoQueue.push(
-      () => araFilesystem.commit({
-        did,
-        password,
-        price: Number(price),
-        gasPrice,
-        writeCallbacks: {
+    let errored = false
+    if (!step || 'deploy' === step) {
+      if ('deploy' === step) autoQueue.clear()
+      let published = false
+      setTimeout(
+        () => {
+          if (!published && !errored) {
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'retrydeploy' } })
+            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
+          }
+        }, 25000
+      )
+      await autoQueue.push(
+        analytics.trackPublishStart,
+        () => araFilesystem.deploy({
+          password,
+          did,
+          gasPrice,
           onhash: hash => {
-            console.log('write onhash', hash)
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'write', writeHash: hash } })
-            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, step: { type: 'write', hash } })
+            console.log('deploy onhash', hash)
+            step = undefined
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deploy', deployHash: hash } })
+            windowManager.openModal('publishProgressModal')
           },
           onreceipt: receipt => {
-            console.log('write onreceipt')
+            console.log('deploy onreceipt')
+            published = true
+            errored = false
           },
           onconfirmation: (confNumber, receipt) => {
-            console.log('write onconfirmation')
+            console.log('deploy onconfirmation')
           },
           onerror: error => {
-            console.log('write onerror', error)
+            console.log('deploy onerror', error)
+            errored = true
+            dispatch({ type: events.FEED_MODAL,
+              load: {
+                modalName: 'transactionError',
+                callback: () => {
+                  internalEmitter.emit(events.NEW_GAS, true, { step: 'deploy' })
+                }
+              }
+            })
+            windowManager.closeModal('publishProgressModal')
+            windowManager.openModal('generalActionModal')
           },
           onmined: receipt => {
-            console.log('write onmined')
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'writeMined', receipt } })
-            // windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'write', receipt } })
+            console.log('deploy onmined')
           }
-        },
-        priceCallbacks: {
+        })
+      )
+      if (errored && !published) {
+        return
+      }
+    }
+
+    let priced = false
+    if (!step || 'write' === step) {
+      if ('write' === step) autoQueue.clear()
+      let written = false
+      setTimeout(
+        () => {
+          if (!written && !errored) {
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'retrywrite' } })
+            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
+          }
+        }, 25000
+      )
+      await autoQueue.push(
+        () => araFilesystem.commit({
+          did,
+          password,
+          price: Number(price),
+          gasPrice,
+          writeCallbacks: {
+            onhash: hash => {
+              console.log('write onhash', hash)
+              step = undefined
+              dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'write', writeHash: hash } })
+              if (step) {
+                windowManager.openModal('publishProgressModal')
+              } else {
+                windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'write', writeHash: hash } })
+              }
+            },
+            onreceipt: receipt => {
+              console.log('write onreceipt')
+              written = true
+              errored = false
+              setTimeout(
+                () => {
+                  if (!priced) {
+                    dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'retryprice' } })
+                    windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
+                  }
+                }, 25000
+              )
+            },
+            onconfirmation: (confNumber, receipt) => {
+              console.log('write onconfirmation')
+            },
+            onerror: error => {
+              console.log('write onerror', error)
+              errored = true
+            },
+            onmined: receipt => {
+              console.log('write onmined')
+            }
+          },
+          priceCallbacks: {
+            onhash: hash => {
+              console.log('price onhash', hash)
+              step = undefined
+              dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', priceHash: hash } })
+              if (step) {
+                windowManager.openModal('publishProgressModal')
+              } else {
+                windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'price', priceHash: hash } })
+              }
+            },
+            onreceipt: receipt => {
+              console.log('price onreceipt')
+              priced = true
+              errored = false
+            },
+            onconfirmation: (confNumber, receipt) => {
+              console.log('price onconfirmation')
+            },
+            onerror: error => {
+              errored = true
+              console.log('price onerror', error)
+            },
+            onmined: receipt => {
+              console.log('price onmined')
+              windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
+              windowManager.closeModal('publishProgressModal')
+            }
+          }
+        }),
+        analytics.trackPublishFinish
+      )
+      if (errored && !(written && priced)) {
+        return
+      }
+    }
+
+    if ('price' === step) {
+      autoQueue.clear()
+      setTimeout(
+        () => {
+          if (!priced && !errored) {
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'retryprice' } })
+            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
+          }
+        }, 120000
+      )
+      await autoQueue.push(
+        () => araFilesystem.setPrice({
+          did,
+          password,
+          price: Number(price),
+          gasPrice,
           onhash: hash => {
             console.log('price onhash', hash)
+            step = undefined
             dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', priceHash: hash } })
-            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'price', hash } })
+            if (step) {
+              windowManager.openModal('publishProgressModal')
+            } else {
+              windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'price', priceHash: hash } })
+            }
           },
           onreceipt: receipt => {
             console.log('price onreceipt')
+            priced = true
           },
           onconfirmation: (confNumber, receipt) => {
             console.log('price onconfirmation')
           },
           onerror: error => {
             console.log('price onerror', error)
+            errored = true
           },
           onmined: receipt => {
             console.log('price onmined')
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
             windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
-            // windowManager.closeModal({ view: 'publishProgressModal' })
+            windowManager.closeModal('publishProgressModal')
           }
-        }
-      }),
-      analytics.trackPublishFinish
-    )
+        })
+      )
+      if (errored && !priced) {
+        return
+      }
+    }
 
     internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
 

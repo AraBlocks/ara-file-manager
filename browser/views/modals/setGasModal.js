@@ -4,12 +4,9 @@ const Input = require('../../components/input')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ average, fast, fastest, name, price, paths }) => {
+module.exports = ({ average, fast, fastest, step }) => {
   this.state = {
-    gasPrice: 0,
-    name,
-    price,
-    paths
+    gasPrice: 0
   }
 
   this.oninput = () => {
@@ -22,8 +19,7 @@ module.exports = ({ average, fast, fastest, name, price, paths }) => {
     children: 'Set Custom Price',
     cssClass: { opts: { height: 3, fontSize: 14, color: 'teal' } },
     onclick: () => {
-      console.log('GAS PRICE', this.state.gasPrice)
-      emit({ event: events.GAS_PRICE, load: { gasPrice: Number(this.state.gasPrice), name, price, paths } })
+      emit({ event: events.GAS_PRICE, load: { gasPrice: Number(this.state.gasPrice), step } })
       closeModal('setGasModal')
     }
   })
@@ -49,7 +45,7 @@ module.exports = ({ average, fast, fastest, name, price, paths }) => {
       <div style="margin: 5% 0;">
         <div class="${styles.gasPriceHolder({})}" onclick="${() => {
           this.state.gasPrice = fastest
-          emit({ event: events.GAS_PRICE, load: { gasPrice: Number(this.state.gasPrice), name, price, paths } })
+          emit({ event: events.GAS_PRICE, load: { gasPrice: Number(this.state.gasPrice), step } })
           closeModal('setGasModal')
         }}">
           <div class="${styles.gasPrice({})}">Fastest</div>
@@ -57,7 +53,7 @@ module.exports = ({ average, fast, fastest, name, price, paths }) => {
         </div>
         <div class="${styles.gasPriceHolder({ color: 'teal'})}" onclick="${() => {
           this.state.gasPrice = fast
-          emit({ event: events.GAS_PRICE, load: { gasPrice: Number(this.state.gasPrice), name, price, paths } })
+          emit({ event: events.GAS_PRICE, load: { gasPrice: Number(this.state.gasPrice), step } })
           closeModal('setGasModal')
         }}">
           <div class="${styles.gasPrice({})}">Fast</div>
@@ -65,7 +61,7 @@ module.exports = ({ average, fast, fastest, name, price, paths }) => {
         </div>
         <div class="${styles.gasPriceHolder({ color: 'darkteal' })}" onclick="${() => {
           this.state.gasPrice = average
-          emit({ event: events.GAS_PRICE, load: { gasPrice: Number(this.state.gasPrice), name, price, paths } })
+          emit({ event: events.GAS_PRICE, load: { gasPrice: Number(this.state.gasPrice), step } })
           closeModal('setGasModal')
         }}">
           <div class="${styles.gasPrice({})}">Average</div>

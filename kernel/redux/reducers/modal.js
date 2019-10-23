@@ -36,9 +36,13 @@ module.exports = (state, { load = null, type }) => {
       state.data.average = load.average
       state.data.fast = load.fast
       state.data.fastest = load.fastest
-      state.data.name = load.name
-      state.data.paths = load.paths
-      state.data.price = load.price
+      state.data.step = load.step
+      state.publishFileData.name = load.name || state.publishFileData.name
+      state.publishFileData.paths = load.paths || state.publishFileData.paths
+      state.publishFileData.price = load.price || state.publishFileData.price
+      state.publishFileData.did = load.did || state.publishFileData.did
+      state.publishFileData.mnemonic = load.mnemonic || state.publishFileData.mnemonic
+      state.publishFileData.size = load.size || state.publishFileData.size
       break
     default:
       return state

@@ -23,4 +23,8 @@ module.exports = class AutoQueue {
     this.queue.shift()
     if (this.queue.length) this._shift()
   }
+
+  clear() {
+    this.queue = []
+  }
 }

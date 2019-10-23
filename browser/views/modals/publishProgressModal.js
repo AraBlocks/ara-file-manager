@@ -1,4 +1,4 @@
-const { closeModal } = require('../../lib/tools/windowManagement')
+const { closeModal, openModal, emit } = require('../../lib/tools/windowManagement')
 const { waitModalText } = require('../../lib/tools/generalModalTextProvider')
 const spinnerBar = require('../../components/spinnerBar')
 const Button = require('../../components/button')
@@ -7,7 +7,7 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, step }) => {
+module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, step, showGas }) => {
   const { description, waitTime } = waitModalText(modalName, load)
   const deployLink = new Link({
     children: `Etherscan`,
@@ -39,14 +39,15 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
     onclick: () => closeModal('publishProgressModal')
   })
   return html`
-    <div class="${styles.container({ justifyContent: 'space-around', height: 95, width: 100 })} modals-container">
-      <div class="${styles.messageBold} modal-messageBold">
+    <div class="${styles.container({ justifyContent: 'space-around', height: 95, width: 100, useSelector: false })} modals-container">
+      <div class="${styles.title} modal-messageBold">
         Publishing...
       </div>
+      <div class="${styles.separator} section-separator" style="width: 90%;"></div>
       <div class="${styles.publishingContainer}">
         <div class="${styles.creating}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${'deploy' === step ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
+            ${step.includes('deploy') ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
             Creating
@@ -54,10 +55,19 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
           <div>
             ${deployLink.render()}
           </div>
+          ${'retrydeploy' === step ?
+            html`<div class="${styles.gasRefill}" onclick=${() => {
+              closeModal('publishProgressModal')
+              emit({ event: events.NEW_GAS, load: { step: 'deploy' } })
+            }}>
+              <img src="../assets/images/gas.png"/>
+            </div>` :
+            null
+          }
         </div>
         <div class="${styles.writing}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${'write' === step ? spinnerBar() : html`<div class="${styles.circle({ color: step && step.includes('price') ? 'green' : 'grey' })}"></div>`}
+            ${step.includes('write') ? spinnerBar() : html`<div class="${styles.circle({ color: step && step.includes('price') ? 'green' : 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
             Writing
@@ -65,6 +75,15 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
           <div>
             ${writeHash ? writeLink.render() : null}
           </div>
+          ${'retrywrite' === step ?
+            html`<div class="${styles.gasRefill}" onclick=${() => {
+              closeModal('publishProgressModal')
+              emit({ event: events.NEW_GAS, load: { step: 'write' } })
+            }}>
+              <img src="../assets/images/gas.png"/>
+            </div>` :
+            null
+          }
         </div>
         <div class="${styles.finalizing}">
           <div class="${styles.progressHolder} modal-progressHolder">
@@ -76,9 +95,18 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
           <div>
             ${priceHash ? priceLink.render() : null}
           </div>
+          ${'retryprice' === step ?
+            html`<div class="${styles.gasRefill}" onclick=${() => {
+              closeModal('publishProgressModal')
+              emit({ event: events.NEW_GAS, load: { step: 'price' } })
+            }}>
+              <img src="../assets/images/gas.png"/>
+            </div>` :
+            null
+          }
         </div>
       </div>
-      <div>
+      <div style="width: 100%;">
         ${exit.render()}
       </div>
     </div>
