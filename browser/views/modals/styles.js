@@ -45,7 +45,7 @@ module.exports = {
     }
   `,
 
-  container({ justifyContent = 'space-between', height = 90, width = 90 }) {
+  container({ justifyContent = 'space-between', height = 90, width = 90, useSelector = true }) {
     return css`
       :host {
         align-items: center;
@@ -59,8 +59,10 @@ module.exports = {
         position: relative;
       }
 
-      :host > div {
-        width: 95%;
+      ${useSelector &&
+      `:host > div {
+          width: 95%;
+        }`
       }
     `
   },
@@ -362,11 +364,12 @@ module.exports = {
         justify-content: space-between;
         flex-direction: column;
         cursor: pointer;
+        -webkit-app-region: no-drag;
       }
 
       :host:hover {
         transform: scale(1.02);
-         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       }
     `
   },
@@ -388,7 +391,23 @@ module.exports = {
       margin-top: 3%;
       width: 100%;
     }
+  `,
+
+  gasRefill: css`
+    :host {
+      align-content: center;
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    :host > img {
+      height: 15px;
+    }
+
+    :host:hover {
+      transform: scale(1.1);
+    }
   `
-
-
 }

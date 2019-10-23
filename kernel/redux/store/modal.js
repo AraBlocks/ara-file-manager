@@ -2,5 +2,12 @@ module.exports = {
   data: {},
   manageFileData: {},
   contentViewerData: {},
-  publishFileData: {}
+  publishFileData: {
+    name: "",
+    paths: [],
+    price: "",
+    did: "",
+    mnemonic: "",
+    size: ""
+  }
 }
