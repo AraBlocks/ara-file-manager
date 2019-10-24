@@ -93,7 +93,8 @@ module.exports = (state, { load = null, type }) => {
       file.status = events.PAUSED
       break
     case events.PUBLISHING:
-      state.published.push(load)
+      file = findFile(load.did, state.published)
+      if (!file) state.published.push(load)
       break
     case events.PUBLISHED:
       file = findFile(load.did, state.published)
