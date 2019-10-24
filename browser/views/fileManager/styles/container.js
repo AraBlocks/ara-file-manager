@@ -55,15 +55,13 @@ module.exports = {
     }
   `,
 
-  sectionContainer(isTestnet) {
-    return css`
-      :host {
-        animation: fadein 1500ms;
-        height: 66%;
-        overflow-y: scroll;
-      }
-    `
-  },
+  sectionContainer: css`
+    :host {
+      animation: fadein 1500ms;
+      height: 66%;
+      overflow-y: scroll;
+    }
+  `,
 
   spinnerBarHolder: css`
     :host {
