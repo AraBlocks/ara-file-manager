@@ -158,16 +158,64 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
     dispatch({ type: events.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    if (!step || 'deploy' === step) {
-      if ('deploy' === step) autoQueue.clear()
+    this.onhash = (hash, _) => {
+      debug('%s tx hash: %s', _, hash)
+      const load = { step: _, [`${_}Hash`]: hash }
+      dispatch({ type: events.PUBLISH_PROGRESS, load })
+      windowManager.openModal('publishProgressModal')
+      if (!step) {
+        windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load })
+      }
+    }
+
+    this.onreceipt = (receipt, _) => {
+      debug('%s tx receipt:', _, receipt)
+      step = undefined
+      errored = false
+    }
+
+    this.onerror = (error, _) => {
+      debug('%s tx error:', _, error)
+      errored = true
+      dispatch({ type: events.FEED_MODAL,
+        load: {
+          modalName: 'transactionError',
+          callback: () => {
+            internalEmitter.emit(events.NEW_GAS, true, { step: _ })
+          }
+        }
+      })
+      windowManager.closeModal('publishProgressModal')
+      windowManager.openModal('generalActionModal')
+    }
+
+    this.startTimer = (_) => {
       setTimeout(
         () => {
-          if (!deployed && !errored) {
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'retrydeploy' } })
+          let trigger = false
+          switch (_) {
+            case 'retrydeploy':
+              trigger = !(deployed || errored)
+              break
+            case 'retrywrite':
+              trigger = !(written || errored)
+              break
+            case 'retryprice':
+              trigger = !(priced || errored)
+              break
+          }
+          debug('timeout', trigger)
+          if (trigger) {
+            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: _ } })
             windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
           }
         }, GAS_TIMEOUT
       )
+    }
+
+    if (!step || 'deploy' === step) {
+      if ('deploy' === step) autoQueue.clear()
+      this.startTimer('retrydeploy')
       await new Promise((resolve, reject) => {
         autoQueue.push(
           analytics.trackPublishStart,
@@ -175,32 +223,15 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
             password,
             did,
             gasPrice,
-            onhash: hash => {
-              debug('Deploy tx hash:', hash)
-              dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deploy', deployHash: hash } })
-              windowManager.openModal('publishProgressModal')
-            },
-            onreceipt: receipt => {
-              debug('Deploy tx receipt:', receipt)
-              step = undefined
+            onhash: hash => this.onhash(hash, 'deploy'),
+            onreceipt: (receipt) => {
+              this.onreceipt(receipt, 'deploy')
               deployed = true
-              errored = false
               resolve()
             },
-            onerror: error => {
-              debug('Deploy tx error:', error)
+            onerror: (error) => {
               if (!deployed) {
-                errored = true
-                dispatch({ type: events.FEED_MODAL,
-                  load: {
-                    modalName: 'transactionError',
-                    callback: () => {
-                      internalEmitter.emit(events.NEW_GAS, true, { step: 'deploy' })
-                    }
-                  }
-                })
-                windowManager.closeModal('publishProgressModal')
-                windowManager.openModal('generalActionModal')
+                this.onerror(error, 'deploy')
                 reject()
               }
             }
@@ -214,14 +245,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     if (deployed || 'write' === step) {
       if ('write' === step) autoQueue.clear()
-      setTimeout(
-        () => {
-          if (!written && !errored) {
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'retrywrite' } })
-            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
-          }
-        }, GAS_TIMEOUT
-      )
+      this.startTimer('retrywrite')
       await new Promise((resolve, reject) => {
         autoQueue.push(
           () => araFilesystem.commit({
@@ -230,81 +254,30 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
             price: Number(price),
             gasPrice,
             writeCallbacks: {
-              onhash: hash => {
-                debug('Write tx hash:', hash)
-                dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'write', writeHash: hash } })
-                if (step) {
-                  windowManager.openModal('publishProgressModal')
-                } else {
-                  windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'write', writeHash: hash } })
-                }
-              },
-              onreceipt: receipt => {
-                debug('Write tx receipt:', receipt)
+              onhash: hash => this.onhash(hash, 'write'),
+              onreceipt: (receipt) => {
+                this.onreceipt(receipt, 'write')
                 written = true
-                errored = false
-                step = undefined
-                setTimeout(
-                  () => {
-                    if (!priced && !errored) {
-                      dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'retryprice' } })
-                      windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
-                    }
-                  }, GAS_TIMEOUT
-                )
+                this.startTimer('retryprice')
               },
-              onerror: error => {
-                debug('Write tx error', error)
+              onerror: (error) => {
                 if (!written) {
-                  errored = true
-                  dispatch({ type: events.FEED_MODAL,
-                    load: {
-                      modalName: 'transactionError',
-                      callback: () => {
-                        internalEmitter.emit(events.NEW_GAS, true, { step: 'write' })
-                      }
-                    }
-                  })
-                  windowManager.closeModal('publishProgressModal')
-                  windowManager.openModal('generalActionModal')
+                  this.onerror(error, 'write')
                   reject()
                 }
               },
             },
             priceCallbacks: {
-              onhash: hash => {
-                debug('Price tx hash:', hash)
-                dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', priceHash: hash } })
-                if (step) {
-                  windowManager.openModal('publishProgressModal')
-                } else {
-                  windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'price', priceHash: hash } })
-                }
-              },
-              onreceipt: receipt => {
-                debug('Price tx receipt:', receipt)
+              onhash: hash => this.onhash(hash, 'price'),
+              onreceipt: (receipt) => {
+                this.onreceipt(receipt, 'price')
                 priced = true
-                errored = false
-                step = undefined
-                dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
-                windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
                 windowManager.closeModal('publishProgressModal')
                 resolve()
               },
               onerror: error => {
-                debug('Price tx error', error)
                 if (!priced) {
-                  errored = true
-                  dispatch({ type: events.FEED_MODAL,
-                    load: {
-                      modalName: 'transactionError',
-                      callback: () => {
-                        internalEmitter.emit(events.NEW_GAS, true, { step: 'write' })
-                      }
-                    }
-                  })
-                  windowManager.closeModal('publishProgressModal')
-                  windowManager.openModal('generalActionModal')
+                  this.onerror(error, 'price')
                   reject()
                 }
               }
@@ -320,14 +293,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     if ('price' === step) {
       autoQueue.clear()
-      setTimeout(
-        () => {
-          if (!priced && !errored) {
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'retryprice' } })
-            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
-          }
-        }, 120000
-      )
+      this.startTimer('retryprice')
       await new Promise((resolve, reject) => {
         autoQueue.push(
           () => araFilesystem.setPrice({
@@ -335,39 +301,16 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
             password,
             price: Number(price),
             gasPrice,
-            onhash: hash => {
-              debug('Price tx hash:', hash)
-              dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', priceHash: hash } })
-              if (step) {
-                windowManager.openModal('publishProgressModal')
-              } else {
-                windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'price', priceHash: hash } })
-              }
-            },
-            onreceipt: receipt => {
-              debug('Price tx receipt', receipt)
+            onhash: hash => this.onhash(hash, 'price'),
+            onreceipt: (receipt) => {
+              this.onreceipt(receipt, 'price')
               priced = true
-              errored = false
-              step = undefined
-              dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
-              windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
               windowManager.closeModal('publishProgressModal')
               resolve()
             },
             onerror: error => {
-              debug('Price tx error', error)
               if (!priced) {
-                errored = true
-                dispatch({ type: events.FEED_MODAL,
-                  load: {
-                    modalName: 'transactionError',
-                    callback: () => {
-                      internalEmitter.emit(events.NEW_GAS, true, { step: 'write' })
-                    }
-                  }
-                })
-                windowManager.closeModal('publishProgressModal')
-                windowManager.openModal('generalActionModal')
+                this.onerror(error, 'price')
                 reject()
               }
             }
