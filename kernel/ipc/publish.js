@@ -176,19 +176,19 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
             did,
             gasPrice,
             onhash: hash => {
-              console.log('deploy onhash', hash)
+              debug('Deploy tx hash:', hash)
               dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'deploy', deployHash: hash } })
               windowManager.openModal('publishProgressModal')
             },
             onreceipt: receipt => {
-              console.log('deploy onreceipt')
+              debug('Deploy tx receipt:', receipt)
               step = undefined
               deployed = true
               errored = false
               resolve()
             },
             onerror: error => {
-              console.log('deploy onerror', deployed, error)
+              debug('Deploy tx error:', error)
               if (!deployed) {
                 errored = true
                 dispatch({ type: events.FEED_MODAL,
@@ -231,7 +231,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
             gasPrice,
             writeCallbacks: {
               onhash: hash => {
-                console.log('write onhash', hash)
+                debug('Write tx hash:', hash)
                 dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'write', writeHash: hash } })
                 if (step) {
                   windowManager.openModal('publishProgressModal')
@@ -240,7 +240,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
                 }
               },
               onreceipt: receipt => {
-                console.log('write onreceipt')
+                debug('Write tx receipt:', receipt)
                 written = true
                 errored = false
                 step = undefined
@@ -254,7 +254,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
                 )
               },
               onerror: error => {
-                console.log('write onerror', written, error)
+                debug('Write tx error', error)
                 if (!written) {
                   errored = true
                   dispatch({ type: events.FEED_MODAL,
@@ -273,7 +273,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
             },
             priceCallbacks: {
               onhash: hash => {
-                console.log('price onhash', hash)
+                debug('Price tx hash:', hash)
                 dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', priceHash: hash } })
                 if (step) {
                   windowManager.openModal('publishProgressModal')
@@ -282,14 +282,17 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
                 }
               },
               onreceipt: receipt => {
-                console.log('price onreceipt')
+                debug('Price tx receipt:', receipt)
                 priced = true
                 errored = false
                 step = undefined
+                dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
+                windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
+                windowManager.closeModal('publishProgressModal')
                 resolve()
               },
               onerror: error => {
-                console.log('price onerror', priced, error)
+                debug('Price tx error', error)
                 if (!priced) {
                   errored = true
                   dispatch({ type: events.FEED_MODAL,
@@ -304,12 +307,6 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
                   windowManager.openModal('generalActionModal')
                   reject()
                 }
-              },
-              onmined: receipt => {
-                console.log('price onmined')
-                dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
-                windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
-                windowManager.closeModal('publishProgressModal')
               }
             }
           }),
@@ -339,7 +336,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
             price: Number(price),
             gasPrice,
             onhash: hash => {
-              console.log('price onhash', hash)
+              debug('Price tx hash:', hash)
               dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'price', priceHash: hash } })
               if (step) {
                 windowManager.openModal('publishProgressModal')
@@ -347,21 +344,18 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
                 windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'price', priceHash: hash } })
               }
             },
-            onconfirmation: (confNumber, receipt) => {
-              console.log('price onconfirmation')
-              step = undefined
-              priced = true
-              errored = false
-            },
             onreceipt: receipt => {
-              console.log('price onreceipt')
+              debug('Price tx receipt', receipt)
               priced = true
               errored = false
               step = undefined
+              dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
+              windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
+              windowManager.closeModal('publishProgressModal')
               resolve()
             },
             onerror: error => {
-              console.log('price onerror', priced, error)
+              debug('Price tx error', error)
               if (!priced) {
                 errored = true
                 dispatch({ type: events.FEED_MODAL,
@@ -376,12 +370,6 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
                 windowManager.openModal('generalActionModal')
                 reject()
               }
-            },
-            onmined: receipt => {
-              console.log('price onmined')
-              dispatch({ type: events.PUBLISH_PROGRESS, load: { step: 'priceMined', receipt } })
-              windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load: { step: 'priceMined', receipt } })
-              windowManager.closeModal('publishProgressModal')
             }
           })
         )
