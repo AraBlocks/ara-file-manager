@@ -87,7 +87,7 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
         </div>
         <div class="${styles.finalizing}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${'price' === step ? spinnerBar() : html`<div class="${styles.circle({ color: 'priceMined' === step ? 'green' : 'grey' })}"></div>`}
+            ${step.includes('price') ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
             Finalizing
