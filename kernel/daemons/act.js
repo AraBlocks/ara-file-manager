@@ -83,6 +83,9 @@ async function purchaseItem(opts) {
 		contentDID: contentDid,
 		userDID: requesterDid,
 		password,
+    gasPrice,
+    approveCallbacks,
+    purchaseCallbacks
 	} = opts
 	debug('Purchasing item: %s', contentDid)
 	try {
@@ -92,22 +95,9 @@ async function purchaseItem(opts) {
 			password,
 			requesterDid,
 			estimate: false,
-      gasPrice: 0,
-      onhash: hash => {
-        console.log('ON HASH', hash)
-      },
-      onreceipt: receipt => {
-        console.log('ON RECEIPT', receipt)
-      },
-      onconfirmation: (confNumber, receipt) => {
-        console.log('ON CONFIRMATION', confNumber, receipt)
-      },
-      onerror: error => {
-        console.log('ON ERROR', error)
-      },
-      onmined: receipt => {
-        console.log('ON MINED', receipt)
-      }
+      gasPrice,
+      approveCallbacks,
+      purchaseCallbacks
 		})
 
 		return jobId
@@ -121,6 +111,7 @@ async function purchaseEstimate(opts) {
 		contentDID: contentDid,
 		userDID: requesterDid,
 		password,
+    gasPrice
 	} = opts
 	try {
 		const gasEstimate = await araContracts.purchase({
@@ -128,7 +119,8 @@ async function purchaseEstimate(opts) {
 			contentDid,
 			password,
 			requesterDid,
-			estimate: true
+			estimate: true,
+      gasPrice
 		})
 
 		return gasEstimate

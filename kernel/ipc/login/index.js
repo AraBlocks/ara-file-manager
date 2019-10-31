@@ -182,7 +182,7 @@ async function login(_, load) {
     helpers.getSubscriptions(files.purchased, files.purchased.concat(files.published), credentials)
 
     if (store.application.deepLinkData !== null) {
-      internalEmitter.emit(events.PROMPT_PURCHASE, store.application.deepLinkData)
+      internalEmitter.emit(events.PURCHASE, store.application.deepLinkData)
     }
 
     windowManager.pingAll({ event: events.REFRESH })

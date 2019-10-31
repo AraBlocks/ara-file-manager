@@ -144,7 +144,7 @@ module.exports = {
     }
   `,
 
-  publishingContainer: css`
+  progressContainer: css`
     :host {
       display: flex;
       height: 70%;
@@ -340,6 +340,13 @@ module.exports = {
     :host {
       width: 25%;
       margin-right: 10%;
+    }
+  `,
+
+  purchasing: css`
+    :host {
+      margin-top: 5%;
+      width: 50%;
     }
   `,
 
