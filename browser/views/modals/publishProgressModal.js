@@ -1,5 +1,4 @@
 const { closeModal, openModal, emit } = require('../../lib/tools/windowManagement')
-const { waitModalText } = require('../../lib/tools/generalModalTextProvider')
 const spinnerBar = require('../../components/spinnerBar')
 const Button = require('../../components/button')
 const Link = require('../../components/link')
@@ -7,8 +6,7 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, step, showGas }) => {
-  const { description, waitTime } = waitModalText(modalName, load)
+module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step, showGas }) => {
   const deployLink = new Link({
     children: `Etherscan`,
     onclick: () => {
@@ -44,10 +42,10 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
         Publishing...
       </div>
       <div class="${styles.separator} section-separator" style="width: 90%;"></div>
-      <div class="${styles.publishingContainer}">
+      <div class="${styles.progressContainer}">
         <div class="${styles.creating}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${step.includes('deploy') ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
+            ${step && step.includes('deploy') ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
             Creating
@@ -58,7 +56,7 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
           ${'retrydeploy' === step ?
             html`<div class="${styles.gasRefill}" onclick=${() => {
               closeModal('publishProgressModal')
-              emit({ event: events.NEW_GAS, load: { step: 'deploy' } })
+              emit({ event: events.PUBLISH_NEW_GAS, load: { step: 'deploy' } })
             }}>
               <img src="../assets/images/gas.png"/>
             </div>` :
@@ -67,7 +65,7 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
         </div>
         <div class="${styles.writing}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${step.includes('write') ? spinnerBar() : html`<div class="${styles.circle({ color: step && step.includes('price') ? 'green' : 'grey' })}"></div>`}
+            ${step && step.includes('write') ? spinnerBar() : html`<div class="${styles.circle({ color: step && step.includes('price') ? 'green' : 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
             Writing
@@ -78,7 +76,7 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
           ${'retrywrite' === step ?
             html`<div class="${styles.gasRefill}" onclick=${() => {
               closeModal('publishProgressModal')
-              emit({ event: events.NEW_GAS, load: { step: 'write' } })
+              emit({ event: events.PUBLISH_NEW_GAS, load: { step: 'write' } })
             }}>
               <img src="../assets/images/gas.png"/>
             </div>` :
@@ -87,7 +85,7 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
         </div>
         <div class="${styles.finalizing}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${step.includes('price') ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
+            ${step && step.includes('price') ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
             Finalizing
@@ -98,7 +96,7 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, receipt, 
           ${'retryprice' === step ?
             html`<div class="${styles.gasRefill}" onclick=${() => {
               closeModal('publishProgressModal')
-              emit({ event: events.NEW_GAS, load: { step: 'price' } })
+              emit({ event: events.PUBLISH_NEW_GAS, load: { step: 'price' } })
             }}>
               <img src="../assets/images/gas.png"/>
             </div>` :

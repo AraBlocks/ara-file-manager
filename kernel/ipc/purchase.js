@@ -7,14 +7,21 @@ const isDev = require('electron-is-dev')
 const { events } = require('k')
 const windowManager = require('electron-window-manager')
 
-const { act, analytics, descriptorGeneration } = require('../daemons')
+const { act, analytics, descriptorGeneration, utils } = require('../daemons')
 const dispatch = require('../redux/reducers/dispatch')
 
 const {
 	account,
 	farmer,
+  modal,
 	files
 } = windowManager.sharedData.fetch('store')
+
+const GAS_TIMEOUT = 25000
+
+let errored = false
+let approved = false
+let purchased = false
 
 internalEmitter.on(events.OPEN_DEEPLINK, async (load) => {
 	try {
@@ -22,58 +29,107 @@ internalEmitter.on(events.OPEN_DEEPLINK, async (load) => {
 		dispatch({ type: events.OPEN_DEEPLINK, load })
 		if (account.userDID == null) { throw new Error('Not logged in') }
 		if (load == null) { throw new Error('Broken link') }
-		internalEmitter.emit(events.PROMPT_PURCHASE, load)
+		internalEmitter.emit(events.PURCHASE, load)
 	} catch (err) {
 		errorHandler(err)
 	}
 })
 
-internalEmitter.on(events.PROMPT_PURCHASE, async (load) => {
+internalEmitter.on(events.PURCHASE, async (load) => {
 	try {
-		debug('%s heard', events.PROMPT_PURCHASE)
-		dispatch({ type: events.DUMP_DEEPLINK_DATA })
-		dispatch({ type: events.FEED_MODAL, load })
+		debug('%s heard', events.PURCHASE, load)
+    dispatch({ type: events.FEED_MODAL, load: { modalName: 'suggestingGasPrices' } })
+    windowManager.openModal('generalPleaseWaitModal')
 
-		windowManager.openWindow('purchaseEstimate')
-		const library = await act.getLibraryItems(account.userDID)
-		const isOwner = !isDev && files.published.find(({ did }) => did === load.did)
-		if (library.includes('0x' + araUtil.getIdentifier(load.did)) || isOwner) {
-			debug('already own item')
-			dispatch({ type: events.FEED_MODAL, load: { modalName: isOwner ? 'packageOwner' : 'alreadyOwn' } })
-			windowManager.openModal('generalMessageModal')
-			windowManager.close('purchaseEstimate')
-			return
-		}
+    const { did, fileName, author } = load
 
-		// get peer count estimate
-		//farmer.farm.dryRunJoin({ did: load.did })
+    const gasPrice = await utils.requestGasPrice()
+    const { average, fast, fastest } = gasPrice
+    dispatch({ type: events.PURCHASE_FILE_LOAD, load: { did, fileName, author } })
+    dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step: 'approve' } })
 
-		const price = await act.getAFSPrice({ did: load.did })
-		const fee = act.getPurchaseFee(price)
-		const gasEstimate = Number(await act.purchaseEstimate({
-			contentDID: load.did,
-			password: account.password,
-			userDID: account.userDID,
-		}))
-		windowManager.pingView({
-			view: 'purchaseEstimate',
-			event: events.REFRESH,
-			load: {
-				fee,
-				peers: 1,
-				gasEstimate,
-				price: Number(price)
-			}
-		})
-
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.openModal('setGasModal')
 	} catch (err) {
+    debug('Error for %s: %o', 'newestimate', err)
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.closeModal('setGasModal')
 		errorHandler(err)
 	}
+})
+
+internalEmitter.on(events.PURCHASE_NEW_GAS, async (_, { step }) => {
+  await _onNewGas(step)
+})
+
+ipcMain.on(events.PURCHASE_NEW_GAS, async (_, { step }) => {
+  await _onNewGas(step)
+})
+
+async function _onNewGas(step) {
+  debug('%s heard', events.PURCHASE_NEW_GAS)
+  dispatch({ type: events.FEED_MODAL, load: { modalName: 'suggestingGasPrices' } })
+  windowManager.openModal('generalPleaseWaitModal')
+  const gasPrice = await daemonsUtil.requestGasPrice()
+  const { average, fast, fastest } = gasPrice
+  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
+  windowManager.closeModal('generalPleaseWaitModal')
+  windowManager.openModal('setGasModal')
+}
+
+ipcMain.on(events.GAS_PRICE, async(_, load) => {
+  const { step, gasPrice } = load
+  if (!('purchase' === step || 'approve' === step)) return
+
+  debug('%s heard', events.GAS_PRICE, load)
+
+  load = Object.assign(load, modal.purchaseFileData)
+  try {
+    dispatch({ type: events.DUMP_DEEPLINK_DATA })
+    dispatch({ type: events.FEED_MODAL, load })
+
+    windowManager.openWindow('purchaseEstimate')
+    const library = await act.getLibraryItems(account.userDID)
+    const isOwner = !isDev && files.published.find(({ did }) => did === load.did)
+    if (library.includes('0x' + araUtil.getIdentifier(load.did)) || isOwner) {
+      debug('already own item')
+      dispatch({ type: events.FEED_MODAL, load: { modalName: isOwner ? 'packageOwner' : 'alreadyOwn' } })
+      windowManager.openModal('generalMessageModal')
+      windowManager.close('purchaseEstimate')
+      return
+    }
+
+    // get peer count estimate
+    //farmer.farm.dryRunJoin({ did: load.did })
+
+    const price = await act.getAFSPrice({ did: load.did })
+    const fee = act.getPurchaseFee(price)
+    const gasEstimate = Number(await act.purchaseEstimate({
+      contentDID: load.did,
+      password: account.password,
+      userDID: account.userDID,
+      gasPrice
+    }))
+    windowManager.pingView({
+      view: 'purchaseEstimate',
+      event: events.REFRESH,
+      load: {
+        fee,
+        peers: 1,
+        gasEstimate,
+        price: Number(price)
+      }
+    })
+  } catch (err) {
+    debug('Error for %s: %o', 'newestimate', err)
+    errorHandler(err)
+  }
 })
 
 ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
 	const { autoQueue } = account
-	debug('%s heard: %s', events.CONFIRM_PURCHASE, load.did)
+  const { step } = load
+	debug('%s heard:', events.CONFIRM_PURCHASE, load)
 	analytics.trackPurchaseStart()
 	try {
 		if (account.ethBalance < load.gasEstimate) {
@@ -91,31 +147,105 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
 		dispatch({ type: events.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-		const itemLoad = { contentDID: load.did, password: account.password, userDID: account.userDID }
+    this.startTimer = (_) => {
+      setTimeout(
+        () => {
+          let trigger = false
+          switch (_) {
+            case 'retryapprove':
+              trigger = !(approved || errored)
+              break
+            case 'retrypurchase':
+              trigger = !(purchased || errored)
+              break
+          }
+          debug('timeout', trigger)
+          if (trigger) {
+            dispatch({ type: events.PURCHASE_PROGRESS, load: { step: _ } })
+            windowManager.pingView({ view: 'purchaseProgressModal', event: events.REFRESH })
+          }
+        }, GAS_TIMEOUT
+      )
+    }
 
-		const [jobId] = await autoQueue.push(
-			() => act.purchaseItem(itemLoad),
-			analytics.trackPurchaseFinish
-		)
+		const itemLoad = {
+      contentDID: load.did,
+      password: account.password,
+      userDID: account.userDID,
+      approveCallbacks: {
+        onhash: hash => {
+          debug('approve tx hash: %s', hash)
+          dispatch({ type: events.PURCHASE_PROGRESS, load: { approveHash: hash, step: 'approve' }})
+          windowManager.openModal('purchaseProgressModal')
+        },
+        onreceipt: receipt => {
+          debug('approve tx receipt:', receipt)
+          approved = true
+          this.startTimer('retrypurchase')
+        },
+        onerror: error => {
+          debug('approve tx error:', error)
+          errored = true
+          windowManager.closeModal('purchaseProgressModal')
+        }
+      },
+      purchaseCallbacks: {
+        onhash: hash => {
+          debug('purchase tx hash: %s', hash)
+          dispatch({ type: events.PURCHASE_PROGRESS, load: { purchaseHash: hash, step: 'purchase' } })
+          windowManager.pingView({ view: 'purchaseProgressModal', event: events.REFRESH, load: { purchaseHash: hash, step: 'purchase' } })
+        },
+        onreceipt: receipt => {
+          debug('purchase tx receipt:', receipt)
+          purchased = true
+          windowManager.closeModal('purchaseProgressModal')
+        },
+        onerror: error => {
+          debug('purchase tx error:', error)
+          errored = true
+          windowManager.closeModal('purchaseProgressModal')
+        }
+      },
+      gasPrice: load.gasPrice
+    }
 
-		const araBalance = await act.getAraBalance(account.userDID)
-		dispatch({ type: events.PURCHASED, load: { araBalance, jobId, did: load.did } })
-		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
+    let jobId = null
+    if ('approve' === step) {
+      autoQueue.clear()
+      this.startTimer('retryapprove')
+  		jobId = await autoQueue.push(
+  			() => act.purchaseItem(itemLoad),
+  			analytics.trackPurchaseFinish
+  		)[0]
+    } else if ('purchase' === step) {
+      autoQueue.clear()
+      this.startTimer('retrypurchase')
+      jobId = await autoQueue.push(
+        () => act.purchaseItem(Object.assign(itemLoad, { approve: false })),
+        analytics.trackPurchaseFinish
+      )[0]
+    }
 
-		dispatch({
-			type: events.FEED_MODAL, load: {
-				modalName: 'startDownload',
-				callback: () => {
-					internalEmitter.emit(events.DOWNLOAD, load)
-				}
-			}
-		})
-		windowManager.openModal('generalActionModal')
+    if (approved && purchased) {
+  		const araBalance = await act.getAraBalance(account.userDID)
+  		dispatch({ type: events.PURCHASED, load: { araBalance, jobId, did: load.did } })
+  		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-		const rewardsSub = await act.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
-		const updateSub = await act.subscribeAFSUpdates(load.did)
+  		dispatch({
+  			type: events.FEED_MODAL, load: {
+  				modalName: 'startDownload',
+  				callback: () => {
+  					internalEmitter.emit(events.DOWNLOAD, load)
+  				}
+  			}
+  		})
+  		windowManager.openModal('generalActionModal')
 
-		dispatch({ type: events.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
+  		const rewardsSub = await act.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
+  		const updateSub = await act.subscribeAFSUpdates(load.did)
+
+  		dispatch({ type: events.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
+    }
 	} catch (err) {
 		errorHandler(err)
 		dispatch({ type: events.ERROR_PURCHASING, load: { did: load.did } })
