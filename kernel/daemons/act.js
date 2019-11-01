@@ -13,7 +13,8 @@ const { internalEmitter } = require('electron-window-manager')
 const {
 	web3: {
 		account: araAccount,
-		contract: contractUtil
+		contract: contractUtil,
+    tx: txUtil
 	}
 } = require('ara-util')
 
@@ -78,6 +79,10 @@ async function getEtherBalance(account) {
 	return balance
 }
 
+async function getTxReceipt(hash) {
+  return txUtil.getTransactionReceipt(hash)
+}
+
 async function purchaseItem(opts) {
 	const {
 		contentDID: contentDid,
@@ -99,10 +104,9 @@ async function purchaseItem(opts) {
       approveCallbacks,
       purchaseCallbacks
 		})
-
 		return jobId
 	} catch (err) {
-		throw new Error('Error purchasing item: %o', err)
+		throw new Error('Error purchasing item:', err)
 	}
 }
 
@@ -355,6 +359,7 @@ async function _calculateBudget(did) {
 }
 
 module.exports = {
+  getTxReceipt,
 	getAccountAddress,
 	getAFSPrice,
 	getAllocatedRewards,

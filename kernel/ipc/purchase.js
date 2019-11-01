@@ -70,7 +70,7 @@ async function _onNewGas(step) {
   debug('%s heard', events.PURCHASE_NEW_GAS)
   dispatch({ type: events.FEED_MODAL, load: { modalName: 'suggestingGasPrices' } })
   windowManager.openModal('generalPleaseWaitModal')
-  const gasPrice = await daemonsUtil.requestGasPrice()
+  const gasPrice = await utils.requestGasPrice()
   const { average, fast, fastest } = gasPrice
   dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
   windowManager.closeModal('generalPleaseWaitModal')
@@ -186,7 +186,16 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
         onerror: error => {
           debug('approve tx error:', error)
           errored = true
+          dispatch({ type: events.FEED_MODAL,
+            load: {
+              modalName: 'transactionError',
+              callback: () => {
+                internalEmitter.emit(events.PURCHASE_NEW_GAS, true, { step: 'approve' })
+              }
+            }
+          })
           windowManager.closeModal('purchaseProgressModal')
+          windowManager.openModal('generalActionModal')
         }
       },
       purchaseCallbacks: {
@@ -212,18 +221,18 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
     let jobId = null
     if ('approve' === step) {
       autoQueue.clear()
-      this.startTimer('retryapprove')
-  		jobId = await autoQueue.push(
+      this.startTimer('retryapprove');
+  		([jobId] = await autoQueue.push(
   			() => act.purchaseItem(itemLoad),
   			analytics.trackPurchaseFinish
-  		)[0]
+  		))
     } else if ('purchase' === step) {
       autoQueue.clear()
-      this.startTimer('retrypurchase')
-      jobId = await autoQueue.push(
+      this.startTimer('retrypurchase');
+      ([jobId] = await autoQueue.push(
         () => act.purchaseItem(Object.assign(itemLoad, { approve: false })),
         analytics.trackPurchaseFinish
-      )[0]
+      ))
     }
 
     if (approved && purchased) {
@@ -247,7 +256,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
   		dispatch({ type: events.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
     }
 	} catch (err) {
-		errorHandler(err)
+    debug('Err in %s: %o', 'purchase', err)
 		dispatch({ type: events.ERROR_PURCHASING, load: { did: load.did } })
 		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 	}

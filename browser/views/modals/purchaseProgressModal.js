@@ -10,7 +10,7 @@ module.exports = ({ load, modalName, approveHash, purchaseHash, showGas, step })
   const approveLink = new Link({
     children: `Etherscan`,
     onclick: () => {
-      hash ?
+      approveHash ?
         shell.openExternal(`https://ropsten.etherscan.io/tx/${approveHash}`) :
         null
     }
@@ -18,7 +18,7 @@ module.exports = ({ load, modalName, approveHash, purchaseHash, showGas, step })
   const purchaseLink = new Link({
     children: `Etherscan`,
     onclick: () => {
-      hash ?
+      purchaseHash ?
         shell.openExternal(`https://ropsten.etherscan.io/tx/${purchaseHash}`) :
         null
     }
