@@ -105,7 +105,8 @@ module.exports = (state, { load = null, type }) => {
       file.owner = true
       break
     case events.PURCHASING:
-      state.purchased.push(load)
+      file = findFile(load.did, state.purchased)
+      if (!file) state.purchased.push(load)
       break
     case events.PURCHASED:
       file = findFile(load.did, state.purchased)
