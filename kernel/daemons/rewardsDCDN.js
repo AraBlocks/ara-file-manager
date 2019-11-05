@@ -15,11 +15,12 @@ function createFarmer({ did: userId, password, queue }) {
       peers: count
     })
   })
-  farmer.on('download-progress', (did, value, total) => {
+  farmer.on('download-progress', (did, value, total, byteLength) => {
     internalEmitter.emit(events.DOWNLOADING, {
       did: Buffer.from(did, 'hex').toString('hex'),
       currentBlock: value,
-      totalBlocks: total
+      totalBlocks: total,
+      byteLength
     })
   })
   farmer.on('download-complete', (did) => {
