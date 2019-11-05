@@ -56,10 +56,9 @@ internalEmitter.on(events.DOWNLOADING, (load) => {
 	const file = files.find(file => file.did === load.did)
 	let prevPercent = file.downloadPercent
 	const perc = load.currentBlock / load.totalBlocks
-	const size = load.totalBlocks * 6111 * 10
+	const size = Math.min(load.byteLength, load.totalBlocks * 6111 * 10)
 	if (perc >= prevPercent + 0.1) {
-		prevPercent = perc
-		if (perc != 1) {
+		if (!prevPercent || perc != 1) {
 			debug('Dispatching %s', events.DOWNLOADING)
 			dispatch({
 				type: events.DOWNLOADING,
@@ -71,6 +70,7 @@ internalEmitter.on(events.DOWNLOADING, (load) => {
 			})
 			windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 		}
+		prevPercent = perc
 	}
 })
 
