@@ -11,7 +11,7 @@ module.exports = {
       padding: 0 2.5%;
       position: sticky;
       pointer-events: none;
-      top: 0px;
+      top: 142px;
       z-index: 400;
     }
   `,

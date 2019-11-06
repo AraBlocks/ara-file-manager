@@ -5,7 +5,6 @@ module.exports = {
   container: css`
     :host {
       display: flex;
-      height: 950px;
       width: 100%;
     }
 
@@ -58,8 +57,8 @@ module.exports = {
   sectionContainer: css`
     :host {
       animation: fadein 1500ms;
-      height: 66%;
-      overflow-y: scroll;
+      height: auto;
+      margin-bottom: 180px;
     }
   `,
 

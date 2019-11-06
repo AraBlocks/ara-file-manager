@@ -39,32 +39,20 @@ ipcMain.on(events.LOGOUT, () => {
 
 internalEmitter.on(events.CHANGE_ACCOUNT, async (_, account) => {
   debug('%s HEARD', events.CHANGE_ACCOUNT)
-  //Callback must use internal emitter. We will never know why
-  await afm.cacheUserDid(account)
-  internalEmitter.emit(events.GET_CACHED_DID)
-  await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
-  dispatch({ type: events.LOGOUT })
-  internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
 
   menuHelper.switchLoginState(events.LOGOUT)
   windowManager.closeWindow('accountInfo')
+  dispatch({ type: events.GOT_CACHED_DID, load: { did: account } })
   windowManager.openWindow('login')
-  windowManager.pingView({ view: 'login', event: events.REFRESH, load: { userDID: account } })
 })
 
 ipcMain.on(events.CHANGE_ACCOUNT, async (_, account) => {
   debug('%s HEARD', events.CHANGE_ACCOUNT)
-  //Callback must use internal emitter. We will never know why
-  await afm.cacheUserDid(account)
-  internalEmitter.emit(events.GET_CACHED_DID)
-  await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
-  dispatch({ type: events.LOGOUT })
-  internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
 
   menuHelper.switchLoginState(events.LOGOUT)
   windowManager.closeWindow('accountInfo')
+  dispatch({ type: events.GOT_CACHED_DID, load: { did: account } })
   windowManager.openWindow('login')
-  windowManager.pingView({ view: 'login', event: events.REFRESH, load: { userDID: account } })
 })
 
 internalEmitter.on(events.GET_CACHED_DID, async () => {
@@ -145,6 +133,11 @@ ipcMain.on(events.RECOVER, async (_, load) => {
 async function login(_, load) {
   debug('%s heard', events.LOGIN)
   try {
+    await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
+    dispatch({ type: events.LOGOUT })
+    internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
+    dispatch({ type: events.GETTING_USER_DATA, load: { userDID: load.userDID } })
+
     const ddo = await araIdentity.resolve(load.userDID)
     const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password }))
     if (incorrectPW) { throw 'IncorrectPW' }
