@@ -7,7 +7,7 @@ module.exports = async (state, { load = null, type }) => {
       break
     case events.GETTING_USER_DATA:
     case events.CREATED_USER_DID:
-      state.network = load.network
+      state.network = load.network || state.network
       break
     case events.FEED_CONTENT_VIEWER:
       state.exportWindowOpen = true

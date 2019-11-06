@@ -60,7 +60,6 @@ class Container extends Nanocomponent {
       renderNoFilesMsg,
       state: { activeTab, files }
     } = this
-
     let sections = []
     switch (activeTab) {
       case 0:
