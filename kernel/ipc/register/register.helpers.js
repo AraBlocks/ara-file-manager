@@ -32,6 +32,7 @@ async function _createIdentity() {
     accountAddress,
     analyticsPermission,
     userDID,
+    username: userDID.slice(0, 8),
     mnemonic,
     network,
     password: application.TEMP_PASSWORD
