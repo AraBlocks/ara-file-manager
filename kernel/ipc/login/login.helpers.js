@@ -17,7 +17,7 @@ const store = windowManager.sharedData.fetch('store')
 
 async function getInitialAccountState(userDID, username, password) {
   const network = await utils.getNetwork()
-  dispatch({ type: events.GETTING_USER_DATA, load: { userDID, network } })
+  dispatch({ type: events.GETTING_USER_DATA, load: { userDID, network, username } })
   windowManager.openWindow('filemanager')
 
   const accountAddress = await act.getAccountAddress(userDID, password)

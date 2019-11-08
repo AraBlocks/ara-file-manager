@@ -136,7 +136,6 @@ async function login(_, load) {
     await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
     dispatch({ type: events.LOGOUT })
     internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
-    dispatch({ type: events.GETTING_USER_DATA, load: { userDID: load.userDID } })
 
     const ddo = await araIdentity.resolve(load.userDID)
     const incorrectPW = !(await araUtil.isCorrectPassword({ ddo, password: load.password }))
@@ -154,6 +153,7 @@ async function login(_, load) {
   try {
     const accounts = await afm.getCachedUserDids()
     dispatch({ type: events.GOT_ACCOUNTS, load: { accounts } })
+    dispatch({ type: events.GETTING_USER_DATA, load: { userDID: load.userDID, username: accounts[accounts.last] } })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
     const { accountAddress, farmer } = await helpers.getInitialAccountState(userDID, accounts[accounts.last], load.password)
