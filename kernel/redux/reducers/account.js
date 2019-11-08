@@ -17,6 +17,7 @@ module.exports = async (state, { load = null, type }) => {
       break
     case events.GETTING_USER_DATA:
       state.userDID = load.userDID
+      state.username = load.username
       break
     case events.GREYLISTED_FROM_FAUCET:
       state.faucetStatus = events.GREYLISTED_FROM_FAUCET
