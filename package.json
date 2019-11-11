@@ -70,7 +70,7 @@
     "conventional-changelog-cli": "^2.0.11",
     "debug": "^3.1.0",
     "electron": "^2.0.5",
-    "electron-builder": "^20.22.0",
+    "electron-builder": "^20.44.4",
     "electron-notarize": "^0.2.0",
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
