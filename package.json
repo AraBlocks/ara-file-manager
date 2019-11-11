@@ -45,7 +45,7 @@
     "did-uri": "^0.2.6",
     "domready": "^1.0.8",
     "electron-is-dev": "^0.3.0",
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^4.2.0",
     "electron-window-manager": "^1.0.6",
     "filesize": "^3.6.1",
     "hyperdrive": "9.14.5",
@@ -71,13 +71,9 @@
     "debug": "^3.1.0",
     "electron": "^2.0.5",
     "electron-builder": "^20.22.0",
-    "electron-installer-dmg": "^2.0.0",
-    "electron-installer-windows": "^1.1.0",
-    "electron-osx-sign": "^0.4.11",
-    "electron-packager": "^13.1.1",
+    "electron-notarize": "^0.2.0",
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
-    "electron-winstaller": "^2.7.0",
     "jsdom": "^14.0.0"
   },
   "ava": {
