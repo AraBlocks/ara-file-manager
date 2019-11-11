@@ -1,5 +1,5 @@
 const debug = require('debug')('ara:fm:boot:main')
-if (require('electron-squirrel-startup')) return
+//if (require('electron-squirrel-startup')) return //TODO replace with new system @zootella
 const writeFiles = require('./writeFiles')
 //Writes .ara and keyrings if doesn't exist
 
@@ -24,7 +24,7 @@ app.on('ready', () => {
   require('./tray').buildTray()
   require('./menu').buildMenu()
   require('../kernel/ipc')//TODO: create proper store creation function
-  require('./squirrel')
+//  require('./squirrel') //TODO replace with new system @zootella
   require('./applyDevSettings')
 
   internalEmitter.emit(events.GET_CACHED_DID)//Loads login screen input with last DID user logged in with
