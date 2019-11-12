@@ -414,6 +414,7 @@ module.exports = {
       justify-content: center;
       margin-top: 15px;
       cursor: pointer;
+      -webkit-app-region: no-drag;
     }
 
     :host > img {
