@@ -4,11 +4,11 @@ const windowManagement = require('../../lib/tools/windowManagement')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ estimate, did }) => {
+module.exports = ({ estimate, did, gasPrice }) => {
   const downloadButton = new Button({
     children: 'Confirm',
     onclick: () => {
-      windowManagement.emit({ event: events.CONFIRM_REDEEM, load: { did } })
+      windowManagement.emit({ event: events.CONFIRM_REDEEM, load: { did, gasPrice } })
       windowManagement.closeModal('redeemConfirmModal')
     }
   })

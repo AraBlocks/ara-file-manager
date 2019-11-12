@@ -36,6 +36,10 @@ module.exports = (state, { load = null, type }) => {
       state.data.purchaseHash = load.purchaseHash || state.data.purchaseHash
       state.data.step = load.step
       break
+    case events.REDEEM_PROGRESS:
+      state.data.hash = load.hash
+      state.data.step = load.step
+      break
     case events.PUBLISH_FILE_LOAD:
       state.publishFileData.name = load.name || state.publishFileData.name
       state.publishFileData.paths = load.paths || state.publishFileData.paths
@@ -48,6 +52,9 @@ module.exports = (state, { load = null, type }) => {
       state.purchaseFileData.did = load.did
       state.purchaseFileData.fileName = load.fileName
       state.purchaseFileData.author = load.author
+      break
+    case events.REDEEM_FILE_LOAD:
+      state.redeemFileData.did = load.did
       break
     case events.SET_GAS_PRICE:
       state.data.average = load.average
