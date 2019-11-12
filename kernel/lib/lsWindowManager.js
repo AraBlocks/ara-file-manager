@@ -103,6 +103,10 @@ windowManager.setSize = (view) => {
       width = 300
       height = 300
       break
+    case 'redeemProgressModal':
+      width = 250
+      height = 300
+      break
     case 'registration':
       width = 400
       height = 350

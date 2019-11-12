@@ -3,5 +3,6 @@ module.exports = {
   manageFileData: {},
   contentViewerData: {},
   publishFileData: {},
-  purchaseFileData: {}
+  purchaseFileData: {},
+  redeemFileData: {}
 }

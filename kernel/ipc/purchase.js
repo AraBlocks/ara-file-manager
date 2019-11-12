@@ -175,6 +175,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
       contentDID: load.did,
       password: account.password,
       userDID: account.userDID,
+      gasPrice: load.gasPrice,
       approveCallbacks: {
         onhash: hash => {
           debug('approve tx hash: %s', hash)
@@ -217,8 +218,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
           errored = true
           windowManager.closeModal('purchaseProgressModal')
         }
-      },
-      gasPrice: load.gasPrice
+      }
     }
 
     let jobId = null

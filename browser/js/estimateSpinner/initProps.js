@@ -4,7 +4,7 @@ module.exports = {
   redeem: {
     confirmText: 'Redeem Rewards',
     confirmEvent: events.CONFIRM_REDEEM,
-    header: 'Redeed Rewards',
+    header: 'Redeem Rewards',
     smallMessageText: 'Before redeeming rewards, you will need to pay a small fee'
   },
 

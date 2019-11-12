@@ -350,6 +350,13 @@ module.exports = {
     }
   `,
 
+  redeeming: css`
+    :host {
+      margin-top: 10%;
+      width: 100%;
+    }
+  `,
+
   gasPrice: css`
     :host {
       margin-top: 20px;

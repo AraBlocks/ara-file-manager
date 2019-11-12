@@ -6,7 +6,7 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step, showGas }) => {
+module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step }) => {
   const deployLink = new Link({
     children: `Etherscan`,
     onclick: () => {
