@@ -36,8 +36,11 @@ internalEmitter.on(events.OPEN_DEEPLINK, async (load) => {
 })
 
 internalEmitter.on(events.PURCHASE, async (load) => {
+	debug('%s heard', events.PURCHASE, load)
 	try {
-		debug('%s heard', events.PURCHASE, load)
+    errored = false
+    approved = false
+    purchased = false
     dispatch({ type: events.FEED_MODAL, load: { modalName: 'suggestingGasPrices' } })
     windowManager.openModal('generalPleaseWaitModal')
 
@@ -90,7 +93,7 @@ ipcMain.on(events.GAS_PRICE, async(_, load) => {
 
     windowManager.openWindow('purchaseEstimate')
     const library = await act.getLibraryItems(account.userDID)
-    const isOwner = !isDev && files.published.find(({ did }) => did === load.did)
+    const isOwner = files.published.find(({ did }) => did === load.did)
     if (library.includes('0x' + araUtil.getIdentifier(load.did)) || isOwner) {
       debug('already own item')
       dispatch({ type: events.FEED_MODAL, load: { modalName: isOwner ? 'packageOwner' : 'alreadyOwn' } })
