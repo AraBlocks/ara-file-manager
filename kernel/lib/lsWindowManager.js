@@ -10,6 +10,7 @@ windowManager.internalEmitter = new EventEmitter
 windowManager.openModal = (modalName) => {
   debug('%s heard', events.OPEN_MODAL)
   if (windowManager.get(modalName).object != null) { return }
+  const center = calculateCenter(modalName)
   windowManager.sharedData.set('current', modalName)
   windowManager.createNew(
     modalName,
@@ -19,6 +20,7 @@ windowManager.openModal = (modalName) => {
     {
       backgroundColor: 'white',
       frame: false,
+      position: center,
       ...windowManager.setSize(modalName),
     }
   ).open()
@@ -238,6 +240,7 @@ windowManager.closeWindow = (name) => {
 }
 
 windowManager.openWindow = (view) => {
+  const center = calculateCenter(view)
   analytics.trackScreenView(view)
   return windowManager.get(view)
     ? windowManager.get(view).focus()
@@ -249,12 +252,25 @@ windowManager.openWindow = (view) => {
       {
         backgroundColor: 'white',
         frame: false,
+        position: center,
         titleBarStyle: 'hidden',
         ...windowManager.setSize(view),
         menu: null,
         maximizable: false
       }
     )
+}
+
+function calculateCenter(view) {
+  try {
+    const fm = windowManager.get('filemanager')
+    const { width, height } = windowManager.setSize(view)
+    const [x, y] = fm.object.getPosition()
+    const [fmWidth, fmHeight] = fm.object.getSize()
+    return [x + Math.round(fmWidth/2) - Math.round(width/2), y + Math.round(fmHeight/2) - Math.round(height/2)]
+  } catch (err) {
+    debug('error calculating FM window center')
+  }
 }
 
 Object.defineProperty(windowManager, 'modalIsOpen', {
