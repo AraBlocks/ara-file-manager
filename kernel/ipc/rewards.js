@@ -103,8 +103,9 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
       )
     }
 
-    this.startTimer('retryredeem')
     let value
+    autoQueue.clear()
+    this.startTimer('retryredeem')
     await new Promise(async (resolve, reject) => {
       [value] = await autoQueue.push(() => rewards.redeem({
         farmerDid: account.userDID,
