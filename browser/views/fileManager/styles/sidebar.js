@@ -14,15 +14,15 @@ module.exports = {
         position: fixed;
         width: 24.8%;
         background-color: #1c1c1c;
-        height: 100%;
+        height: 95%;
       }
     `,
 
   logoContainer: css`
     :host {
       position: absolute;
-      top: 15px;
-      left: 17%;
+      top: 2%;
+      left: 30%;
       transform: scale(1.5, 1.5);
     }
   `,
