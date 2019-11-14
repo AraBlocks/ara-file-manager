@@ -39,16 +39,16 @@ module.exports = {
   	`
   },
 
-	menu({ visible, direction = 'right' }) {
+	menu({ visible, direction = 'bottom' }) {
 		return css`
 			:host {
-				top: 25%;
+				${'top' === direction ? 'bottom' : 'top' }: 25%;
 				display: ${visible ? 'flex' : 'none'};
 				flex-direction: column;
 				justify-content: space-between;
 				min-width: 100px;
 				position: absolute;
-				${direction === 'right' ? 'left' : 'right'}: 0;
+				right: 0;
 			}
 		`
 	},

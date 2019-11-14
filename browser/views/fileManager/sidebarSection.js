@@ -19,12 +19,12 @@ class SidebarSection extends Nanocomponent {
 
   makeRows(currAccount, accounts) {
     const { typeRow } = this.props
-    return Object.keys(accounts).map((account, i) => {
+    return Object.keys(accounts).map((account, i, array) => {
       if (account !== 'last') {
         const current = currAccount.userDID === account
-        const constructorArgs = [{ account, name: accounts[account], current }]
+        const constructorArgs = [{ account, name: accounts[account], current, index: i, length: array.length - 1 }]
         return box('account', { key: account, constructorArgs })
-          .render({ name: accounts[account], current })
+          .render({ name: accounts[account], current, index: i, length: array.length - 1 })
       }
     })
   }
@@ -37,7 +37,7 @@ class SidebarSection extends Nanocomponent {
   }
 
   update(props) {
-    this.props = { ...this.props, account: props.account, accounts: props.accounts}
+    this.props = { ...this.props, account: props.account, accounts: props.accounts }
     return true
   }
 

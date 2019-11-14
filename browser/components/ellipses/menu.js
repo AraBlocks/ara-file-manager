@@ -6,7 +6,7 @@ const Nanocomponent = require('nanocomponent')
 class Menu extends Nanocomponent {
 	constructor({
 		items = [],
-		direction = 'right',
+		direction = 'bottom',
 		toggleCB = () => { }
 	} = {}) {
 		super()
