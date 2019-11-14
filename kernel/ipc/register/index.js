@@ -4,9 +4,12 @@ const { events } = require('k')
 const { ipcMain } = require('electron')
 const windowManager = require('electron-window-manager')
 
-const { aid, afm } = require('../../daemons')
+const { aid, afm, rewardsDCDN } = require('../../daemons')
+const menuHelper = require('../../../boot/menuHelper')
 const dispatch = require('../../redux/reducers/dispatch')
 const helpers = require('./register.helpers')
+
+const store = windowManager.sharedData.fetch('store')
 
 ipcMain.on(events.CREATE_USER_DID, helpers.pushAID)
 
@@ -15,6 +18,12 @@ windowManager.internalEmitter.on(events.CREATE_USER_DID, helpers.pushAID)
 ipcMain.on(events.REGISTER, async (_, { mnemonic, password, userDID, identityProps }) => {
   debug('%s heard', events.REGISTER)
   try {
+    await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
+    dispatch({ type: events.LOGOUT })
+    windowManager.internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
+
+    menuHelper.switchLoginState(events.LOGOUT)
+
     dispatch({
       type: events.CREATED_USER_DID,
       load: {

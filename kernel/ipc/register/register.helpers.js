@@ -84,14 +84,6 @@ async function pushAID(_, load) {
   debug('%s heard', events.CREATE_USER_DID)
   const logout = load ? load.logout : false
   try {
-    if (logout) {
-      await rewardsDCDN.stopAllBroadcast(store.farmer.farm)
-      dispatch({ type: events.LOGOUT })
-      internalEmitter.emit(events.CANCEL_SUBSCRIPTION)
-
-      menuHelper.switchLoginState(events.LOGOUT)
-    }
-
     const identityProps = await _createIdentity()
     windowManager.pingView({
       view: 'registration',
