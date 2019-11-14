@@ -40,6 +40,7 @@ function openModal(view = 'modal') {
   if (windowManager.modalIsOpen) {
     windowManager.get('modal').focus()
   } else {
+    const center = calculateCenter(view)
     windowManager.sharedData.set('current', view)
     windowManager.open(
       view,
@@ -49,6 +50,7 @@ function openModal(view = 'modal') {
       {
         backgroundColor: 'white',
         frame: false,
+        position: center,
         ...windowManager.setSize(view),
       }
     )
@@ -67,6 +69,7 @@ function transitionModal(view) {
 
 function openWindow(view) {
   ipcRenderer.send(events.PAGE_VIEW, { view })
+  const center = calculateCenter(view)
   windowManager.get(view)
     ? windowManager.get(view).focus()
     : windowManager.open(
@@ -77,6 +80,7 @@ function openWindow(view) {
         {
           backgroundColor: 'white',
           frame: false,
+          position: center,
           ...windowManager.setSize(view)
         }
       )
@@ -92,6 +96,18 @@ function quitApp() {
 
 function getStore() {
   return windowManager.sharedData.fetch('store')
+}
+
+function calculateCenter(view) {
+  try {
+    const fm = windowManager.get('filemanager')
+    const { width, height } = windowManager.setSize(view)
+    const [x, y] = fm.object.getPosition()
+    const [fmWidth, fmHeight] = fm.object.getSize()
+    return [x + Math.round(fmWidth/2) - Math.round(width/2), y + Math.round(fmHeight/2) - Math.round(height/2)]
+  } catch (err) {
+    debug('error calculating FM window center')
+  }
 }
 
 module.exports = {
