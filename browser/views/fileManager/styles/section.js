@@ -8,10 +8,10 @@ module.exports = {
       font-family: ${fonts.black};
       font-size: 16px;
       height: 30px;
-      padding: 0 2.5%;
+      padding: 1.5% 2.5% 0 2.5%;
       position: sticky;
       pointer-events: none;
-      top: 142px;
+      top: 115px;
       z-index: 400;
     }
   `,

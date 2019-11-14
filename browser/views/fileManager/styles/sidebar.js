@@ -14,7 +14,7 @@ module.exports = {
         position: fixed;
         width: 24.8%;
         background-color: #1c1c1c;
-        height: 95%;
+        height: 97%;
       }
     `,
 

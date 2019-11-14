@@ -10,9 +10,9 @@ module.exports = {
       display: flex;
       flex-direction: column;
       font-family: ${fonts.light};
-      height: 110px;
+      height: 90px;
       justify-content: space-between;
-      margin-bottom: 5px;
+      margin-bottom: 0px;
       padding: 2.5% 2.5%;
       top: 0;
       position: sticky;

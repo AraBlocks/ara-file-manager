@@ -52,7 +52,7 @@ async function getAccountsProps({ password, userDID }) {
   return { autoQueue, deployEstimateDid, farmer }
 }
 
-async function _getSubscriptions({ accountAddress, userDID }) {
+async function getSubscriptions({ accountAddress, userDID }) {
   const transfer = await act.subscribeTransfer(accountAddress, userDID)
   const transferEth = await act.subscribeEthBalance(accountAddress)
   let faucet = {}
@@ -93,25 +93,15 @@ async function pushAID(_, load) {
     }
 
     const identityProps = await _createIdentity()
-    dispatch({
-      type: events.CREATED_USER_DID,
-      load: {
-        ...identityProps,
-        araBalance: 0,
-        ethBalance: 0,
-      }
-    })
     windowManager.pingView({
       view: 'registration',
       event: events.CREATED_USER_DID,
       load: {
+        identityProps,
         userDID: identityProps.userDID,
         mnemonic: identityProps.mnemonic
       }
     })
-    windowManager.pingAll({ event: events.REFRESH })
-    const subscriptions = await _getSubscriptions(identityProps)
-    dispatch({ type: events.GOT_REGISTRATION_SUBS, load: subscriptions })
   } catch (err) {
     debug('Error creating identity: %o', err)
     dispatch({ type: events.FEED_MODAL, load: { modalName: 'registrationFailed' } })
@@ -121,6 +111,7 @@ async function pushAID(_, load) {
 }
 
 module.exports = {
+  getSubscriptions,
   getAccountsProps,
   pushAID
 }

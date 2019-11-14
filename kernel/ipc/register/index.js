@@ -12,9 +12,18 @@ ipcMain.on(events.CREATE_USER_DID, helpers.pushAID)
 
 windowManager.internalEmitter.on(events.CREATE_USER_DID, helpers.pushAID)
 
-ipcMain.on(events.REGISTER, async (_, { mnemonic, password, userDID }) => {
+ipcMain.on(events.REGISTER, async (_, { mnemonic, password, userDID, identityProps }) => {
   debug('%s heard', events.REGISTER)
   try {
+    dispatch({
+      type: events.CREATED_USER_DID,
+      load: {
+        ...identityProps,
+        araBalance: 0,
+        ethBalance: 0,
+      }
+    })
+
     windowManager.pingView({ view: 'registration', event: events.REGISTERING })
     const identity = await aid.recover({ mnemonic, password })
     windowManager.pingView({ view: 'registration', event: events.REGISTERED })
@@ -34,6 +43,10 @@ ipcMain.on(events.REGISTER, async (_, { mnemonic, password, userDID }) => {
         userDID
       }
     })
+
+    windowManager.pingAll({ event: events.REFRESH })
+    const subscriptions = await helpers.getSubscriptions(identityProps)
+    dispatch({ type: events.GOT_REGISTRATION_SUBS, load: subscriptions })
   } catch (err) {
     debug('Error creating identity: %o', err)
     dispatch({ type: events.FEED_MODAL, load: { modalName: 'registrationFailed' } })

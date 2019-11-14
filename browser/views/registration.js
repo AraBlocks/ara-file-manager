@@ -16,7 +16,7 @@ class Registration extends Nanocomponent {
       password: '',
       pwConfirmation: '',
     },
-    this.props = { inputDisabled: true, mnemonic: null, userDID: null, }
+    this.props = { inputDisabled: true, mnemonic: null, userDID: null, identityProps: null }
     this.children = {
       passwordInput: new ErrorInput({
         disabled: this.props.inputDisabled,
@@ -87,9 +87,9 @@ class Registration extends Nanocomponent {
   register(e) {
     e.preventDefault()
     const { password } = this.state
-    const { mnemonic, userDID } = this.props
+    const { mnemonic, userDID, identityProps } = this.props
     this.validInput
-      ? emit({ event: events.REGISTER, load: { password, mnemonic, userDID } })
+      ? emit({ event: events.REGISTER, load: { password, mnemonic, userDID, identityProps } })
       : this.rerender()
   }
 
