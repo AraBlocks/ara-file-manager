@@ -19,17 +19,6 @@ module.exports = {
       z-index: 500;
       background-color: white;
     }
-
-    :host:before {
-      content: "";
-      height: 160px;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 93%;
-      -webkit-app-region: drag;
-      z-index: -1;
-    }
   `,
 
   iconHolder: css`
