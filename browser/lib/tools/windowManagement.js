@@ -51,6 +51,7 @@ function openModal(view = 'modal') {
         backgroundColor: 'white',
         frame: false,
         position: center,
+        showDevTools: true,
         ...windowManager.setSize(view),
       }
     )
@@ -81,6 +82,7 @@ function openWindow(view) {
           backgroundColor: 'white',
           frame: false,
           position: center,
+          showDevTools: true,
           ...windowManager.setSize(view)
         }
       )
