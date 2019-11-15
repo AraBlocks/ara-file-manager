@@ -21,6 +21,7 @@ windowManager.openModal = (modalName) => {
       backgroundColor: 'white',
       frame: false,
       position: center,
+      showDevTools: true,
       ...windowManager.setSize(modalName),
     }
   ).open()
@@ -254,6 +255,7 @@ windowManager.openWindow = (view) => {
         frame: false,
         position: center,
         titleBarStyle: 'hidden',
+        showDevTools: true,
         ...windowManager.setSize(view),
         menu: null,
         maximizable: false
