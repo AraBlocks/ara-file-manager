@@ -27,12 +27,13 @@ class AfsFileRow extends Nanocomponent {
 			rowType,
 			renderView
 		}
+		this.fileClicked = this.fileClicked.bind(this)
+		this.exportFile = this.exportFile.bind(this)
+		this.deleteFile = this.deleteFile.bind(this)
 
 		this.children = {
 			menuItem: this.makeMenu()
 		}
-		this.fileClicked = this.fileClicked.bind(this)
-		this.exportFile = this.exportFile.bind(this)
 	}
 
 	update() {
@@ -47,7 +48,7 @@ class AfsFileRow extends Nanocomponent {
 			case events.PUBLISH:
 				menu = html`
 					<div class="${styles.contextMenu} editableFileTable-contextMenu" id="context-menu">
-						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
+						<div class="${styles.menuItem}" onclick=${this.deleteFile}>Delete</div>
 					</div>
 				`
 				break
@@ -57,11 +58,11 @@ class AfsFileRow extends Nanocomponent {
 						<div
 							class="${styles.menuItem}"
 							style="border-bottom: none;"
-							onclick=${this.exportFile.bind(this)}
+							onclick=${this.exportFile}
 						>
 							Export
 						</div>
-						<div class="${styles.menuItem}" onclick=${this.deleteFile.bind(this)}>Delete</div>
+						<div class="${styles.menuItem}" onclick=${this.deleteFile}>Delete</div>
 					</div>
 				`
 				break
@@ -72,12 +73,14 @@ class AfsFileRow extends Nanocomponent {
 					</div>
 				`
 				break
+			
 		}
 		return menu
 	}
 
 	deleteFile(e) {
 		const { props } = this
+		e.stopPropagation()
 		props.deleteFile(props.fileInfo)
 	}
 

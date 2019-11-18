@@ -4,5 +4,6 @@ module.exports = {
   contentViewerData: {},
   publishFileData: {},
   purchaseFileData: {},
-  redeemFileData: {}
+  redeemFileData: {},
+  updateFileData: {}
 }
