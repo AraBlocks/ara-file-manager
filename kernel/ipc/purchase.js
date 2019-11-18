@@ -82,7 +82,8 @@ async function _onNewGas(step) {
 
 ipcMain.on(events.GAS_PRICE, async(_, load) => {
   const { step, gasPrice } = load
-  if (!('purchase' === step || 'approve' === step)) return
+  if (!('purchase' === step || 'approve' === step))
+    return
 
   debug('%s heard', events.GAS_PRICE, load)
 

@@ -17,6 +17,11 @@ const { pause } = require('../lib')
 
 const store = windowManager.sharedData.fetch('store')
 
+const GAS_TIMEOUT = 25000
+
+let updated = false
+let errored = false
+
 ipcMain.on(events.LOAD_MANAGE_FILE_UPDATE, async (_, { did, name }) => {
   debug('%s heard', events.LOAD_MANAGE_FILE_UPDATE)
   const { farmer } = store
@@ -88,6 +93,9 @@ ipcMain.on(events.UPDATE_FILE, async (_, load) => {
   debug('%s heard', events.UPDATE_FILE)
   const { account } = store
   try {
+    updated = false
+    errored = false
+
     dispatch({ type: events.FEED_MODAL, load: { load: { fileName: load.name } } })
     windowManager.openModal('generalPleaseWaitModal')
     windowManager.closeWindow('manageFileView')
@@ -99,10 +107,53 @@ ipcMain.on(events.UPDATE_FILE, async (_, load) => {
       password: account.password
     })
 
-    let estimate
+    const gasPrice = await daemonsUtil.requestGasPrice()
+    const { average, fast, fastest } = gasPrice
+    dispatch({ type: events.UPDATE_FILE_LOAD, load })
+    dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step: 'update' } })
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.openModal('setGasModal')
+  } catch (err) {
+    debug('Error: %O', err)
+    windowManager.closeModal('generalPleaseWaitModal')
+    windowManager.closeModal('setGasModal')
+  }
+})
+
+internalEmitter.on(events.UPDATE_NEW_GAS, async (_, { step }) => {
+  await _onNewGas(step)
+})
+
+ipcMain.on(events.UPDATE_NEW_GAS, async (_, { step }) => {
+  await _onNewGas(step)
+})
+
+async function _onNewGas(step) {
+  debug('%s heard', events.UPDATE_NEW_GAS)
+  dispatch({ type: events.FEED_MODAL, load: { modalName: 'suggestingGasPrices' } })
+  windowManager.openModal('generalPleaseWaitModal')
+  const gasPrice = await utils.requestGasPrice()
+  const { average, fast, fastest } = gasPrice
+  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
+  windowManager.closeModal('generalPleaseWaitModal')
+  windowManager.openModal('setGasModal')
+}
+
+ipcMain.on(events.GAS_PRICE, async(_, load) => {
+  const { step, gasPrice } = load
+  const { account, modal } = store
+  if ('update' !== step)
+    return
+
+  dispatch({ type: events.FEED_MODAL, load: { load: { fileName: load.name } } })
+  windowManager.openModal('generalPleaseWaitModal')
+  load = Object.assign(load, modal.updateFileData)
+
+  debug('%s heard', events.GAS_PRICE, load)
+  let estimate
     if (load.shouldUpdatePrice && !load.shouldCommit) {
       debug('Estimating gas for set price')
-      estimate = await araFilesystem.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
+      estimate = await araFilesystem.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true, gasPrice })
     } else {
       if (load.addPaths.length != 0) {
         await (await araFilesystem.add({ did: load.did, paths: load.addPaths, password: account.password })).close()
@@ -112,10 +163,10 @@ ipcMain.on(events.UPDATE_FILE, async (_, load) => {
       }
       if (load.shouldUpdatePrice) {
         debug('Estimate gas for commit and set price')
-        estimate = await araFilesystem.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true })
+        estimate = await araFilesystem.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true, gasPrice })
       } else {
         debug('Estimating gas for commit only')
-        estimate = await araFilesystem.commit({ did: load.did, password: account.password, estimate: true })
+        estimate = await araFilesystem.commit({ did: load.did, password: account.password, estimate: true, gasPrice })
       }
     }
 
@@ -124,6 +175,7 @@ ipcMain.on(events.UPDATE_FILE, async (_, load) => {
       gasEstimate: Number(estimate),
       name: load.name,
       price: load.price,
+      gasPrice,
       size: load.size,
       shouldUpdatePrice: load.shouldUpdatePrice,
       shouldCommit: load.shouldCommit
@@ -132,14 +184,11 @@ ipcMain.on(events.UPDATE_FILE, async (_, load) => {
     dispatch({ type: events.FEED_MODAL, load: dispatchLoad })
     windowManager.closeModal('generalPleaseWaitModal')
     windowManager.openModal('updateConfirmModal')
-  } catch (err) {
-    debug('Error: %O', err)
-  }
 })
 
 ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
   debug('%s heard', events.CONFIRM_UPDATE_FILE)
-  const { account } = store
+  const { account, account: { autoQueue } } = store
   try {
     dispatch({
       type: events.UPDATING_FILE,
@@ -154,23 +203,123 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
     windowManager.closeWindow('manageFileView')
 
-    if (load.shouldUpdatePrice && !load.shouldCommit) {
-      debug('Updating price only')
-      await araFilesystem.setPrice({ did: load.did, password: account.password, price: Number(load.price) })
-    } else if (!load.shouldUpdatePrice && load.shouldCommit) {
-      debug('Updating Files')
-      await araFilesystem.commit({ did: load.did, password: account.password })
-    } else {
-      debug('Updating Files and Price')
-      await araFilesystem.commit({ did: load.did, password: account.password, price: Number(load.price) })
+    this.startTimer = (_) => {
+      setTimeout(
+        () => {
+          let trigger = !(updated || errored)
+          debug('timeout', trigger)
+          if (trigger) {
+            dispatch({ type: events.UPDATE_PROGRESS, load: { step: _ } })
+            windowManager.pingView({ view: 'updateProgressModal', event: events.REFRESH })
+          }
+        }, GAS_TIMEOUT
+      )
     }
 
-    dispatch({ type: events.UPDATED_FILE, load })
+    autoQueue.clear()
+    this.startTimer('retryupdate')
+    if (load.shouldUpdatePrice && !load.shouldCommit) {
+      debug('Updating price only')
+      await autoQueue.push(() => araFilesystem.setPrice({
+          did: load.did,
+          password: account.password,
+          price: Number(load.price),
+          gasPrice: load.gasPrice,
+          onhash: hash => {
+            debug('price tx hash: %s', hash)
+            dispatch({ type: events.UPDATE_PROGRESS, load: { hash, step: 'update' }})
+            windowManager.openModal('updateProgressModal')
+          },
+          onreceipt: receipt => {
+            debug('price tx receipt:', receipt)
+            updated = true
+            windowManager.closeModal('updateProgressModal')
+          },
+          onerror: error => {
+            debug('price tx error:', error)
+            errored = true
+            windowManager.closeModal('updateProgressModal')
+          }
+        })
+      )
+    } else if (!load.shouldUpdatePrice && load.shouldCommit) {
+      debug('Updating Files')
+      await autoQueue.push(() => araFilesystem.commit({
+          did: load.did,
+          password: account.password,
+          gasPrice: load.gasPrice,
+          writeCallbacks: {
+            onhash: hash => {
+              debug('write tx hash: %s', hash)
+              dispatch({ type: events.UPDATE_PROGRESS, load: { hash, step: 'update' }})
+              windowManager.openModal('updateProgressModal')
+            },
+            onreceipt: receipt => {
+              debug('write tx receipt:', receipt)
+              updated = true
+              windowManager.closeModal('updateProgressModal')
+            },
+            onerror: error => {
+              debug('write tx error:', error)
+              errored = true
+              windowManager.closeModal('updateProgressModal')
+            }
+          }
+        })
+      )
+    } else {
+      debug('Updating Files and Price')
+      await autoQueue.push(() => araFilesystem.commit({
+          did: load.did,
+          password: account.password,
+          price: Number(load.price),
+          gasPrice: load.gasPrice,
+          writeCallbacks: {
+            onhash: hash => {
+              debug('write tx hash: %s', hash)
+              dispatch({ type: events.UPDATE_PROGRESS, load: { hash, step: 'update' }})
+              windowManager.openModal('updateProgressModal')
+            },
+            onreceipt: receipt => {
+              debug('write tx receipt:', receipt)
+              updated = true
+              windowManager.closeModal('updateProgressModal')
+            },
+            onerror: error => {
+              debug('write tx error:', error)
+              errored = true
+              windowManager.closeModal('updateProgressModal')
+            }
+          },
+          priceCallbacks: {
+            onhash: hash => {
+            debug('price tx hash: %s', hash)
+            dispatch({ type: events.UPDATE_PROGRESS, load: { hash, step: 'update' }})
+            windowManager.openModal('updateProgressModal')
+            },
+            onreceipt: receipt => {
+              debug('price tx receipt:', receipt)
+              updated = true
+              windowManager.closeModal('updateProgressModal')
+            },
+            onerror: error => {
+              debug('price tx error:', error)
+              errored = true
+              windowManager.closeModal('updateProgressModal')
+            }
+          }
+        })
+      )
+    }
 
-    internalEmitter.emit(events.START_SEEDING, load)
+    if (updated) {
+      dispatch({ type: events.UPDATED_FILE, load })
 
-    dispatch({ type: events.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
-    windowManager.openModal('generalMessageModal')
+      internalEmitter.emit(events.START_SEEDING, load)
+
+      dispatch({ type: events.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
+      windowManager.openModal('generalMessageModal')
+    }
   } catch (err) {
     debug('Error: %O', err)
   }

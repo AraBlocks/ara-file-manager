@@ -80,7 +80,8 @@ async function _onNewGas(step) {
 }
 
 ipcMain.on(events.GAS_PRICE, async(_, { gasPrice, step = 'publish' }) => {
-  if (!('publish' === step || 'deploy' === step || 'write' === step || 'price' === step)) return
+  if (!('publish' === step || 'deploy' === step || 'write' === step || 'price' === step))
+    return
 
   debug('%s heard', events.GAS_PRICE, step)
 

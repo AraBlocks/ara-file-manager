@@ -60,7 +60,8 @@ async function _onNewGas(step) {
 ipcMain.on(events.GAS_PRICE, async (_, load) => {
   load = Object.assign(load, store.modal.redeemFileData)
   const { did, step, gasPrice } = load
-  if ('redeem' !== step) return
+  if ('redeem' !== step)
+    return
 
   const { account } = store
   try {

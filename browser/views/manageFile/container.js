@@ -91,11 +91,11 @@ class Container extends Nanocomponent {
   get pathDiff() {
     const { state } = this
     const subPaths = state.fileList.map(file => file.subPath)
-    const removePaths = state.afsContents.filter(file =>
-      !subPaths.includes(file.subPath) && file.fullPath === null
+    const removePaths = state.afsContents.filter(file => 
+      !subPaths.includes(file.subPath) && !file.fullPath
     ).map(file => file.subPath)
     const addPaths = state.fileList.filter(file =>
-      file.fullPath != null
+      file.fullPath
     ).map(file => file.fullPath)
     const allPaths = state.fileList.map(file => file.fullPath)
     return {

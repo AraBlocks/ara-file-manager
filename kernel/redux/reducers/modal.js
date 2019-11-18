@@ -37,6 +37,7 @@ module.exports = (state, { load = null, type }) => {
       state.data.step = load.step
       break
     case events.REDEEM_PROGRESS:
+    case events.UPDATE_PROGRESS:
       state.data.hash = load.hash
       state.data.step = load.step
       break
@@ -55,6 +56,9 @@ module.exports = (state, { load = null, type }) => {
       break
     case events.REDEEM_FILE_LOAD:
       state.redeemFileData.did = load.did
+      break
+    case events.UPDATE_FILE_LOAD:
+      Object.assign(state.updateFileData, load)
       break
     case events.SET_GAS_PRICE:
       state.data.average = load.average
