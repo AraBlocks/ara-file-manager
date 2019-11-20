@@ -38,7 +38,7 @@ module.exports = (state, { load = null, type }) => {
       break
     case events.REDEEM_PROGRESS:
     case events.UPDATE_PROGRESS:
-      state.data.hash = load.hash
+      state.data.hash = load.hash || state.data.hash
       state.data.step = load.step
       break
     case events.PUBLISH_FILE_LOAD:
