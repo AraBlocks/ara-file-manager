@@ -119,6 +119,7 @@ class Container extends Nanocomponent {
     this.state.loadingLibrary = files.loadingLibrary
     this.state.account = account
     this.state.accounts = application.accounts
+    this.state.files = files
     return true
   }
 

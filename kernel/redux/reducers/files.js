@@ -19,7 +19,8 @@ module.exports = (state, { load = null, type }) => {
       if (file == null) { break }
       file.downloadPercent = load.downloadPercent || 0
       file.status = events.DOWNLOADING
-      file.size = file.size || load.size
+      file.size = load.size || file.size
+      console.log('DOWNLOADING', file)
       break
     case events.DOWNLOADED:
       file = findFile(load.did, state.purchased)
@@ -28,6 +29,8 @@ module.exports = (state, { load = null, type }) => {
       file.downloadPercent = 1
       file.status = events.DOWNLOADED_PUBLISHED
       file.shouldBroadcast = true
+      file.size = load.size || file.size
+      console.log('DOWNLOADED', file)
       break
     case events.DOWNLOAD_FAILED:
       file = findFile(load.did, state.purchased)
@@ -169,6 +172,7 @@ module.exports = (state, { load = null, type }) => {
       if (file == null) { break }
       file.downloadPercent = 0
       file.status = events.CONNECTING
+      console.log('CONNECTING', file)
       break
     default:
       return state
