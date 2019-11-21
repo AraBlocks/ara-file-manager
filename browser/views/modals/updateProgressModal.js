@@ -6,10 +6,14 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, hash, step }) => {
-  const updateLink = new Link({
+module.exports = ({ load, modalName, writeHash, priceHash, step }) => {
+  const writeLink = new Link({
     children: `Etherscan`,
-    onclick: () => shell.openExternal(`https://ropsten.etherscan.io/tx/${hash}`)
+    onclick: () => shell.openExternal(`https://ropsten.etherscan.io/tx/${writeHash}`)
+  })
+  const priceLink = new Link({
+    children: `Etherscan`,
+    onclick: () => shell.openExternal(`https://ropsten.etherscan.io/tx/${priceHash}`)
   })
   const exit = new Button({
     children: 'Exit',
@@ -23,26 +27,72 @@ module.exports = ({ load, modalName, hash, step }) => {
       </div>
       <div class="${styles.separator} section-separator" style="width: 90%;"></div>
       <div class="${styles.progressContainer}">
-        <div class="${styles.redeeming}">
-          <div class="${styles.progressHolder} modal-progressHolder">
-            ${spinnerBar()}
-          </div>
-          <div class="${styles.boldLabel}">
-            Updating
-          </div>
-          <div>
-            ${updateLink.render()}
-          </div>
-          ${'retryupdate' === step ?
-            html`<div class="${styles.gasRefill}" onclick=${() => {
-              closeModal('updateProgressModal')
-              emit({ event: events.UPDATE_NEW_GAS, load: { step: 'update' } })
-            }}>
-              <img src="../assets/images/gas.png"/>
-            </div>` :
-            null
-          }
-        </div>
+        ${step.includes('all') ?
+          html`
+            <div class="${styles.purchasing}">
+              <div class="${styles.progressHolder} modal-progressHolder">
+                ${step && step.includes('write') ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
+              </div>
+              <div class="${styles.boldLabel}">
+                Writing
+              </div>
+              <div>
+                ${writeHash ? writeLink.render() : null}
+              </div>
+              ${'retryupdateallwrite' === step ?
+                html`<div class="${styles.gasRefill}" onclick=${() => {
+                  closeModal('updateProgressModal')
+                  emit({ event: events.UPDATE_NEW_GAS, load: { step: 'updateallwrite' } })
+                }}>
+                  <img src="../assets/images/gas.png"/>
+                </div>` :
+                null
+              }
+            </div>
+            <div class="${styles.purchasing}">
+              <div class="${styles.progressHolder} modal-progressHolder">
+                ${step && step.includes('price') ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
+              </div>
+              <div class="${styles.boldLabel}">
+                Finalizing
+              </div>
+              <div>
+                ${priceHash ? priceLink.render() : null}
+              </div>
+              ${'retryupdateallprice' === step ?
+                html`<div class="${styles.gasRefill}" onclick=${() => {
+                  closeModal('updateProgressModal')
+                  emit({ event: events.UPDATE_NEW_GAS, load: { step: 'updateprice' } })
+                }}>
+                  <img src="../assets/images/gas.png"/>
+                </div>` :
+                null
+              }
+            </div>
+          ` :
+          html`
+            <div class="${styles.singleTx}">
+              <div class="${styles.progressHolder} modal-progressHolder">
+                ${spinnerBar()}
+              </div>
+              <div class="${styles.boldLabel}">
+                Updating
+              </div>
+              <div>
+                ${writeHash ? writeLink.render() : priceLink.render()}
+              </div>
+              ${step.includes('retry') ?
+                html`<div class="${styles.gasRefill}" onclick=${() => {
+                  closeModal('updateProgressModal')
+                  emit({ event: events.UPDATE_NEW_GAS, load: { step: step.includes('price') ? 'updateprice' : 'updatewrite' } })
+                }}>
+                  <img src="../assets/images/gas.png"/>
+                </div>` :
+                null
+              }
+            </div>
+          `
+        }
       </div>
       <div style="width: 100%;">
         ${exit.render()}

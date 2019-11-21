@@ -350,7 +350,7 @@ module.exports = {
     }
   `,
 
-  redeeming: css`
+  singleTx: css`
     :host {
       margin-top: 10%;
       width: 100%;

@@ -23,7 +23,7 @@ module.exports = ({ load, modalName, hash, step }) => {
       </div>
       <div class="${styles.separator} section-separator" style="width: 90%;"></div>
       <div class="${styles.progressContainer}">
-        <div class="${styles.redeeming}">
+        <div class="${styles.singleTx}">
           <div class="${styles.progressHolder} modal-progressHolder">
             ${spinnerBar()}
           </div>
