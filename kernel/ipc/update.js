@@ -142,7 +142,7 @@ async function _onNewGas(step) {
 ipcMain.on(events.GAS_PRICE, async(_, load) => {
   const { step, gasPrice } = load
   const { account, modal } = store
-  if ('update' !== step)
+  if (!step.includes('update'))
     return
 
   dispatch({ type: events.FEED_MODAL, load: { load: { fileName: load.name } } })
@@ -217,8 +217,8 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
     }
 
     autoQueue.clear()
-    this.startTimer('retryupdate')
     if (load.shouldUpdatePrice && !load.shouldCommit) {
+      this.startTimer('retryupdateprice')
       debug('Updating price only')
       await autoQueue.push(() => araFilesystem.setPrice({
           did: load.did,
@@ -227,7 +227,7 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
           gasPrice: load.gasPrice,
           onhash: hash => {
             debug('price tx hash: %s', hash)
-            dispatch({ type: events.UPDATE_PROGRESS, load: { hash, step: 'update' }})
+            dispatch({ type: events.UPDATE_PROGRESS, load: { priceHash: hash, step: 'updateprice' }})
             windowManager.openModal('updateProgressModal')
           },
           onreceipt: receipt => {
@@ -243,6 +243,7 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
         })
       )
     } else if (!load.shouldUpdatePrice && load.shouldCommit) {
+      this.startTimer('retryupdatewrite')
       debug('Updating Files')
       await autoQueue.push(() => araFilesystem.commit({
           did: load.did,
@@ -251,7 +252,7 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
           writeCallbacks: {
             onhash: hash => {
               debug('write tx hash: %s', hash)
-              dispatch({ type: events.UPDATE_PROGRESS, load: { hash, step: 'update' }})
+              dispatch({ type: events.UPDATE_PROGRESS, load: { writeHash: hash, step: 'updatewrite' }})
               windowManager.openModal('updateProgressModal')
             },
             onreceipt: receipt => {
@@ -268,6 +269,7 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
         })
       )
     } else {
+      this.startTimer('retryupdateallwrite')
       debug('Updating Files and Price')
       await autoQueue.push(() => araFilesystem.commit({
           did: load.did,
@@ -277,13 +279,13 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
           writeCallbacks: {
             onhash: hash => {
               debug('write tx hash: %s', hash)
-              dispatch({ type: events.UPDATE_PROGRESS, load: { hash, step: 'update' }})
+              dispatch({ type: events.UPDATE_PROGRESS, load: { writeHash: hash, step: 'updateallwrite' }})
               windowManager.openModal('updateProgressModal')
             },
             onreceipt: receipt => {
               debug('write tx receipt:', receipt)
               updated = true
-              windowManager.closeModal('updateProgressModal')
+              this.startTimer('retryupdateallprice')
             },
             onerror: error => {
               debug('write tx error:', error)
@@ -294,8 +296,10 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
           priceCallbacks: {
             onhash: hash => {
             debug('price tx hash: %s', hash)
-            dispatch({ type: events.UPDATE_PROGRESS, load: { hash, step: 'update' }})
+            const load = { priceHash: hash, step: 'updateallprice' }
+            dispatch({ type: events.UPDATE_PROGRESS, load })
             windowManager.openModal('updateProgressModal')
+            windowManager.pingView({ view: 'updateProgressModal', event: events.REFRESH, load })
             },
             onreceipt: receipt => {
               debug('price tx receipt:', receipt)

@@ -26,8 +26,9 @@ module.exports = (state, { load = null, type }) => {
       state.data.isAFS = true
       state.data.freezeData = true
     case events.PUBLISH_PROGRESS:
-      state.data.step = load.step
       state.data.deployHash = load.deployHash || state.data.deployHash
+    case events.UPDATE_PROGRESS:
+      state.data.step = load.step
       state.data.writeHash = load.writeHash || state.data.writeHash
       state.data.priceHash = load.priceHash || state.data.priceHash
       break
@@ -37,7 +38,6 @@ module.exports = (state, { load = null, type }) => {
       state.data.step = load.step
       break
     case events.REDEEM_PROGRESS:
-    case events.UPDATE_PROGRESS:
       state.data.hash = load.hash || state.data.hash
       state.data.step = load.step
       break
