@@ -11,3 +11,10 @@ package-lock.json
 lib/constants/analytics.js.bak
 build/certs
 
+# Electron userland builders
+release/
+dist/
+wwwroot/
+
+# Windows code signing certificates
+*.pfx
