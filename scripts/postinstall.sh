@@ -3,8 +3,10 @@ echo 'postinstall.sh ---- start'
 echo ''
 
 # Remove faulty utp-native
+echo 'ls utp-native before rm:'
 ls ./node_modules/@hyperswarm/network/node_modules/utp-native
 rm -r ./node_modules/@hyperswarm/network/node_modules/utp-native
+echo 'ls utp-native after rm:'
 ls ./node_modules/@hyperswarm/network/node_modules/utp-native
 #TODO make a note about this, is it still necessary?
 #     added ls before and after to see if it is even deleting anything
