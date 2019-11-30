@@ -2,13 +2,16 @@
 echo 'power-wash.sh ---- start'
 echo ''
 
+echo 'Deleting node_modules folder may take a minute...'
+echo ''
+
 rm -rf ./dist
+rm -rf ./release-builds
 rm -rf ./node_modules
-rm -rf ./package-lock.json
 
 ls ./dist
+ls ./release-builds
 ls ./node_modules
-ls ./package-lock.json
 
 echo ''
 echo 'power-wash.sh ---- done'
