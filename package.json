@@ -1,17 +1,32 @@
 {
-  "name": "ara-file-manager",
-  "productName": "Ara File Manager",
-  "description": "Ara file manager",
-  "author": {
-    "name": "ara blocks"
-  },
+  "name": "ara",
   "version": "0.12.7",
+  "license": "ISC",
+  "productName": "Ara File Manager",
+  "description": "Ara decentralized peer node and crypto token wallet",
+  "keywords": [],
+  "author": {
+    "name": "Little Star Media Inc"
+  },
+  "homepage": "https://ara.one/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AraBlocks/ara-file-manager"
+  },
+  "bugs": {
+    "url": "https://github.com/AraBlocks/ara-file-manager/issues"
+  },
   "main": "boot",
   "network": "test",
   "scripts": {
+    "postinstall": "sh ./scripts/postinstall.sh && electron-builder install-app-deps",
+    "start": "electron ./boot/index.js",
+    "dir": "electron-builder --dir",
+    "build": "electron-builder",
+    "clean": "sh ./scripts/clean.sh",
+    "power-wash": "sh ./scripts/power-wash.sh",
     "start-dev": "./node_modules/.bin/electron boot",
     "test": "ava test/renderer",
-    "postinstall": "sh ./scripts/postinstall.sh && install-app-deps",
     "pack": "build --dir",
     "build-dev-mac": "sh ./scripts/build-dev-mac.sh",
     "build-dev-win": "sh ./scripts/build-dev-win.sh",
@@ -22,16 +37,45 @@
     "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
     "version": "npm run changelog && git add CHANGELOG.md"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/littlstar/ara-content-manager.git"
+  "build": {
+    "appId": "com.ara.one.araFileManager",
+    "publish": {
+      "provider": "generic",
+      "url": "https://app.ara.one/update"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
+    },
+    "dmg": {
+      "sign": false
+    },
+    "afterSign": "notarize.js",
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "certificateFile": "../your_code_signing_certificate.pfx",
+      "certificatePassword": "your_exported_certificate_password"
+    },
+    "nsis": {
+      "artifactName": "${productName}-${version}.${ext}",
+      "uninstallDisplayName": "${productName}",
+      "differentialPackage": false,
+      "oneClick": true,
+      "perMachine": false,
+      "createStartMenuShortcut": true,
+      "createDesktopShortcut": true
+    }
   },
-  "keywords": [],
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/littlstar/ara-content-manager/issues"
-  },
-  "homepage": "https://github.com/littlstar/ara-content-manager#readme",
   "dependencies": {
     "ara-context": "^0.6.4",
     "ara-contracts": "^0.25.2",
