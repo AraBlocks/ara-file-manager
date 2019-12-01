@@ -2,12 +2,15 @@
 echo 'clean.sh ---- start'
 echo ''
 
+echo 'Deleting the dist folder'
+echo ''
+
 rm -rf ./dist
-rm -rf ./release-builds
 
 ls ./dist
-ls ./release-builds
 
+echo 'Now you can do a fresh $ npm run build'
 echo ''
+
 echo 'clean.sh ---- done'
 echo ''

@@ -2,17 +2,20 @@
 echo 'power-wash.sh ---- start'
 echo ''
 
-echo 'Deleting node_modules folder may take a minute...'
+echo 'Deleting package-lock.json, node_modules, and dist'
+echo 'This may take a minute...'
 echo ''
 
-rm -rf ./dist
-rm -rf ./release-builds
+rm -rf ./package-lock.json
 rm -rf ./node_modules
+rm -rf ./dist
 
-ls ./dist
-ls ./release-builds
+ls ./package-lock.json
 ls ./node_modules
+ls ./dist
 
+echo 'Now you can do a fresh $ npm install'
 echo ''
+
 echo 'power-wash.sh ---- done'
 echo ''
