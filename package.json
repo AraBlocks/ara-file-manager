@@ -20,18 +20,12 @@
   "network": "test",
   "scripts": {
     "postinstall": "sh ./scripts/postinstall.sh && electron-builder install-app-deps",
-    "start": "electron ./boot/index.js",
+    "start": "electron boot/index.js",
     "dir": "electron-builder --dir",
     "build": "electron-builder",
     "clean": "sh ./scripts/clean.sh",
     "power-wash": "sh ./scripts/power-wash.sh",
-    "start-dev": "./node_modules/.bin/electron boot",
     "test": "ava test/renderer",
-    "pack": "build --dir",
-    "build-dev-mac": "sh ./scripts/build-dev-mac.sh",
-    "build-dev-win": "sh ./scripts/build-dev-win.sh",
-    "build-prod-mac": "sh ./scripts/build-prod-mac.sh",
-    "build-prod-win": "sh ./scripts/build-prod-win.sh",
     "debug-mac": "DEBUG=afm*,arp*,ard* release-builds/Ara\\ File\\ Manager-darwin-x64/Ara\\ File\\ Manager.app/Contents/MacOS/Ara\\ File\\ Manager",
     "debug-windows": "DEBUG=afm*,arp*,ard* release-builds/Ara\\ File\\ Manager-win32-x64/Ara\\ File\\ Manager.exe",
     "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
@@ -57,7 +51,7 @@
     "dmg": {
       "sign": false
     },
-    "afterSign": "notarize.js",
+    "afterSign": "scripts/notarize.js",
     "win": {
       "target": [
         "nsis",
