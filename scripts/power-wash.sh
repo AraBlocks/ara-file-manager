@@ -13,6 +13,7 @@ rm -rf ./dist
 ls ./package-lock.json
 ls ./node_modules
 ls ./dist
+echo ''
 
 echo 'Now you can do a fresh $ npm install'
 echo ''
