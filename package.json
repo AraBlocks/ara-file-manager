@@ -25,6 +25,8 @@
     "build": "electron-builder",
     "clean": "sh ./scripts/clean.sh",
     "power-wash": "sh ./scripts/power-wash.sh",
+    "uninstall-mac": "sh ./scripts/uninstall-mac.sh",
+    "uninstall-win": "sh ./scripts/uninstall-win.sh",
     "test": "ava test/renderer",
     "debug-mac": "DEBUG=afm*,arp*,ard* release-builds/Ara\\ File\\ Manager-darwin-x64/Ara\\ File\\ Manager.app/Contents/MacOS/Ara\\ File\\ Manager",
     "debug-windows": "DEBUG=afm*,arp*,ard* release-builds/Ara\\ File\\ Manager-win32-x64/Ara\\ File\\ Manager.exe",
@@ -110,7 +112,6 @@
     "electron": "^2.0.5",
     "electron-builder": "^20.44.4",
     "electron-notarize": "^0.2.0",
-    "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.3",
     "jsdom": "^14.0.0"
   },
