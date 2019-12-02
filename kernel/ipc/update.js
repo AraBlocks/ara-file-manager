@@ -132,7 +132,7 @@ async function _onNewGas(step) {
   debug('%s heard', events.UPDATE_NEW_GAS)
   dispatch({ type: events.FEED_MODAL, load: { modalName: 'suggestingGasPrices' } })
   windowManager.openModal('generalPleaseWaitModal')
-  const gasPrice = await utils.requestGasPrice()
+  const gasPrice = await daemonsUtil.requestGasPrice()
   const { average, fast, fastest } = gasPrice
   dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
   windowManager.closeModal('generalPleaseWaitModal')
