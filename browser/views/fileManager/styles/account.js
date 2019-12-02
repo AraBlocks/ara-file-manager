@@ -9,9 +9,9 @@ module.exports = {
         position: relative;
         flex-direction: row;
         justify-content: space-between;
-        padding: 15px 40px 15px 40px;
-        background-color: ${current ? `var(--ara-teal)` : '' }
-
+        padding: 15px 0px 15px 30px;
+        background-color: ${current ? `var(--ara-teal)` : '' };
+        font-size: 14px;
       }
 
       :host:hover {
@@ -26,7 +26,7 @@ module.exports = {
       cursor: pointer;
       display: flex;
       position: absolute;
-      right: 10%;
+      right: 5%;
       top: 50%;
       transform: translateY(-50%);
       padding: 3px;
