@@ -8,7 +8,7 @@ module.exports = {
         background-color: #1c1c1c;
         font-family: ${fonts.bold};
         color: white;
-        font-size: 12px;
+        font-size: 14px;
         height: 30px;
         padding: 8% 10% 0 10%;
         position: sticky;
