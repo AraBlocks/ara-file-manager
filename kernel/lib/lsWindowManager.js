@@ -21,7 +21,6 @@ windowManager.openModal = (modalName) => {
       backgroundColor: 'white',
       frame: false,
       position: center,
-      showDevTools: true,
       ...windowManager.setSize(modalName),
     }
   ).open()
@@ -102,11 +101,11 @@ windowManager.setSize = (view) => {
       height = 300
       break
     case 'purchaseProgressModal':
+    case 'updateProgressModal':
       width = 300
       height = 300
       break
     case 'redeemProgressModal':
-    case 'updateProgressModal':
       width = 250
       height = 300
       break
@@ -256,7 +255,6 @@ windowManager.openWindow = (view) => {
         frame: false,
         position: center,
         titleBarStyle: 'hidden',
-        showDevTools: true,
         ...windowManager.setSize(view),
         menu: null,
         maximizable: false
