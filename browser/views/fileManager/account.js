@@ -67,7 +67,7 @@ class Account extends Nanocomponent {
         style="color: white;"
         onclick=${onClick}
       >
-        ${name.length > 11 ? name.slice(0, 11) + '...' : name}
+        ${name.length > 12 ? name.slice(0, 12) + '...' : name}
         <div class="${styles.container}">
           ${children.ellipses.render({ current })}
         </div>
