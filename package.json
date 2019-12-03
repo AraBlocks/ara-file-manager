@@ -27,8 +27,8 @@
     "power-wash": "sh ./scripts/power-wash.sh",
     "uninstall": "sh ./scripts/uninstall.sh",
     "test": "ava test/renderer",
-    "debug-mac": "DEBUG=afm*,arp*,ard* dist/mac/Ara\\ File\\ Manager.app/Contents/MacOS/Ara\\ File\\ Manager",
-    "debug-win": "DEBUG=afm*,arp*,ard* dist/win-unpacked/Ara\\ File\\ Manager.exe",
+    "mac": "DEBUG=afm*,arp*,ard* dist/mac/Ara\\ File\\ Manager.app/Contents/MacOS/Ara\\ File\\ Manager",
+    "win": "DEBUG=afm*,arp*,ard* dist/win-unpacked/Ara\\ File\\ Manager.exe",
     "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
     "version": "npm run changelog && git add CHANGELOG.md"
   },
