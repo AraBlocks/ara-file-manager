@@ -28,7 +28,7 @@
     "uninstall": "sh ./scripts/uninstall.sh",
     "test": "ava test/renderer",
     "mac": "DEBUG=afm*,arp*,ard* dist/mac/Ara\\ File\\ Manager.app/Contents/MacOS/Ara\\ File\\ Manager",
-    "win": "DEBUG=afm*,arp*,ard* dist/win-unpacked/Ara\\ File\\ Manager.exe",
+    "win": "set DEBUG=afm*,arp*,ard* && \"dist\\win-unpacked\\Ara File Manager.exe\"",
     "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
     "version": "npm run changelog && git add CHANGELOG.md"
   },
