@@ -33,7 +33,7 @@ $ APPLEID=yourid PASSWORD=yourpass npm run build
 ```
 
 `npm run build` uses [electron-builder](https://www.electron.build/) to make a *dmg* on macOS and a setup *exe* on Windows.
-[Code signing] and [notarization] make the Ara File Manager easy for users to install, but are not a requirement.
+[Code signing](https://www.electron.build/code-signing) and [notarization](https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/) make the Ara File Manager easy for users to install, but are not a requirement.
 
 On macOS, electron-builder uses whatever code signing certificate is installed on your computer to sign the app.
 Type your developer Apple ID and password before `npm run build`, and [electron-notarize](https://www.npmjs.com/package/electron-notarize) will [upload the app to Apple for automated analysis](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution).
