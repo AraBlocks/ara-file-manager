@@ -1,6 +1,6 @@
 {
   "name": "ara",
-  "version": "0.12.7",
+  "version": "0.13.0",
   "license": "ISC",
   "productName": "Ara File Manager",
   "description": "Ara decentralized peer node and crypto token wallet",
@@ -11,10 +11,10 @@
   "homepage": "https://ara.one/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AraBlocks/ara-file-manager"
+    "url": "git+https://github.com/arablocks/ara-file-manager"
   },
   "bugs": {
-    "url": "https://github.com/AraBlocks/ara-file-manager/issues"
+    "url": "https://github.com/arablocks/ara-file-manager/issues"
   },
   "main": "boot",
   "network": "test",

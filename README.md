@@ -5,7 +5,7 @@
 The **Ara File Manager** is a simple desktop app that demonstrates the functionality of a complete local Ara network node and crypto token wallet.
 Ara is truly decentralized; with the Ara File Manager, your machine is participating directly in peer distribution swarms and the blockchain.
 
-The File Manager lets you sell your digital content using the ARA token, and distribute your content without hosting costs.
+The Ara File Manager lets you sell your digital content using the ARA token, and distribute your content without hosting costs.
 You can buy content, and earn Ara by seeding content in a swarm of nodes that have also purchased it.
 
 With the _code_ of the Ara File Manager, you can see how to integrate Ara into your own app or site,
@@ -19,21 +19,61 @@ Get the code for the Ara File Mananager, build it, and run it with commands like
 $ git clone https://github.com/arablocks/ara-file-manager
 $ cd ara-file-manager
 $ npm install
-$ npm run start-dev
+$ npm run start
 ```
 
-Didn't work? Head over to the [detailed guide](https://github.com/arablocks/ara-file-manager/blob/master/.github/INSTALL.md).
+For `npm install` to work, your computer must be able to build native Node modules.
+If you're getting errors, head over to the [detailed guide](https://github.com/arablocks/ara-file-manager/blob/master/.github/INSTALL.md).
 
-Package your code for development and production on macOS and Windows:
+Package your code for macOS and Windows users with commands like these:
 
 ```shell
-$ npm run build-dev-mac
-$ npm run build-dev-win
-$ npm run build-prod-mac
-$ npm run build-prod-win
+$ npm run build
+$ APPLEID=yourid PASSWORD=yourpass npm run build
 ```
 
-Make a branch, code some changes, and send us a pull request:
+`npm run build` uses [electron-builder](https://www.electron.build/) to make a *dmg* on macOS and a setup *exe* on Windows.
+[Code signing] and [notarization] make the Ara File Manager easy for users to install, but are not a requirement.
+
+On macOS, electron-builder uses whatever code signing certificate is installed on your computer to sign the app.
+Type your developer Apple ID and password before `npm run build`, and [electron-notarize](https://www.npmjs.com/package/electron-notarize) will [upload the app to Apple for automated analysis](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution).
+
+These two lines in [package.json](https://github.com/AraBlocks/ara-file-manager/blob/master/package.json) are about code signing on Windows:
+
+```
+"certificateFile": "../your_code_signing_certificate.pfx",
+"certificatePassword": "your_exported_certificate_password"
+```
+
+You can use your certificate and password here, or remove these lines to create an unsigned *exe*, which will work just fine.
+
+Here are some more commands useful in building and testing the app:
+
+```
+$ npm run mac
+$ npm run win
+
+$ npm run clean
+$ npm run power-wash
+
+$ npm run uninstall
+```
+
+`npm run mac` runs the *Ara File Manager.app* package that electron-builder made.
+Running it this way from the command line lets you see log output and error messages.
+On Windows, `npm run win` runs the built *exe*.
+
+Between calls to `npm run build`, use `npm run clean` to delete the *dist* folder.
+electron-builder creates this folder when it runs.
+`npm run power-wash` is much stronger, deleting not just *dist* but also *node_modules* and *package.json*.
+Use *power wash* to start over from scratch, as though you just cloned the repository and will now run `npm install`.
+
+To absolutely, completely start over, `npm run uninstall` deletes all the paths where the Ara File Manager may have ever left files.
+This includes Ara program files and settings, as well as Ara user identity, document, and wallet files on your computer.
+Uninstall kills paths used by previous versions, and covers paths used on macOS and Windows.
+After running *uninstall*, you'll have to enter your seed phrase to recreate your ARA wallet from the blockchain.
+
+Make a branch, code some changes, and send us a pull request with commands like these:
 
 ```shell
 $ git checkout -b your-branch-name
@@ -53,7 +93,7 @@ This project is in active developement.
 
 ```shell
 $ npm install --verbose --no-optional
-$ npm run start-dev [loggedin] [<DID>] [<password>]
+$ npm run start [loggedin] [<DID>] [<password>]
 ```
 
 Use the `--verbose` flag to get more granular feedback from npm.
@@ -61,15 +101,6 @@ The `--no-optional` flag will prevent unnecessary and heavy packages from being 
 `npm install` downloads a large number of modules, compiles native code, and takes a minute or two to do all this.
 
 You can follow the `start-dev` with an optional string: "`loggedin`". If you add this, you'll need to follow it with the DID you'd like to log in with, and the corresponding password to that DID. It will boot the app with you logged in already, for speedier development.
-
-## Packaging App
-
-```shell
-$ npm i electron-packager -g
-$ electron-packager . --overwrite --platform=darwin --arch=x64 --icon=build/icons/mac/ara.icns --prune=true --out=release-builds --app-bundle-id=“com.ara.one.araFileManager”
-```
-
-This will write a mac compatible compiled application to a folder in your project root called `release-builds`
 
 ## Debug
 
@@ -94,10 +125,6 @@ The metadata format the file manager is compatible with is the following:
   }
 }
 ```
-
-## Building the application
-
-Documentation around building the application can be found [here](https://github.com/arablocks/ara-file-manager/blob/master/.github/BUILD.md)
 
 ## Contributing
 
