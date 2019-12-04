@@ -24,20 +24,24 @@ $ electron --version
 $ electron                  and try running global Electron
 
 $ git clone https://github.com/arablocks/ara-file-manager  
-$ cd ara-file-manager       took 21s, made 150mb to clone
-$ npm install               took 2m7s, made 770mb
+$ cd ara-file-manager
+$ npm install
+$ npm run start             run from code
 
-$ npm run start-dev         run from code
+$ npm run dir               make a .app folder on macOS, and an .exe file on Windows
+$ npm run mac               run the .app from the command line to see console output
+$ npm run win               run the .exe from the command line to see console output
+$ npm run build             same as dir, but keeps going to make the dmg and setup.exe
 
-$ npm run build-dev-mac
-$ npm run build-dev-win     took 1m14s, added another 390mb
-$ npm run build-prod-mac
-$ npm run build-prod-win    took 2m13s, the whole thing is now 1.27gb
+$ npm run clean             delete stuff to start over with $ npm run build
+$ npm run power-wash        delete stuff to start over with $ npm install
+$ npm run uninstall         delete stuff to start over with opening the dmg or running setup.exe
 ```
 
 ## Delete paths
 
 If you've previously installed the Ara File Manager, you may want to start out again on a system that is free of remnants of previous attempts.
+You can use `npm run uninstall`, or delete paths manually.
 Using the generic user name *Kevin* as an example, on macOS, delete the files and directories at paths like these:
 
 ```
