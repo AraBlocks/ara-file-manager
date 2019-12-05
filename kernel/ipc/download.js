@@ -54,7 +54,6 @@ ipcMain.on(events.PAUSE_DOWNLOAD, async (_, load) => {
 internalEmitter.on(events.DOWNLOADING, (load) => {
 	const files = store.files.published.concat(store.files.purchased)
 	const file = files.find(file => file.did === load.did)
-  console.log('IN DOWNLOAD IPC, DOWNLOADING', load, '\n', file)
 	let prevPercent = file.downloadPercent
 	const perc = load.currentBlock / load.totalBlocks
 	const size = load.byteLength
@@ -78,7 +77,6 @@ internalEmitter.on(events.DOWNLOADING, (load) => {
 internalEmitter.on(events.DOWNLOADED, async (load) => {
 	debug('Dispatching %s', events.DOWNLOADED)
 	const fileInfo = await utils.readFileMetadata(load.did)
-  console.log('DOWNLOADED', fileInfo)
 	dispatch({ type: events.DOWNLOADED, load: { did: load.did, name: fileInfo.title, size: fileInfo.size } })
 	windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 	analytics.trackDownloadFinish()
