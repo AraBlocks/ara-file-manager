@@ -1,3 +1,59 @@
+# [1.0.0](https://github.com/arablocks/ara-file-manager/compare/0.13.0...1.0.0) (2019-12-06)
+
+
+### Bug Fixes
+
+* account switching + UI tweaks ([aac2a58](https://github.com/arablocks/ara-file-manager/commit/aac2a58b886f66f5288fea29cf0adccc9a9c8700))
+* cannot purchase file published by self ([3edbe4e](https://github.com/arablocks/ara-file-manager/commit/3edbe4e2332c0568087a542c2dd4750cdd72493d))
+* check hash exists ([aef4f98](https://github.com/arablocks/ara-file-manager/commit/aef4f9824dd70a3af0daef29ebfa673dd40d7bec))
+* clear q ([db7eb78](https://github.com/arablocks/ara-file-manager/commit/db7eb78ce4914fcc822babddee086877a2534153))
+* consistently center modals and windows ([446083e](https://github.com/arablocks/ara-file-manager/commit/446083edefbb0959aa78cb70a430098a674ccc0c))
+* download progress for small files ([3c91018](https://github.com/arablocks/ara-file-manager/commit/3c9101894794624b73754401d97dc8cd493341a2))
+* ellipses menu tweaks ([26ae4bd](https://github.com/arablocks/ara-file-manager/commit/26ae4bd93aa744ef106e9f8d1258b414781a602a))
+* more UI improvements ([efd5f58](https://github.com/arablocks/ara-file-manager/commit/efd5f581779df9994df16fa55be583f332390aed))
+* pass thru gas price ([c5aa7f6](https://github.com/arablocks/ara-file-manager/commit/c5aa7f66f91daff51b5769c488eb1a3fa9e2bb88))
+* register flow and UI fix ([dd6c409](https://github.com/arablocks/ara-file-manager/commit/dd6c4091646a74eb048e0d7e40d586a3f5c9af68))
+* registration bug ([9a12cf5](https://github.com/arablocks/ara-file-manager/commit/9a12cf5e6e9eb0c0821ca33b7dabd33de4d59ab8))
+* separate load hash ([f5a6384](https://github.com/arablocks/ara-file-manager/commit/f5a63847d6ff61b44b9acf689dfd2c739b0fc7c2))
+* shrink window ([df186e2](https://github.com/arablocks/ara-file-manager/commit/df186e2e2d158e7ac9daa5d0a7f16b522501e384))
+* UI improvement ([8615e79](https://github.com/arablocks/ara-file-manager/commit/8615e79c1e27b3576510566bf210886c8fd6d41a))
+* update broken logic ([938951b](https://github.com/arablocks/ara-file-manager/commit/938951b3537d3d9a24a393f1b493b2ecf9004760))
+* update gas price ([023d769](https://github.com/arablocks/ara-file-manager/commit/023d7695c18afa5591206e98585413dfaa6b3e97))
+* windows gas refill button ([4c0c2e0](https://github.com/arablocks/ara-file-manager/commit/4c0c2e03e696ab7d06a86465466e3484d25f1140))
+* windows titlebar drag ([9189529](https://github.com/arablocks/ara-file-manager/commit/9189529adf46d7d11ca31406185049159bc4ddd9))
+* WIP fixing update ([04d2efe](https://github.com/arablocks/ara-file-manager/commit/04d2efe6aaef86d6bb566faa726e35c5a3b3825a))
+
+
+### Features
+
+* account naming support ([25ba1c0](https://github.com/arablocks/ara-file-manager/commit/25ba1c00128ac817c856fbc5eca87f6685d860db))
+* account naming wip ([c483017](https://github.com/arablocks/ara-file-manager/commit/c48301787ccd611d522c8b2ab8f1d59e77c05ede))
+* account switch working ([d6a3508](https://github.com/arablocks/ara-file-manager/commit/d6a3508edf034d63d5f9d90fda2e51c1a5160f9a))
+* add multiple account cache, more design updates ([f9b3148](https://github.com/arablocks/ara-file-manager/commit/f9b3148a83ace22a3245280dbf0728d28bff15dd))
+* center modals ([b99f4b9](https://github.com/arablocks/ara-file-manager/commit/b99f4b9a4e80a89cbe54a10d712117ff03f86a27))
+* design polish and add account functionality ([c293c85](https://github.com/arablocks/ara-file-manager/commit/c293c858e6670c14a72d3857c2feb2c72a60ff4c))
+* design updates wip ([9cc5498](https://github.com/arablocks/ara-file-manager/commit/9cc5498921ab496519b976e3f9dd2a1ed1916bc3))
+* editable account name ([e46d538](https://github.com/arablocks/ara-file-manager/commit/e46d5381da519d5f790deb620f25d7f883a23be1))
+* gas price modal working for publish ([c28bdd5](https://github.com/arablocks/ara-file-manager/commit/c28bdd53328de92c1475b97bc6577fe7c8b8b81a))
+* gas price/tx recovery for redeem ([1fea357](https://github.com/arablocks/ara-file-manager/commit/1fea3577df60a498e02cb4f886560a7471566103))
+* more callback logic, cleanup to come ([e4469a2](https://github.com/arablocks/ara-file-manager/commit/e4469a25c56f9494ce409e542a03978411cb45f8))
+* more design wip ([9bb83bd](https://github.com/arablocks/ara-file-manager/commit/9bb83bd63930c77d40899e9bfbfecdd7ae68da2f))
+* more fleshed out titlebar ([803a1c1](https://github.com/arablocks/ara-file-manager/commit/803a1c1934f3e061ee72421b4bff803254be43b7))
+* more sidebar wip ([0ff9501](https://github.com/arablocks/ara-file-manager/commit/0ff9501011ef118fe63cc1cc24287c33064078f0))
+* more tweaks and start gas price modal ([58f7453](https://github.com/arablocks/ara-file-manager/commit/58f7453fb9df0227c81e5d5d7e13562e97ef14b6))
+* more WIP update recovery ([bbfada6](https://github.com/arablocks/ara-file-manager/commit/bbfada6bd4224c858fcd02fcae498aaeac6a8d1a))
+* multi account wip ([7f43133](https://github.com/arablocks/ara-file-manager/commit/7f4313399672233dbbe05c7fcc5bd181a291e6e7))
+* publish callbacks + design update wip ([5965a0c](https://github.com/arablocks/ara-file-manager/commit/5965a0c318e02793602bd96e74ee5b6d685a4e72))
+* purchase tx recovery flow ([da15e43](https://github.com/arablocks/ara-file-manager/commit/da15e43556fcc98cc0a450f5af744021ab370a09))
+* purchase tx recovery wip ([aafcf71](https://github.com/arablocks/ara-file-manager/commit/aafcf712a48028c855b8db67dd1be30473532003))
+* sidebar reflects name change ([5e11b48](https://github.com/arablocks/ara-file-manager/commit/5e11b48b6282f42db97ce239a1ed9f661c28db71))
+* sidebar wip ([d81371e](https://github.com/arablocks/ara-file-manager/commit/d81371ecc96372600cd607cfbd622b3cab343fd1))
+* test callbacks ([6d20f2e](https://github.com/arablocks/ara-file-manager/commit/6d20f2e08fd7bfda7877d923070cc74e21ee03ec))
+* tx error handling wip ([be79d03](https://github.com/arablocks/ara-file-manager/commit/be79d03831c908628d0debe1088d5a1eb7f2c91d))
+* WIP custom gas price and update tx recovery ([a9b4989](https://github.com/arablocks/ara-file-manager/commit/a9b4989c19b9cd4793459dba4cf423dabea67be2))
+
+
+
 # [0.13.0](https://github.com/arablocks/ara-file-manager/compare/0.12.3...0.13.0) (2019-12-06)
 
 
