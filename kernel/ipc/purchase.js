@@ -17,7 +17,7 @@ const {
 	files
 } = windowManager.sharedData.fetch('store')
 
-const GAS_TIMEOUT = 25000
+const GAS_TIMEOUT = 60000
 
 let errored = false
 let approved = false
