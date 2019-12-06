@@ -9,11 +9,19 @@ const html = require('nanohtml')
 module.exports = ({ load, modalName, writeHash, priceHash, step }) => {
   const writeLink = new Link({
     children: `Etherscan`,
-    onclick: () => shell.openExternal(`https://ropsten.etherscan.io/tx/${writeHash}`)
+    onclick: () => {
+      writeHash ?
+        shell.openExternal(`https://ropsten.etherscan.io/tx/${writeHash}`) :
+        null
+    }
   })
   const priceLink = new Link({
     children: `Etherscan`,
-    onclick: () => shell.openExternal(`https://ropsten.etherscan.io/tx/${priceHash}`)
+    onclick: () => {
+      priceHash ?
+        shell.openExternal(`https://ropsten.etherscan.io/tx/${priceHash}`) :
+        null
+    }
   })
   const exit = new Button({
     children: 'Exit',
