@@ -9,7 +9,11 @@ const html = require('nanohtml')
 module.exports = ({ load, modalName, hash, step }) => {
   const redeemLink = new Link({
     children: `Etherscan`,
-    onclick: () => shell.openExternal(`https://ropsten.etherscan.io/tx/${hash}`)
+    onclick: () => {
+      hash ?
+        shell.openExternal(`https://ropsten.etherscan.io/tx/${hash}`) :
+        null
+    }
   })
   const exit = new Button({
     children: 'Exit',
