@@ -17,7 +17,7 @@ const { pause } = require('../lib')
 
 const store = windowManager.sharedData.fetch('store')
 
-const GAS_TIMEOUT = 25000
+const GAS_TIMEOUT = 60000
 
 let updated = false
 let errored = false

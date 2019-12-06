@@ -11,7 +11,7 @@ const dispatch = require('../redux/reducers/dispatch')
 const store = windowManager.sharedData.fetch('store')
 const { internalEmitter } = windowManager
 
-const GAS_TIMEOUT = 25000
+const GAS_TIMEOUT = 60000
 
 let errored = false
 let redeemed = false
