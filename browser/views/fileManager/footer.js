@@ -26,14 +26,14 @@ class Footer extends Nanocomponent {
     this.children = {
       downloadButton: new Button({
         children: 'Download Ara Link',
-        cssClass: { opts: { height: 3, fontSize: 14, color: 'teal' } },
+        cssClass: { opts: { height: 3, fontSize: 14, color: 'green' } },
         onclick: () => {
           this.rerender()
         }
       }),
       publishFilebutton: new Button({
         children: 'Publish New File',
-        cssClass: { opts: { height: 3, fontSize: 14, color: 'darkteal' } },
+        cssClass: { opts: { height: 3, fontSize: 14, color: 'teal' } },
         onclick: () => {
           if (!account.pendingPublish) {
             windowManagement.emit({ event: events.OPEN_MANAGE_FILE_VIEW})
@@ -63,7 +63,7 @@ class Footer extends Nanocomponent {
     return {
       cssClass: account.pendingPublish
         ? { name: 'thinBorder', opts: { fontSize: 14 } }
-        : { opts: { height: 3, fontSize: 14, color: 'darkteal' } }
+        : { opts: { height: 3, fontSize: 14, color: 'teal' } }
     }
   }
 
