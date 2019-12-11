@@ -1,8 +1,15 @@
 #!/bin/bash
 echo 'uninstall.sh ---- start'
 echo ''
-echo 'Deleting all the paths where the app may have left files'
-echo 'Includes program, settings, and user document files, this and previous versions, and macOS, Windows, and Linux'
+echo 'This will delete all the paths where the app may have left files'
+echo 'This includes program, settings, and user document files, for this and previous versions, on macOS, Windows, and Linux'
+echo ''
+echo '**** WARNING: THIS WILL DELETE YOUR ~/.ara FOLDER! ****'
+echo ''
+read -p "Are you sure? [y/n]" -n 1 -r
+echo ''
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
 echo ''
 
 rm -rf /Applications/Ara\ File\ Manager.app
@@ -32,3 +39,4 @@ echo 'Now you can reinstall the app as though this computer has never seen it be
 echo ''
 echo 'uninstall.sh ---- done'
 echo ''
+fi
