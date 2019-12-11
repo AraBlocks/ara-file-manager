@@ -142,7 +142,7 @@ async function _onNewGas(step) {
 ipcMain.on(events.GAS_PRICE, async(_, load) => {
   const { step, gasPrice } = load
   const { account, modal } = store
-  if (!step.includes('update'))
+  if (step && !step.includes('update'))
     return
 
   dispatch({ type: events.FEED_MODAL, load: { load: { fileName: load.name } } })
