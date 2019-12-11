@@ -42,7 +42,7 @@ windowManager.setSize = (view) => {
       break
     case 'accountInfo':
       width = 325
-      height = 630
+      height = 530
       break
     case 'developer':
       width = 300
