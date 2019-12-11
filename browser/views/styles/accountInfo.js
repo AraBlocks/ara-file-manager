@@ -39,7 +39,7 @@ module.exports = {
       height: 73px;
       flex-direction: column;
       justify-content: space-between;
-      padding: 3px 0 12px 0;
+      padding: 0px 0 40px 0;
     }
 
     :host b {
@@ -84,8 +84,9 @@ module.exports = {
       border-bottom: 1px solid var(--ara-grey);
       display: flex;
       flex-direction: column;
-      height: 420px;
+      height: 320px;
       justify-content: space-between;
+      padding-top: 10px;
     }
   `,
 
@@ -93,7 +94,8 @@ module.exports = {
     :host {
       border-bottom: 1px solid var(--ara-grey);
       height: 120px;
-      padding-top: 10px
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
 
     :host .container {
@@ -110,7 +112,7 @@ module.exports = {
       flex-direction: column;
       height: 145px;
       justify-content: space-between;
-      padding: 12px 0 20px 0;
+      padding: 25px 0 10px 0;
     }
 
     :host .request-container {
