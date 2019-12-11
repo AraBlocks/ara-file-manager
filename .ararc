@@ -2,7 +2,7 @@
 ;; Ethereum
 [web3]
 provider=ws://127.0.0.1:8546
-network_id=testnet
+network_id=mainnet
 
 [web3.privatenet]
 provider[]=http://127.0.0.1:8545
