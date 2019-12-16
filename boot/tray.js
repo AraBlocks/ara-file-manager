@@ -37,7 +37,7 @@ const buildTray = () => {
       }
     },
     { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(events.LOGOUT) },
-    { label: 'Quit', type: 'normal', click: () => internalEmitter.emit(events.CONFIRM_QUIT) }
+    { label: 'Quit [TODO]', type: 'normal', click: () => internalEmitter.emit(events.CONFIRM_QUIT) }
   ]
 
   //If dev mode, pushes developer option to tray
