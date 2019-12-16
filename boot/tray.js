@@ -3,7 +3,7 @@ const debug = require('debug')('ara:fm:boot:tray')
 const isDev = require('electron-is-dev')
 const { closeWindow, internalEmitter, openWindow } = require('electron-window-manager')
 const { events } = require('k')
-const { Menu, Tray } = require('electron')
+const { app, Menu, Tray } = require('electron')
 const path = require('path')
 
 let tray
@@ -45,7 +45,7 @@ const buildTray = () => {
     && menuItems.push({ label: 'Clean UI', type: 'normal', click: () => internalEmitter.emit(events.CLEAN_UI) })
 
   const quitOrExit = process.platform === 'darwin' ? "Quit [TODO]" : "Exit [TODO]"
-  menuItems.push({ label: quitOrExit, type: 'normal', click: () => internalEmitter.emit(events.CONFIRM_QUIT) })
+  menuItems.push({ label: quitOrExit, type: 'normal', click: () => app.quit() /*internalEmitter.emit(events.CONFIRM_QUIT)*/ })
 
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)
