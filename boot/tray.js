@@ -44,8 +44,8 @@ const buildTray = () => {
     && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer') })
     && menuItems.push({ label: 'Clean UI', type: 'normal', click: () => internalEmitter.emit(events.CLEAN_UI) })
 
-  const quitOrExit = process.platform === 'darwin' ? "Quit [TODO]" : "Exit [TODO]"
-  menuItems.push({ label: quitOrExit, type: 'normal', click: () => app.quit() /*internalEmitter.emit(events.CONFIRM_QUIT)*/ })
+  const quitOrExit = process.platform === 'darwin' ? "Quit" : "Exit"
+  menuItems.push({ label: quitOrExit, type: 'normal', click: () => app.quit()})
 
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)
