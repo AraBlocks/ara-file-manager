@@ -49,7 +49,14 @@ const buildTray = () => {
 
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)
-  tray.on('click', () => tray.popUpContextMenu(contextMenu))
+
+  if (process.platform === 'darwin') {//Mac
+    tray.on('click', () => tray.popUpContextMenu(contextMenu))
+  } else {//Windows and Linux
+    tray.on('click', () => openWindow('filemanager'))
+    tray.on('right-click', () => tray.popUpContextMenu(contextMenu))
+  }
+
   isDev && openWindow('developer')
 }
 
