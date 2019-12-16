@@ -40,7 +40,15 @@ app.on('ready', () => {
 app.on('window-all-closed', () => { })
 
 //"launching the application for the first time, attempting to re-launch the application when it's already running, or clicking on the application's dock or taskbar icon"
-app.on('activate', () => openWindow('filemanager'))
+app.on('activate', function() {
+  console.log("got activate event!");
+  openWindow('filemanager');
+
+
+
+
+
+});
 
 // For Deep Linking
 app.setAsDefaultProtocolClient('ara')
