@@ -39,11 +39,8 @@ app.on('ready', () => {
 //Prevents app from closing when all windows are closed
 app.on('window-all-closed', () => { })
 
-//"launching the application for the first time, attempting to re-launch the application when it's already running, or clicking on the application's dock or taskbar icon"
-app.on('activate', function() {
-  console.log("got app on activate!!");
-  windowManager.openWindow('filemanager');
-});
+// The user clicked our icon on the dock after closing the window, open it again
+app.on('activate', () => windowManager.openWindow('filemanager'))
 
 // For Deep Linking
 app.setAsDefaultProtocolClient('ara')

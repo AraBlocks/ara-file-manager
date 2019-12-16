@@ -53,10 +53,7 @@ const buildTray = () => {
   if (process.platform === 'darwin') {//Mac
     tray.on('click', () => tray.popUpContextMenu(contextMenu))
   } else {//Windows and Linux
-    tray.on('click', function() {
-      console.log("got tray on click!!");
-      openWindow('filemanager');//TODO app.on('activate') should be all we need, though
-    });
+    tray.on('click', () => openWindow('filemanager'))//TODO app.on('activate') should be all we need, though
     tray.on('right-click', () => tray.popUpContextMenu(contextMenu))
   }
 
