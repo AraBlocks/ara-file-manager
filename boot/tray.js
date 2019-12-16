@@ -36,14 +36,16 @@ const buildTray = () => {
         closeWindow('registration')
       }
     },
-    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(events.LOGOUT) },
-    { label: 'Quit [TODO]', type: 'normal', click: () => internalEmitter.emit(events.CONFIRM_QUIT) }
+    { label: 'Log Out', type: 'normal', visible: false, click: () => internalEmitter.emit(events.LOGOUT) }
   ]
 
   //If dev mode, pushes developer option to tray
   isDev
     && menuItems.push({ label: 'Developer', type: 'normal', click: () => openWindow('developer') })
     && menuItems.push({ label: 'Clean UI', type: 'normal', click: () => internalEmitter.emit(events.CLEAN_UI) })
+
+  const quitOrExit = process.platform === 'darwin' ? "Quit [TODO]" : "Exit [TODO]"
+  menuItems.push({ label: quitOrExit, type: 'normal', click: () => internalEmitter.emit(events.CONFIRM_QUIT) })
 
   //Creates context menu and adds onclick listener to tray
   contextMenu = Menu.buildFromTemplate(menuItems)
