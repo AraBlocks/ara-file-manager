@@ -109,7 +109,7 @@ class AccountInfo extends Nanocomponent {
 
     return html`
       <div class="${styles.container} accountInfo-container">
-        ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html``}
+        ${utils.shouldShowBanner(props.network) ? TestnetBanner() : html`<div></div>`}
         <div class="${styles.accountOverview} accountInfo-accountOverview">
           <div class="${styles.banner} accountInfo-banner">Account</div>
             <div class="${styles.descriptionSection} accountInfo-descriptionSection">
@@ -139,6 +139,10 @@ class AccountInfo extends Nanocomponent {
             </div>
           </div>
           <div class="${styles.interactiveSection} accountInfo-interactiveSection">
+            ${utils.shouldShowBanner(props.network) ? html`<div class="request-container">
+              <b>Request test tokens:</b>
+              ${children.requestTokensButton.render(faucetButtonOpts)}
+            </div>` : html``}
             <div class="send-container">
               <b>Send tokens to another account:</b>
               ${children.sendTokensButton.render({})}
@@ -146,6 +150,7 @@ class AccountInfo extends Nanocomponent {
           </div>
         </div>
         <div class="${styles.appInfo} accountInfo-appInfo">
+            ${utils.shouldShowBanner(props.network) ? html`<div>Note: Tokens will only work on testnet.</div>` : html``}
           <div class="link-holder">
             <a onclick=${toggleAnalyticsPermission}>
               ${props.analyticsPermission ? 'Disable Analytics' : 'Enable Analytics' }
