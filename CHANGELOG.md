@@ -1,3 +1,7 @@
+## [1.1.2](https://github.com/arablocks/ara-file-manager/compare/1.1.1...1.1.2) (2019-12-17)
+
+
+
 ## [1.1.1](https://github.com/arablocks/ara-file-manager/compare/0.13.0...1.1.1) (2019-12-17)
 
 
@@ -192,7 +196,6 @@
 * **errorInput:** referenced props instead of defunct state ([54eb714](https://github.com/arablocks/ara-file-manager/commit/54eb714db27db5326c4565db4f16586061a89935))
 * **errorInput:** referenced props instead of defunct state ([c7e6341](https://github.com/arablocks/ara-file-manager/commit/c7e63413658843235cad944d72b74f64aa78be9c))
 * **tray:** created proper flow for register via tray ([9866fb2](https://github.com/arablocks/ara-file-manager/commit/9866fb2a57795dea46b02f1bc8d8fbd549f7623f))
-* **update.js:** renders package name in modal ([9103c9b](https://github.com/arablocks/ara-file-manager/commit/9103c9b809e7870c335e4f179d44898590a4fc86))
 
 
 ### Features
@@ -203,7 +206,6 @@
 ### Reverts
 
 * Revert "refactor(kernel/): Clean up folder structure" ([ef36cb1](https://github.com/arablocks/ara-file-manager/commit/ef36cb18c55a84d527034c96e7bfdfa283b44794))
-* Revert "refactor(kernel/): Clean up folder structure" ([5370d3e](https://github.com/arablocks/ara-file-manager/commit/5370d3ec9b35ddd15f86b20ac2237688b9cca673))
 
 
 
@@ -213,6 +215,7 @@
 ### Bug Fixes
 
 * **squirrel:** fixed version check ([2367bcb](https://github.com/arablocks/ara-file-manager/commit/2367bcb80e29ba34592f42f37a117d3224e28804))
+* **update.js:** renders package name in modal ([9103c9b](https://github.com/arablocks/ara-file-manager/commit/9103c9b809e7870c335e4f179d44898590a4fc86))
 
 
 ### Features
@@ -223,6 +226,7 @@
 ### Reverts
 
 * Revert "refactor(kernel/): Clean up folder structure" ([0b14b1e](https://github.com/arablocks/ara-file-manager/commit/0b14b1e5b7d86875822f4adb9b4373b673c9471d))
+* Revert "refactor(kernel/): Clean up folder structure" ([5370d3e](https://github.com/arablocks/ara-file-manager/commit/5370d3ec9b35ddd15f86b20ac2237688b9cca673))
 
 
 
@@ -598,6 +602,16 @@
 ## [0.1.2](https://github.com/arablocks/ara-file-manager/compare/0.1.1...0.1.2) (2018-11-16)
 
 
+### Features
+
+* Ping all views for pending transaction state([#236](https://github.com/arablocks/ara-file-manager/issues/236)) ([41acebc](https://github.com/arablocks/ara-file-manager/commit/41acebcf859d3cda5f6dd071feb8bdf36fb2311a))
+* Restyled fileManager ([987e2df](https://github.com/arablocks/ara-file-manager/commit/987e2df0e84d81ce555c88e8c83f548131715fdb))
+
+
+
+## [0.1.1](https://github.com/arablocks/ara-file-manager/compare/0.1.0...0.1.1) (2018-11-14)
+
+
 ### Bug Fixes
 
 * **afsFileRow.js:** added :before element for better ux ([5db1cdf](https://github.com/arablocks/ara-file-manager/commit/5db1cdf2439038e7468e23acc1de9633daa2d692))
@@ -606,28 +620,14 @@
 
 ### Features
 
-* PE-578 Handle pending transactions ([#231](https://github.com/arablocks/ara-file-manager/issues/231)) ([f618caa](https://github.com/arablocks/ara-file-manager/commit/f618caa467306e8d480d52242049a43fc6b8a883))
-* Ping all views for pending transaction state([#236](https://github.com/arablocks/ara-file-manager/issues/236)) ([41acebc](https://github.com/arablocks/ara-file-manager/commit/41acebcf859d3cda5f6dd071feb8bdf36fb2311a))
-* Restyled fileManager ([987e2df](https://github.com/arablocks/ara-file-manager/commit/987e2df0e84d81ce555c88e8c83f548131715fdb))
-
-
-### Reverts
-
-* Revert "Mr subscribe rewards allocated" (#229) ([98678b9](https://github.com/arablocks/ara-file-manager/commit/98678b98ee23aabbce2c0afb131120134be699bd)), closes [#229](https://github.com/arablocks/ara-file-manager/issues/229)
-
-
-
-## [0.1.1](https://github.com/arablocks/ara-file-manager/compare/0.1.0...0.1.1) (2018-11-14)
-
-
-### Features
-
 * PE-578 Handle pending transactions ([#227](https://github.com/arablocks/ara-file-manager/issues/227)) ([d3c4971](https://github.com/arablocks/ara-file-manager/commit/d3c4971680247ae00c6622cc951cd4a20a7690ef))
+* PE-578 Handle pending transactions ([#231](https://github.com/arablocks/ara-file-manager/issues/231)) ([f618caa](https://github.com/arablocks/ara-file-manager/commit/f618caa467306e8d480d52242049a43fc6b8a883))
 
 
 ### Reverts
 
 * Revert "feat(): PE-578 Handle pending transactions (#227)" (#230) ([043f011](https://github.com/arablocks/ara-file-manager/commit/043f0110440110725bbfb3a770ea8c0f57684122)), closes [#227](https://github.com/arablocks/ara-file-manager/issues/227) [#230](https://github.com/arablocks/ara-file-manager/issues/230)
+* Revert "Mr subscribe rewards allocated" (#229) ([98678b9](https://github.com/arablocks/ara-file-manager/commit/98678b98ee23aabbce2c0afb131120134be699bd)), closes [#229](https://github.com/arablocks/ara-file-manager/issues/229)
 
 
 
