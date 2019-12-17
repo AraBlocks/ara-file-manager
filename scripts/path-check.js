@@ -16,6 +16,8 @@ So, here's a script that can take a look at your node_modules path depth situati
 Pass it a folder name like node_modules to look in that folder
 
 $ node ./scripts/path-check.js node_modules
+
+TODO
 */
 
 const fs = require('fs');
@@ -25,7 +27,7 @@ const path = require('path');
 // Look at the given folder, and tabulate the following results
 let startPath = path.resolve(process.argv[2]);
 let results = {
-  size: 0n, // Total size of all the files we find, a bigint just in case
+  size: 0, // Total size of all the files we find, a bigint just in case
   files: 0, // Total count of files
   folders: 0, // Total count of folders
   longest: "", // Longest path found
@@ -41,6 +43,11 @@ recursiveSpelunker(startPath);
 // Search the given folder to find and count files and subfolders
 function recursiveSpelunker(folderPath) {
   fs.readdirSync(folderPath, {withFileTypes: true}).forEach(foundItem => {
+
+    console.log("type of found item is: " + typeof foundItem);
+
+
+
     let foundPath = path.join(folderPath, foundItem.name);
     countItem(folderPath, foundPath, foundItem);
     if (foundItem.isDirectory()) {
