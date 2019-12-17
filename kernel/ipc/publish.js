@@ -94,7 +94,7 @@ ipcMain.on(events.GAS_PRICE, async(_, { gasPrice, step = 'publish' }) => {
     const gasEstimate = Number(await araFilesystem.commit({
       did,
       estimate: true,
-      estimateDid: networkKeys.ESTIMATE_PROXY_DID,
+      estimateDid: store.application.network === 'main' ? networkKeys.ESTIMATE_PROXY_DID : networkKeys.TESTNET_ESTIMATE_PROXY_DID,
       password,
       gasPrice,
       price: Number(price)
