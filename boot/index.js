@@ -39,6 +39,9 @@ app.on('ready', () => {
 //Prevents app from closing when all windows are closed
 app.on('window-all-closed', () => { })
 
+// The user clicked our icon on the dock after closing the window, open it again
+app.on('activate', () => windowManager.openWindow('filemanager'))
+
 // For Deep Linking
 app.setAsDefaultProtocolClient('ara')
 app.on('open-url', handleDeepLink)
