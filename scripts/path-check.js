@@ -16,8 +16,6 @@ So, here's a script that can take a look at your node_modules path depth situati
 Pass it a folder name like node_modules to look in that folder
 
 $ node ./scripts/path-check.js node_modules
-
-TODO
 */
 
 const fs = require('fs');
@@ -68,7 +66,7 @@ function countItem(folderPath, foundPath, foundItem) {
   if (foundItem.isFile()) {
 
     results.files++;
-    let stats = fs.statSync(foundPath, {bigint: true});
+    let stats = fs.statSync(foundPath);
     results.size += stats.size;
 
   } else if (foundItem.isDirectory()) {
