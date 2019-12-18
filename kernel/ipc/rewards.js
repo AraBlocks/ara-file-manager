@@ -91,14 +91,14 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
     dispatch({ type: events.REDEEMING_REWARDS, load: { did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    this.startTimer = (_) => {
+    this.startTimer = (progressStep) => {
       setTimeout(
         () => {
           let trigger = !(redeemed || errored)
           debug('timeout', trigger)
           if (trigger) {
-            dispatch({ type: events.REDEEM_PROGRESS, load: { step: _ } })
-            windowManager.pingView({ view: 'redeemProgressModal', event: events.REFRESH })
+            dispatch({ type: events.ONE_STEP_PROGRESS, load: { step: progressStep } })
+            windowManager.pingView({ view: 'oneStepProgressModal', event: events.REFRESH })
           }
         }, GAS_TIMEOUT
       )
@@ -106,7 +106,7 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
 
     let value
     autoQueue.clear()
-    this.startTimer('retryredeem')
+    this.startTimer('retry')
     await new Promise(async (resolve, reject) => {
       [value] = await autoQueue.push(() => rewards.redeem({
         farmerDid: account.userDID,
@@ -115,19 +115,27 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
         gasPrice: load.gasPrice,
         onhash: hash => {
           debug('redeem tx hash: %s', hash)
-          dispatch({ type: events.REDEEM_PROGRESS, load: { hash, step: 'redeem', network: store.application.network }})
-          windowManager.openModal('redeemProgressModal')
+          dispatch({
+            type: events.ONE_STEP_PROGRESS,
+            load: {
+              modalName: 'Redeeming',
+              hash,
+              network: store.application.network,
+              retryEvent: events.REDEEM_NEW_GAS,
+              stepName: 'Redeeming'
+            }})
+          windowManager.openModal('oneStepProgressModal')
         },
         onreceipt: receipt => {
           debug('redeem tx receipt:', receipt)
           redeemed = true
-          windowManager.closeModal('redeemProgressModal')
+          windowManager.closeModal('oneStepProgressModal')
           resolve()
         },
         onerror: error => {
           debug('redeem tx error:', error)
           errored = true
-          windowManager.closeModal('redeemProgressModal')
+          windowManager.closeModal('oneStepProgressModal')
           reject()
         }
       }))

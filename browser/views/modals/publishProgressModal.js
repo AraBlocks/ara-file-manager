@@ -7,7 +7,6 @@ const styles = require('./styles')
 const html = require('nanohtml')
 
 module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step, network }) => {
-  console.log('PUBLISH PROGRESS STATE', state)
   const deployLink = new Link({
     children: `Etherscan`,
     onclick: () => {
