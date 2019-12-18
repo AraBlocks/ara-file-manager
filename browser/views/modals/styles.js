@@ -153,6 +153,15 @@ module.exports = {
     }
   `,
 
+  threeStepProgressContainer: css`
+    :host {
+      display: flex;
+      height: 70%;
+      width: 100%;
+      margin-top: 5%;
+    }
+  `,
+
   link: css`
     :host {
       overflow: hidden;
@@ -330,13 +339,33 @@ module.exports = {
     }
   `,
 
+  stepOne: css`
+    :host {
+      width: 25%;
+      margin-left: 10%;
+    }
+  `,
+
   writing: css`
     :host {
       width: 50%;
     }
   `,
 
+  stepTwo: css`
+    :host {
+      width: 50%;
+    }
+  `,
+
   finalizing: css`
+    :host {
+      width: 25%;
+      margin-right: 10%;
+    }
+  `,
+
+  stepThree: css`
     :host {
       width: 25%;
       margin-right: 10%;
