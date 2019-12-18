@@ -45,47 +45,50 @@ async function trackScreenView(screen) {
   session.pageview(screen, a.APP_NAME, screen).send()
 }
 
-function trackDownloadFinish() {
+async function trackDownloadFinish() {
   debug('GA: trackDownloadFinish')
-  trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+  return trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
-function trackDownloadStart() {
+async function trackDownloadStart() {
   debug('GA: trackDownloadStart')
-  trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+  return trackEvent(a.CATEGORY.DOWNLOAD, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
-function trackPublishFinish() {
+async function trackPublishFinish() {
   debug('GA: trackPublishFinish')
-  trackEvent(a.CATEGORY.PUBLISH, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+  return trackEvent(a.CATEGORY.PUBLISH, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
-function trackPublishStart() {
+async function trackPublishStart() {
   debug('GA: trackPublishStart')
-  trackEvent(a.CATEGORY.PUBLISH, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+  return trackEvent(a.CATEGORY.PUBLISH, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
-function trackPurchaseFinish() {
+async function trackPurchaseFinish() {
   debug('GA: trackPurchaseFinsish')
-  trackEvent(a.CATEGORY.PURCHASE, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+  return trackEvent(a.CATEGORY.PURCHASE, a.ACTION.FINISH_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
-function trackPurchaseStart() {
+async function trackPurchaseStart() {
   debug('GA: trackPurchaseStart')
-  trackEvent(a.CATEGORY.PURCHASE, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
+  return trackEvent(a.CATEGORY.PURCHASE, a.ACTION.START_TIME, a.LABEL.AFS_CONTENT, _makeTimeStamp())
 }
 
 async function trackEvent(category, action, label, value) {
   if (!hasAnalyticsPermission()) { return }
   const session = await getSession()
-  session.event({
+  const event = session.event({
     ec: category,
     ea: action,
     el: label,
     ev: value,
     av: version,
     an: a.APP_NAME
-  }, logErr).send()
+  }, logErr)
+  console.log('TRACK EVENT', event)
+
+  event.send()
 
   function logErr(err) {
     if (err) {
