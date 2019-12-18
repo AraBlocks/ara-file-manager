@@ -379,7 +379,21 @@ module.exports = {
     }
   `,
 
+  twoSteps: css`
+    :host {
+      margin-top: 5%;
+      width: 50%;
+    }
+  `,
+
   singleTx: css`
+    :host {
+      margin-top: 10%;
+      width: 100%;
+    }
+  `,
+
+  oneStep: css`
     :host {
       margin-top: 10%;
       width: 100%;

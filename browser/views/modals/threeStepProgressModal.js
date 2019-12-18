@@ -6,7 +6,7 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, stepOneHash, stepTwoHash, stepThreeHash, step, network, retryEvent }) => {
+module.exports = ({ load, modalName, stepOneHash, stepTwoHash, stepThreeHash, step, network, retryEvent, stepNames }) => {
   const stepOneLink = new Link({
     children: `Etherscan`,
     onclick: () => {
@@ -48,7 +48,7 @@ module.exports = ({ load, modalName, stepOneHash, stepTwoHash, stepThreeHash, st
             ${step && step.includes('One') ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
-            Creating
+            ${stepNames[1]}
           </div>
           <div>
             ${stepOneLink.render()}
@@ -68,7 +68,7 @@ module.exports = ({ load, modalName, stepOneHash, stepTwoHash, stepThreeHash, st
             ${step && step.includes('Two') ? spinnerBar() : html`<div class="${styles.circle({ color: step && step.includes('Three') ? 'green' : 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
-            Writing
+            ${stepNames[2]}
           </div>
           <div>
             ${stepTwoHash ? stepTwoLink.render() : null}
@@ -88,7 +88,7 @@ module.exports = ({ load, modalName, stepOneHash, stepTwoHash, stepThreeHash, st
             ${step && step.includes('Three') ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
-            Finalizing
+            ${stepNames[2]}
           </div>
           <div>
             ${stepThreeHash ? stepThreeLink.render() : null}

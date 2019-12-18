@@ -18,7 +18,7 @@ const dispatch = require('../redux/reducers/dispatch')
 const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
 
-const GAS_TIMEOUT = 60000
+const GAS_TIMEOUT = 10000
 
 let errored = false
 let deployed = false
@@ -164,8 +164,19 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     this.onhash = (progressStep, hash) => {
       debug('%s tx hash: %s', progressStep, hash)
-      const load = { modalName: 'Publishing', step: getStepNumber(progressStep), [`${progressStep}Hash`]: hash, network: store.application.network, retryEvent: events.PUBLISH_NEW_GAS }
-      dispatch({ type: events.PUBLISH_PROGRESS, load })
+      const load = {
+        modalName: 'Publishing',
+        step: getStepNumber(progressStep),
+        stepNames: {
+          1: 'Creating',
+          2: 'Writing',
+          3: 'Finalizing'
+        },
+        [`${getStepNumber(progressStep)}Hash`]: hash,
+        network: store.application.network,
+        retryEvent: events.PUBLISH_NEW_GAS
+      }
+      dispatch({ type: events.THREE_STEP_PROGRESS, load })
       windowManager.openModal('threeStepProgressModal')
       windowManager.pingView({ view: 'threeStepProgressModal', event: events.REFRESH, load })
     }
@@ -208,7 +219,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
           }
           debug('timeout', trigger)
           if (trigger) {
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: progressStep } })
+            dispatch({ type: events.THREE_STEP_PROGRESS, load: { step: progressStep } })
             windowManager.pingView({ view: 'threeStepProgressModal', event: events.REFRESH })
           }
         }, GAS_TIMEOUT
