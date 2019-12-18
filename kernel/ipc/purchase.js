@@ -176,6 +176,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
               trigger = !(purchased || errored)
               type = events.TWO_STEP_PROGRESS
               view = 'twoStepProgressModal'
+              break
             case 'retryPurchase':
               trigger = !(purchased || errored)
               type = events.ONE_STEP_PROGRESS
@@ -247,6 +248,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
             dispatch({ type: events.TWO_STEP_PROGRESS, load })
             windowManager.pingView({ view: 'twoStepProgressModal', event: events.REFRESH, load })
           } else {
+            approved = true
             const load = {
               modalName: 'Purchasing',
               hash,
@@ -255,7 +257,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
               stepName: 'Purchasing'
             }
             dispatch({ type: events.ONE_STEP_PROGRESS, load })
-            windowManager.openModal({ view: 'oneStepProgressModal' })
+            windowManager.openModal('oneStepProgressModal')
           }
         },
         onreceipt: receipt => {
