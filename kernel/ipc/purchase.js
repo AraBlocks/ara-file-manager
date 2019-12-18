@@ -133,61 +133,91 @@ ipcMain.on(events.GAS_PRICE, async(_, load) => {
 
 ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
 	const { autoQueue } = account
-  const { step } = load
+  const {
+    gasEstimate,
+    gasPrice,
+    fileName,
+    price,
+    step,
+    fee,
+    did
+  } = load
 	debug('%s heard:', events.CONFIRM_PURCHASE, load)
 	analytics.trackPurchaseStart()
 	try {
-		if (account.ethBalance < load.gasEstimate) {
+		if (account.ethBalance < gasEstimate) {
 			throw new Error('Not enough eth')
 		}
 
-		if (account.araBalance < load.price + load.fee) { throw new Error('Not enough Ara') }
+		if (account.araBalance < price + fee) { throw new Error('Not enough Ara') }
 
 		const descriptorOpts = {
 			peers: 1,
-			name: load.fileName,
+			name: fileName,
 			status: events.PURCHASING,
 		}
-		const descriptor = await descriptorGeneration.makeDescriptor(load.did, descriptorOpts)
+		const descriptor = await descriptorGeneration.makeDescriptor(did, descriptorOpts)
 		dispatch({ type: events.PURCHASING, load: descriptor })
 		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    this.startTimer = (_) => {
+    this.startTimer = (progressStep) => {
       setTimeout(
         () => {
           let trigger = false
-          switch (_) {
-            case 'retryapprove':
+          let type
+          let view
+          switch (progressStep) {
+            case 'retryStepOne':
               trigger = !(approved || errored)
+              type = events.TWO_STEP_PROGRESS
+              view = 'twoStepProgressModal'
               break
-            case 'retrypurchase':
+            case 'retryStepTwo':
               trigger = !(purchased || errored)
+              type = events.TWO_STEP_PROGRESS
+              view = 'twoStepProgressModal'
+            case 'retryPurchase':
+              trigger = !(purchased || errored)
+              type = events.ONE_STEP_PROGRESS
+              view = 'oneStepProgressModal'
               break
           }
           debug('timeout', trigger)
           if (trigger) {
-            dispatch({ type: events.PURCHASE_PROGRESS, load: { step: _ } })
-            windowManager.pingView({ view: 'purchaseProgressModal', event: events.REFRESH })
+            dispatch({ type, load: { step: progressStep } })
+            windowManager.pingView({ view, event: events.REFRESH })
           }
         }, GAS_TIMEOUT
       )
     }
 
 		const itemLoad = {
-      contentDID: load.did,
+      contentDID: did,
       password: account.password,
       userDID: account.userDID,
-      gasPrice: load.gasPrice,
+      gasPrice: gasPrice,
       approveCallbacks: {
         onhash: hash => {
           debug('approve tx hash: %s', hash)
-          dispatch({ type: events.PURCHASE_PROGRESS, load: { approveHash: hash, step: 'approve', network: application.network }})
-          windowManager.openModal('purchaseProgressModal')
+          dispatch({
+            type: events.TWO_STEP_PROGRESS,
+            load: {
+              modalName: 'Purchasing',
+              stepOneHash: hash,
+              step: 'stepOne',
+              network: application.network,
+              retryEvent: events.PURCHASE_NEW_GAS,
+              stepNames: {
+                1: 'Approving',
+                2: 'Purchasing'
+              }
+            }})
+          windowManager.openModal('twoStepProgressModal')
         },
         onreceipt: receipt => {
           debug('approve tx receipt:', receipt)
           approved = true
-          this.startTimer('retrypurchase')
+          this.startTimer('retryStepTwo')
         },
         onerror: error => {
           debug('approve tx error:', error)
@@ -200,40 +230,58 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
               }
             }
           })
-          windowManager.closeModal('purchaseProgressModal')
+          windowManager.closeModal('twoStepProgressModal')
           windowManager.openModal('generalActionModal')
         }
       },
       purchaseCallbacks: {
         onhash: hash => {
           debug('purchase tx hash: %s', hash)
-          dispatch({ type: events.PURCHASE_PROGRESS, load: { purchaseHash: hash, step: 'purchase' } })
-          windowManager.pingView({ view: 'purchaseProgressModal', event: events.REFRESH, load: { purchaseHash: hash, step: 'purchase' } })
+          if (0 < price) {
+            const load = {
+              stepTwoHash: hash,
+              step: 'stepTwo',
+              network: application.network,
+              retryEvent: events.PURCHASE_NEW_GAS
+            }
+            dispatch({ type: events.TWO_STEP_PROGRESS, load })
+            windowManager.pingView({ view: 'twoStepProgressModal', event: events.REFRESH, load })
+          } else {
+            const load = {
+              modalName: 'Purchasing',
+              hash,
+              network: application.network,
+              retryEvent: events.PURCHASE_NEW_GAS,
+              stepName: 'Purchasing'
+            }
+            dispatch({ type: events.ONE_STEP_PROGRESS, load })
+            windowManager.openModal({ view: 'oneStepProgressModal' })
+          }
         },
         onreceipt: receipt => {
           debug('purchase tx receipt:', receipt)
           purchased = true
-          windowManager.closeModal('purchaseProgressModal')
+          0 < price ? windowManager.closeModal('twoStepProgressModal') : windowManager.closeModal('oneStepProgressModal')
         },
         onerror: error => {
           debug('purchase tx error:', error)
           errored = true
-          windowManager.closeModal('purchaseProgressModal')
+          0 < price ? windowManager.closeModal('twoStepProgressModal') : windowManager.closeModal('oneStepProgressModal')
         }
       }
     }
 
     let jobId = null
-    if ('approve' === step) {
+    if ('approve' === step && 0 < price) {
       autoQueue.clear()
-      this.startTimer('retryapprove');
+      this.startTimer('retryStepOne');
   		([jobId] = await autoQueue.push(
   			() => act.purchaseItem(itemLoad),
   			analytics.trackPurchaseFinish
   		))
-    } else if ('purchase' === step) {
+    } else {
       autoQueue.clear()
-      this.startTimer('retrypurchase');
+      this.startTimer('retryPurchase');
       ([jobId] = await autoQueue.push(
         () => act.purchaseItem(Object.assign(itemLoad, { approve: false })),
         analytics.trackPurchaseFinish
@@ -242,7 +290,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
 
     if (approved && purchased) {
   		const araBalance = await act.getAraBalance(account.userDID)
-  		dispatch({ type: events.PURCHASED, load: { araBalance, jobId, did: load.did } })
+  		dispatch({ type: events.PURCHASED, load: { araBalance, jobId, did: did } })
   		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
   		dispatch({
@@ -255,14 +303,14 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
   		})
   		windowManager.openModal('generalActionModal')
 
-  		const rewardsSub = await act.subscribeRewardsAllocated(load.did, account.accountAddress, account.userDID)
-  		const updateSub = await act.subscribeAFSUpdates(load.did)
+  		const rewardsSub = await act.subscribeRewardsAllocated(did, account.accountAddress, account.userDID)
+  		const updateSub = await act.subscribeAFSUpdates(did)
 
   		dispatch({ type: events.GOT_PURCHASED_SUBS, load: { rewardsSub, updateSub } })
     }
 	} catch (err) {
     debug('Err in %s: %o', 'purchase', err)
-		dispatch({ type: events.ERROR_PURCHASING, load: { did: load.did } })
+		dispatch({ type: events.ERROR_PURCHASING, load: { did } })
 		windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 	}
 })

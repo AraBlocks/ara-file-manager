@@ -337,6 +337,14 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
             onerror: error => {
               debug('write tx error:', error)
               errored = true
+              dispatch({ type: events.FEED_MODAL,
+                load: {
+                  modalName: 'transactionError',
+                  callback: () => {
+                    internalEmitter.emit(events.UPDATE_NEW_GAS, true, { step: 'stepOne' })
+                  }
+                }
+              })
               windowManager.closeModal('twoStepProgressModal')
             }
           },

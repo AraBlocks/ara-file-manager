@@ -164,21 +164,28 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     this.onhash = (progressStep, hash) => {
       debug('%s tx hash: %s', progressStep, hash)
+      let stepNames = {
+        1: 'Creating',
+        2: 'Writing'
+      }
+      let type = events.TWO_STEP_PROGRESS
+      let view = 'twoStepProgressModal'
+      if (0 < price) {
+        stepNames = Object.assign(stepNames, { 3: 'Finalizing' })
+        type = events.THREE_STEP_PROGRESS
+        view = 'threeStepProgressModal'
+      }
       const load = {
         modalName: 'Publishing',
         step: getStepNumber(progressStep),
-        stepNames: {
-          1: 'Creating',
-          2: 'Writing',
-          3: 'Finalizing'
-        },
+        stepNames,
         [`${getStepNumber(progressStep)}Hash`]: hash,
         network: store.application.network,
         retryEvent: events.PUBLISH_NEW_GAS
       }
       dispatch({ type: events.THREE_STEP_PROGRESS, load })
-      windowManager.openModal('threeStepProgressModal')
-      windowManager.pingView({ view: 'threeStepProgressModal', event: events.REFRESH, load })
+      windowManager.openModal(view)
+      windowManager.pingView({ view, event: events.REFRESH, load })
     }
 
     this.onreceipt = (progressStep, receipt) => {
@@ -198,7 +205,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
           }
         }
       })
-      windowManager.closeModal('threeStepProgressModal')
+      0 < price ? windowManager.closeModal('threeStepProgressModal') : windowManager.closeModal('twoStepProgressModal')
       windowManager.openModal('generalActionModal')
     }
 
@@ -219,8 +226,8 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
           }
           debug('timeout', trigger)
           if (trigger) {
-            dispatch({ type: events.THREE_STEP_PROGRESS, load: { step: progressStep } })
-            windowManager.pingView({ view: 'threeStepProgressModal', event: events.REFRESH })
+            dispatch({ type: 0 < price ? events.THREE_STEP_PROGRESS : events.TWO_STEP_PROGRESS, load: { step: progressStep } })
+            windowManager.pingView({ view: 0 < price ? 'threeStepProgressModal' : 'twoStepProgressModal', event: events.REFRESH })
           }
         }, GAS_TIMEOUT
       )
@@ -271,7 +278,13 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
               onreceipt: (receipt) => {
                 this.onreceipt('write', receipt)
                 written = true
-                this.startTimer('retryStepThree')
+                if (0 < price) {
+                  this.startTimer('retryStepThree')
+                } else {
+                  priced = true
+                  windowManager.closeModal('twoStepProgressModal')
+                  resolve() 
+                }
               },
               onerror: (error) => {
                 if (!written) {
