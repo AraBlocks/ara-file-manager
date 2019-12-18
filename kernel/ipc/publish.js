@@ -164,7 +164,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     this.onhash = (_, hash) => {
       debug('%s tx hash: %s', _, hash)
-      const load = { step: _, [`${_}Hash`]: hash }
+      const load = { step: _, [`${_}Hash`]: hash, network: store.application.network }
       dispatch({ type: events.PUBLISH_PROGRESS, load })
       windowManager.openModal('publishProgressModal')
       windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load })

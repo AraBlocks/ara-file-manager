@@ -6,12 +6,12 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, approveHash, purchaseHash, step }) => {
+module.exports = ({ load, modalName, approveHash, purchaseHash, step, network }) => {
   const approveLink = new Link({
     children: `Etherscan`,
     onclick: () => {
       approveHash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${approveHash}`) :
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${approveHash}` : `https://ropsten.etherscan.io/tx/${approveHash}`) :
         null
     }
   })
@@ -19,7 +19,7 @@ module.exports = ({ load, modalName, approveHash, purchaseHash, step }) => {
     children: `Etherscan`,
     onclick: () => {
       purchaseHash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${purchaseHash}`) :
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${purchaseHash}` : `https://ropsten.etherscan.io/tx/${purchaseHash}`) :
         null
     }
   })

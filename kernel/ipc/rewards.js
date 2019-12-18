@@ -115,7 +115,7 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
         gasPrice: load.gasPrice,
         onhash: hash => {
           debug('redeem tx hash: %s', hash)
-          dispatch({ type: events.REDEEM_PROGRESS, load: { hash, step: 'redeem' }})
+          dispatch({ type: events.REDEEM_PROGRESS, load: { hash, step: 'redeem', network: store.application.network }})
           windowManager.openModal('redeemProgressModal')
         },
         onreceipt: receipt => {

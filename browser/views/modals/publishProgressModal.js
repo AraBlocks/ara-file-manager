@@ -6,12 +6,13 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step }) => {
+module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step, network }) => {
+  console.log('PUBLISH PROGRESS STATE', state)
   const deployLink = new Link({
     children: `Etherscan`,
     onclick: () => {
       deployHash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${deployHash}`) :
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${deployHash}` : `https://ropsten.etherscan.io/tx/${deployHash}`) :
         null
     }
   })
@@ -19,7 +20,7 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step }) =
     children: `Etherscan`,
     onclick: () => {
       writeHash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${writeHash}`) :
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${writeHash}` : `https://ropsten.etherscan.io/tx/${writeHash}`) :
         null
     }
   })
@@ -27,7 +28,7 @@ module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step }) =
     children: `Etherscan`,
     onclick: () => {
       priceHash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${priceHash}`) :
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${priceHash}` : `https://ropsten.etherscan.io/tx/${priceHash}`) :
         null
     }
   })

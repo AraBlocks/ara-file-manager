@@ -11,6 +11,7 @@ const { act, analytics, descriptorGeneration, utils } = require('../daemons')
 const dispatch = require('../redux/reducers/dispatch')
 
 const {
+  application,
 	account,
 	farmer,
   modal,
@@ -180,7 +181,7 @@ ipcMain.on(events.CONFIRM_PURCHASE, async (_, load) => {
       approveCallbacks: {
         onhash: hash => {
           debug('approve tx hash: %s', hash)
-          dispatch({ type: events.PURCHASE_PROGRESS, load: { approveHash: hash, step: 'approve' }})
+          dispatch({ type: events.PURCHASE_PROGRESS, load: { approveHash: hash, step: 'approve', network: application.network }})
           windowManager.openModal('purchaseProgressModal')
         },
         onreceipt: receipt => {

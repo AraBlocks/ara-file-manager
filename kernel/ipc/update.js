@@ -227,7 +227,7 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
           gasPrice: load.gasPrice,
           onhash: hash => {
             debug('price tx hash: %s', hash)
-            dispatch({ type: events.UPDATE_PROGRESS, load: { priceHash: hash, step: 'updateprice' }})
+            dispatch({ type: events.UPDATE_PROGRESS, load: { priceHash: hash, step: 'updateprice', network: store.application.network }})
             windowManager.openModal('updateProgressModal')
           },
           onreceipt: receipt => {

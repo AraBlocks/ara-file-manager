@@ -6,12 +6,12 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, hash, step }) => {
+module.exports = ({ load, modalName, hash, step, network }) => {
   const redeemLink = new Link({
     children: `Etherscan`,
     onclick: () => {
       hash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${hash}`) :
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${hash}` : `https://ropsten.etherscan.io/tx/${hash}`) :
         null
     }
   })

@@ -29,15 +29,18 @@ module.exports = (state, { load = null, type }) => {
       state.data.deployHash = load.deployHash || state.data.deployHash
     case events.UPDATE_PROGRESS:
       state.data.step = load.step
+      state.data.network = load.network || state.data.network
       state.data.writeHash = load.writeHash || state.data.writeHash
       state.data.priceHash = load.priceHash || state.data.priceHash
       break
     case events.PURCHASE_PROGRESS:
+    state.data.network = load.network || state.data.network
       state.data.approveHash = load.approveHash || state.data.approveHash
       state.data.purchaseHash = load.purchaseHash || state.data.purchaseHash
       state.data.step = load.step
       break
     case events.REDEEM_PROGRESS:
+    state.data.network = load.network || state.data.network
       state.data.hash = load.hash || state.data.hash
       state.data.step = load.step
       break
