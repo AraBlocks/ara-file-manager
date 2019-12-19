@@ -15,10 +15,7 @@ parts:
   ara-file-manager:
     plugin: dump
     source: https://github.com/AraBlocks/ara-file-manager/releases/download/$SNAPCRAFT_PROJECT_VERSION/Ara.File.Manager-$SNAPCRAFT_PROJECT_VERSION-linux.zip
-    override-build: |
-      mv Ara\ File\ Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage ara-file-manager
-      chmod +x ara-file-manager
 
 apps:
   ara-file-manager:
-    command: ara-file-manager
+    command: Ara\ File\ Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage
