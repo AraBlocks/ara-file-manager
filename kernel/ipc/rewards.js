@@ -11,7 +11,7 @@ const dispatch = require('../redux/reducers/dispatch')
 const store = windowManager.sharedData.fetch('store')
 const { internalEmitter } = windowManager
 
-const GAS_TIMEOUT = 60000
+const GAS_TIMEOUT = 10000
 
 let errored = false
 let redeemed = false
@@ -60,7 +60,7 @@ async function _onNewGas(step) {
 ipcMain.on(events.GAS_PRICE, async (_, load) => {
   load = Object.assign(load, store.modal.redeemFileData)
   const { did, step, gasPrice } = load
-  if ('redeem' !== step)
+  if (!step.includes('redeem'))
     return
 
   const { account } = store
@@ -106,7 +106,7 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
 
     let value
     autoQueue.clear()
-    this.startTimer('retry')
+    this.startTimer('retryredeem')
     await new Promise(async (resolve, reject) => {
       [value] = await autoQueue.push(() => rewards.redeem({
         farmerDid: account.userDID,
