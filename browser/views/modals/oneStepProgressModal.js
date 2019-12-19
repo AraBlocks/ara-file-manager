@@ -18,7 +18,7 @@ module.exports = ({ load, modalName, hash, step, network, retryEvent, stepName }
   const exit = new Button({
     children: 'Exit',
     cssClass: { opts: { height: 3, fontSize: 14, color: 'teal' } },
-    onclick: () => closeModal('redeemProgressModal')
+    onclick: () => closeModal('oneStepProgressModal')
   })
   return html`
     <div class="${styles.container({ justifyContent: 'space-around', height: 95, width: 100, useSelector: false })} modals-container">
