@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Ara File Manager
+Comment=Ara decentralized peer node and crypto token wallet.
+Exec=ara-file-manager
+Terminl=false
+Type=Application
+Icon=${SNAP}/meta/gui/icon.png
+StartupWMClass=Ara File Manager
+X-AppImage-Version=1.1.1
+GenericName=File Manager
+MimeType=x-scheme-handler/ara
+Categories=Utilities
