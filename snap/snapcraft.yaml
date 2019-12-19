@@ -1,6 +1,6 @@
 
   name: ara-file-manager
-  version: ''Publish, purchase, and download content on the Ara Network (https://ara.one) # 79 char long summary
+  version: 'Publish, purchase, and download content on the Ara Network (https://ara.one)' # 79 char long summary
   description: |
     The Ara File Manager is a simple desktop app that demonstrates the functionality of a
     complete local Ara network node and crypto token wallet. Ara is truly decentralized;
