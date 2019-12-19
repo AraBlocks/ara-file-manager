@@ -26,29 +26,6 @@ module.exports = (state, { load = null, type }) => {
       state.data.isAFS = true
       state.data.freezeData = true
       break
-
-
-
-    // case events.PUBLISH_PROGRESS:
-    //   state.data.deployHash = load.deployHash || state.data.deployHash
-    // case events.UPDATE_PROGRESS:
-    //   state.data.step = load.step
-    //   state.data.network = load.network || state.data.network
-    //   state.data.writeHash = load.writeHash || state.data.writeHash
-    //   state.data.priceHash = load.priceHash || state.data.priceHash
-    //   break
-    // case events.PURCHASE_PROGRESS:
-    //   state.data.network = load.network || state.data.network
-    //   state.data.approveHash = load.approveHash || state.data.approveHash
-    //   state.data.purchaseHash = load.purchaseHash || state.data.purchaseHash
-    //   state.data.step = load.step
-    //   break
-    // case events.REDEEM_PROGRESS:
-    //   state.data.network = load.network || state.data.network
-    //   state.data.hash = load.hash || state.data.hash
-    //   state.data.step = load.step
-    //   break
-
     case events.THREE_STEP_PROGRESS:
       state.data.step = load.step
       state.data.modalName = load.modalName || state.data.modalName
@@ -68,14 +45,6 @@ module.exports = (state, { load = null, type }) => {
       state.data.stepOneHash = load.stepOneHash || state.data.stepOneHash
       state.data.stepTwoHash = load.stepTwoHash || state.data.stepTwoHash
       break
-    // case events.PURCHASE_PROGRESS:
-    //   state.data.step = load.step
-    //   state.data.modalName = load.modalName
-    //   state.data.retryEvent = load.retryEvent || state.data.retryEvent
-    //   state.data.network = load.network || state.data.network
-    //   state.data.stepOneHash = load.approveHash || state.data.stepOneHash
-    //   state.data.stepTwoHash = load.purchaseHash || state.data.stepTwoHash
-    //   break
     case events.ONE_STEP_PROGRESS:
       state.data.step = load.step
       state.data.modalName = load.modalName || state.data.modalName
@@ -84,8 +53,6 @@ module.exports = (state, { load = null, type }) => {
       state.data.network = load.network || state.data.network
       state.data.hash = load.hash || state.data.hash
       break
-
-
     case events.PUBLISH_FILE_LOAD:
       state.publishFileData.name = load.name || state.publishFileData.name
       state.publishFileData.paths = load.paths || state.publishFileData.paths
