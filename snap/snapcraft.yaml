@@ -21,3 +21,4 @@ parts:
 apps:
   ara-file-manager:
     command: Ara\ File\ Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage
+    desktop: snap/ara-file-manager.desktop
