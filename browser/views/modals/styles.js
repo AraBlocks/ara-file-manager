@@ -153,15 +153,6 @@ module.exports = {
     }
   `,
 
-  threeStepProgressContainer: css`
-    :host {
-      display: flex;
-      height: 70%;
-      width: 100%;
-      margin-top: 5%;
-    }
-  `,
-
   link: css`
     :host {
       overflow: hidden;
@@ -332,13 +323,6 @@ module.exports = {
     }
   `,
 
-  creating: css`
-    :host {
-      width: 25%;
-      margin-left: 10%;
-    }
-  `,
-
   stepOne: css`
     :host {
       width: 25%;
@@ -346,22 +330,9 @@ module.exports = {
     }
   `,
 
-  writing: css`
-    :host {
-      width: 50%;
-    }
-  `,
-
   stepTwo: css`
     :host {
       width: 50%;
-    }
-  `,
-
-  finalizing: css`
-    :host {
-      width: 25%;
-      margin-right: 10%;
     }
   `,
 
@@ -372,24 +343,10 @@ module.exports = {
     }
   `,
 
-  purchasing: css`
-    :host {
-      margin-top: 5%;
-      width: 50%;
-    }
-  `,
-
   twoSteps: css`
     :host {
       margin-top: 5%;
       width: 50%;
-    }
-  `,
-
-  singleTx: css`
-    :host {
-      margin-top: 10%;
-      width: 100%;
     }
   `,
 

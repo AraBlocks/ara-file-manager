@@ -42,7 +42,7 @@ module.exports = ({ load, modalName, stepOneHash, stepTwoHash, stepThreeHash, st
         ${modalName}...
       </div>
       <div class="${styles.separator} section-separator" style="width: 90%;"></div>
-      <div class="${styles.threeStepProgressContainer}">
+      <div class="${styles.progressContainer}">
         <div class="${styles.stepOne}">
           <div class="${styles.progressHolder} modal-progressHolder">
             ${step && step.includes('One') ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
