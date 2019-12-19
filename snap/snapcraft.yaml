@@ -14,9 +14,9 @@ base: core18 ## ubuntu 18
 parts:
   ara-file-manager:
     plugin: dump
-    source: https://github.com/AraBlocks/ara-file-manager/releases/download/$SNAPCRAFT_PROJECT_VERSION/Ara.File.Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage
-    prepare: |
-      mv Ara.File.Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage ara-file-manager
+    source: https://github.com/AraBlocks/ara-file-manager/releases/download/$SNAPCRAFT_PROJECT_VERSION/Ara.File.Manager-$SNAPCRAFT_PROJECT_VERSION-linux.zip
+    override-build: |
+      mv Ara\ File\ Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage ara-file-manager
       chmod +x ara-file-manager
 
 apps:
