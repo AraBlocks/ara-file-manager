@@ -8,7 +8,7 @@ description: |
   distribution swarms and the blockchain.
 
 grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+confinement: strict # use 'strict' once you have the right plugs and slots
 base: core18 ## ubuntu 18
 
 architectures: [amd64, i386]
