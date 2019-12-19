@@ -1,12 +1,24 @@
-
-  name: ara-file-manager
-  version: 'Publish, purchase, and download content on the Ara Network (https://ara.one)' # 79 char long summary
-  description: |
-    The Ara File Manager is a simple desktop app that demonstrates the functionality of a
-    complete local Ara network node and crypto token wallet. Ara is truly decentralized;
-    with the Ara File Manager, your machine is participating directly in peer
-    distribution swarms and the blockchain.
-
-  grade: stable # must be 'stable' to release into candidate/stable channels
-  confinement: devmode # use 'strict' once you have the right plugs and slots
+name: ara-file-manager
+version: 1.1.1
+summary: Publish, purchase, and download content on the Ara Network (https://ara.one) # 79 char long summary
+description: |
+  The Ara File Manager is a simple desktop app that demonstrates the functionality of a
+  complete local Ara network node and crypto token wallet. Ara is truly decentralized;
+  with the Ara File Manager, your machine is participating directly in peer
+  distribution swarms and the blockchain.
   
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+base: core18 ## ubuntu 18
+
+parts:
+  ara-file-manager:
+    plugin: dump
+    source: https://github.com/AraBlocks/ara-file-manager/releases/download/$SNAPCRAFT_PROJECT_VERSION/Ara.File.Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage
+    prepare: |
+      mv Ara.File.Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage ara-file-manager
+      chmod +x ara-file-manager
+
+apps:
+  ara-file-manager:
+    command: ara-file-manager
