@@ -21,24 +21,3 @@ parts:
 apps:
   ara-file-manager:
     command: Ara\ File\ Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage
-    plugs:
-      - alsa
-      - audio-playback
-      - avahi-control
-      - avahi-observe
-      - browser-support
-      - desktop
-      - desktop-legacy
-      - fuse-support
-      - hardware-random-observe
-      - home
-      - maliit
-      - wayland
-      - network
-      - opengl
-      - personal-files
-      - pulseaudio
-      - screen-inhibit-control
-      - unity7
-      - upower-observe
-      - x11
