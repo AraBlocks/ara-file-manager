@@ -88,7 +88,7 @@ module.exports = ({ load, modalName, stepOneHash, stepTwoHash, stepThreeHash, st
             ${step && step.includes('Three') ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
-            ${stepNames[2]}
+            ${stepNames[3]}
           </div>
           <div>
             ${stepThreeHash ? stepThreeLink.render() : null}
