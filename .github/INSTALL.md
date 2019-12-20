@@ -45,16 +45,16 @@ As of this writing, on macOS, we're building with
 * **Clone** takes **10s** to make **300 files** and **170 MB**.
 * **Install** takes **4m40s** to make **39k files** and **820 MB**.
 * **Build** takes **7m32s** to make **39k files** and **1.4 GB**.
-* The dist folder has a **100 MB dmg file**.
+* The dist folder has a **100 MB dmg**.
 
 On Windows, we're building with
 **Node 8.17.0**,
 **npm 6.13.4**, and
 **node-gyp 5.0.3**.
 * **Clone** takes **3s** to make **300 files** and **160 MB**.
-* **Install** takes **3m45s** to make **35k** files and **830 MB**.
+* **Install** takes **3m45s** to make **35k files** and **830 MB**.
 * **Build** takes **3m5s** to make **36k files** and **1.3 GB**.
-* The dist folder has a **50 MB exe file**.
+* The dist folder has a **50 MB exe**.
 
 Steps to increment the version number and tag a new release:
 
