@@ -8,7 +8,7 @@ description: |
   distribution swarms and the blockchain.
 
 grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: strict # use 'strict' once you have the right plugs and slots
+confinement: classic # 'classic' for now, we will use 'strict' the right plugs and deps
 base: core ## ubuntu 16 (core18 is missing 'libfuse' at the moment)
 
 architectures: [amd64, i386]
@@ -21,3 +21,24 @@ parts:
 apps:
   ara-file-manager:
     command: Ara\ File\ Manager-$SNAPCRAFT_PROJECT_VERSION.AppImage
+    plugs:
+      - alsa
+      - audio-playback
+      - avahi-control
+      - avahi-observe
+      - browser-support
+      - desktop
+      - desktop-legacy
+      - fuse-support
+      - hardware-random-observe
+      - home
+      - maliit
+      - wayland
+      - network
+      - opengl
+      - personal-files
+      - pulseaudio
+      - screen-inhibit-control
+      - unity7
+      - upower-observe
+      - x11
