@@ -18,7 +18,7 @@ const {
 	files
 } = windowManager.sharedData.fetch('store')
 
-const GAS_TIMEOUT = 60000
+const GAS_TIMEOUT = 10000
 
 let errored = false
 let approved = false
@@ -76,7 +76,7 @@ async function _onNewGas(step) {
   windowManager.openModal('generalPleaseWaitModal')
   const gasPrice = await utils.requestGasPrice()
   const { average, fast, fastest } = gasPrice
-  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
+  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step: getStepName(step) } })
   windowManager.closeModal('generalPleaseWaitModal')
   windowManager.openModal('setGasModal')
 }
@@ -342,4 +342,17 @@ function errorHandler(err) {
 	dispatch({ type: events.FEED_MODAL, load: { modalName, callback } })
 	windowManager.openModal('generalMessageModal')
 	internalEmitter.emit(events.CHANGE_PENDING_PUBLISH_STATE, false)
+}
+
+function getStepName(step) {
+  switch (step) {
+    case 'stepOne':
+      step = 'approve'
+      break
+    case 'stepTwo':
+    default:
+      step = 'purchase'
+      break
+  }
+  return step
 }

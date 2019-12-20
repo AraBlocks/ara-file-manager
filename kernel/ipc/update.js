@@ -155,12 +155,6 @@ ipcMain.on(events.GAS_PRICE, async(_, load) => {
       debug('Estimating gas for set price')
       estimate = await araFilesystem.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true, gasPrice })
     } else {
-      if (load.addPaths.length != 0) {
-        await (await araFilesystem.add({ did: load.did, paths: load.addPaths, password: account.password })).close()
-      }
-      if (load.removePaths.length != 0) {
-        await (await araFilesystem.remove({ did: load.did, paths: load.removePaths, password: account.password })).close()
-      }
       if (load.shouldUpdatePrice) {
         debug('Estimate gas for commit and set price')
         estimate = await araFilesystem.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true, gasPrice })
@@ -179,7 +173,9 @@ ipcMain.on(events.GAS_PRICE, async(_, load) => {
       size: load.size,
       shouldUpdatePrice: load.shouldUpdatePrice,
       shouldCommit: load.shouldCommit,
-      step
+      step,
+      addPaths: load.addPaths,
+      removePaths: load.removePaths
     }
 
     dispatch({ type: events.FEED_MODAL, load: dispatchLoad })
@@ -190,15 +186,30 @@ ipcMain.on(events.GAS_PRICE, async(_, load) => {
 ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
   debug('%s heard', events.CONFIRM_UPDATE_FILE)
   const { account, account: { autoQueue } } = store
-  const { step } = load
+  const {
+    step,
+    addPaths,
+    removePaths,
+    did,
+    name,
+    price,
+    size,
+    gasPrice
+  } = load
   try {
+    if (addPaths.length != 0) {
+      await (await araFilesystem.add({ did, paths: addPaths, password: account.password })).close()
+    }
+    if (removePaths.length != 0) {
+      await (await araFilesystem.remove({ did, paths: removePaths, password: account.password })).close()
+    }
     dispatch({
       type: events.UPDATING_FILE,
       load: {
-        did: load.did,
-        name: load.name,
-        price: load.price,
-        size: load.size
+        did,
+        name,
+        price,
+        size
       }
     })
 
@@ -237,10 +248,10 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
       this.startTimer('retryPrice')
       debug('Updating price only')
       await autoQueue.push(() => araFilesystem.setPrice({
-          did: load.did,
+          did,
           password: account.password,
-          price: Number(load.price),
-          gasPrice: load.gasPrice,
+          price: Number(price),
+          gasPrice: gasPrice,
           onhash: hash => {
             debug('price tx hash: %s', hash)
             dispatch({
@@ -271,9 +282,9 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
       this.startTimer('retryCommit')
       debug('Updating Files')
       await autoQueue.push(() => araFilesystem.commit({
-          did: load.did,
+          did,
           password: account.password,
-          gasPrice: load.gasPrice,
+          gasPrice: gasPrice,
           writeCallbacks: {
             onhash: hash => {
               debug('write tx hash: %s', hash)
@@ -306,10 +317,10 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
       this.startTimer('retryStepOne')
       debug('Updating Files and Price')
       await autoQueue.push(() => araFilesystem.commit({
-          did: load.did,
+          did,
           password: account.password,
-          price: Number(load.price),
-          gasPrice: load.gasPrice,
+          price: Number(price),
+          gasPrice: gasPrice,
           writeCallbacks: {
             onhash: hash => {
               debug('write tx hash: %s', hash)
@@ -382,7 +393,7 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
 
       internalEmitter.emit(events.START_SEEDING, load)
 
-      dispatch({ type: events.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
+      dispatch({ type: events.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: name } } })
       windowManager.openModal('generalMessageModal')
     }
   } catch (err) {

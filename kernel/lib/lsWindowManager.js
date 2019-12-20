@@ -96,16 +96,15 @@ windowManager.setSize = (view) => {
       width = 340
       height = 300
       break
-    case 'publishProgressModal':
+    case 'threeStepProgressModal':
       width = 500
       height = 300
       break
-    case 'purchaseProgressModal':
-    case 'updateProgressModal':
+    case 'twoStepProgressModal':
       width = 300
       height = 300
       break
-    case 'redeemProgressModal':
+    case 'oneStepProgress Modal':
       width = 250
       height = 300
       break

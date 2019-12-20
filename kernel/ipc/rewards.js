@@ -142,7 +142,7 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
     })
 
     if (redeemed) {
-      debug('DISPATCHING %s', events.REWARDS_REDEEMED)
+      debug('DISPATCHING %s', events.REWARDS_REDEEMED, value)
       dispatch({ type: events.REWARDS_REDEEMED, load: { did: load.did, value } })
       windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
     }
