@@ -1,7 +1,7 @@
 {
   "name": "ara",
   "version": "1.1.2",
-  "license": "ISC",
+  "license": "LGPL",
   "productName": "Ara File Manager",
   "description": "Ara decentralized peer node and crypto token wallet",
   "keywords": [],

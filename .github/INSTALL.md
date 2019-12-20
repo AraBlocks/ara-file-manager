@@ -7,17 +7,17 @@ The Ara File Manager includes Node modules developed within
 Building the Ara File Manager includes building native modules, including [web3](https://www.npmjs.com/package/web3) and the _Ethereum Virtual Machine_.
 This guide will help you get your computer setup to build the Ara modules and the Ara File Manager.
 
-## TL;DR
+## Cheat sheet
 
 If you've been through this guide before, here are the commands in quick summary:
 
 ```
-$ nave use 8.15.1           nave is macOS only
+$ nave use 8.17.0           nave is macOS only
 $ exit                      get out of nave when you're all done
 
 $ git --version             make sure you can reach everything
 $ gcc --version             macOS only, Visual Studio will build native modules on Windows
-$ node --version            we recommend 8.16.0 on Windows
+$ node --version            we recommend 8.17.0
 $ npm --version
 $ node-gyp --version
 $ electron --version
@@ -38,6 +38,84 @@ $ npm run power-wash        delete stuff to start over with $ npm install
 $ npm run uninstall         delete stuff to start over with opening the dmg or running setup.exe
 ```
 
+As of this writing, on macOS, we're building with
+**Node 8.17.0**,
+**npm 6.13.4**, and
+**node-gyp 5.0.3**.
+**Clone** takes **10s** to make **300 files** and **170 MB**.
+**Install** takes **4m40s** to make **39k files** and **820 MB**.
+**Build** takes **7m32s** to make **39k files** and **1.4 GB**.
+The dist folder has a **100 MB dmg file**.
+
+On Windows, we're building with
+**Node 8.17.0**,
+**npm 6.13.4**, and
+**node-gyp 5.0.3**.
+**Clone** takes **3s** to make **300 files** and **160 MB**.
+**Install** takes **3m45s** to make **35k** files and **830 MB**.
+**Build** takes **3m 5s** to make **36k files** and **1.3 GB**.
+The dist folder has a **50 MB exe file**.
+
+Steps to increment the version number and tag a new release:
+
+```
+$ git clone https://github.com/arablocks/ara-file-manager
+$ cd ara-file-manager
+$ npm install
+$ npm version patch         major, minor, or patch
+$ git push
+$ git push --tags
+```
+
+Steps to build a release:
+
+```
+win, make sure the .pfx file is where you clone if you want to code sign:
+$ git clone https://github.com/arablocks/ara-file-manager
+$ cd ara-file-manager
+$ git checkout tags/1.2.3
+$ npm install
+$ npm run build
+
+mac:
+$ nave use 8.17.0
+$ git clone https://github.com/arablocks/ara-file-manager
+$ cd ara-file-manager
+$ git checkout tags/1.2.3
+$ npm install
+$ APPLEID=you@example.com PASSWORD=yourpassword npm run build
+$ exit
+
+github website:
+Code, Releases, Draft a new release
+Tag version, type in 1.2.3, Existing tag
+drag files from dist folder to webpage target area, Publish release
+on mac, github website, Edit, drag in more files, Update release
+```
+
+Steps to make a branch and submit a pull request:
+
+```
+$ git clone https://github.com/arablocks/ara-file-manager
+$ cd ara-file-manager
+$ git pull
+$ git checkout -b branch-name
+$ git push --set-upstream origin branch-name    desktop to github
+$ git checkout --track origin/branch-name       github to laptop, to test on mac, for instance
+
+$ git pull
+$ git status
+$ git diff
+$ git add .
+$ git commit -a -n -m "intermediate note"
+$ git commit -a -n -m "tasktype(file.ext): note about what you did"
+$ git push
+
+github website:
+Rebase and merge, or Squash and merge
+Delete branch
+```
+
 ## Delete paths
 
 If you've previously installed the Ara File Manager, you may want to start out again on a system that is free of remnants of previous attempts.
@@ -46,25 +124,28 @@ Using the generic user name *Kevin* as an example, on macOS, delete the files an
 
 ```
 /Applications/Ara File Manager.app
-/Users/kevin/.ara
-/Users/kevin/.ararc
-/Users/kevin/Library/Application Support/Ara File Manager
-/Users/kevin/Library/Preferences/com.ara.one.araFileManager.helper.plist
-/Users/kevin/Library/Preferences/com.ara.one.araFileManager.plist
+~/.ara
+~/.ararc
+~/Library/Application Support/Ara File Manager
+~/Library/Preferences/com.ara.one.araFileManager.helper.plist
+~/Library/Preferences/com.ara.one.araFileManager.plist
 ```
 
 And these on Windows:
 
 ```
-C:\Users\Kevin\.ara
-C:\Users\Kevin\.ararc
-C:\Users\Kevin\AppData\Local\ara-file-manager
+~/.ara
+~/.ararc
+~/AppData/Local/ara-file-manager
+~/AppData/Local/ara-updater
+~/AppData/Local/Programs/ara
+~/AppData/Roaming/Ara File Manager
 ```
 
 Additionally, if you coded a sample app in Electron, it may have left some settings here:
 
 ```
-C:\Users\Kevin\AppData\Roaming\some-electron-sample-name
+~/AppData/Roaming/some-electron-sample-name
 ```
 
 ## Windows Update (Windows)
@@ -114,11 +195,11 @@ Several gigabytes and reboots later, head back to Terminal to check the version 
 
 ```
 $ git --version
-git version 2.20.1 (Apple Git-117)
+git version 2.21.0 (Apple Git-122.2)
 
 $ gcc --version
 ...
-Apple LLVM version 10.0.1 (clang-1001.0.46.3)
+Apple clang version 11.0.0 (clang-1100.0.33.16)
 ```
 
 Your Mac now has [gcc](https://en.wikipedia.org/wiki/GNU_Compiler_Collection), the C compiler that will build the native modules.
@@ -177,13 +258,13 @@ v5.0.3
 
 $ npm install -g electron
 $ electron --version
-v5.0.2
+v7.1.7
 $ electron
 ```
 
 The last command `electron` should open a graphical window with more version information, like:
 
-*Electron v5.0.2, Chromium v73.0.3683.121, Node v12.0.0, v8 v7.3.492.27-electron.0*
+*Electron v7.1.7, Chromium v78.0.3904.130, Node v12.8.1, v8 v7.8.279.23-electron.0*
 
 Notice how `brew` got us *Node* and *npm*, and `npm` got us *nave*, *node-gyp*, and *electron*.
 A popular alternative to nave is [nvm](https://github.com/nvm-sh/nvm), but I've had good luck with nave.
@@ -191,15 +272,15 @@ Here's how nave lets you switch between node and npm versions:
 
 ```
 $ node --version     we start outside nave
-v12.4.0
+v11.10.1
 $ npm --version
-6.9.0
+6.10.2
 
-$ nave use 8.15.1    now enter nave's virtual environment for node 8
+$ nave use 8.17.0    now enter nave's virtual environment for node 8
 $ node --version     where the version numbers reflect that
-v8.15.1
+v8.17.0
 $ npm --version
-6.4.1
+6.13.4
 
 $ exit               back out of nave
 ```
@@ -243,14 +324,16 @@ The [Ara modules](https://github.com/arablocks) are written in Node, and the Ara
 ## Node, npm, node-gyp, and Electron (Windows)
 
 On Windows, install Node from [nodejs.org](https://nodejs.org/).
-Instead of getting the most recent version, click [Other Downloads](https://nodejs.org/en/download/) and [Previous Releases](https://nodejs.org/en/download/releases/) to find **Node.js 8.16.0**:
+Instead of getting the most recent version, click [Other Downloads](https://nodejs.org/en/download/),
+[Previous Releases](https://nodejs.org/en/download/releases/),
+and [Node.js 8.x](https://nodejs.org/dist/latest-v8.x/) to download
+**[node-v8.17.0-x64.msi](https://nodejs.org/dist/latest-v8.x/node-v8.17.0-x64.msi)**.
 
 ```
-Version         LTS     Date        V8          npm    NODE_MODULE_VERSION
-Node.js 8.16.0  Carbon  2019-04-16  6.2.414.77  6.4.1  57
+Version         LTS     Date        V8          npm     NODE_MODULE_VERSION
+Node.js 8.17.0  Carbon  2019-12-17  6.2.414.78  6.13.4  57
 ```
 
-Click [Downloads](https://nodejs.org/download/release/v8.16.0/) and pick the file **[node-v8.16.0-x64.msi](https://nodejs.org/download/release/v8.16.0/node-v8.16.0-x64.msi)**.
 Run the installer and click through the setup steps.
 The defaults are fine.
 If Node setup asks if you want to install tools for native modules, **leave that box unchecked**.
@@ -263,10 +346,10 @@ Check the Node and [npm](https://www.npmjs.com/) versions, and also install [nod
 
 ```
 $ node --version
-v8.16.0
+v8.17.0
 
 $ npm --version
-6.4.1
+6.13.4
 
 $ npm install -g node-gyp
 $ node-gyp --version
@@ -274,7 +357,7 @@ v5.0.3
 
 $ npm install -g electron
 $ electron --version
-v6.0.8
+v7.1.7
 
 $ electron
 ```
@@ -305,7 +388,7 @@ You may have come to this guide after encountering an error like this:
 ```
 $ npm run start-dev
 
-> ara-file-manager@0.9.0 start-dev /Users/Name/ara-file-manager
+> ara-file-manager@1.2.3 start-dev /Users/Name/ara-file-manager
 > electron boot
 
 App threw an error during load
