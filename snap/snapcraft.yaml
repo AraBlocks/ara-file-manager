@@ -9,7 +9,7 @@ description: |
 
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: devmove # use 'strict' once you have the right plugs and slots
-base: core ## ubuntu 16 (core18 is missing 'libfuse' at the moment)
+base: core18 ## ubuntu 18
 
 architectures: [amd64, i386]
 
