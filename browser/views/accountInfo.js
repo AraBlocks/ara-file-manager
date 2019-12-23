@@ -1,6 +1,6 @@
 const { events } = require('k')
 const Button = require('../components/button')
-const { clipboard } = require('electron')
+const { clipboard, shell, remote } = require('electron')
 const { emit } = require('../lib/tools/windowManagement')
 const DynamicTooltip = require('../components/dynamicTooltip')
 const TestnetBanner = require('../components/testnetBanner')
@@ -9,7 +9,6 @@ const styles = require('./styles/accountInfo')
 const { utils, windowManagement } = require('../lib/tools')
 const html = require('nanohtml')
 const Nanocomponent = require('nanocomponent')
-const { shell } = require('electron')
 
 class AccountInfo extends Nanocomponent {
   constructor(props) {
@@ -23,7 +22,8 @@ class AccountInfo extends Nanocomponent {
       ethBalance: account.ethBalance,
       faucetStatus: account.faucetStatus,
       network: application.network,
-      userDID: account.userDID
+      userDID: account.userDID,
+      appVersion: remote.app.getVersion()
     }
 
     this.children = {
@@ -151,6 +151,7 @@ class AccountInfo extends Nanocomponent {
         </div>
         <div class="${styles.appInfo} accountInfo-appInfo">
             ${utils.shouldShowBanner(props.network) ? html`<div>Note: Tokens will only work on testnet.</div>` : html``}
+          <p>Version ${props.appVersion}</p>
           <div class="link-holder">
             <a onclick=${toggleAnalyticsPermission}>
               ${props.analyticsPermission ? 'Disable Analytics' : 'Enable Analytics' }

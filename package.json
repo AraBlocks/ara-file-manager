@@ -16,11 +16,11 @@
   "bugs": {
     "url": "https://github.com/arablocks/ara-file-manager/issues"
   },
-  "main": "boot",
+  "main": "boot/index.js",
   "network": "test",
   "scripts": {
     "postinstall": "sh ./scripts/postinstall.sh && electron-builder install-app-deps",
-    "start": "electron boot/index.js",
+    "start": "electron .",
     "dir": "electron-builder --dir",
     "build": "electron-builder",
     "clean": "sh ./scripts/clean.sh",
