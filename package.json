@@ -69,6 +69,14 @@
       "perMachine": false,
       "createStartMenuShortcut": true,
       "createDesktopShortcut": true
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "snap",
+        "pacman",
+        "zip"
+      ]
     }
   },
   "dependencies": {
