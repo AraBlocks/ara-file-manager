@@ -386,9 +386,9 @@ You can take a snapshot, install something, have it not work, and then go back i
 You may have come to this guide after encountering an error like this:
 
 ```
-$ npm run start-dev
+$ npm run start
 
-> ara-file-manager@1.2.3 start-dev /Users/Name/ara-file-manager
+> ara-file-manager@1.2.3 start /Users/Name/ara-file-manager
 > electron boot
 
 App threw an error during load
@@ -399,7 +399,7 @@ using `npm rebuild` or `npm install`).
 ```
 
 This happens when the versions of V8 in Node and Electron don't match.
-`npm install` built the native modules using Node, but then `start-dev` ran Electron, and Electron's V8 doesn't like them.
+`npm install` built the native modules using Node, but then `start` ran Electron, and Electron's V8 doesn't like them.
 
 To remedy this, the Ara File Manager's *package.json* uses [electron-rebuild](https://github.com/electron/electron-rebuild) to [rebuild the native modules for Electron](https://electronjs.org/docs/tutorial/using-native-node-modules#installing-modules-and-rebuilding-for-electron).
 `npm install` builds the native modules for Node, reaches this step at the end, and then rebuilds them for Electron.
@@ -496,8 +496,8 @@ Note also that *package.json* pins the Electron version to 2, which is much earl
 Now that you've built the Ara File Manager from source code, run it with commands like these:
 
 ```
-$ npm run start-dev
-$ npm run start-dev [loggedin] [<DID>] [<password>]
+$ npm run start
+$ npm run start [loggedin] [<DID>] [<password>]
 ```
 
 ![](install8.png)
