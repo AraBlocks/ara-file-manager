@@ -513,22 +513,22 @@ Here's a cheat sheet of commands:
 $ sudo apt update
 $ sudo apt upgrade
 
-$ sudo apt install gcc          7.4.0
-$ sudo apt install make         4.1
-$ sudo apt install curl         7.58.0
-$ sudo apt install git          2.17.1
-$ sudo apt install nodejs       8.10.0
-$ sudo apt install npm          3.5.2
-$ python --version              2.7.17
-$ node-gyp --version            3.6.2
+$ sudo apt install gcc                7.4.0
+$ sudo apt install make               4.1
+$ sudo apt install curl               7.58.0
+$ sudo apt install git                2.17.1
+$ sudo apt install nodejs             8.10.0
+$ sudo apt install npm                3.5.2
+$ python --version                    2.7.17
+$ node-gyp --version                  3.6.2
 
 $ sudo npm install -g nave
 $ nave use latest
-$ node --version                13.6.0
+$ node --version                      13.6.0
 $ npm install -g electron
-$ electron --version            7.1.9
-$ electron                      electron window
-$ exit                          leave nave
+$ electron --version                  7.1.9
+$ electron                            show the empty electron window
+$ exit                                exit nave
 
 $ sudo apt install -y libgconf-2-4
 
