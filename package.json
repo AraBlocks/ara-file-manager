@@ -27,6 +27,7 @@
     "power-wash": "sh ./scripts/power-wash.sh",
     "uninstall": "sh ./scripts/uninstall.sh",
     "test": "ava test/renderer",
+    "linux": "DEBUG=afm*,arp*,ard* dist/linux-unpacked/ara",
     "mac": "DEBUG=afm*,arp*,ard* dist/mac/Ara\\ File\\ Manager.app/Contents/MacOS/Ara\\ File\\ Manager",
     "win": "set DEBUG=afm*,arp*,ard* && \"dist\\win-unpacked\\Ara File Manager.exe\"",
     "changelog": "conventional-changelog --same-file --preset angular --release-count 0 --infile CHANGELOG.md",
@@ -74,7 +75,6 @@
       "target": [
         "AppImage",
         "snap",
-        "pacman",
         "zip"
       ]
     }

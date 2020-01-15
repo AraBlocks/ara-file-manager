@@ -504,6 +504,68 @@ $ npm run start [loggedin] [<DID>] [<password>]
 
 You can enter your ARAid and password on the command line to bypass the graphical **Log In** window.
 
+## Linux
+
+Building the Ara File Manager on desktop Linux involves fewer steps than those above for macOS and Windows.
+Here's a cheat sheet of commands:
+
+```
+$ sudo apt update
+$ sudo apt upgrade
+
+$ sudo apt install gcc          7.4.0
+$ sudo apt install make         4.1
+$ sudo apt install curl         7.58.0
+$ sudo apt install git          2.17.1
+$ sudo apt install nodejs       8.10.0
+$ sudo apt install npm          3.5.2
+$ python --version              2.7.17
+$ node-gyp --version            3.6.2
+
+$ sudo npm install -g nave
+$ nave use latest
+$ node --version                13.6.0
+$ npm install -g electron
+$ electron --version            7.1.9
+$ electron                      electron window
+$ exit                          leave nave
+
+$ sudo apt install -y libgconf-2-4
+
+$ nave use 8.17.0
+$ git clone https://github.com/arablocks/ara-file-manager  
+$ cd ara-file-manager
+$ git checkout tags/1.2.3
+$ npm install
+$ npm run start
+$ npm run build
+$ exit
+
+$ npm run linux
+```
+
+These steps use [Ubuntu 18.04.3 LTS](https://ubuntu.com/download/desktop).
+Use `update` and `upgrade` to get everything ready, and then install `gcc`, `make`, `curl`, `git`, `nodejs`, and `npm`.
+At that point, you'll also have `python` and `node-gyp`.
+Make sure everything is there with `--version`.
+
+Just like we did on macOS, install `nave` to easily switch between Node versions.
+While `apt` gave use Node 8, `nave use latest` gets us Node 13.
+There you can install Electron globally, check its version, and type just `$ electron` to have it show its graphical window.
+Remember to `exit` Nave.
+
+If `npm install` gives you an error about *libgconf-2.so.4*, install it with `$ sudo apt install -y libgconf-2-4`.
+
+To build the Ara File Manager, use Node 8.17.0.
+`$ npm run build`, makes three files for Linux:
+**Ara File Manager-1.1.2.AppImage**, **ara_1.1.2_amd64.snap**, and **ara-1.1.2.zip**.
+Each should be around 100 MB in size.
+
+Double-click the *.AppImage* to run the Ara File Manager,
+or run it built but not packaged with `$ npm run linux`.
+
+## Happy building!
+
 Did this guide work?
 What are your ideas about what you want to make with Ara?
 Get [Telegram](https://telegram.org/) and then [text me and the team](https://t.me/arablocks).
