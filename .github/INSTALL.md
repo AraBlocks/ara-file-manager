@@ -550,15 +550,15 @@ At that point, you'll also have `python` and `node-gyp`.
 Make sure everything is there with `--version`.
 
 Just like we did on macOS, install `nave` to easily switch between Node versions.
-While `apt` gave use Node 8, `nave use latest` gets us Node 13.
+While `apt` gave us Node 8, `nave use latest` gets us Node 13.
 There you can install Electron globally, check its version, and type just `$ electron` to have it show its graphical window.
 Remember to `exit` Nave.
 
 If `npm install` gives you an error about *libgconf-2.so.4*, install it with `$ sudo apt install -y libgconf-2-4`.
 
 To build the Ara File Manager, use Node 8.17.0.
-`$ npm run build`, makes three files for Linux:
-**Ara File Manager-1.1.2.AppImage**, **ara_1.1.2_amd64.snap**, and **ara-1.1.2.zip**.
+`$ npm run build` makes three files for Linux:
+**Ara File Manager-1.2.3.AppImage**, **ara_1.2.3_amd64.snap**, and **ara-1.2.3.zip**.
 Each should be around 100 MB in size.
 
 Double-click the *.AppImage* to run the Ara File Manager,
