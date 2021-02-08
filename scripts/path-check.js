@@ -12,6 +12,9 @@ Some apps that unfortunately don't are:
 -Amazingly, the File Explorer app that ships with Windows 10
 -electron-winstaller, which won't be able to build a setup.exe if node_modules is too deep
 
+We're no longer using electron-winstaller, and Electron's .asar archive hides long paths from Windows
+But, this script is still here to help you see what's going on in your node_modules folder
+
 So, here's a script that can take a look at your node_modules path depth situation
 Pass it a folder name like node_modules to look in that folder
 
@@ -25,7 +28,7 @@ const path = require('path');
 // Look at the given folder, and tabulate the following results
 let startPath = path.resolve(process.argv[2]);
 let results = {
-  size: 0n, // Total size of all the files we find, a bigint just in case
+  size: 0, // Total size of all the files we find, a bigint just in case
   files: 0, // Total count of files
   folders: 0, // Total count of folders
   longest: "", // Longest path found
@@ -61,7 +64,7 @@ function countItem(folderPath, foundPath, foundItem) {
   if (foundItem.isFile()) {
 
     results.files++;
-    let stats = fs.statSync(foundPath, {bigint: true});
+    let stats = fs.statSync(foundPath);
     results.size += stats.size;
 
   } else if (foundItem.isDirectory()) {
