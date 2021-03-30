@@ -9,14 +9,23 @@ writeFiles.writeDotAra()
 const { app } = require('electron')
 const { application, events } = require('k')
 const windowManager = require('../kernel/lib/lsWindowManager')
-const { internalEmitter } = require('electron-window-manager')
+const { internalEmitter, openDeepLinking } = require('electron-window-manager')
 const analytics = require('../kernel/daemons/analytics')
 const cleanUp = require('./cleanUp')
 const { handleDeepLink, deeplinkWaiting } = require('./deepLink')
 
+
 require('./preventMultInstances')//Prevent windows from making multiple instances of app
 
 app.setName(application.APP_NAME)
+
+app.on('second-instance', (event, argv, workingDirectory) => {
+  if (process.platform === 'win32') {
+    const arg = argv[1]
+    if (arg && arg.includes('ara://')) { openDeepLinking(arg) }
+  }
+})
+
 app.on('ready', () => {
   debug('App initialzed')
   windowManager.init()

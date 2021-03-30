@@ -52,6 +52,11 @@ function openModal(view = 'modal') {
         frame: false,
         position: center,
         ...windowManager.setSize(view),
+        webPreferences : 
+        {   
+            nodeIntegration : true,
+            enableRemoteModule: true
+        }
       }
     )
     windowManager.modalIsOpen = true
@@ -81,7 +86,12 @@ function openWindow(view) {
           backgroundColor: 'white',
           frame: false,
           position: center,
-          ...windowManager.setSize(view)
+          ...windowManager.setSize(view),
+          webPreferences : 
+          {   
+              nodeIntegration : true,
+              enableRemoteModule: true
+          }
         }
       )
 }

@@ -257,7 +257,12 @@ windowManager.openWindow = (view) => {
         titleBarStyle: 'hidden',
         ...windowManager.setSize(view),
         menu: null,
-        maximizable: false
+        maximizable: false,
+        webPreferences : 
+        {   
+            nodeIntegration : true,
+            enableRemoteModule: true
+        }
       }
     )
 }
@@ -270,7 +275,7 @@ function calculateCenter(view) {
     const [fmWidth, fmHeight] = fm.object.getSize()
     return [x + Math.round(fmWidth/2) - Math.round(width/2), y + Math.round(fmHeight/2) - Math.round(height/2)]
   } catch (err) {
-    debug('error calculating FM window center')
+    debug('error calculating FM window center ' + err)
   }
 }
 

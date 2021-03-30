@@ -28,7 +28,12 @@ const makeWindow = (view, i ) => {
     {
       backgroundColor: 'white',
       frame: false,
-      ...windowManager.setSize(view)
+      ...windowManager.setSize(view),
+      webPreferences : 
+      {   
+          nodeIntegration : true,
+          enableRemoteModule: true
+      }
     }
   )
 }
