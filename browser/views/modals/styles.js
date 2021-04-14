@@ -323,34 +323,34 @@ module.exports = {
     }
   `,
 
-  creating: css`
+  stepOne: css`
     :host {
       width: 25%;
       margin-left: 10%;
     }
   `,
 
-  writing: css`
+  stepTwo: css`
     :host {
       width: 50%;
     }
   `,
 
-  finalizing: css`
+  stepThree: css`
     :host {
       width: 25%;
       margin-right: 10%;
     }
   `,
 
-  purchasing: css`
+  twoSteps: css`
     :host {
       margin-top: 5%;
       width: 50%;
     }
   `,
 
-  singleTx: css`
+  oneStep: css`
     :host {
       margin-top: 10%;
       width: 100%;

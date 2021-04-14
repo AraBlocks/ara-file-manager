@@ -18,7 +18,7 @@ const dispatch = require('../redux/reducers/dispatch')
 const { internalEmitter } = windowManager
 const store = windowManager.sharedData.fetch('store')
 
-const GAS_TIMEOUT = 60000
+const GAS_TIMEOUT = 10000
 
 let errored = false
 let deployed = false
@@ -74,7 +74,7 @@ async function _onNewGas(step) {
   windowManager.openModal('generalPleaseWaitModal')
   const gasPrice = await daemonsUtil.requestGasPrice()
   const { average, fast, fastest } = gasPrice
-  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
+  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step: getStepName(step) } })
   windowManager.closeModal('generalPleaseWaitModal')
   windowManager.openModal('setGasModal')
 }
@@ -162,54 +162,72 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
     dispatch({ type: events.PUBLISHING, load: descriptor })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    this.onhash = (_, hash) => {
-      debug('%s tx hash: %s', _, hash)
-      const load = { step: _, [`${_}Hash`]: hash }
-      dispatch({ type: events.PUBLISH_PROGRESS, load })
-      windowManager.openModal('publishProgressModal')
-      windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH, load })
+    this.onhash = (progressStep, hash) => {
+      debug('%s tx hash: %s', progressStep, hash)
+      let stepNames = {
+        1: 'Creating',
+        2: 'Writing'
+      }
+      let type = events.TWO_STEP_PROGRESS
+      let view = 'twoStepProgressModal'
+      if (0 < price) {
+        stepNames = Object.assign(stepNames, { 3: 'Finalizing' })
+        type = events.THREE_STEP_PROGRESS
+        view = 'threeStepProgressModal'
+      }
+      const load = {
+        modalName: 'Publishing',
+        step: getStepNumber(progressStep),
+        stepNames,
+        [`${getStepNumber(progressStep)}Hash`]: hash,
+        network: store.application.network,
+        retryEvent: events.PUBLISH_NEW_GAS
+      }
+      dispatch({ type: events.THREE_STEP_PROGRESS, load })
+      windowManager.openModal(view)
+      windowManager.pingView({ view, event: events.REFRESH, load })
     }
 
-    this.onreceipt = (_, receipt) => {
-      debug('%s tx receipt:', _, receipt)
+    this.onreceipt = (progressStep, receipt) => {
+      debug('%s tx receipt:', progressStep, receipt)
       step = undefined
       errored = false
     }
 
-    this.onerror = (_, error) => {
-      debug('%s tx error:', _, error)
+    this.onerror = (progressStep, error) => {
+      debug('%s tx error:', progressStep, error)
       errored = true
       dispatch({ type: events.FEED_MODAL,
         load: {
           modalName: 'transactionError',
           callback: () => {
-            internalEmitter.emit(events.PUBLISH_NEW_GAS, true, { step: _ })
+            internalEmitter.emit(events.PUBLISH_NEW_GAS, true, { step: getStepNumber(progressStep) })
           }
         }
       })
-      windowManager.closeModal('publishProgressModal')
+      0 < price ? windowManager.closeModal('threeStepProgressModal') : windowManager.closeModal('twoStepProgressModal')
       windowManager.openModal('generalActionModal')
     }
 
-    this.startTimer = (_) => {
+    this.startTimer = (progressStep) => {
       setTimeout(
         () => {
           let trigger = false
-          switch (_) {
-            case 'retrydeploy':
+          switch (progressStep) {
+            case 'retryStepOne':
               trigger = !(deployed || errored)
               break
-            case 'retrywrite':
+            case 'retryStepTwo':
               trigger = !(written || errored)
               break
-            case 'retryprice':
+            case 'retryStepThree':
               trigger = !(priced || errored)
               break
           }
           debug('timeout', trigger)
           if (trigger) {
-            dispatch({ type: events.PUBLISH_PROGRESS, load: { step: _ } })
-            windowManager.pingView({ view: 'publishProgressModal', event: events.REFRESH })
+            dispatch({ type: 0 < price ? events.THREE_STEP_PROGRESS : events.TWO_STEP_PROGRESS, load: { step: progressStep } })
+            windowManager.pingView({ view: 0 < price ? 'threeStepProgressModal' : 'twoStepProgressModal', event: events.REFRESH })
           }
         }, GAS_TIMEOUT
       )
@@ -217,7 +235,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     if ('publish' === step || 'deploy' === step) {
       if ('deploy' === step) autoQueue.clear()
-      this.startTimer('retrydeploy')
+      this.startTimer('retryStepOne')
       await new Promise((resolve, reject) => {
         autoQueue.push(
           analytics.trackPublishStart,
@@ -247,7 +265,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     if (deployed || 'write' === step) {
       if ('write' === step) autoQueue.clear()
-      this.startTimer('retrywrite')
+      this.startTimer('retryStepTwo')
       await new Promise((resolve, reject) => {
         autoQueue.push(
           () => araFilesystem.commit({
@@ -260,7 +278,13 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
               onreceipt: (receipt) => {
                 this.onreceipt('write', receipt)
                 written = true
-                this.startTimer('retryprice')
+                if (0 < price) {
+                  this.startTimer('retryStepThree')
+                } else {
+                  priced = true
+                  windowManager.closeModal('twoStepProgressModal')
+                  resolve() 
+                }
               },
               onerror: (error) => {
                 if (!written) {
@@ -274,7 +298,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
               onreceipt: (receipt) => {
                 this.onreceipt('price', receipt)
                 priced = true
-                windowManager.closeModal('publishProgressModal')
+                windowManager.closeModal('threeStepProgressModal')
                 resolve()
               },
               onerror: error => {
@@ -295,7 +319,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
 
     if ('price' === step) {
       autoQueue.clear()
-      this.startTimer('retryprice')
+      this.startTimer('retryStepThree')
       await new Promise((resolve, reject) => {
         autoQueue.push(
           () => araFilesystem.setPrice({
@@ -307,7 +331,7 @@ ipcMain.on(events.CONFIRM_PUBLISH, async (_, {
             onreceipt: (receipt) => {
               this.onreceipt('price', receipt)
               priced = true
-              windowManager.closeModal('publishProgressModal')
+              windowManager.closeModal('threeStepProgressModal')
               resolve()
             },
             onerror: error => {
@@ -375,4 +399,34 @@ async function _feedManageFile() {
   } catch (err) {
     debug('Error for %s: %o', 'newevent', err)
   }
+}
+
+function getStepName(step) {
+  switch (step) {
+    case 'stepOne':
+      step = 'deploy'
+      break
+    case 'stepTwo':
+      step = 'write'
+      break
+    case 'stepThree':
+      step = "price"
+      break
+  }
+  return step
+}
+
+function getStepNumber(step) {
+  switch (step) {
+    case 'deploy':
+      step = 'stepOne'
+      break
+    case 'write':
+      step = 'stepTwo'
+      break
+    case 'price':
+      step = "stepThree"
+      break
+  }
+  return step
 }

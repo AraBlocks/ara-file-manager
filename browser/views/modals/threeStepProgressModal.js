@@ -6,97 +6,97 @@ const { shell } = require('electron')
 const styles = require('./styles')
 const html = require('nanohtml')
 
-module.exports = ({ load, modalName, deployHash, writeHash, priceHash, step }) => {
-  const deployLink = new Link({
+module.exports = ({ load, modalName, stepOneHash, stepTwoHash, stepThreeHash, step, network, retryEvent, stepNames }) => {
+  const stepOneLink = new Link({
     children: `Etherscan`,
     onclick: () => {
-      deployHash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${deployHash}`) :
+      stepOneHash ?
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${stepOneHash}` : `https://ropsten.etherscan.io/tx/${stepOneHash}`) :
         null
     }
   })
-  const writeLink = new Link({
+  const stepTwoLink = new Link({
     children: `Etherscan`,
     onclick: () => {
-      writeHash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${writeHash}`) :
+      stepTwoHash ?
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${stepTwoHash}` : `https://ropsten.etherscan.io/tx/${stepTwoHash}`) :
         null
     }
   })
-  const priceLink = new Link({
+  const stepThreeLink = new Link({
     children: `Etherscan`,
     onclick: () => {
-      priceHash ?
-        shell.openExternal(`https://ropsten.etherscan.io/tx/${priceHash}`) :
+      stepThreeHash ?
+        shell.openExternal(network === 'main' ? `https://etherscan.io/${stepThreeHash}` : `https://ropsten.etherscan.io/tx/${stepThreeHash}`) :
         null
     }
   })
   const exit = new Button({
     children: 'Exit',
     cssClass: { opts: { height: 3, fontSize: 14, color: 'teal' } },
-    onclick: () => closeModal('publishProgressModal')
+    onclick: () => closeModal('threeStepProgressModal')
   })
   return html`
     <div class="${styles.container({ justifyContent: 'space-around', height: 95, width: 100, useSelector: false })} modals-container">
       <div class="${styles.title} modal-messageBold">
-        Publishing...
+        ${modalName}...
       </div>
       <div class="${styles.separator} section-separator" style="width: 90%;"></div>
       <div class="${styles.progressContainer}">
-        <div class="${styles.creating}">
+        <div class="${styles.stepOne}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${step && step.includes('deploy') ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
+            ${step && step.includes('One') ? spinnerBar() : html`<div class="${styles.circle({ color: 'green' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
-            Creating
+            ${stepNames[1]}
           </div>
           <div>
-            ${deployLink.render()}
+            ${stepOneLink.render()}
           </div>
-          ${'retrydeploy' === step ?
+          ${'retryStepOne' === step ?
             html`<div class="${styles.gasRefill}" onclick=${() => {
-              closeModal('publishProgressModal')
-              emit({ event: events.PUBLISH_NEW_GAS, load: { step: 'deploy' } })
+              closeModal('threeStepProgressModal')
+              emit({ event: retryEvent, load: { step: 'stepOne' } })
             }}>
               <img src="../assets/images/gas.png"/>
             </div>` :
             null
           }
         </div>
-        <div class="${styles.writing}">
+        <div class="${styles.stepTwo}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${step && step.includes('write') ? spinnerBar() : html`<div class="${styles.circle({ color: step && step.includes('price') ? 'green' : 'grey' })}"></div>`}
+            ${step && step.includes('Two') ? spinnerBar() : html`<div class="${styles.circle({ color: step && step.includes('Three') ? 'green' : 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
-            Writing
+            ${stepNames[2]}
           </div>
           <div>
-            ${writeHash ? writeLink.render() : null}
+            ${stepTwoHash ? stepTwoLink.render() : null}
           </div>
-          ${'retrywrite' === step ?
+          ${'retryStepTwo' === step ?
             html`<div class="${styles.gasRefill}" onclick=${() => {
-              closeModal('publishProgressModal')
-              emit({ event: events.PUBLISH_NEW_GAS, load: { step: 'write' } })
+              closeModal('threeStepProgressModal')
+              emit({ event: retryEvent, load: { step: 'stepTwo' } })
             }}>
               <img src="../assets/images/gas.png"/>
             </div>` :
             null
           }
         </div>
-        <div class="${styles.finalizing}">
+        <div class="${styles.stepThree}">
           <div class="${styles.progressHolder} modal-progressHolder">
-            ${step && step.includes('price') ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
+            ${step && step.includes('Three') ? spinnerBar() : html`<div class="${styles.circle({ color: 'grey' })}"></div>`}
           </div>
           <div class="${styles.boldLabel}">
-            Finalizing
+            ${stepNames[3]}
           </div>
           <div>
-            ${priceHash ? priceLink.render() : null}
+            ${stepThreeHash ? stepThreeLink.render() : null}
           </div>
-          ${'retryprice' === step ?
+          ${'retryStepThree' === step ?
             html`<div class="${styles.gasRefill}" onclick=${() => {
-              closeModal('publishProgressModal')
-              emit({ event: events.PUBLISH_NEW_GAS, load: { step: 'price' } })
+              closeModal('threeStepProgressModal')
+              emit({ event: retryEvent, load: { step: 'stepThree' } })
             }}>
               <img src="../assets/images/gas.png"/>
             </div>` :

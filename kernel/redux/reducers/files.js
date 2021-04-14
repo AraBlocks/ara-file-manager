@@ -15,14 +15,14 @@ module.exports = (state, { load = null, type }) => {
       file.packageOpened = false
       break
     case events.DOWNLOADING:
-      file = findFile(load.did, state.purchased)
+      file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
       file.downloadPercent = load.downloadPercent || 0
       file.status = events.DOWNLOADING
       file.size = load.size || file.size
       break
     case events.DOWNLOADED:
-      file = findFile(load.did, state.purchased)
+      file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
       file.name = load.name
       file.downloadPercent = 1
@@ -31,7 +31,7 @@ module.exports = (state, { load = null, type }) => {
       file.size = load.size || file.size
       break
     case events.DOWNLOAD_FAILED:
-      file = findFile(load.did, state.purchased)
+      file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
       file.downloadPercent = 0
       file.status = events.DOWNLOAD_FAILED
@@ -136,11 +136,11 @@ module.exports = (state, { load = null, type }) => {
       file.status = events.DOWNLOADED_PUBLISHED
       break
     case events.UPDATE_EARNING:
-      file = findFile(load.did, state.published)
+      file = findFile(load.did, state.published.concat(state.purchased))
       file.earnings += Number(load.earning)
       break
     case events.UPDATE_META:
-      file = findFile(load.did, state.published)
+      file = findFile(load.did, state.published.concat(state.purchased))
       Object.assign(file, load)
       break
     case events.UPDATE_PEER_COUNT:
@@ -166,7 +166,7 @@ module.exports = (state, { load = null, type }) => {
       file.redeeming = false
       break
     case events.CONNECTING:
-      file = findFile(load.did, state.purchased)
+      file = findFile(load.did, state.published.concat(state.purchased))
       if (file == null) { break }
       file.downloadPercent = 0
       file.status = events.CONNECTING

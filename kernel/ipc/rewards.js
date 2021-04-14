@@ -11,7 +11,7 @@ const dispatch = require('../redux/reducers/dispatch')
 const store = windowManager.sharedData.fetch('store')
 const { internalEmitter } = windowManager
 
-const GAS_TIMEOUT = 60000
+const GAS_TIMEOUT = 10000
 
 let errored = false
 let redeemed = false
@@ -60,7 +60,7 @@ async function _onNewGas(step) {
 ipcMain.on(events.GAS_PRICE, async (_, load) => {
   load = Object.assign(load, store.modal.redeemFileData)
   const { did, step, gasPrice } = load
-  if ('redeem' !== step)
+  if (!step.includes('redeem'))
     return
 
   const { account } = store
@@ -91,14 +91,14 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
     dispatch({ type: events.REDEEMING_REWARDS, load: { did: load.did } })
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
 
-    this.startTimer = (_) => {
+    this.startTimer = (progressStep) => {
       setTimeout(
         () => {
           let trigger = !(redeemed || errored)
           debug('timeout', trigger)
           if (trigger) {
-            dispatch({ type: events.REDEEM_PROGRESS, load: { step: _ } })
-            windowManager.pingView({ view: 'redeemProgressModal', event: events.REFRESH })
+            dispatch({ type: events.ONE_STEP_PROGRESS, load: { step: progressStep } })
+            windowManager.pingView({ view: 'oneStepProgressModal', event: events.REFRESH })
           }
         }, GAS_TIMEOUT
       )
@@ -115,26 +115,34 @@ ipcMain.on(events.CONFIRM_REDEEM, async (_, load) => {
         gasPrice: load.gasPrice,
         onhash: hash => {
           debug('redeem tx hash: %s', hash)
-          dispatch({ type: events.REDEEM_PROGRESS, load: { hash, step: 'redeem' }})
-          windowManager.openModal('redeemProgressModal')
+          dispatch({
+            type: events.ONE_STEP_PROGRESS,
+            load: {
+              modalName: 'Redeeming',
+              hash,
+              network: store.application.network,
+              retryEvent: events.REDEEM_NEW_GAS,
+              stepName: 'Redeeming'
+            }})
+          windowManager.openModal('oneStepProgressModal')
         },
         onreceipt: receipt => {
           debug('redeem tx receipt:', receipt)
           redeemed = true
-          windowManager.closeModal('redeemProgressModal')
+          windowManager.closeModal('oneStepProgressModal')
           resolve()
         },
         onerror: error => {
           debug('redeem tx error:', error)
           errored = true
-          windowManager.closeModal('redeemProgressModal')
+          windowManager.closeModal('oneStepProgressModal')
           reject()
         }
       }))
     })
 
     if (redeemed) {
-      debug('DISPATCHING %s', events.REWARDS_REDEEMED)
+      debug('DISPATCHING %s', events.REWARDS_REDEEMED, value)
       dispatch({ type: events.REWARDS_REDEEMED, load: { did: load.did, value } })
       windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
     }

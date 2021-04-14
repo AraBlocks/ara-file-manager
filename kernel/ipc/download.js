@@ -14,7 +14,7 @@ ipcMain.on(events.DOWNLOAD, download)
 internalEmitter.on(events.DOWNLOAD, (load) => download(null, load))
 
 async function download(_, load) {
-	debug('%s heard', events.DOWNLOAD)
+	debug('%s heard', events.DOWNLOAD, load)
 	try {
 		const { jobId } = store.files.purchased.concat(store.files.published)
 			.find(({ did }) => did === load.did)

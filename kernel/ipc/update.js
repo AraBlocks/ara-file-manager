@@ -17,7 +17,7 @@ const { pause } = require('../lib')
 
 const store = windowManager.sharedData.fetch('store')
 
-const GAS_TIMEOUT = 60000
+const GAS_TIMEOUT = 10000
 
 let updated = false
 let errored = false
@@ -134,7 +134,7 @@ async function _onNewGas(step) {
   windowManager.openModal('generalPleaseWaitModal')
   const gasPrice = await daemonsUtil.requestGasPrice()
   const { average, fast, fastest } = gasPrice
-  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step } })
+  dispatch({ type: events.SET_GAS_PRICE, load: { average: Number(average)/10, fast: Number(fast)/10, fastest: Number(fastest)/10, step: getStepName(step) } })
   windowManager.closeModal('generalPleaseWaitModal')
   windowManager.openModal('setGasModal')
 }
@@ -155,12 +155,6 @@ ipcMain.on(events.GAS_PRICE, async(_, load) => {
       debug('Estimating gas for set price')
       estimate = await araFilesystem.setPrice({ did: load.did, password: account.password, price: Number(load.price), estimate: true, gasPrice })
     } else {
-      if (load.addPaths.length != 0) {
-        await (await araFilesystem.add({ did: load.did, paths: load.addPaths, password: account.password })).close()
-      }
-      if (load.removePaths.length != 0) {
-        await (await araFilesystem.remove({ did: load.did, paths: load.removePaths, password: account.password })).close()
-      }
       if (load.shouldUpdatePrice) {
         debug('Estimate gas for commit and set price')
         estimate = await araFilesystem.commit({ did: load.did, password: account.password, price: Number(load.price), estimate: true, gasPrice })
@@ -178,7 +172,10 @@ ipcMain.on(events.GAS_PRICE, async(_, load) => {
       gasPrice,
       size: load.size,
       shouldUpdatePrice: load.shouldUpdatePrice,
-      shouldCommit: load.shouldCommit
+      shouldCommit: load.shouldCommit,
+      step,
+      addPaths: load.addPaths,
+      removePaths: load.removePaths
     }
 
     dispatch({ type: events.FEED_MODAL, load: dispatchLoad })
@@ -189,127 +186,202 @@ ipcMain.on(events.GAS_PRICE, async(_, load) => {
 ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
   debug('%s heard', events.CONFIRM_UPDATE_FILE)
   const { account, account: { autoQueue } } = store
+  const {
+    step,
+    addPaths,
+    removePaths,
+    did,
+    name,
+    price,
+    size,
+    gasPrice
+  } = load
   try {
+    if (addPaths.length != 0) {
+      await (await araFilesystem.add({ did, paths: addPaths, password: account.password })).close()
+    }
+    if (removePaths.length != 0) {
+      await (await araFilesystem.remove({ did, paths: removePaths, password: account.password })).close()
+    }
     dispatch({
       type: events.UPDATING_FILE,
       load: {
-        did: load.did,
-        name: load.name,
-        price: load.price,
-        size: load.size
+        did,
+        name,
+        price,
+        size
       }
     })
 
     windowManager.pingView({ view: 'filemanager', event: events.REFRESH })
     windowManager.closeWindow('manageFileView')
 
-    this.startTimer = (_) => {
+    this.startTimer = (progressStep) => {
       setTimeout(
         () => {
           let trigger = !(updated || errored)
           debug('timeout', trigger)
+          let view
+          let type
+          switch (progressStep) {
+            case 'retryStepOne':
+            case 'retryStepTwo':
+              type = events.TWO_STEP_PROGRESS
+              view = 'twoStepProgressModal'
+              break
+            case 'retryPrice':
+            case 'retryCommit':
+              type = events.ONE_STEP_PROGRESS
+              view = 'oneStepProgressModal'
+              break
+          }
           if (trigger) {
-            dispatch({ type: events.UPDATE_PROGRESS, load: { step: _ } })
-            windowManager.pingView({ view: 'updateProgressModal', event: events.REFRESH })
+            dispatch({ type, load: { step: progressStep } })
+            windowManager.pingView({ view, event: events.REFRESH })
           }
         }, GAS_TIMEOUT
       )
     }
 
     autoQueue.clear()
-    if (load.shouldUpdatePrice && !load.shouldCommit) {
-      this.startTimer('retryupdateprice')
+    if (load.shouldUpdatePrice && !load.shouldCommit || 'updatePrice' === step) {
+      this.startTimer('retryPrice')
       debug('Updating price only')
       await autoQueue.push(() => araFilesystem.setPrice({
-          did: load.did,
+          did,
           password: account.password,
-          price: Number(load.price),
-          gasPrice: load.gasPrice,
+          price: Number(price),
+          gasPrice: gasPrice,
           onhash: hash => {
             debug('price tx hash: %s', hash)
-            dispatch({ type: events.UPDATE_PROGRESS, load: { priceHash: hash, step: 'updateprice' }})
-            windowManager.openModal('updateProgressModal')
+            dispatch({
+              type: events.ONE_STEP_PROGRESS,
+              load: {
+                modalName: 'Updating',
+                hash,
+                network: store.application.network,
+                retryEvent: events.UPDATE_NEW_GAS,
+                stepName: 'Updating Price'
+              }
+            })
+            windowManager.openModal('oneStepProgressModal')
           },
           onreceipt: receipt => {
             debug('price tx receipt:', receipt)
             updated = true
-            windowManager.closeModal('updateProgressModal')
+            windowManager.closeModal('oneStepProgressModal')
           },
           onerror: error => {
             debug('price tx error:', error)
             errored = true
-            windowManager.closeModal('updateProgressModal')
+            windowManager.closeModal('oneStepProgressModal')
           }
         })
       )
-    } else if (!load.shouldUpdatePrice && load.shouldCommit) {
-      this.startTimer('retryupdatewrite')
+    } else if (!load.shouldUpdatePrice && load.shouldCommit || 'updateCommit' === step) {
+      this.startTimer('retryCommit')
       debug('Updating Files')
       await autoQueue.push(() => araFilesystem.commit({
-          did: load.did,
+          did,
           password: account.password,
-          gasPrice: load.gasPrice,
+          gasPrice: gasPrice,
           writeCallbacks: {
             onhash: hash => {
               debug('write tx hash: %s', hash)
-              dispatch({ type: events.UPDATE_PROGRESS, load: { writeHash: hash, step: 'updatewrite' }})
-              windowManager.openModal('updateProgressModal')
+              dispatch({
+                type: events.ONE_STEP_PROGRESS,
+                load: {
+                  modalName: 'Updating',
+                  hash,
+                  network: store.application.network,
+                  retryEvent: events.UPDATE_NEW_GAS,
+                  stepName: 'Writing'
+                }
+              })
+              windowManager.openModal('oneStepProgressModal')
             },
             onreceipt: receipt => {
               debug('write tx receipt:', receipt)
               updated = true
-              windowManager.closeModal('updateProgressModal')
+              windowManager.closeModal('oneStepProgressModal')
             },
             onerror: error => {
               debug('write tx error:', error)
               errored = true
-              windowManager.closeModal('updateProgressModal')
+              windowManager.closeModal('oneStepProgressModal')
             }
           }
         })
       )
     } else {
-      this.startTimer('retryupdateallwrite')
+      this.startTimer('retryStepOne')
       debug('Updating Files and Price')
       await autoQueue.push(() => araFilesystem.commit({
-          did: load.did,
+          did,
           password: account.password,
-          price: Number(load.price),
-          gasPrice: load.gasPrice,
+          price: Number(price),
+          gasPrice: gasPrice,
           writeCallbacks: {
             onhash: hash => {
               debug('write tx hash: %s', hash)
-              dispatch({ type: events.UPDATE_PROGRESS, load: { writeHash: hash, step: 'updateallwrite' }})
-              windowManager.openModal('updateProgressModal')
+              dispatch({
+                type: events.TWO_STEP_PROGRESS,
+                load: {
+                  modalName: 'Updating',
+                  stepOneHash: hash,
+                  step: 'stepOne',
+                  network: store.application.network,
+                  retryEvent: events.UPDATE_NEW_GAS,
+                  stepNames: {
+                    1: 'Writing',
+                    2: 'Finalizing'
+                  }
+                }
+              })
+              windowManager.openModal('twoStepProgressModal')
             },
             onreceipt: receipt => {
               debug('write tx receipt:', receipt)
               updated = true
-              this.startTimer('retryupdateallprice')
+              this.startTimer('retryStepTwo')
             },
             onerror: error => {
               debug('write tx error:', error)
               errored = true
-              windowManager.closeModal('updateProgressModal')
+              dispatch({ type: events.FEED_MODAL,
+                load: {
+                  modalName: 'transactionError',
+                  callback: () => {
+                    internalEmitter.emit(events.UPDATE_NEW_GAS, true, { step: 'stepOne' })
+                  }
+                }
+              })
+              windowManager.closeModal('twoStepProgressModal')
             }
           },
           priceCallbacks: {
             onhash: hash => {
-            debug('price tx hash: %s', hash)
-            const load = { priceHash: hash, step: 'updateallprice' }
-            dispatch({ type: events.UPDATE_PROGRESS, load })
-            windowManager.openModal('updateProgressModal')
-            windowManager.pingView({ view: 'updateProgressModal', event: events.REFRESH, load })
+              debug('price tx hash: %s', hash)
+              const load = {
+                modalName: 'Updating',
+                stepTwoHash: hash,
+                step: 'stepTwo',
+                network: store.application.network,
+                retryEvent: events.UPDATE_NEW_GAS
+              }
+              dispatch({ type: events.TWO_STEP_PROGRESS, load })
+              windowManager.openModal('twoStepProgressModal')
+              windowManager.pingView({ view: 'twoStepProgressModal', event: events.REFRESH, load })
             },
             onreceipt: receipt => {
               debug('price tx receipt:', receipt)
               updated = true
-              windowManager.closeModal('updateProgressModal')
+              windowManager.closeModal('twoStepProgressModal')
             },
             onerror: error => {
               debug('price tx error:', error)
               errored = true
-              windowManager.closeModal('updateProgressModal')
+              windowManager.closeModal('twoStepProgressModal')
             }
           }
         })
@@ -321,10 +393,26 @@ ipcMain.on(events.CONFIRM_UPDATE_FILE, async (_, load) => {
 
       internalEmitter.emit(events.START_SEEDING, load)
 
-      dispatch({ type: events.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: load.name } } })
+      dispatch({ type: events.FEED_MODAL, load: { modalName: 'updateSuccessModal', load: { fileName: name } } })
       windowManager.openModal('generalMessageModal')
     }
   } catch (err) {
     debug('Error: %O', err)
   }
 })
+
+function getStepName(step) {
+  switch (step) {
+    case 'stepOne':
+      step = 'update'
+      break
+    case 'retryPrice':
+      step = 'updatePrice'
+      break
+    case 'stepTwo':
+    case 'retryCommit':
+      step = 'updateCommit'
+      break
+  }
+  return step
+}
