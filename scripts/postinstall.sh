@@ -2,12 +2,6 @@
 echo 'postinstall.sh ---- start'
 echo ''
 
-# Remove faulty utp-native
-echo 'ls utp-native before rm:'
-ls ./node_modules/@hyperswarm/network/node_modules/utp-native
-rm -r ./node_modules/@hyperswarm/network/node_modules/utp-native
-echo 'ls utp-native after rm:'
-ls ./node_modules/@hyperswarm/network/node_modules/utp-native
 #TODO this does delete something, and it is necessary
 #     update and unify our use of UTP so we can get rid of this extra step
 
